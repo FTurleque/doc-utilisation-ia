@@ -1,0 +1,59 @@
+site_name: Documentation sur l'utilisation de l'IA
+site_description: Documentation collectée sur l'utilisation de l'IA
+site_author: FTurleque
+repo_url: https://github.com/FTurleque/doc-utilisation-ia
+repo_name: FTurleque/doc-utilisation-ia
+
+theme:
+  name: material
+  language: fr
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Passer en mode sombre
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Passer en mode clair
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search:
+      lang: fr
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Accueil: index.md
+  - Introduction:
+    - Qu'est-ce que l'IA ?: introduction/quest-ce-que-lia.md
+    - Grands modèles de langage (LLM): introduction/llm.md
+  - Bonnes pratiques:
+    - Rédiger de bons prompts: bonnes-pratiques/rediger-des-prompts.md
+    - Vérifier les réponses: bonnes-pratiques/verifier-les-reponses.md
+  - Outils:
+    - Panorama des outils: outils/panorama.md
+  - Ressources: ressources.md
