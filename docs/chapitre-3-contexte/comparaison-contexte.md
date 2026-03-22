@@ -1,53 +1,257 @@
-# Comparaison — Contexte & Personnalisation VS Code vs IntelliJ
+# Comparaison — Contexte & Personnalisation entre Éditeurs
+
+<span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
 
 ## Présentation
-Cette page compare les capacités de contextualisation et de personnalisation de Copilot entre VS Code et IntelliJ IDEA. Les deux approches sont complémentaires et donnent des résultats différents selon les langages et les besoins.
+
+Cette page compare les fonctionnalités de Copilot entre **VS Code** et **IntelliJ IDEA**. Les deux offrent des capacités riches, mais avec approches différentes.
 
 ---
 
-## Tableau comparatif complet
+## Features Copilot par IDE
 
-| Mécanisme | VS Code | IntelliJ | Notes |
-|-----------|:-------:|:--------:|-------|
-| **Fenêtre de contexte** | Fichiers ouverts | Analyse complète PSI | IntelliJ analyse plus en profondeur |
-| **Instructions globales** | ✅ `.github/copilot-instructions.md` | ❌ | Exclusif VS Code |
-| **Instructions ciblées** | ✅ `.github/instructions/*.instructions.md` | ❌ | Exclusif VS Code |
-| **Prompt files** | ✅ `.github/prompts/*.prompt.md` | ❌ | Exclusif VS Code |
-| **Agents custom** | ✅ `.github/agents/*.agent.md` | ❌ | Exclusif VS Code |
-| **Skills** | ✅ `SKILL.md` + `copilot-skill://` | ❌ | Exclusif VS Code |
-| **Hooks** | ✅ (limités, en évolution) | ❌ | Exclusif VS Code |
-| **Exclusion de fichiers** | ✅ `.copilotignore` | ✅ Dossiers "Excluded" | Mécanismes différents |
-| **Contexte de dépendances** | ✅ package.json, requirements.txt | ✅ pom.xml, build.gradle | Les deux lisent les manifests |
-| **Analyse sémantique** | Via Language Server (LSP) | Via PSI (analyse native) | IntelliJ plus profond pour JVM |
-| **Settings par projet** | ✅ `.vscode/settings.json` | ✅ `.idea/` (partageable) | Deux approches |
-| **Workspace multi-dossiers** | ✅ `.code-workspace` | ✅ Multi-module natif | IntelliJ meilleur pour Maven/Gradle |
+### Inline Suggestions (Autocomplétion)
+
+| Feature | VS Code | IntelliJ IDEA |
+|---------|:-------:|:------------:|
+| Suggestions en temps réel | ✅ | ✅ |
+| Accepter avec Tab/Enter | ✅ | ✅ |
+| Naviguer entre suggestions | ✅ | ✅ |
+| Mode manuel/auto | ✅ | ✅ |
+| Générer multi-ligne | ✅ | ✅ |
+
+**Résultat** : ✅ Équivalentes
+
+### Chat Interactif
+
+| Feature | VS Code | IntelliJ IDEA |
+|---------|:-------:|:------------:|
+| Chat panneau dédié | ✅ | ✅ |
+| Inline Chat (dans éditeur) | ✅ | ✅ |
+| Slash commands (/explain, /tests) | ✅ | ✅ |
+| Contexte participants (@workspace, @project) | ✅ | ✅ |
+| Chat multi-fichiers | ✅ | ✅ |
+
+**Résultat** : ✅ Équivalentes (légère avance VS Code en UX)
+
+### Copilot Agents
+
+| Feature | VS Code | IntelliJ IDEA |
+|---------|:-------:|:------------:|
+| Agent autonome | ✅ | ✅ |
+| Créer PR automatiquement | ✅ | ✅ |
+| Implémenter feature depuis issue | ✅ | ✅ |
+| Analyser et corriger bugs | ✅ | ✅ |
+| Plans | Pro+/Enterprise | Pro+/Enterprise |
+
+**Résultat** : ✅ Équivalentes
+
+### Copilot Edits (Multi-fichiers)
+
+| Feature | VS Code | IntelliJ IDEA |
+|---------|:-------:|:------------:|
+| Edit mode (aprouver chaque change) | ✅ | ✅ |
+| Agent mode (autonome) | ✅ | ✅ |
+| Modifications coordonnées | ✅ | ✅ |
+| Itération automatique | ✅ | ✅ |
+
+**Résultat** : ✅ Équivalentes
+
+### Code Revie & PR Summaries
+
+| Feature | VS Code | IntelliJ IDEA |
+|---------|:-------:|:------------:|
+| Review suggestions (Free) | Sélection | Sélection |
+| Review complète (Pro+) | ✅ | ✅ |
+| PR summary auto | ✅ | ✅ |
+
+**Résultat** : ✅ Équivalentes
 
 ---
 
-## Qualité du contexte par langage
+## Contextualisation & Personnalisation
 
-| Langage | VS Code | IntelliJ |
-|---------|:-------:|:--------:|
-| Java | ⭐⭐⭐⭐ (Extension Pack for Java) | ⭐⭐⭐⭐⭐ natif |
-| Kotlin | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ natif |
-| TypeScript | ⭐⭐⭐⭐⭐ natif | ⭐⭐⭐⭐ (WebStorm) |
-| JavaScript | ⭐⭐⭐⭐⭐ natif | ⭐⭐⭐⭐ (WebStorm) |
-| Python | ⭐⭐⭐⭐⭐ avec Pylance | ⭐⭐⭐⭐⭐ (PyCharm) |
-| Go | ⭐⭐⭐⭐⭐ natif | ⭐⭐⭐⭐ (GoLand) |
-| Rust | ⭐⭐⭐⭐⭐ natif | ⭐⭐⭐ (plugin) |
-| C# | ⭐⭐⭐⭐ avec C# Dev Kit | ⭐⭐⭐⭐⭐ (Rider) |
+Ici, les éditeurs **divergent significativement**.
+
+### Custom Instructions
+
+| Mécanisme | VS Code | IntelliJ IDEA |
+|-----------|:-------:|:------------:|
+| **Repository-level** | ✅ `.github/copilot-instructions.md` | ✅ `.idea/ai/copilot-instructions.md` ou settings |
+| **Personal-level** | ✅ GitHub settings | ✅ GitHub settings |
+| **Format** | Markdown | Markdown ou settings UI |
+| **Partage équipe** | ✅ Via Git | ✅ Via `.idea/` versionnée |
+
+### Instructions Ciblées
+
+| Mécanisme | VS Code | IntelliJ IDEA |
+|-----------|:-------:|:------------:|
+| `.github/instructions/*.instructions.md` | ✅ | ❌ (via settings UI) |
+| Par langage/domaine | ✅ | Partiellement |
+| Appliqué auto | ✅ Basé sur `applyTo` glob | ✅ Basé sur fichier ouvert |
+
+### Prompt Files & Skills
+
+| Mécanisme | VS Code | IntelliJ IDEA |
+|-----------|:-------:|:------------:|
+| **Prompt files** (`.prompt.md`) | ✅ Réutilisables, sauvegardés | ❌ |
+| **Skills** (`SKILL.md`) | ✅ Packaging domain knowledge | ❌ |
+| **Agents custom** (`.agent.md`) | ✅ Full automation | ⭐ Limité aux workflows IDE |
+
+### Exclusion & Sensibilité
+
+| Mécanisme | VS Code | IntelliJ IDEA |
+|-----------|:-------:|:------------:|
+| `.copilotignore` | ✅ | ❌ |
+| Exclusion dossiers | Limitée | ✅ Natif "Excluded Folders" |
+| Cache context privé | ✅ | ✅ |
 
 ---
 
-## L'avantage de VS Code : personnalisation profonde
+## Analyses Sémantique & Contexte Inferred
 
-VS Code permet une personnalisation du comportement de Copilot impossible sur IntelliJ :
+### VS Code
 
-```
-Équipe utilisant VS Code peut avoir :
+**Contexte utilisé par Copilot** :
+- Fichiers ouverts dans les tabs
+- Fichiers récemment modifiés
+- Imports / dépendances lues depuis `package.json`, `tsconfig.json`, etc.
+- Language Server Protocol (LSP) pour types et symboles
+- `.github/copilot-instructions.md` et autres directives
 
-.github/
-├── copilot-instructions.md              → "Ce projet utilise Vue 3 + Pinia + TypeScript 5"
+**Profondeur d'analyse** : Moyenne (LSP-dépendant)
+
+### IntelliJ IDEA
+
+**Contexte utilisé par Copilot** :
+- Fichier courant ouvert
+- Imports et références détectées par PSI (Persistent Syntax Index)
+- Hiérarchie complète du projet (classes, méthodes, types)
+- `pom.xml`, `build.gradle` pour dépendances
+- Structure module (Maven/Gradle multi-module nativement compris)
+- IntelliJ project structure
+
+**Profondeur d'analyse** : **Plus profonde** (PSI natif, très complet pour JVM)
+
+!!! tip "Comparaison"
+    **IntelliJ** : Meilleure analyse sémantique **native** Pour Java/JVM. PSI = syntaxe *et* sémantique résolue.
+    
+    **VS Code** : LSP = plus **extensible**, pas aussi profond pour Java, excellent pour JS/TS.
+
+---
+
+## Avantages par IDE
+
+### VS Code ✅
+
+- **Personnalisation avancée** : instructions ciblées, skills, agents, prompts réutilisables
+- **Légèreté** : moins exigeant en ressources
+- **Écosystème extensible** : MCP (Model Context Protocol) pour intégrer outils externes
+- **Workflow équipe** : tout se versionne via Git (`.github/`)
+- **Web-based** : VS Code Web, GitHub Codespaces
+- **TypeScript/JS excellence** : contexte optimal pour frontend
+
+### IntelliJ IDEA ✅
+
+- **Analyse JVM native** : Meilleure pour Java, Kotlin, Scala
+- **Refactorings intelligents** : intégrés avant Copilot
+- **Multi-module Maven/Gradle natif** : organise auto le contexte
+- **Inspections & hints intégrées** : Copilot + IDE analysis combinés
+- **Performance pour gros projets** : PSI cache = réactif
+- **Workflows IDE sophistiqués** : debugging, profiling intégré
+
+---
+
+## Contexte par Écosystème
+
+### Frontend (React, Vue, Angular, Next.js)
+
+| Aspect | VS Code | IntelliJ |
+|--------|:-------:|:--------:|
+| Contexte langues | **Excellent** | Bien |
+| Resolution types | Excellent | Bien |
+| Plugins/extensions | Excellent | Limité |
+| Recommandation | **Préféré** | Option secondaire|
+
+⭐ **Gagnant : VS Code** (WebStorm meilleur si acheté)
+
+### Backend Java / JVM
+
+| Aspect | VS Code | IntelliJ |
+|--------|:-------:|:--------:|
+| Contexte sémantique | Bon | **Excellent** |
+| Héritage multi-génération | Limité | **Compris natif** |
+| Refactorings Copilot | Bon | **Meilleur** |
+| Maven/Gradle multi-module | Bon | **Meilleur** |
+| Recommandation | Acceptable | **Préféré** |
+
+⭐ **Gagnant : IntelliJ** (ou IDEA complet)
+
+### Backend Node.js / Python
+
+| Aspect | VS Code | IntelliJ |
+|--------|:-------:|:--------:|
+| Contexte | Excellent | Bon |
+| Types inference | Excellent | Bon |
+| Recommandation | **Préféré** | Acceptable |
+
+⭐ **Gagnant : VS Code**
+
+### Polyglot (Mono-repo : Frontend + Backend + Shared)
+
+| Aspect | VS Code | IntelliJ |
+|--------|:-------:|:--------:|
+| Multi-dossiers natif | ✅ `.code-workspace` | ✅ Multi-module |
+| Contexte partagé | Excellent | Bon |
+| Recommandation | Très bon (equipé ensemble) | Équipes séparées |
+
+⭐ **Gagnant : VS Code** (meilleur pour équipes mixed)
+
+---
+
+## Recommandations par Contexte
+
+### Équipe Frontend React/TypeScript
+→ **VS Code** (+ optionnel WebStorm pour expérience UI)
+
+### Équipe Backend Java/Spring
+→ **IntelliJ IDEA** (meilleure analyse PSI + Spring tooling)
+
+### Équipe Python/FastAPI
+→ **VS Code** (avec Pylance)
+
+### Mono-repo : Frontend + Backend + Shared Types
+→ **VS Code** (`code-workspace` + instructions ciblées)
+  
+   Fonctionne aussi : **IntelliJ Fleet** (Lightweight, MCP-ready)
+
+### Solo Dev Multi-skillée
+→ **VS Code** (flexibilité, personnalisation profonde)
+
+---
+
+## Tableau Récapitulatif
+
+| Catégorie | Gagnant |
+|-----------|--------|
+| **Inline suggestions** | 🤝 Égalité |
+| **Chat & Agents** | 🤝 Égalité |
+| **Edits multi-fichiers** | 🤝 Égalité |
+| **Personnalisation avancée** | ✅ VS Code |
+| **Contexte JVM natif** | ✅ IntelliJ |
+| **Frontend excellent** | ✅ VS Code |
+| **Backend JVM excellent** | ✅ IntelliJ |
+| **Légèreté & flexibilité** | ✅ VS Code |
+| **Analyse sémantique** | ✅ IntelliJ |
+
+---
+
+## Ressources
+
+- [Guide VS Code Complet](../chapitre-1-installation/vscode/reference.md)
+- [Guide IntelliJ Complet](../chapitre-1-installation/intellij/reference.md)
+- [Contexte VS Code avancé](vscode-contexte.md)
+- [Contexte IntelliJ avancé](intellij-contexte.md)
 ├── instructions/
 │   ├── vue.instructions.md              → Règles composants Vue (applyTo: **/*.vue)
 │   └── stores.instructions.md           → Règles Pinia (applyTo: **/stores/**) 

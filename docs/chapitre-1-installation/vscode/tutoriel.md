@@ -3,175 +3,222 @@
 <span class="badge-vscode">VS Code</span> <span class="badge-beginner">Débutant</span>
 
 ## Présentation
-Ce tutoriel vous guide pas à pas pour installer et configurer GitHub Copilot sur Visual Studio Code. Durée estimée : **3 à 5 minutes**.
+
+Ce tutoriel vous guide pas à pas pour installer et configurer GitHub Copilot sur Visual Studio Code. Durée estimée : **5 minutes**.
+
+GitHub Copilot vous permet de :
+- Recevoir des suggestions de code en temps réel
+- Poser des questions en langage naturel via le chat
+- Automatiser la génération de tests et de documentation
+- Déboguer votre code plus rapidement
 
 ---
 
 ## Prérequis
 
-Avant de commencer, vérifiez :
+Avant de commencer, vérifiez les prérequis :
 
-- [ ] Visual Studio Code version **1.80 ou supérieure** (vérifiable via *Help → About*)
-- [ ] Un compte GitHub avec un abonnement **Copilot actif** ([vérifier ici](https://github.com/settings/copilot))
-- [ ] Une connexion internet active
+- [ ] **Visual Studio Code 1.85+** (version en date de mars 2026 recommandée)
+- [ ] **Compte GitHub actif** avec authentification
+- [ ] **Accès à Copilot** (Free, Pro, ou via votre organisation)
+- [ ] **Connexion internet** (authentification OAuth)
 
-!!! warning "Version VS Code"
-    Les versions antérieures à 1.80 ne supportent pas toutes les fonctionnalités de Copilot. La mise à jour est fortement recommandée.
-    
-    Pour mettre à jour VS Code : *Help → Check for Updates* (ou téléchargez la dernière version sur [code.visualstudio.com](https://code.visualstudio.com))
+Vérifiez la version VS Code : *Help → About* ou ++ctrl+shift+p++ → tapez *"About"*
+
+!!! warning "Version insuffisante ?"
+    Si votre VS Code est antérieur à 1.85, mettez à jour via *Help → Check for Updates* ou téléchargez depuis [code.visualstudio.com](https://code.visualstudio.com).
 
 ---
 
 ## Étape 1 — Ouvrir le panneau Extensions
 
-1. Lancez Visual Studio Code
-2. Ouvrez le panneau **Extensions** via l'une de ces méthodes :
-   - Cliquer sur l'icône Extensions dans la barre latérale gauche (icône de carrés)
-   - Raccourci : ++ctrl+shift+x++ (Windows/Linux) / ++cmd+shift+x++ (macOS)
-   - Menu : *View → Extensions*
+Ouvrez Visual Studio Code et accédez au **panneau Extensions** :
 
-<div class="img-placeholder">
-📸 Capture d'écran : Icône Extensions dans la barre latérale VS Code
-</div>
+**Méthode 1 (rapide)** : Raccourci clavier
+- Windows/Linux : ++ctrl+shift+x++
+- macOS : ++cmd+shift+x++
 
----
+**Méthode 2 (visuelle)** : Barre latérale gauche
+1. Cliquez l'icône Extensions (quatre petits carrés)
 
-## Étape 2 — Rechercher et installer GitHub Copilot
+**Méthode 3 (menu)** : *View → Extensions*
 
-1. Dans la barre de recherche du panneau Extensions, tapez : **GitHub Copilot**
-2. Vous verrez deux extensions principales :
-   - **GitHub Copilot** — autocomplétion inline (à installer en premier)
-   - **GitHub Copilot Chat** — interface de chat IA
-3. Cliquez sur **GitHub Copilot** (le premier résultat, publié par *GitHub*)
-4. Cliquez sur le bouton **Install** bleu
-
-<div class="img-placeholder">
-📸 Capture d'écran : Résultats de recherche "GitHub Copilot" dans les extensions VS Code
-</div>
-
-!!! danger "Vérifiez l'éditeur"
-    Assurez-vous que l'extension est publiée par **GitHub** (insigne de vérification). L'identifiant exact est `GitHub.copilot`. Il existe des extensions tierces imitatrices — installez uniquement l'officielle.
+!!! example "Vous verrez:"
+    Une barre de recherche avec "Search Extensions in Marketplace" en haut du panneau.
 
 ---
 
-## Étape 3 — Installer GitHub Copilot Chat
+## Étape 2 — Installer GitHub Copilot
 
-L'extension Copilot Chat n'est pas incluse automatiquement — installez-la pour bénéficier du chat IA :
+1. Tapez **`GitHub Copilot`** dans la barre de recherche du panneau Extensions
+2. Le premier résultat doit être l'extension officielle publiée par **GitHub** (avec un badge de vérification ✓)
+3. Vérifiez l'identifiant exact : `GitHub.copilot`
+4. Cliquez le bouton vert **Install**
 
-1. Dans le panneau Extensions, cherchez **GitHub Copilot Chat**
-2. Cliquez sur **Install**
+!!! danger "Sécurité — Vérification importante"
+    Installez **UNIQUEMENT** l'extension publiée par `GitHub` (l'organisation autorisée). Plusieurs extensions imitatrices existent — ignorez-les. L'identifiant correct est `GitHub.copilot`, pas d'autres variantes.
 
-!!! info "Depuis VS Code 1.90+"
-    À partir de VS Code 1.90, GitHub Copilot et Copilot Chat sont souvent proposés ensemble et peuvent être installés d'un seul clic via une notification dans VS Code.
+**Après l'installation**, l'extension démarre. Vous verrez un message :
+- *"GitHub Copilot installed successfully"* dans la palette de commandes
+- Ou une notification pop-up vous demandant de vous connecter
+
+---
+
+## Étape 3 — Installer GitHub Copilot Chat (optionnel mais recommandé)
+
+L'interface **chat** n'est pas incluse automatiquement. Installez-la pour utiliser :
+- Chat conversationnel
+- Slash commands (`/explain`, `/tests`, `/doc`)
+- Contexte enrichi (`@workspace`, `@project`)
+
+1. Tapez **`GitHub Copilot Chat`** dans les Extensions
+2. Cliquez **Install** sur l'extension officielle de GitHub
+3. L'extension installée, VS Code demande de recharger
+
+!!! info "Installation groupée (VS Code 1.90+)"
+    Les versions récentes de VS Code peuvent proposer une installation groupée : cliquez pour installer Copilot + Chat d'un coup.
 
 ---
 
 ## Étape 4 — Authentification avec GitHub
 
-Après installation, VS Code déclenche automatiquement le processus d'authentification :
+Après installation, authentifiez-vous :
 
-1. Une **notification pop-up** apparaît en bas à droite : *"Sign in to use GitHub Copilot"*
-2. Cliquez sur **Sign In to GitHub**
-3. VS Code ouvre votre navigateur sur la page d'autorisation GitHub
-4. Si vous n'êtes pas connecté à GitHub, connectez-vous
-5. Cliquez sur **Authorize Visual-Studio-Code**
+**Cas 1 : Notification automatique**
+1. Une pop-up apparaît en bas à droite : *"Sign in to use GitHub Copilot"*
+2. Cliquez **"Sign in to GitHub"** ou **"Sign in with GitHub"**
 
-<div class="img-placeholder">
-📸 Capture d'écran : Page d'autorisation GitHub dans le navigateur
-</div>
+**Cas 2 : Authentification manuelle**
+1. Ouvrez la palette de commandes : ++ctrl+shift+p++ (ou ++cmd+shift+p++ macOS)
+2. Tapez : `GitHub Copilot: Sign In`
+3. Appuyez ++enter++
 
-6. Une fois autorisé, VS Code affiche un message de confirmation : *"GitHub authentication was successful"*
-7. Sélectionnez **Open** quand VS Code demande de rouvrir l'application
+**Processus de connexion :**
+1. VS Code ouvre votre navigateur sur GitHub
+2. Si non connecté, connectez-vous avec vos identifiants GitHub
+3. GitHub affiche une page d'autorisation : *"Visual Studio Code wants to access your account"*
+4. Cliquez **Authorize Visual-Studio-Code**
+5. VS Code affiche : *"GitHub Copilot authentication successful"*
+6. Le navigateur vous redirige, VS Code recharge automatiquement
 
-!!! tip "La notification n'apparaît pas ?"
-    Ouvrez la palette de commandes avec ++ctrl+shift+p++ (++cmd+shift+p++ sur macOS), tapez **"GitHub Copilot: Sign In"** et appuyez sur ++enter++.
-
----
-
-## Étape 5 — Vérifier le fonctionnement
-
-**Vérification visuelle :**
-
-Regardez la barre d'état en bas de VS Code (la barre colorée tout en bas) :
-
-- L'icône Copilot (ressemblant à un casque/logo Copilot) devrait apparaître
-- Si elle est accompagnée d'un point vert, Copilot est actif
-
-<div class="img-placeholder">
-📸 Capture d'écran : Icône Copilot dans la barre de statut VS Code (en bas à droite)
-</div>
-
-**Vérification par un test pratique :**
-
-1. Créez un nouveau fichier : ++ctrl+n++ ou *File → New File*
-2. Choisissez le langage JavaScript (ou n'importe quel autre langage)
-3. Tapez ce commentaire :
-
-```javascript
-// Fonction qui retourne la somme de tous les nombres dans un tableau
-function
-```
-
-4. Attendez 1 à 2 secondes après avoir tapé `function`
-5. Une suggestion grisée devrait apparaître automatiquement
-
-```javascript
-// Suggestion exemple (en gris dans votre éditeur) :
-function sumArray(arr) {
-    return arr.reduce((acc, val) => acc + val, 0);
-}
-```
-
-6. Appuyez sur ++tab++ pour accepter la suggestion
-
-!!! success "Ça fonctionne !"
-    Si vous voyez la suggestion apparaître en gris et pouvez l'accepter avec ++tab++, GitHub Copilot est opérationnel.
+!!! tip "Connexion bloquée ?"
+    - Vérifiez que l'authentification 2FA est activée sur votre compte GitHub
+    - Certains réseaux d'entreprise bloquent OAuth → contactez votre IT
+    - Essayez "*GitHub Copilot: Sign Out*" puis réessayez
 
 ---
 
-## Étape 6 — Tester Copilot Chat
+## Étape 5 — Vérifier que Copilot est actif
 
-1. Ouvrez le panneau Copilot Chat via l'icône dans la barre latérale gauche (bulle de chat avec logo Copilot)
-2. Ou utilisez le raccourci ++ctrl+alt+i++ (++cmd+alt+i++ macOS)
-3. Tapez une question comme : *"Comment créer une fonction qui trie un tableau d'objets par date en JavaScript ?"*
-4. Copilot répond avec du code et des explications
+**Vérification rapide :**
+1. Regardez la **barre de statut en bas à droite** de VS Code
+2. Vous devez voir l'icône Copilot (ressemble à un éclair ou logo Copilot)
+3. Si elle est **verte** ou **visible sans point rouge d'erreur** → Copilot est actif
 
-!!! info "Modes de Copilot Chat"
-    - **Chat panel** (panneau latéral) : conversations longues et contextuelles
-    - **Inline Chat** (++ctrl+i++ / ++cmd+i++) : directement dans l'éditeur, sur le code sélectionné
-    - **Quick Chat** (++ctrl+shift+i++) : fenêtre flottante rapide
+**Test rapide du fonctionnement :**
+1. Créez un nouveau fichier : *File → New File*
+2. Tapez un langage : `// TypeScript` ou `# Python`
+3. Appuyez ++enter++ et tapez : `function hello` (ou autre début)
+4. Attendez 1-2 secondes → Copilot affiche une suggestion grise
+5. Appuyez ++tab++ pour accepter, ou ++escape++ pour rejeter
+
+!!! example "Exemple: vous tapez"
+    ```
+    function hello
+    ```
+    
+    Copilot suggère (en gris) :
+    ```
+    function hello(name: string): string {
+      return `Hello, ${name}!`;
+    }
+    ```
+    
+    Appuyer ++tab++ accepte la suggestion entière. ++alt+right++ accepte mot par mot.
 
 ---
 
-## Pièges à éviter
+## Votre première interaction avec Copilot Chat
 
-!!! danger "Pièges courants lors de l'installation"
+Maintenant testez le chat :
 
-    **1. VS Code trop ancien**
-    L'extension s'installe mais les fonctionnalités avancées ne fonctionnent pas.
-    ✅ Solution : mettez à jour VS Code via *Help → Check for Updates*
+1. Ouvrez **Copilot Chat** : ++ctrl+alt+i++ (Windows/Linux) ou ++cmd+alt+i++ (macOS)
+2. Le panneau Chat s'ouvre à droite
+3. Tapez une question simple :
+   ```
+   Explique-moi comment utiliser Map en JavaScript
+   ```
+4. Copilot répond avec explication + exemples de code
 
-    **2. Authentification bloquée par un proxy d'entreprise**
-    Le navigateur s'ouvre mais la redirection vers VS Code échoue.
-    ✅ Solution : vérifiez les paramètres réseau, ou configurez un proxy dans les settings VS Code (`http.proxy`)
-
-    **3. Pas de suggestion malgré une installation réussie**
-    Copilot est peut-être désactivé pour le langage actuel.
-    ✅ Vérifiez `github.copilot.enable` dans les settings (voir [Paramétrage VS Code](../../chapitre-2-parametrage/vscode-parametrage.md))
-
-    **4. Suggestions confondues avec l'autocomplétion IntelliSense**
-    Les suggestions Copilot apparaissent en gris italique et légèrement décalées, différentes des suggestions IntelliSense classiques.
-    ✅ Voir les [raccourcis clavier](reference.md) pour les distinguer et les contrôler
-
-    **5. Extension installée mais icône absente dans la barre de statut**
-    Parfois VS Code nécessite un rechargement de fenêtre.
-    ✅ *Developer → Reload Window* (ou ++ctrl+shift+p++ → "Reload Window")
+Raccourcis Chat courants :
+- **Ouvrir Chat** : ++ctrl+alt+i++
+- **Inline Chat (dans l'éditeur)** : ++ctrl+i++ — modifier du code sélectionné
+- **Quick Chat (fenêtre flottante)** : ++ctrl+shift+i++
 
 ---
 
 ## Prochaines étapes
 
-- [Guide de référence VS Code](reference.md) — settings.json, raccourcis complets, extensions recommandées
-- [Paramétrage VS Code](../../chapitre-2-parametrage/vscode-parametrage.md) — Configurer Copilot finement
-- [Comparaison IntelliJ vs VS Code](../comparaison.md) — Différences clés entre les deux IDEs
+Vous avez installé Copilot ! Explor ensuite :
+
+### 1. **Découvrir les raccourcis** (5 min)
+→ [Guide Référence — Raccourcis complets](reference.md)
+
+Apprenez :
+- Accepter suggestions (++tab++, ++alt+right++)
+- Naviguer entre suggestions (++alt+bracket-left/right++)
+- Déclencher manuellement (++alt+backslash++)
+
+### 2. **Personnaliser vos préférences** (10 min)
+→ [Paramétrage avancé](../../chapitre-2-parametrage/vscode-parametrage.md)
+
+Configurez :
+- Auto-suggestions (mode manuel vs auto)
+- Langages autorisés
+- Raccourcis clavier personnalisés
+
+### 3. **Apprendre les best practices** (15 min)
+→ [Utilisation Effective](../../chapitre-4-bonnes-pratiques/utilisation-effective.md)
+
+Maîtrisez :
+- Quand utiliser suggestions inline vs chat
+- Prompt engineering basique
+- Validation du code suggéré
+- Sécurité et bonnes pratiques
+
+### 4. **Explorer les agents et personnalisation** (20+ min)
+→ [Contexte & Personnalisation](../../chapitre-3-contexte/vscode-contexte.md)
+
+Avancé :
+- Custom instructions (`.github/copilot-instructions.md`)
+- Agents autonomes
+- Copilot Edits (modification multi-fichiers)
+
+---
+
+## Foire aux questions
+
+**Q : Comment désactiver temporairement Copilot ?**
+
+A : Cliquez l'icône Copilot dans la barre de statut (bas VS Code) → *"Disable Globally"* ou *"Disable for [Langage]"*
+
+**Q : Copilot ne suggère rien. Qu'est-ce qui ne va pas ?**
+
+A : Vérifiez :
+- [ ] Extension GitHub Copilot installée (`GitHub.copilot`)
+- [ ] Vous êtes authentifié (icône Copilot visible en bas)
+- [ ] Les suggestions auto sont activées (settings)
+- [ ] Vous êtes connecté à Internet
+
+**Q : Je vois une erreur d'authentification. Que faire ?**
+
+A : 
+1. Ouvrez palette de commandes ++ctrl+shift+p++
+2. Tapez `GitHub Copilot: Sign Out`
+3. Attendez 10 secondes
+4. Tapez `GitHub Copilot: Sign In` et reconnectez-vous
+
+**Q : Copilot suggère du code dangereux / mauvaise qualité ?**
+
+A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-4-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
 

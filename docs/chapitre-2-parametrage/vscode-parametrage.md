@@ -1,35 +1,70 @@
-﻿# :material-microsoft-visual-studio-code: Paramétrage Complet — GitHub Copilot sur VS Code
+﻿# :material-microsoft-visual-studio-code: Paramétrage Avancé — GitHub Copilot sur VS Code
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intermediate">Intermédiaire</span>
 
-## Accès aux paramètres
+## Présentation
 
-### Via l'interface graphique (recommandé pour les débutants)
-
-1. Ouvrez les paramètres : ++ctrl+comma++ (++cmd+comma++ sur macOS)
-2. Tapez **"copilot"** dans la barre de recherche
-3. Tous les paramètres Copilot apparaissent avec leur description
-
-### Via le fichier JSON (recommandé pour les avancés)
-
-1. Ouvrez la palette de commandes : ++ctrl+shift+p++
-2. Tapez **"Open User Settings (JSON)"**
-3. Modifiez directement le fichier `settings.json`
-
-!!! tip "Settings UI vs JSON"
-    Les deux méthodes modifient exactement les mêmes paramètres. L'interface UI est plus accessible, le JSON est plus rapide à copier-coller et à partager en équipe.
+Ce guide couvre **tous les paramètres Copilot** pour VS Code : activation par langage, modes d'autocomplétion, actions de code, et configuration avancée.
 
 ---
 
-## Référence complète des paramètres
+## Accès aux Paramètres
+
+### Méthode 1 : Interface Graphique (Recommandée pour débuter)
+
+1. Ouvrez les préférences :
+   - Windows/Linux : ++ctrl+comma++
+   - macOS : ++cmd+comma++
+
+2. Tapez `"copilot"` dans la barre de recherche
+
+3. Tous les paramètres Copilot apparaissent avec descriptions
+
+**Avantage** : Interface conviviale, documentation en ligne, aperçu immédiat.
+
+### Méthode 2 : Fichier JSON (Recommandée pour équipes)
+
+1. Ouvrez la palette de commandes : ++ctrl+shift+p++ (++cmd+shift+p++ macOS)
+2. Tapez : `"Open User Settings (JSON)"`
+3. Modifiez directement le fichier `settings.json`
+
+**Avantage** : Plus rapide, peut être partagé en équipe, versionné dans Git.
+
+!!! tip "User Settings vs Workspace Settings"
+    Les **User Settings** s'appliquent à VS Code entièrement. Pour un projet spécifique, créez `.vscode/settings.json` **à la racine du projet** : les settings du workspace ont priorité.
+    
+    Exemple workspace settings `.vscode/settings.json` :
+    ```json
+    {
+        "github.copilot.enable": {
+            "plaintext": false,
+            "markdown": false
+        }
+    }
+    ```
+
+---
+
+## Référence Complète des Paramètres
 
 ### `github.copilot.enable`
 
-**Quoi :** Active ou désactive Copilot par type de langage. Vous pouvez activer globalement (`"*": true`) et désactiver sélectivement pour certains langages.
+**Description** : Activer/désactiver Copilot par type de fichier/langage.
 
-**Pourquoi :** Éviter les suggestions dans des fichiers sensibles (`.env`, mots de passe) ou dans des langages où Copilot est contre-productif.
+**Type** : Objet `{ [langage]: boolean }`
 
-**Exemple :**
+**Défaut** : 
+```json
+{
+    "github.copilot.enable": {
+        "*": true
+    }
+}
+```
+
+**Exemples de cas d'usage** :
+
+**Cas 1 — Désactiver pour fichiers sensibles**
 ```json
 {
     "github.copilot.enable": {
@@ -37,43 +72,82 @@
         "plaintext": false,
         "markdown": false,
         "dotenv": false,
+        "env": false,
         "sql": false
     }
 }
 ```
 
-**Avant (défaut)** : Copilot actif sur tous les fichiers, y compris `.env`
-**Après** : Copilot désactivé sur les fichiers `.env`, markdown, et SQL
+Effet :
+- ✓ Copilot actif sur `.js`, `.python`, `.java`, etc.
+- ✗ Copilot **inactif** sur `.env` (sécurité clés API), `.md` (documentation), `.sql` (sensible)
 
-**Cas d'usage :** Équipe qui veut éviter que Copilot suggère des valeurs de variables d'environnement ou complete des clés API en dur dans le code.
+**Cas 2 — Activer sélectivement**
+```json
+{
+    "github.copilot.enable": {
+        "*": false,
+        "javascript": true,
+        "typescript": true,
+        "python": true
+    }
+}
+```
+
+Effet : Copilot SEULEMENT sur JS, TS, Python. Désabusé ailleurs.
+
+**Cas 3 — Actif partout sauf pour votre format custom**
+```json
+{
+    "github.copilot.enable": {
+        "*": true,
+        "requirements": false,
+        "dockerfile": false
+    }
+}
+```
 
 ---
 
 ### `github.copilot.editor.enableAutoCompletions`
 
-**Quoi :** Active ou désactive les suggestions automatiques pendant la frappe. Si `false`, Copilot ne suggère rien spontanément — vous devez déclencher manuellement avec ++alt+backslash++.
+**Description** : Mode automatique vs manuel pour suggestions inline.
 
-**Pourquoi :** Les développeurs très expérimentés préfèrent souvent le mode manuel pour garder le contrôle complet sur le flux de travail.
+**Type** : Boolean
 
+**Défaut** : `true`
+
+**Valeurs** :
+
+| Valeur | Comportement | Quand utiliser |
+|--------|-------------|---|
+| `true` | Suggestions automatiques pendant frappe | Développeurs normaux (défaut) |
+| `false` | Mode manuel : ++alt+backslash++ pour déclencher | Mais très expérimentés / flux spécifique |
+
+**Exemple** :
 ```json
 {
-    "github.copilot.editor.enableAutoCompletions": true
+    "github.copilot.editor.enableAutoCompletions": false
 }
 ```
 
-| Valeur | Comportement |
-|--------|-------------|
-| `true` (défaut) | Suggestions automatiques |
-| `false` | Mode manuel uniquement (++alt+backslash++ pour déclencher) |
+**Effet** : Vous devez appuyer ++alt+backslash++ pour déclencher Copilot. Pas de suggestions spontanées.
 
 ---
 
 ### `github.copilot.editor.enableCodeActions`
 
-**Quoi :** Active les actions de code Copilot dans l'éditeur (ampoule IA, suggestions contextuelles dans la gouttière).
+**Description** : Afficher les "Light Bulb" AI (actions rapides Copilot).
 
-**Pourquoi :** Ces actions permettent à Copilot de proposer des corrections, refactorings et explications directement sur les warnings et erreurs dans l'éditeur.
+**Type** : Boolean
 
+**Défaut** : `true`
+
+**Exemples d'actions de code** :
+- Ampoule jaune sur une erreur de console → clic → "Copilot: Fix This"
+- Sélection de code → clic droit → "Copilot: Explain This"
+
+**Exemple** :
 ```json
 {
     "github.copilot.editor.enableCodeActions": true
@@ -82,22 +156,299 @@
 
 ---
 
+### `github.copilot.editor.inlineSuggestCount`
+
+**Description** : Nombre de suggestions à générer pour sélection (voir avec ++ctrl+enter++).
+
+**Type** : Integer
+
+**Défaut** : `3`
+
+**Plage** : 1–10
+
+**Exemple** :
+```json
+{
+    "github.copilot.editor.inlineSuggestCount": 5
+}
+```
+
+**Effet** : Vous pouvez naviguer ++alt+bracket-right/left++ parmi 5 suggestions au lieu de 3.
+
+---
+
+### `github.copilot.editor.tabCompletionEnabled`
+
+**Description** : Utiliser ++tab++ pour accepter suggestion.
+
+**Type** : Boolean
+
+**Défaut** : `true`
+
+**Exemple** :
+```json
+{
+    "github.copilot.editor.tabCompletionEnabled": true
+}
+```
+
+Si `false`, le ++tab++ se comporte normalement (indentation) et vous devez utiliser autre raccourci.
+
+---
+
 ### `github.copilot.advanced`
 
-**Quoi :** Paramètres avancés de Copilot regroupés dans un objet. Principalement utilisé pour le debug et les tweaks fin.
+**Description** : Paramètres avancés (debug, tuning bas niveau).
 
-**Pourquoi :** Rarement nécessaire en usage normal, mais utile pour diagnostiquer des problèmes ou ajuster des comportements spécifiques.
+**Type** : Object
 
+Contient `debug.*`, `listCount`, `inlineSuggestCount`, etc.
+
+**Exemple complet**:
 ```json
 {
     "github.copilot.advanced": {
         "debug.overrideEngine": "",
         "debug.overrideLogLevels": {},
+        "debug.testOverrideProxyUrl": "",
         "debug.useNodeFetcher": false,
         "listCount": 10,
-        "inlineSuggestCount": 3
+        "inlineSuggestCount": 3,
+        "authProvider": "github"
     }
 }
+```
+
+**Cas d'usage** : Rarement utilisé. Surtout pour diagnostique avec support GitHub.
+
+---
+
+## Custom Instructions (Personnalisation Avancée)
+
+### Qu'est-ce que les Custom Instructions ?
+
+Les **Custom Instructions** sont des directives que vous donnez à Copilot pour adapter son comportement à **vos besoins spécifiques**.
+
+**Exemple** : "Toujours utiliser TypeScript strict mode" ou "Ne jamais suggérer `var`".
+
+### Repository-Level Instructions
+
+Fichier : `.github/copilot-instructions.md` (à la racine du projet)
+
+**Exemple** :
+```markdown
+# Copilot Instructions pour ce projet
+
+## Contraintes de Style
+- Utiliser TypeScript **strict mode**
+- Pas de `any` type
+- Préférer les `interfaces` aux `type` unions
+- Prettier formatting (80 caractères max pour longues lignes)
+
+## Conventions
+- Noms de fonction : camelCase
+- Noms de classe : PascalCase
+- Constantes: UPPER_SNAKE_CASE
+
+## Interdictions Sécurité
+- **Jamais** écrire des clés API en dur
+- Pas de mots de passe en suggestions
+- Pas d'information sensible dans logs
+
+## Frameworks Autorisés
+- React 19+ (hooks, Suspense, RSC)
+- Next.js 15+
+- TailwindCSS 4
+
+## Dépendances Favorisées
+- PostgreSQL pour la DB
+- Prisma pour l'ORM
+- Jest pour les tests
+```
+
+**Effet** :
+- Copilot **lit automatiquement** ce fichier
+- Toutes ses suggestions respectent ces contraintes
+- S'applique à toute équipe qui clone le repo
+
+### Personal-Level Instructions
+
+1. Allez sur [github.com/settings/copilot](https://github.com/settings/copilot)
+2. Scroll jusqu'à **"Copilot personalization"**
+3. Ajoutez vos instructions personnelles (400 caractères max)
+
+**Exemple** :
+```
+Je suis expert Python/Django. Préfère les class-based views. 
+Utilise PostgreSQL + SQLAlchemy. Format PEP 8 strict.
+```
+
+**Effet** : Vos instructions s'appliquent à **tous vos repos** (Global).
+
+### Organization-Level Instructions (Enterprise+)
+
+Disponible pour administrateurs GitHub Enterprise :
+- Settings → Code security → Copilot configuration
+- Configure instructions pour **toute l'org**
+
+---
+
+## Configuration des Raccourcis Clavier
+
+### Modifier les Raccourcis
+
+1. ++ctrl+shift+p++ → `"Preferences: Open Keyboard Shortcuts"`
+2. Cherchez le raccourci (ex: `"copilot"`, `"inlineSuggest"`)
+3. Double-cliquez pour éditer, tapez le nouveau raccourci
+
+### Exemple : Changer "Accepter" de Tab à Entrée
+
+Cherchez `editor.action.inlineSuggest.commit` et modifiez la bind :
+
+```json
+{
+    "key": "enter",
+    "command": "editor.action.inlineSuggest.commit",
+    "when": "inlineSuggestVisible && !editorTextFocus"
+}
+```
+
+### Commandes Copilot Disponibles
+
+| Commande | Raccourci Défaut |
+|----------|--|
+| `editor.action.inlineSuggest.commit` | ++tab++ |
+| `editor.action.inlineSuggest.hide` | ++escape++ |
+| `editor.action.inlineSuggest.trigger` | ++alt+backslash++ |
+| `github.copilot.openSymbolFromEditor` | `?` (dans Chat) |
+| `workbench.action.chat.open` | ++ctrl+alt+i++ |
+
+---
+
+## Modèles IA par Plan
+
+Copilot supporte plusieurs modèles IA selon votre plan :
+
+| Plan | Modèles Disponibles |
+|------|---|
+| **Free** | Claude Haiku 4.5, GPT-5 mini, Grok Code Fast 1 |
+| **Pro** | Claude Haiku 4.5, GPT-5, Claude 3.5 Sonnet, Gemini 2 |
+| **Pro+** | ✓ **Tous les modèles** (complet) |
+| **Enterprise** | Selon config org + custom models |
+
+Sélection du modèle :
+- Dans Chat : Vous sélectionnez via dropdown
+- Dans suggestions inline : Copilot choisit le mieux adapté
+
+---
+
+## Configuration Privacy & Telemetry
+
+### `telemetry.level`
+
+**Description** : Envoyer usage anonyme à GitHub pour améliorer Copilot.
+
+```json
+{
+    "telemetry.level": "all"
+}
+```
+
+| Valeur | Comportement |
+|--------|---|
+| `"all"` | Toutes données anonymes (défaut) |
+| `"error"` | Erreurs seulement |
+| `"off"` | Aucun telemetry |
+
+### `github.copilot.enable` pour Sécurité
+
+Documentation sensible = settings restrictifs :
+
+```json
+{
+    "github.copilot.enable": {
+        "*": true,
+        "dotenv": false,
+        "env": false,
+        "sql": false,
+        "dockerfile": false
+    }
+}
+```
+
+---
+
+## Exemples de Configurations Complètes
+
+### Configurat Backend Python (Strict)
+
+```json
+{
+    "github.copilot.enable": {
+        "*": false,
+        "python": true,
+        "yaml": true,
+        "json": true
+    },
+    "github.copilot.editor.enableAutoCompletions": true,
+    "github.copilot.editor.enableCodeActions": true,
+    "github.copilot.editor.inlineSuggestCount": 3,
+    "telemetry.level": "off"
+}
+```
+
+### Configuration Frontend TypeScript (Production)
+
+```json
+{
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "dotenv": false,
+        "env": false
+    },
+    "github.copilot.editor.enableAutoCompletions": true,
+    "github.copilot.editor.enableCodeActions": true,
+    "github.copilot.editor.inlineSuggestCount": 5,
+    "github.copilot.advanced": {
+        "listCount": 10
+    }
+}
+```
+
+### Configuration Workspace (Désactiver pour le Projet)
+
+Fichier `.vscode/settings.json` :
+
+```json
+{
+    "github.copilot.enable": {
+        "*": false
+    }
+}
+```
+
+Effet : Copilot désactivé **dans ce projet uniquement**, actif ailleurs.
+
+---
+
+## Dépannage
+
+| Problème | Solution |
+|----------|----------|
+| **Copilot n'émet aucune suggestion** | Vérifiez `enableAutoCompletions: true` et `enable: {"*": true}` |
+| **Performance VS Code ralentie** | Réduisez `inlineSuggestCount`, désactivez pour gros fichiers |
+| **Suggestions ignoran votre style** | Créez `.github/copilot-instructions.md` with contraintes |
+| **Raccourcis ne fonctionnent pas** | Allez dans *Preferences: Open Keyboard Shortcuts*, cherchez `copilot` |
+
+---
+
+## Ressources & Prochaines Étapes
+
+- [Guide Installation](../chapitre-1-installation/vscode/tutoriel.md)
+- [Guide Référence Complet](../chapitre-1-installation/vscode/reference.md)
+- [Contexte & Personnalisation](../chapitre-3-contexte/vscode-contexte.md)
+- [Docs Officielles](https://docs.github.com/en/copilot)
 ```
 
 | Sous-paramètre | Description |

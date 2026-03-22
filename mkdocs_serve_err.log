@@ -85,3 +85,4 @@ INFO    -  [16:31:30] Detected file changes
 INFO    -  Building documentation...
 INFO    -  Documentation built in 1.31 seconds
 INFO    -  [16:31:31] Reloading browsers
+INFO    -  [16:37:24] Browser connected: http://localhost:8000/chapitre-1-installation/intellij/reference/

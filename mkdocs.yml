@@ -52,7 +52,7 @@ markdown_extensions:
 nav:
   - Accueil: index.md
   
-  - Chapitre 1 — Installation:
+  - Installation:
     - Accueil: chapitre-1-installation/index.md
     - Comparaison: chapitre-1-installation/comparaison.md
     - IntelliJ IDEA:
@@ -62,13 +62,13 @@ nav:
       - Tutoriel: chapitre-1-installation/vscode/tutoriel.md
       - Référence: chapitre-1-installation/vscode/reference.md
   
-  - Chapitre 2 — Paramétrage:
+  - Paramétrage:
     - Accueil: chapitre-2-parametrage/index.md
     - IntelliJ IDEA: chapitre-2-parametrage/intellij-parametrage.md
     - Visual Studio Code: chapitre-2-parametrage/vscode-parametrage.md
     - Comparaison: chapitre-2-parametrage/comparaison-parametres.md
   
-  - Chapitre 3 — Contexte & Personnalisation:
+  - Contexte & Personnalisation:
     - Accueil: chapitre-3-contexte/index.md
     - Concepts Clés: chapitre-3-contexte/concepts.md
     - Instructions (.instructions.md): chapitre-3-contexte/instructions.md
@@ -82,7 +82,7 @@ nav:
     - IntelliJ IDEA — Configuration Contexte: chapitre-3-contexte/intellij-contexte.md
     - Comparaison Contexte: chapitre-3-contexte/comparaison-contexte.md
   
-  - Chapitre 4 — Bonnes Pratiques:
+  - Bonnes Pratiques:
     - Accueil: chapitre-4-bonnes-pratiques/index.md
     - Utilisation Effective: chapitre-4-bonnes-pratiques/utilisation-effective.md
     - Organisation du Code: chapitre-4-bonnes-pratiques/organisation-code.md
@@ -90,19 +90,19 @@ nav:
     - Sécurité & Qualité: chapitre-4-bonnes-pratiques/securite-qualite.md
     - Performance & Ressources: chapitre-4-bonnes-pratiques/performance.md
   
-  - Chapitre 5 — Troubleshooting:
+  - Troubleshooting:
     - Accueil: chapitre-5-troubleshooting/index.md
     - Problèmes Courants: chapitre-5-troubleshooting/problemes-courants.md
     - Logs & Diagnostic: chapitre-5-troubleshooting/logs-diagnostic.md
     - Comparaison des Problèmes: chapitre-5-troubleshooting/comparaison-problemes.md
   
-  - Chapitre 6 — Cas d'Usage:
+  - Cas d'Usage:
     - Accueil: chapitre-6-cas-usage/index.md
     - Node.js & React: chapitre-6-cas-usage/nodejs-react.md
     - Python: chapitre-6-cas-usage/python.md
     - Java: chapitre-6-cas-usage/java.md
   
-  - Chapitre 7 — Modes CLI:
+  - Modes CLI:
     - Accueil: chapitre-7-cli-modes/index.md
     - Modes CLI Détail: chapitre-7-cli-modes/page-principale.md
     - Comparaison Modes: chapitre-7-cli-modes/comparaison.md
