@@ -345,5 +345,5 @@ Cette méthode fonctionne **identiquement** sur VS Code et IntelliJ.
 ## Prochaines étapes
 
 - [Agents (.agent.md)](agents.md) — Agents Copilot avec outils et comportements personnalisés
-- [Instructions (.instructions.md)](instructions.md) — Pour les règles passives plutôt qu'actives
+- [Skills (SKILL.md)](skills.md) — Packages de connaissance domaine pour les agents
 

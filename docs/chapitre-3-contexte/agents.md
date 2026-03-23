@@ -292,6 +292,6 @@ Dans Copilot Chat :
 ## Prochaines étapes
 
 - [Skills (SKILL.md)](skills.md) — Packages de connaissance domaine pour les agents
-- [Prompt Files (.prompt.md)](prompt-files.md) — Pour des tâches ponctuelles plutôt que des personas
-- [Instructions (.instructions.md)](instructions.md) — Pour des règles passives plutôt qu'actives
+- [Hooks](hooks.md) — Automatisations déclenchées par les actions Copilot
+- [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
 

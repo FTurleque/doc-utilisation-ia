@@ -88,7 +88,6 @@ Ordre de priorité conseillé pour éviter les conflits :
 
 ## Prochaines étapes
 
-- [Instructions (.instructions.md)](instructions.md)
-- [applyTo avancé](applyto-avance.md)
-- [Agents (.agent.md)](agents.md)
-- [Skills (SKILL.md)](skills.md)
+- [VS Code — Contexte projet](vscode-contexte.md) — Intégrer la configuration dans la structure de votre projet
+- [IntelliJ IDEA — Contexte projet](intellij-contexte.md) — Équivalents pour IntelliJ
+- [Comparaison Contexte](comparaison-contexte.md) — Différences de configuration entre les deux IDEs

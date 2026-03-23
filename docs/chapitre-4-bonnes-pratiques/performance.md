@@ -180,6 +180,91 @@ Dans `idea.log`, cherchez les lignes contenant `Copilot` pour identifier les err
 
 ---
 
+## Maîtriser la consommation MCP
+
+Activer des MCPs multiplie mécaniquement le nombre de requêtes et les tokens consommés. Il est important de comprendre ces deux impacts avant de configurer plusieurs serveurs.
+
+**1. Chaque appel d'outil MCP = 1 requête**
+
+Chaque invocation d'outil MCP (interroger Jira, rechercher dans la doc, exécuter une requête SQL) est comptabilisée comme une requête individuelle dans le compteur GitHub Copilot, au même titre qu'une question dans le Chat.
+
+**2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés**
+
+Le résultat retourné par le serveur (liste de tickets, rapport SonarQube, page de documentation) est transmis directement au modèle dans la **fenêtre de contexte**. Plus la réponse est volumineuse, plus elle consomme de tokens — réduisant l'espace disponible pour votre code.
+
+**Exemple d'escalade en mode Agent**
+
+| Étape | Déclencheur | Requêtes | Tokens estimés |
+|-------|-------------|----------|----------------|
+| 1 | Question : « Analyse ce composant et ouvre un ticket Jira » | +1 | ~500 |
+| 2 | Appel MCP SonarQube → rapport d'analyse | +1 | +800 |
+| 3 | Appel MCP Jira → liste des projets | +1 | +300 |
+| 4 | Appel MCP Jira → création du ticket | +1 | +200 |
+| **Total** | | **4 requêtes** | **~1 800 tokens** |
+
+Sans MCP, la même demande : **1 requête**, ~500 tokens.
+
+!!! warning "Effet multiplicateur en mode Agent"
+    En mode Agent, Copilot peut enchaîner plusieurs appels MCP automatiquement sans confirmation. Un agent face à une tâche ambiguë peut multiplier les appels silencieusement. Gardez `Auto-approve` désactivé pendant la prise en main et activez uniquement les MCPs réellement utiles.
+
+### Bonnes pratiques
+
+- **Activez uniquement les MCPs dont vous avez besoin** — chaque serveur enregistré est potentiellement invoqué par l'agent dès qu'il juge cela pertinent.
+- **Formulez des requêtes ciblées** — précisez « Analyse uniquement `OrderService.java` » plutôt que « Analyse tout ».
+- **Préférez les MCPs avec réponses compactes** — 50 lignes JSON coûtent moins qu'une page HTML entière.
+- **Vérifiez le compteur d'utilisation** via [github.com/settings/copilot](https://github.com/settings/copilot) si vous êtes sur un plan avec quota.
+- **N'utilisez pas un MCP pour parcourir votre propre code** (voir section suivante).
+
+### MCP et code browsing — votre code local n'a pas besoin de MCP
+
+Le terme **code browsing** désigne la capacité de naviguer dans le code source d'un projet : lire des fichiers, rechercher des symboles, explorer l'arborescence, identifier les dépendances entre classes.
+
+En mode Agent, Copilot dispose déjà d'**outils intégrés** pour faire exactement cela sur votre workspace local, sans passer par MCP et sans consommation de requêtes supplémentaires. Créer un MCP qui expose votre code local revient à dupliquer ce que l'agent fait nativement, avec un surcoût : un serveur à lancer, une sérialisation JSON, et une requête MCP à chaque lecture.
+
+**La règle d'or — quoi accéder via MCP vs nativement**
+
+| Ressource | Accès recommandé |
+|-----------|------------------|
+| Votre code, vos fichiers locaux | Accès natif de l'agent (0 MCP) |
+| Base de données distante | MCP DB (ex. DBHub) |
+| Tickets Jira / Confluence | MCP Atlassian |
+| Documentation externe volumineuse | MCP Context7, Microsoft Docs |
+| Rapport qualité SonarQube | MCP SonarQube |
+
+Context7 apporte une vraie valeur en **sélectionnant les extraits pertinents** dans une documentation de 10 000 pages — ce qu'un agent ne peut pas faire nativement. Un MCP qui lit vos fichiers locaux, lui, est inutile et coûteux.
+
+### Accéder à des fichiers hors du projet courant
+
+Une question fréquente : peut-on demander à Copilot de consulter des fichiers en dehors du projet ouvert, en donnant un chemin absolu (ex. `C:\\projets\\autre-projet\\src\\Service.java`) ?
+
+**En mode Chat (référence manuelle) — Oui**
+
+Vous pouvez attacher n'importe quel fichier accessible sur votre système en utilisant :
+
+=== "VS Code"
+    - **`#file:`** dans le chat : tapez `#file:` puis entrez le chemin absolu du fichier
+    - **Glisser-déposer** le fichier depuis l'explorateur système directement dans la fenêtre de chat
+    - **Ouvrir le fichier** dans l'IDE et le mentionner avec `#editor`
+
+=== "IntelliJ IDEA"
+    - **Ouvrir le fichier** dans l'IDE (File → Open) puis le mentionner dans le chat Copilot
+    - Utiliser le bouton **Attach file** dans la fenêtre de chat Copilot
+
+**En mode Agent (navigation autonome) — Limité au workspace**
+
+L'agent peut lire et modifier des fichiers **uniquement dans les dossiers du workspace ouvert**. Il ne navigue pas de façon autonome en dehors, même avec un chemin absolu dans la demande. C'est une contrainte de sécurité intentionnelle : sans cette limite, l'agent pourrait accéder à des fichiers sensibles hors du projet (clés SSH, `.env` d'autres projets, etc.).
+
+!!! tip "Astuce — Ajouter un dossier externe au workspace"
+    Pour qu'un agent accède de façon autonome à un autre projet ou dossier, ajoutez-le au workspace courant :
+
+    === "VS Code"
+        **Fichier → Ajouter un dossier à l'espace de travail** (multi-root workspace). L'agent aura alors accès natif à ce dossier comme s'il faisait partie du projet.
+
+    === "IntelliJ IDEA"
+        **File → New → Module from Existing Sources** pour intégrer un module externe au projet IntelliJ. Le code devient alors accessible à l'index PSI et donc à l'agent.
+
+---
+
 ## En résumé
 
 - **Fermer les onglets inutilisés** est la mesure de performance la plus simple et la plus efficace

@@ -278,6 +278,33 @@ Les MCPs se configurent dans un fichier JSON (localisation selon l'IDE).
 - **Guru** — Base de connaissance Guru
 - Et bien d'autres...
 
+#### Impact sur la consommation de tokens et de requêtes
+
+L'utilisation d'un serveur MCP a un **double impact** sur votre quota Copilot, qu'il est important de comprendre avant d'activer plusieurs MCPs simultanément.
+
+**1. Chaque appel d'outil MCP = 1 requête**
+
+Lorsque Copilot invoque un outil MCP (ex. interroger Jira, effectuer une recherche dans la doc, exécuter une requête SQL), cette invocation est comptabilisée comme **une requête individuelle** dans votre compteur d'utilisation GitHub Copilot — exactement comme si vous posiez une question dans le Chat. Sur un plan Free ou Pro avec un quota mensuel, les appels MCP s'accumulent si Copilot les enchaîne en mode Agent.
+
+**2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés**
+
+Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQube, résultat de requête SQL, page de documentation) est transmis directement au modèle IA dans la **fenêtre de contexte**. Plus la réponse est volumineuse, plus elle consomme de tokens — réduisant d'autant l'espace disponible pour votre code et vos instructions.
+
+**Exemple d'escalade en mode Agent**
+
+| Étape | Déclencheur | Requêtes | Tokens estimés |
+|-------|-------------|----------|----------------|
+| 1 | Question utilisateur : « Analyse ce composant et ouvre un ticket Jira » | +1 | ~500 (question + contexte) |
+| 2 | Appel MCP SonarQube → rapport d'analyse retourné | +1 | +800 (rapport injecté) |
+| 3 | Appel MCP Jira → liste des projets disponibles | +1 | +300 (liste injectée) |
+| 4 | Appel MCP Jira → création du ticket + confirmation | +1 | +200 (réponse API) |
+| **Total** | | **4 requêtes** | **~1 800 tokens** |
+
+Sans MCP, la même demande aurait coûté **1 requête** et ~500 tokens.
+
+!!! tip "Bonnes pratiques — maîtriser la consommation MCP"
+    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requetes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-4-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
+
 **Quand l'utiliser :** Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).
 
 **Ressources utiles :**

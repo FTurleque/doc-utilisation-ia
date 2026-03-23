@@ -268,7 +268,7 @@ feat(auth): ajouter la vérification 2FA par SMS
 
 ## Prochaines étapes
 
+- [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
 - [VS Code — Contexte projet](vscode-contexte.md) — Intégrer tous ces mécanismes dans la structure de votre projet
-- [IntelliJ — Contexte projet](intellij-contexte.md) — Équivalents disponibles sur IntelliJ
 - [Bonnes Pratiques](../chapitre-4-bonnes-pratiques/index.md) — Comment combiner tous ces outils efficacement
 

@@ -1,4 +1,4 @@
-site_name: Documentation sur l'utilisation de l'IA
+site_name: Documentation IA avec GitHub Copilot
 site_description: Documentation collectée sur l'utilisation de l'IA
 site_author: FTurleque
 repo_url: https://github.com/FTurleque/doc-utilisation-ia
@@ -128,6 +128,13 @@ nav:
     - Accueil: chapitre-7-cli-modes/index.md
     - Modes CLI Détail: chapitre-7-cli-modes/page-principale.md
     - Comparaison Modes: chapitre-7-cli-modes/comparaison.md
+  
+  - Prompt Engineering:
+    - Accueil: chapitre-8-prompt-engineering/index.md
+    - Fondamentaux: chapitre-8-prompt-engineering/fondamentaux.md
+    - Techniques Intermédiaires: chapitre-8-prompt-engineering/techniques-intermediaires.md
+    - Techniques Avancées: chapitre-8-prompt-engineering/techniques-avancees.md
+    - Prompting avec Copilot: chapitre-8-prompt-engineering/avec-copilot.md
   
   - Appendices:
     - Accueil: appendices/index.md

@@ -293,6 +293,97 @@ Disponible pour administrateurs GitHub Enterprise :
 
 ---
 
+## 🔗 Model Context Protocol (MCP)
+
+### Qu'est-ce que MCP ?
+
+Model Context Protocol est un **protocole standard** qui permet à Copilot d'intégrer et d'utiliser des **outils et données externes** directement dans le Chat. Avec MCP, vous pouvez :
+
+- Connecter des bases de données, APIs, et services externes
+- Accéder à des documentations externalisées
+- Exécuter des commandes système
+- Interroger des outils comme SonarQube, Notion, Atlassian Jira, Stack Overflow, etc.
+
+**Exemple :** Copilot peut interroger votre base de données pour optimiser une requête SQL, ou consulter la documentation Microsoft Learn directement dans le Chat.
+
+**Configuration sous VS Code :**
+
+Les MCPs se configurent dans un fichier `.vscode/mcp.json` à la racine du workspace (ou dans les settings utilisateur pour une portée globale). La syntaxe est identique sur toutes les plateformes.
+
+```json
+{
+  "servers": {
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "sonarqube": {
+      "type": "http",
+      "url": "http://localhost:9000/api/mcp",
+      "headers": { "Authorization": "Bearer ${env:SONAR_TOKEN}" }
+    }
+  }
+}
+```
+
+**Types de connexion MCP :**
+
+| Type | Description | Exemple |
+|------|-------------|---------|
+| **stdio** | Communication locale via ligne de commande | `npx @upstash/context7-mcp`, `uvx markitdown-mcp` |
+| **http** | Communication HTTP à distance | Services cloud (Notion, Jira, SonarQube) |
+| **docker** | Exécution containerisée | SonarQube via Docker |
+
+**MCPs officiellement disponibles :**
+
+- **Context7** (Upstash) — Contexte et recherche étendue
+- **Markitdown** (Microsoft) — Conversion de documents
+- **Notion MCP** (Makenotion) — Accès aux bases Notion
+- **Desktop Commander** — Contrôle du système de fichiers
+- **Dependency Management** (Sonatype) — Gestion des dépendances Maven/NPM
+- **SonarQube** — Analyse de qualité de code
+- **Microsoft Docs** — Documentation officielle Microsoft
+- **Stackoverflow MCP** — Recherche programmée Stack Overflow
+- **Atlassian MCP** — Intégrations Jira, Confluence
+- **DBHub** (Bytebase) — Requêtes et gestion bases de données
+- Et bien d'autres sur le [Registry GitHub MCP](https://github.com/modelcontextprotocol/servers)
+
+### Impact sur la consommation de tokens et de requêtes
+
+L'utilisation d'un serveur MCP a un **double impact** sur votre quota Copilot, qu'il est important de comprendre avant d'activer plusieurs MCPs simultanément.
+
+**1. Chaque appel d'outil MCP = 1 requête**
+
+Lorsque Copilot invoque un outil MCP (ex. interroger Jira, effectuer une recherche dans la doc, exécuter une requête SQL), cette invocation est comptabilisée comme **une requête individuelle** dans votre compteur d'utilisation GitHub Copilot — exactement comme si vous posiez une question dans le Chat. Sur un plan Free ou Pro avec un quota mensuel, les appels MCP s'accumulent si Copilot les enchaîne en mode Agent.
+
+**2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés**
+
+Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQube, résultat de requête SQL, page de documentation) est transmis directement au modèle IA dans la **fenêtre de contexte**. Plus la réponse est volumineuse, plus elle consomme de tokens — réduisant d'autant l'espace disponible pour votre code et vos instructions.
+
+**Exemple d'escalade en mode Agent**
+
+| Étape | Déclencheur | Requêtes | Tokens estimés |
+|-------|-------------|----------|----------------|
+| 1 | Question utilisateur : « Analyse ce composant et ouvre un ticket Jira » | +1 | ~500 (question + contexte) |
+| 2 | Appel MCP SonarQube → rapport d'analyse retourné | +1 | +800 (rapport injecté) |
+| 3 | Appel MCP Jira → liste des projets disponibles | +1 | +300 (liste injectée) |
+| 4 | Appel MCP Jira → création du ticket + confirmation | +1 | +200 (réponse API) |
+| **Total** | | **4 requêtes** | **~1 800 tokens** |
+
+Sans MCP, la même demande aurait coûté **1 requête** et ~500 tokens.
+
+!!! tip "Bonnes pratiques — maîtriser la consommation MCP"
+    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requêtes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-4-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
+
+**Quand l'utiliser :** Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).
+
+**Ressources utiles :**
+- [Registry GitHub MCP](https://github.com/modelcontextprotocol/servers) — Tous les serveurs disponibles
+- [Documentation MCP officielle](https://modelcontextprotocol.io) — Spécification et guides de configuration
+
+---
+
 ## Configuration des Raccourcis Clavier
 
 ### Modifier les Raccourcis

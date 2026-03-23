@@ -23,7 +23,7 @@ Copilot utilise une fenêtre de contexte qui varie selon le mode d'utilisation :
 |------|----------------------------------|
 | **Suggestions inline** | ~2 000 tokens (~1 500 mots / ~6 Ko de code) |
 | **Copilot Chat** | ~8 000 à 128 000 tokens selon le modèle |
-| **Copilot Edits** <span class="badge-vscode">VS Code</span> | ~32 000 tokens |
+| **Copilot Edits** | ~32 000 tokens |
 | **Mode Agent** | ~128 000 tokens (avec outils) |
 
 !!! info "C'est quoi un token ?"
@@ -68,6 +68,7 @@ Exemple :
 ### 2. Positionner le curseur intelligemment
 
 Copilot priorise le code **proche du curseur**. Pour obtenir de meilleures suggestions pour une fonction :
+
 - Écrivez d'abord le nom de la fonction + signature
 - Ajoutez un commentaire décrivant ce que la fonction doit faire
 - Puis demandez à Copilot de compléter
@@ -147,7 +148,7 @@ Il est important de comprendre les **limites du contexte** pour éviter les atte
 | Données de base de données | Ne sait pas ce que contient votre DB |
 | Documentation externe (Confluence, Notion) | Ne lit pas vos docs d'architecture |
 | Commits Git non ouverts | Ne lit pas l'historique Git automatiquement |
-| Fichiers dans `.copilotignore` <span class="badge-vscode">VS Code</span> | Explicitement exclus du contexte (IntelliJ utilise les exclusions de projet et `.gitignore`) |
+| Fichiers dans `.copilotignore` | Explicitement exclus du contexte (IntelliJ utilise les exclusions de projet et `.gitignore`) |
 
 !!! tip "Copilot Chat voit plus"
     Dans Copilot Chat, Copilot peut indexer et rechercher dans l'ensemble du projet. Sur **VS Code**, utilisez le participant `@workspace` ; sur **IntelliJ**, posez directement une question dans le chat — Copilot accède à l'index du projet automatiquement. Dans les deux cas, c'est le bon mode pour des questions sur votre projet globalement.
@@ -236,8 +237,8 @@ Dans les fichiers de configuration Copilot, cette distinction se traduit directe
 |---------|----------------------|-----------|
 | **Contexte** | `.github/copilot-instructions.md` | Évolue avec le projet |
 | **Contexte** | `.github/instructions/*.instructions.md` | Évolue avec les règles |
-| **Capacité** | `.github/skills/*/SKILL.md` <span class="badge-vscode">VS Code</span> | Stable, réutilisable |
-| **Capacité** | `.github/agents/*.agent.md` <span class="badge-vscode">VS Code</span> | Stable, spécialisé |
+| **Capacité** | `.github/skills/*/SKILL.md` | Stable, réutilisable |
+| **Capacité** | `.github/agents/*.agent.md` | Stable, spécialisé |
 
 ---
 
@@ -326,7 +327,6 @@ Avec ce README, Copilot comprend votre stack, votre architecture et vos conventi
 
 ## Prochaines étapes
 
-- [Paramètres du dépôt](parametres-depot.md) — Configurer `copilot-instructions.md` et les paramètres de dépôt
 - [Instructions (.instructions.md)](instructions.md) — Formaliser vos conventions en instructions Copilot
-- [VS Code — Contexte projet](vscode-contexte.md) — Configurer `.copilotignore` et la structure de workspace
-- [IntelliJ — Contexte projet](intellij-contexte.md) — Optimiser le contexte pour IntelliJ
+- [applyTo Avancé](applyto-avance.md) — Cibler précisément vos instructions par type de fichier
+- [Prompt Files (.prompt.md)](prompt-files.md) — Prompts réutilisables pour des tâches récurrentes
