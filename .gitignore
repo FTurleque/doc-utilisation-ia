@@ -21,3 +21,9 @@ Thumbs.db
 *.tmp
 *.temp
 tmp/
+
+# Logs MkDocs
+*.log
+
+# Rapports générés par IA (session reports, QA reports, etc.)
+ai-reports/
