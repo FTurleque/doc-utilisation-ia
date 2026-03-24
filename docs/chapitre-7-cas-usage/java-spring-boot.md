@@ -291,6 +291,6 @@ graph TD
 
 ## Ressources & Prochaines Étapes
 
-- [Best Practices](../chapitre-4-bonnes-pratiques/utilisation-effective.md) — Patterns universels
+- [Best Practices](../chapitre-5-bonnes-pratiques/utilisation-effective.md) — Patterns universels
 - [Comparaison Ecosystèmes](comparaison-ecosystemes.md) — Spring Boot vs autres stacks
 - [IntelliJ Référence](../chapitre-1-installation/intellij/reference.md) — Raccourcis + features

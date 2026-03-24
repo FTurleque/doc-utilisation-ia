@@ -66,6 +66,7 @@ Les hooks Copilot se configurent dans `settings.json` ou dans un fichier de conf
 L'un des hooks les plus utiles : Copilot peut générer automatiquement des messages de commit basés sur vos changements.
 
 **Activation :**
+
 1. Dans la vue Source Control de VS Code
 2. Cliquez sur l'icône étoile ✨ dans le champ de message de commit
 3. Copilot analyse vos changements et génère un message
@@ -270,5 +271,5 @@ feat(auth): ajouter la vérification 2FA par SMS
 
 - [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
 - [VS Code — Contexte projet](vscode-contexte.md) — Intégrer tous ces mécanismes dans la structure de votre projet
-- [Bonnes Pratiques](../chapitre-4-bonnes-pratiques/index.md) — Comment combiner tous ces outils efficacement
+- [Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md) — Comment combiner tous ces outils efficacement
 

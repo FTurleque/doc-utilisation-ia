@@ -107,5 +107,5 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 
 ## Prochaines étapes
 
-- [Cas d'Usage](../chapitre-6-cas-usage/index.md) — Configurations pratiques par technologie
+- [Cas d'Usage](../chapitre-7-cas-usage/index.md) — Configurations pratiques par technologie
 - [Appendices FAQ](../appendices/faq.md) — Réponses rapides aux questions fréquentes

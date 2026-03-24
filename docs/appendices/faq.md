@@ -104,7 +104,7 @@
     
     IntelliJ offre une meilleure **analyse sémantique** du code Java/Kotlin via PSI, mais moins de fonctionnalités de personnalisation.
     
-    Voir la [Comparaison des problèmes](../chapitre-5-troubleshooting/comparaison-problemes.md) pour la matrice complète.
+    Voir la [Comparaison des problèmes](../chapitre-6-troubleshooting/comparaison-problemes.md) pour la matrice complète.
 
 ??? question "Copilot fonctionne-t-il avec tous les langages ?"
     Copilot supporte la grande majorité des langages de programmation. La qualité varie :
@@ -137,7 +137,7 @@
     5. **`editor.inlineSuggest.enabled: false`** (VS Code)
     6. **Mode Power Save actif** (IntelliJ)
     
-    Voir [Problèmes courants](../chapitre-5-troubleshooting/problemes-courants.md) pour les solutions détaillées.
+    Voir [Problèmes courants](../chapitre-6-troubleshooting/problemes-courants.md) pour les solutions détaillées.
 
 ??? question "Comment lire les logs Copilot ?"
     === ":material-microsoft-visual-studio-code: VS Code"
@@ -146,4 +146,4 @@
     === ":simple-intellijidea: IntelliJ"
         **Help → Show Log in Explorer** → filtrez `idea.log` avec grep "copilot"
     
-    Voir [Logs & Diagnostic](../chapitre-5-troubleshooting/logs-diagnostic.md) pour le guide complet.
+    Voir [Logs & Diagnostic](../chapitre-6-troubleshooting/logs-diagnostic.md) pour le guide complet.

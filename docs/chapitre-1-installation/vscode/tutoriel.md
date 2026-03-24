@@ -206,7 +206,7 @@ Configurez :
 - Raccourcis clavier personnalisés
 
 ### 3. **Apprendre les best practices** (15 min)
-→ [Utilisation Effective](../../chapitre-4-bonnes-pratiques/utilisation-effective.md)
+→ [Utilisation Effective](../../chapitre-5-bonnes-pratiques/utilisation-effective.md)
 
 Maîtrisez :
 - Quand utiliser suggestions inline vs chat
@@ -248,5 +248,5 @@ A :
 
 **Q : Copilot suggère du code dangereux / mauvaise qualité ?**
 
-A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-4-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
+A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-5-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
 

@@ -100,41 +100,41 @@ nav:
     - IntelliJ IDEA — Configuration Contexte: chapitre-3-contexte/intellij-contexte.md
     - Comparaison Contexte: chapitre-3-contexte/comparaison-contexte.md
   
+  - Prompt Engineering:
+    - Accueil: chapitre-4-prompt-engineering/index.md
+    - Fondamentaux: chapitre-4-prompt-engineering/fondamentaux.md
+    - Techniques Intermédiaires: chapitre-4-prompt-engineering/techniques-intermediaires.md
+    - Techniques Avancées: chapitre-4-prompt-engineering/techniques-avancees.md
+    - Prompting avec Copilot: chapitre-4-prompt-engineering/avec-copilot.md
+  
   - Bonnes Pratiques:
-    - Accueil: chapitre-4-bonnes-pratiques/index.md
-    - Utilisation Effective: chapitre-4-bonnes-pratiques/utilisation-effective.md
-    - Organisation du Code: chapitre-4-bonnes-pratiques/organisation-code.md
-    - Productivité: chapitre-4-bonnes-pratiques/productivite.md
-    - Sécurité & Qualité: chapitre-4-bonnes-pratiques/securite-qualite.md
-    - Performance & Ressources: chapitre-4-bonnes-pratiques/performance.md
+    - Accueil: chapitre-5-bonnes-pratiques/index.md
+    - Utilisation Effective: chapitre-5-bonnes-pratiques/utilisation-effective.md
+    - Organisation du Code: chapitre-5-bonnes-pratiques/organisation-code.md
+    - Productivité: chapitre-5-bonnes-pratiques/productivite.md
+    - Sécurité & Qualité: chapitre-5-bonnes-pratiques/securite-qualite.md
+    - Performance & Ressources: chapitre-5-bonnes-pratiques/performance.md
   
   - Troubleshooting:
-    - Accueil: chapitre-5-troubleshooting/index.md
-    - Problèmes Courants: chapitre-5-troubleshooting/problemes-courants.md
-    - Logs & Diagnostic: chapitre-5-troubleshooting/logs-diagnostic.md
-    - Comparaison des Problèmes: chapitre-5-troubleshooting/comparaison-problemes.md
+    - Accueil: chapitre-6-troubleshooting/index.md
+    - Problèmes Courants: chapitre-6-troubleshooting/problemes-courants.md
+    - Logs & Diagnostic: chapitre-6-troubleshooting/logs-diagnostic.md
+    - Comparaison des Problèmes: chapitre-6-troubleshooting/comparaison-problemes.md
   
   - Cas d'Usage:
-    - Accueil: chapitre-6-cas-usage/index.md
-    - Comparaison Écosystèmes: chapitre-6-cas-usage/comparaison-ecosystemes.md
-    - Java: chapitre-6-cas-usage/java.md
-    - Java & Spring Boot: chapitre-6-cas-usage/java-spring-boot.md
-    - Node.js & React: chapitre-6-cas-usage/nodejs-react.md
-    - Node.js & Express: chapitre-6-cas-usage/nodejs-express.md
-    - React 19 & TypeScript: chapitre-6-cas-usage/react-typescript.md
-    - Python & FastAPI: chapitre-6-cas-usage/python.md
+    - Accueil: chapitre-7-cas-usage/index.md
+    - Comparaison Écosystèmes: chapitre-7-cas-usage/comparaison-ecosystemes.md
+    - Java: chapitre-7-cas-usage/java.md
+    - Java & Spring Boot: chapitre-7-cas-usage/java-spring-boot.md
+    - Node.js & React: chapitre-7-cas-usage/nodejs-react.md
+    - Node.js & Express: chapitre-7-cas-usage/nodejs-express.md
+    - React 19 & TypeScript: chapitre-7-cas-usage/react-typescript.md
+    - Python & FastAPI: chapitre-7-cas-usage/python.md
   
   - Modes CLI:
-    - Accueil: chapitre-7-cli-modes/index.md
-    - Modes CLI Détail: chapitre-7-cli-modes/page-principale.md
-    - Comparaison Modes: chapitre-7-cli-modes/comparaison.md
-  
-  - Prompt Engineering:
-    - Accueil: chapitre-8-prompt-engineering/index.md
-    - Fondamentaux: chapitre-8-prompt-engineering/fondamentaux.md
-    - Techniques Intermédiaires: chapitre-8-prompt-engineering/techniques-intermediaires.md
-    - Techniques Avancées: chapitre-8-prompt-engineering/techniques-avancees.md
-    - Prompting avec Copilot: chapitre-8-prompt-engineering/avec-copilot.md
+    - Accueil: chapitre-8-cli-modes/index.md
+    - Modes CLI Détail: chapitre-8-cli-modes/page-principale.md
+    - Comparaison Modes: chapitre-8-cli-modes/comparaison.md
   
   - Appendices:
     - Accueil: appendices/index.md

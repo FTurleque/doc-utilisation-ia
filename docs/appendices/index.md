@@ -30,5 +30,5 @@ Ressources complémentaires, références rapides et templates pour la documenta
 
 ## Navigation rapide
 
-- [Retour aux Bonnes Pratiques](../chapitre-4-bonnes-pratiques/index.md)
-- [Troubleshooting](../chapitre-5-troubleshooting/index.md) — En cas de problème
+- [Retour aux Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md)
+- [Troubleshooting](../chapitre-6-troubleshooting/index.md) — En cas de problème

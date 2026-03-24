@@ -1,4 +1,4 @@
-﻿# Problèmes Courants
+# Problèmes Courants
 
 ## 1. Copilot ne génère aucune suggestion
 
@@ -232,7 +232,7 @@ IntelliJ ou VS Code devient globalement plus lent après l'activation de Copilot
 
 ### Solutions rapides
 
-1. Augmenter la mémoire allouée à IntelliJ (voir [Performance](../chapitre-4-bonnes-pratiques/performance.md))
+1. Augmenter la mémoire allouée à IntelliJ (voir [Performance](../chapitre-5-bonnes-pratiques/performance.md))
 2. Augmenter le délai de suggestions pour réduire les requêtes
 3. Désactiver pour les langages non essentiels
 4. Fermer les onglets inutilisés

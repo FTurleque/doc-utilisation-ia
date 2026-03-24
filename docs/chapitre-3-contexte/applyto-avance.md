@@ -1,6 +1,6 @@
 # applyTo Avancé
 
-<span class="badge-vscode">VS Code</span> <span class="badge-expert">Expert</span>
+<span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
 Guide pratique pour écrire des motifs `applyTo` robustes dans les fichiers `.instructions.md`.
 

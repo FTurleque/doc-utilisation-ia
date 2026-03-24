@@ -97,5 +97,5 @@ La qualité des suggestions Copilot dépend du contexte fourni à l'IA, pas uniq
 ## Prochaines étapes
 
 - [Contexte & Personnalisation](../chapitre-3-contexte/index.md) — Explorer les mécanismes de personnalisation avancée (VS Code)
-- [Bonnes Pratiques](../chapitre-4-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
+- [Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
 

@@ -86,17 +86,58 @@ Ici, les éditeurs **divergent significativement**.
 
 | Mécanisme | VS Code | IntelliJ IDEA |
 |-----------|:-------:|:------------:|
-| `.github/instructions/*.instructions.md` | ✅ | ❌ (via settings UI) |
+| `.github/instructions/*.instructions.md` | ✅ | ✅ (via settings UI) |
 | Par langage/domaine | ✅ | Partiellement |
 | Appliqué auto | ✅ Basé sur `applyTo` glob | ✅ Basé sur fichier ouvert |
 
-### Prompt Files & Skills
+### Prompt Files
 
 | Mécanisme | VS Code | IntelliJ IDEA |
 |-----------|:-------:|:------------:|
-| **Prompt files** (`.prompt.md`) | ✅ Réutilisables, sauvegardés | ❌ |
-| **Skills** (`SKILL.md`) | ✅ Packaging domain knowledge | ❌ |
-| **Agents custom** (`.agent.md`) | ✅ Full automation | ⭐ Limité aux workflows IDE |
+| **Prompt files** (`.prompt.md`) | ✅ Réutilisables, invoquables via `#fichier` | ✅ |
+| Stockage | `.github/prompts/` | `.github/prompts/` |
+| Partage équipe via Git | ✅ | ✅ |
+
+### Skills (`SKILL.md`)
+
+| Mécanisme | VS Code | IntelliJ IDEA |
+|-----------|:-------:|:------------:|
+| **Création** via interface | ✅ | ❌ |
+| **Lecture / utilisation** | ✅ | ⭐ En lecture seule |
+| URI de référence | `copilot-skill://domain/SKILL.md` | — |
+| Chargement | À la demande (≠ instructions toujours actives) | À la demande |
+| Stockage | `.github/skills/<domain>/SKILL.md` | `.github/skills/<domain>/SKILL.md` |
+| Partage équipe via Git | ✅ | ✅ (lecture) |
+
+**Résultat** : ✅ VS Code (création + usage), ⭐ IntelliJ (lecture seulement)
+
+### Agents Personnalisés (`.agent.md`)
+
+| Mécanisme | VS Code | IntelliJ IDEA |
+|-----------|:-------:|:------------:|
+| Fichiers `.agent.md` dans `.github/agents/` | ✅ | ✅ |
+| Invocation `@nom-agent` dans le chat | ✅ | ✅ |
+| Restriction des outils par agent | ✅ (`tools:` frontmatter) | ✅ |
+| Modèle IA par agent (`model:` frontmatter) | ✅ | ✅ |
+| Instructions permanentes intégrées à l'agent | ✅ | ✅ |
+| Workflows IDE natifs (actions, intentions) | ⭐ Via agent mode | ✅ Natif IDE |
+
+**Résultat** : ✅ Équivalentes
+
+### Hooks Automatiques
+
+| Mécanisme | VS Code | IntelliJ IDEA |
+|-----------|:-------:|:------------:|
+| Hooks d'éditeur (`onSave`, `onOpen`, `onCodeAction`) | ✅ | ❌ |
+| Hooks de workflow (`pre-commit`, `post-merge`, `on-build-error`) | ✅ | ❌ |
+| Génération auto de messages de commit | ✅ (icône ✨ Source Control) | ❌ |
+| Intégration GitHub Actions pour revue PR | ✅ | ✅ (via GitHub) |
+| Configuration dans `settings.json` | ✅ | ❌ |
+
+**Résultat** : ✅ VS Code exclusif (sauf GitHub Actions)
+
+!!! info "Hooks et IntelliJ"
+    IntelliJ IDEA dispose de ses propres mécanismes d'automatisation (file watchers, intentions, macros), mais ceux-ci ne sont pas des hooks Copilot — ils ne déclenchent pas d'actions Copilot directement.
 
 ### Exclusion & Sensibilité
 
@@ -110,33 +151,127 @@ Ici, les éditeurs **divergent significativement**.
 
 ## Analyses Sémantique & Contexte Inferred
 
-### VS Code
+Les deux IDEs n'utilisent pas la même technologie pour comprendre votre code. Cette différence est fondamentale : elle détermine **combien Copilot "voit" sans que vous ayez à ouvrir des fichiers**.
 
-**Contexte utilisé par Copilot** :
-- Fichiers ouverts dans les tabs
-- Fichiers récemment modifiés
-- Imports / dépendances lues depuis `package.json`, `tsconfig.json`, etc.
-- Language Server Protocol (LSP) pour types et symboles
-- `.github/copilot-instructions.md` et autres directives
+### Comment ça fonctionne ?
 
-**Profondeur d'analyse** : Moyenne (LSP-dépendant)
+=== "VS Code — LSP (Language Server Protocol)"
 
-### IntelliJ IDEA
+    **Principe** : VS Code délègue l'analyse du code à des serveurs de langage externes (un par langage). Copilot récupère le contexte via ces serveurs.
 
-**Contexte utilisé par Copilot** :
-- Fichier courant ouvert
-- Imports et références détectées par PSI (Persistent Syntax Index)
-- Hiérarchie complète du projet (classes, méthodes, types)
-- `pom.xml`, `build.gradle` pour dépendances
-- Structure module (Maven/Gradle multi-module nativement compris)
-- IntelliJ project structure
+    **Ce que Copilot voit automatiquement** :
 
-**Profondeur d'analyse** : **Plus profonde** (PSI natif, très complet pour JVM)
+    - Fichiers ouverts dans les onglets (contexte principal)
+    - Fichiers récemment modifiés
+    - Imports et dépendances lus depuis `package.json`, `tsconfig.json`, `pyproject.toml`, etc.
+    - Types et symboles exposés par le Language Server actif
+    - `.github/copilot-instructions.md` et instructions ciblées
 
-!!! tip "Comparaison"
-    **IntelliJ** : Meilleure analyse sémantique **native** Pour Java/JVM. PSI = syntaxe *et* sémantique résolue.
-    
-    **VS Code** : LSP = plus **extensible**, pas aussi profond pour Java, excellent pour JS/TS.
+    **Profondeur d'analyse** : **Moyenne** — dépend du Language Server installé
+
+    !!! info "LSP = extensible mais fragmenté"
+        L'avantage du LSP est que chaque langage peut avoir son propre serveur optimisé (TypeScript LS, Pylance, rust-analyzer…). L'inconvénient : la profondeur varie selon la qualité du serveur, et les fichiers non ouverts sont souvent invisibles.
+
+=== "IntelliJ IDEA — PSI (Program Structure Interface)"
+
+    **Principe** : IntelliJ indexe l'intégralité du projet au démarrage via le PSI — un arbre syntaxique *et* sémantique résolu pour chaque fichier. Copilot hérite de cet index complet.
+
+    **Ce que Copilot voit automatiquement** :
+
+    - Hiérarchie complète du projet (classes, méthodes, types, interfaces)
+    - Imports et références détectées sur **tous les fichiers** (pas seulement les ouverts)
+    - Héritage et polymorphisme résolus nativement
+    - `pom.xml`, `build.gradle` pour dépendances et modules
+    - Structure multi-module Maven/Gradle comprise sans configuration extra
+    - Annotations Spring, JPA, Jakarta EE interprétées par l'IDE
+
+    **Profondeur d'analyse** : **Élevée** — index complet du projet disponible en permanence
+
+    !!! info "PSI = profond mais spécialisé JVM"
+        L'avantage du PSI est sa précision exceptionnelle pour Java, Kotlin, Scala. L'inconvénient : il est principalement taillé pour les langages JVM ; pour TypeScript ou Python pur, la valeur ajoutée est moindre.
+
+---
+
+### Comparaison directe LSP vs PSI
+
+| Critère | VS Code (LSP) | IntelliJ IDEA (PSI) |
+|---------|:-------------:|:-------------------:|
+| Connaissance des fichiers **non ouverts** | ⭐ Partielle | ✅ Complète |
+| Résolution de l'héritage de classes | ⭐ Via LS actif | ✅ Natif, complet |
+| Inférence de types sans annotations | ⭐ Selon LS | ✅ Résolu par PSI |
+| Qualité pour **Java / Kotlin / Scala** | Bon | **Excellent** |
+| Qualité pour **TypeScript / JavaScript** | **Excellent** | Bon |
+| Qualité pour **Python** | **Excellent** (Pylance) | Bon |
+| Qualité pour **Go / Rust / C++** | Très bon | Bon |
+| Support multi-module Maven/Gradle | Bon | **Natif** |
+| Performance sur très grands projets | Bon | **Excellent** (cache PSI) |
+| Extensibilité (nouveaux langages) | **Excellent** | Limité |
+
+---
+
+### Exemple concret : la différence en pratique
+
+Imaginons une classe `OrderService` dans un projet Java de 200 fichiers.
+
+=== "Sur IntelliJ IDEA"
+
+    ```java
+    @Service
+    public class OrderProcessor {
+
+        @Autowired
+        private OrderService orderService;
+
+        public void process(Long orderId) {
+            orderService.  // ← Copilot suggère TOUTES les méthodes
+                          //   de OrderService avec les bons types,
+                          //   même si OrderService.java n'est PAS ouvert.
+                          //   PSI a déjà tout indexé.
+        }
+    }
+    ```
+
+    ✅ Copilot voit `findById()`, `save()`, `cancelOrder()` et leurs signatures exactes.
+
+=== "Sur VS Code"
+
+    ```java
+    @Service
+    public class OrderProcessor {
+
+        @Autowired
+        private OrderService orderService;
+
+        public void process(Long orderId) {
+            orderService.  // ← Copilot suggère des méthodes génériques
+                          //   ou rien de précis si OrderService.java
+                          //   n'est pas dans un onglet ouvert.
+        }
+    }
+    ```
+
+    ⭐ Pour obtenir les bonnes suggestions, il faut ouvrir `OrderService.java` dans un onglet.
+
+---
+
+### Quand utiliser quel IDE ?
+
+| Situation | IDE recommandé | Raison |
+|-----------|:--------------:|--------|
+| Projet **Java / Spring Boot** | ✅ IntelliJ | PSI résout héritage, annotations Spring, injection de dépendances sans configuration |
+| Projet **Kotlin / Android** | ✅ IntelliJ | Support natif Kotlin + PSI = suggestions très précises |
+| Projet **Scala** | ✅ IntelliJ | Analyse complexité Scala (implicits, type classes) via PSI |
+| Projet **TypeScript / React / Next.js** | ✅ VS Code | TypeScript LS = inférence parfaite + extensions frontend riches |
+| Projet **Python / FastAPI / Django** | ✅ VS Code | Pylance LSP = meilleur support Python actuel |
+| Projet **Node.js / Express** | ✅ VS Code | Écosystème npm + LSP = contexte optimal |
+| Projet **Go / Rust** | ✅ VS Code | gopls / rust-analyzer = Language Servers de référence |
+| **Mono-repo multi-langage** | ✅ VS Code | `.instructions.md` ciblées + workspace multi-dossiers |
+| Base de code **Java legacy massive** | ✅ IntelliJ | PSI comprend les hiérarchies complexes sans ouvrir chaque fichier |
+| Dev en **GitHub Codespaces / Cloud** | ✅ VS Code | Natif web, LSP disponible en remote |
+| **Gouvernance IA** (instructions, politiques, contrôle) | ✅ VS Code | `.instructions.md` versionnées dans `.github/`, `applyTo` pour cibler les équipes, agents avec restriction d'outils, `.copilotignore` pour exclure le code sensible |
+
+!!! tip "Stratégie combinée"
+    Vous pouvez tirer le meilleur des deux : créez vos fichiers `.github/` (instructions, prompts, agents) en VS Code, puis ouvrez le même projet dans IntelliJ pour bénéficier du PSI. **Les instructions `.github/copilot-instructions.md` sont lues par les deux IDEs.**
 
 ---
 
@@ -238,6 +373,10 @@ Ici, les éditeurs **divergent significativement**.
 | **Chat & Agents** | 🤝 Égalité |
 | **Edits multi-fichiers** | 🤝 Égalité |
 | **Personnalisation avancée** | ✅ VS Code |
+| **Prompt files réutilisables** | ✅ VS Code |
+| **Skills domaine (SKILL.md)** | ✅ VS Code |
+| **Agents personnalisés (.agent.md)** | 🤝 Égalité |
+| **Hooks automatiques** | ✅ VS Code |
 | **Contexte JVM natif** | ✅ IntelliJ |
 | **Frontend excellent** | ✅ VS Code |
 | **Backend JVM excellent** | ✅ IntelliJ |
@@ -252,17 +391,6 @@ Ici, les éditeurs **divergent significativement**.
 - [Guide IntelliJ Complet](../chapitre-1-installation/intellij/reference.md)
 - [Contexte VS Code avancé](vscode-contexte.md)
 - [Contexte IntelliJ avancé](intellij-contexte.md)
-├── instructions/
-│   ├── vue.instructions.md              → Règles composants Vue (applyTo: **/*.vue)
-│   └── stores.instructions.md           → Règles Pinia (applyTo: **/stores/**) 
-├── prompts/
-│   ├── create-component.prompt.md       → Template création de composant Vue
-│   └── write-e2e-test.prompt.md         → Cypress E2E tests standards
-└── agents/
-    └── vue-expert.agent.md              → Agent spécialisé Vue 3
-```
-
-Résultat : Copilot se comporte comme s'il avait été formé spécifiquement pour ce projet.
 
 ---
 
@@ -361,7 +489,7 @@ Conventions Java :
 
 ## Prochaines étapes
 
-- [Bonnes Pratiques](../chapitre-4-bonnes-pratiques/index.md) — Comment tirer le meilleur des deux IDEs
-- [Cas d'usage Java](../chapitre-6-cas-usage/java.md) — Configuration complète pour un projet Java
-- [Cas d'usage Node.js/React](../chapitre-6-cas-usage/nodejs-react.md) — Configuration complète pour un projet TypeScript
+- [Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md) — Comment tirer le meilleur des deux IDEs
+- [Cas d'usage Java](../chapitre-7-cas-usage/java.md) — Configuration complète pour un projet Java
+- [Cas d'usage Node.js/React](../chapitre-7-cas-usage/nodejs-react.md) — Configuration complète pour un projet TypeScript
 

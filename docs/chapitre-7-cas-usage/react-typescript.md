@@ -393,6 +393,6 @@ graph TD
 
 ## Ressources
 
-- [Best Practices](../chapitre-4-bonnes-pratiques/utilisation-effective.md)
+- [Best Practices](../chapitre-5-bonnes-pratiques/utilisation-effective.md)
 - [Comparaison Ecosystèmes](comparaison-ecosystemes.md)
 - [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)

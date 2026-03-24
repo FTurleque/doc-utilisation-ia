@@ -1,4 +1,4 @@
-﻿# :simple-python: Cas d'Usage — Python & FastAPI avec GitHub Copilot
+# :simple-python: Cas d'Usage — Python & FastAPI avec GitHub Copilot
 
 <span class="badge-intermediate">Intermédiaire</span>
 
@@ -325,24 +325,6 @@ graph TD
 
 ---
 
-## Ressources
-
-- [Best Practices](../chapitre-4-bonnes-pratiques/utilisation-effective.md)
-- [Comparaison Écosystèmes](comparaison-ecosystemes.md)
-- [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)
-│       │   └── dependencies.py
-│       ├── services/
-│       └── repositories/
-├── tests/
-│   ├── conftest.py
-│   ├── unit/
-│   └── integration/
-├── pyproject.toml
-└── mypy.ini
-```
-
----
-
 ## Configuration Copilot pour Python
 
 ### `.github/copilot-instructions.md`
@@ -534,5 +516,6 @@ def upgrade() -> None:
 
 ## Prochaines étapes
 
-- [Java — Cas d'Usage](java.md)
-- [Node.js & React — Cas d'Usage](nodejs-react.md)
+- [Best Practices](../chapitre-5-bonnes-pratiques/utilisation-effective.md)
+- [Comparaison Écosystèmes](comparaison-ecosystemes.md)
+- [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)

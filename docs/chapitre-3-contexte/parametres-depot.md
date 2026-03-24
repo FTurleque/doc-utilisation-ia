@@ -1,6 +1,6 @@
 # Paramètres du Dépôt
 
-<span class="badge-vscode">VS Code</span> <span class="badge-intermediate">Intermédiaire</span>
+<span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-intermediate">Intermédiaire</span>
 
 Les paramètres du dépôt vivent dans le code source et sont partagés avec toute l'équipe.
 Ils priment sur les réglages individuels quand Copilot construit son contexte de travail.
@@ -27,9 +27,9 @@ En combinant les trois, vous obtenez :
 
 Personnalisations courantes :
 
-- instructions de conventions de code ;
-- skills réutilisables ;
-- agents spécialisés par workflow ;
+- instructions de conventions de code.
+- skills réutilisables.
+- agents spécialisés par workflow.
 - règles de contexte et d'exclusion (`.copilotignore`, `.gitignore`).
 
 ### Arborescence recommandée
@@ -54,8 +54,8 @@ AGENT.md
 
 Vous pouvez ajouter un fichier `AGENT.md` à la racine pour référencer :
 
-- les agents disponibles ;
-- les skills de référence ;
+- les agents disponibles.
+- les skills de référence.
 - les conventions d'orchestration (quand utiliser quel agent).
 
 Exemple minimal :

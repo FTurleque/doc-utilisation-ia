@@ -97,9 +97,8 @@ IntelliJ utilise des marquages de dossiers pour comprendre la structure du proje
    - **Test Resources Root** (gris clair) — Ressources de tests
    - **Excluded** (rouge) — Exclu de l'indexation
 
-<div class="img-placeholder">
-📸 Capture d'écran : Menu "Mark Directory as" dans IntelliJ
-</div>
+![Menu "Mark Directory as" dans IntelliJ IDEA](../assets/images/intellij/mark-directoy-as.jpg){ .reduced-screenshot }
+*Menu contextuel "Mark Directory as" — clic droit sur un dossier dans la vue Project*
 
 !!! tip "Impact sur Copilot"
     Les dossiers marqués comme **Excluded** ne sont pas indexés par IntelliJ — Copilot ne les voit donc pas. Utilisez cela pour exclure du contexte les dossiers de données volumineuses ou sensibles.
@@ -223,12 +222,12 @@ Pour des dossiers qui doivent rester dans Git mais être exclus du contexte Copi
     
     | Mécanisme | VS Code | IntelliJ |
     |-----------|:-------:|:--------:|
-    | `.instructions.md` | ✅ | ❌ |
-    | `.prompt.md` | ✅ | ❌ |
-    | `.agent.md` | ✅ | ❌ |
-    | `SKILL.md` | ✅ | ❌ |
+    | `.instructions.md` | ✅ | ✅ |
+    | `.prompt.md` | ✅ | ✅ |
+    | `.agent.md` | ✅ | ✅ |
+    | `SKILL.md` | ✅ | ✅ (Read only) |
     | Hooks Copilot | ✅ | ❌ |
-    | `.copilotignore` | ✅ | ❌ (utiliser Excluded) |
+    | `.copilotignore` | ✅ | A vérifier (utiliser Excluded) |
     
     Si vous travaillez principalement sur IntelliJ et souhaitez utiliser ces fonctionnalités, vous devez ouvrir le projet dans VS Code ponctuellement pour les tâches concernées.
 
@@ -298,5 +297,5 @@ public interface UserRepository extends JpaRepository<User, UUID> { ... }
 ## Prochaines étapes
 
 - [Comparaison contexte](comparaison-contexte.md) — IntelliJ vs VS Code
-- [Bonnes pratiques](../chapitre-4-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
+- [Bonnes pratiques](../chapitre-5-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
 

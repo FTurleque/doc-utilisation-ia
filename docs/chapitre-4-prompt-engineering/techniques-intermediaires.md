@@ -1,4 +1,4 @@
-# Techniques Intermédiaires de Prompt Engineering
+﻿# Techniques Intermédiaires de Prompt Engineering
 
 <span class="badge-intermediate">Intermédiaire</span>
 
@@ -20,9 +20,6 @@ graph LR
     LLM2 --> R2["Réponse guidée\npar vos exemples"]
     LLM3 --> R3["Réponse très fidèle\nau style montré"]
 
-    style ZS fill:#3b82f6,color:#fff
-    style FS fill:#10b981,color:#fff
-    style MS fill:#8b5cf6,color:#fff
 ```
 
 ### Zero-Shot — Sans exemple
@@ -97,6 +94,7 @@ après une série de transactions ?
 Analyse cette fonction qui calcule le solde d'un compte.
 
 Procède ainsi :
+
 1. Trace l'exécution ligne par ligne avec les entrées [2000, -500, -300, 1000]
 2. Note la valeur de chaque variable à chaque étape
 3. Identifie à quelle étape le résultat diverge de l'attendu (résultat attendu : 2200)
@@ -129,11 +127,6 @@ graph TD
     BASE --> R3
     BASE --> R4
 
-    style BASE fill:#7c3aed,color:#fff
-    style SEC fill:#b62324,color:#fff
-    style TUT fill:#238636,color:#fff
-    style REV fill:#9a6700,color:#fff
-    style DOC fill:#1f6feb,color:#fff
 ```
 
 ### Exemples de rôles efficaces en développement
@@ -258,13 +251,13 @@ Définir des **limites et interdictions** évite les dérives et force la préci
 ```
 Réécris cette fonction JavaScript.
 
-Contraintes strictes :
-✅ Utilise uniquement ES2022 (pas de librairies externes)
-✅ Conserve exactement la même signature de fonction
-✅ Inclus les tests unitaires Jest correspondants
-❌ Ne change pas la logique métier
-❌ N'ajoute pas de commentaires sur du code évident
-❌ N'utilise pas le type `any` en TypeScript
+Contraintes strictes :      
+✅ Utilise uniquement ES2022 (pas de librairies externes).      
+✅ Conserve exactement la même signature de fonction.       
+✅ Inclus les tests unitaires Jest correspondants.      
+❌ Ne change pas la logique métier.     
+❌ N'ajoute pas de commentaires sur du code évident.        
+❌ N'utilise pas le type `any` en TypeScript.       
 
 [coller le code]
 ```
@@ -318,8 +311,6 @@ flowchart TD
     FIX4 --> VN
     VN --> TEST1
 
-    style SAVE fill:#238636,color:#fff
-    style V1 fill:#4a90d9,color:#fff
 ```
 
 ### Tableau de diagnostic rapide

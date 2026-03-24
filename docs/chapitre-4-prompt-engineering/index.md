@@ -1,4 +1,4 @@
-# Prompt Engineering
+﻿# Prompt Engineering
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
@@ -24,9 +24,6 @@ graph TD
     R -->|évalue| U
     U -->|itère si besoin| P
 
-    style PE fill:#4a90d9,color:#fff
-    style LLM fill:#7c3aed,color:#fff
-    style OP fill:#10b981,color:#fff
 ```
 
 ---
@@ -86,10 +83,6 @@ graph LR
     B --> D
     C --> D
 
-    style A fill:#238636,color:#fff
-    style B fill:#9a6700,color:#fff
-    style C fill:#b62324,color:#fff
-    style D fill:#1f6feb,color:#fff
 ```
 
 !!! tip "Conseil de progression"

@@ -1,4 +1,4 @@
-# Techniques Avancées de Prompt Engineering
+﻿# Techniques Avancées de Prompt Engineering
 
 <span class="badge-expert">Expert</span>
 
@@ -20,9 +20,6 @@ graph LR
     P3 --> O3["Sortie 3\n(rapport vérifié)"]
     O3 --> OUTPUT["📤 Résultat\nfinal qualifié"]
 
-    style P1 fill:#3b82f6,color:#fff
-    style P2 fill:#f59e0b,color:#fff
-    style P3 fill:#ef4444,color:#fff
 ```
 
 ### Exemple : Pipeline de Génération de Code
@@ -103,10 +100,6 @@ graph TD
     AUGMENT --> LLM["🧠 LLM"]
     LLM --> ANS["💬 Réponse\ncontextualisée et factuelle"]
 
-    style EMB fill:#4a90d9,color:#fff
-    style VDB fill:#7c3aed,color:#fff
-    style AUGMENT fill:#10b981,color:#fff
-    style LLM fill:#7c3aed,color:#fff
 ```
 
 ### Pourquoi le RAG est indispensable en production
@@ -131,9 +124,6 @@ graph LR
     CTX --> LLM["🧠 Modèle Copilot\n(fenêtre de tokens)"]
     LLM --> SUG["✨ Suggestions\ncohérentes avec votre projet"]
 
-    style CTX fill:#1f6feb,color:#fff
-    style LLM fill:#7c3aed,color:#fff
-    style SUG fill:#238636,color:#fff
 ```
 
 ### Implémenter un RAG simple
@@ -194,9 +184,6 @@ graph TD
 
     T2A --> BEST["🏆 Solution sélectionnée\navec justification complète"]
 
-    style BEST fill:#238636,color:#fff
-    style T2A fill:#10b981,color:#fff
-    style P fill:#4a90d9,color:#fff
 ```
 
 ### Prompt Tree of Thoughts
@@ -240,8 +227,6 @@ graph LR
 
     VOTE --> FINAL["✅ Réponse A\n(4/5 votes → fiable)"]
 
-    style FINAL fill:#238636,color:#fff
-    style VOTE fill:#4a90d9,color:#fff
 ```
 
 !!! tip "Quand utiliser Self-Consistency ?"
@@ -277,9 +262,6 @@ graph TD
 
     META_LLM --> OPTIMAL["🏆 Prompt Optimal\nsélectionné et documenté"]
 
-    style META_LLM fill:#7c3aed,color:#fff
-    style WORKER fill:#4a90d9,color:#fff
-    style OPTIMAL fill:#238636,color:#fff
 ```
 
 ### Exemple de Meta-Prompt
@@ -319,13 +301,6 @@ graph TD
     DEFENSE --> D3["Validation de la sortie\n(vérifier le format et le contenu)"]
     DEFENSE --> D4["Séparation trust level\n(system prompt vs données utilisateur)"]
 
-    style ATT fill:#b62324,color:#fff
-    style LEAK fill:#b62324,color:#fff
-    style DEFENSE fill:#238636,color:#fff
-    style D1 fill:#238636,color:#fff
-    style D2 fill:#238636,color:#fff
-    style D3 fill:#238636,color:#fff
-    style D4 fill:#238636,color:#fff
 ```
 
 ### System Prompt résistant aux injections
@@ -376,8 +351,6 @@ flowchart TD
     GOOD -- Oui --> DEPLOY["🚀 Déployer\nen production"]
     IMPROVE --> PROMPT
 
-    style DEPLOY fill:#238636,color:#fff
-    style IMPROVE fill:#9a6700,color:#fff
 ```
 
 ### Template de Fiche d'Évaluation
@@ -442,10 +415,6 @@ graph TD
     CACHE --> LOGS["📊 Logging\n(métriques + audit)"]
     LOGS --> U
 
-    style GUARD fill:#b62324,color:#fff
-    style AUGMENT fill:#10b981,color:#fff
-    style LLM fill:#7c3aed,color:#fff
-    style CACHE fill:#238636,color:#fff
 ```
 
 | Composant | Rôle | Technique PE associée |

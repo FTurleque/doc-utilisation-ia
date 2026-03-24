@@ -1,6 +1,6 @@
 # Instructions Copilot (.instructions.md)
 
-<span class="badge-vscode">VS Code</span> <span class="badge-expert">Expert</span>
+<span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
 ## Présentation
 Les fichiers `.instructions.md` sont des fichiers Markdown spéciaux que VS Code injecte automatiquement dans le contexte de Copilot. Ils permettent de définir des **règles persistantes** qui s'appliquent à toutes vos interactions avec Copilot, sans avoir à les répéter à chaque prompt.

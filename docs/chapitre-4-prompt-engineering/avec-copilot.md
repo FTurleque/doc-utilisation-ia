@@ -1,4 +1,4 @@
-# Prompt Engineering avec GitHub Copilot
+﻿# Prompt Engineering avec GitHub Copilot
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
@@ -30,9 +30,6 @@ graph TD
     TOKENS --> LLM["🧠 Modèle Copilot\n(Claude 3.5 Sonnet / GPT-4o)"]
     LLM -->|suggestion / réponse| OUTPUT["✨ Complétion ou Réponse Chat"]
 
-    style ASSEMBLE fill:#1f6feb,color:#fff
-    style LLM fill:#7c3aed,color:#fff
-    style OUTPUT fill:#238636,color:#fff
 ```
 
 !!! info "La fenêtre de tokens est une limite physique"
@@ -209,8 +206,6 @@ graph TD
     FOR --> INS
     CTX --> INS
 
-    style INS fill:#1f6feb,color:#fff
-    style COPILOT fill:#7c3aed,color:#fff
 ```
 
 ### Exemple d'instruction combinant plusieurs techniques PE
@@ -260,10 +255,6 @@ graph TD
     PF --> FMT["📐 Format de sortie\n(JSON, Markdown structuré)"]
     PF --> INP["📥 Entrée dynamique\n(${selection}, ${file})"]
 
-    style PF fill:#1f6feb,color:#fff
-    style FM fill:#4a90d9,color:#fff
-    style COT fill:#10b981,color:#fff
-    style FMT fill:#8b5cf6,color:#fff
 ```
 
 ### Exemple : Audit de Sécurité (Expert)
@@ -335,12 +326,6 @@ graph TD
     A4 --> FIX4["✅ Toujours reviewer le code\ngénéré avant de committer"]
     A5 --> FIX5["✅ Décomposer en prompts\nenchaînés (Prompt Chaining)"]
 
-    style AP fill:#b62324,color:#fff
-    style FIX1 fill:#238636,color:#fff
-    style FIX2 fill:#238636,color:#fff
-    style FIX3 fill:#238636,color:#fff
-    style FIX4 fill:#238636,color:#fff
-    style FIX5 fill:#238636,color:#fff
 ```
 
 ---

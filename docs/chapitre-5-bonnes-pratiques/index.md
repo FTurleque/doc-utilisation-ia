@@ -65,4 +65,3 @@ Installer et configurer Copilot, c'est bien. L'utiliser efficacement au quotidie
     **Débutant** → [Utilisation Effective](utilisation-effective.md)  
     **Intermédiaire** → [Organisation Code](organisation-code.md)  
     **Avancé** → [Sécurité & Qualité](securite-qualite.md)
-

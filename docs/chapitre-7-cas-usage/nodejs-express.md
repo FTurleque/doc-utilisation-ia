@@ -190,28 +190,6 @@ export const errorHandler = (
 app.use(errorHandler);
 ```
 
-Prompt Copilot : **"Génère une fonction middleware Express qui valide les tokens JWT"**
-
-```typescript
-import jwt from 'jsonwebtoken';
-
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  
-  if (!token) {
-    return res.status(401).json({ error: 'Missing token' });
-  }
-  
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
-    (req as any).user = decoded;
-    next();
-  } catch (err) {
-    return res.status(403).json({ error: 'Invalid token' });
-  }
-};
-```
-
 ---
 
 ## TypeScript + Copilot
@@ -362,6 +340,6 @@ graph TD
 
 ## Ressources
 
-- [Best Practices universelles](../chapitre-4-bonnes-pratiques/utilisation-effective.md)
+- [Best Practices universelles](../chapitre-5-bonnes-pratiques/utilisation-effective.md)
 - [Comparaison Ecosystèmes](comparaison-ecosystemes.md)
 - [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)

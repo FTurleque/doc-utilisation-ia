@@ -1,4 +1,4 @@
-﻿# Productivité avec GitHub Copilot
+# Productivité avec GitHub Copilot
 
 <span class="badge-intermediate">Intermédiaire</span>
 

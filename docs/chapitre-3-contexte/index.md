@@ -56,7 +56,7 @@ Ce chapitre documente tous les mécanismes disponibles pour personnaliser Copilo
 
     Structurer `.github/`, `AGENT.md`, et la gouvernance de personnalisation
 
-- :material-console: **[Références fichiers & CLI](../chapitre-7-cli-modes/page-principale.md)**
+- :material-console: **[Références fichiers & CLI](../chapitre-8-cli-modes/page-principale.md)**
 
     Utiliser `#fichier` et `@fichier`, plus les points d'attention CLI
 

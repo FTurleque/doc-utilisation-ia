@@ -76,4 +76,4 @@ Si GitHub Copilot est signalé comme dégradé ou en interruption, attendez la r
 | Installation échouée | [Installation](../chapitre-1-installation/index.md) |
 | Paramètre introuvable | [Paramétrage](../chapitre-2-parametrage/index.md) |
 | Contexte insatisfaisant | [Contexte & Personnalisation](../chapitre-3-contexte/index.md) |
-| Code généré de mauvaise qualité | [Bonnes Pratiques](../chapitre-4-bonnes-pratiques/index.md) |
+| Code généré de mauvaise qualité | [Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md) |

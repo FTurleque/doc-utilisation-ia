@@ -1,4 +1,4 @@
-# Fondamentaux du Prompt Engineering
+﻿# Fondamentaux du Prompt Engineering
 
 <span class="badge-beginner">Débutant</span>
 
@@ -17,9 +17,6 @@ graph LR
     P["📝 Votre prompt\n(entrée)"] -->|requête| LLM
     LLM -->|génère token par token| R["💬 Réponse\n(sortie)"]
 
-    style LLM fill:#7c3aed,color:#fff
-    style P fill:#1f6feb,color:#fff
-    style R fill:#10b981,color:#fff
 ```
 
 !!! info "Analogie simple"
@@ -54,11 +51,6 @@ graph TD
     E --> Ex3["ex : 'Voici le code : [code ici]'"]
     O --> Ex4["ex : 'Réponds en JSON avec les champs: ...'"]
 
-    style P fill:#4a90d9,color:#fff
-    style I fill:#10b981,color:#fff
-    style C fill:#f59e0b,color:#fff
-    style E fill:#3b82f6,color:#fff
-    style O fill:#8b5cf6,color:#fff
 ```
 
 !!! example "Prompt vague vs prompt structuré"
@@ -104,21 +96,17 @@ Avant chaque prompt, posez-vous ces quatre questions. Elles structurent naturell
 
 ```mermaid
 flowchart TD
-    START(["💭 J'ai une tâche à accomplir"])
-    START --> Q1{"1. QUOI ?\nQue dois-je accomplir\nexactement ?"}
-    Q1 --> Q2{"2. QUI ?\nQuel rôle ou quelle expertise\ndois-je demander au modèle ?"}
-    Q2 --> Q3{"3. DONNÉES ?\nQuelles informations dois-je\nfournir en entrée ?"}
-    Q3 --> Q4{"4. FORMAT ?\nSous quel format veux-je\nla réponse ?"}
-    Q4 --> PROMPT["✍️ Rédiger le prompt"]
+    START(["💭 Tâche à accomplir"])
+    START --> Q1{"1. QUOI ?"}
+    Q1 -. "Que dois-je accomplir ?" .-> Q2{"2. QUI ?"}
+    Q2 -. "Quel rôle pour le modèle ?" .-> Q3{"3. DONNÉES ?"}
+    Q3 -. "Quelles infos en entrée ?" .-> Q4{"4. FORMAT ?"}
+    Q4 -. "Quel format de réponse ?" .-> PROMPT["✍️ Rédiger le prompt"]
     PROMPT --> RESULT["💬 Réponse du LLM"]
     RESULT --> GOOD{"Satisfait ?"}
     GOOD -- Oui --> END(["✅ Terminé"])
-    GOOD -- Non --> REFINE["🔄 Affiner le prompt\n(voir checklist §7)"]
+    GOOD -- Non --> REFINE["🔄 Affiner le prompt"]
     REFINE --> PROMPT
-
-    style START fill:#238636,color:#fff
-    style END fill:#238636,color:#fff
-    style PROMPT fill:#4a90d9,color:#fff
 ```
 
 ---
@@ -264,7 +252,6 @@ flowchart LR
     D --> GOOD
     E --> GOOD
 
-    style GOOD fill:#238636,color:#fff
 ```
 
 | Critère | Question à se poser |

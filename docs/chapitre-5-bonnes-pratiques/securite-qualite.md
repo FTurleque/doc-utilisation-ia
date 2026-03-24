@@ -213,46 +213,6 @@ graph TD
 
 ---
 
-## Ressources
-
-- [Best Practices](utilisation-effective.md)
-- [Organisation Code](organisation-code.md)
-- [Chapitre Installation](../chapitre-1-installation/index.md)
-    await createUser(user);
-    res.json(user);
-});
-
-// ✅ Avec validation des entrées
-import { z } from 'zod';
-
-const CreateUserSchema = z.object({
-    email: z.string().email(),
-    name: z.string().min(2).max(100),
-    role: z.enum(['USER', 'ADMIN'])
-});
-
-app.post('/users', (req, res) => {
-    const validated = CreateUserSchema.parse(req.body);  // Lance une erreur si invalide
-    await createUser(validated);
-    res.json(validated);
-});
-```
-
-### 4. Cryptographie faible
-
-```java
-// ❌ Copilot peut suggérer des algorithmes dépréciés
-MessageDigest md = MessageDigest.getInstance("MD5");  // MD5 est cassé
-byte[] hash = md.digest(password.getBytes());
-
-// ✅ Utiliser des algorithmes récents
-// Pour les mots de passe, utilisez BCrypt, Argon2, ou PBKDF2
-BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-String hashedPassword = encoder.encode(password);
-```
-
----
-
 ## Problèmes de licence et droits d'auteur
 
 ### Le risque
@@ -264,6 +224,7 @@ Copilot est entraîné sur du code public, dont certains sont sous licence restr
 **1. Activer le filtrage de code dupliqué** dans les paramètres GitHub Copilot :
 
 Sur [github.com/settings/copilot](https://github.com/settings/copilot) :
+
 - Activez **"Block suggestions matching public code"** (Duplication Detection)
 
 **2. Revue des séquences de code inhabituelles**
@@ -362,4 +323,4 @@ infrastructure/terraform/
 ## Prochaines étapes
 
 - [Performance & Ressources](performance.md) — Optimiser Copilot pour ne pas impacter l'IDE
-- [Troubleshooting](../chapitre-5-troubleshooting/index.md) — Résoudre les problèmes courants
+- [Troubleshooting](../chapitre-6-troubleshooting/index.md) — Résoudre les problèmes courants

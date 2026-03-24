@@ -396,7 +396,7 @@ Vous pouvez **redéfinir les raccourcis** Copilot.
 |----------|----------|
 | **Copilot ne suggère rien** | Vérifiez extension installée, authentifié, et `enableAutoCompletions: true` |
 | **Erreur d'authentification** | Sign out → Sign in (++ctrl+shift+p++ → "GitHub Copilot: Sign In") |
-| **Suggestions très mauvaises** | Lisez [Best Practices](../../chapitre-4-bonnes-pratiques/utilisation-effective.md), améliorez vos prompts |
+| **Suggestions très mauvaises** | Lisez [Best Practices](../../chapitre-5-bonnes-pratiques/utilisation-effective.md), améliorez vos prompts |
 | **Performance VS Code ralentie** | Réduisez `inlineSuggestCount`, désactivez pour certains langages gros fichiers |
 | **Chat n'apparaît pas** | Installez "GitHub Copilot Chat", rechargez VS Code |
 
@@ -406,7 +406,7 @@ Vous pouvez **redéfinir les raccourcis** Copilot.
 
 - **Docs officielles** : [docs.github.com/copilot](https://docs.github.com/en/copilot)
 - **Raccourcis VS Code** : ++ctrl+k++ ++ctrl+s++ (ouvre éditeur raccourcis)
-- **Extensions recommandées** : Voir [Chapitre 7 — CLI & Modes](../../chapitre-7-cli-modes/index.md)
+- **Extensions recommandées** : Voir [Chapitre 8 — CLI & Modes](../../chapitre-8-cli-modes/index.md)
 
 ---
 

@@ -1,4 +1,4 @@
-﻿# Performance & Ressources
+# Performance & Ressources
 
 <span class="badge-beginner">Débutant</span>
 
@@ -200,7 +200,7 @@ Le résultat retourné par le serveur (liste de tickets, rapport SonarQube, page
 | 2 | Appel MCP SonarQube → rapport d'analyse | +1 | +800 |
 | 3 | Appel MCP Jira → liste des projets | +1 | +300 |
 | 4 | Appel MCP Jira → création du ticket | +1 | +200 |
-| **Total** | | **4 requêtes** | **~1 800 tokens** |
+| **Total** | | **4 requêtes** | **~1 800 tokens** |
 
 Sans MCP, la même demande : **1 requête**, ~500 tokens.
 
@@ -231,7 +231,7 @@ En mode Agent, Copilot dispose déjà d'**outils intégrés** pour faire exactem
 | Documentation externe volumineuse | MCP Context7, Microsoft Docs |
 | Rapport qualité SonarQube | MCP SonarQube |
 
-Context7 apporte une vraie valeur en **sélectionnant les extraits pertinents** dans une documentation de 10 000 pages — ce qu'un agent ne peut pas faire nativement. Un MCP qui lit vos fichiers locaux, lui, est inutile et coûteux.
+Context7 apporte une vraie valeur en **sélectionnant les extraits pertinents** dans une documentation de 10 000 pages — ce qu'un agent ne peut pas faire nativement. Un MCP qui lit vos fichiers locaux, lui, est inutile et coûteux.
 
 ### Accéder à des fichiers hors du projet courant
 
@@ -277,5 +277,5 @@ L'agent peut lire et modifier des fichiers **uniquement dans les dossiers du wor
 
 ## Prochaines étapes
 
-- [Troubleshooting](../chapitre-5-troubleshooting/index.md) — Résoudre les problèmes courants
-- [Cas d'Usage](../chapitre-6-cas-usage/index.md) — Exemples par technologie
+- [Troubleshooting](../chapitre-6-troubleshooting/index.md) — Résoudre les problèmes courants
+- [Cas d'Usage](../chapitre-7-cas-usage/index.md) — Exemples par technologie

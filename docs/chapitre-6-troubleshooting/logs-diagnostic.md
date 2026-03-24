@@ -1,4 +1,4 @@
-﻿# Logs & Diagnostic
+# Logs & Diagnostic
 
 Lire les logs est la technique la plus fiable pour diagnostiquer un problème Copilot persistant. Ce guide explique comment accéder aux logs, ce qu'ils contiennent, et comment les interpréter.
 

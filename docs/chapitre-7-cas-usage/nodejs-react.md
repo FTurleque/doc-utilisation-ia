@@ -1,4 +1,4 @@
-﻿# Node.js & React — Cas d'Usage
+# Node.js & React — Cas d'Usage
 
 ## Stack couverte
 
