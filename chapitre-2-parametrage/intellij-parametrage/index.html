@@ -1,0 +1,4528 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation collectée sur l'utilisation de l'IA">
+      
+      
+        <meta name="author" content="FTurleque">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../vscode-parametrage/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>IntelliJ IDEA - Documentation IA avec GitHub Copilot</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#parametrage-complet-github-copilot-sur-intellij-idea" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Documentation IA avec GitHub Copilot" class="md-header__button md-logo" aria-label="Documentation IA avec GitHub Copilot" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation IA avec GitHub Copilot
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              IntelliJ IDEA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer en mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer en mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Accueil
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapitre-1-installation/" class="md-tabs__link">
+          
+  
+  
+  Installation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Paramétrage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapitre-3-contexte/" class="md-tabs__link">
+          
+  
+  
+  Contexte & Personnalisation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapitre-4-prompt-engineering/" class="md-tabs__link">
+          
+  
+  
+  Prompt Engineering
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapitre-5-bonnes-pratiques/" class="md-tabs__link">
+          
+  
+  
+  Bonnes Pratiques
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapitre-6-troubleshooting/" class="md-tabs__link">
+          
+  
+  
+  Troubleshooting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapitre-7-cas-usage/" class="md-tabs__link">
+          
+  
+  
+  Cas d'Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapitre-8-cli-modes/" class="md-tabs__link">
+          
+  
+  
+  Modes CLI
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../appendices/" class="md-tabs__link">
+          
+  
+  
+  Appendices
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentation IA avec GitHub Copilot" class="md-nav__button md-logo" aria-label="Documentation IA avec GitHub Copilot" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation IA avec GitHub Copilot
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    IntelliJ IDEA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visual Studio Code
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramétrage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Paramétrage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#acces-aux-parametres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accès aux paramètres
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accès aux paramètres">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-via-le-menu-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ Via le menu principal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-via-licone-dans-la-barre-detat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ Via l'icône dans la barre d'état
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-via-le-menu-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ Via le menu Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categories-des-parametres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Catégories des paramètres
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Catégories des paramètres">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 General
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 General">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentification-et-gestion-du-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentification et gestion du plugin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💬 Chat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💬 Chat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-des-agents-et-du-mode-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration des agents et du mode Chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent-max-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent Max Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anthropic-thinking-budget-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anthropic Thinking Budget Tokens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#completions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✏️ Completions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✏️ Completions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-des-completions-automatiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration des complétions automatiques
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 Customizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 Customizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instructions-personnalisees-pour-guider-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instructions personnalisées pour guider Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-chaque-parametre-apporte-et-ou-aller-plus-loin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que chaque paramètre apporte — et où aller plus loin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keymap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⌨️ Keymap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⌨️ Keymap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raccourcis-clavier-github-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raccourcis clavier GitHub Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-context-protocol-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Model Context Protocol (MCP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 Model Context Protocol (MCP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quest-ce-que-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qu'est-ce que MCP ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-sur-la-consommation-de-tokens-et-de-requetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact sur la consommation de tokens et de requêtes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌐 Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌐 Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profils-de-configuration-recommandes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profils de configuration recommandés
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profils de configuration recommandés">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#les-deux-axes-de-granularite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les deux axes de granularité
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tableau-comparatif-des-profils" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tableau comparatif des profils
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-debutant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🟢 Profil Débutant
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🟢 Profil Débutant">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-ceux-qui-decouvrent-copilot-et-veulent-un-maximum-daide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour ceux qui découvrent Copilot et veulent un maximum d'aide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-expert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔴 Profil Expert
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔴 Profil Expert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-les-developpeurs-experimentes-qui-veulent-le-controle-granulaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour les développeurs expérimentés qui veulent le contrôle granulaire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👥 Profil Équipe
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="👥 Profil Équipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-standardiser-la-configuration-dans-une-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour standardiser la configuration dans une équipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-avancee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration avancée
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration avancée">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichier-de-configuration-xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fichier de configuration XML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fichier de configuration XML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-les-reglages-non-exposes-dans-lui-editer-directement-le-fichier-xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour les réglages non exposés dans l'UI, éditer directement le fichier XML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pieges-a-eviter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pièges à éviter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaines-etapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaines étapes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparaison-parametres/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexte & Personnalisation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contexte & Personnalisation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Clés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instructions (.instructions.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/applyto-avance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    applyTo Avancé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/prompt-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Files (.prompt.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents (.agent.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills (SKILL.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/parametres-depot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramètres du Dépôt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/vscode-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code — Configuration Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/intellij-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA — Configuration Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-contexte/comparaison-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Engineering
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prompt Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-prompt-engineering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-prompt-engineering/fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-prompt-engineering/techniques-intermediaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Intermédiaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-prompt-engineering/techniques-avancees/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Avancées
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-prompt-engineering/avec-copilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompting avec Copilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bonnes Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bonnes Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-bonnes-pratiques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-bonnes-pratiques/utilisation-effective/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisation Effective
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-bonnes-pratiques/organisation-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Organisation du Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-bonnes-pratiques/productivite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Productivité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-bonnes-pratiques/securite-qualite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité & Qualité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-bonnes-pratiques/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance & Ressources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-troubleshooting/problemes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problèmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-troubleshooting/logs-diagnostic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logs & Diagnostic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-troubleshooting/comparaison-problemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Problèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cas d'Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/comparaison-ecosystemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/java-spring-boot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java & Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/nodejs-react/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & React
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/nodejs-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & Express
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/react-typescript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    React 19 & TypeScript
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-cas-usage/python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & FastAPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modes CLI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-cli-modes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-cli-modes/page-principale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI Détail
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-cli-modes/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/raccourcis-clavier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raccourcis Clavier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/ressources-externes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ressources Externes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/templates-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#acces-aux-parametres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Accès aux paramètres
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Accès aux paramètres">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-via-le-menu-principal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1️⃣ Via le menu principal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-via-licone-dans-la-barre-detat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2️⃣ Via l'icône dans la barre d'état
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-via-le-menu-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3️⃣ Via le menu Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categories-des-parametres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Catégories des paramètres
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Catégories des paramètres">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 General
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 General">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#authentification-et-gestion-du-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentification et gestion du plugin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💬 Chat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💬 Chat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-des-agents-et-du-mode-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration des agents et du mode Chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent-max-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent Max Requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anthropic-thinking-budget-tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anthropic Thinking Budget Tokens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#completions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✏️ Completions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✏️ Completions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-des-completions-automatiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration des complétions automatiques
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 Customizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📝 Customizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#instructions-personnalisees-pour-guider-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instructions personnalisées pour guider Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ce-que-chaque-parametre-apporte-et-ou-aller-plus-loin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce que chaque paramètre apporte — et où aller plus loin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keymap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⌨️ Keymap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⌨️ Keymap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#raccourcis-clavier-github-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raccourcis clavier GitHub Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-context-protocol-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Model Context Protocol (MCP)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 Model Context Protocol (MCP)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quest-ce-que-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qu'est-ce que MCP ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-sur-la-consommation-de-tokens-et-de-requetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact sur la consommation de tokens et de requêtes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🌐 Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🌐 Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quand-lutiliser_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand l'utiliser
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profils-de-configuration-recommandes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profils de configuration recommandés
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profils de configuration recommandés">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#les-deux-axes-de-granularite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les deux axes de granularité
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tableau-comparatif-des-profils" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tableau comparatif des profils
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-debutant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🟢 Profil Débutant
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🟢 Profil Débutant">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-ceux-qui-decouvrent-copilot-et-veulent-un-maximum-daide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour ceux qui découvrent Copilot et veulent un maximum d'aide
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-expert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔴 Profil Expert
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔴 Profil Expert">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-les-developpeurs-experimentes-qui-veulent-le-controle-granulaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour les développeurs expérimentés qui veulent le contrôle granulaire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#profil-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        👥 Profil Équipe
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="👥 Profil Équipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-standardiser-la-configuration-dans-une-equipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour standardiser la configuration dans une équipe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-avancee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration avancée
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration avancée">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fichier-de-configuration-xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fichier de configuration XML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fichier de configuration XML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pour-les-reglages-non-exposes-dans-lui-editer-directement-le-fichier-xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pour les réglages non exposés dans l'UI, éditer directement le fichier XML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pieges-a-eviter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pièges à éviter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaines-etapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaines étapes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Accueil
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Paramétrage
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="parametrage-complet-github-copilot-sur-intellij-idea"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0v24h24V0zm3.723 3.111h5v1.834h-1.39v6.277h1.39v1.834h-5v-1.834h1.444V4.945H3.723zm11.055 0H17v6.5c0 .612-.055 1.111-.222 1.556-.167.444-.39.777-.723 1.11-.277.279-.666.557-1.11.668a3.9 3.9 0 0 1-1.445.278c-.778 0-1.444-.167-1.944-.445a4.8 4.8 0 0 1-1.279-1.056l1.39-1.555a3.2 3.2 0 0 0 .833.722c.277.167.611.278.945.278.389 0 .721-.111 1-.389.221-.278.333-.667.333-1.278zM2.222 19.5h9V21h-9z"/></svg></span> Paramétrage Complet — GitHub Copilot sur IntelliJ IDEA<a class="headerlink" href="#parametrage-complet-github-copilot-sur-intellij-idea" title="Permanent link">&para;</a></h1>
+<p><span class="badge-intellij">IntelliJ IDEA</span> <span class="badge-intermediate">Intermédiaire</span></p>
+<div class="admonition info">
+<p class="admonition-title">Version 2025.3.4+</p>
+<p>Cette documentation s'applique à <strong>IntelliJ IDEA 2025.3.4 et versions récentes</strong>. L'interface GitHub Copilot a été structurée avec les catégories : General, Chat, Completions, Customizations, Keymap, MCP, Network. Les paramètres des versions antérieures diffèrent.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Raccourcis clavier — valeurs par défaut uniquement</p>
+<p>Tous les raccourcis mentionnés dans cette page correspondent aux <strong>valeurs par défaut</strong> d'IntelliJ IDEA. Selon votre keymap (AZERTY, IdeaVim, Emacs, schéma personnalisé d'entreprise), ces raccourcis peuvent ne pas fonctionner ou être mappés différemment. Consultez la <a href="#keymap">section Keymap</a> pour vérifier et adapter vos raccourcis.</p>
+</div>
+<h2 id="acces-aux-parametres">Accès aux paramètres<a class="headerlink" href="#acces-aux-parametres" title="Permanent link">&para;</a></h2>
+<p>Trois façons d'accéder aux paramètres GitHub Copilot :</p>
+<h3 id="1-via-le-menu-principal">1️⃣ Via le menu principal<a class="headerlink" href="#1-via-le-menu-principal" title="Permanent link">&para;</a></h3>
+<ol>
+<li><em>File → Settings</em> (Windows/Linux) ou <em>IntelliJ IDEA → Preferences</em> (macOS)</li>
+<li>Raccourci : <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-alt">Alt</kbd><span>+</span><kbd class="key-s">S</kbd></span> / <span class="keys"><kbd class="key-command">Cmd</kbd><span>+</span><kbd class="key-comma">,</kbd></span></li>
+<li>Cherchez <strong>GitHub Copilot</strong> dans le panneau de gauche et expandez-le</li>
+</ol>
+<h3 id="2-via-licone-dans-la-barre-detat">2️⃣ Via l'icône dans la barre d'état<a class="headerlink" href="#2-via-licone-dans-la-barre-detat" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cliquez sur l'icône Copilot en bas à droite de la fenêtre</li>
+<li>Sélectionnez <strong>"Open GitHub Copilot Settings"</strong></li>
+</ul>
+<h3 id="3-via-le-menu-tools">3️⃣ Via le menu Tools<a class="headerlink" href="#3-via-le-menu-tools" title="Permanent link">&para;</a></h3>
+<ul>
+<li><em>Tools → GitHub Copilot → Settings...</em></li>
+</ul>
+<p><strong>Page d'accueil des paramètres :</strong></p>
+<p>Une fois ouvert, vous voyez une page de catégorisation avec 6 catégories principales :</p>
+<p><img alt="Page d'accueil des paramètres GitHub Copilot" class="doc-screenshot" src="../../assets/images/intellij/settings-copilot.png" />
+<em>Catégories des paramètres GitHub Copilot</em></p>
+<hr />
+<h2 id="categories-des-parametres">Catégories des paramètres<a class="headerlink" href="#categories-des-parametres" title="Permanent link">&para;</a></h2>
+<p>Les paramètres GitHub Copilot sont organisés en 6 catégories principales. Explorez chaque section selon vos besoins :</p>
+<h3 id="general">🔧 General<a class="headerlink" href="#general" title="Permanent link">&para;</a></h3>
+<h4 id="authentification-et-gestion-du-plugin">Authentification et gestion du plugin<a class="headerlink" href="#authentification-et-gestion-du-plugin" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>GitHub Copilot account settings</strong> — Gérez votre compte GitHub, authentification device code flow ou custom enterprise URI</li>
+<li><strong>Plugin updates</strong> — Canal de mise à jour (Stable / Beta), vérification automatique</li>
+<li><strong>Send usage telemetry</strong> — Optionnel ; permet à GitHub d'améliorer Copilot</li>
+</ul>
+<p><img alt="Section General - Authentification et gestion du plugin" class="doc-screenshot" src="../../assets/images/intellij/general-copilot.png" />
+<em>Paramètres généraux : compte, mise à jour, authentification, télémétrie</em></p>
+<h4 id="quand-lutiliser">Quand l'utiliser<a class="headerlink" href="#quand-lutiliser" title="Permanent link">&para;</a></h4>
+<p>Lors de la première configuration, ou pour changer de compte GitHub.</p>
+<hr />
+<h3 id="chat">💬 Chat<a class="headerlink" href="#chat" title="Permanent link">&para;</a></h3>
+<h4 id="configuration-des-agents-et-du-mode-chat">Configuration des agents et du mode Chat<a class="headerlink" href="#configuration-des-agents-et-du-mode-chat" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Enable Auto Model</strong> — Sélectionne automatiquement le meilleur modèle pour votre requête</li>
+<li><strong>Natural Language</strong> — Langue des interactions (français, anglais, etc.)</li>
+<li><strong>Diff View Mode</strong> — Comment afficher les différences (inline, side-by-side)</li>
+<li><strong>Auto-accept Delay</strong> — Temps avant acceptation automatique (0 = désactivé)</li>
+<li><strong>Auto-scroll to bottom</strong> — Remonte automatiquement au dernier message</li>
+<li><strong>Show inline chat gutter icon</strong> — Affiche l'icône du chat inline</li>
+</ul>
+<p><img alt="Section Chat &gt; General - Configuration du mode Chat" class="doc-screenshot" src="../../assets/images/intellij/chat-copilot-1.png" />
+<em>Paramètres généraux du Chat : auto-model, langue, affichage</em></p>
+<p><strong>Mode Agent (avancé) :</strong></p>
+<ul>
+<li><strong>Enable Agent mode</strong> — Autorise Copilot à exécuter des commandes autonomes</li>
+<li><strong>Enable Custom Agent</strong> — Active les agents personnalisés définis dans <code>AGENTS.md</code></li>
+<li><strong>Enable Coding Agent</strong> — Active les actions de génération/modification de code</li>
+<li><strong>Enable Subaagent</strong> — Permet aux agents d'invoquer d'autres agents</li>
+<li><strong>Enable Skills</strong> — Active les compétences spécialisées</li>
+<li><strong>Enable Code Review</strong> — Active les revues de code assistées</li>
+</ul>
+<h4 id="agent-max-requests">Agent Max Requests<a class="headerlink" href="#agent-max-requests" title="Permanent link">&para;</a></h4>
+<p>Quand le mode Agent est actif, Copilot peut effectuer des <strong>actions autonomes enchaînées</strong> : lire des fichiers, écrire du code, appeler des outils MCP, exécuter des commandes terminal. Chacune de ces actions compte comme <strong>1 requête</strong> dans le compteur.</p>
+<p>Ce paramètre fixe une limite haute pour une session d'agent. Il sert à deux choses :</p>
+<ol>
+<li><strong>Protéger contre les boucles infinies</strong> : un agent mal configuré ou confronté à un problème ambiguë peut s'emballer et consommer du quota silencieusement.</li>
+<li><strong>Contrôler la consommation</strong> : chaque requête consomme des tokens sur votre abonnement GitHub Copilot.</li>
+</ol>
+<p><strong>Valeur par défaut :</strong> 250</p>
+<table>
+<thead>
+<tr>
+<th>Profil</th>
+<th>Valeur recommandée</th>
+<th>Cas d'usage typique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Débutant</td>
+<td>50–100</td>
+<td>Tâches simples, génération de méthodes isolées</td>
+</tr>
+<tr>
+<td>Développeur solo</td>
+<td>150–250</td>
+<td>Refactoring de classes, génération de tests</td>
+</tr>
+<tr>
+<td>Expert / migrations</td>
+<td>250–500</td>
+<td>Réécriture multi-fichiers, migrations complexes</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Bonne pratique</p>
+<p>Commencez avec 100–150. Si vos sessions d'agent sont systématiquement interrompues avant la fin, augmentez progressivement. Une valeur trop haute ne garantit pas de meilleures réponses — elle augmente seulement le risque de dérives non surveillées.</p>
+</div>
+<h4 id="anthropic-thinking-budget-tokens">Anthropic Thinking Budget Tokens<a class="headerlink" href="#anthropic-thinking-budget-tokens" title="Permanent link">&para;</a></h4>
+<p>Ce paramètre s'applique <strong>exclusivement aux modèles Claude (Anthropic)</strong>. Il ne concerne pas GPT-4.x ou les autres modèles OpenAI.</p>
+<p><strong>Qu'est-ce que le "Extended Thinking" ?</strong></p>
+<p>Claude (contrairement à GPT) peut activer un mode de <strong>raisonnement étendu</strong> avant de formuler sa réponse. Pendant cette phase, le modèle "réfléchit" en interne : il décompose le problème, explore plusieurs pistes, vérifie sa cohérence — tout cela de manière invisible pour l'utilisateur. Ce processus consomme des tokens qui ne font <strong>pas partie</strong> de la réponse finale visible.</p>
+<p>Le paramètre <code>Anthropic Thinking Budget Tokens</code> contrôle le <strong>budget maximal de tokens</strong> alloué à cette phase de réflexion interne.</p>
+<p><strong>Valeur par défaut :</strong> 1 024 tokens</p>
+<table>
+<thead>
+<tr>
+<th>Tâche</th>
+<th>Budget recommandé</th>
+<th>Remarque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Questions simples, complétion de code</td>
+<td>1 024 (défaut)</td>
+<td>Suffisant dans 90% des cas</td>
+</tr>
+<tr>
+<td>Debug multi-fichiers, analyse de stack trace</td>
+<td>2 048–4 096</td>
+<td>Améliore la précision du diagnostic</td>
+</tr>
+<tr>
+<td>Refactoring d'architecture, conception de classes</td>
+<td>4 096–8 192</td>
+<td>Utile si les réponses semblent trop superficielles</td>
+</tr>
+<tr>
+<td>Migrations complexes, analyse de codebase entier</td>
+<td>8 192</td>
+<td>Réserver aux tâches vraiment complexes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Différence avec GPT :</strong> les modèles GPT-4.x ne disposent pas de ce mécanisme de thinking étendu. Ce paramètre est sans effet si vous n'utilisez pas Claude comme modèle actif.</p>
+<div class="admonition tip">
+<p class="admonition-title">Éviter les pertes de tokens</p>
+<p>Un budget élevé ne garantit pas une meilleure réponse si la tâche est simple — les tokens de raisonnement seront consommés inutilement. Calibrez ce paramètre selon la <strong>complexité réelle</strong> de vos interactions habituelles. Pour un usage quotidien standard, 1 024–2 048 est le bon équilibre entre qualité et consommation.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Impact sur la consommation</p>
+<p>Augmenter le thinking budget augmente la consommation de tokens de votre abonnement Copilot, même si la réponse affichée semble identique. En cas de quota limité (plan Copilot Individual), préférez garder la valeur par défaut et n'augmentez que ponctuellement.</p>
+</div>
+<p><img alt="Section Chat &gt; Agent - Configuration des agents" class="doc-screenshot" src="../../assets/images/intellij/chat-copilot-2.png" />
+<em>Mode Agent : activation des agents personnalisés, skills, et code review</em></p>
+<p><strong>Auto-approve (expérimental) :</strong></p>
+<ul>
+<li><strong>Auto-approve</strong> — Valide automatiquement les modifications suggérées</li>
+<li><strong>Terminal Auto-approve</strong> — Approuve automatiquement les commandes du terminal</li>
+<li><strong>Edits Auto-approve</strong> — Approuve les modifications de fichiers (avec patterns de confiance)</li>
+<li><strong>MCP Tool Auto-approve</strong> — Approuve les appels d'outils MCP</li>
+</ul>
+<p><img alt="Section Chat &gt; Auto-approve - Configuration de l'auto-approbation" class="doc-screenshot" src="../../assets/images/intellij/chat-copilot-3.png" />
+<em>Auto-approve : automatisation des validations pour modifications, terminal, et fichiers</em></p>
+<h4 id="quand-lutiliser_1">Quand l'utiliser<a class="headerlink" href="#quand-lutiliser_1" title="Permanent link">&para;</a></h4>
+<p>Configuration personnalisée du Chat, activation des agents et de la revue de code.</p>
+<hr />
+<h3 id="completions">✏️ Completions<a class="headerlink" href="#completions" title="Permanent link">&para;</a></h3>
+<h4 id="configuration-des-completions-automatiques">Configuration des complétions automatiques<a class="headerlink" href="#configuration-des-completions-automatiques" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Automatically show completions</strong> — Active/désactive les suggestions pendant la frappe</li>
+<li><strong>Enable Next Edit Suggestions (NES)</strong> — Propose la prochaine édition logique</li>
+<li><strong>Show IDE completions side-by-side</strong> — Affiche les suggestions IDE et Copilot ensemble</li>
+<li><strong>Show multiple code suggestions</strong> — Propose plusieurs variantes</li>
+<li><strong>Model for completions</strong> — Sélectionne le modèle (GPT-4.1 Copilot par défaut)</li>
+</ul>
+<p><img alt="Section Completions - Configuration des suggestions automatiques" class="doc-screenshot" src="../../assets/images/intellij/completions-copilot.png" />
+<em>Paramètres des complétions : auto-show, NES, affichage side-by-side, model</em></p>
+<p><strong>Langages</strong> :</p>
+<ul>
+<li><strong>Enabled languages for completions</strong> — Liste des langages supportés (Java, Python, C#, JavaScript, SQL, etc.)</li>
+<li>Les langages cochés reçoivent les suggestions</li>
+<li>Décochez pour désactiver Copilot sur des fichiers sensibles (<code>.env</code>, configuration critique)</li>
+</ul>
+<h4 id="quand-lutiliser_2">Quand l'utiliser<a class="headerlink" href="#quand-lutiliser_2" title="Permanent link">&para;</a></h4>
+<p>Pour contrôler quand et où Copilot propose des suggestions.</p>
+<hr />
+<h3 id="customizations">📝 Customizations<a class="headerlink" href="#customizations" title="Permanent link">&para;</a></h3>
+<h4 id="instructions-personnalisees-pour-guider-copilot">Instructions personnalisées pour guider Copilot<a class="headerlink" href="#instructions-personnalisees-pour-guider-copilot" title="Permanent link">&para;</a></h4>
+<p>La section Customizations est le <strong>pont entre le paramétrage de l'IDE et la personnalisation intelligente de Copilot</strong>. Elle regroupe tous les mécanismes qui permettent d'injecter du contexte permanent dans les interactions : règles de style, comportements attendus, agents spécialisés, templates de prompts.</p>
+<p>Ces paramètres ont un impact direct sur la <strong>qualité et la cohérence des réponses</strong>. Un Copilot sans Customizations répond de façon générique ; un Copilot bien configuré connaît vos conventions d'équipe, votre stack technique, et adopte le bon comportement sans avoir à le répéter à chaque requête.</p>
+<ul>
+<li><strong>Copilot Instructions</strong> — Directive globale permanente (ex: "Utilise toujours les async/await en TypeScript")</li>
+<li><strong>Instruction Files</strong> — Fichiers <code>.instructions.md</code> à appliquer par contexte (<code>applyTo</code> par pattern de fichier ou de dossier)</li>
+<li><strong>Git Commit Instructions</strong> — Instructions pour standardiser le format des messages de commit</li>
+<li><strong>AGENTS.md</strong> — Définit des agents personnalisés pour le Chat (rôles, outils, comportements)</li>
+<li><strong>CLAUDE.md</strong> — Configuration spécifique du modèle Claude (expérimental)</li>
+<li><strong>Prompt Files</strong> — Modèles réutilisables pour des tâches répétitives (revue de code, génération de tests…)</li>
+<li><strong>Chat Agents</strong> — Ajoute des agents personnalisés au niveau du workspace</li>
+<li><strong>Skills (<code>SKILL.md</code>)</strong> — Compétences spécialisées invocables depuis le Chat ; IntelliJ les charge en <strong>lecture seule</strong> (les utiliser, pas les créer depuis l'IDE)</li>
+</ul>
+<p><img alt="Section Customizations - Instructions et configurations personnalisées" class="doc-screenshot" src="../../assets/images/intellij/customizations-copilot.png" />
+<em>Customizations : instructions, AGENTS.md, CLAUDE.md, prompt files, chat agents, skills</em></p>
+<h4 id="ce-que-chaque-parametre-apporte-et-ou-aller-plus-loin">Ce que chaque paramètre apporte — et où aller plus loin<a class="headerlink" href="#ce-que-chaque-parametre-apporte-et-ou-aller-plus-loin" title="Permanent link">&para;</a></h4>
+<p>Chaque sous-paramètre correspond à un mécanisme documenté en détail dans le <strong><a href="../../chapitre-3-contexte/">Contexte &amp; Personnalisation</a></strong>. Ce chapitre explique comment créer, structurer et combiner ces fichiers pour obtenir un Copilot parfaitement adapté à votre projet.</p>
+<table>
+<thead>
+<tr>
+<th>Paramètre Customizations</th>
+<th>Ce que ça apporte</th>
+<th>Documentation détaillée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Copilot Instructions</strong></td>
+<td>Règle globale appliquée à toutes les conversations, sans avoir à la répéter</td>
+<td><a href="../../chapitre-3-contexte/instructions/">Instructions Copilot</a></td>
+</tr>
+<tr>
+<td><strong>Instruction Files</strong></td>
+<td>Règles ciblées sur des fichiers spécifiques via <code>applyTo</code> (ex: appliquer des conventions Java uniquement aux <code>.java</code>)</td>
+<td><a href="../../chapitre-3-contexte/instructions/">Instructions Copilot</a></td>
+</tr>
+<tr>
+<td><strong>Git Commit Instructions</strong></td>
+<td>Messages de commit cohérents et conformes à vos conventions (Conventional Commits, ticket Jira…)</td>
+<td><a href="../../chapitre-3-contexte/instructions/">Instructions Copilot</a></td>
+</tr>
+<tr>
+<td><strong>AGENTS.md</strong></td>
+<td>Crée des agents avec un rôle, des outils et des instructions dédiés (ex: agent "Reviewer", agent "Test Generator")</td>
+<td><a href="../../chapitre-3-contexte/agents/">Agents Copilot</a></td>
+</tr>
+<tr>
+<td><strong>Prompt Files</strong></td>
+<td>Sauvegarde des prompts complexes sous forme de templates invocables depuis le Chat</td>
+<td><a href="../../chapitre-3-contexte/prompt-files/">Prompt Files</a></td>
+</tr>
+<tr>
+<td><strong>Chat Agents</strong></td>
+<td>Ajoute des agents personnalisés directement dans le sélecteur de mode du Chat (niveau workspace)</td>
+<td><a href="../../chapitre-3-contexte/agents/">Agents Copilot</a></td>
+</tr>
+<tr>
+<td><strong>Skills (<code>SKILL.md</code>)</strong></td>
+<td>Modules de connaissance spécialisée (ex: standards API, sécurité, domaine métier) invocables dans le Chat via <code>copilot-skill://</code>. IntelliJ les utilise en <strong>lecture seule</strong> — ils se créent dans VS Code ou manuellement, mais fonctionnent dans les deux IDEs</td>
+<td><a href="../../chapitre-3-contexte/skills/">Skills Copilot</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">La maîtrise des Customizations est le vrai levier de productivité</p>
+<p>Les paramètres de Completions et de Chat sont des réglages de confort. Les Customizations, elles, définissent <strong>comment Copilot comprend votre projet</strong>. Consultez le <a href="../../chapitre-3-contexte/">Chapitre 3 — Contexte &amp; Personnalisation</a> pour configurer ces mécanismes et transformer Copilot en véritable assistant de votre codebase.</p>
+</div>
+<p><strong>Quand l'utiliser :</strong> Standardisation d'équipe, amélioration de la cohérence des suggestions.</p>
+<hr />
+<h3 id="keymap">⌨️ Keymap<a class="headerlink" href="#keymap" title="Permanent link">&para;</a></h3>
+<h4 id="raccourcis-clavier-github-copilot">Raccourcis clavier GitHub Copilot<a class="headerlink" href="#raccourcis-clavier-github-copilot" title="Permanent link">&para;</a></h4>
+<p>Vérifiez et personnalisez les raccourcis clavier en naviguant vers <em>Keymap → GitHub Copilot</em> (Windows/Linux) ou <em>Preferences → Keymap</em> (macOS).</p>
+<p><strong>Raccourcis courants :</strong></p>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Raccourci (défaut)</th>
+<th>Customisable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Copilot Completion</td>
+<td><span class="keys"><kbd class="key-alt">Alt</kbd><span>+</span><kbd class="key-backslash">\</kbd></span></td>
+<td>✅ Oui</td>
+</tr>
+<tr>
+<td>Copilot Chat</td>
+<td><span class="keys"><kbd class="key-alt">Alt</kbd><span>+</span><kbd class="key-l">L</kbd></span></td>
+<td>✅ Oui</td>
+</tr>
+<tr>
+<td>Copilot Inline Chat</td>
+<td><span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-k">K</kbd></span></td>
+<td>✅ Oui</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">⚠️ Attention</p>
+<p>Les raccourcis clavier <strong>dépendent de votre configuration</strong>. Si vous utilisez un clavier AZERTY ou avez personnalisé les raccourcis, les touches réelles peuvent différer. Vérifiez toujours sous <em>Keymap → GitHub Copilot</em>.</p>
+</div>
+<h4 id="quand-lutiliser_3">Quand l'utiliser<a class="headerlink" href="#quand-lutiliser_3" title="Permanent link">&para;</a></h4>
+<p>Lors de la configuration initiale ou pour adapter les raccourcis à votre workflow.</p>
+<hr />
+<h3 id="model-context-protocol-mcp">🔗 Model Context Protocol (MCP)<a class="headerlink" href="#model-context-protocol-mcp" title="Permanent link">&para;</a></h3>
+<h4 id="quest-ce-que-mcp">Qu'est-ce que MCP ?<a class="headerlink" href="#quest-ce-que-mcp" title="Permanent link">&para;</a></h4>
+<p>Model Context Protocol est un <strong>protocole standard</strong> qui permet à Copilot d'intégrer et d'utiliser des <strong>outils et des données externes</strong> directement dans le Chat. Avec MCP, vous pouvez :</p>
+<ul>
+<li>Connecter des bases de données, APIs, et services externes</li>
+<li>Accéder à des documentations externalisées</li>
+<li>Exécuter des commandes système</li>
+<li>Interroger des outils comme SonarQube, Notion, Atlassian Jira, Stack Overflow, etc.</li>
+</ul>
+<p><strong>Exemple :</strong> Copilot peut interroger votre base de données pour optimiser une requête SQL, ou consulter la documentation Microsoft Learn directement dans le Chat.</p>
+<p><strong>Installation de MCPs :</strong></p>
+<p>Les serveurs MCP sont disponibles sur le <strong>registre officiel GitHub</strong> : https://github.com/modelcontextprotocol/servers</p>
+<p>Les MCPs se configurent dans un fichier JSON (localisation selon l'IDE).</p>
+<p><strong>Types de connexion MCP :</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>stdio</strong></td>
+<td>Communication locale via ligne de commande</td>
+<td>npx @upstash/context7-mcp, uvx markitdown-mcp</td>
+</tr>
+<tr>
+<td><strong>http</strong></td>
+<td>Communication HTTP à distance</td>
+<td>Services cloud (Notion, Jira, SonarQube)</td>
+</tr>
+<tr>
+<td><strong>docker</strong></td>
+<td>Exécution containerisée</td>
+<td>SonarQube via Docker</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MCPs officiellement disponibles :</strong></p>
+<ul>
+<li><strong>Context7</strong> (Upstash) — Contexte et recherche étendue</li>
+<li><strong>Markitdown</strong> (Microsoft) — Conversion de documents</li>
+<li><strong>Notion MCP</strong> (Makenotion) — Accès aux bases Notion</li>
+<li><strong>Desktop Commander</strong> — Contrôle du système de fichiers</li>
+<li><strong>Dependency Management</strong> (Sonatype) — Gestion des dépendances Maven/NPM</li>
+<li><strong>SonarQube</strong> — Analyse de qualité de code</li>
+<li><strong>Microsoft Docs</strong> — Documentation officielle Microsoft</li>
+<li><strong>Stackoverflow MCP</strong> — Recherche programmée Stack Overflow</li>
+<li><strong>Atlassian MCP</strong> — Intégrations Jira, Confluence</li>
+<li><strong>DBHub</strong> (Bytebase) — Requêtes et gestion bases de données</li>
+<li><strong>ContextStream</strong> — Intégration de streams de contenu</li>
+<li><strong>Guru</strong> — Base de connaissance Guru</li>
+<li>Et bien d'autres...</li>
+</ul>
+<h4 id="impact-sur-la-consommation-de-tokens-et-de-requetes">Impact sur la consommation de tokens et de requêtes<a class="headerlink" href="#impact-sur-la-consommation-de-tokens-et-de-requetes" title="Permanent link">&para;</a></h4>
+<p>L'utilisation d'un serveur MCP a un <strong>double impact</strong> sur votre quota Copilot, qu'il est important de comprendre avant d'activer plusieurs MCPs simultanément.</p>
+<p><strong>1. Chaque appel d'outil MCP = 1 requête</strong></p>
+<p>Lorsque Copilot invoque un outil MCP (ex. interroger Jira, effectuer une recherche dans la doc, exécuter une requête SQL), cette invocation est comptabilisée comme <strong>une requête individuelle</strong> dans votre compteur d'utilisation GitHub Copilot — exactement comme si vous posiez une question dans le Chat. Sur un plan Free ou Pro avec un quota mensuel, les appels MCP s'accumulent si Copilot les enchaîne en mode Agent.</p>
+<p><strong>2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés</strong></p>
+<p>Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQube, résultat de requête SQL, page de documentation) est transmis directement au modèle IA dans la <strong>fenêtre de contexte</strong>. Plus la réponse est volumineuse, plus elle consomme de tokens — réduisant d'autant l'espace disponible pour votre code et vos instructions.</p>
+<p><strong>Exemple d'escalade en mode Agent</strong></p>
+<table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Déclencheur</th>
+<th>Requêtes</th>
+<th>Tokens estimés</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Question utilisateur : « Analyse ce composant et ouvre un ticket Jira »</td>
+<td>+1</td>
+<td>~500 (question + contexte)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Appel MCP SonarQube → rapport d'analyse retourné</td>
+<td>+1</td>
+<td>+800 (rapport injecté)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Appel MCP Jira → liste des projets disponibles</td>
+<td>+1</td>
+<td>+300 (liste injectée)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Appel MCP Jira → création du ticket + confirmation</td>
+<td>+1</td>
+<td>+200 (réponse API)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>4 requêtes</strong></td>
+<td><strong>~1 800 tokens</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Sans MCP, la même demande aurait coûté <strong>1 requête</strong> et ~500 tokens.</p>
+<div class="admonition tip">
+<p class="admonition-title">Bonnes pratiques — maîtriser la consommation MCP</p>
+<p>Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requetes et tokens. Consultez le guide complet : <a href="../../chapitre-5-bonnes-pratiques/performance/#maitriser-la-consommation-mcp">Performance &amp; Ressources → Maîtriser la consommation MCP</a> (code browsing, règle d'or, accès aux fichiers hors projet).</p>
+</div>
+<p><strong>Quand l'utiliser :</strong> Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).</p>
+<p><strong>Ressources utiles :</strong>
+- <a href="https://github.com/modelcontextprotocol/servers">Registry GitHub MCP</a> — Tous les serveurs disponibles
+- Documentation officielle MCP — Pour configuration détaillée</p>
+<hr />
+<h3 id="network">🌐 Network<a class="headerlink" href="#network" title="Permanent link">&para;</a></h3>
+<p><strong>Paramètres réseau et proxy :</strong></p>
+<p>Configuration des connexions réseau, proxy, et certificats SSL (rarement nécessaire sauf en entreprise).</p>
+<h4 id="quand-lutiliser_4">Quand l'utiliser<a class="headerlink" href="#quand-lutiliser_4" title="Permanent link">&para;</a></h4>
+<p>Environnements d'entreprise avec proxy obligatoire.</p>
+<h2 id="profils-de-configuration-recommandes">Profils de configuration recommandés<a class="headerlink" href="#profils-de-configuration-recommandes" title="Permanent link">&para;</a></h2>
+<p>Copilot est un outil à double tranchant : mal calibré, il peut devenir <strong>intrusif</strong> (suggestions constantes qui brisent la concentration) ou au contraire <strong>trop discret</strong> (aucune aide visible). Ces trois profils offrent des points de départ calibrés selon votre expérience et votre contexte de travail.</p>
+<h3 id="les-deux-axes-de-granularite">Les deux axes de granularité<a class="headerlink" href="#les-deux-axes-de-granularite" title="Permanent link">&para;</a></h3>
+<p><strong>1. Automatisme des suggestions (Completions)</strong>
+Contrôle si Copilot propose des suggestions automatiquement pendant la frappe ou seulement sur demande explicite. En mode automatique, chaque pause de saisie déclenche une suggestion — pratique en apprentissage, potentiellement gênant sur du code complexe où la concentration est prioritaire.</p>
+<p><strong>2. Niveau d'autonomie de l'agent (Chat → Agent mode)</strong>
+Détermine si Copilot se limite à des suggestions passives ou peut agir de façon autonome : lire des fichiers, écrire du code, exécuter des commandes. Le mode agent offre une productivité maximale mais nécessite une <strong>confiance établie</strong> dans les suggestions générées — d'où l'importance de bien configurer les Customizations avant de l'activer.</p>
+<h3 id="tableau-comparatif-des-profils">Tableau comparatif des profils<a class="headerlink" href="#tableau-comparatif-des-profils" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Critère</th>
+<th>🟢 Débutant</th>
+<th>🔴 Expert</th>
+<th>👥 Équipe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Suggestions automatiques</td>
+<td>✅ Maximum</td>
+<td>⚠️ Manuel</td>
+<td>✅ Activé</td>
+</tr>
+<tr>
+<td>Mode Agent</td>
+<td>❌ Désactivé</td>
+<td>✅ Complet</td>
+<td>✅ Activé</td>
+</tr>
+<tr>
+<td>Auto-approve</td>
+<td>❌</td>
+<td>❌ Manuel</td>
+<td>❌ Désactivé</td>
+</tr>
+<tr>
+<td>Customizations</td>
+<td>Minimales</td>
+<td>Fines et ciblées</td>
+<td>Partagées (workspace)</td>
+</tr>
+<tr>
+<td>Langages actifs</td>
+<td>Tous</td>
+<td>Sélectifs</td>
+<td>Projet uniquement</td>
+</tr>
+<tr>
+<td>Idéal pour</td>
+<td>Apprentissage, découverte</td>
+<td>Contrôle maximal</td>
+<td>Cohérence d'équipe</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Ces profils sont des points de départ</p>
+<p>Ne les appliquez pas tels quels sans les adapter à votre workflow. Activez progressivement les fonctionnalités avancées (Agent mode, Auto-approve) à mesure que vous gagnez en confiance.</p>
+</div>
+<hr />
+<h3 id="profil-debutant">🟢 Profil Débutant<a class="headerlink" href="#profil-debutant" title="Permanent link">&para;</a></h3>
+<h4 id="pour-ceux-qui-decouvrent-copilot-et-veulent-un-maximum-daide">Pour ceux qui découvrent Copilot et veulent un maximum d'aide<a class="headerlink" href="#pour-ceux-qui-decouvrent-copilot-et-veulent-un-maximum-daide" title="Permanent link">&para;</a></h4>
+<p><strong>Completions :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>✅ Automatically show completions : Activé
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>✅ Enable Next Edit Suggestions : Activé
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>✅ Show IDE completions side-by-side : Activé
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>✅ Model : GPT-4.1 Copilot
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>✅ Enabled languages : Tous (ou au moins votre langage principal)
+</code></pre></div></p>
+<p><strong>Chat :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>✅ Enable Auto Model : Activé
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>✅ Enable Coding Agent : Activé
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>✅ Enable Skills : Activé
+</code></pre></div></p>
+<p><strong>Customizations :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>⚠️  Copilot Instructions : À personnaliser selon vos préférences
+</code></pre></div></p>
+<h3 id="profil-expert">🔴 Profil Expert<a class="headerlink" href="#profil-expert" title="Permanent link">&para;</a></h3>
+<h4 id="pour-les-developpeurs-experimentes-qui-veulent-le-controle-granulaire">Pour les développeurs expérimentés qui veulent le contrôle granulaire<a class="headerlink" href="#pour-les-developpeurs-experimentes-qui-veulent-le-controle-granulaire" title="Permanent link">&para;</a></h4>
+<p><strong>Completions :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>⚠️  Automatically show completions : Désactivé (déclenchement manuel avec alt+\)
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>✅ Enable Next Edit Suggestions : Désactivé
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>✅ Show multiple code suggestions : Désactivé
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>✅ Model : GPT-4.1 Copilot
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>✅ Enabled languages : Sélectifs (ex: Java, Python; désactiver .env, YAML config)
+</code></pre></div></p>
+<p><strong>Chat :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>✅ Enable Auto Model : Activé
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>✅ Enable Agent mode : Activé
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>✅ Enable Custom Agent : Activé
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>✅ Enable Code Review : Activé
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>✅ Auto-approve : Désactivé (approbation manuelle)
+</code></pre></div></p>
+<p><strong>Customizations :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>✅ Copilot Instructions : Personnalisées finement
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>✅ AGENTS.md : Configurés avec des agents personnalisés
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>✅ Prompt Files : Définis pour les tâches répétitives
+</code></pre></div></p>
+<h3 id="profil-equipe">👥 Profil Équipe<a class="headerlink" href="#profil-equipe" title="Permanent link">&para;</a></h3>
+<h4 id="pour-standardiser-la-configuration-dans-une-equipe">Pour standardiser la configuration dans une équipe<a class="headerlink" href="#pour-standardiser-la-configuration-dans-une-equipe" title="Permanent link">&para;</a></h4>
+<p><strong>Completions :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>✅ Automatically show completions : Activé
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>✅ Show IDE completions side-by-side : Activé
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>✅ Enabled languages : Ceux du projet (désactiver .env, secrets.*, *credentials*)
+</code></pre></div></p>
+<p><strong>Chat :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>✅ Enable Auto Model : Activé
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>✅ Enable Coding Agent : Activé
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>✅ Enable Agent mode : Activé
+</code></pre></div></p>
+<p><strong>Customizations (IMPORTANT - Workspace level) :</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>✅ Copilot Instructions : Instructions de l&#39;équipe (ex: coding standards)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>✅ AGENTS.md : Agents partagés
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>✅ CLAUDE.md : Configuration projet
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>✅ Prompt Files : Templates standardisés
+</code></pre></div></p>
+<div class="admonition tip">
+<p class="admonition-title">Partage de settings en équipe</p>
+<p>Committez les fichiers <code>.idea/copilot.xml</code> ou les fichiers <code>AGENTS.md</code> / <code>CLAUDE.md</code> dans votre repository pour synchroniser la config à toute l'équipe. Consultez la documentation JetBrains sur <em>File → Manage IDE Settings</em> pour les options de partage plus avancées.</p>
+</div>
+<hr />
+<h2 id="configuration-avancee">Configuration avancée<a class="headerlink" href="#configuration-avancee" title="Permanent link">&para;</a></h2>
+<p>L'interface graphique d'IntelliJ n'expose pas la totalité des paramètres du plugin GitHub Copilot. Certains réglages fins — délai avant l'affichage des suggestions, comportements expérimentaux, flags de fonctionnalités en preview — ne sont accessibles que via le <strong>fichier XML de configuration</strong> généré par l'IDE.</p>
+<p>Cas d'usage typiques :</p>
+<ul>
+<li><strong>Régler le <code>completionDelay</code></strong> : augmenter ce délai réduit les suggestions intempestives pendant la saisie rapide, sans désactiver complètement les complétions automatiques.</li>
+<li><strong>Activer des fonctionnalités expérimentales</strong> : certaines features sont en preview et non encore exposées dans l'UI.</li>
+<li><strong>Diagnostic comparatif</strong> : comparer les valeurs entre deux installations (postes dev vs. CI) pour identifier des incohérences de comportement.</li>
+</ul>
+<h3 id="fichier-de-configuration-xml">Fichier de configuration XML<a class="headerlink" href="#fichier-de-configuration-xml" title="Permanent link">&para;</a></h3>
+<h4 id="pour-les-reglages-non-exposes-dans-lui-editer-directement-le-fichier-xml">Pour les réglages non exposés dans l'UI, éditer directement le fichier XML<a class="headerlink" href="#pour-les-reglages-non-exposes-dans-lui-editer-directement-le-fichier-xml" title="Permanent link">&para;</a></h4>
+<p><strong>Localisation :</strong></p>
+<ul>
+<li>Windows : <code>%APPDATA%\JetBrains\&lt;version&gt;\options\github-copilot.xml</code></li>
+<li>macOS : <code>~/Library/Application Support/JetBrains/&lt;version&gt;/options/github-copilot.xml</code></li>
+<li>Linux : <code>~/.config/JetBrains/&lt;version&gt;/options/github-copilot.xml</code></li>
+</ul>
+<p><strong>Exemple :</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">&lt;application&gt;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">&lt;component</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CopilotApplicationSettings&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="nt">&lt;option</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;isEnabled&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nt">&lt;option</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;automaticCompletionsEnabled&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nt">&lt;option</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;completionDelay&quot;</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;400&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="nt">&lt;/component&gt;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nt">&lt;/application&gt;</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">⚠️ Édition manuelle</p>
+<p>Fermez IntelliJ avant de modifier ce fichier. Une syntaxe XML incorrecte peut corrompre les paramètres.</p>
+</div>
+<hr />
+<h2 id="pieges-a-eviter">Pièges à éviter<a class="headerlink" href="#pieges-a-eviter" title="Permanent link">&para;</a></h2>
+<div class="admonition danger">
+<p class="admonition-title">Erreurs de configuration courantes</p>
+<p><strong>1. Oublier d'activer Agent mode pour utiliser les custom agents</strong>
+Si vous définissez un <code>AGENTS.md</code> personnalisé mais n'activez pas <em>Chat → Enable Agent mode</em>, l'agent ne sera pas disponible.
+✅ Vérifiez que <em>Enable Agent mode</em> est coché dans Chat.</p>
+<p><strong>2. Désactiver les langages sans vouloir</strong>
+Dans Completions → Enabled languages, tous les langages doivent être cochés par défaut. Si vous en décrochez par erreur, les suggestions seront bloquées.
+✅ Vérifiez que votre langage principal est coché.</p>
+<p><strong>3. Utiliser des instructions personnalisées conflictuelles</strong>
+Si vous avez des instructions dans Copilot Instructions ET dans <code>CLAUDE.md</code>, elles peuvent entrer en conflit.
+✅ Préférez <code>CLAUDE.md</code> pour les configurations projet (plus spécifiques).</p>
+<p><strong>4. Auto-approve trop agressif</strong>
+Activer <em>Auto-approve</em> + <em>Edits Auto-approve</em> peut appliquer des modifications non vérifiées.
+✅ En équipe, gardez Auto-approve désactivé ou très restrictif.</p>
+</div>
+<hr />
+<h2 id="prochaines-etapes">Prochaines étapes<a class="headerlink" href="#prochaines-etapes" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../chapitre-3-contexte/intellij-contexte/">Contexte projet IntelliJ</a> — Optimiser le contexte pour de meilleures suggestions</li>
+<li><a href="../vscode-parametrage/">Paramétrage VS Code</a> — Pour comparer avec d'autres IDEs (documentation à venir pour 2025.x)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

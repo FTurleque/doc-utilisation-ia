@@ -1,0 +1,300 @@
+/* ============================================================
+   GitHub Copilot Documentation — Custom Styles
+   Theme: Material for MkDocs
+   ============================================================ */
+
+/* Zone de contenu principale élargie */
+.md-grid {
+  max-width: 1600px;
+}
+
+.md-content {
+  max-width: 100%;
+}
+
+/* Sidebars réduites */
+.md-sidebar {
+  width: 200px;
+}
+
+.md-sidebar__scrollwrap {
+  width: 200px;
+}
+
+/* Marges de la zone principale réduites */
+.md-main__inner {
+  margin-top: 0.4rem;
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-content {
+    margin-left: 10em;
+    margin-right: 10em;
+  }
+}
+
+/* Centrage des tableaux Markdown */
+.md-content table {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Centrage des diagrammes Mermaid */
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
+/* Hero banner sur la page d'accueil */
+.hero-banner {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  color: #e8e8e8;
+  border-left: 4px solid #58a6ff;
+}
+
+.hero-banner h2 {
+  color: #ffffff;
+  font-size: 1.6rem;
+  margin-top: 0;
+}
+
+/* Badges de niveau */
+.badge-beginner {
+  background-color: #238636;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.badge-intermediate {
+  background-color: #9a6700;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.badge-expert {
+  background-color: #b62324;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Badge IDE */
+.badge-intellij {
+  background-color: #fe315d;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-vscode {
+  background-color: #007acc;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Touchs clavier (kbd) */
+kbd {
+  background-color: var(--md-default-fg-color--lightest);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.85em;
+  font-family: var(--md-code-font-family);
+  color: var(--md-code-fg-color);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Mise en évidence des blocs de paramètres */
+.param-block {
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.param-block code {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Tableaux de comparaison */
+.comparison-table th:first-child {
+  width: 30%;
+}
+
+/* Étapes numérotées (tutoriels) */
+.tutorial-step {
+  counter-increment: step-counter;
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.tutorial-step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #58a6ff;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Boutons CTA sur la page d'accueil */
+.md-button--primary {
+  background-color: #58a6ff !important;
+  border-color: #58a6ff !important;
+  color: #0d1117 !important;
+  font-weight: 600;
+}
+
+.md-button--primary:hover {
+  background-color: #79c0ff !important;
+  border-color: #79c0ff !important;
+}
+
+/* Grille de cartes améliorée */
+.grid.cards > ul > li {
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grid.cards > ul > li:hover {
+  border-color: #58a6ff;
+  box-shadow: 0 2px 8px rgba(88, 166, 255, 0.15);
+}
+
+/* Bloc "placeholder image" */
+.img-placeholder {
+  background: var(--md-default-fg-color--lightest);
+  border: 2px dashed var(--md-default-fg-color--lighter);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.doc-screenshot {
+  display: block;
+  max-width: 100%;
+  width: min(100%, 960px);
+  margin: 1rem auto 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Images réduites de moitié */
+.reduced-screenshot {
+  display: block;
+  max-width: 100%;
+  width: min(100%, 480px);
+  margin: 1rem auto 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.doc-screenshot + em,
+.reduced-screenshot + em {
+  display: block;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1rem;
+}
+
+/* Centre le <p> qui contient l'image réduite */
+p:has(> .reduced-screenshot) {
+  text-align: center !important;
+}
+
+/* Centre le <p> qui suit (la caption) */
+p:has(> .reduced-screenshot) + p {
+  text-align: center !important;
+}
+
+[data-md-color-scheme="slate"] .doc-screenshot {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Icône Copilot dans les titres de section */
+.copilot-section-icon {
+  vertical-align: middle;
+  margin-right: 0.4em;
+  color: #58a6ff;
+}
+
+/* Amélioration des tableaux en général */
+table th {
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+[data-md-color-scheme="slate"] table th {
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+/* Highlight des raccourcis clavier */
+kbd {
+  background: var(--md-default-fg-color--lightest);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.8em;
+  font-family: var(--md-code-font-family);
+}
+
+/* Légendes d'images (<figure> / <figcaption>) */
+figure {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+figcaption {
+  display: block;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.85em;
+  font-style: italic;
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+figure .doc-screenshot,
+figure .reduced-screenshot {
+  margin: 0 auto 0.5rem;
+}
+
+
