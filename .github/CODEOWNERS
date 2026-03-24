@@ -1,0 +1,24 @@
+# CODEOWNERS — Règles de propriété du code
+#
+# Ce fichier désigne les reviewer(s) obligatoires pour chaque fichier du dépôt.
+# GitHub requiert leur approbation avant tout merge sur main (si les Branch
+# Protection Rules sont activées — voir CONTRIBUTING.md).
+#
+# Syntaxe : <pattern> <@utilisateur ou @org/équipe>
+# Référence : https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Règle globale : @FTurleque est reviewer obligatoire sur tous les fichiers
+* @FTurleque
+
+# Documentation principale
+docs/ @FTurleque
+
+# Configuration MkDocs (critique — impacte le build et le déploiement)
+mkdocs.yml @FTurleque
+
+# CI/CD (critique — impacte le déploiement GitHub Pages)
+.github/workflows/ @FTurleque
+
+# Règles de collaboration (ce fichier lui-même)
+.github/CODEOWNERS @FTurleque
+CONTRIBUTING.md @FTurleque
