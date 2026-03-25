@@ -45,13 +45,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Supprimer le domaine personnalisé GitHub Pages
+      - name: Supprimer le fichier CNAME de gh-pages
+        run: |
+          set -e
+          git fetch origin gh-pages
+          git worktree add /tmp/gh-pages-clean origin/gh-pages
+          cd /tmp/gh-pages-clean
+          if [ -f CNAME ]; then
+            git rm CNAME
+            git commit -m "chore: supprimer le fichier CNAME du domaine personnalisé"
+            git push origin HEAD:gh-pages
+            echo "Fichier CNAME supprimé et poussé vers gh-pages."
+          else
+            echo "Aucun fichier CNAME trouvé dans gh-pages."
+          fi
+          cd "$GITHUB_WORKSPACE"
+          git worktree remove /tmp/gh-pages-clean
+
+      - name: Supprimer le domaine personnalisé via l'API GitHub Pages
         run: |
           response=$(curl -sS -w "\n%{http_code}" -X PUT \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"cname": null, "source": {"branch": "gh-pages", "path": "/"}}' \
+            -d '{"cname": null}' \
             "https://api.github.com/repos/${{ github.repository }}/pages")
           http_code=$(echo "$response" | tail -1)
           body=$(echo "$response" | head -n -1)
