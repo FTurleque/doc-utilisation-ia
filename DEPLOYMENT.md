@@ -198,6 +198,23 @@ google_analytics:
 3. Run locally first: `python -m mkdocs build --strict`
 4. Check file encoding (UTF-8 recommended)
 
+### Permission Denied (403) on `mkdocs gh-deploy`
+
+If you see an error like:
+```
+remote: Permission to FTurleque/doc-utilisation-ia.git denied to <username>.
+fatal: unable to access '...': The requested URL returned error: 403
+```
+
+**Local deployment is not recommended.** Use the automated GitHub Actions workflow instead.
+
+To trigger a deployment:
+```bash
+git push origin main
+```
+
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) uses `GITHUB_TOKEN` and the `github-actions[bot]` identity to push to the `gh-pages` branch — no manual deployment is needed.
+
 ### Site Not Updating
 
 1. Verify push succeeded: `git status`
