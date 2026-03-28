@@ -231,7 +231,7 @@ Configurez :
 - Raccourcis clavier personnalisés
 
 ### 3. **Apprendre les best practices** (15 min)
-→ [Utilisation Effective](../../chapitre-5-bonnes-pratiques/utilisation-effective.md)
+→ [Utilisation Effective](../../chapitre-8-bonnes-pratiques/utilisation-effective.md)
 
 Maîtrisez :
 - Écrire des prompts efficaces
@@ -268,7 +268,7 @@ A :
 
 **Q : Copilot suggère du code de mauvaise qualité.**
 
-A : C'est normal — **vous êtes responsable** de vérifier. Lisez la section [Best Practices](../../chapitre-5-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
+A : C'est normal — **vous êtes responsable** de vérifier. Lisez la section [Best Practices](../../chapitre-8-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
 
 ---
 

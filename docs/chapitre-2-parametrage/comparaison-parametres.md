@@ -1,4 +1,4 @@
-# Comparaison des Paramètres — IntelliJ vs VS Code
+﻿# Comparaison des Paramètres — IntelliJ vs VS Code
 
 ## Présentation
 Cette page compare les options de configuration disponibles entre IntelliJ IDEA et Visual Studio Code pour GitHub Copilot. Les deux IDEs offrent des expériences similaires mais avec des différences notables dans la granularité des paramètres.
@@ -94,5 +94,5 @@ La qualité des suggestions Copilot dépend du contexte fourni à l'IA, pas uniq
 ## Prochaines étapes
 
 - [Contexte & Personnalisation](../chapitre-3-contexte/index.md) — Explorer les mécanismes de personnalisation avancée (VS Code)
-- [Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
+- [Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
 

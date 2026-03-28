@@ -1,4 +1,4 @@
-# Performance & Ressources
+﻿# Performance & Ressources
 
 <span class="badge-beginner">Débutant</span>
 
@@ -277,5 +277,5 @@ L'agent peut lire et modifier des fichiers **uniquement dans les dossiers du wor
 
 ## Prochaines étapes
 
-- [Troubleshooting](../chapitre-6-troubleshooting/index.md) — Résoudre les problèmes courants
-- [Cas d'Usage](../chapitre-7-cas-usage/index.md) — Exemples par technologie
+- [Troubleshooting](../chapitre-10-troubleshooting/index.md) — Résoudre les problèmes courants
+- [Cas d'Usage](../chapitre-9-cas-usage/index.md) — Exemples par technologie

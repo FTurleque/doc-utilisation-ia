@@ -1,4 +1,4 @@
-# Problèmes Courants
+﻿# Problèmes Courants
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
 
@@ -301,7 +301,7 @@ IntelliJ ou VS Code devient globalement plus lent après l'activation de Copilot
 
 4. **Fermer les onglets inutilisés** — Copilot indexe tous les fichiers ouverts comme contexte
 
-Voir aussi [Performance & Ressources](../chapitre-5-bonnes-pratiques/performance.md) pour les réglages avancés.
+Voir aussi [Performance & Ressources](../chapitre-8-bonnes-pratiques/performance.md) pour les réglages avancés.
 
 ---
 

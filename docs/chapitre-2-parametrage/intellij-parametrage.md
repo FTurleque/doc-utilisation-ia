@@ -1,4 +1,4 @@
-# :simple-intellijidea: Paramétrage Complet — GitHub Copilot sur IntelliJ IDEA
+﻿# :simple-intellijidea: Paramétrage Complet — GitHub Copilot sur IntelliJ IDEA
 
 <span class="badge-intellij">IntelliJ IDEA</span> <span class="badge-intermediate">Intermédiaire</span>
 
@@ -303,7 +303,7 @@ Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQ
 Sans MCP, la même demande aurait coûté **1 requête** et ~500 tokens.
 
 !!! tip "Bonnes pratiques — maîtriser la consommation MCP"
-    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requetes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-5-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
+    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requetes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-8-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
 
 **Quand l'utiliser :** Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).
 

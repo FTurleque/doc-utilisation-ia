@@ -1,4 +1,4 @@
-# Comparaison — Contexte & Personnalisation entre Éditeurs
+﻿# Comparaison — Contexte & Personnalisation entre Éditeurs
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
 
@@ -489,7 +489,7 @@ Conventions Java :
 
 ## Prochaines étapes
 
-- [Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md) — Comment tirer le meilleur des deux IDEs
-- [Cas d'usage Java](../chapitre-7-cas-usage/java.md) — Configuration complète pour un projet Java
-- [Cas d'usage Node.js/React](../chapitre-7-cas-usage/nodejs-react.md) — Configuration complète pour un projet TypeScript
+- [Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md) — Comment tirer le meilleur des deux IDEs
+- [Cas d'usage Java](../chapitre-9-cas-usage/java.md) — Configuration complète pour un projet Java
+- [Cas d'usage Node.js/React](../chapitre-9-cas-usage/nodejs-react.md) — Configuration complète pour un projet TypeScript
 

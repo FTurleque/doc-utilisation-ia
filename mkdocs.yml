@@ -107,53 +107,53 @@ nav:
     - Techniques Avancées: chapitre-4-prompt-engineering/techniques-avancees.md
     - Prompting avec Copilot: chapitre-4-prompt-engineering/avec-copilot.md
   
-  - Bonnes Pratiques:
-    - Accueil: chapitre-5-bonnes-pratiques/index.md
-    - Utilisation Effective: chapitre-5-bonnes-pratiques/utilisation-effective.md
-    - Organisation du Code: chapitre-5-bonnes-pratiques/organisation-code.md
-    - Productivité: chapitre-5-bonnes-pratiques/productivite.md
-    - Sécurité & Qualité: chapitre-5-bonnes-pratiques/securite-qualite.md
-    - Performance & Ressources: chapitre-5-bonnes-pratiques/performance.md
-    - Workflows IA Complets: chapitre-5-bonnes-pratiques/workflows-ia.md
-  
-  - Troubleshooting:
-    - Accueil: chapitre-6-troubleshooting/index.md
-    - Problèmes Courants: chapitre-6-troubleshooting/problemes-courants.md
-    - Logs & Diagnostic: chapitre-6-troubleshooting/logs-diagnostic.md
-    - Comparaison des Problèmes: chapitre-6-troubleshooting/comparaison-problemes.md
-    - Procédures de Réparation: chapitre-6-troubleshooting/procedures-reparation.md
-  
-  - Cas d'Usage:
-    - Accueil: chapitre-7-cas-usage/index.md
-    - Comparaison Écosystèmes: chapitre-7-cas-usage/comparaison-ecosystemes.md
-    - Java: chapitre-7-cas-usage/java.md
-    - Java & Spring Boot: chapitre-7-cas-usage/java-spring-boot.md
-    - Node.js & React: chapitre-7-cas-usage/nodejs-react.md
-    - Node.js & Express: chapitre-7-cas-usage/nodejs-express.md
-    - React 19 & TypeScript: chapitre-7-cas-usage/react-typescript.md
-    - Python & FastAPI: chapitre-7-cas-usage/python.md
-  
-  - Modes CLI:
-    - Accueil: chapitre-8-cli-modes/index.md
-    - Modes CLI Détail: chapitre-8-cli-modes/page-principale.md
-    - Comparaison Modes: chapitre-8-cli-modes/comparaison.md
-  
   - Machine Learning:
-    - Accueil: chapitre-9-machine-learning/index.md
-    - Concepts Fondamentaux: chapitre-9-machine-learning/concepts-fondamentaux.md
-    - Algorithmes Courants: chapitre-9-machine-learning/algorithmes-courants.md
-    - Copilot pour le ML: chapitre-9-machine-learning/copilot-workflow-ml.md
-    - Python & Data Science: chapitre-9-machine-learning/python-data-science.md
-    - Deep Learning: chapitre-9-machine-learning/deep-learning.md
-    - Notebooks Jupyter: chapitre-9-machine-learning/notebooks-jupyter.md
-    - MLOps & Déploiement: chapitre-9-machine-learning/mlops-deploiement.md
-    - Comparaison Écosystèmes ML: chapitre-9-machine-learning/comparaison-ecosystemes-ml.md
-    - Comparaison des Outils: chapitre-9-machine-learning/comparaison-outils.md
+    - Accueil: chapitre-5-machine-learning/index.md
+    - Concepts Fondamentaux: chapitre-5-machine-learning/concepts-fondamentaux.md
+    - Algorithmes Courants: chapitre-5-machine-learning/algorithmes-courants.md
+    - Copilot pour le ML: chapitre-5-machine-learning/copilot-workflow-ml.md
+    - Python & Data Science: chapitre-5-machine-learning/python-data-science.md
+    - Deep Learning: chapitre-5-machine-learning/deep-learning.md
+    - Notebooks Jupyter: chapitre-5-machine-learning/notebooks-jupyter.md
+    - MLOps & Déploiement: chapitre-5-machine-learning/mlops-deploiement.md
+    - Comparaison Écosystèmes ML: chapitre-5-machine-learning/comparaison-ecosystemes-ml.md
+    - Comparaison des Outils: chapitre-5-machine-learning/comparaison-outils.md
 
   - RAG:
-    - Introduction: chapitre-10-rag/index.md
-    - Concepts & Types: chapitre-10-rag/concepts.md
-    - Mise en Œuvre: chapitre-10-rag/implementation.md
+    - Introduction: chapitre-6-rag/index.md
+    - Concepts & Types: chapitre-6-rag/concepts.md
+    - Mise en Œuvre: chapitre-6-rag/implementation.md
+
+  - Modes CLI:
+    - Accueil: chapitre-7-cli-modes/index.md
+    - Modes CLI Détail: chapitre-7-cli-modes/page-principale.md
+    - Comparaison Modes: chapitre-7-cli-modes/comparaison.md
+
+  - Bonnes Pratiques:
+    - Accueil: chapitre-8-bonnes-pratiques/index.md
+    - Utilisation Effective: chapitre-8-bonnes-pratiques/utilisation-effective.md
+    - Organisation du Code: chapitre-8-bonnes-pratiques/organisation-code.md
+    - Productivité: chapitre-8-bonnes-pratiques/productivite.md
+    - Sécurité & Qualité: chapitre-8-bonnes-pratiques/securite-qualite.md
+    - Performance & Ressources: chapitre-8-bonnes-pratiques/performance.md
+    - Workflows IA Complets: chapitre-8-bonnes-pratiques/workflows-ia.md
+
+  - Cas d'Usage:
+    - Accueil: chapitre-9-cas-usage/index.md
+    - Comparaison Écosystèmes: chapitre-9-cas-usage/comparaison-ecosystemes.md
+    - Java: chapitre-9-cas-usage/java.md
+    - Java & Spring Boot: chapitre-9-cas-usage/java-spring-boot.md
+    - Node.js & React: chapitre-9-cas-usage/nodejs-react.md
+    - Node.js & Express: chapitre-9-cas-usage/nodejs-express.md
+    - React 19 & TypeScript: chapitre-9-cas-usage/react-typescript.md
+    - Python & FastAPI: chapitre-9-cas-usage/python.md
+
+  - Troubleshooting:
+    - Accueil: chapitre-10-troubleshooting/index.md
+    - Problèmes Courants: chapitre-10-troubleshooting/problemes-courants.md
+    - Logs & Diagnostic: chapitre-10-troubleshooting/logs-diagnostic.md
+    - Comparaison des Problèmes: chapitre-10-troubleshooting/comparaison-problemes.md
+    - Procédures de Réparation: chapitre-10-troubleshooting/procedures-reparation.md
 
   - Appendices:
     - Accueil: appendices/index.md

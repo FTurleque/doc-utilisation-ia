@@ -1,4 +1,4 @@
-# Cas d'Usage par Technologie
+﻿# Cas d'Usage par Technologie
 
 GitHub Copilot s'adapte à chaque écosystème technologique. Ce chapitre présente des configurations et workflows optimisés pour les stacks les plus courants, avec des exemples concrets pour IntelliJ et VS Code.
 
@@ -80,7 +80,7 @@ Quel que soit le langage/framework, ces principes optimisent la qualité des sug
 ## Ressources du Chapitre
 
 - [Diagrammes Architecture](comparaison-ecosystemes.md#matrice-decision-choisir-ton-ecosysteme) — Matrice décision pour choisir stack
-- [Best Practices Universelles](../chapitre-5-bonnes-pratiques/index.md) — Patterns applicables à tous
+- [Best Practices Universelles](../chapitre-8-bonnes-pratiques/index.md) — Patterns applicables à tous
 - [Installation IDE](../chapitre-1-installation/index.md) — Setup initial par technologie
 
 ---

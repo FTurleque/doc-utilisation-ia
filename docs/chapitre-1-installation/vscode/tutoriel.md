@@ -225,7 +225,7 @@ Configurez :
 
 ### 3. **Apprendre les best practices** (15 min)
 
-→ [Utilisation Effective](../../chapitre-5-bonnes-pratiques/utilisation-effective.md)
+→ [Utilisation Effective](../../chapitre-8-bonnes-pratiques/utilisation-effective.md)
 
 Maîtrisez :
 
@@ -272,5 +272,5 @@ A :
 
 **Q : Copilot suggère du code dangereux / mauvaise qualité ?**
 
-A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-5-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
+A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-8-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
 

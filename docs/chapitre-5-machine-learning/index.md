@@ -1,4 +1,4 @@
-# Machine Learning avec GitHub Copilot
+﻿# Machine Learning avec GitHub Copilot
 
 <span class="badge-intermediate">Intermédiaire</span>
 
@@ -106,7 +106,7 @@ l'exploration des données au déploiement en production.
         - **Python 3.10+** installé sur ton poste
         - **GitHub Copilot** activé dans VS Code ou IntelliJ IDEA
         - Notions de base en Python (variables, fonctions, listes) — voir
-            [chapitre 2 du livre de référence](../chapitre-7-cas-usage/python.md)
+            [chapitre 2 du livre de référence](../chapitre-9-cas-usage/python.md)
         - Aucune compétence mathématique avancée requise pour les
             fondamentaux
 

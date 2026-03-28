@@ -408,7 +408,7 @@ Vous pouvez **redéfinir les raccourcis** Copilot.
 |----------|----------|
 | **Copilot ne suggère rien** | Vérifiez extension installée, authentifié, et `enableAutoCompletions: true` |
 | **Erreur d'authentification** | Sign out → Sign in (++ctrl+shift+p++ → "GitHub Copilot: Sign In") |
-| **Suggestions très mauvaises** | Lisez [Best Practices](../../chapitre-5-bonnes-pratiques/utilisation-effective.md), améliorez vos prompts |
+| **Suggestions très mauvaises** | Lisez [Best Practices](../../chapitre-8-bonnes-pratiques/utilisation-effective.md), améliorez vos prompts |
 | **Performance VS Code ralentie** | Réduisez `inlineSuggestCount`, désactivez pour certains langages gros fichiers |
 | **Chat n'apparaît pas** | Installez "GitHub Copilot Chat", rechargez VS Code |
 
@@ -418,7 +418,7 @@ Vous pouvez **redéfinir les raccourcis** Copilot.
 
 - **Docs officielles** : [docs.github.com/copilot](https://docs.github.com/en/copilot)
 - **Raccourcis VS Code** : ++ctrl+k++ ++ctrl+s++ (ouvre éditeur raccourcis)
-- **Extensions recommandées** : Voir [Chapitre 8 — CLI & Modes](../../chapitre-8-cli-modes/index.md)
+- **Extensions recommandées** : Voir [Chapitre 8 — CLI & Modes](../../chapitre-7-cli-modes/index.md)
 
 ---
 
@@ -794,7 +794,7 @@ Sans MCP, la même question aurait coûté **1 requête** et ~500 tokens.
 !!! tip "Bonnes pratiques pour maîtriser la consommation"
     - N'activez que les serveurs MCP dont vous avez besoin dans `.vscode/mcp.json`
     - Désactivez les serveurs via `MCP: Stop Server` quand ils ne sont pas utilisés
-    - Guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../../chapitre-5-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp)
+    - Guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../../chapitre-8-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp)
 
 ---
 

@@ -21,9 +21,13 @@ docs/
 │       └── reference.md
 ├── chapitre-2-parametrage/
 ├── chapitre-3-contexte/
-├── chapitre-4-bonnes-pratiques/
-├── chapitre-5-troubleshooting/
-├── chapitre-6-cas-usage/
+├── chapitre-4-prompt-engineering/
+├── chapitre-5-machine-learning/
+├── chapitre-6-rag/
+├── chapitre-7-cli-modes/
+├── chapitre-8-bonnes-pratiques/
+├── chapitre-9-cas-usage/
+├── chapitre-10-troubleshooting/
 └── appendices/
 ```
 

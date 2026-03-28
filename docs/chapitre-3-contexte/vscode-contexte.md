@@ -412,7 +412,7 @@ Conventions :
 - [Instructions Avancées](instructions.md) — `.instructions.md` syntax
 - [Agents Custom](agents.md) — Créer vos propres agents
 - [Skills](skills.md) — Packager dans expertise
-- [Best Practices](../chapitre-5-bonnes-pratiques/utilisation-effective.md)
+- [Best Practices](../chapitre-8-bonnes-pratiques/utilisation-effective.md)
 ├── package.json
 ├── tsconfig.json
 └── tailwind.config.js        ← Copilot comprend votre config Tailwind
@@ -525,5 +525,5 @@ Copilot utilise vos onglets ouverts comme contexte supplémentaire. Organisez vo
 
 - [IntelliJ — Contexte projet](intellij-contexte.md) — Équivalents pour IntelliJ
 - [Comparaison contexte](comparaison-contexte.md) — Différences entre les deux IDEs
-- [Bonnes pratiques](../chapitre-5-bonnes-pratiques/index.md) — Aller plus loin
+- [Bonnes pratiques](../chapitre-8-bonnes-pratiques/index.md) — Aller plus loin
 

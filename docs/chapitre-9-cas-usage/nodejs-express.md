@@ -1,4 +1,4 @@
-# :simple-nodedotjs: Cas d'Usage — Node.js & Express avec GitHub Copilot
+﻿# :simple-nodedotjs: Cas d'Usage — Node.js & Express avec GitHub Copilot
 
 <span class="badge-intermediate">Intermédiaire</span>
 
@@ -340,6 +340,6 @@ graph TD
 
 ## Ressources
 
-- [Best Practices universelles](../chapitre-5-bonnes-pratiques/utilisation-effective.md)
+- [Best Practices universelles](../chapitre-8-bonnes-pratiques/utilisation-effective.md)
 - [Comparaison Ecosystèmes](comparaison-ecosystemes.md)
 - [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)

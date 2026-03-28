@@ -1,4 +1,4 @@
-# Comparaison : Efficacité Copilot par Écosystème
+﻿# Comparaison : Efficacité Copilot par Écosystème
 
 <span class="badge-expert">Expert</span>
 
@@ -198,6 +198,6 @@ Voir détails complets :
 
 ## Ressources
 
-- [Best Practices universelles](../chapitre-5-bonnes-pratiques/index.md)
+- [Best Practices universelles](../chapitre-8-bonnes-pratiques/index.md)
 - [Chapitre Installation](../chapitre-1-installation/index.md)
 - [Configuration IDE](../chapitre-2-parametrage/index.md)

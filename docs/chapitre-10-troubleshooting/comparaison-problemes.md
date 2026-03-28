@@ -1,4 +1,4 @@
-# Comparaison des Problèmes par IDE
+﻿# Comparaison des Problèmes par IDE
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
 
@@ -120,4 +120,4 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 ## Prochaines étapes
 
 - [Procédures de Réparation](procedures-reparation.md) — Guide pas à pas pour résoudre les problèmes persistants
-- [Cas d'Usage](../chapitre-7-cas-usage/index.md) — Configurations pratiques par technologie
+- [Cas d'Usage](../chapitre-9-cas-usage/index.md) — Configurations pratiques par technologie

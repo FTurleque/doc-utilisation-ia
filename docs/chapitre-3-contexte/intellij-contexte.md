@@ -1,4 +1,4 @@
-# :simple-intellijidea: IntelliJ IDEA — Configuration du Contexte Projet
+﻿# :simple-intellijidea: IntelliJ IDEA — Configuration du Contexte Projet
 
 <span class="badge-intellij">IntelliJ IDEA</span> <span class="badge-intermediate">Intermédiaire</span>
 
@@ -297,5 +297,5 @@ public interface UserRepository extends JpaRepository<User, UUID> { ... }
 ## Prochaines étapes
 
 - [Comparaison contexte](comparaison-contexte.md) — IntelliJ vs VS Code
-- [Bonnes pratiques](../chapitre-5-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
+- [Bonnes pratiques](../chapitre-8-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
 

@@ -1,4 +1,4 @@
-# :simple-java: Cas d'Usage — Java & Spring Boot avec GitHub Copilot
+﻿# :simple-java: Cas d'Usage — Java & Spring Boot avec GitHub Copilot
 
 <span class="badge-expert">Expert</span>
 
@@ -291,6 +291,6 @@ graph TD
 
 ## Ressources & Prochaines Étapes
 
-- [Best Practices](../chapitre-5-bonnes-pratiques/utilisation-effective.md) — Patterns universels
+- [Best Practices](../chapitre-8-bonnes-pratiques/utilisation-effective.md) — Patterns universels
 - [Comparaison Ecosystèmes](comparaison-ecosystemes.md) — Spring Boot vs autres stacks
 - [IntelliJ Référence](../chapitre-1-installation/intellij/reference.md) — Raccourcis + features

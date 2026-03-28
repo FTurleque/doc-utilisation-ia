@@ -1,4 +1,4 @@
-# Sécurité & Qualité du Code Généré
+﻿# Sécurité & Qualité du Code Généré
 
 <span class="badge-intermediate">Intermédiaire</span>
 
@@ -430,4 +430,4 @@ function MyComponent() {
 
 - [Performance & Ressources](performance.md) — Optimiser Copilot pour ne pas impacter l'IDE
 - [Workflows IA Complets](workflows-ia.md) — Workflows bout en bout avec validation intégrée
-- [Troubleshooting](../chapitre-6-troubleshooting/index.md) — Résoudre les problèmes courants
+- [Troubleshooting](../chapitre-10-troubleshooting/index.md) — Résoudre les problèmes courants

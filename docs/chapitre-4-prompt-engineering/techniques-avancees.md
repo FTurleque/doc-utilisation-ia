@@ -92,7 +92,7 @@ C'est cette mécanique que GitHub Copilot utilise nativement : il lit vos fichie
 !!! info "Chapitre dédié au RAG"
     Le RAG est couvert en profondeur dans son propre chapitre : ce qu'il est, pourquoi et quand l'utiliser, les 3 architectures (Naive RAG, Advanced RAG, Agentic RAG), l'aide au choix selon votre contexte, et l'implémentation pas à pas avec code fonctionnel.
 
-    **[→ Chapitre 10 — RAG : Retrieval-Augmented Generation](../chapitre-10-rag/index.md)**
+    **[→ Chapitre 10 — RAG : Retrieval-Augmented Generation](../chapitre-6-rag/index.md)**
 
 
 

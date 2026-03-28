@@ -1,4 +1,4 @@
-# :simple-python: Cas d'Usage — Python & FastAPI avec GitHub Copilot
+﻿# :simple-python: Cas d'Usage — Python & FastAPI avec GitHub Copilot
 
 <span class="badge-intermediate">Intermédiaire</span>
 
@@ -516,6 +516,6 @@ def upgrade() -> None:
 
 ## Prochaines étapes
 
-- [Best Practices](../chapitre-5-bonnes-pratiques/utilisation-effective.md)
+- [Best Practices](../chapitre-8-bonnes-pratiques/utilisation-effective.md)
 - [Comparaison Écosystèmes](comparaison-ecosystemes.md)
 - [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)

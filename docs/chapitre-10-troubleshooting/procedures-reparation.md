@@ -1,4 +1,4 @@
-# Procédures de Réparation
+﻿# Procédures de Réparation
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
 
@@ -324,5 +324,5 @@ Cette méthode est systématique et garantit d'identifier la bonne extension san
 
 ## Prochaines étapes
 
-- [Cas d'Usage](../chapitre-7-cas-usage/index.md) — Configurations pratiques par technologie (Java, Python, Node.js…)
+- [Cas d'Usage](../chapitre-9-cas-usage/index.md) — Configurations pratiques par technologie (Java, Python, Node.js…)
 - [Appendices FAQ](../appendices/faq.md) — Réponses rapides aux questions fréquentes
