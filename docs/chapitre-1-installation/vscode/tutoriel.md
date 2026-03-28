@@ -44,8 +44,10 @@ Ouvrez Visual Studio Code et accédez au **panneau Extensions** :
 
 1. Cliquez l'icône Extensions (quatre petits carrés)
 
-!!! info "📸 Capture à ajouter"
-    Image attendue : `vscode-marketplace-01.png` — Panneau Extensions / Marketplace
+<figure markdown>
+  ![Panneau Extensions](../../assets/images/vscode/vscode-marketplace-01.png){ .reduced-screenshot }
+  <figcaption markdown="span">:material-camera: Panneau Extensions</figcaption>
+</figure>
 
 ### :material-menu: Méthode 3 : Menu
 
@@ -65,8 +67,10 @@ Ouvrez Visual Studio Code et accédez au **panneau Extensions** :
 3. Vérifiez l'identifiant exact : `GitHub.copilot`
 4. Cliquez le bouton vert **Install**
 
-!!! info "📸 Capture à ajouter"
-    Image attendue : `vscode-install-button-01.png` — Bouton « Install » de GitHub Copilot
+<figure markdown>
+  ![Bouton Install](../../assets/images/vscode/vscode-install-button-01.png){ .doc-screenshot }
+  <figcaption markdown="span">:material-camera: Résultat de la recherche GitHub Copilot</figcaption>
+</figure>
 
 !!! danger "Sécurité — Vérification importante"
     Installez **UNIQUEMENT** l'extension publiée par `GitHub` (l'organisation autorisée). Plusieurs extensions imitatrices existent — ignorez-les. L'identifiant correct est `GitHub.copilot`, pas d'autres variantes.
@@ -109,8 +113,10 @@ Après installation, authentifiez-vous :
 - **Windows/Linux** : ++ctrl+shift+p++ → `GitHub Copilot: Sign In`
 - **macOS** : ++cmd+shift+p++ → `GitHub Copilot: Sign In`
 
-!!! info "📸 Capture à ajouter"
-    Image attendue : `vscode-auth-github-01.png` — Boîte de dialogue « Device Flow » d'authentification
+<figure markdown>
+  ![Authentification GitHub](../../assets/images/vscode/vscode-auth-github-01.png){ .doc-screenshot }
+  <figcaption markdown="span">:material-camera: Authentification GitHub</figcaption>
+</figure>
 
 ### :material-web: Processus de connexion
 
@@ -128,16 +134,16 @@ Après installation, authentifiez-vous :
 
 ---
 
-### :material-check: Vérification rapideier que Copilot est actif
-
-**Vérification rapide** : :material-check:
+### :material-check: Vérification rapide
 
 1. Regardez la **barre de statut en bas à droite** de VS Code
 2. Vous devez voir l'icône Copilot (ressemble à un éclair ou logo Copilot)
-3. Si elle est **verte** ou **visible sans point rouge d'erreur** → Copilot est actif
+3. **Vert** ou sans point rouge = actif ✅
 
-!!! info "📸 Capture à ajouter"
-    Image attendue : `vscode-status-bar-icon.png` — Icône Copilot dans la barre de statut (bas à droite)
+<figure markdown>
+  ![Icône Copilot](../../assets/images/vscode/vscode-status-bar-icon.png){ .reduced-screenshot }
+  <figcaption markdown="span">:material-camera: Icône Copilot active dans la barre de statut</figcaption>
+</figure>
 
 ### :material-play: Test rapide du fonctionnement
 
@@ -174,8 +180,10 @@ Après installation, authentifiez-vous :
 
 1. Le panneau **Chat** s'ouvre à droite
 
-!!! info "📸 Capture à ajouter"
-    Image attendue : `vscode-chat-sidebar-01.png` — Panneau Copilot Chat dans la barre latérale
+<figure markdown>
+  ![Panneau Copilot Chat](../../assets/images/vscode/vscode-chat-sidebar-01.png){ .doc-screenshot }
+  <figcaption markdown="span">:material-camera: Panneau Copilot Chat ouvert dans VS Code</figcaption>
+</figure>
 
 2. Tapez une question simple :
    ```

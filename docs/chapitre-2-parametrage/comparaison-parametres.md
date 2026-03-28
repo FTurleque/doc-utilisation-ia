@@ -43,9 +43,6 @@ Cette page compare les options de configuration disponibles entre IntelliJ IDEA 
 |----------------|-------------|
 | **`github.copilot.enable` par langage** | Désactiver/activer avec une précision par langage individuel |
 | **`chat.localeOverride`** | Forcer la langue du Chat indépendamment de la langue de l'IDE |
-| **Fichiers `.instructions.md`** | Instructions persistantes pour personnaliser le comportement de Copilot |
-| **Fichiers `.prompt.md`** | Prompts réutilisables stockés dans `.github/prompts/` |
-| **Fichiers `.agent.md`** | Agents Copilot custom avec restrictions d'outils |
 | **Fichiers `SKILL.md`** | Packages de connaissance domaine pour Copilot |
 | **Hooks Copilot** | Automatisations déclenchées par des actions Copilot |
 | **`.copilotignore`** | Exclure des fichiers du contexte Copilot |

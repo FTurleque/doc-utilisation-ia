@@ -1,5 +1,7 @@
 # Comparaison des Problèmes par IDE
 
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+
 Certains problèmes sont communs aux deux IDEs, d'autres sont spécifiques à l'architecture de chaque environnement. Ce tableau vous aide à orienter votre diagnostic.
 
 ---
@@ -26,11 +28,11 @@ Certains problèmes sont communs aux deux IDEs, d'autres sont spécifiques à l'
 | IDE très lent après activation | JVM undersized | Augmenter `-Xmx` dans VM Options |
 | `OutOfMemoryError` dans les logs | Heap insuffisant pour PSI + Copilot | Help → Edit Custom VM Options → `-Xmx4096m` |
 | Autocomplétion IntelliJ et Copilot en conflit | Double suggestion | Ajuster la priorité dans les paramètres Keymap |
-| Suggestions coupées à mi-chemin | PSI timeout | Simplifier le fichier ouvert, fermer onglets |
+| Solutions coupées à mi-chemin | PSI timeout | Simplifier le fichier ouvert, fermer onglets |
 | Plugin Copilot incompatible avec la version IDE | Version plugin obsolète | Mettre à jour le plugin |
 | Erreur SSL sur réseau d'entreprise | Certificat proxy non reconnu | Importer le certificat dans le keystore JVM |
-| `.instructions.md` ignoré | Fonctionnalité absente dans IntelliJ | Utiliser `.idea/copilot-context.md` (partiel) |
-| Mode Agent indisponible | Feature VS Code uniquement | Utiliser VS Code pour le mode Agent |
+| `.instructions.md` ignoré | Format `applyTo` glob non supporté nativement | Utiliser `.idea/ai/copilot-instructions.md` ou les paramètres IDE |
+| Indexation PSI bloque les suggestions | Background indexing en cours | Attendre la fin de l'indexation (barre de progression en bas) |
 
 ---
 
@@ -48,6 +50,8 @@ Certains problèmes sont communs aux deux IDEs, d'autres sont spécifiques à l'
 | Paramétrage `.vscode/settings.json` ignoré | Syntaxe JSON incorrecte | Valider avec un linter JSON |
 | Extension ne se met pas à jour | Cache VS Code corrompu | `code --uninstall-extension GitHub.copilot` puis réinstaller |
 | Crashs du Language Server | Conflit avec extension LSP tierce | Désactiver extensions LSP concurrentes |
+| Suggestions absentes dans les fichiers volumineux | Fichier > ~1000 lignes (contexte saturé) | Diviser le fichier ou fermer des onglets |
+| Suggestions absentes en Remote / WSL | Chemin de settings différent dans le contexte distant | Configurer les settings dans le profil Remote, pas le profil local |
 
 ---
 
@@ -60,35 +64,43 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 | Analyse du code | PSI sémantique | Token-based | IntelliJ comprend mieux la structure |
 | Vitesse de suggestion | Légèrement plus lent | Plus rapide | PSI = plus de latence mais meilleure qualité |
 | Contexte des imports | Analysé via PSI | Via fichiers ouverts | IntelliJ détecte mieux les dépendances |
-| Support `.instructions.md` | ❌ Non supporté | ✅ Supporté | Feature VS Code uniquement |
-| Support `.agent.md` | ❌ Non supporté | ✅ Supporté | Feature VS Code uniquement |
-| Support `.prompt.md` | ❌ Non supporté | ✅ Supporté | Feature VS Code uniquement |
-| Support `SKILL.md` | ❌ Non supporté | ✅ Supporté | Feature VS Code uniquement |
-| Mode Agent (Chat) | ❌ Non disponible | ✅ Disponible | Feature VS Code uniquement |
-| Copilot Edits multi-fichiers | ❌ Non disponible | ✅ Disponible | Feature VS Code uniquement |
+| Support `.instructions.md` | ⭐ Partiel (via settings UI) | ✅ Supporté (applyTo glob) | IntelliJ ne supporte pas les globs `applyTo` |
+| Support `.agent.md` | ✅ Supporté | ✅ Supporté | Supporté dans les deux IDEs |
+| Support `.prompt.md` | ✅ Supporté | ✅ Supporté | Supporté dans les deux IDEs |
+| Support `SKILL.md` | ⭐ Lecture seule | ✅ Création + usage | VS Code : création via interface |
+| Mode Agent (Chat) | ✅ Disponible | ✅ Disponible | Supporté dans les deux IDEs |
+| Copilot Edits multi-fichiers | ✅ Disponible | ✅ Disponible | Supporté dans les deux IDEs |
+| Hooks Copilot | ❌ Non disponible | ✅ Disponible | VS Code exclusif (onSave, pre-commit…) |
+| `.copilotignore` | ❌ Non supporté | ✅ Supporté | Exclusion de fichiers du contexte Copilot |
+| Génération auto message de commit | ❌ Non disponible | ✅ Icône ✨ Source Control | VS Code exclusif |
+| Connaissance fichiers non ouverts | ✅ Complète (PSI) | ⭐ Partielle (LSP) | IntelliJ analyse tout le projet sans ouvrir les fichiers |
+| Délai de suggestion configurable | ✅ En ms (UI paramètres) | ⚠️ Non exposé directement | IntelliJ offre plus de précision |
 | Inline Chat | ✅ Alt+Entrée | ✅ Ctrl+I | Noms différents |
 | Raccourci accepter | ++tab++ | ++tab++ | Identique |
 | Raccourci voir alternatives | ++alt+bracket-right++ | ++alt+bracket-right++ | Identique |
 | Configuration proxy | JVM/IDE level | OS/settings.json | Approches différentes |
 | Gestion multi-repo | Via modules IntelliJ | Via multi-root workspace | Philosophies différentes |
+| Visibilité du rate limiting | Silencieux (masqué dans logs) | Visible en barre de statut et notification | Surveiller `idea.log` sous IntelliJ |
 
 ---
 
 ## Matrice de compatibilité des fonctionnalités
 
-| Fonctionnalité | IntelliJ ≥ 2023.1 | VS Code ≥ 1.80 |
+| Fonctionnalité | IntelliJ ≥ 2023.1 | VS Code ≥ 1.90 |
 |---------------|-------------------|----------------|
 | Inline completions | ✅ | ✅ |
 | Copilot Chat | ✅ (intégré au plugin) | ✅ (extension séparée) |
 | Inline Chat | ✅ | ✅ |
-| `.instructions.md` | ❌ | ✅ (≥ 1.90) |
-| Prompt files | ❌ | ✅ (≥ 1.91) |
-| `.agent.md` | ❌ | ✅ (Preview) |
-| `SKILL.md` | ❌ | ✅ (Preview) |
-| Mode Agent (Ask/Edit/Agent) | ❌ | ✅ (≥ 1.90) |
-| Copilot Edits | ❌ | ✅ (≥ 1.91) |
+| `.instructions.md` | ✅ | ✅ (≥ 1.90) |
+| Prompt files | ✅ | ✅ (≥ 1.91) |
+| `.agent.md` | ✅ | ✅ (Preview) |
+| `SKILL.md` | ⭐ (lecture seule) | ✅ (Preview) |
+| Mode Agent (Ask/Edit/Agent) | ✅ | ✅ (≥ 1.90) |
+| Copilot Edits | ✅ | ✅ (≥ 1.91) |
 | Désactiver par langage | ✅ | ✅ |
 | `.copilotignore` | ❌ | ✅ |
+| Hooks Copilot | ❌ | ✅ |
+| Génération auto commit | ❌ | ✅ |
 
 ---
 
@@ -107,5 +119,5 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 
 ## Prochaines étapes
 
+- [Procédures de Réparation](procedures-reparation.md) — Guide pas à pas pour résoudre les problèmes persistants
 - [Cas d'Usage](../chapitre-7-cas-usage/index.md) — Configurations pratiques par technologie
-- [Appendices FAQ](../appendices/faq.md) — Réponses rapides aux questions fréquentes

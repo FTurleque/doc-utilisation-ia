@@ -27,8 +27,6 @@ PowerShell :
 .\\.venv\\Scripts\\Activate.ps1
 ```
 
-![Activation PowerShell](docs/assets/images/vscode/vscode-auth-github-01.png)
-
 Invite de commandes (cmd) :
 ```cmd
 .\\.venv\\Scripts\\activate.bat
@@ -74,8 +72,6 @@ Ce mode permet de vérifier le rendu final (fichiers générés dans `site/`).
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
 ```
-
-![PowerShell Execution Policy](docs/assets/images/vscode/vscode-status-bar-icon.png)
 - `mkdocs` manquant :
 ```powershell
 py -m pip install mkdocs mkdocs-material

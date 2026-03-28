@@ -18,6 +18,7 @@ Les paramètres et configurations VS Code sont stockés à :
     ```
     %APPDATA%\Code\User\
     ```
+    
     Chemin complet : `C:\Users\[SonNom]\AppData\Roaming\Code\User\`
 
 === "macOS"
@@ -45,7 +46,7 @@ Le fichier `settings.json` contient **tous** les paramètres VS Code (incluant C
 !!! tip "User Settings vs Workspace Settings"
     - **User Settings** (`%APPDATA%\Code\User\settings.json`) : globaux, s'appliquent à tous les projets
     - **Workspace Settings** (`.vscode/settings.json` dans le projet) : locaux au projet, **priorité plus haute**
-    
+
     Utilisez Workspace Settings pour des configs par projet (ex: désactiver Copilot pour certains fichiers sensibles).
 
 ---
@@ -158,6 +159,7 @@ Clic droit sur du code sélectionné → *Copilot* :
 **Où** : L'éditeur principal.
 
 **Cas d'usage** :
+
 - Complétions de lignes
 - Génération de fonctions à partir de commentaires
 - Getters/setters, boilerplate
@@ -175,6 +177,7 @@ Clic droit sur du code sélectionné → *Copilot* :
 **Où** : Panneau droit VS Code (par défaut) / fenêtre flottante / inline dans l'éditeur.
 
 **Cas d'usage** :
+
 - Questions exploratoires ("Comment implémenter un composant React ?")
 - Explications de code existant
 - Debugging et diagnostique
@@ -193,6 +196,7 @@ Clic droit sur du code sélectionné → *Copilot* :
 **Où** : Interface dédiée (vue Edits).
 
 **Cas d'usage** :
+
 - Grandes refactorings
 - Migrations de dépendances
 - Restructurations d'architecture
@@ -212,11 +216,13 @@ Clic droit sur du code sélectionné → *Copilot* :
 **Où** : GitHub.com (dans la PR) / VS Code (pour reviews locales).
 
 **Cas d'usage** :
+
 - Identifier problèmes de sécurité
 - Suggérer refactorings
 - Vérifier maintenabilité
 
 **Plans** :
+
 - **Free** : review sur sélection manuelle
 - **Pro+/Enterprise** : review complète automatique
 
@@ -226,12 +232,14 @@ Clic droit sur du code sélectionné → *Copilot* :
 
 **Quoi** : Instructions personnalisées pour adapter Copilot à **votre workflow**.
 
-**Où** : 
+**Où** :
+
 - Repository-level : `.github/copilot-instructions.md` (dans le projet)
 - Personal-level : GitHub settings (votre profil)
 - Organization-level : Admin GitHub (Enterprise+)
 
 **Cas d'usage** :
+
 - Imposer un style de code (TypeScript strict, pas de `var`)
 - Libérer Copilot vers certaines APIs ou frameworks
 - Restrictions de sécurité (pas de secrets en suggestions)
@@ -245,6 +253,7 @@ Clic droit sur du code sélectionné → *Copilot* :
 **Où** : VS Code Chat, ou invoqué depuis GitHub.com.
 
 **Cas d'usage** :
+
 - Assigner une GitHub Issue → Copilot crée une PR
 - "Implémente une fonction de tri complète avec tests"
 
@@ -257,6 +266,7 @@ Clic droit sur du code sélectionné → *Copilot* :
 **Quoi** : Utiliser Copilot en ligne de commande (Terminal).
 
 **Commandes** :
+
 ```bash
 # Demander un conseil
 gh copilot explain "ls -la"
@@ -290,7 +300,8 @@ gh copilot version
 ```
 
 **Effets** :
-- `"*": true` : Activepar défaut pour tous les langages
+
+- `"*": true` : Active par défaut pour tous les langages
 - `"plaintext": false` : Désactive pour fichiers `.txt`
 - `"dotenv": false` : Désactive pour `.env` (sécurité)
 
@@ -326,6 +337,7 @@ gh copilot version
 ```
 
 Si `true` :
+
 - L'ampoule jaune IA apparaît pour les erreurs/warnings
 - Cliquer → suggestions Copilot directes
 
@@ -514,6 +526,280 @@ Pour les paramètres complets avec explications détaillées, voir [Paramétrage
 ### Mettre à jour les extensions
 
 VS Code met à jour automatiquement les extensions. Pour forcer une mise à jour manuelle :
+
 1. Extensions panel → menu `...` → *"Check for Extension Updates"*
 2. Ou : ++ctrl+shift+p++ → *"Extensions: Check for Extension Updates"*
 
+---
+
+## MCP — Enrichir Copilot avec des serveurs externes
+
+<span class="badge-intermediate">Intermédiaire</span>
+
+### Qu'est-ce que MCP ?
+
+**Model Context Protocol (MCP)** est un protocole standard open-source qui permet à Copilot de se connecter à des **outils et sources de données externes** directement dans le Chat ou en mode Agent. Au lieu d'être limité à votre code local, Copilot peut interroger des bases de données, appeler des APIs, consulter de la documentation à jour, créer des tickets Jira, etc.
+
+**Exemples concrets :**
+
+- `@context7` : Copilot consulte la doc officielle de React/Next.js à la version exacte que vous utilisez
+- `@github` : Copilot liste vos pull requests ouvertes ou crée une issue directement
+- `@postgres` : Copilot interroge votre base de données locale pour optimiser une requête SQL
+- `@firecrawl` : Copilot extrait et résume le contenu d'une page web
+
+**Comment ça fonctionne :**
+
+```
+Vous posez une question dans le Chat
+        ↓
+Copilot identifie qu'un outil MCP peut aider
+        ↓
+Copilot appelle le serveur MCP (stdio / http / sse)
+        ↓
+Le serveur retourne des données (doc, résultat DB, liste issues…)
+        ↓
+Copilot intègre ces données dans sa réponse
+```
+
+!!! info "MCP ≠ extension VS Code"
+    Un serveur MCP est un **processus séparé** (Node.js, Python, Docker…) que VS Code lance ou contacte. Il peut tourner en local ou pointer vers un service cloud. L'extension GitHub Copilot gère la communication.
+
+---
+
+### Accéder à la gestion MCP dans VS Code
+
+Trois points d'entrée dans VS Code :
+
+#### Via la palette de commandes
+
+++ctrl+shift+p++ → cherchez `MCP` pour voir toutes les commandes disponibles :
+
+| Commande | Action |
+|----------|--------|
+| `MCP: Add Server` | Ajouter un nouveau serveur MCP |
+| `MCP: List Servers` | Voir les serveurs configurés et leur statut |
+| `MCP: Start Server` | Démarrer un serveur arrêté |
+| `MCP: Stop Server` | Arrêter un serveur actif |
+| `MCP: Show Output` | Voir les logs d'un serveur (debug) |
+| `MCP: Browse Servers` | Parcourir le registre officiel de serveurs |
+
+#### Via le mode Agent (Chat)
+
+1. Ouvrez Copilot Chat (++ctrl+alt+i++)
+2. Passez en mode **Agent** (menu déroulant en haut du Chat : *Agent*)
+3. Cliquez sur l'icône **outils** (🔧) pour voir les outils MCP disponibles
+4. Ou tapez `@` dans le champ de message pour sélectionner un serveur directement
+
+#### Via `.vscode/mcp.json`
+
+Le fichier de configuration principal — décrit en détail dans la section suivante.
+
+---
+
+### Configurer un serveur MCP
+
+Les serveurs MCP se déclarent dans **`.vscode/mcp.json`** à la racine du workspace (config locale au projet) ou dans `settings.json` pour une portée globale.
+
+#### Structure de base
+
+```json
+{
+  "servers": {
+    "nom-du-serveur": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@nom/package-mcp"]
+    }
+  }
+}
+```
+
+#### Types de connexion
+
+| Type | Description | Prérequis |
+|------|-------------|-----------|
+| **`stdio`** | Lance un processus local (Node.js, Python, executable) | Node.js / Python / binaire installé |
+| **`http`** | Connexion HTTP vers un service distant (cloud ou local) | URL accessible |
+| **`sse`** | Server-Sent Events (streaming temps-réel) | Service SSE compatible |
+
+#### Exemples de configuration
+
+=== "stdio (local, Node.js)"
+
+    ```json
+    {
+      "servers": {
+        "context7": {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["-y", "@upstash/context7-mcp"]
+        },
+        "github": {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-github"],
+          "env": {
+            "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_TOKEN}"
+          }
+        },
+        "playwright": {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["-y", "@playwright/mcp@latest"]
+        }
+      }
+    }
+    ```
+
+=== "stdio (local, Python / uvx)"
+
+    ```json
+    {
+      "servers": {
+        "markitdown": {
+          "type": "stdio",
+          "command": "uvx",
+          "args": ["markitdown-mcp"]
+        },
+        "filesystem": {
+          "type": "stdio",
+          "command": "uvx",
+          "args": ["mcp-server-filesystem", "/chemin/vers/dossier"]
+        }
+      }
+    }
+    ```
+
+=== "http (service distant)"
+
+    ```json
+    {
+      "servers": {
+        "sonarqube": {
+          "type": "http",
+          "url": "http://localhost:9000/api/mcp",
+          "headers": {
+            "Authorization": "Bearer ${env:SONAR_TOKEN}"
+          }
+        },
+        "notion": {
+          "type": "http",
+          "url": "https://mcp.notion.so/mcp",
+          "headers": {
+            "Authorization": "Bearer ${env:NOTION_TOKEN}"
+          }
+        }
+      }
+    }
+    ```
+
+!!! warning "Ne jamais mettre de tokens en clair dans `.vscode/mcp.json`"
+    Utilisez toujours `${env:NOM_VARIABLE}` pour référencer des variables d'environnement système. Ajoutez `.vscode/mcp.json` à `.gitignore` si ce fichier contient des URLs sensibles.
+
+    ```bash
+    # Windows PowerShell — définir une variable d'environnement
+    [System.Environment]::SetEnvironmentVariable("GITHUB_TOKEN", "ghp_xxx", "User")
+
+    # macOS / Linux — dans ~/.zshrc ou ~/.bashrc
+    export GITHUB_TOKEN="ghp_xxx"
+    ```
+
+---
+
+### Serveurs MCP populaires
+
+| Serveur | Package / ID | Utilité |
+|---------|-------------|---------|
+| **Context7** | `@upstash/context7-mcp` | Documentation à jour pour bibliothèques (React, Vue, Next.js…) |
+| **GitHub** | `@modelcontextprotocol/server-github` | Gérer repos, issues, PRs directement |
+| **Playwright** | `@playwright/mcp@latest` | Tests navigateur, automatisation web, accessibilité |
+| **Markitdown** | `markitdown-mcp` (uvx) | Convertir PDF, Word, Excel, images en Markdown |
+| **Filesystem** | `mcp-server-filesystem` (uvx) | Accès aux fichiers hors du projet ouvert |
+| **Firecrawl** | `firecrawl-mcp-server` | Extraction et résumé de pages web |
+| **Notion** | `notion-mcp-server` | Accès aux bases Notion |
+| **DBHub** | `@bytebase/dbhub` | Requêtes PostgreSQL, MySQL, SQLite |
+| **SonarQube** | URL HTTP locale | Analyse qualité et sécurité du code |
+| **Atlassian** | `@atlassian/mcp` | Jira, Confluence |
+| **Azure** | `@microsoft/azure-mcp` | Tous les outils Azure |
+| **Supabase** | `@supabase/mcp` | Interactions avec Supabase |
+
+!!! tip "Découvrir d'autres serveurs"
+    - [Registry officiel MCP](https://github.com/modelcontextprotocol/servers) — catalogue complet
+    - ++ctrl+shift+p++ → `MCP: Browse Servers` — directement dans VS Code
+
+---
+
+### Utiliser un serveur MCP dans Copilot Chat
+
+Une fois un serveur configuré et démarré, trois façons de l'utiliser :
+
+#### Référencer explicitement avec `@`
+
+```
+@context7 Quelle est l'API de useEffect dans React 19 ?
+@github Liste mes pull requests en attente de review
+@playwright Teste l'accessibilité de cette page : http://localhost:3000
+```
+
+#### Laisser Copilot décider en mode Agent
+
+En mode **Agent**, Copilot choisit automatiquement les outils MCP pertinents selon votre question. Il vous informe des appels qu'il effectue avant de les exécuter (sauf si l'auto-approve est activé).
+
+```
+Analyse ce composant React, vérifie la doc officielle de la version
+utilisée, et propose des optimisations.
+```
+
+→ Copilot appelle `@context7` automatiquement si disponible.
+
+#### Référencer un outil spécifique avec `#tool`
+
+```
+#fetch Récupère le contenu de https://api.example.com/users
+```
+
+!!! info "Approbation des appels MCP"
+    Par défaut, VS Code vous demande confirmation avant chaque appel MCP. Pour activer l'auto-approve dans `.vscode/settings.json` :
+
+    ```json
+    {
+      "github.copilot.chat.agent.autoApprove": true
+    }
+    ```
+
+    Utilisez cette option avec précaution — les appels en mode Agent s'accumulent rapidement.
+
+---
+
+### Impact sur votre quota Copilot
+
+Chaque appel MCP consomme **deux ressources simultanément** :
+
+| Ressource | Impact | Explication |
+|-----------|--------|-------------|
+| **Requêtes** | +1 par appel | Chaque invocation d'outil MCP = 1 requête |
+| **Tokens** | Variable | La réponse du serveur est injectée dans le contexte |
+
+**Exemple d'une session Agent avec MCPs :**
+
+| Étape | Action | Requêtes | Tokens |
+|-------|--------|----------|--------|
+| 1 | Votre question | +1 | ~500 |
+| 2 | Appel `@context7` → doc injectée | +1 | +1 000 |
+| 3 | Appel `@github` → liste PRs | +1 | +300 |
+| **Total** | | **3 requêtes** | **~1 800 tokens** |
+
+Sans MCP, la même question aurait coûté **1 requête** et ~500 tokens.
+
+!!! tip "Bonnes pratiques pour maîtriser la consommation"
+    - N'activez que les serveurs MCP dont vous avez besoin dans `.vscode/mcp.json`
+    - Désactivez les serveurs via `MCP: Stop Server` quand ils ne sont pas utilisés
+    - Guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../../chapitre-5-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp)
+
+---
+
+### Ressources MCP
+
+- [Spécification officielle MCP](https://modelcontextprotocol.io) — protocole et guides
+- [Registry MCP sur GitHub](https://github.com/modelcontextprotocol/servers) — tous les serveurs
+- [Configuration MCP détaillée](../../chapitre-2-parametrage/vscode-parametrage.md#model-context-protocol-mcp) — paramètres avancés et gestion des tokens

@@ -13,8 +13,15 @@ Ce guide couvre **tous les paramètres Copilot** pour VS Code : activation par l
 ### Méthode 1 : Interface Graphique (Recommandée pour débuter)
 
 1. Ouvrez les préférences :
-   - Windows/Linux : ++ctrl+comma++
-   - macOS : ++cmd+comma++
+
+=== "Windows/Linux"
+
+    ++ctrl+comma++
+
+=== "macOS"
+
+    ++cmd+comma++
+
 
 2. Tapez `"copilot"` dans la barre de recherche
 
@@ -79,6 +86,7 @@ Ce guide couvre **tous les paramètres Copilot** pour VS Code : activation par l
 ```
 
 Effet :
+
 - ✓ Copilot actif sur `.js`, `.python`, `.java`, etc.
 - ✗ Copilot **inactif** sur `.env` (sécurité clés API), `.md` (documentation), `.sql` (sensible)
 
@@ -122,7 +130,7 @@ Effet : Copilot SEULEMENT sur JS, TS, Python. Désabusé ailleurs.
 | Valeur | Comportement | Quand utiliser |
 |--------|-------------|---|
 | `true` | Suggestions automatiques pendant frappe | Développeurs normaux (défaut) |
-| `false` | Mode manuel : ++alt+backslash++ pour déclencher | Mais très expérimentés / flux spécifique |
+| `false` | Mode manuel : ++alt+backslash++ pour déclencher | Très expérimentés / flux spécifique |
 
 **Exemple** :
 ```json

@@ -311,16 +311,123 @@ infrastructure/terraform/
 
 ---
 
+## Risques Spécifiques à la Génération IA
+
+Au-delà des vulnérabilités classiques (SQL injection, XSS…), la génération par LLM introduit des **risques propres à l'IA** que vous ne rencontreriez pas avec du code humain.
+
+### 1. Hallucinations d'API — Fonctions qui n'existent pas
+
+Copilot peut générer du code utilisant des **méthodes ou paramètres qui n'existent pas** dans la version de la bibliothèque que vous utilisez. Le code semble correct syntaxiquement mais plantera à l'exécution.
+
+```typescript
+// ❌ Exemple d'hallucination : méthode inventée
+import { prisma } from './db';
+
+// Copilot a généré findManyByEmail() — cette méthode n'existe pas dans Prisma
+const users = await prisma.user.findManyByEmail({ emails: [...] });
+
+// ✅ Méthode réelle Prisma
+const users = await prisma.user.findMany({
+    where: { email: { in: emails } }
+});
+```
+
+**Stratégie de détection :**
+- Vérifiez la complétion dans le hover/autocomplete de votre IDE — si la méthode n'a pas de signature affichée, elle est probablement inventée
+- Cherchez dans la documentation officielle ou les types installés (`node_modules/@types/`)
+- Faites confiance à votre IDE (TypeScript/Python LSP) : une erreur de type = hallucination probable
+
+### 2. Package Hallucination — Dépendances Inventées
+
+Copilot peut suggérer d'importer un **package npm/pip/maven qui n'existe pas** (ou qui existe mais sous un autre nom), voire un package malveillant homonyme.
+
+```python
+# ❌ Copilot suggère un import suspect
+from fastercsv import parse_csv  # Ce package n'existe pas en Python !
+
+# ✅ Vérification avant d'installer
+# 1. Chercher sur pypi.org / npmjs.com
+# 2. Vérifier le nombre de téléchargements et la date de dernière mise à jour
+# 3. Ne jamais `pip install` / `npm install` un package sans vérification
+```
+
+**Procédure de vérification obligatoire avant toute nouvelle dépendance :**
+1. Vérifier l'existence sur [npmjs.com](https://npmjs.com) / [pypi.org](https://pypi.org)
+2. Vérifier le nombre de téléchargements hebdomadaires (>10k = signal de confiance)
+3. Vérifier la date du dernier commit/release
+4. Lire le README et les issues ouvertes
+
+!!! danger "Typosquatting et packages malveillants"
+    Des acteurs malveillants publient délibérément des packages avec des noms proches de packages populaires (`lodash` → `1odash`, `requests` → `request5`). Vérifiez toujours l'orthographe exacte et la source. Un LLM peut halluciner un nom proche d'un vrai package qui correspond à un package malveillant.
+
+### 3. Sur-Ingénierie Silencieuse
+
+Copilot tend parfois à générer du code **plus complexe que nécessaire** : patterns de design inutiles, abstractions précoces, over-engineering. Ce code compile et fonctionne, mais il est difficile à maintenir.
+
+```typescript
+// ❌ Sur-ingénierie générée par Copilot pour une simple fonction de formatage
+interface FormatterStrategy {
+    format(value: string): string;
+}
+
+class DateFormatterFactory {
+    static create(strategy: string): FormatterStrategy {
+        // ...20 lignes pour ce qui devrait être une fonction de 5 lignes
+    }
+}
+
+// ✅ Ce qui était vraiment nécessaire
+function formatDateToISO(date: Date): string {
+    return date.toISOString().split('T')[0];
+}
+```
+
+**Signaux d'alerte :**
+- Factory, Strategy, Abstract Factory pour une logique qu'on n'utilisera qu'une fois
+- Plus de 3 niveaux d'héritage de classes
+- Interfaces avec une seule implémentation
+- Plus de 50 lignes pour une opération simple
+
+**Règle pratique** : Si vous ne pouvez pas expliquer pourquoi ce pattern est nécessaire maintenant (pas "dans le futur"), demandez à Copilot de simplifier :
+```
+/fix #selection Simplifie ce code. Supprime les abstractions inutiles. 
+     Garde uniquement ce qui est nécessaire pour le besoin actuel.
+```
+
+### 4. Code Obsolète ou Déprécié
+
+Copilot est entraîné sur du code historique — il peut suggérer des APIs **dépréciées dans les versions récentes** de vos bibliothèques.
+
+```javascript
+// ❌ API dépréciée que Copilot peut générer (React 17 style)
+import React from 'react';
+class MyComponent extends React.Component {
+    componentWillMount() { /* déprécié depuis React 16.3 */ }
+}
+
+// ✅ API moderne (React 18+)
+import { useEffect } from 'react';
+function MyComponent() {
+    useEffect(() => { /* ... */ }, []);
+}
+```
+
+**Réflexe** : Quand Copilot génère du code utilisant une API que vous ne reconnaissez pas, vérifiez sa présence dans la documentation de la **version actuelle** de votre bibliothèque, pas une version historique.
+
+---
+
 ## Les 3 règles à ne jamais oublier
 
 !!! danger "Règles d'or"
     1. **Validez toujours** — Copilot peut produire du code fonctionnel mais incorrect ou non sécurisé
     2. **Zéro secret hardcodé** — Clés API, mots de passe et tokens : toujours en variables d'environnement
     3. **Testez avant de committer** — Même le boilerplate généré doit passer par des tests
+    4. **Vérifiez les imports** — Chaque nouveau package suggéré doit être validé sur son registry officiel
 
 ---
 
 ## Prochaines étapes
 
 - [Performance & Ressources](performance.md) — Optimiser Copilot pour ne pas impacter l'IDE
+- [Workflows IA Complets](workflows-ia.md) — Workflows bout en bout avec validation intégrée
 - [Troubleshooting](../chapitre-6-troubleshooting/index.md) — Résoudre les problèmes courants

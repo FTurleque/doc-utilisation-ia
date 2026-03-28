@@ -114,12 +114,14 @@ nav:
     - Productivité: chapitre-5-bonnes-pratiques/productivite.md
     - Sécurité & Qualité: chapitre-5-bonnes-pratiques/securite-qualite.md
     - Performance & Ressources: chapitre-5-bonnes-pratiques/performance.md
+    - Workflows IA Complets: chapitre-5-bonnes-pratiques/workflows-ia.md
   
   - Troubleshooting:
     - Accueil: chapitre-6-troubleshooting/index.md
     - Problèmes Courants: chapitre-6-troubleshooting/problemes-courants.md
     - Logs & Diagnostic: chapitre-6-troubleshooting/logs-diagnostic.md
     - Comparaison des Problèmes: chapitre-6-troubleshooting/comparaison-problemes.md
+    - Procédures de Réparation: chapitre-6-troubleshooting/procedures-reparation.md
   
   - Cas d'Usage:
     - Accueil: chapitre-7-cas-usage/index.md
@@ -147,6 +149,11 @@ nav:
     - MLOps & Déploiement: chapitre-9-machine-learning/mlops-deploiement.md
     - Comparaison Écosystèmes ML: chapitre-9-machine-learning/comparaison-ecosystemes-ml.md
     - Comparaison des Outils: chapitre-9-machine-learning/comparaison-outils.md
+
+  - RAG:
+    - Introduction: chapitre-10-rag/index.md
+    - Concepts & Types: chapitre-10-rag/concepts.md
+    - Mise en Œuvre: chapitre-10-rag/implementation.md
 
   - Appendices:
     - Accueil: appendices/index.md

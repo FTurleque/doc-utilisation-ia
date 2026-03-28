@@ -1,5 +1,7 @@
 # Logs & Diagnostic
 
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+
 Lire les logs est la technique la plus fiable pour diagnostiquer un problème Copilot persistant. Ce guide explique comment accéder aux logs, ce qu'ils contiennent, et comment les interpréter.
 
 ---
@@ -38,8 +40,8 @@ Pour activer les logs de débogage complets :
 }
 ```
 
-!!! warning "Verbose logs"
-    Les logs DEBUG sont volumineux. Désactivez cette option après votre diagnostic en supprimant la clé.
+!!! warning "Logs DEBUG volumineux"
+    Les logs DEBUG peuvent dépasser 100 Mo en quelques heures. **Désactivez cette option immédiatement après votre diagnostic** en supprimant la clé `debug.overrideLogLevels` de vos settings.
 
 ### Fichiers de logs VS Code
 
@@ -163,6 +165,8 @@ grep -i "copilot" idea.log | tail -100
 | `403` | Autorisations insuffisantes — vérifier l'abonnement |
 | `422` | Requête invalide — bug potentiel, vérifier la version |
 | `429` | Rate limit — attendre et réessayer |
+| `408` | Timeout — problème réseau ou serveur lent, augmenter `requestTimeout` |
+| `413` | Payload trop grand — contexte excessif, fermer des onglets |
 | `500/503` | Erreur serveur GitHub — vérifier githubstatus.com |
 
 ---
@@ -173,21 +177,43 @@ grep -i "copilot" idea.log | tail -100
 
 Copilot communique avec ces domaines — vérifiez qu'ils sont accessibles depuis votre réseau :
 
-```bash
-# PowerShell
-Test-NetConnection -ComputerName "api.github.com" -Port 443
-Test-NetConnection -ComputerName "copilot-proxy.githubusercontent.com" -Port 443
+=== "Windows (PowerShell)"
+    ```powershell
+    Test-NetConnection -ComputerName "api.github.com" -Port 443
+    # Sortie attendue :
+    #   ComputerName     : api.github.com
+    #   RemoteAddress    : 140.82.121.6
+    #   RemotePort       : 443
+    #   TcpTestSucceeded : True   <- Doit être True
+    
+    Test-NetConnection -ComputerName "copilot-proxy.githubusercontent.com" -Port 443
+    # Sortie attendue : TcpTestSucceeded : True
+    ```
 
-# Bash
-curl -I "https://api.github.com" 2>&1 | head -5
-curl -I "https://copilot-proxy.githubusercontent.com" 2>&1 | head -5
-```
+=== "macOS / Linux"
+    ```bash
+    curl -I https://api.github.com
+    # Sortie attendue :
+    #   HTTP/2 200
+    #   server: GitHub.com
+    #   < en moins de 500ms >
+    
+    curl -I https://copilot-proxy.githubusercontent.com
+    # Sortie attendue : HTTP/2 200 ou 204
+    ```
+
+!!! tip "Interpréter les résultats"
+    Si `TcpTestSucceeded : False` ou si `curl` retourne un timeout, le problème est réseau (proxy, firewall, VPN). Voir [Procédures de réparation — Configuration proxy/SSL](procedures-reparation.md#procedure-4-configuration-proxy-ssl).
 
 ### Capture HAR (pour support GitHub)
+
+!!! danger "Sécurité — Fichiers HAR"
+    Les fichiers HAR contiennent l'**intégralité des requêtes et réponses HTTP**, y compris les **tokens d'authentification**, cookies et données de session. **Ne partagez jamais un fichier HAR brut** sans avoir redácté les champs sensibles. Ouvrez le HAR dans un éditeur texte et remplacez les valeurs des champs `Authorization`, `Cookie` et `access_token` par `REDACTED` avant tout partage.
 
 Si vous devez contacter le support GitHub avec un problème de réseau :
 
 **VS Code :**
+
 1. Ouvrez Developer Tools (F12)
 2. Onglet **Network**
 3. Cochez "Preserve log"

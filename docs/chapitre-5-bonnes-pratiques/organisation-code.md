@@ -311,6 +311,105 @@ src/
 
 ---
 
+## Configurer le Contexte IA du Projet
+
+Au-delà du code lui-même, vous pouvez **configurer explicitement comment Copilot comprend votre projet** via trois types de fichiers de contexte.
+
+### 1. `.github/copilot-instructions.md` — Instructions Système Persistantes
+
+Ce fichier contient des **instructions qui s'appliquent automatiquement à toutes les conversations Copilot** pour votre dépôt. C'est l'équivalent d'un brief permanent donné à l'IA à chaque session.
+
+```markdown
+# Copilot Instructions — Mon Projet
+
+## Stack technique
+- TypeScript 5.3 strict, Node.js 20, Express 4.18
+- Base de données : PostgreSQL 15 avec Prisma ORM
+- Tests : Jest + Supertest, coverage minimum 80%
+
+## Conventions
+- Toujours utiliser les classes d'erreur de `src/errors/`
+- Pas d'`any` TypeScript — utiliser `unknown` + type guard
+- Les routes retournent toujours `{ data, meta }` (jamais directement le modèle)
+- Validation des entrées avec Zod sur toutes les routes POST/PUT
+
+## Patterns à suivre
+- Nouveau controller → copier le pattern de `src/controllers/UserController.ts`
+- Nouveau service → suivre l'interface de `src/services/BaseService.ts`
+```
+
+!!! tip "Lien vers le chapitre dédié"
+    Pour aller plus loin sur les instructions Copilot : [Instructions et personnalisation](../chapitre-3-contexte/instructions.md)
+
+### 2. `COPILOT.md` — Documentation Architecturale pour l'IA
+
+Un `COPILOT.md` à la racine du projet est un document de référence que Copilot lit pour comprendre **l'architecture et les décisions techniques**. Contrairement au README (destiné aux humains), COPILOT.md est optimisé pour être parsé par une IA.
+
+```markdown
+# COPILOT.md — Guide Architecture
+
+## Vue d'ensemble
+Application e-commerce multi-tenant. Chaque tenant a son schéma PostgreSQL isolé.
+
+## Modules principaux
+- `src/auth/` — JWT + refresh tokens (voir AuthService, TokenRepository)
+- `src/orders/` — Cycle de vie commande (états : PENDING → CONFIRMED → SHIPPED → DELIVERED)
+- `src/payments/` — Intégration Stripe (webhooks dans PaymentWebhookHandler)
+
+## Règles d'architecture
+- PAS de logique métier dans les controllers (déléguer aux services)
+- PAS d'accès direct à la DB depuis les services (passer par les repositories)
+- Les events domaine sont publiés via EventBus (src/events/)
+
+## Décisions techniques (ADR)
+- Choix Prisma vs TypeORM : Prisma retenu pour ses types générés automatiquement
+- Multi-tenancy : schema-per-tenant (pas row-level) pour l'isolation des données
+```
+
+### 3. Fichiers `.prompt.md` — Prompts Réutilisables
+
+Les fichiers `.prompt.md` (dans `.github/prompts/`) permettent de **standardiser des demandes récurrentes** pour l'équipe. Au lieu de retaper le même brief à chaque fois, vous référencez le fichier.
+
+```markdown
+# .github/prompts/new-api-endpoint.prompt.md
+
+Crée un nouvel endpoint REST dans ce projet.
+
+Contexte du projet :
+- Express + TypeScript strict
+- Validation Zod obligatoire sur les inputs
+- Réponses au format `{ data: T, meta: {} }`
+- Tests Jest dans le dossier `__tests__/`
+
+Instructions :
+1. Créer le schema Zod pour les inputs
+2. Créer la route dans le controller approprié
+3. Créer la méthode dans le service correspondant
+4. Créer le test d'intégration (happy path + validation error)
+
+Endpoint à créer : [DÉCRIRE L'ENDPOINT ICI]
+```
+
+---
+
+## Gestion de la Fenêtre de Contexte
+
+La **fenêtre de contexte** (context window) est la quantité maximale de texte que Copilot peut analyser en une seule fois pour générer une suggestion. Si trop de fichiers sont ouverts ou si vos fichiers sont trop longs, la qualité des suggestions baisse.
+
+### Règles pratiques
+
+| Situation | Impact | Action recommandée |
+|-----------|--------|-------------------|
+| Trop d'onglets ouverts | ⚠️ Contexte dilué | Fermer les fichiers non pertinents à la tâche |
+| Fichier > 500 lignes | ⚠️ Contexte tronqué | Splitter en modules plus petits |
+| Fichier > 1000 lignes | 🔴 Suggestions dégradées | Refactorer obligatoirement |
+| Fichiers de données (JSON, CSV) ouverts | ⚠️ Bruit contextuel | Fermer ou exclure via `.copilotignore` |
+
+!!! tip "Travaillez par modules"
+    Pour une session de travail efficace : ouvrez **uniquement les fichiers liés à votre tâche en cours**. Si vous ajoutez une fonctionnalité à `UserService.ts`, ouvrez les types associés, le controller, et les tests — et fermez tout le reste.
+
+---
+
 ## En résumé
 
 - **Nommage expressif** : `activeAdultUsers` > `x` — les noms parlants génèrent de meilleures suggestions
@@ -318,6 +417,9 @@ src/
 - **Un fichier, une responsabilité** : la séparation des concerns aide Copilot à comprendre l'intention
 - **Les barrel exports** (`index.ts`) donnent à Copilot une vue d'ensemble des APIs disponibles
 - **Le README est lu en priorité** : un README structuré améliore toutes les suggestions du projet
+- **`.github/copilot-instructions.md`** : configurez les conventions de votre projet une fois, Copilot les applique toujours
+- **`COPILOT.md`** : documentez l'architecture pour que Copilot comprenne vos décisions techniques
+- **Gérez le contexte** : fermez les onglets non pertinents, gardez les fichiers < 500 lignes
 
 ---
 

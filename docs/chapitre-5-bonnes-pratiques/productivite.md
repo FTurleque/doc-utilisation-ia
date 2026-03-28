@@ -236,13 +236,134 @@ Copilot est particulièrement efficace quand vous expliquez à voix haute ce que
 
 ---
 
+## Gestion de la Fenêtre de Contexte
+
+La **fenêtre de contexte** est la quantité de texte que Copilot peut traiter en une seule fois pour générer une suggestion. Comprendre ce concept vous permet d'optimiser la pertinence des suggestions.
+
+### Qu'est-ce que la context window ?
+
+Imaginez que Copilot lit vos fichiers ouverts comme un développeur qui relit du code avant de suggérer quelque chose. Il a une **mémoire de travail limitée** : si vous lui donnez trop de texte, il doit choisir quoi lire — et peut rater l'information cruciale.
+
+| Modèle Copilot (2025) | Context window approx. |
+|-----------------------|------------------------|
+| GPT-4o (Chat) | ~128 000 tokens (~100k mots) |
+| Claude 3.5 Sonnet (Chat) | ~200 000 tokens (~150k mots) |
+| Suggestions inline | Fenêtre réduite (fichier courant + contexte proche) |
+
+### Stratégies pour rester dans la fenêtre
+
+```
+❌ Session peu efficace
+   10 onglets ouverts dont 8 non pertinents
+   2 fichiers de 1500 lignes
+   Suggestions : génériques, hors contexte
+
+✅ Session optimale
+   3-4 onglets ciblés sur la tâche en cours
+   Fichiers < 400 lignes bien nommés
+   Suggestions : précises, cohérentes avec votre code
+```
+
+**Actions concrètes :**
+
+1. **Fermer les onglets non pertinents** avant de démarrer une session de travail ciblée
+2. **Ouvrir les fichiers liés** (service + types + tests) pour donner le bon contexte
+3. **Utiliser `#file` ou `#selection`** dans Chat pour cibler précisément plutôt que d'utiliser `@workspace` systématiquement
+4. **Splitter les gros fichiers** : au-delà de 500 lignes, envisagez de découper en modules
+
+!!! tip "Signal d'une context window saturée"
+    Quand Copilot commence à suggérer des noms de variables qui n'existent pas dans votre projet, ou répète du code que vous venez d'écrire — c'est souvent le signe que la fenêtre de contexte est saturée. Fermez des onglets et relancez.
+
+---
+
+## Workflows Avancés
+
+### Workflow 6 : Session Copilot Edits Multi-Fichiers
+
+**Objectif** : Modifier une fonctionnalité qui touche plusieurs fichiers en une seule session cohérente.
+
+```
+Scénario : Ajouter un champ `phone` optionnel au modèle User
+(impacts : types, service, controller, tests, migration DB)
+
+1. Ouvrir Copilot Edits (++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++)
+
+2. Constituer le Working Set :
+   + src/types/User.ts          ← Type User
+   + src/services/UserService.ts ← Logique métier
+   + src/controllers/UserController.ts ← Routes
+   + src/__tests__/UserService.test.ts ← Tests
+   + prisma/schema.prisma        ← Schéma DB
+
+3. Rédiger la demande :
+   "Ajoute un champ `phone?: string` au modèle User.
+    - Validation : format E.164 (+33612345678) avec Zod
+    - Exposé dans les réponses API
+    - Index unique dans Prisma si phone est fourni
+    - Mets à jour les tests existants"
+
+4. Reviewer les modifications proposées fichier par fichier :
+   ✓ User.ts — Accepter l'ajout du type
+   ✓ UserController.ts — Accepter la validation Zod mise à jour
+   ? UserService.ts — Vérifier la logique d'update
+   ✓ tests — Accepter les nouveaux cas de test
+
+5. Committer le Working Set validé
+```
+
+!!! warning "Gardez le Working Set minimal"
+    Résistez à la tentation d'ajouter tous les fichiers du projet. Un Working Set de 4-6 fichiers est optimal. Au-delà, les suggestions deviennent moins cohérentes et plus difficiles à reviewer.
+
+### Workflow 7 : Agent Mode Autonome
+
+**Objectif** : Déléguer une tâche bien définie à Copilot en mode entièrement autonome.
+
+!!! info "Prérequis"
+    Le mode Agent nécessite **GitHub Copilot Pro+** (ou Business/Enterprise). Il est accessible dans VS Code depuis le menu Copilot Edits → bouton **Agent**.
+
+```
+Scénario : Migrer tous les callbacks async vers async/await dans un module
+
+1. Préparer une instruction claire et vérifiable :
+   "Dans src/legacy/, convertis tous les callbacks Node.js style (err, result)
+    en async/await. Garde la même signature publique des fonctions.
+    Exécute les tests après chaque fichier modifié pour valider."
+
+2. Activer le mode Agent dans Copilot Edits
+
+3. Copilot va :
+   → Analyser les fichiers ciblés
+   → Proposer les modifications fichier par fichier
+   → Exécuter `npm test` pour vérifier
+   → Itérer si des tests échouent
+
+4. Monitorer la progression dans le panel Agent :
+   → Vous pouvez interrompre à tout moment avec "Stop"
+   → Reviewer chaque modification dans le diff
+
+5. Valider le résultat final avant commit
+```
+
+**Tâches idéales pour l'Agent :**
+- Migrations de syntaxe (callbacks → async/await, CommonJS → ESM)
+- Ajout systématique de gestion d'erreurs manquante
+- Conversion de tests (Jest → Vitest, unittest → pytest)
+- Génération de documentation pour tous les modules d'un dossier
+
+**Tâches à éviter pour l'Agent :**
+- Logique métier complexe avec règles implicites
+- Refactoring d'architecture (trop risqué sans supervision étroite)
+- Code touchant la sécurité (auth, crypto)
+
+---
+
 ## Top 5 des gestes à retenir
 
 1. **++tab++** — Accepter une suggestion (universel, les deux IDEs)
 2. **++ctrl+right++ / ++option+right++** — Accepter mot par mot pour garder le contrôle
 3. **++ctrl+i++ / ++cmd+i++** — Inline Chat directement dans l'éditeur
 4. **++alt+bracket-right++** — Parcourir les suggestions alternatives avant de rejeter
-5. **++ctrl+alt+i++ / ++cmd+alt+i++** — Ouvrir Copilot Chat (VS Code)
+5. **++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++** — Ouvrir Copilot Edits (multi-fichiers)
 
 ---
 
@@ -250,3 +371,4 @@ Copilot est particulièrement efficace quand vous expliquez à voix haute ce que
 
 - [Sécurité & Qualité](securite-qualite.md) — Vérifier le code généré par Copilot
 - [Performance & Ressources](performance.md) — Optimiser les performances avec Copilot
+- [Workflows IA Complets](workflows-ia.md) — Workflows bout en bout avec Copilot

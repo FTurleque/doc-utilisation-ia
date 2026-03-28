@@ -82,8 +82,6 @@ git push origin feature/ma-nouvelle-page
 3. Remplir le template de PR (description, type de changement, checklist)
 4. Soumettre — **@FTurleque sera automatiquement ajouté en reviewer** (via CODEOWNERS)
 
-![Créer une Pull Request](docs/assets/images/vscode/vscode-marketplace-01.png)
-
 ### 6. Revue et merge
 
 - @FTurleque examine la PR, laisse des commentaires ou approuve

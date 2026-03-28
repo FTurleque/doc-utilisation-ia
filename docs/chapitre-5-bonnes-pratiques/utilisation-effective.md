@@ -101,6 +101,19 @@ async findByPhoneNumber(phone: string): Promise<User> {
 
 ### Commencer par un mini-PRD
 
+!!! info "C'est quoi un PRD ?"
+    Un **PRD** (Product Requirements Document — Document de Spécifications Produit) est un document structuré qui décrit **ce qu'un logiciel doit faire, pour qui, et pourquoi**. Historiquement rédigé par un Product Manager à destination des équipes techniques, il formalise les besoins avant toute ligne de code.
+
+    **Dans le contexte Copilot**, un mini-PRD sert de *prompt de haut niveau* : il donne à l'IA suffisamment de contexte pour générer du code cohérent et aligné avec vos intentions, au lieu de deviner.
+
+    Un PRD complet contient typiquement :
+    
+    - **Contexte** : pourquoi cette fonctionnalité existe
+    - **Utilisateurs cibles** : qui va s'en servir
+    - **Périmètre fonctionnel** : ce qui doit être fait (et ce qui est hors périmètre)
+    - **Critères d'acceptation** : comment vérifier que c'est réussi
+    - **Contraintes** : techniques, de performance, de sécurité
+
 Avant de demander du code, formalisez un mini-PRD en 5 points :
 
 1. Objectif produit
@@ -150,13 +163,172 @@ Tour 4 → "Refactorise pour extraire la logique de validation dans
           un validateur séparé"
 ```
 
-### Utiliser les variables de contexte dans Chat
+---
 
-Dans Copilot Chat, vous pouvez référencer :
-- `#file` — inclure un fichier spécifique comme contexte
-- `#selection` — le code sélectionné dans l'éditeur
-- `@workspace` — rechercher dans tout le workspace
-- `@vscode` — poser des questions sur VS Code lui-même
+## Slash Commands — Référence Complète
+
+Les **slash commands** sont des raccourcis de prompt intégrés à Copilot Chat qui déclenchent des comportements spécifiques. Tapez `/` dans le champ de saisie pour voir la liste contextuelle.
+
+| Commande | Ce qu'elle fait | Exemple d'utilisation |
+|----------|----------------|----------------------|
+| `/explain` | Explique le code sélectionné ou demandé, étape par étape | `Sélectionner une fonction → /explain` |
+| `/tests` | Génère des tests unitaires pour le code sélectionné | `/tests Génère les tests Jest avec happy path et cas d'erreur` |
+| `/doc` | Génère la documentation (JSDoc, docstring, Javadoc) | `Sélectionner une classe → /doc` |
+| `/fix` | Analyse et corrige un bug ou une erreur | `Coller le stack trace → /fix` |
+| `/new` | Crée un nouveau projet ou fichier depuis zéro | `/new API Express TypeScript avec authentification JWT` |
+| `/newNotebook` | Crée un nouveau Jupyter Notebook | `/newNotebook Analyse exploratoire d'un CSV pandas` |
+| `/terminal` | Explique ou suggère une commande terminal | `/terminal Comment lister les ports ouverts sur Windows ?` |
+| `/search` | Recherche dans la documentation ou le workspace | `/search Où est configuré le middleware Express ?` |
+| `/clear` | Efface la conversation Chat en cours | — |
+
+!!! tip "Combiner slash command + contexte"
+    Les slash commands sont encore plus puissantes avec du contexte explicite :
+    ```
+    /tests #file:src/services/UserService.ts
+    Couvre : création, mise à jour, suppression, et le cas email dupliqué.
+    ```
+    ```
+    /fix #selection
+    L'erreur est : "Cannot read property 'id' of undefined" à la ligne 45.
+    ```
+
+!!! info "Slash commands dans IntelliJ"
+    Dans le plugin Copilot pour IntelliJ IDEA, les slash commands sont disponibles dans le panel **GitHub Copilot Chat**. La liste des commandes disponibles peut varier légèrement selon la version du plugin. Utilisez `/explain`, `/tests` et `/fix` — ce sont les plus stables cross-IDE.
+
+---
+
+## Variables de Contexte dans Copilot Chat
+
+Dans Copilot Chat, utilisez des **variables de contexte** pour cibler précisément ce que l'IA doit analyser. Elles remplacent les longues descriptions textuelles par des références directes à votre code.
+
+### Participants (préfixe `@`)
+
+| Variable | Portée | Cas d'usage typique |
+|----------|--------|---------------------|
+| `@workspace` | Tout le projet | Rechercher un pattern, comprendre l'architecture, trouver où quelque chose est défini |
+| `@vscode` | VS Code lui-même | Paramètres, extensions, raccourcis, configuration de l'éditeur |
+| `@terminal` | Terminal actif | Expliquer la sortie d'une commande, diagnostiquer une erreur shell |
+
+**Exemples concrets :**
+```
+@workspace Où est définie la logique de validation des commandes ?
+@workspace Comment les erreurs HTTP sont-elles gérées dans ce projet ?
+@vscode Comment configurer le lint on save pour ce projet ?
+@terminal L'erreur ci-dessus vient de quelle dépendance ?
+```
+
+### Variables de fichiers (préfixe `#`)
+
+| Variable | Ce qu'elle inclut | Quand l'utiliser |
+|----------|------------------|------------------|
+| `#file` | Contenu d'un fichier spécifique | Analyser, expliquer, tester un fichier précis |
+| `#selection` | Code actuellement sélectionné | Refactorer, fixer, expliquer une portion de code |
+| `#codebase` | Index sémantique du projet entier | Questions d'architecture, recherches transversales |
+| `#sym` | Définition d'un symbole (fonction, classe) | Comprendre une API interne, trouver des usages |
+
+**Exemples concrets :**
+```
+Refactorise #file:src/services/OrderService.ts pour extraire la validation dans un fichier séparé
+/tests #file:src/utils/dateUtils.ts — couvre les cas de timezone et de date invalide
+Explique le rôle de #sym:UserAuthMiddleware dans le flow d'authentification
+Comment #selection interagit-il avec le cache Redis ?
+```
+
+!!! tip "Stratégie : moins de contexte = meilleures réponses"
+    Donnez à Copilot Chat **le minimum de contexte nécessaire**, pas tout le projet. `#file:mon-service.ts` est plus efficace que `@workspace` pour des questions localisées. Réservez `@workspace` ou `#codebase` pour les questions transversales.
+
+---
+
+## Next Edit Suggestions (NES)
+
+**Next Edit Suggestions** est une fonctionnalité de Copilot qui anticipe où vous allez modifier votre code ensuite, et propose une suggestion à cet endroit — même si votre curseur n'y est pas encore.
+
+### Comment ça fonctionne
+
+Après avoir accepté ou écrit une modification, Copilot analyse le contexte et identifie les endroits du fichier qui sont probablement à mettre à jour en conséquence (exemple : vous renommez un paramètre dans une signature → NES propose de le renommer dans le corps de la fonction).
+
+Une flèche indique la prochaine suggestion dans la gouttière de l'éditeur.
+
+### Activation (VS Code)
+
+```json
+// .vscode/settings.json
+{
+    "github.copilot.nextEditSuggestions.enabled": true
+}
+```
+
+Ou via ++ctrl+shift+p++ → `Preferences: Open Settings` → rechercher `nextEditSuggestions`.
+
+### Raccourcis NES
+
+| Action | Raccourci Windows/Linux | Raccourci macOS |
+|--------|------------------------|-----------------|
+| Naviguer vers la suggestion suivante | ++tab++ (depuis la flèche) | ++tab++ |
+| Accepter la suggestion | ++tab++ (au niveau de la suggestion) | ++tab++ |
+| Ignorer et continuer | ++escape++ | ++escape++ |
+
+### Cas d'usage typiques
+
+- Renommer un paramètre → NES met à jour toutes ses occurrences dans la fonction
+- Changer un type → NES adapte les usages du type
+- Ajouter un champ à une interface → NES propose de l'initialiser dans le constructeur
+- Modifier une signature de méthode → NES adapte les appels dans le même fichier
+
+!!! info "NES vs refactoring IDE"
+    NES n'est pas un refactoring classique (qui gère tous les fichiers du projet). C'est une suggestion contextuelle dans le *fichier courant*. Pour un renommage global, utilisez ++f2++ (Rename Symbol) dans VS Code ou ++shift+f6++ dans IntelliJ.
+
+---
+
+## Copilot Edits : Modifications Multi-Fichiers
+
+Copilot Edits est le mode de Copilot conçu pour les **modifications qui touchent plusieurs fichiers simultanément**. Contrairement au Chat (conversationnel) ou aux suggestions inline (locales), Edits peut proposer des changements cohérents à travers votre codebase.
+
+### Ouvrir Copilot Edits
+
+=== ":material-microsoft-visual-studio-code: VS Code"
+    ++ctrl+shift+alt+i++ (Windows/Linux) ou ++cmd+shift+alt+i++ (macOS)
+    
+    Ou : Copilot Chat → icône ✏️ **Edits**
+
+=== ":simple-intellijidea: IntelliJ IDEA"
+    Panel GitHub Copilot → bouton **Edit** (disponible depuis la version 1.5+ du plugin)
+
+### Le Working Set
+
+Avant de lancer une session Edits, vous définissez un **Working Set** : la liste des fichiers que Copilot est autorisé à modifier.
+
+```
+Working Set recommandé pour une fonctionnalité :
+  ✓ Le fichier service  (ex: UserService.ts)
+  ✓ Le fichier controller associé (UserController.ts)
+  ✓ Les types/interfaces (types/User.ts)
+  ✓ Le fichier de tests (UserService.test.ts)
+  ✗ Pas les fichiers non liés — limitez le périmètre
+```
+
+### Mode Collaboratif vs Mode Autonome
+
+| Mode | Comportement | Quand l'utiliser |
+|------|-------------|------------------|
+| **Collaboratif** | Copilot propose les changements, vous acceptez fichier par fichier | Modifications complexes où vous voulez contrôler chaque étape |
+| **Autonome (Agent)** | Copilot applique les changements, exécute les tests, itère | Tâches répétitives bien définies (ex: "Migre tous les callbacks en async/await") |
+
+### Workflow typique en mode Collaboratif
+
+```
+1. Ouvrir Copilot Edits (++ctrl+shift+alt+i++)
+2. Ajouter les fichiers au Working Set
+3. Décrire la modification :
+   "Ajoute la gestion du champ `deletedAt` (soft delete) à UserService.
+    Mets à jour le type User, le service, et les tests associés."
+4. Copilot propose les modifications pour chaque fichier
+5. Reviewer fichier par fichier → Accepter / Rejeter / Modifier
+6. Committer le résultat
+```
+
+!!! warning "Vérifiez toujours le Working Set"
+    En mode autonome, Copilot peut modifier des fichiers supplémentaires qu'il juge pertinents. Vérifiez toujours la liste des fichiers modifiés avant de committer — c'est votre responsabilité de valider l'ensemble.
 
 ---
 
@@ -305,10 +477,13 @@ et les risques potentiels.
 ## En résumé
 
 - **Commentaire = prompt** : plus votre commentaire est précis, meilleure est la suggestion
-- **Le mini-PRD** avant une demande complexe améliore nettement la qualité du code généré
+- **Le mini-PRD** (Product Requirements Document) formalise votre besoin avant de coder — il améliore nettement la qualité du code généré par Copilot Chat
+- **Slash commands** `/explain`, `/tests`, `/fix`, `/doc` : des raccourcis de prompt pour les tâches courantes
+- **Variables de contexte** `#file`, `#selection`, `@workspace` : donnez à Copilot exactement le bon périmètre
+- **NES** (Next Edit Suggestions) : laissez Copilot anticiper vos prochaines modifications avec `Tab`
+- **Copilot Edits** pour les modifications multi-fichiers : définissez un Working Set et choisissez le mode collaboratif ou autonome
 - **Acceptez de manière sélective** : mot par mot (++ctrl+right++) pour garder le contrôle
 - **Explorez les alternatives** avec ++alt+bracket-right++ avant de rejeter une suggestion
-- **Copilot Chat + `@workspace`** pour les tâches multi-fichiers complexes
 
 ---
 
@@ -316,3 +491,4 @@ et les risques potentiels.
 
 - [Organisation du code](organisation-code.md) — Structurer le code pour de meilleures suggestions
 - [Productivité](productivite.md) — Raccourcis et workflows optimisés
+- [Workflows IA Complets](workflows-ia.md) — Workflows bout en bout avec Copilot

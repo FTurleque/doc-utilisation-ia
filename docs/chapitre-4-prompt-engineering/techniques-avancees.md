@@ -85,79 +85,16 @@ sequenceDiagram
 
 ## 2. RAG — Retrieval-Augmented Generation
 
-Le **RAG** enrichit dynamiquement les prompts avec des données externes récupérées au moment de la requête. C'est l'architecture qui permet à un LLM de répondre avec précision sur des données qu'il n'a jamais vues lors de son entraînement — votre codebase, vos documents internes, vos données métier.
+Le **RAG** (*Retrieval-Augmented Generation*) enrichit les prompts avec des données externes récupérées en temps réel. Au lieu d'espérer que le LLM connaît votre codebase, vos docs internes ou vos données métier, le RAG les indexe et injecte automatiquement les passages pertinents dans chaque prompt.
 
-```mermaid
-graph TD
-    Q["❓ Question utilisateur"] --> EMB["🔢 Vectorisation\n(embedding)"]
+C'est cette mécanique que GitHub Copilot utilise nativement : il lit vos fichiers ouverts, votre historique et vos `.instructions.md` pour construire un contexte adapté à votre projet avant chaque suggestion.
 
-    EMB --> VDB[("🗄️ Base Vectorielle\n(code, docs, données métier)")]
-    VDB -->|"top-k résultats\nles plus pertinents"| REL["📚 Contexte\npertinent récupéré"]
+!!! info "Chapitre dédié au RAG"
+    Le RAG est couvert en profondeur dans son propre chapitre : ce qu'il est, pourquoi et quand l'utiliser, les 3 architectures (Naive RAG, Advanced RAG, Agentic RAG), l'aide au choix selon votre contexte, et l'implémentation pas à pas avec code fonctionnel.
 
-    REL --> AUGMENT["✨ Prompt Augmenté\n= Question + Contexte récupéré"]
-    Q --> AUGMENT
+    **[→ Chapitre 10 — RAG : Retrieval-Augmented Generation](../chapitre-10-rag/index.md)**
 
-    AUGMENT --> LLM["🧠 LLM"]
-    LLM --> ANS["💬 Réponse\ncontextualisée et factuelle"]
 
-```
-
-### Pourquoi le RAG est indispensable en production
-
-| Limitation du LLM seul | Solution apportée par RAG |
-|------------------------|---------------------------|
-| Connaissance figée (date de coupure) | Données en temps réel |
-| Hallucinations sur données internes | Réponses ancrées dans vos documents |
-| Pas de connaissance de votre codebase | Contexte du projet injecté automatiquement |
-| Fine-tuning très coûteux | RAG économique et sans ré-entraînement |
-| Incertitude sur l'origine des réponses | Sources citables et traçables |
-
-### RAG dans votre IDE — Comment Copilot l'implémente
-
-```mermaid
-graph LR
-    CODE["📁 Fichiers ouverts\n(onglets actifs)"] --> IDX["🔍 Indexation\nCopilot"]
-    HIST["💬 Historique\nde conversation"] --> CTX
-    CURSOR["📍 Code autour\ndu curseur"] --> CTX["🎯 Contexte\nassemblé par Copilot"]
-    IDX --> CTX
-    SINST["📋 Instructions\n(.instructions.md)"] --> CTX
-    CTX --> LLM["🧠 Modèle Copilot\n(fenêtre de tokens)"]
-    LLM --> SUG["✨ Suggestions\ncohérentes avec votre projet"]
-
-```
-
-### Implémenter un RAG simple
-
-```python
-# Concept d'un pipeline RAG minimal
-class SimpleRAG:
-    def __init__(self, documents: list[str]):
-        # 1. Indexer les documents dans une base vectorielle
-        self.index = VectorIndex()
-        for doc in documents:
-            embedding = embed_model.encode(doc)
-            self.index.add(embedding, doc)
-
-    def query(self, question: str, top_k: int = 3) -> str:
-        # 2. Trouver le contexte le plus pertinent
-        q_embedding = embed_model.encode(question)
-        relevant_docs = self.index.search(q_embedding, top_k)
-
-        # 3. Construire le prompt augmenté
-        context = "\n---\n".join(relevant_docs)
-        prompt = f"""
-        Contexte disponible (extrait de la documentation) :
-        {context}
-
-        Question : {question}
-
-        Réponds uniquement en te basant sur le contexte fourni.
-        Si la réponse n'est pas dans ce contexte, indique-le explicitement.
-        """
-
-        # 4. Appeler le LLM avec le contexte enrichi
-        return llm.call(prompt)
-```
 
 ---
 

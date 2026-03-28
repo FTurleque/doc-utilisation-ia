@@ -1,5 +1,7 @@
 # Problèmes Courants
 
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+
 ## 1. Copilot ne génère aucune suggestion
 
 ### Symptôme
@@ -83,15 +85,38 @@ Si la re-authentification ne fonctionne pas : connectez-vous sur [github.com/set
 ### Symptôme
 Les suggestions apparaissent parfois, avec 2-5 secondes de délai, ou s'interrompent fréquemment.
 
+### Repères de performance
+
+| Latence | Interprétation | Action |
+|---------|---------------|--------|
+| < 2 secondes | ✅ Normal | Rien à faire |
+| 2 à 5 secondes | ⚠️ Dégradé | Surveiller, tester le réseau |
+| > 5 secondes ou timeout | ❌ Anormal | Diagnostiquer le réseau ou le proxy |
+
 ### Diagnostic réseau
 
-```bash
-# Tester la connectivité depuis le terminal
-curl -I https://api.github.com
+=== "Windows (PowerShell)"
+    ```powershell
+    # Tester la connectivité
+    Test-NetConnection -ComputerName "api.github.com" -Port 443
+    # Résultat attendu : TcpTestSucceeded : True
+    
+    Test-NetConnection -ComputerName "copilot-proxy.githubusercontent.com" -Port 443
+    # Résultat attendu : TcpTestSucceeded : True
+    ```
 
-# Devrait retourner HTTP/2 200 rapidement
-# Si timeout ou erreur réseau → problème de connectivité ou proxy
-```
+=== "macOS / Linux"
+    ```bash
+    # Tester la connectivité
+    curl -I https://api.github.com
+    # Résultat attendu : HTTP/2 200 en < 500ms
+    
+    curl -I https://copilot-proxy.githubusercontent.com
+    # Résultat attendu : HTTP/2 200 ou 204
+    ```
+
+!!! tip "VPN et réseau d'entreprise"
+    Si vous êtes connecté à un VPN, testez en le déconnectant temporairement. Certains VPN d'entreprise interceptent le trafic HTTPS vers `githubusercontent.com` et causent des erreurs SSL silencieuses.
 
 ### Solutions
 
@@ -137,12 +162,22 @@ Copilot génère du code qui ne correspond pas au contexte du projet : mauvais f
 2. **Créer un fichier `.github/copilot-instructions.md`** avec des directives du projet
 3. **Positionner le curseur après du code existant** plutôt qu'en début de fichier vide
 4. **Décrire le contexte dans un commentaire** juste avant le code à générer :
-   ```typescript
-   // Projet: API REST Express TypeScript
-   // Pattern: Repository, pas d'ORM, PostgreSQL via pg
-   // Fonction: récupération d'un utilisateur par email
-   function getUserByEmail(email: string) {
-   ```
+
+    === ":material-check: Commentaire contextualisé (bon)"
+        ```typescript
+        // Projet: API REST Express TypeScript
+        // Pattern: Repository, pas d'ORM, PostgreSQL via pg
+        // Fonction: récupération d'un utilisateur par email avec gestion d'erreur
+        function getUserByEmail(email: string): Promise<User | null> {
+        ```
+
+    === ":material-close: Commentaire vague (mauvais)"
+        ```typescript
+        // get user
+        function get(e) {
+        ```
+
+5. **Vérifier `.copilotignore`** — si le fichier en cours est listé dans `.copilotignore`, Copilot l'ignore entièrement (voir [Problème 11](#11-fichier-ignore-par-copilot))
 
 ---
 
@@ -209,19 +244,25 @@ Copilot génère les imports selon le contexte visible. Si les dépendances ne s
 ### Symptôme
 VS Code : l'option "Copilot Edits" ou le mode Agent dans Chat n'est pas disponible.
 
-### Prérequis
+### Prérequis par offre
 
-- **GitHub Copilot Chat** version ≥ 0.13
-- Compte avec accès aux fonctionnalités avancées (peut nécessiter Copilot Business ou accès anticipé)
+| Fonctionnalité | Copilot Free | Copilot Pro | Copilot Business/Enterprise |
+|---------------|:------------:|:-----------:|:---------------------------:|
+| Suggestions inline | ✅ | ✅ | ✅ |
+| Copilot Chat | ✅ (limité) | ✅ | ✅ |
+| Mode Agent (Ask/Edit/Agent) | ❌ | ✅ | ✅ |
+| Copilot Edits multi-fichiers | ❌ | ✅ | ✅ |
+| Modèles premium (GPT-4o, Claude) | ❌ | ✅ | ✅ |
 
 ### Solution
 
 ```
-Extensions → GitHub Copilot Chat → Vérifier la version
-Si version ancienne : Update
+Extensions → GitHub Copilot Chat → Vérifier la version (doit être ≥ 0.13)
+Si version ancienne : clic sur Update
 ```
 
-Si le mode Agent est toujours absent après mise à jour, consultez la page [GitHub Copilot Features](https://docs.github.com/copilot) pour vérifier la disponibilité.
+!!! warning "Offre insuffisante"
+    Si vous avez Copilot Free, certaines fonctionnalités (mode Agent, Copilot Edits) sont réservées à Pro et Business. Consultez [github.com/settings/copilot](https://github.com/settings/copilot) pour vérifier et mettre à niveau votre offre.
 
 ---
 
@@ -232,10 +273,35 @@ IntelliJ ou VS Code devient globalement plus lent après l'activation de Copilot
 
 ### Solutions rapides
 
-1. Augmenter la mémoire allouée à IntelliJ (voir [Performance](../chapitre-5-bonnes-pratiques/performance.md))
-2. Augmenter le délai de suggestions pour réduire les requêtes
-3. Désactiver pour les langages non essentiels
-4. Fermer les onglets inutilisés
+1. **Augmenter la mémoire IntelliJ** :
+   - **Help → Edit Custom VM Options**
+   - Modifier ou ajouter : `-Xmx4096m` (4 Go, recommandé avec Copilot actif)
+   - Redémarrer IntelliJ pour appliquer
+
+2. **Réduire la fréquence des requêtes dans VS Code** :
+    ```json
+    {
+        "editor.quickSuggestionsDelay": 500,
+        "github.copilot.advanced": {
+            "inlineSuggestCount": 1
+        }
+    }
+    ```
+
+3. **Désactiver pour les langages non essentiels** :
+    ```json
+    {
+        "github.copilot.enable": {
+            "markdown": false,
+            "plaintext": false,
+            "xml": false
+        }
+    }
+    ```
+
+4. **Fermer les onglets inutilisés** — Copilot indexe tous les fichiers ouverts comme contexte
+
+Voir aussi [Performance & Ressources](../chapitre-5-bonnes-pratiques/performance.md) pour les réglages avancés.
 
 ---
 
@@ -252,7 +318,122 @@ Après une mise à jour de l'extension/plugin ou de l'IDE, certains paramètres 
 === ":simple-intellijidea: IntelliJ"
     Utilisez **File → Manage IDE Settings → Sync Settings to JetBrains Account** pour sauvegarder en cloud.
     
-    Ou exportez manuellement : **File → Manage IDE Settings → Export Settings**.
+    Ou exportez manuellement : **File → Manage IDE Settings → Export Settings** (génère un `.zip` réimportable).
+
+!!! tip "Sauvegarder settings.json localement"
+    Dans les deux IDEs, versionner le fichier de settings dans git est la méthode la plus fiable :
+    - VS Code : `.vscode/settings.json` dans le dépôt
+    - IntelliJ : `.idea/` dans le dépôt (activer le partage des settings de projet)
+
+---
+
+## 11. Fichier ignoré par Copilot
+
+### Symptôme
+Copilot génère des suggestions normalement dans d'autres fichiers, mais reste silencieux sur un fichier spécifique. Aucun message d'erreur.
+
+### Cause
+Le fichier correspond à un pattern dans `.copilotignore` (VS Code uniquement) ou son extension est désactivée dans les settings.
+
+### Vérification
+
+=== ":material-microsoft-visual-studio-code: VS Code"
+    **1. Vérifier `.copilotignore`**
+    
+    Si un fichier `.copilotignore` existe à la racine du projet ou dans un dossier parent, ouvrez-le et vérifiez qu'il ne correspond pas au fichier concerné.
+    
+    Syntaxe identique à `.gitignore` :
+    ```
+    # Ignorer tous les fichiers de config
+    *.config.js
+    
+    # Ignorer un dossier spécifique
+    secrets/
+    
+    # Ignorer un fichier précis
+    src/config/env.ts
+    ```
+    
+    **2. Vérifier les settings par langage**
+    ```json
+    // Si la valeur est false, Copilot est désactivé pour ce langage
+    {
+        "github.copilot.enable": {
+            "typescript": false  // <- voilà le problème
+        }
+    }
+    ```
+
+=== ":simple-intellijidea: IntelliJ"
+    IntelliJ ne supporte pas `.copilotignore`. Vérifiez :
+    
+    **Settings → GitHub Copilot → Disabled Languages** — le langage du fichier y figure-t-il ?
+    
+    Si oui, décochez-le pour réactiver Copilot sur ce langage.
+
+---
+
+## 12. Chat : contexte de conversation saturé
+
+### Symptôme
+Après plusieurs échanges dans la même conversation, Copilot Chat donne des réponses hors sujet, oublie des informations données plus tôt, ou répond « Je n'ai pas accès à cette information ».
+
+### Cause
+Chaque modèle de langage a une fenêtre de contexte maximale. Quand l'historique de conversation la dépasse, les messages anciens sont tronqués.
+
+### Solutions
+
+=== ":material-microsoft-visual-studio-code: VS Code"
+    1. **Démarrer une nouvelle conversation** — cliquez sur l'icône « + » dans le panneau Chat
+    2. **Résumer le contexte au début** de la nouvelle conversation :
+        ```
+        Contexte : je travaille sur une API Express TypeScript avec PostgreSQL.
+        Objectif : implémenter le service d'authentification JWT.
+        Fichiers clés: src/auth/auth.service.ts, src/middleware/auth.middleware.ts
+        ```
+    3. **En mode Agent** : utilisez `#codebase` ou `@workspace` pour recharger le contexte
+
+=== ":simple-intellijidea: IntelliJ"
+    Fermez le panneau Chat et rouvrez-le pour démarrer une nouvelle session. Résumez votre contexte dans le premier message.
+
+!!! tip "Bonne pratique"
+    Pour les sessions longues, démarrez une nouvelle conversation toutes les 10-15 questions. Résumez les décisions prises pour ne pas perdre le fil.
+
+---
+
+## 13. Suggestions tronquées
+
+### Symptôme
+La suggestion apparaît mais s'arrête au milieu d'une ligne, d'une fonction, ou même au milieu d'un mot.
+
+### Causes fréquentes
+
+| Cause | Indice | Solution |
+|-------|--------|----------|
+| Timeout réseau | Suggestion rapide puis coupée | Augmenter `requestTimeout` |
+| Rate limit | Se produit après une activité intense | Attendre 1-2 min |
+| Contexte trop large | Fichier très long (> 1000 lignes) | Fermer des onglets, découper le fichier |
+| Bug extension/plugin | Reproductible sur tout fichier | Mettre à jour l'extension |
+
+### Solutions
+
+=== ":material-microsoft-visual-studio-code: VS Code"
+    ```json
+    {
+        "github.copilot.advanced": {
+            "requestTimeout": 15000
+        }
+    }
+    ```
+    
+    Si le problème persiste : ++ctrl+shift+p++ → **"Developer: Reload Window"**
+
+=== ":simple-intellijidea: IntelliJ"
+    Vérifiez `idea.log` pour des messages `PSI timeout` ou `Request timeout`.
+    
+    Si le fichier est très long, essayez de diviser le fichier ou de fermer des onglets inutilisés.
+    
+    Si le problème est reproductible : **Help → Submit a Bug Report** avec le log filtré.
 
 ---
 
