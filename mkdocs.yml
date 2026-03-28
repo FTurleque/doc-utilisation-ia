@@ -137,6 +137,18 @@ nav:
     - Modes CLI Détail: chapitre-8-cli-modes/page-principale.md
     - Comparaison Modes: chapitre-8-cli-modes/comparaison.md
   
+  - Machine Learning:
+    - Accueil: chapitre-9-machine-learning/index.md
+    - Concepts Fondamentaux: chapitre-9-machine-learning/concepts-fondamentaux.md
+    - Algorithmes Courants: chapitre-9-machine-learning/algorithmes-courants.md
+    - Copilot pour le ML: chapitre-9-machine-learning/copilot-workflow-ml.md
+    - Python & Data Science: chapitre-9-machine-learning/python-data-science.md
+    - Deep Learning: chapitre-9-machine-learning/deep-learning.md
+    - Notebooks Jupyter: chapitre-9-machine-learning/notebooks-jupyter.md
+    - MLOps & Déploiement: chapitre-9-machine-learning/mlops-deploiement.md
+    - Comparaison Écosystèmes ML: chapitre-9-machine-learning/comparaison-ecosystemes-ml.md
+    - Comparaison des Outils: chapitre-9-machine-learning/comparaison-outils.md
+
   - Appendices:
     - Accueil: appendices/index.md
     - FAQ: appendices/faq.md

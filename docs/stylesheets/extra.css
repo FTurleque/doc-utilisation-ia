@@ -194,6 +194,51 @@ kbd {
   box-shadow: 0 2px 8px rgba(88, 166, 255, 0.15);
 }
 
+/* Vignettes / cartes : agrandies pour meilleure lisibilité */
+.grid.cards > ul > li {
+  min-height: 140px; /* plus d'espace vertical */
+  padding: 1.25rem 1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.grid.cards > ul > li .md-content {
+  flex: 1 1 auto;
+}
+
+.grid.cards > ul > li .md-icon,
+.grid.cards > ul > li .material-icons,
+.grid.cards > ul > li .icon {
+  font-size: 2rem; /* icônes plus grandes */
+  margin-right: 0.75rem;
+}
+
+.grid.cards > ul > li h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.grid.cards > ul > li p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Responsive : réduire la hauteur sur petits écrans */
+@media screen and (max-width: 40rem) {
+  .grid.cards > ul > li {
+    min-height: auto;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    display: block;
+  }
+
+  .grid.cards > ul > li .md-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.4rem;
+  }
+}
+
 /* Bloc "placeholder image" */
 .img-placeholder {
   background: var(--md-default-fg-color--lightest);
@@ -295,6 +340,29 @@ figcaption {
 figure .doc-screenshot,
 figure .reduced-screenshot {
   margin: 0 auto 0.5rem;
+}
+
+/* Conteneur pour agrandir certains diagrammes Mermaid */
+.mermaid-large {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  margin: 1rem 0 1.5rem;
+}
+
+.mermaid-large .mermaid {
+  display: block;
+  width: auto !important;
+  max-width: 100%;
+}
+
+.mermaid-large .mermaid svg {
+  width: 80% !important;
+  height: auto !important;
+  max-height: 70vh;
+  display: block;
+  margin: 0 auto;
 }
 
 

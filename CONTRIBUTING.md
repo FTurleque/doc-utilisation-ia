@@ -82,6 +82,8 @@ git push origin feature/ma-nouvelle-page
 3. Remplir le template de PR (description, type de changement, checklist)
 4. Soumettre — **@FTurleque sera automatiquement ajouté en reviewer** (via CODEOWNERS)
 
+![Créer une Pull Request](docs/assets/images/vscode/vscode-marketplace-01.png)
+
 ### 6. Revue et merge
 
 - @FTurleque examine la PR, laisse des commentaires ou approuve
@@ -176,3 +178,64 @@ git push origin main
 ## Questions ou problèmes ?
 
 Ouvrir une issue avec le label `question` sur le dépôt GitHub.
+
+---
+
+## Développement local
+
+But : exécuter et tester le site MkDocs localement pour éditer la documentation avant commit.
+
+Remarque : le dossier `.venv/` est local et ne doit pas être versionné. Utilisez `requirements.txt` pour partager les dépendances.
+
+Prérequis
+- Python 3 installé (ou le launcher `py`) et `pip`.
+
+Créer et préparer l’environnement (Windows)
+
+PowerShell :
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+py -m pip install --upgrade pip
+py -m pip install -r requirements.txt
+```
+
+Invite de commandes (cmd) :
+```cmd
+py -3 -m venv .venv
+.\.venv\Scripts\activate.bat
+py -m pip install --upgrade pip
+py -m pip install -r requirements.txt
+```
+
+Remarque : si la commande `py` n'est pas disponible, remplacez `py -m` par `.\.venv\Scripts\python -m`.
+
+Deux façons de lancer le site
+- Mode A — Serveur de développement (rechargement automatique) — recommandé pour édition active :
+```powershell
+py -m mkdocs serve
+# ou si 'py' absent :
+.\\.venv\\Scripts\\python -m mkdocs serve
+```
+Ouvrir http://127.0.0.1:8000
+
+- Mode B — Build statique + serveur simple — utile pour tester le site construit :
+```powershell
+py -m mkdocs build
+py -m http.server --directory site 8000
+# ou :
+.\\.venv\\Scripts\\python -m mkdocs build
+.\\.venv\\Scripts\\python -m http.server --directory site 8000
+```
+
+Dépannage rapide
+- Erreur « py : introuvable » → utiliser `.\.venv\Scripts\python -m ...` ou installer le launcher Python depuis python.org (cocher "Install launcher").
+- PowerShell bloque l'exécution des scripts → exécuter :
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+```
+- Si `mkdocs` absent → `py -m pip install mkdocs mkdocs-material`.
+
+Suggestion
+- Pour plus de détails et exemples, voir la page dédiée `docs/appendices/developpement-local.md`.
+ - Pour plus de détails et exemples, voir la page dédiée `user/developpement-local.md`.

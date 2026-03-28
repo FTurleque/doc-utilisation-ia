@@ -60,7 +60,7 @@ Avant de commencer, vérifiez que vous disposez de :
 | **Prompt Files** | ✓ Supporté | ✓ Supporté |
 | **Agent Skills** | ✓ Supporté (lecture) | ✓ Supporté |
 | **MCP (Model Context Protocol)** | ✓ Supporté | ✓ Supporté |
-| **Hooks personnalisés** | ✗ Non supportés | ✗ Non supportés |
+| **Hooks personnalisés** | ✗ Non supportés | ✓ Supporté |
 
 !!! warning "Versions minimales requises"
     - **IntelliJ IDEA** : 2023.1+ pour Copilot complet
