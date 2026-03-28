@@ -7,6 +7,7 @@
 Ce tutoriel vous guide pas à pas pour installer et configurer GitHub Copilot sur Visual Studio Code. Durée estimée : **5 minutes**.
 
 GitHub Copilot vous permet de :
+
 - Recevoir des suggestions de code en temps réel
 - Poser des questions en langage naturel via le chat
 - Automatiser la génération de tests et de documentation
@@ -71,6 +72,7 @@ Ouvrez Visual Studio Code et accédez au **panneau Extensions** :
     Installez **UNIQUEMENT** l'extension publiée par `GitHub` (l'organisation autorisée). Plusieurs extensions imitatrices existent — ignorez-les. L'identifiant correct est `GitHub.copilot`, pas d'autres variantes.
 
 **Après l'installation**, l'extension démarre. Vous verrez un message :
+
 - *"GitHub Copilot installed successfully"* dans la palette de commandes
 - Ou une notification pop-up vous demandant de vous connecter
 
@@ -79,6 +81,7 @@ Ouvrez Visual Studio Code et accédez au **panneau Extensions** :
 ## :material-chat: Étape 3 — Installer GitHub Copilot Chat (optionnel mais recommandé)
 
 L'interface **chat** n'est pas incluse automatiquement. Installez-la pour utiliser :
+
 - Chat conversationnel
 - Slash commands (`/explain`, `/tests`, `/doc`)
 - Contexte enrichi (`@workspace`, `@project`)
@@ -110,6 +113,7 @@ Après installation, authentifiez-vous :
     Image attendue : `vscode-auth-github-01.png` — Boîte de dialogue « Device Flow » d'authentification
 
 ### :material-web: Processus de connexion
+
 1. VS Code ouvre votre navigateur sur GitHub
 2. Si non connecté, connectez-vous avec vos identifiants GitHub
 3. GitHub affiche une page d'autorisation : *"Visual Studio Code wants to access your account"*
@@ -127,6 +131,7 @@ Après installation, authentifiez-vous :
 ### :material-check: Vérification rapideier que Copilot est actif
 
 **Vérification rapide** : :material-check:
+
 1. Regardez la **barre de statut en bas à droite** de VS Code
 2. Vous devez voir l'icône Copilot (ressemble à un éclair ou logo Copilot)
 3. Si elle est **verte** ou **visible sans point rouge d'erreur** → Copilot est actif
@@ -135,6 +140,7 @@ Après installation, authentifiez-vous :
     Image attendue : `vscode-status-bar-icon.png` — Icône Copilot dans la barre de statut (bas à droite)
 
 ### :material-play: Test rapide du fonctionnement
+
 1. Créez un nouveau fichier : *File → New File*
 2. Tapez un langage : `// TypeScript` ou `# Python`
 3. Appuyez ++enter++ et tapez : `function hello` (ou autre début)
@@ -190,34 +196,42 @@ Après installation, authentifiez-vous :
 Vous avez installé Copilot ! Explor ensuite :
 
 ### 1. **Découvrir les raccourcis** (5 min)
+
 → [Guide Référence — Raccourcis complets](reference.md)
 
 Apprenez :
+
 - Accepter suggestions (++tab++, ++alt+right++)
 - Naviguer entre suggestions (++alt+bracket-left/right++)
 - Déclencher manuellement (++alt+backslash++)
 
 ### 2. **Personnaliser vos préférences** (10 min)
+
 → [Paramétrage avancé](../../chapitre-2-parametrage/vscode-parametrage.md)
 
 Configurez :
+
 - Auto-suggestions (mode manuel vs auto)
 - Langages autorisés
 - Raccourcis clavier personnalisés
 
 ### 3. **Apprendre les best practices** (15 min)
+
 → [Utilisation Effective](../../chapitre-5-bonnes-pratiques/utilisation-effective.md)
 
 Maîtrisez :
+
 - Quand utiliser suggestions inline vs chat
 - Prompt engineering basique
 - Validation du code suggéré
 - Sécurité et bonnes pratiques
 
 ### 4. **Explorer les agents et personnalisation** (20+ min)
+
 → [Contexte & Personnalisation](../../chapitre-3-contexte/vscode-contexte.md)
 
 Avancé :
+
 - Custom instructions (`.github/copilot-instructions.md`)
 - Agents autonomes
 - Copilot Edits (modification multi-fichiers)
@@ -233,6 +247,7 @@ A : Cliquez l'icône Copilot dans la barre de statut (bas VS Code) → *"Disable
 **Q : Copilot ne suggère rien. Qu'est-ce qui ne va pas ?**
 
 A : Vérifiez :
+
 - [ ] Extension GitHub Copilot installée (`GitHub.copilot`)
 - [ ] Vous êtes authentifié (icône Copilot visible en bas)
 - [ ] Les suggestions auto sont activées (settings)
@@ -240,7 +255,8 @@ A : Vérifiez :
 
 **Q : Je vois une erreur d'authentification. Que faire ?**
 
-A : 
+A :
+
 1. Ouvrez palette de commandes ++ctrl+shift+p++
 2. Tapez `GitHub Copilot: Sign Out`
 3. Attendez 10 secondes
