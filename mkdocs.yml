@@ -1,4 +1,4 @@
-site_name: Documentation IA avec GitHub Copilot
+site_name: Documentation IA
 site_description: Documentation collectée sur l'utilisation de l'IA
 site_author: FTurleque
 repo_url: https://github.com/FTurleque/doc-utilisation-ia
@@ -87,82 +87,82 @@ nav:
       - Visual Studio Code: chapitre-2-parametrage/vscode-parametrage.md
       - Comparaison: chapitre-2-parametrage/comparaison-parametres.md
     - Modes CLI:
-      - Accueil: chapitre-7-cli-modes/index.md
-      - Modes CLI Détail: chapitre-7-cli-modes/page-principale.md
-      - Comparaison Modes: chapitre-7-cli-modes/comparaison.md
+      - Accueil: chapitre-3-cli-modes/index.md
+      - Modes CLI Détail: chapitre-3-cli-modes/page-principale.md
+      - Comparaison Modes: chapitre-3-cli-modes/comparaison.md
 
   - Contexte & Personnalisation:
-    - Accueil: chapitre-3-contexte/index.md
-    - Concepts Clés: chapitre-3-contexte/concepts.md
-    - Guide Instructions (.instructions.md): chapitre-3-contexte/guide-instructions.md
-    - applyTo Avancé: chapitre-3-contexte/applyto-avance.md
-    - Prompt Files (.prompt.md): chapitre-3-contexte/prompt-files.md
-    - Guide Agents (.agent.md): chapitre-3-contexte/guide-agents.md
-    - Guide Skills (SKILL.md): chapitre-3-contexte/guide-skills.md
-    - Guide Hooks: chapitre-3-contexte/guide-hooks.md
-    - Paramètres du Dépôt: chapitre-3-contexte/parametres-depot.md
-    - VS Code — Configuration Contexte: chapitre-3-contexte/vscode-contexte.md
-    - IntelliJ IDEA — Configuration Contexte: chapitre-3-contexte/intellij-contexte.md
-    - Comparaison Contexte: chapitre-3-contexte/comparaison-contexte.md
+    - Accueil: chapitre-4-contexte/index.md
+    - Concepts Clés: chapitre-4-contexte/concepts.md
+    - Guide Instructions (.instructions.md): chapitre-4-contexte/guide-instructions.md
+    - applyTo Avancé: chapitre-4-contexte/applyto-avance.md
+    - Prompt Files (.prompt.md): chapitre-4-contexte/prompt-files.md
+    - Guide Agents (.agent.md): chapitre-4-contexte/guide-agents.md
+    - Guide Skills (SKILL.md): chapitre-4-contexte/guide-skills.md
+    - Guide Hooks: chapitre-4-contexte/guide-hooks.md
+    - Paramètres du Dépôt: chapitre-4-contexte/parametres-depot.md
+    - VS Code — Configuration Contexte: chapitre-4-contexte/vscode-contexte.md
+    - IntelliJ IDEA — Configuration Contexte: chapitre-4-contexte/intellij-contexte.md
+    - Comparaison Contexte: chapitre-4-contexte/comparaison-contexte.md
   
   - Prompt Engineering:
-    - Accueil: chapitre-4-prompt-engineering/index.md
-    - Fondamentaux: chapitre-4-prompt-engineering/fondamentaux.md
-    - Techniques Intermédiaires: chapitre-4-prompt-engineering/techniques-intermediaires.md
-    - Techniques Avancées: chapitre-4-prompt-engineering/techniques-avancees.md
-    - Prompting avec Copilot: chapitre-4-prompt-engineering/avec-copilot.md
+    - Accueil: chapitre-5-prompt-engineering/index.md
+    - Fondamentaux: chapitre-5-prompt-engineering/fondamentaux.md
+    - Techniques Intermédiaires: chapitre-5-prompt-engineering/techniques-intermediaires.md
+    - Techniques Avancées: chapitre-5-prompt-engineering/techniques-avancees.md
+    - Prompting avec Copilot: chapitre-5-prompt-engineering/avec-copilot.md
   
   - Machine Learning:
-    - Accueil: chapitre-5-machine-learning/index.md
-    - Concepts Fondamentaux: chapitre-5-machine-learning/concepts-fondamentaux.md
-    - Algorithmes Courants: chapitre-5-machine-learning/algorithmes-courants.md
-    - Copilot pour le ML: chapitre-5-machine-learning/copilot-workflow-ml.md
-    - Python & Data Science: chapitre-5-machine-learning/python-data-science.md
-    - Deep Learning: chapitre-5-machine-learning/deep-learning.md
-    - Notebooks Jupyter: chapitre-5-machine-learning/notebooks-jupyter.md
-    - MLOps & Déploiement: chapitre-5-machine-learning/mlops-deploiement.md
-    - Comparaison Écosystèmes ML: chapitre-5-machine-learning/comparaison-ecosystemes-ml.md
-    - Comparaison des Outils: chapitre-5-machine-learning/comparaison-outils.md
+    - Accueil: chapitre-6-machine-learning/index.md
+    - Concepts Fondamentaux: chapitre-6-machine-learning/concepts-fondamentaux.md
+    - Algorithmes Courants: chapitre-6-machine-learning/algorithmes-courants.md
+    - Copilot pour le ML: chapitre-6-machine-learning/copilot-workflow-ml.md
+    - Python & Data Science: chapitre-6-machine-learning/python-data-science.md
+    - Deep Learning: chapitre-6-machine-learning/deep-learning.md
+    - Notebooks Jupyter: chapitre-6-machine-learning/notebooks-jupyter.md
+    - MLOps & Déploiement: chapitre-6-machine-learning/mlops-deploiement.md
+    - Comparaison Écosystèmes ML: chapitre-6-machine-learning/comparaison-ecosystemes-ml.md
+    - Comparaison des Outils: chapitre-6-machine-learning/comparaison-outils.md
 
   - RAG:
-    - Introduction: chapitre-6-rag/index.md
-    - Concepts & Types: chapitre-6-rag/concepts.md
-    - Mise en Œuvre: chapitre-6-rag/implementation.md
+    - Introduction: chapitre-7-rag/index.md
+    - Concepts & Types: chapitre-7-rag/concepts.md
+    - Mise en Œuvre: chapitre-7-rag/implementation.md
 
   - Bonnes Pratiques:
-    - Accueil: chapitre-8-bonnes-pratiques/index.md
-    - Utilisation Effective: chapitre-8-bonnes-pratiques/utilisation-effective.md
-    - Organisation du Code: chapitre-8-bonnes-pratiques/organisation-code.md
-    - Productivité: chapitre-8-bonnes-pratiques/productivite.md
-    - Sécurité & Qualité: chapitre-8-bonnes-pratiques/securite-qualite.md
-    - Performance & Ressources: chapitre-8-bonnes-pratiques/performance.md
-    - Workflows IA Complets: chapitre-8-bonnes-pratiques/workflows-ia.md
+    - Accueil: chapitre-9-bonnes-pratiques/index.md
+    - Utilisation Effective: chapitre-9-bonnes-pratiques/utilisation-effective.md
+    - Organisation du Code: chapitre-9-bonnes-pratiques/organisation-code.md
+    - Productivité: chapitre-9-bonnes-pratiques/productivite.md
+    - Sécurité & Qualité: chapitre-9-bonnes-pratiques/securite-qualite.md
+    - Performance & Ressources: chapitre-9-bonnes-pratiques/performance.md
+    - Workflows IA Complets: chapitre-9-bonnes-pratiques/workflows-ia.md
 
   - Cas d'Usage:
-    - Accueil: chapitre-9-cas-usage/index.md
-    - Comparaison Écosystèmes: chapitre-9-cas-usage/comparaison-ecosystemes.md
-    - Java: chapitre-9-cas-usage/java.md
-    - Java & Spring Boot: chapitre-9-cas-usage/java-spring-boot.md
-    - Node.js & React: chapitre-9-cas-usage/nodejs-react.md
-    - Node.js & Express: chapitre-9-cas-usage/nodejs-express.md
-    - React 19 & TypeScript: chapitre-9-cas-usage/react-typescript.md
-    - Python & FastAPI: chapitre-9-cas-usage/python.md
+    - Accueil: chapitre-10-cas-usage/index.md
+    - Comparaison Écosystèmes: chapitre-10-cas-usage/comparaison-ecosystemes.md
+    - Java: chapitre-10-cas-usage/java.md
+    - Java & Spring Boot: chapitre-10-cas-usage/java-spring-boot.md
+    - Node.js & React: chapitre-10-cas-usage/nodejs-react.md
+    - Node.js & Express: chapitre-10-cas-usage/nodejs-express.md
+    - React 19 & TypeScript: chapitre-10-cas-usage/react-typescript.md
+    - Python & FastAPI: chapitre-10-cas-usage/python.md
 
   - Troubleshooting:
-    - Accueil: chapitre-10-troubleshooting/index.md
-    - Problèmes Courants: chapitre-10-troubleshooting/problemes-courants.md
-    - Logs & Diagnostic: chapitre-10-troubleshooting/logs-diagnostic.md
-    - Comparaison des Problèmes: chapitre-10-troubleshooting/comparaison-problemes.md
-    - Procédures de Réparation: chapitre-10-troubleshooting/procedures-reparation.md
+    - Accueil: chapitre-11-troubleshooting/index.md
+    - Problèmes Courants: chapitre-11-troubleshooting/problemes-courants.md
+    - Logs & Diagnostic: chapitre-11-troubleshooting/logs-diagnostic.md
+    - Comparaison des Problèmes: chapitre-11-troubleshooting/comparaison-problemes.md
+    - Procédures de Réparation: chapitre-11-troubleshooting/procedures-reparation.md
 
   - Coûts & Gouvernance:
-    - Accueil: chapitre-11-couts-gouvernance/index.md
-    - Patterns pour réduire les allers-retours: chapitre-11-couts-gouvernance/patterns-allers-retours.md
-    - "Premium Requests : mécanique": chapitre-11-couts-gouvernance/premium-requests.md
-    - Les abonnements: chapitre-11-couts-gouvernance/abonnements.md
-    - Leviers d'économie: chapitre-11-couts-gouvernance/leviers-economie.md
-    - Quand utiliser quel mode ?: chapitre-11-couts-gouvernance/modes-quand-utiliser.md
-    - Workflow recommandé: chapitre-11-couts-gouvernance/workflow-recommande.md
+    - Accueil: chapitre-12-couts-gouvernance/index.md
+    - Patterns pour réduire les allers-retours: chapitre-12-couts-gouvernance/patterns-allers-retours.md
+    - "Premium Requests : mécanique": chapitre-12-couts-gouvernance/premium-requests.md
+    - Les abonnements: chapitre-12-couts-gouvernance/abonnements.md
+    - Leviers d'économie: chapitre-12-couts-gouvernance/leviers-economie.md
+    - Quand utiliser quel mode ?: chapitre-12-couts-gouvernance/modes-quand-utiliser.md
+    - Workflow recommandé: chapitre-12-couts-gouvernance/workflow-recommande.md
 
   - Appendices:
     - Accueil: appendices/index.md
