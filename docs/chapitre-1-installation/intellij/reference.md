@@ -286,3 +286,23 @@ Ici, vous pouvez :
 
 ---
 
+---
+
+## Prochaine étape
+
+**[Paramétrage IntelliJ IDEA](../../chapitre-2-parametrage/intellij-parametrage.md)** : configuration détaillée de tous les paramètres de GitHub Copilot sur IntelliJ IDEA pour adapter Copilot à votre workflow.
+
+Concepts clés couverts :
+
+- **Général** — authentification, gestion du compte, mises à jour
+- **Chat & Agents** — configuration des agents autonomes, auto-approve, thinking budget
+- **Complétions** — suggestions automatiques, modèles, langages
+- **Customizations** — instructions personnalisées, AGENTS.md, prompt files, skills
+- **Keymap** — raccourcis clavier, personnalisation des keybindings
+- **MCP** — intégration de serveurs externes (Context7, GitHub, SonarQube, etc.)
+- **Profils recommandés** — configurations prêtes pour débutant, expert, équipe
+
+---
+
+**[Comparaison IntelliJ IDEA vs VS Code](../comparaison.md)** : tableau comparatif des différences d'installation et de fonctionnement entre IntelliJ IDEA et Visual Studio Code pour vous aider à choisir le bon IDE.
+

@@ -274,3 +274,15 @@ A :
 
 A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-8-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
 
+---
+
+## Prochaine étape
+
+**[Guide Référence — GitHub Copilot sur VS Code](reference.md)** : documentation complète avec tous les raccourcis, paramétrages avancés, MCP, et fonctionnalités de Copilot sur VS Code.
+
+Concepts clés couverts :
+
+- **Raccourcis clavier complets** — accepter suggestions, naviguer, chat, inline chat
+- **Paramétrages avancés** — modèles, tokens, MCP, authentification
+- **Model Context Protocol (MCP)** — enrichir Copilot avec des serveurs externes (Context7, GitHub, Playwright, etc.)
+- **Extensions recommandées** — GitHub Copilot Chat, GitLens, Error Lens, et autres

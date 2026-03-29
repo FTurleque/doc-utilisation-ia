@@ -106,11 +106,3 @@ Le plugin GitHub Copilot fonctionne sur **tous les IDEs de la suite JetBrains** 
 | **Utilisation en entreprise avec proxy strict** | IntelliJ (auth plus robuste sur proxy) |
 | **Ressources machine limitées (RAM < 8 Go)** | VS Code (plus léger qu'IntelliJ) |
 
----
-
-## Prochaines étapes
-
-- [Paramétrage IntelliJ](../chapitre-2-parametrage/intellij-parametrage.md) — Configurer Copilot en détail sur IntelliJ
-- [Paramétrage VS Code](../chapitre-2-parametrage/vscode-parametrage.md) — Configurer Copilot en détail sur VS Code
-- [Contexte & Personnalisation](../chapitre-3-contexte/index.md) — Aller plus loin avec instructions, agents, skills
-

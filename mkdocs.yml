@@ -21,9 +21,7 @@ theme:
         icon: material/brightness-4
         name: Passer en mode clair
   features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.expand
+    - navigation.indexes
     - navigation.path
     - navigation.top
     - search.suggest
@@ -33,6 +31,9 @@ theme:
 
 extra_css:
   - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/sidebar-toggle.js
 
 exclude_docs: |
   **/README.md
@@ -70,22 +71,26 @@ markdown_extensions:
 nav:
   - Accueil: index.md
   
-  - Installation:
-    - Accueil: chapitre-1-installation/index.md
-    - Comparaison: chapitre-1-installation/comparaison.md
-    - IntelliJ IDEA:
-      - Tutoriel: chapitre-1-installation/intellij/tutoriel.md
-      - Référence: chapitre-1-installation/intellij/reference.md
-    - Visual Studio Code:
-      - Tutoriel: chapitre-1-installation/vscode/tutoriel.md
-      - Référence: chapitre-1-installation/vscode/reference.md
-  
-  - Paramétrage:
-    - Accueil: chapitre-2-parametrage/index.md
-    - IntelliJ IDEA: chapitre-2-parametrage/intellij-parametrage.md
-    - Visual Studio Code: chapitre-2-parametrage/vscode-parametrage.md
-    - Comparaison: chapitre-2-parametrage/comparaison-parametres.md
-  
+  - Copilot:
+    - Installation:
+      - Accueil: chapitre-1-installation/index.md
+      - IntelliJ IDEA:
+        - Tutoriel: chapitre-1-installation/intellij/tutoriel.md
+        - Référence: chapitre-1-installation/intellij/reference.md
+      - Visual Studio Code:
+        - Tutoriel: chapitre-1-installation/vscode/tutoriel.md
+        - Référence: chapitre-1-installation/vscode/reference.md
+      - Comparaison: chapitre-1-installation/comparaison.md
+    - Paramétrage:
+      - Accueil: chapitre-2-parametrage/index.md
+      - IntelliJ IDEA: chapitre-2-parametrage/intellij-parametrage.md
+      - Visual Studio Code: chapitre-2-parametrage/vscode-parametrage.md
+      - Comparaison: chapitre-2-parametrage/comparaison-parametres.md
+    - Modes CLI:
+      - Accueil: chapitre-7-cli-modes/index.md
+      - Modes CLI Détail: chapitre-7-cli-modes/page-principale.md
+      - Comparaison Modes: chapitre-7-cli-modes/comparaison.md
+
   - Contexte & Personnalisation:
     - Accueil: chapitre-3-contexte/index.md
     - Concepts Clés: chapitre-3-contexte/concepts.md
@@ -123,11 +128,6 @@ nav:
     - Introduction: chapitre-6-rag/index.md
     - Concepts & Types: chapitre-6-rag/concepts.md
     - Mise en Œuvre: chapitre-6-rag/implementation.md
-
-  - Modes CLI:
-    - Accueil: chapitre-7-cli-modes/index.md
-    - Modes CLI Détail: chapitre-7-cli-modes/page-principale.md
-    - Comparaison Modes: chapitre-7-cli-modes/comparaison.md
 
   - Bonnes Pratiques:
     - Accueil: chapitre-8-bonnes-pratiques/index.md

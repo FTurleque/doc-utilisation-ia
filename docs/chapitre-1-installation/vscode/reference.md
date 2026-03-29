@@ -803,3 +803,22 @@ Sans MCP, la même question aurait coûté **1 requête** et ~500 tokens.
 - [Spécification officielle MCP](https://modelcontextprotocol.io) — protocole et guides
 - [Registry MCP sur GitHub](https://github.com/modelcontextprotocol/servers) — tous les serveurs
 - [Configuration MCP détaillée](../../chapitre-2-parametrage/vscode-parametrage.md#model-context-protocol-mcp) — paramètres avancés et gestion des tokens
+
+---
+
+## Prochaine étape
+
+**[Paramétrage Avancé — GitHub Copilot sur VS Code](../../chapitre-2-parametrage/vscode-parametrage.md)** : configuration détaillée de tous les paramètres de GitHub Copilot sur VS Code pour adapter Copilot à votre workflow.
+
+Concepts clés couverts :
+
+- **Fichier `settings.json`** — paramètres globaux et workspace
+- **Activation par langage** — activer/désactiver Copilot selon le type de fichier
+- **Paramètres Chat** — configuration des agents, auto-approve, thinking budget
+- **Configuration MCP** — intégration de serveurs externes (Context7, GitHub, Playwright, etc.)
+- **Extensions recommandées** — GitHub Copilot Chat, GitLens, Error Lens, et autres
+- **Profils recommandés** — configurations prêtes pour débutant, expert, équipe
+
+---
+
+**[Comparaison IntelliJ IDEA vs VS Code](../comparaison.md)** : tableau comparatif des différences d'installation et de fonctionnement entre IntelliJ IDEA et Visual Studio Code pour vous aider à choisir le bon IDE.
