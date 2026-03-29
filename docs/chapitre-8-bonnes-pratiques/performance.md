@@ -275,7 +275,14 @@ L'agent peut lire et modifier des fichiers **uniquement dans les dossiers du wor
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Troubleshooting](../chapitre-10-troubleshooting/index.md) — Résoudre les problèmes courants
-- [Cas d'Usage](../chapitre-9-cas-usage/index.md) — Exemples par technologie
+**[Workflows IA Complets](workflows-ia.md)** : assembler toutes les pratiques en cycles de développement complets et reproductibles avec Copilot.
+
+Concepts clés couverts :
+
+- **PRD-Driven Dev** — partir d'un document de spécifications pour générer du code aligné avec les besoins
+- **TDD Assisté** — écrire les tests d'abord, laisser Copilot implémenter
+- **Sprint Planning** — découper les stories en tâches estimables avec l'IA
+- **Code Review** — détecter automatiquement les problèmes avant chaque PR
+- **Refactoring Progressif et Débogage Assisté** — transformer du code legacy et résoudre les bugs de façon structurée

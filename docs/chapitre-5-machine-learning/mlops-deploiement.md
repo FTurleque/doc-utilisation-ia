@@ -346,3 +346,16 @@ async def predict(pokemon: PokemonFeatures):
 | **Monitoring** | Evidently | Data drift, métriques |
 | **CI/CD** | GitHub Actions | Automatisation entraînement |
 | **Feature Store** | Feast | Partager features entre modèles |
+
+---
+
+## Prochaine étape
+
+**[Comparaison des Écosystèmes ML](comparaison-ecosystemes-ml.md)** : Python, R ou Julia — comparer les langages selon votre contexte et l'intégration avec Copilot.
+
+Concepts clés couverts :
+
+- **Vue d'ensemble comparative** — Popularité ML, courbe d'apprentissage, support Copilot, performance brute pour Python, R et Julia
+- **Python** — Le standard industriel : écosystème complet, intégration Copilot maximale, du notebook à l'API en production
+- **R** — Le roi de la statistique : ggplot2, tidyverse, RMarkdown — idéal pour la recherche académique
+- **Guide de décision** — Tableau synthétique : quel langage choisir selon votre profil (startup, recherche, simulation...)

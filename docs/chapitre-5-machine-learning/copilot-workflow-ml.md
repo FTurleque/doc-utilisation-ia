@@ -287,3 +287,16 @@ print(f"Confiance : {probabilite[0].max():.1%}")
 | Modélisation | `"Comparer 3 algorithmes de classification avec cross-validation 5-fold"` | Boucle de comparaison |
 | Évaluation | `"Afficher précision, rappel, F1-score et la courbe ROC"` | Rapport complet |
 | Déploiement | `"Sauvegarder le pipeline sklearn avec joblib"` | Code de persistance |
+
+---
+
+## Prochaine étape
+
+**[Python & Data Science avec GitHub Copilot](python-data-science.md)** : maîtriser le stack pandas, numpy et scikit-learn pour mettre en œuvre ce workflow en pratique.
+
+Concepts clés couverts :
+
+- **Stack Data Science** — pandas 2.x, numpy, scikit-learn, matplotlib, seaborn : rôles et patterns d'utilisation
+- **Configurer Copilot** — Instructions personnalisées pour que Copilot respecte vos conventions (random_state, stratify, suffixes de variables)
+- **Pipeline sklearn complet** — `ColumnTransformer` + preprocessing + modèle, sans fuite de données
+- **Éviter le data leakage** — Pourquoi scaler *après* le split et toujours via un `Pipeline`

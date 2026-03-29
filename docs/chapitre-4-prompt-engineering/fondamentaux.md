@@ -265,8 +265,13 @@ flowchart LR
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Techniques Intermédiaires](techniques-intermediaires.md) — Few-Shot, Chain-of-Thought, Role Prompting, format structuré
-- [Techniques Avancées](techniques-avancees.md) — Prompt chaining, Tree of Thoughts, self-consistency, méta-prompting
-- [Prompting avec GitHub Copilot](avec-copilot.md) — Appliquer ces techniques directement dans Copilot Chat
+**[Techniques Intermédiaires de Prompt Engineering](techniques-intermediaires.md)** : passer du bon prompt à l'excellent prompt avec des méthodes structurées et mesurables.
+
+Concepts clés couverts :
+
+- **Zero-Shot, Few-Shot, Many-Shot** — guider le modèle par l'exemple pour obtenir un format ou un style précis
+- **Chain-of-Thought** — forcer le raisonnement étape par étape pour les tâches logiques complexes
+- **Role Prompting** — assigner une expertise au LLM pour conditionner son angle d'approche
+- **Structuration des sorties** — contrôler le format (JSON, tableau, Markdown) pour intégrer les réponses dans vos workflows

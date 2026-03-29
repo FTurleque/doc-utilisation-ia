@@ -121,3 +121,16 @@ copilot --yolo -p "prompt"
 - Utiliser review pour valider les modifications
 - Privilégier edit pour des changements précis
 - Utiliser chat pour des questions complexes
+
+---
+
+## Prochaine étape
+
+**[Comparaison des modes CLI VS Code / IntelliJ](comparaison.md)** : voir les différences de support et d'intégration selon l'IDE.
+
+Concepts clés couverts :
+
+- **Disponibilité par IDE** — quels modes fonctionnent sur VS Code et IntelliJ
+- **Intégration éditeur** — terminal intégré, explorateur de fichiers, panels
+- **Prompts `.prompt.md` en CLI** — réutiliser vos prompts sauvegardés depuis le terminal
+- **Compatibilité** — les modes sont identiques dès lors que le terminal est configuré

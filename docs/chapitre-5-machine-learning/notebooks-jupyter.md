@@ -263,3 +263,16 @@ Outputs:
     - Variables globales réutilisées sans contexte clair
     - Sauter des cellules lors de l'exécution (contexte brisé pour Copilot)
     - Mélanger exploration et production dans le même notebook
+
+---
+
+## Prochaine étape
+
+**[MLOps & Déploiement de Modèles avec Copilot](mlops-deploiement.md)** : passer du prototype en notebook à un modèle déployé et monitoré en production.
+
+Concepts clés couverts :
+
+- **MLflow** — Tracker les expériences, logger hyperparamètres/métriques/artefacts, comparer les runs dans l'interface web
+- **API REST avec FastAPI** — Exposer un modèle joblib comme endpoint `/predict` avec validation Pydantic
+- **Containerisation Docker** — Dockerfile optimisé pour une API ML, `docker-compose` pour l'orchestration locale
+- **Monitoring & Data Drift** — Détecter quand les données de production divergent du jeu d'entraînement avec Evidently

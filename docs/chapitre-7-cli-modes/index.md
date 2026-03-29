@@ -13,5 +13,13 @@ Ce chapitre explique chaque mode, liste toutes les commandes disponibles, leurs 
 
 ---
 
-- [Détail des modes CLI](page-principale.md)
-- [Comparaison VS Code / IntelliJ](comparaison.md)
+## Prochaine étape
+
+**[Modes CLI Copilot : détail et commandes](page-principale.md)** : explorer tous les modes disponibles avec leurs commandes, usages et exemples concrets.
+
+Concepts clés couverts :
+
+- **Mode Yolo** — exécution autonome sans confirmation, idéal pour les tâches rapides
+- **Mode Review** — analyse de code et rapport structuré de corrections
+- **Mode Edit** — modification ciblée d'un fichier via un prompt
+- **Mode Chat / Explain / Test** — dialogue interactif, explication et génération de tests

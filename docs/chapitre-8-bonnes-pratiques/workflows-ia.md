@@ -473,8 +473,8 @@ qui aurait détecté ce problème avant qu'il arrive en production.
 
 ---
 
-## Prochaines étapes
+## Chapitres suivants
 
-- [Utilisation Effective](utilisation-effective.md) — Slash commands et variables de contexte
-- [Organisation du Code](organisation-code.md) — Configurer le contexte IA du projet
-- [Sécurité & Qualité](securite-qualite.md) — Valider le code généré à chaque étape
+**[Cas d'Usage par Technologie](../chapitre-9-cas-usage/index.md)** : appliquer toutes ces pratiques sur des exemples concrets par écosystème technologique — Java & Spring Boot, Python & FastAPI, Node.js & TypeScript.
+
+**[Troubleshooting](../chapitre-10-troubleshooting/index.md)** : diagnostiquer et résoudre les dysfonctionnements courants de Copilot dans les deux IDEs — suggestions absentes, authentification, performances dégradées.

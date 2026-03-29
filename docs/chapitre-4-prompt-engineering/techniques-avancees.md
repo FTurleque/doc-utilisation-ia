@@ -366,8 +366,13 @@ graph TD
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Prompting avec GitHub Copilot](avec-copilot.md) — Appliquer ces techniques avancées directement dans Copilot Chat et l'Agent Mode
-- [Machine Learning avec Copilot](../chapitre-5-machine-learning/index.md) — Utiliser Copilot pour vos workflows ML et Data Science
-- [Machine Learning — Concepts Fondamentaux](../chapitre-5-machine-learning/concepts-fondamentaux.md) — Notions essentielles de ML pour mieux utiliser Copilot sur ces sujets
+**[Prompting avec GitHub Copilot](avec-copilot.md)** : appliquer toutes ces techniques directement dans Copilot Chat et l'Agent Mode.
+
+Concepts clés couverts :
+
+- **Copilot Chat vs inline** — choisir le bon mode selon la complexité de la tâche
+- **Références de fichiers** — utiliser `#file`, `#selection`, `#codebase` pour cibler le contexte
+- **Agent Mode** — déléguer des workflows multi-étapes à Copilot en mode autonome
+- **Prompts sauvegardés** — créer et réutiliser des `.prompt.md` pour les tâches récurrentes

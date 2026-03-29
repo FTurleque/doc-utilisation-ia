@@ -149,6 +149,68 @@ Pour ajouter un nouveau chapitre, continuer la numérotation à partir de 7.
 | `appendices/ressources-externes.md` | Liens externes | Liens vers docs officielles |
 | `appendices/templates-configuration.md` | Templates copiables | Blocs de code à copier-coller |
 
+## Section de fin de page : "Prochaine étape"
+
+**Toute page de contenu DOIT se terminer par une section `## Prochaine étape`** (singulier). Cette section assure la navigation séquentielle et indique au lecteur ce qui vient ensuite.
+
+### Format obligatoire
+
+```markdown
+---
+
+## Prochaine étape
+
+**[Titre de la page suivante](lien-page-suivante.md)** : une phrase décrivant ce que le lecteur va apprendre.
+
+Concepts clés couverts :
+
+- **Concept 1** — description courte
+- **Concept 2** — description courte
+- **Concept 3** — description courte
+- **Concept 4** — description courte
+```
+
+### Règles
+
+- Le lien est en **gras** et pointe vers la **page suivante dans l'ordre logique de lecture**
+- La phrase d'accroche est sur la même ligne que le lien, séparée par ` : `
+- Les bullets "Concepts clés" sont 4 à 5 points maximum, en gras + tiret + description
+- L'`index.md` d'un chapitre pointe vers la première page de contenu du chapitre
+- Ne jamais mettre une liste de plusieurs liens — **une seule** prochaine étape
+
+### Exception : dernière page d'un chapitre
+
+La **dernière page de contenu d'un chapitre** (pas l'`index.md`) utilise `## Chapitres suivants` au lieu de `## Prochaine étape`. Elle liste les **2 chapitres suivants** sous forme de deux liens en gras, chacun sur sa propre ligne avec une courte description.
+
+```markdown
+---
+
+## Chapitres suivants
+
+**[Titre du chapitre N+1](../chapitre-N+1/index.md)** : une phrase décrivant ce chapitre et ce que le lecteur va y trouver.
+
+**[Titre du chapitre N+2](../chapitre-N+2/index.md)** : une phrase décrivant ce chapitre et ce que le lecteur va y trouver.
+```
+
+### Exemple issu du projet
+
+```markdown
+---
+
+## Prochaine étape
+
+**[Organisation du Code](organisation-code.md)** : structurer votre code pour que Copilot comprenne votre domaine et génère des suggestions précises.
+
+Concepts clés couverts :
+
+- **Nommage expressif** — `activeAdultUsers` > `x`, les noms parlants génèrent de meilleures suggestions
+- **Typage explicite** — interfaces TypeScript, annotations Python, Javadoc : le typage est du contexte
+- **Séparation des responsabilités** — un fichier, une responsabilité pour guider Copilot
+- **`.github/copilot-instructions.md`** — configurer les conventions du projet une fois, Copilot les applique toujours
+```
+
+---
+
 ## Checklist pour une nouvelle page
 
 - [ ] Fichier créé dans le bon chapitre avec nommage `kebab-case.md`
@@ -157,5 +219,6 @@ Pour ajouter un nouveau chapitre, continuer la numérotation à partir de 7.
 - [ ] Contenu structuré avec `## H2` et `### H3`
 - [ ] Admonitions utilisées pour les conseils et avertissements
 - [ ] Onglets utilisés pour les différences IntelliJ / VS Code
+- [ ] **Section `## Prochaine étape` présente en fin de page** (voir format ci-dessus)
 - [ ] `mkdocs.yml` mis à jour avec l'entrée de navigation
 - [ ] `py -m mkdocs build` exécuté sans erreur

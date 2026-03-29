@@ -53,5 +53,13 @@ Le RAG opère en **deux phases distinctes** :
 
 ---
 
-- [Concepts & Types de RAG →](concepts.md)
-- [Mise en Œuvre pas à pas →](implementation.md)
+## Prochaine étape
+
+**[Concepts & Types de RAG](concepts.md)** : comprendre les trois grandes architectures avant de choisir et d'implémenter.
+
+Concepts clés couverts :
+
+- **Naive RAG** — le point de départ obligatoire : chunking, vectorisation, index, top-k
+- **Advanced RAG** — query expansion, re-ranking, chunking sémantique, HyDE pour améliorer la qualité
+- **Agentic RAG** — le LLM décide lui-même quand et comment interroger la base vectorielle
+- **Quelle architecture choisir** — arbre de décision selon le volume, la complexité et le budget infrastructure

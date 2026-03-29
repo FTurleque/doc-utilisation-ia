@@ -72,3 +72,17 @@ Installer et configurer Copilot, c'est bien. L'utiliser efficacement au quotidie
     **Intermédiaire** → [Organisation du Code](organisation-code.md) — Configurer le contexte IA du projet  
     **Avancé** → [Workflows IA Complets](workflows-ia.md) — Cycles de développement bout en bout  
     **Sécurité** → [Sécurité & Qualité](securite-qualite.md) — Hallucinations et risques spécifiques à l'IA
+
+---
+
+## Prochaine étape
+
+**[Utilisation Effective](utilisation-effective.md)** : maîtriser les techniques de prompting et les outils Copilot pour être efficace au quotidien.
+
+Concepts clés couverts :
+
+- **Commentaire-prompt** — plus votre commentaire est précis, meilleure est la suggestion inline
+- **Mini-PRD** — formaliser le besoin avant de coder pour guider Copilot Chat
+- **Slash commands** `/explain`, `/tests`, `/fix`, `/doc` — raccourcis pour les tâches courantes
+- **Variables de contexte** `#file`, `#selection`, `@workspace` — cibler le bon périmètre
+- **NES & Copilot Edits** — anticiper les prochaines modifications et éditer plusieurs fichiers à la fois

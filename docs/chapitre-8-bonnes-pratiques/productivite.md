@@ -367,8 +367,14 @@ Scénario : Migrer tous les callbacks async vers async/await dans un module
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Sécurité & Qualité](securite-qualite.md) — Vérifier le code généré par Copilot
-- [Performance & Ressources](performance.md) — Optimiser les performances avec Copilot
-- [Workflows IA Complets](workflows-ia.md) — Workflows bout en bout avec Copilot
+**[Sécurité & Qualité](securite-qualite.md)** : valider et sécuriser le code généré pour éviter les pièges courants de la génération IA.
+
+Concepts clés couverts :
+
+- **Injection SQL, secrets hardcodés, XSS** — les vulnérabilités que Copilot peut générer sans le signaler
+- **Hallucinations d'API** — packages inventés, méthodes inexistantes, versions fantômes
+- **Checklist avant commit** — validation sécurité en 5 points pour tout code généré
+- **`.copilotignore`** — exclure les fichiers sensibles de l'analyse Copilot
+- **Tests obligatoires** — aucun code généré ne va en production sans tests

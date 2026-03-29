@@ -209,10 +209,13 @@ print(df["PV"].describe())  # Résumé complet
 
 ---
 
-## Prochaines Étapes
+## Prochaine étape
 
-Une fois ces concepts assimilés, tu peux explorer :
+**[Algorithmes Courants du Machine Learning](algorithmes-courants.md)** : découvrir les principaux algorithmes et savoir lequel choisir selon votre problème.
 
-- [Algorithmes Courants](algorithmes-courants.md) — les principaux algorithmes et quand les utiliser
-- [Python & Data Science](python-data-science.md) — passer à la pratique avec pandas et scikit-learn
-- [Copilot pour le ML](copilot-workflow-ml.md) — comment Copilot assiste dans ces tâches
+Concepts clés couverts :
+
+- **Choisir le bon algorithme** — Arbre de décision selon le type d'apprentissage et le type de problème
+- **Régression** — Linéaire, polynomiale, logistique, et le mécanisme de descente de gradient
+- **Classification** — Random Forest, SVM, KNN, Naive Bayes : forces et cas d'usage de chacun
+- **Clustering** — K-Means, DBSCAN, GMM : regrouper des données sans étiquettes

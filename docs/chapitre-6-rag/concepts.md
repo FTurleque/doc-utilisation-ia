@@ -134,5 +134,13 @@ graph TD
 
 ---
 
-- [← Introduction au RAG](index.md)
-- [Mise en Œuvre pas à pas →](implementation.md)
+## Prochaine étape
+
+**[Mise en Œuvre pas à pas](implementation.md)** : construire un RAG fonctionnel en local, sans serveur externe, en 4 étapes.
+
+Concepts clés couverts :
+
+- **Chunking avec overlap** — découper les documents en blocs de taille fixe avec fenêtre glissante
+- **Embeddings avec sentence-transformers** — vectoriser les chunks avec `all-MiniLM-L6-v2`
+- **Base vectorielle** — stocker et interroger avec ChromaDB (disque) ou FAISS (RAM)
+- **Prompt augmenté** — assembler le contexte récupéré dans un prompt défensif envoyé au LLM

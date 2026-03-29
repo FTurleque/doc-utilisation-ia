@@ -487,8 +487,14 @@ et les risques potentiels.
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Organisation du code](organisation-code.md) — Structurer le code pour de meilleures suggestions
-- [Productivité](productivite.md) — Raccourcis et workflows optimisés
-- [Workflows IA Complets](workflows-ia.md) — Workflows bout en bout avec Copilot
+**[Organisation du Code](organisation-code.md)** : structurer votre code pour que Copilot comprenne votre domaine et génère des suggestions précises.
+
+Concepts clés couverts :
+
+- **Nommage expressif** — `activeAdultUsers` > `x`, les noms parlants génèrent de meilleures suggestions
+- **Typage explicite** — interfaces TypeScript, annotations Python, Javadoc : le typage est du contexte
+- **Séparation des responsabilités** — un fichier, une responsabilité pour guider Copilot
+- **`.github/copilot-instructions.md`** — configurer les conventions du projet une fois, Copilot les applique toujours
+- **`COPILOT.md`** — documenter l'architecture pour que Copilot comprenne vos décisions techniques

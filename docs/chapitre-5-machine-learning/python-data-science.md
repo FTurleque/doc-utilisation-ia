@@ -278,3 +278,16 @@ plt.show()
 
 !!! warning "Attention aux fuites de données (data leakage)"
     Copilot peut parfois proposer de scaler ou d'encoder **avant** le split train/test. Cela crée une **fuite de données** (le modèle voit les statistiques du jeu de test lors de l'entraînement). Utilisez toujours un `Pipeline` sklearn pour éviter ce piège.
+
+---
+
+## Prochaine étape
+
+**[Deep Learning avec GitHub Copilot](deep-learning.md)** : aller au-delà de scikit-learn avec les réseaux de neurones et les frameworks TensorFlow/PyTorch.
+
+Concepts clés couverts :
+
+- **Du perceptron aux réseaux profonds** — Comment un neurone artificiel calcule sa sortie, fonctions d'activation (ReLU, Softmax, Sigmoid)
+- **TensorFlow & Keras** — Construire, compiler et entraîner un réseau Dense ou CNN avec `model.fit()` et `EarlyStopping`
+- **Réseaux Convolutifs (CNN)** — Architecture convolution → pooling → classification pour les images (Fashion MNIST, MNIST)
+- **PyTorch** — Même réseau implémenté en PyTorch avec la boucle d'entraînement manuelle

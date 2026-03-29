@@ -426,8 +426,14 @@ function MyComponent() {
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Performance & Ressources](performance.md) — Optimiser Copilot pour ne pas impacter l'IDE
-- [Workflows IA Complets](workflows-ia.md) — Workflows bout en bout avec validation intégrée
-- [Troubleshooting](../chapitre-10-troubleshooting/index.md) — Résoudre les problèmes courants
+**[Performance & Ressources](performance.md)** : comprendre et maîtriser l'impact de Copilot sur les performances de votre IDE.
+
+Concepts clés couverts :
+
+- **Profil de consommation** — RAM, CPU et latence réseau selon l'IDE
+- **Causes fréquentes de ralentissement** — grands fichiers, trop d'onglets ouverts, types de fichiers non essentiels
+- **Désactivation contextuelle** — suspendre Copilot globalement ou par langage en un clic
+- **Optimisation mémoire IntelliJ** — augmenter `-Xmx` dans les VM Options
+- **Maîtriser la consommation MCP** — effet multiplicateur des appels d'outils en mode Agent

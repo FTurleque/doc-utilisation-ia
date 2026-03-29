@@ -155,6 +155,15 @@ nav:
     - Comparaison des Problèmes: chapitre-10-troubleshooting/comparaison-problemes.md
     - Procédures de Réparation: chapitre-10-troubleshooting/procedures-reparation.md
 
+  - Coûts & Gouvernance:
+    - Accueil: chapitre-11-couts-gouvernance/index.md
+    - Patterns pour réduire les allers-retours: chapitre-11-couts-gouvernance/patterns-allers-retours.md
+    - "Premium Requests : mécanique": chapitre-11-couts-gouvernance/premium-requests.md
+    - Les abonnements: chapitre-11-couts-gouvernance/abonnements.md
+    - Leviers d'économie: chapitre-11-couts-gouvernance/leviers-economie.md
+    - Quand utiliser quel mode ?: chapitre-11-couts-gouvernance/modes-quand-utiliser.md
+    - Workflow recommandé: chapitre-11-couts-gouvernance/workflow-recommande.md
+
   - Appendices:
     - Accueil: appendices/index.md
     - FAQ: appendices/faq.md

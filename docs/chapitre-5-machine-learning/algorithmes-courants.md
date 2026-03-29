@@ -217,3 +217,16 @@ probas = gmm.predict_proba(X)  # Probabilité d'appartenir à chaque cluster
 
 !!! tip "Utiliser Copilot pour choisir"
     Décrivez votre problème à Copilot Chat : *"J'ai 10 000 observations avec 50 features numériques et je veux prédire une catégorie parmi 5. Quel algorithme sklearn recommandes-tu ?"* — Copilot suggère généralement Random Forest ou XGBoost avec justification.
+
+---
+
+## Prochaine étape
+
+**[Copilot pour le Workflow ML](copilot-workflow-ml.md)** : maintenant que vous connaissez les algorithmes, découvrez comment Copilot vous assiste à chaque phase du projet ML.
+
+Concepts clés couverts :
+
+- **Définir le problème** — Copilot identifie le type de problème (classification, régression) et recommande un algorithme adapté
+- **Préparer les données** — Suggestions pour gérer les NaN, encoder les catégories, normaliser avec sklearn
+- **Entraîner et évaluer** — Pipeline complet avec `cross_val_score`, matrice de confusion, rapport de classification
+- **Prompts par phase** — Bibliothèque de prompts Copilot prêts à l'emploi pour chaque étape du workflow

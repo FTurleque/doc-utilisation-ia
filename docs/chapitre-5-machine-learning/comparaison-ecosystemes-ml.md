@@ -214,3 +214,16 @@ jl.seval("using Flux")
 # Utiliser un modèle Julia dans Python
 model = jl.seval("Chain(Dense(10 => 5, relu), Dense(5 => 1))")
 ```
+
+---
+
+## Prochaine étape
+
+**[Comparaison des Outils ML](comparaison-outils.md)** : maintenant que vous avez choisi votre langage, comparez les frameworks ML au sein de l'écosystème Python.
+
+Concepts clés couverts :
+
+- **scikit-learn vs TensorFlow vs PyTorch vs Keras** — Forces, faiblesses et cas d'usage de chaque framework
+- **Critères de choix** — Taille du dataset, type de modèle (classique vs DL), besoin de déploiement, support Copilot
+- **Courbes d'apprentissage** — Quel framework est le plus assisté par Copilot et le plus rapide à prendre en main
+- **Tableau de décision** — Guide synthétique pour choisir le bon outil selon votre contexte projet

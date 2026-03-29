@@ -423,7 +423,14 @@ La **fenêtre de contexte** (context window) est la quantité maximale de texte 
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Productivité](productivite.md) — Raccourcis et workflows optimisés
-- [Sécurité & Qualité](securite-qualite.md) — Vérifier et valider le code généré
+**[Productivité](productivite.md)** : optimiser votre flux de travail pour tirer le meilleur de Copilot au quotidien.
+
+Concepts clés couverts :
+
+- **Les 3 modes de suggestion** — Inline, Inline Chat, Chat Panel : choisir le bon outil selon la complexité
+- **Raccourcis essentiels** — les gestes indispensables sur VS Code et IntelliJ
+- **Gestion de la fenêtre de contexte** — quels fichiers garder ouverts, comment structurer les sessions
+- **Copilot Edits multi-fichiers** — Working Set, mode collaboratif et autonome
+- **Workflows TDD, refactoring, débogage** — intégrer Copilot dans les cycles de développement

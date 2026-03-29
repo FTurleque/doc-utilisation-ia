@@ -392,5 +392,8 @@ prompt = rag.ask("Quelle est la limite de requêtes par minute sur l'API ?")
 
 ---
 
-- [← Concepts & Types de RAG](concepts.md)
-- [← Introduction au RAG](index.md)
+## Prochains chapitres
+
+- **[Modes CLI Copilot](../chapitre-7-cli-modes/index.md)** — Yolo, Review, Edit, Chat : utiliser Copilot depuis le terminal
+- **[Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md)** — Utilisation effective, productivité, sécurité et workflows IA au quotidien
+- **[Cas d'Usage par Technologie](../chapitre-9-cas-usage/index.md)** — Configurations et exemples concrets pour Java, Python, Node.js, React

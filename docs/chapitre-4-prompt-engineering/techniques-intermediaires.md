@@ -389,7 +389,13 @@ Analyse maintenant cette classe :
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Techniques Avancées](techniques-avancees.md) — Prompt chaining, Tree of Thoughts, self-consistency, méta-prompting
-- [Prompting avec GitHub Copilot](avec-copilot.md) — Appliquer ces techniques dans l'interface Copilot
+**[Techniques Avancées de Prompt Engineering](techniques-avancees.md)** : maîtriser les architectures sophistiquées utilisées en production pour des workflows IA fiables.
+
+Concepts clés couverts :
+
+- **Prompt Chaining** — décomposer une tâche complexe en séquence de prompts enchaînés
+- **Tree of Thoughts** — explorer plusieurs raisonnements parallèles et sélectionner le meilleur
+- **Self-Consistency** — valider la fiabilité par répétition et vote majoritaire
+- **Meta-Prompting** — utiliser un LLM pour créer et optimiser ses propres prompts
