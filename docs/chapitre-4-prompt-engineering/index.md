@@ -90,4 +90,13 @@ graph LR
 
 ---
 
-- [Commencer par les Fondamentaux →](fondamentaux.md)
+## Prochaine étape
+
+**[Fondamentaux du Prompt Engineering](fondamentaux.md)** : comprendre les bases avant d'appliquer les techniques avancées.
+
+Concepts clés couverts :
+
+- **Qu'est-ce qu'un LLM** — Analogie du collaborateur cultivé, modèles courants (GPT-4o, Claude, Gemini, Copilot...)
+- **Anatomie d'un prompt** — Les 4 composants : instruction, contexte, entrée, format de sortie
+- **La règle fondamentale** — Plus vous êtes spécifique, meilleurs sont les résultats
+- **Prompt vague vs prompt structuré** — Exemples concrets de l'impact de la précision

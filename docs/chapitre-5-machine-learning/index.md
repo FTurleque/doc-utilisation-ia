@@ -161,3 +161,16 @@ graph TB
 | [MLOps & Déploiement](mlops-deploiement.md) | Expert | CI/CD ML, monitoring |
 | [Comparaison Écosystèmes ML](comparaison-ecosystemes-ml.md) | Intermédiaire | Python vs R vs Julia |
 | [Comparaison des Outils](comparaison-outils.md) | Intermédiaire | sklearn vs TF vs PyTorch |
+
+---
+
+## Prochaine étape
+
+**[Concepts Fondamentaux du Machine Learning](concepts-fondamentaux.md)** : comprendre les bases théoriques avant de coder.
+
+Concepts clés couverts :
+
+- **IA, ML, Deep Learning** — Définitions et relations entre ces trois termes (poupées russes)
+- **Historique** — Du perceptron (1957) aux Transformers (2017) et à l'IA générative (2022)
+- **3 types d'apprentissage** — Supervisé (données étiquetées), non supervisé (clustering), par renforcement (récompenses)
+- **Exemples concrets** — Filtre antispam, reconnaissance d'images, segmentation de clients

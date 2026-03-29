@@ -487,9 +487,8 @@ Conventions Java :
 
 ---
 
-## Prochaines étapes
+## Chapitres suivants
 
-- [Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md) — Comment tirer le meilleur des deux IDEs
-- [Cas d'usage Java](../chapitre-9-cas-usage/java.md) — Configuration complète pour un projet Java
-- [Cas d'usage Node.js/React](../chapitre-9-cas-usage/nodejs-react.md) — Configuration complète pour un projet TypeScript
+- [Prompt Engineering](../chapitre-4-prompt-engineering/index.md) — Vue d'ensemble des techniques de prompt engineering avec Copilot
+- [Machine Learning — Concepts Fondamentaux](../chapitre-5-machine-learning/concepts-fondamentaux.md) — Notions essentielles de ML pour mieux utiliser Copilot sur ces sujets
 

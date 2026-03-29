@@ -252,6 +252,6 @@ Si un workflow revient régulièrement (ex: audit sécurité, génération de te
 
 ## Prochaines étapes
 
-- [Hooks](hooks.md) — Automatisations déclenchées par les actions Copilot
+- [Guide Hooks](guide-hooks.md) — Automatisations déclenchées par les actions Copilot
 - [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
 - [VS Code — Contexte projet](vscode-contexte.md) — Intégrer ces mécanismes dans la structure de projet

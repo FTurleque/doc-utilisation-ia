@@ -265,4 +265,8 @@ flowchart LR
 
 ---
 
-- [Suite : Techniques Intermédiaires →](techniques-intermediaires.md)
+## Prochaines étapes
+
+- [Techniques Intermédiaires](techniques-intermediaires.md) — Few-Shot, Chain-of-Thought, Role Prompting, format structuré
+- [Techniques Avancées](techniques-avancees.md) — Prompt chaining, Tree of Thoughts, self-consistency, méta-prompting
+- [Prompting avec GitHub Copilot](avec-copilot.md) — Appliquer ces techniques directement dans Copilot Chat

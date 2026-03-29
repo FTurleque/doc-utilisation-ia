@@ -327,6 +327,6 @@ Avec ce README, Copilot comprend votre stack, votre architecture et vos conventi
 
 ## Prochaines étapes
 
-- [Instructions (.instructions.md)](instructions.md) — Formaliser vos conventions en instructions Copilot
+- [Guide Instructions (.instructions.md)](guide-instructions.md) — Formaliser vos conventions en instructions Copilot
 - [applyTo Avancé](applyto-avance.md) — Cibler précisément vos instructions par type de fichier
 - [Prompt Files (.prompt.md)](prompt-files.md) — Prompts réutilisables pour des tâches récurrentes

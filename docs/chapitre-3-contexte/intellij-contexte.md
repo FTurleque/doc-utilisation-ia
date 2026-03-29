@@ -297,5 +297,5 @@ public interface UserRepository extends JpaRepository<User, UUID> { ... }
 ## Prochaines étapes
 
 - [Comparaison contexte](comparaison-contexte.md) — IntelliJ vs VS Code
-- [Bonnes pratiques](../chapitre-8-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
-
+- [Prompt Engineering — Accueil](../chapitre-4-prompt-engineering/index.md) — Aller plus loin avec les techniques avancées
+- [Fondamentaux du Prompt Engineering](../chapitre-4-prompt-engineering/fondamentaux.md) — Concepts clés pour optimiser vos prompts

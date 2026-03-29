@@ -98,5 +98,5 @@ name: 'GitHub Copilot SDK C# Instructions'
 ## Prochaines étapes
 
 - [Prompt Files (.prompt.md)](prompt-files.md) — Prompts réutilisables pour des tâches récurrentes
-- [Agents (.agent.md)](agents.md) — Agents IA custom avec comportements spécialisés
-- [Skills (SKILL.md)](skills.md) — Packages de connaissance domaine pour les agents
+- [Guide Agents (.agent.md)](guide-agents.md) — Agents IA custom avec comportements spécialisés
+- [Guide Skills (SKILL.md)](guide-skills.md) — Packages de connaissance domaine pour les agents

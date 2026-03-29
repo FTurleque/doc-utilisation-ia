@@ -197,13 +197,13 @@ Chaque sous-paramètre correspond à un mécanisme documenté en détail dans le
 
 | Paramètre Customizations | Ce que ça apporte | Documentation détaillée |
 |---|---|---|
-| **Copilot Instructions** | Règle globale appliquée à toutes les conversations, sans avoir à la répéter | [Instructions Copilot](../chapitre-3-contexte/instructions.md) |
-| **Instruction Files** | Règles ciblées sur des fichiers spécifiques via `applyTo` (ex: appliquer des conventions Java uniquement aux `.java`) | [Instructions Copilot](../chapitre-3-contexte/instructions.md) |
-| **Git Commit Instructions** | Messages de commit cohérents et conformes à vos conventions (Conventional Commits, ticket Jira…) | [Instructions Copilot](../chapitre-3-contexte/instructions.md) |
-| **AGENTS.md** | Crée des agents avec un rôle, des outils et des instructions dédiés (ex: agent "Reviewer", agent "Test Generator") | [Agents Copilot](../chapitre-3-contexte/agents.md) |
+| **Copilot Instructions** | Règle globale appliquée à toutes les conversations, sans avoir à la répéter | [Guide Instructions Copilot](../chapitre-3-contexte/guide-instructions.md) |
+| **Instruction Files** | Règles ciblées sur des fichiers spécifiques via `applyTo` (ex: appliquer des conventions Java uniquement aux `.java`) | [Guide Instructions Copilot](../chapitre-3-contexte/guide-instructions.md) |
+| **Git Commit Instructions** | Messages de commit cohérents et conformes à vos conventions (Conventional Commits, ticket Jira…) | [Guide Instructions Copilot](../chapitre-3-contexte/guide-instructions.md) |
+| **AGENTS.md** | Crée des agents avec un rôle, des outils et des instructions dédiés (ex: agent "Reviewer", agent "Test Generator") | [Guide Agents Copilot](../chapitre-3-contexte/guide-agents.md) |
 | **Prompt Files** | Sauvegarde des prompts complexes sous forme de templates invocables depuis le Chat | [Prompt Files](../chapitre-3-contexte/prompt-files.md) |
-| **Chat Agents** | Ajoute des agents personnalisés directement dans le sélecteur de mode du Chat (niveau workspace) | [Agents Copilot](../chapitre-3-contexte/agents.md) |
-| **Skills (`SKILL.md`)** | Modules de connaissance spécialisée (ex: standards API, sécurité, domaine métier) invocables dans le Chat via `copilot-skill://`. IntelliJ les utilise en **lecture seule** — ils se créent dans VS Code ou manuellement, mais fonctionnent dans les deux IDEs | [Skills Copilot](../chapitre-3-contexte/skills.md) |
+| **Chat Agents** | Ajoute des agents personnalisés directement dans le sélecteur de mode du Chat (niveau workspace) | [Guide Agents Copilot](../chapitre-3-contexte/guide-agents.md) |
+| **Skills (`SKILL.md`)** | Modules de connaissance spécialisée (ex: standards API, sécurité, domaine métier) invocables dans le Chat via `copilot-skill://`. IntelliJ les utilise en **lecture seule** — ils se créent dans VS Code ou manuellement, mais fonctionnent dans les deux IDEs | [Guide Skills Copilot](../chapitre-3-contexte/guide-skills.md) |
 
 !!! tip "La maîtrise des Customizations est le vrai levier de productivité"
     Les paramètres de Completions et de Chat sont des réglages de confort. Les Customizations, elles, définissent **comment Copilot comprend votre projet**. Consultez le [Chapitre 3 — Contexte & Personnalisation](../chapitre-3-contexte/index.md) pour configurer ces mécanismes et transformer Copilot en véritable assistant de votre codebase.
@@ -497,7 +497,6 @@ Cas d'usage typiques :
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Contexte projet IntelliJ](../chapitre-3-contexte/intellij-contexte.md) — Optimiser le contexte pour de meilleures suggestions
-- [Paramétrage VS Code](vscode-parametrage.md) — Pour comparer avec d'autres IDEs (documentation à venir pour 2025.x)
+- [Comparaison des Paramètres](comparaison-parametres.md) — IntelliJ vs VS Code (différences clés)

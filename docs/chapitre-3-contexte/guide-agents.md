@@ -291,7 +291,6 @@ Dans Copilot Chat :
 
 ## Prochaines étapes
 
-- [Skills (SKILL.md)](skills.md) — Packages de connaissance domaine pour les agents
-- [Hooks](hooks.md) — Automatisations déclenchées par les actions Copilot
+- [Guide Skills (SKILL.md)](guide-skills.md) — Packages de connaissance domaine pour les agents
+- [Guide Hooks](guide-hooks.md) — Automatisations déclenchées par les actions Copilot
 - [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
-

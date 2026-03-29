@@ -1,4 +1,4 @@
-﻿# Contexte & Personnalisation
+# Contexte & Personnalisation
 
 GitHub Copilot n'est pas un simple outil d'autocomplétion — c'est un système dont la qualité des suggestions dépend directement de la **qualité du contexte** que vous lui fournissez. Ce chapitre couvre tous les mécanismes disponibles pour enrichir ce contexte et personnaliser le comportement de Copilot.
 
@@ -32,7 +32,7 @@ Ce chapitre documente tous les mécanismes disponibles pour personnaliser Copilo
 
     Fenêtre de contexte, tokens, priorités, strategies pour améliorer les suggestions
 
-- :material-file-code: **[Instructions (.instructions.md)](instructions.md)**
+- :material-file-code: **[Guide Instructions (.instructions.md)](guide-instructions.md)**
 
     Règles persistantes pour guider Copilot sur les conventions du projet
 
@@ -44,11 +44,11 @@ Ce chapitre documente tous les mécanismes disponibles pour personnaliser Copilo
 
     Prompts réutilisables pour des tâches récurrentes
 
-- :material-robot: **[Agents (.agent.md)](agents.md)**
+- :material-robot: **[Guide Agents (.agent.md)](guide-agents.md)**
 
     Agents IA custom avec comportements et outils spécialisés
 
-- :material-lightbulb: **[Skills (SKILL.md)](skills.md)**
+- :material-lightbulb: **[Skills (SKILL.md)](guide-skills.md)**
 
     Packages de connaissance domaine pour des expertise métier
 
@@ -60,7 +60,7 @@ Ce chapitre documente tous les mécanismes disponibles pour personnaliser Copilo
 
     Utiliser `#fichier` et `@fichier`, plus les points d'attention CLI
 
-- :material-hook: **[Hooks](hooks.md)**
+- :material-hook: **[Hooks](guide-hooks.md)**
 
     Automatisations déclenchées par les actions Copilot
 
@@ -96,4 +96,17 @@ Ce chapitre documente tous les mécanismes disponibles pour personnaliser Copilo
 
 !!! info "Support IntelliJ"
     `copilot-instructions.md`, `.instructions.md`, `.prompt.md`, `.agent.md` et `SKILL.md` sont supportés dans IntelliJ IDEA via le plugin GitHub Copilot. La création de `SKILL.md` via l'interface reste réservée à VS Code, mais les fichiers créés manuellement ou via VS Code sont bien pris en compte par IntelliJ. Seuls les hooks restent spécifiques à VS Code.
+
+---
+
+## Prochaine étape
+
+**[Concepts fondamentaux du contexte Copilot](concepts.md)** : comprendre comment Copilot construit son prompt et comment l'influencer.
+
+Concepts clés couverts :
+
+- **Fenêtre de contexte** — Taille selon le mode (inline ~2 000 tokens, Chat jusqu'à 128 000 tokens)
+- **Priorités du contexte** — Fichier actuel → onglets ouverts → fichiers de config → instructions
+- **Tokens** — Ce qu'est un token et pourquoi la limite de taille impacte la qualité des suggestions
+- **Stratégies d'amélioration** — Quels fichiers garder ouverts, comment structurer son code pour Copilot
 

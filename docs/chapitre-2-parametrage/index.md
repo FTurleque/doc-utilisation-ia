@@ -51,5 +51,6 @@ Tout au long de ce chapitre, vous trouverez ces 4 profils prêts à l'emploi :
 ## Prochaines étapes
 
 Après avoir configuré vos paramètres, explorez :
+
 - [Contexte & Personnalisation](../chapitre-3-contexte/index.md) pour aller encore plus loin avec les instructions, agents et skills
 

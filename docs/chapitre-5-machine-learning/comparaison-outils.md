@@ -246,3 +246,11 @@ pip install keras
     os.environ["KERAS_BACKEND"] = "torch"  # ou "tensorflow" ou "jax"
     import keras
     ```
+
+---
+
+## Chapitres suivants
+
+- [RAG — Retrieval-Augmented Generation](../chapitre-6-rag/index.md) — Implémenter le RAG pas à pas avec code fonctionnel
+- [Modes CLI & Agent](../chapitre-7-cli-modes/index.md) — Maîtriser les modes d'interaction avancés avec Copilot
+

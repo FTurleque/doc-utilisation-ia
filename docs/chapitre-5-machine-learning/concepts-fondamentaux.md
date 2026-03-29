@@ -30,17 +30,75 @@ graph TD
 
 ## Un Peu d'Histoire
 
-L'intelligence artificielle n'est pas une invention récente. Voici les grandes périodes clés :
+L'intelligence artificielle n'est pas une invention récente. Elle a traversé des périodes d'enthousiasme intense et des "hivers" de désillusion avant d'atteindre la maturité actuelle.
 
-| Période | Événement marquant |
-|---------|--------------------|
-| **1950** | Alan Turing propose le "Test de Turing" |
-| **1957** | Création du premier **perceptron** (Frank Rosenblatt) |
-| **1980s** | Premier "hiver de l'IA" — manque de puissance de calcul |
-| **1997** | Deep Blue bat Kasparov aux échecs |
-| **2012** | AlexNet relance le Deep Learning (GPU + big data) |
-| **2017** | Transformers (base de GPT, BERT) |
-| **2022** | ChatGPT, GitHub Copilot — IA générative grand public |
+```mermaid
+graph TD
+    subgraph F["🏛️ Fondations"]
+        A["**1950** — Test de Turing\nAlan Turing pose la question :\n*Les machines peuvent-elles penser ?*"]
+        B["**1956** — Conférence de Dartmouth\nNaissance officielle du terme\n*Intelligence Artificielle*"]
+        C["**1957** — Premier perceptron\nFrank Rosenblatt — premier neurone\nartificiel simulé sur ordinateur"]
+    end
+
+    subgraph H["❄️ Hivers de l'IA"]
+        D["**1970s** — Limites atteintes\nOrdinateurs trop lents,\nproblèmes trop complexes"]
+        E["**1980s** — Systèmes experts\nRègles codées à la main —\nsuccès partiel, fragiles et coûteux"]
+        G["**1987** — Deuxième hiver\nEffondrement du marché\ndes systèmes experts"]
+    end
+
+    subgraph R["🌱 Renaissance"]
+        I["**1997** — Deep Blue bat Kasparov\nIBM — premier programme à battre\nun champion du monde aux échecs"]
+        J["**1998** — LeNet\nYann LeCun — premiers CNN\npour la reconnaissance de chiffres"]
+        K["**2006** — Deep Belief Networks\nGeoffrey Hinton — pré-entraînement\ndes réseaux profonds"]
+    end
+
+    subgraph E2["🚀 Explosion du Deep Learning"]
+        L["**2012** — AlexNet\nGPU + big data — erreur divisée par 2\nsur ImageNet, tournant historique"]
+        M["**2014** — GANs\nIan Goodfellow — génération\nd'images réalistes"]
+        N["**2017** — Transformers\n*Attention is All You Need*\nbase de GPT et BERT"]
+    end
+
+    subgraph G2["🤖 IA Générative"]
+        O["**2020** — GPT-3\n175 milliards de paramètres\ngénération de texte bluffante"]
+        P["**2022** — ChatGPT & GitHub Copilot\nIA générative grand public\nmillions d'utilisateurs"]
+        Q["**2024** — Agents autonomes\nLLMs capables de planifier,\nutiliser des outils, exécuter des tâches"]
+    end
+
+    F --> H --> R --> E2 --> G2
+    A --> B --> C
+    D --> E --> G
+    I --> J --> K
+    L --> M --> N
+    O --> P --> Q
+```
+
+### Les grandes ruptures technologiques
+
+Trois facteurs ont rendu possible la révolution du Deep Learning :
+
+| Facteur | Avant (2000s) | Après (2010s+) |
+|---------|--------------|----------------|
+| **Données** | Quelques milliers d'exemples | Milliards d'exemples (internet, médias sociaux) |
+| **Puissance de calcul** | CPUs lents, coûteux | GPUs massivement parallèles, cloud accessible |
+| **Algorithmes** | Réseaux peu profonds (2-3 couches) | Réseaux très profonds (100+ couches), Transformers |
+
+!!! info "Pourquoi 2012 est une date charnière ?"
+    En 2012, le réseau **AlexNet** (Alex Krizhevsky, supervisé par Geoffrey Hinton) remporte le concours ImageNet avec un taux d'erreur de **16%**, contre **26%** pour le meilleur algorithme classique de l'époque. Cette rupture de 10 points en un an a convaincu toute la communauté scientifique de basculer vers le Deep Learning.
+
+### Les pionniers à connaître
+
+| Nom | Contribution | Récompense |
+|-----|-------------|-----------|
+| **Alan Turing** | Test de Turing, fondements théoriques | Prix Turing (posthume) |
+| **Frank Rosenblatt** | Perceptron (1957) | — |
+| **Geoffrey Hinton** | Backpropagation, Deep Belief Networks | Prix Turing 2018 |
+| **Yann LeCun** | Réseaux convolutifs (CNN) | Prix Turing 2018 |
+| **Yoshua Bengio** | Apprentissage de représentations | Prix Turing 2018 |
+| **Ian Goodfellow** | GANs (Generative Adversarial Networks) | — |
+| **Vaswani et al.** | Architecture Transformer (2017) | — |
+
+!!! tip "Les trois prix Turing 2018"
+    Hinton, LeCun et Bengio sont surnommés les **"parrains du Deep Learning"**. Ils ont persisté dans leurs recherches pendant les "hivers de l'IA", quand la communauté scientifique les considérait marginaux. Leur ténacité a rendu possible la révolution actuelle.
 
 ---
 

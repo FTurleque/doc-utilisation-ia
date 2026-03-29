@@ -755,8 +755,6 @@ Les settings du workspace **ont la priorité** sur les settings utilisateur. Uti
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
 - [Comparaison des paramètres](comparaison-parametres.md) — IntelliJ vs VS Code côte à côte
-- [Contexte projet VS Code](../chapitre-3-contexte/vscode-contexte.md) — Fichiers `.instructions.md`, `.copilotignore`
-- [Instructions & Personnalisation](../chapitre-3-contexte/instructions.md) — Aller plus loin avec les instructions Copilot

@@ -409,9 +409,9 @@ Conventions :
 ## Ressources & Prochaines Étapes
 
 - [Concepts Clés](concepts.md) — Explications détaillées
-- [Instructions Avancées](instructions.md) — `.instructions.md` syntax
-- [Agents Custom](agents.md) — Créer vos propres agents
-- [Skills](skills.md) — Packager dans expertise
+- [Guide Instructions Avancées](guide-instructions.md) — `.instructions.md` syntax
+- [Guide Agents Custom](guide-agents.md) — Créer vos propres agents
+- [Guide Skills](guide-skills.md) — Packager votre expertise
 - [Best Practices](../chapitre-8-bonnes-pratiques/utilisation-effective.md)
 ├── package.json
 ├── tsconfig.json
@@ -525,5 +525,4 @@ Copilot utilise vos onglets ouverts comme contexte supplémentaire. Organisez vo
 
 - [IntelliJ — Contexte projet](intellij-contexte.md) — Équivalents pour IntelliJ
 - [Comparaison contexte](comparaison-contexte.md) — Différences entre les deux IDEs
-- [Bonnes pratiques](../chapitre-8-bonnes-pratiques/index.md) — Aller plus loin
-
+- [Prompt Engineering — Accueil](../chapitre-4-prompt-engineering/index.md) — Aller plus loin avec les techniques avancées

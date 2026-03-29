@@ -11,7 +11,7 @@ Vous maîtrisez le few-shot, le chain-of-thought et les rôles. Ce chapitre couv
 Le **Prompt Chaining** décompose une tâche complexe en une **séquence de prompts enchaînés** où la sortie de chaque étape alimente l'étape suivante. Cette technique contourne les limites des LLMs sur les tâches longues ou multi-dimensionnelles.
 
 ```mermaid
-graph LR
+graph TD
     INPUT["📥 Entrée\ninitiale"] --> P1["🔵 Prompt 1\nAnalyse / Décomposition"]
     P1 --> O1["Sortie 1\n(structure JSON)"]
     O1 --> P2["🟡 Prompt 2\nTransformation / Génération"]
@@ -366,4 +366,8 @@ graph TD
 
 ---
 
-- [Suite : Prompting avec GitHub Copilot →](avec-copilot.md)
+## Prochaines étapes
+
+- [Prompting avec GitHub Copilot](avec-copilot.md) — Appliquer ces techniques avancées directement dans Copilot Chat et l'Agent Mode
+- [Machine Learning avec Copilot](../chapitre-5-machine-learning/index.md) — Utiliser Copilot pour vos workflows ML et Data Science
+- [Machine Learning — Concepts Fondamentaux](../chapitre-5-machine-learning/concepts-fondamentaux.md) — Notions essentielles de ML pour mieux utiliser Copilot sur ces sujets

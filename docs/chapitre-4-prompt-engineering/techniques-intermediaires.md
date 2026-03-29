@@ -356,4 +356,40 @@ Analyse maintenant cette classe :
 
 ---
 
-- [Suite : Techniques Avancées →](techniques-avancees.md)
+## Synthèse : Quelle technique pour quel besoin ?
+
+| Technique | Quand l'utiliser | Se combine avec |
+|-----------|-----------------|-----------------|
+| **Zero-Shot** | Tâche simple, standard, bien connue du LLM | Point de départ universel |
+| **Few-Shot** | Format inhabituel, style précis à reproduire, classification | CoT, Rôle |
+| **Chain-of-Thought** | Problèmes multi-étapes, debugging, logique complexe | Rôle, Few-Shot |
+| **Role Prompting** | Expertise spécialisée requise, ton ou niveau adapté | CoT, Format structuré |
+| **Format structuré** | Intégration dans un workflow, sortie machine-readable | Tous |
+| **Contraintes explicites** | Refactoring contrôlé, génération avec règles strictes | Rôle, Format |
+| **Délimiteurs** | Code, texte long, entrées potentiellement ambigu | Tous (bonne pratique systématique) |
+| **Itération** | Améliorer un prompt qui donne des résultats partiels | Tous |
+
+!!! tip "Stratégie progressive recommandée"
+    1. **Commencez par le Zero-Shot** — si le résultat est satisfaisant, inutile d'aller plus loin
+    2. **Ajoutez un rôle** si la réponse manque d'expertise ou de spécialisation
+    3. **Ajoutez le CoT** si la logique ou le raisonnement est insuffisant
+    4. **Ajoutez des exemples (Few-Shot)** si le format ou le style n'est pas respecté
+    5. **Ajoutez des contraintes** pour verrouiller les points non négociables
+    6. **Sauvegardez en `.prompt.md`** dès qu'un prompt fonctionne bien pour le réutiliser
+
+!!! info "Récapitulatif des 8 techniques vues"
+    1. **Zero/Few/Many-Shot** — guider par l'exemple
+    2. **Chain-of-Thought** — raisonner étape par étape
+    3. **Role Prompting** — assigner une expertise
+    4. **Format structuré** — contrôler la forme de la sortie
+    5. **Contraintes explicites** — définir ce qui est autorisé/interdit
+    6. **Délimiteurs** — séparer instructions et données
+    7. **Cycle d'itération** — améliorer systématiquement
+    8. **Combinaison** — empiler les techniques pour des tâches complexes
+
+---
+
+## Prochaines étapes
+
+- [Techniques Avancées](techniques-avancees.md) — Prompt chaining, Tree of Thoughts, self-consistency, méta-prompting
+- [Prompting avec GitHub Copilot](avec-copilot.md) — Appliquer ces techniques dans l'interface Copilot

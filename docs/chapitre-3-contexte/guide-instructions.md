@@ -314,5 +314,5 @@ Les fichiers `.instructions.md` doivent être **committés dans Git** — ils fo
 
 - [applyTo avancé](applyto-avance.md) — Cibler précisément vos instructions par type de fichier
 - [Prompt Files (.prompt.md)](prompt-files.md) — Prompts réutilisables pour des tâches récurrentes
-- [Agents (.agent.md)](agents.md) — Agents IA custom avec comportements spécialisés
-
+- [Guide Agents (.agent.md)](guide-agents.md) — Agents IA custom avec comportements spécialisés
+- [Guide Skills (SKILL.md)](guide-skills.md) — Packages de connaissance domaine

@@ -339,7 +339,7 @@ Ce fichier contient des **instructions qui s'appliquent automatiquement à toute
 ```
 
 !!! tip "Lien vers le chapitre dédié"
-    Pour aller plus loin sur les instructions Copilot : [Instructions et personnalisation](../chapitre-3-contexte/instructions.md)
+    Pour aller plus loin sur les instructions Copilot : [Instructions et personnalisation](../chapitre-3-contexte/guide-instructions.md)
 
 ### 2. `COPILOT.md` — Documentation Architecturale pour l'IA
 

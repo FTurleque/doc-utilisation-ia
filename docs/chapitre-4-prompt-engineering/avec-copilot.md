@@ -353,5 +353,8 @@ graph TD
 
 ---
 
-- [← Retour : Techniques Avancées](techniques-avancees.md)
-- [← Retour à l'Index du Chapitre](index.md)
+## Chapitres suivants
+
+- [Machine Learning](../chapitre-5-machine-learning/index.md) — Utiliser Copilot pour vos workflows ML et Data Science
+- [RAG — Retrieval-Augmented Generation](../chapitre-6-rag/index.md) — Comprendre la mécanique de contexte qui sous-tend les suggestions Copilot
+

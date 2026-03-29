@@ -91,8 +91,8 @@ La qualité des suggestions Copilot dépend du contexte fourni à l'IA, pas uniq
 
 ---
 
-## Prochaines étapes
+## Chapitres suivants
 
-- [Contexte & Personnalisation](../chapitre-3-contexte/index.md) — Explorer les mécanismes de personnalisation avancée (VS Code)
-- [Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
+- [Contexte & Personnalisation](../chapitre-3-contexte/index.md) — Explorer les mécanismes de personnalisation avancée (instructions, agents, prompt files)
+- [Prompt Engineering](../chapitre-4-prompt-engineering/index.md) — Maîtriser la rédaction de prompts efficaces avec Copilot
 
