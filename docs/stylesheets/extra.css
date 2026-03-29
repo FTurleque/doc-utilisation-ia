@@ -21,6 +21,9 @@
 
 .md-sidebar__scrollwrap {
   width: 280px;
+  overflow-y: auto; /* Permet le défilement vertical uniquement */
+  scrollbar-color: transparent transparent; /* Couleur transparente pour la barre et le fond */
+  scrollbar-width: thin; /* Réduction de la largeur de la scrollbar */
 }
 
 /* Marges de la zone principale réduites */
