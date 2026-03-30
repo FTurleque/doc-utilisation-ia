@@ -391,8 +391,13 @@ graph TD
 
 ---
 
-## Ressources
+## Prochaine étape
 
-- [Best Practices](../chapitre-9-bonnes-pratiques/utilisation-effective.md)
-- [Comparaison Ecosystèmes](comparaison-ecosystemes.md)
-- [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)
+**[Python & FastAPI](python.md)** : découvrir comment Copilot génère des APIs Python asynchrones hautement productives avec validation Pydantic et SQLAlchemy type-safe.
+
+Concepts clés couverts :
+
+- **FastAPI avec Pydantic v2** — Validation et documentation automatique
+- **SQLAlchemy 2.0 style** — Mapped types et type-safety complète
+- **Async patterns en Python** — Routes async, fixtures pytest
+- **Migrations Alembic** — Génération automatique de schémas

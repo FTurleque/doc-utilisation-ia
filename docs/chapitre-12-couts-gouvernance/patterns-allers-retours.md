@@ -151,3 +151,16 @@ Pour les tâches longues, découper en étapes avec validation intermédiaire :
 | Références explicites (#file, @workspace) | −50% d'ambiguïtés | VS Code Chat |
 | Plan avant exécution (Agent) | −65% de tool calls | Agent Mode |
 | Checkpoints explicites | Évite les refactorings | Agent Mode |
+
+---
+
+## Prochaine étape
+
+**[Premium Requests : mécanique](premium-requests.md)** : comprendre ce qu'est une premium request, quels modèles la consomment, et comment surveiller son quota mensuel.
+
+Concepts clés couverts :
+
+- **Coût des modèles** — Standard gratuit, Claude/o1/o3 = premium requests
+- **Quotas par plan** — Free 50, Pro 300, Business/Enterprise 300 par utilisateur
+- **Surveiller son solde** — GitHub Copilot usage dashboard
+- **Comportement après épuisement** — Basculage automatique au modèle standard

@@ -338,8 +338,13 @@ graph TD
 
 ---
 
-## Ressources
+## Prochaine étape
 
-- [Best Practices universelles](../chapitre-9-bonnes-pratiques/utilisation-effective.md)
-- [Comparaison Ecosystèmes](comparaison-ecosystemes.md)
-- [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)
+**[React 19 & TypeScript](react-typescript.md)** : maîtriser React 19 avec les Server Components, hooks optimisés et patterns TypeScript que Copilot génère avec excellence.
+
+Concepts clés couverts :
+
+- **Typed Functional Components** — Interfaces Props pour meilleur contexte Copilot
+- **Custom Hooks patterns** — Extraction de logique complexe
+- **Server Components + Client Components** — Architecture Next.js 15
+- **React Hook Form + Zod** — Validation et type-safety complète

@@ -264,7 +264,13 @@ Aucune suggestion, pas d'icône dans la status bar
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Comparaison des problèmes](comparaison-problemes.md) — Différences IDE-spécifiques
-- [Problèmes courants](problemes-courants.md) — Solutions pour les cas les plus fréquents
+**[Comparaison des Problèmes](comparaison-problemes.md)** : tableau comparatif détaillé des problèmes spécifiques à chaque IDE et leurs solutions différentes dans IntelliJ vs VS Code.
+
+Concepts clés couverts :
+
+- **Problèmes communs** — Rate limit, authentification, contexte insuffisant
+- **Problèmes IntelliJ** — PSI timeout, Power Save Mode, heap insuffisant
+- **Problèmes VS Code** — Conflits d'extensions, Inline Chat, .instructions.md
+- **Matrice de compatibilité** — Support des features par IDE et version

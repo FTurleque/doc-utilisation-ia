@@ -322,7 +322,8 @@ Cette méthode est systématique et garantit d'identifier la bonne extension san
 
 ---
 
-## Prochaines étapes
+## Chapitres suivants
 
-- [Cas d'Usage](../chapitre-10-cas-usage/index.md) — Configurations pratiques par technologie (Java, Python, Node.js…)
-- [Appendices FAQ](../appendices/faq.md) — Réponses rapides aux questions fréquentes
+**[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : optimiser vos dépenses avec GitHub Copilot, comprendre les modes d'interaction (Free, Pro, Business) et mettre en place un workflow recommandé.
+
+**[Appendices](../appendices/index.md)** : FAQ, raccourcis clavier, ressources externes et templates de configuration pour tous les IDEs et stacks technologiques.

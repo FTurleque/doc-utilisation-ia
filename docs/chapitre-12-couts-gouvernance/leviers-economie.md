@@ -129,3 +129,16 @@ L'Agent Mode multiplie les tool calls (lecture de fichiers, recherches, écritur
 □ Instructions communes dans copilot-instructions.md (pas réexpliquées)
 □ Agent Mode uniquement pour les tâches ≥ 3 fichiers
 ```
+
+---
+
+## Prochaine étape
+
+**[Quand utiliser quel mode ?](modes-quand-utiliser.md)** : guide complet des quatre modes Copilot (Inline, Chat, Edits, Agent) avec tableau de coûts et matrice décision par tâche.
+
+Concepts clés couverts :
+
+- **Quatre modes disponibles** — Inline, Chat, Edits, Agent avec coûts croissants
+- **Matrice décision par tâche** — Quel mode pour refactoring, génération, exploration
+- **Comparatif de coûts** — Validée sur des exemples concrets
+- **Anti-patterns courants** — Agent Mode par défaut = gaspillage maximal

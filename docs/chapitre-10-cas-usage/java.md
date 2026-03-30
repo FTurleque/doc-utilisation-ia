@@ -264,7 +264,13 @@ public UserResponse create(CreateUserRequest request) {
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Appendices](../appendices/raccourcis-clavier.md) — Raccourcis complets et templates
-- [Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md) — Sécurité et qualité du code généré
+**[Java & Spring Boot](java-spring-boot.md)** : maîtriser les patterns Spring Boot pour les backends enterprise et comment Copilot génère des services, controllers et tests de haute qualité.
+
+Concepts clés couverts :
+
+- **Custom Instructions pour Spring Boot** — Configuration Copilot par couche
+- **Pattern Service complet** — Service class optimisée pour la génération
+- **Entités JPA annotées** — Maximiser le contexte pour Copilot
+- **Tests avec Copilot Chat** — Générer tests unitaires complets avec Mockito

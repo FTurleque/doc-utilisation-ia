@@ -437,7 +437,13 @@ La suggestion apparaît mais s'arrête au milieu d'une ligne, d'une fonction, ou
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Logs & Diagnostic](logs-diagnostic.md) — Analyser les logs pour les problèmes persistants
-- [Comparaison des problèmes](comparaison-problemes.md) — Problèmes spécifiques à chaque IDE
+**[Logs & Diagnostic](logs-diagnostic.md)** : comment activer, lire et interpréter les logs Copilot dans VS Code et IntelliJ pour diagnostiquer les problèmes persistants.
+
+Concepts clés couverts :
+
+- **Accès aux logs** — Panneau Output VS Code, fichier idea.log IntelliJ
+- **Interprétation des messages** — Types de logs courants et codes d'erreur HTTP
+- **Diagnostic réseau** — Vérifier la connectivité aux endpoints Copilot
+- **Rapport de bug** — Capturer et partager les informations essentielles

@@ -196,8 +196,13 @@ Voir détails complets :
 
 ---
 
-## Ressources
+## Prochaine étape
 
-- [Best Practices universelles](../chapitre-9-bonnes-pratiques/index.md)
-- [Chapitre Installation](../chapitre-1-installation/index.md)
-- [Configuration IDE](../chapitre-2-parametrage/index.md)
+**[Java — Cas d'Usage](java.md)** : explorer les patterns Spring Boot optimisés pour GitHub Copilot et les pièges les plus courants en production.
+
+Concepts clés couverts :
+
+- **Architecture en couches** — Controllers, Services, Repositories, Entities
+- **Patterns Spring optimisés** — Services, Repositories, Entities JPA avec Copilot
+- **Tests JUnit 5 + Mockito** — générer des tests de qualité automatiquement
+- **Pièges courants** — N+1 queries, lazy loading, injection circulaire

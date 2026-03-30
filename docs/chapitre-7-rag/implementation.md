@@ -394,5 +394,5 @@ prompt = rag.ask("Quelle est la limite de requêtes par minute sur l'API ?")
 
 ## Prochains chapitres
 
-- **[Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)** — Utilisation effective, productivité, sécurité et workflows IA au quotidien
-- **[Cas d'Usage par Technologie](../chapitre-10-cas-usage/index.md)** — Configurations et exemples concrets pour Java, Python, Node.js, React
+**[Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)** — Utilisation effective, productivité, sécurité et workflows IA au quotidien
+**[Cas d'Usage par Technologie](../chapitre-10-cas-usage/index.md)** — Configurations et exemples concrets pour Java, Python, Node.js, React

@@ -151,3 +151,16 @@ graph TD
 
 !!! danger "Anti-pattern"
     Lancer Agent Mode par défaut sur toutes les tâches parce que "c'est plus rapide à formuler" — c'est le principal vecteur de gaspillage de premium requests.
+
+---
+
+## Prochaine étape
+
+**[Workflow recommandé](workflow-recommande.md)** : séquence optimale au quotidien combinant décisions sur les modes, modèles et contexte pour maximiser la productivité et minimiser le gaspillage.
+
+Concepts clés couverts :
+
+- **Principe directeur** — Commencer par le moins coûteux, monter en puissance si nécessaire
+- **Workflow journalier** — Mise en contexte, séquences type, tâches récurrentes
+- **Pairs de tâches** — Patterns optimaux pour code repetitif, refactoring, debugging, architecture
+- **Checklist quotidienne** — Points de vérification pour éviter les erreurs courantes

@@ -99,6 +99,13 @@ Quel que soit le langage/framework, ces principes optimisent la qualité des sug
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Appendices](../appendices/raccourcis-clavier.md) — Référence complète des raccourcis et templates
+**[Comparaison Écosystèmes](comparaison-ecosystemes.md)** : tableau comparatif détaillé des stacks (Java/Spring, Node.js, React, Python) avec critères de sélection et recommandations par cas d'usage.
+
+Concepts clés couverts :
+
+- **Tableau comparatif complet** — Type Safety, accuracy Copilot, IDE, testing, productivité
+- **Recommandations par cas d'usage** — Startup, API rapide, Frontend, Full-stack, Data
+- **Critères avancés** — Meilleur duo IDE + Copilot + Stack
+- **Benchmark temps de génération** — Comparaison réaliste entre stacks

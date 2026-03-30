@@ -514,8 +514,8 @@ def upgrade() -> None:
 
 ---
 
-## Prochaines étapes
+## Chapitres suivants
 
-- [Best Practices](../chapitre-9-bonnes-pratiques/utilisation-effective.md)
-- [Comparaison Écosystèmes](comparaison-ecosystemes.md)
-- [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)
+**[Troubleshooting](../chapitre-11-troubleshooting/index.md)** : diagnostiquer et résoudre les problèmes courants avec GitHub Copilot dans tous les écosystèmes, avec procédures de réparation.
+
+**[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : optimiser les coûts d'utilisation de Copilot, comprendre les modes d'interaction et mettre en place un workflow recommandé.

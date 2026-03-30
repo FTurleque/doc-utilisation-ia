@@ -46,3 +46,16 @@ Utiliser GitHub Copilot efficacement, c'est aussi savoir gérer ce qu'il consomm
 | [Économies](leviers-economie.md) | Choisir le modèle le plus léger adapté à la tâche |
 | [Modes](modes-quand-utiliser.md) | Inline < Chat < Edits < Agent en termes de coût de requêtes |
 | [Workflow](workflow-recommande.md) | Inline pour la répétition, Chat pour l'exploration, Agent pour les grandes tâches |
+
+---
+
+## Prochaine étape
+
+**[Patterns pour réduire les allers-retours](patterns-allers-retours.md)** : structurer ses prompts pour obtenir la bonne réponse dès la première fois et éviter les cycles inutiles de corrections.
+
+Concepts clés couverts :
+
+- **Contexte complet dès le départ** — Passer de 5 échanges à 1 en formulant précisément
+- **Templates de prompts réutilisables** — Supprimer la redondance dans les explicications
+- **Références explicites avec #file/@workspace** — Éliminer l'ambiguïté sur le contexte
+- **Checkpoints en Agent Mode** — Valider le plan avant exécution plutôt que refactoriser après

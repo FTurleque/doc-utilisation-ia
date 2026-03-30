@@ -112,3 +112,16 @@ graph TD
 - Les API Copilot pour intégrations tierces (facturation séparée)
 - L'usage de Copilot Extensions de third-parties (peuvent avoir leur propre facturation)
 - Les modèles via GitHub Models dans les Codespaces (quota séparé)
+
+---
+
+## Prochaine étape
+
+**[Leviers d'économie](leviers-economie.md)** : sept stratégies pragmatiques pour réduire les dépenses de premium requests sans sacrifier la productivité.
+
+Concepts clés couverts :
+
+- **Choisir le bon modèle par tâche** — Standard pour l'exploration, premium pour l'implémentation
+- **Utiliser l'autocomplétion au maximum** — Gratuite sur les plans payants, très efficace
+- **Gérer le contexte des fichiers ouverts** — Moins d'onglets = moins de tokens
+- **Limiter la taille des conversations** — Nouvelles conversations courtes meilleur marché

@@ -117,7 +117,13 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Procédures de Réparation](procedures-reparation.md) — Guide pas à pas pour résoudre les problèmes persistants
-- [Cas d'Usage](../chapitre-10-cas-usage/index.md) — Configurations pratiques par technologie
+**[Procédures de Réparation](procedures-reparation.md)** : procédures graduées et pas à pas pour résoudre les problèmes persistants : reset complet, nettoyage du cache, réinstallation complète, configuration proxy/SSL.
+
+Concepts clés couverts :
+
+- **Nettoyage du cache** — Extensions VS Code, plugins IntelliJ
+- **Réinstallation complète** — Supprimer et réinstaller depuis zéro
+- **Configuration proxy/SSL** — Résoudre les problèmes réseau d'entreprise
+- **Diagnostic avancé** — Vérifier les logs système et les conflicts

@@ -355,6 +355,6 @@ graph TD
 
 ## Chapitres suivants
 
-- [Machine Learning](../chapitre-6-machine-learning/index.md) — Utiliser Copilot pour vos workflows ML et Data Science
-- [RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md) — Comprendre la mécanique de contexte qui sous-tend les suggestions Copilot
+**[Machine Learning](../chapitre-6-machine-learning/index.md)** — Utiliser Copilot pour vos workflows ML et Data Science
+**[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** — Comprendre la mécanique de contexte qui sous-tend les suggestions Copilot
 

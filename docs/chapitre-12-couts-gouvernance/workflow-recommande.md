@@ -176,3 +176,11 @@ sequenceDiagram
 ```
 
 Copier ce template dans le chat en début de tâche complexe cadre l'interaction dès le premier message.
+
+---
+
+## Chapitres suivants
+
+**[Appendices](../appendices/index.md)** : ressources de référence complètes — FAQ, raccourcis clavier, templates de configuration prêts à copier-coller.
+
+**[Ressources Externes](../appendices/ressources-externes.md)** : liens vers les documentations officielles, blogs et communautés pour approfondir vos connaissances sur GitHub Copilot.

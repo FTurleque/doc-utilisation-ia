@@ -243,7 +243,13 @@ La séquence optimale pour du code Node.js/TypeScript de qualité :
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Python — Cas d'Usage](python.md)
-- [Java — Cas d'Usage](java.md)
+**[Node.js & Express](nodejs-express.md)** : explorer les patterns Express spécifiquement optimisés pour Copilot avec TypeScript, Prisma et tests d'intégration.
+
+Concepts clés couverts :
+
+- **Route + Controller Pattern** — Séparation claire des responsabilités
+- **Service + ORM (Prisma)** — Type-safe queries et validations
+- **Middleware d'erreur global** — Gestion cohérente des erreurs
+- **Tests Supertest + Vitest** — Tests d'intégration complets

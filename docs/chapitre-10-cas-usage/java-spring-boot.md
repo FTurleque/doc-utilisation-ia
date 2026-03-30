@@ -289,8 +289,13 @@ graph TD
 
 ---
 
-## Ressources & Prochaines Étapes
+## Prochaine étape
 
-- [Best Practices](../chapitre-9-bonnes-pratiques/utilisation-effective.md) — Patterns universels
-- [Comparaison Ecosystèmes](comparaison-ecosystemes.md) — Spring Boot vs autres stacks
-- [IntelliJ Référence](../chapitre-1-installation/intellij/reference.md) — Raccourcis + features
+**[Node.js & React](nodejs-react.md)** : construire des applications full-stack avec Node.js backend et React frontend, en maximisant la productivité avec Copilot.
+
+Concepts clés couverts :
+
+- **Structure de projet TypeScript cohérente** — Aide Copilot à comprendre l'architecture
+- **Configuration Copilot pour TypeScript/React** — Custom instructions par couche
+- **Composants React typés** — Props typing et patterns optimisés
+- **Tests avec Vitest + RTL** — Générer des tests de qualité automatiquement

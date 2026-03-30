@@ -95,3 +95,16 @@ Copilot **ne s'arrête pas** — il bascule automatiquement sur le modèle stand
 
 !!! warning "Comportement selon le plan"
     Sur le plan **Free**, une fois le quota de complétions ET de messages épuisé, Copilot est désactivé jusqu'au mois suivant. Sur les plans payants, seuls les modèles premium sont restreints.
+
+---
+
+## Prochaine étape
+
+**[Les abonnements](abonnements.md)** : comparatif détaillé des quatre plans GitHub Copilot (Free, Pro, Business, Enterprise) avec quotas, fonctionnalités et critères de choix.
+
+Concepts clés couverts :
+
+- **Quatre plans disponibles** — Free gratuit, Pro $10, Business $19, Enterprise $39
+- **Limites et quotas** — Complétions, messages chat, premium requests par plan
+- **Fonctionnalités exclusives** — Agent Mode, Audit logs, Custom models
+- **Quel plan choisir** — Matrice décision selon profil (solo, équipe, conformité)
