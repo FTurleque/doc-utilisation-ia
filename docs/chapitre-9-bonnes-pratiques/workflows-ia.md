@@ -475,6 +475,6 @@ qui aurait détecté ce problème avant qu'il arrive en production.
 
 ## Chapitres suivants
 
-**[Cas d'Usage par Technologie](../chapitre-9-cas-usage/index.md)** : appliquer toutes ces pratiques sur des exemples concrets par écosystème technologique — Java & Spring Boot, Python & FastAPI, Node.js & TypeScript.
+**[Cas d'Usage par Technologie](../chapitre-10-cas-usage/index.md)** : appliquer toutes ces pratiques sur des exemples concrets par écosystème technologique — Java & Spring Boot, Python & FastAPI, Node.js & TypeScript.
 
-**[Troubleshooting](../chapitre-10-troubleshooting/index.md)** : diagnostiquer et résoudre les dysfonctionnements courants de Copilot dans les deux IDEs — suggestions absentes, authentification, performances dégradées.
+**[Troubleshooting](../chapitre-11-troubleshooting/index.md)** : diagnostiquer et résoudre les dysfonctionnements courants de Copilot dans les deux IDEs — suggestions absentes, authentification, performances dégradées.

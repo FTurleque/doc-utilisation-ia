@@ -193,20 +193,20 @@ Ces paramètres ont un impact direct sur la **qualité et la cohérence des rép
 
 #### Ce que chaque paramètre apporte — et où aller plus loin
 
-Chaque sous-paramètre correspond à un mécanisme documenté en détail dans le **[Contexte & Personnalisation](../chapitre-3-contexte/index.md)**. Ce chapitre explique comment créer, structurer et combiner ces fichiers pour obtenir un Copilot parfaitement adapté à votre projet.
+Chaque sous-paramètre correspond à un mécanisme documenté en détail dans le **[Contexte & Personnalisation](../chapitre-4-contexte/index.md)**. Ce chapitre explique comment créer, structurer et combiner ces fichiers pour obtenir un Copilot parfaitement adapté à votre projet.
 
 | Paramètre Customizations | Ce que ça apporte | Documentation détaillée |
 |---|---|---|
-| **Copilot Instructions** | Règle globale appliquée à toutes les conversations, sans avoir à la répéter | [Guide Instructions Copilot](../chapitre-3-contexte/guide-instructions.md) |
-| **Instruction Files** | Règles ciblées sur des fichiers spécifiques via `applyTo` (ex: appliquer des conventions Java uniquement aux `.java`) | [Guide Instructions Copilot](../chapitre-3-contexte/guide-instructions.md) |
-| **Git Commit Instructions** | Messages de commit cohérents et conformes à vos conventions (Conventional Commits, ticket Jira…) | [Guide Instructions Copilot](../chapitre-3-contexte/guide-instructions.md) |
-| **AGENTS.md** | Crée des agents avec un rôle, des outils et des instructions dédiés (ex: agent "Reviewer", agent "Test Generator") | [Guide Agents Copilot](../chapitre-3-contexte/guide-agents.md) |
-| **Prompt Files** | Sauvegarde des prompts complexes sous forme de templates invocables depuis le Chat | [Prompt Files](../chapitre-3-contexte/prompt-files.md) |
-| **Chat Agents** | Ajoute des agents personnalisés directement dans le sélecteur de mode du Chat (niveau workspace) | [Guide Agents Copilot](../chapitre-3-contexte/guide-agents.md) |
-| **Skills (`SKILL.md`)** | Modules de connaissance spécialisée (ex: standards API, sécurité, domaine métier) invocables dans le Chat via `copilot-skill://`. IntelliJ les utilise en **lecture seule** — ils se créent dans VS Code ou manuellement, mais fonctionnent dans les deux IDEs | [Guide Skills Copilot](../chapitre-3-contexte/guide-skills.md) |
+| **Copilot Instructions** | Règle globale appliquée à toutes les conversations, sans avoir à la répéter | [Guide Instructions Copilot](../chapitre-4-contexte/guide-instructions.md) |
+| **Instruction Files** | Règles ciblées sur des fichiers spécifiques via `applyTo` (ex: appliquer des conventions Java uniquement aux `.java`) | [Guide Instructions Copilot](../chapitre-4-contexte/guide-instructions.md) |
+| **Git Commit Instructions** | Messages de commit cohérents et conformes à vos conventions (Conventional Commits, ticket Jira…) | [Guide Instructions Copilot](../chapitre-4-contexte/guide-instructions.md) |
+| **AGENTS.md** | Crée des agents avec un rôle, des outils et des instructions dédiés (ex: agent "Reviewer", agent "Test Generator") | [Guide Agents Copilot](../chapitre-4-contexte/guide-agents.md) |
+| **Prompt Files** | Sauvegarde des prompts complexes sous forme de templates invocables depuis le Chat | [Prompt Files](../chapitre-4-contexte/prompt-files.md) |
+| **Chat Agents** | Ajoute des agents personnalisés directement dans le sélecteur de mode du Chat (niveau workspace) | [Guide Agents Copilot](../chapitre-4-contexte/guide-agents.md) |
+| **Skills (`SKILL.md`)** | Modules de connaissance spécialisée (ex: standards API, sécurité, domaine métier) invocables dans le Chat via `copilot-skill://`. IntelliJ les utilise en **lecture seule** — ils se créent dans VS Code ou manuellement, mais fonctionnent dans les deux IDEs | [Guide Skills Copilot](../chapitre-4-contexte/guide-skills.md) |
 
 !!! tip "La maîtrise des Customizations est le vrai levier de productivité"
-    Les paramètres de Completions et de Chat sont des réglages de confort. Les Customizations, elles, définissent **comment Copilot comprend votre projet**. Consultez le [Chapitre 3 — Contexte & Personnalisation](../chapitre-3-contexte/index.md) pour configurer ces mécanismes et transformer Copilot en véritable assistant de votre codebase.
+    Les paramètres de Completions et de Chat sont des réglages de confort. Les Customizations, elles, définissent **comment Copilot comprend votre projet**. Consultez le [Chapitre 4 — Contexte & Personnalisation](../chapitre-4-contexte/index.md) pour configurer ces mécanismes et transformer Copilot en véritable assistant de votre codebase.
 
 **Quand l'utiliser :** Standardisation d'équipe, amélioration de la cohérence des suggestions.
 
@@ -303,7 +303,7 @@ Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQ
 Sans MCP, la même demande aurait coûté **1 requête** et ~500 tokens.
 
 !!! tip "Bonnes pratiques — maîtriser la consommation MCP"
-    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requetes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-8-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
+    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requetes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-9-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
 
 **Quand l'utiliser :** Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).
 

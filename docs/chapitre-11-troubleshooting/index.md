@@ -135,5 +135,5 @@ Si les procédures de ce chapitre n'ont pas résolu le problème, voici les ress
 |----------|----------|
 | Installation échouée | [Installation](../chapitre-1-installation/index.md) |
 | Paramètre introuvable | [Paramétrage](../chapitre-2-parametrage/index.md) |
-| Contexte insatisfaisant | [Contexte & Personnalisation](../chapitre-3-contexte/index.md) |
-| Code généré de mauvaise qualité | [Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md) |
+| Contexte insatisfaisant | [Contexte & Personnalisation](../chapitre-4-contexte/index.md) |
+| Code généré de mauvaise qualité | [Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md) |

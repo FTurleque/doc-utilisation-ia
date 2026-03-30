@@ -412,7 +412,7 @@ Conventions :
 - [Guide Instructions Avancées](guide-instructions.md) — `.instructions.md` syntax
 - [Guide Agents Custom](guide-agents.md) — Créer vos propres agents
 - [Guide Skills](guide-skills.md) — Packager votre expertise
-- [Best Practices](../chapitre-8-bonnes-pratiques/utilisation-effective.md)
+- [Best Practices](../chapitre-9-bonnes-pratiques/utilisation-effective.md)
 ├── package.json
 ├── tsconfig.json
 └── tailwind.config.js        ← Copilot comprend votre config Tailwind
@@ -521,8 +521,13 @@ Copilot utilise vos onglets ouverts comme contexte supplémentaire. Organisez vo
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [IntelliJ — Contexte projet](intellij-contexte.md) — Équivalents pour IntelliJ
-- [Comparaison contexte](comparaison-contexte.md) — Différences entre les deux IDEs
-- [Prompt Engineering — Accueil](../chapitre-4-prompt-engineering/index.md) — Aller plus loin avec les techniques avancées
+**[Comparaison — Contexte & Personnalisation entre Éditeurs](comparaison-contexte.md)** : tableau comparatif complet des fonctionnalités Copilot entre IntelliJ IDEA et VS Code, avec recommandations par contexte et écosystème.
+
+Concepts clés couverts :
+
+- **Différences d'analyse sémantique** — PSI vs Language Server Protocol (LSP)
+- **Avantages de chaque IDE** — IntelliJ pour JVM, VS Code pour TypeScript/Python
+- **Contexte par écosystème** — Frontend, Backend Java, Backend Node.js, Polyglot
+- **Stratégies combinées** — Comment utiliser les deux IDEs en complémentarité

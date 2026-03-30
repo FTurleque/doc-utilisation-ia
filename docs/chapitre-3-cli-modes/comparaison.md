@@ -36,6 +36,5 @@ Ce tableau compare l'utilisation des modes CLI Copilot entre VS Code et IntelliJ
 
 ## Prochains chapitres
 
-- **[Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md)** — Utilisation effective, productivité, sécurité et workflows IA au quotidien
-- **[Cas d'Usage par Technologie](../chapitre-9-cas-usage/index.md)** — Configurations et exemples concrets pour Java, Python, Node.js, React
-- **[Troubleshooting](../chapitre-10-troubleshooting/index.md)** — Diagnostiquer et résoudre les problèmes courants de Copilot
+- [Contexte & Personnalisation](../chapitre-4-contexte/index.md) — Explorer les mécanismes de personnalisation avancée (instructions, agents, prompt files)
+- [Prompt Engineering](../chapitre-5-prompt-engineering/index.md) — Maîtriser la rédaction de prompts efficaces avec Copilot

@@ -332,18 +332,14 @@ Cette méthode fonctionne **identiquement** sur VS Code et IntelliJ.
 
 ---
 
-## Bonnes pratiques
+## Prochaine étape
 
-1. **Un prompt par tâche** — Ne pas mélanger revue de code et génération de tests dans le même prompt
-2. **Instructions précises** — Plus le prompt est spécifique, meilleure sera la réponse
-3. **Inclure des exemples** — Montrer le format attendu dans le prompt améliore la cohérence
-4. **Versionner** — Les prompt files doivent être committés dans Git pour être partagés en équipe
-5. **Utiliser `applyTo`** — Pour des prompts qui ne s'appliquent qu'à certains langages, considérez les instructions ciblées à la place
+**[Guide Agents (.agent.md)](guide-agents.md)** : créer des agents Copilot spécialisés avec comportements, outils et instructions dédiés.
 
----
+Concepts clés couverts :
 
-## Prochaines étapes
-
-- [Guide Agents (.agent.md)](guide-agents.md) — Agents Copilot avec outils et comportements personnalisés
-- [Guide Skills (SKILL.md)](guide-skills.md) — Packages de connaissance domaine pour les agents
+- **Qu'est-ce qu'un agent custom** — Persona IA avec rôle spécifié et outils restreints
+- **Frontmatter d'agent** — `name`, `description`, `tools`, `model`
+- **Restriction d'outils** — Limiter les capacités pour des raisons de sécurité ou focus
+- **Exemples d'agents** — Documentation writer, security auditor, refactoring expert
 

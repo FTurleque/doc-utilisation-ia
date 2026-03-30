@@ -251,6 +251,6 @@ pip install keras
 
 ## Chapitres suivants
 
-- [RAG — Retrieval-Augmented Generation](../chapitre-6-rag/index.md) — Implémenter le RAG pas à pas avec code fonctionnel
-- [Modes CLI & Agent](../chapitre-7-cli-modes/index.md) — Maîtriser les modes d'interaction avancés avec Copilot
+- **[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** — Implémenter le RAG pas à pas avec code fonctionnel
+- **[Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)** — Utilisation effective, productivité, sécurité et workflows IA au quotidien
 

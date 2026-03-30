@@ -211,7 +211,7 @@ Les instructions dans `.github/copilot-instructions.md` ou `.github/instructions
 | Fichier mal nommé | Le fichier doit finir exactement en `.instructions.md` |
 | `applyTo` incorrect | Vérifier le glob pattern : `applyTo: '**/*.ts'` pour TypeScript |
 | Feature flag désactivé | VS Code : `"github.copilot.chat.codeGeneration.useInstructionFiles": true` |
-| IntelliJ | Fonctionnalité absente — voir [comparaison contexte](../chapitre-3-contexte/comparaison-contexte.md) |
+| IntelliJ | Fonctionnalité absente — voir [comparaison contexte](../chapitre-4-contexte/comparaison-contexte.md) |
 
 ```json
 // S'assurer que les instruction files sont actifs
@@ -301,7 +301,7 @@ IntelliJ ou VS Code devient globalement plus lent après l'activation de Copilot
 
 4. **Fermer les onglets inutilisés** — Copilot indexe tous les fichiers ouverts comme contexte
 
-Voir aussi [Performance & Ressources](../chapitre-8-bonnes-pratiques/performance.md) pour les réglages avancés.
+Voir aussi [Performance & Ressources](../chapitre-9-bonnes-pratiques/performance.md) pour les réglages avancés.
 
 ---
 

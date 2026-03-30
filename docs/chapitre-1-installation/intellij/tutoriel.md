@@ -231,7 +231,7 @@ Configurez :
 - Raccourcis clavier personnalisés
 
 ### 3. **Apprendre les best practices** (15 min)
-→ [Utilisation Effective](../../chapitre-8-bonnes-pratiques/utilisation-effective.md)
+→ [Utilisation Effective](../../chapitre-9-bonnes-pratiques/utilisation-effective.md)
 
 Maîtrisez :
 - Écrire des prompts efficaces
@@ -239,7 +239,7 @@ Maîtrisez :
 - Quand utiliser Chat vs Agents
 
 ### 4. **Explorer personnalisation & contexte** (20+ min)
-→ [Contexte & Personnalisation IntelliJ](../../chapitre-3-contexte/intellij-contexte.md)
+→ [Contexte & Personnalisation IntelliJ](../../chapitre-4-contexte/intellij-contexte.md)
 
 Avancé :
 - Custom instructions par projet
@@ -268,7 +268,7 @@ A :
 
 **Q : Copilot suggère du code de mauvaise qualité.**
 
-A : C'est normal — **vous êtes responsable** de vérifier. Lisez la section [Best Practices](../../chapitre-8-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
+A : C'est normal — **vous êtes responsable** de vérifier. Lisez la section [Best Practices](../../chapitre-9-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
 
 ---
 

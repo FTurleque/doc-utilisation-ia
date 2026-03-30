@@ -91,8 +91,14 @@ La qualité des suggestions Copilot dépend du contexte fourni à l'IA, pas uniq
 
 ---
 
-## Chapitres suivants
+## Prochaine étape
 
-- [Contexte & Personnalisation](../chapitre-3-contexte/index.md) — Explorer les mécanismes de personnalisation avancée (instructions, agents, prompt files)
-- [Prompt Engineering](../chapitre-4-prompt-engineering/index.md) — Maîtriser la rédaction de prompts efficaces avec Copilot
+**[CLI Modes et Workflows](../chapitre-3-cli-modes/index.md)** : découvrir les différents modes de fonctionnement de Copilot (inline, chat, CLI) et comment les utiliser dans votre workflow.
+
+Concepts clés couverts :
+
+- **Mode inline** — Complétion automatique et suggestions de code
+- **Mode Chat** — Conversation interactive avec Copilot
+- **Mode CLI** — Utilisation de Copilot en ligne de commande
+- **Intégration IDE** — Comment les modes interagissent avec votre éditeur
 

@@ -489,6 +489,7 @@ Conventions Java :
 
 ## Chapitres suivants
 
-- [Prompt Engineering](../chapitre-4-prompt-engineering/index.md) — Vue d'ensemble des techniques de prompt engineering avec Copilot
-- [Machine Learning — Concepts Fondamentaux](../chapitre-5-machine-learning/concepts-fondamentaux.md) — Notions essentielles de ML pour mieux utiliser Copilot sur ces sujets
+**[Prompt Engineering](../chapitre-5-prompt-engineering/index.md)** : techniques fondamentales et avancées pour écrire des prompts efficaces et obtenir des réponses de qualité du modèle de langage.
+
+**[Machine Learning](../chapitre-6-machine-learning/index.md)** : utiliser Copilot pour accélérer vos workflows ML, Data Science et la création de modèles d'IA.
 

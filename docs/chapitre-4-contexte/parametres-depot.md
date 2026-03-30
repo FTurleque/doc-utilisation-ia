@@ -86,8 +86,23 @@ Ordre de priorité conseillé pour éviter les conflits :
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [VS Code — Contexte projet](vscode-contexte.md) — Intégrer la configuration dans la structure de votre projet
-- [IntelliJ IDEA — Contexte projet](intellij-contexte.md) — Équivalents pour IntelliJ
-- [Comparaison Contexte](comparaison-contexte.md) — Différences de configuration entre les deux IDEs
+**[IntelliJ IDEA — Configuration Contexte](intellij-contexte.md)** : exploiter l'analyse sémantique profonde (PSI) d'IntelliJ pour offrir à Copilot un contexte ultra-riche et des suggestions précises.
+
+Concepts clés couverts :
+
+- **Analyse PSI native** — Avantage unique d'IntelliJ pour les langages JVM
+- **Structure de projet recommandée** — Maven, Gradle, multi-modules
+- **Marquage des dossiers** — Sources, Tests, Resources, Excluded
+- **Fichiers importants** — `pom.xml`, `build.gradle`, `application.yml`, Javadoc
+
+**[VS Code — Configuration Contexte](vscode-contexte.md)** : structurer votre projet VS Code pour offrir à Copilot le meilleur contexte possible et la meilleure expérience utilisateur.
+
+Concepts clés couverts :
+
+- **Instructions personnelles et par repository** — Personal-level vs Repository-level
+- **Arborescence optimale** — Structurer `.github/`, `src/`, composants pour VS Code
+- **Custom instructions officielles** — Niveaux de configuration et priorités
+- **Exemple complet** — Projet MERN avec instructions, patterns et conventions
+

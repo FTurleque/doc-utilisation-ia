@@ -250,8 +250,13 @@ Si un workflow revient régulièrement (ex: audit sécurité, génération de te
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Guide Hooks](guide-hooks.md) — Automatisations déclenchées par les actions Copilot
-- [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
-- [VS Code — Contexte projet](vscode-contexte.md) — Intégrer ces mécanismes dans la structure de projet
+**[Guide Hooks](guide-hooks.md)** : configurer des automatisations déclenchées par les événements de développement (sauvegarde, commit, erreur).
+
+Concepts clés couverts :
+
+- **Types de hooks** — `onSave`, `onOpen`, `pre-commit`, `on-build-error`
+- **Hooks d'éditeur** — Actions code, fichiers ouverts, sauvegardes
+- **Hooks de workflow** — Intégration Git, gestion d'erreurs
+- **Exemples pratiques** — Génération de messages de commit, validation pre-commit

@@ -294,8 +294,13 @@ public interface UserRepository extends JpaRepository<User, UUID> { ... }
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Comparaison contexte](comparaison-contexte.md) — IntelliJ vs VS Code
-- [Prompt Engineering — Accueil](../chapitre-4-prompt-engineering/index.md) — Aller plus loin avec les techniques avancées
-- [Fondamentaux du Prompt Engineering](../chapitre-4-prompt-engineering/fondamentaux.md) — Concepts clés pour optimiser vos prompts
+**[Comparaison — Contexte & Personnalisation entre Éditeurs](comparaison-contexte.md)** : tableau comparatif complet des fonctionnalités Copilot entre IntelliJ IDEA et VS Code, avec recommandations par contexte et écosystème.
+
+Concepts clés couverts :
+
+- **Différences d'analyse sémantique** — PSI vs Language Server Protocol (LSP)
+- **Avantages de chaque IDE** — IntelliJ pour JVM, VS Code pour TypeScript/Python
+- **Contexte par écosystème** — Frontend, Backend Java, Backend Node.js, Polyglot
+- **Stratégies combinées** — Comment utiliser les deux IDEs en complémentarité

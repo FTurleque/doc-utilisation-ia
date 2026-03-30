@@ -120,4 +120,4 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 ## Prochaines étapes
 
 - [Procédures de Réparation](procedures-reparation.md) — Guide pas à pas pour résoudre les problèmes persistants
-- [Cas d'Usage](../chapitre-9-cas-usage/index.md) — Configurations pratiques par technologie
+- [Cas d'Usage](../chapitre-10-cas-usage/index.md) — Configurations pratiques par technologie

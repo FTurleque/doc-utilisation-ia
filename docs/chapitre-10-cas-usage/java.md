@@ -267,4 +267,4 @@ public UserResponse create(CreateUserRequest request) {
 ## Prochaines étapes
 
 - [Appendices](../appendices/raccourcis-clavier.md) — Raccourcis complets et templates
-- [Bonnes Pratiques](../chapitre-8-bonnes-pratiques/index.md) — Sécurité et qualité du code généré
+- [Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md) — Sécurité et qualité du code généré

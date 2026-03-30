@@ -516,6 +516,6 @@ def upgrade() -> None:
 
 ## Prochaines étapes
 
-- [Best Practices](../chapitre-8-bonnes-pratiques/utilisation-effective.md)
+- [Best Practices](../chapitre-9-bonnes-pratiques/utilisation-effective.md)
 - [Comparaison Écosystèmes](comparaison-ecosystemes.md)
 - [Configuration VS Code](../chapitre-2-parametrage/vscode-parametrage.md)

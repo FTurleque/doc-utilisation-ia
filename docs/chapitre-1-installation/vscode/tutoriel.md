@@ -225,7 +225,7 @@ Configurez :
 
 ### 3. **Apprendre les best practices** (15 min)
 
-→ [Utilisation Effective](../../chapitre-8-bonnes-pratiques/utilisation-effective.md)
+→ [Utilisation Effective](../../chapitre-9-bonnes-pratiques/utilisation-effective.md)
 
 Maîtrisez :
 
@@ -236,7 +236,7 @@ Maîtrisez :
 
 ### 4. **Explorer les agents et personnalisation** (20+ min)
 
-→ [Contexte & Personnalisation](../../chapitre-3-contexte/vscode-contexte.md)
+→ [Contexte & Personnalisation](../../chapitre-4-contexte/vscode-contexte.md)
 
 Avancé :
 
@@ -272,7 +272,7 @@ A :
 
 **Q : Copilot suggère du code dangereux / mauvaise qualité ?**
 
-A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-8-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
+A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. Lisez la section [Best Practices](../../chapitre-9-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
 
 ---
 

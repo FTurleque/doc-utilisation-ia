@@ -310,9 +310,13 @@ Les fichiers `.instructions.md` doivent être **committés dans Git** — ils fo
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [applyTo avancé](applyto-avance.md) — Cibler précisément vos instructions par type de fichier
-- [Prompt Files (.prompt.md)](prompt-files.md) — Prompts réutilisables pour des tâches récurrentes
-- [Guide Agents (.agent.md)](guide-agents.md) — Agents IA custom avec comportements spécialisés
-- [Guide Skills (SKILL.md)](guide-skills.md) — Packages de connaissance domaine
+**[applyTo Avancé](applyto-avance.md)** : maîtriser les patterns glob pour cibler précisément vos instructions sur les bons fichiers et langages.
+
+Concepts clés couverts :
+
+- **Globber patterns** — `**/*.ts`, `src/api/**`, `**/*.test.{ts,tsx}`
+- **Motifs multi-patterns** — Combiner plusieurs patterns avec des virgules
+- **Erreurs fréquentes** — Cas d'usage mal définis, portée trop large
+- **Stratégie recommandée** — Tester avant généralisant, documenter le but

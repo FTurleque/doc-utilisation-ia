@@ -325,8 +325,13 @@ Avec ce README, Copilot comprend votre stack, votre architecture et vos conventi
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Guide Instructions (.instructions.md)](guide-instructions.md) — Formaliser vos conventions en instructions Copilot
-- [applyTo Avancé](applyto-avance.md) — Cibler précisément vos instructions par type de fichier
-- [Prompt Files (.prompt.md)](prompt-files.md) — Prompts réutilisables pour des tâches récurrentes
+**[Guide Instructions (.instructions.md)](guide-instructions.md)** : formaliser vos conventions en instructions Copilot persistantes qui s'appliquent automatiquement.
+
+Concepts clés couverts :
+
+- **Frontmatter YAML** — `description`, `applyTo`, et autres champs pour cibler les instructions
+- **Patterns applyTo** — Globber syntax pour cibler précisément vos fichiers
+- **Instructions ciblées vs. globales** — Quand utiliser chaque type
+- **Exemples concrets** — Structures TypeScript, tests, API standards

@@ -267,8 +267,13 @@ feat(auth): ajouter la vérification 2FA par SMS
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
-- [VS Code — Contexte projet](vscode-contexte.md) — Intégrer tous ces mécanismes dans la structure de votre projet
-- [IntelliJ — Contexte projet](intellij-contexte.md) — Équivalents pour IntelliJ
+**[Paramètres du Dépôt](parametres-depot.md)** : centraliser et versionner la configuration Copilot dans `.github/` pour la partager avec toute l'équipe.
+
+Concepts clés couverts :
+
+- **Couches de personnalisation** — Instructions, Skills, Agents combinés
+- **Arborescence recommandée** — `.github/copilot-instructions.md`, `instructions/`, `prompts/`, `agents/`, `skills/`
+- **Fichier AGENT.md à la racine** — Catalogue et orchestration des agents
+- **Priorité des fichiers** — Ordre d'application et résolution de conflits

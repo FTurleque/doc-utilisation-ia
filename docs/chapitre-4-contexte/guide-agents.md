@@ -289,8 +289,13 @@ Dans Copilot Chat :
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Guide Skills (SKILL.md)](guide-skills.md) — Packages de connaissance domaine pour les agents
-- [Guide Hooks](guide-hooks.md) — Automatisations déclenchées par les actions Copilot
-- [Paramètres du Dépôt](parametres-depot.md) — Centraliser la configuration Copilot dans le dépôt
+**[Guide Skills (SKILL.md)](guide-skills.md)** : packager de l'expertise domaine réutilisable que les agents peuvent invoquer à la demande.
+
+Concepts clés couverts :
+
+- **Qu'est-ce qu'un SKILL.md** — Package de connaissance stable et réutilisable
+- **Emplacement et URI** — `.github/skills/*/SKILL.md` et référençage via `copilot-skill://`
+- **Différence Skills vs Instructions vs Agents** — Tableau comparatif clair
+- **Exemples de skills** — API standards, modèle de domaine, patterns d'architecture

@@ -324,5 +324,5 @@ Cette méthode est systématique et garantit d'identifier la bonne extension san
 
 ## Prochaines étapes
 
-- [Cas d'Usage](../chapitre-9-cas-usage/index.md) — Configurations pratiques par technologie (Java, Python, Node.js…)
+- [Cas d'Usage](../chapitre-10-cas-usage/index.md) — Configurations pratiques par technologie (Java, Python, Node.js…)
 - [Appendices FAQ](../appendices/faq.md) — Réponses rapides aux questions fréquentes

@@ -382,7 +382,7 @@ Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQ
 Sans MCP, la même demande aurait coûté **1 requête** et ~500 tokens.
 
 !!! tip "Bonnes pratiques — maîtriser la consommation MCP"
-    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requêtes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-8-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
+    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requêtes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-9-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
 
 **Quand l'utiliser :** Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).
 
@@ -546,7 +546,7 @@ Effet : Copilot désactivé **dans ce projet uniquement**, actif ailleurs.
 
 - [Guide Installation](../chapitre-1-installation/vscode/tutoriel.md)
 - [Guide Référence Complet](../chapitre-1-installation/vscode/reference.md)
-- [Contexte & Personnalisation](../chapitre-3-contexte/vscode-contexte.md)
+- [Contexte & Personnalisation](../chapitre-4-contexte/vscode-contexte.md)
 - [Docs Officielles](https://docs.github.com/en/copilot)
 ```
 

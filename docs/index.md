@@ -112,5 +112,5 @@ GitHub Copilot est un service d'IA développé par GitHub et OpenAI. Il s'intèg
 
 - **Vous débutez ?** → Suivez le [tutoriel IntelliJ](chapitre-1-installation/intellij/tutoriel.md) ou [tutoriel VS Code](chapitre-1-installation/vscode/tutoriel.md) de A à Z
 - **Vous cherchez un paramètre précis ?** → Utilisez la **barre de recherche** en haut (++slash++ pour l'activer)
-- **Vous avez un problème ?** → Rendez-vous directement au [Troubleshooting](chapitre-10-troubleshooting/index.md)
+- **Vous avez un problème ?** → Rendez-vous directement au [Troubleshooting](chapitre-11-troubleshooting/index.md)
 - **Vous voulez les raccourcis ?** → [Appendice A — Raccourcis clavier](appendices/raccourcis-clavier.md)

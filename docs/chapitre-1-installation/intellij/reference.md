@@ -181,7 +181,7 @@ Pour connaître la version du plugin installée :
 2. Recherchez "GitHub Copilot"
 3. La version s'affiche sous le nom du plugin
 
-Pour accéder aux logs Copilot détaillés : voir [Logs & Diagnostic](../../chapitre-10-troubleshooting/logs-diagnostic.md)
+Pour accéder aux logs Copilot détaillés : voir [Logs & Diagnostic](../../chapitre-11-troubleshooting/logs-diagnostic.md)
 
 ---
 

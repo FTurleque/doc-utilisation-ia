@@ -95,8 +95,13 @@ name: 'GitHub Copilot SDK C# Instructions'
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Prompt Files (.prompt.md)](prompt-files.md) — Prompts réutilisables pour des tâches récurrentes
-- [Guide Agents (.agent.md)](guide-agents.md) — Agents IA custom avec comportements spécialisés
-- [Guide Skills (SKILL.md)](guide-skills.md) — Packages de connaissance domaine pour les agents
+**[Prompt Files (.prompt.md)](prompt-files.md)** : sauvegarder et partager des prompts Copilot réutilisables pour vos tâches récurrentes.
+
+Concepts clés couverts :
+
+- **Structure d'un .prompt.md** — Frontmatter YAML + contenu Markdown
+- **Modes d'exécution** — `ask`, `edit`, `agent`
+- **Outils disponibles** — `codebase`, `editFiles`, `terminalLastCommand`
+- **Exemples pratiques** — Revue de code, génération de tests, audit de sécurité
