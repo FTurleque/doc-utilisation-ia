@@ -75,15 +75,49 @@ tools:                              # Outils disponibles pour cet agent
 
 ### Champs avancés souvent utiles
 
+!!! warning "Le champ `prompt` n'existe pas"
+    Le prompt de l'agent est le **corps du fichier `.agent.md`** (après le frontmatter), pas un champ frontmatter. N'utilisez pas `prompt:` dans le frontmatter — il sera ignoré.
+
 | Champ | Usage |
 |-------|-------|
-| `prompt` | Prompt système dédié à l'agent |
-| `agents` | Sous-agents/handoffs possibles |
-| `argument-hint` | Aide de saisie pour invoquer l'agent |
+| `argument-hint` | Texte d'aide affiché dans le champ de saisie lors de l'invocation |
+| `agents` | Liste des sous-agents autorisés (`*` pour tous, `[]` pour aucun) |
 | `mcp-servers` | Serveurs MCP autorisés pour cet agent |
-| `disable-model-invocation` | Empêche certains chemins d'appel modèle |
-| `user-invocable` | Indique si l'agent est invocable directement |
-| `handoffs` | Règles de délégation vers d'autres agents |
+| `disable-model-invocation` | Empêche l'agent d'être invoqué comme sous-agent par d'autres agents |
+| `user-invocable` | Masque l'agent dans le sélecteur (utile pour les agents purement en sous-agent) |
+| `handoffs` | Transitions guidées vers d'autres agents (voir ci-dessous) |
+| `target` | Environnement cible : `vscode` ou `github-copilot` |
+
+!!! info "Le champ `infer` est déprécié"
+    Remplacé par `user-invocable` + `disable-model-invocation` qui offrent un contrôle indépendant.
+
+### Handoffs — transitions guidées entre agents
+
+Les handoffs permettent de créer des **workflows séquentiels guidés**. Après qu'un agent termine sa réponse, des boutons de transition apparaissent pour passer à l'agent suivant.
+
+```yaml
+---
+name: Planning Agent
+description: Génère un plan d'implémentation détaillé
+tools:
+  - codebase
+handoffs:
+  - label: Démarrer l'implémentation
+    agent: implementation
+    prompt: Implémente maintenant le plan décrit ci-dessus.
+    send: false
+  - label: Revue de sécurité
+    agent: security-auditor
+---
+```
+
+| Champ handoff | Description |
+|---------------|-------------|
+| `label` | Texte du bouton de transition |
+| `agent` | Identifiant de l'agent cible |
+| `prompt` | Prompt pré-rempli envoyé à l'agent cible |
+| `send` | `true` = envoie automatiquement ; `false` = pré-remplit seulement (défaut) |
+| `model` | Modèle à utiliser lors de la transition (optionnel) |
 
 ### Outils disponibles
 

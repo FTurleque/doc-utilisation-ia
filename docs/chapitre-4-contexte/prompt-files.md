@@ -74,8 +74,8 @@ disable-model-invocation: false  # true = désactive l'appel au modèle
 | `tools` | liste | Outils accessibles pendant l'exécution |
 | `disable-model-invocation` | `true` \| `false` | Si `true`, le prompt n'appelle pas le modèle — utile pour des prompts de type "template" ou orchestration pure |
 
-!!! tip "Quand utiliser `disable-model-invocation: true` ?"
-    Utile lorsque le prompt sert à organiser le contexte ou déléguer à un agent sans produire de réponse LLM directe. Par exemple, un prompt qui prépare des variables et passe la main à un agent spécialisé.
+!!! warning "`disable-model-invocation` n'existe pas dans les prompt files"
+    Ce champ **n'est pas pris en charge** dans les fichiers `.prompt.md` selon la [documentation officielle VS Code](https://code.visualstudio.com/docs/copilot/customization/prompt-files). Il existe uniquement dans les fichiers `.agent.md` et `SKILL.md`. Ne pas l'utiliser dans vos prompt files — il sera ignoré silencieusement.
 
 ### Le champ `mode`
 

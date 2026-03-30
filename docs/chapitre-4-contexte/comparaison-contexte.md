@@ -77,7 +77,7 @@ Ici, les éditeurs **divergent significativement**.
 
 | Mécanisme | VS Code | IntelliJ IDEA |
 |-----------|:-------:|:------------:|
-| **Repository-level** | ✅ `.github/copilot-instructions.md` | ✅ `.idea/ai/copilot-instructions.md` ou settings |
+| **Repository-level** | ✅ `.github/copilot-instructions.md` | ✅ `.github/copilot-instructions.md` ou settings |
 | **Personal-level** | ✅ GitHub settings | ✅ GitHub settings |
 | **Format** | Markdown | Markdown ou settings UI |
 | **Partage équipe** | ✅ Via Git | ✅ Via `.idea/` versionnée |
@@ -104,7 +104,7 @@ Ici, les éditeurs **divergent significativement**.
 |-----------|:-------:|:------------:|
 | **Création** via interface | ✅ | ❌ |
 | **Lecture / utilisation** | ✅ | ⭐ En lecture seule |
-| URI de référence | `copilot-skill://domain/SKILL.md` | — |
+| Invocation | Commande slash `/nom-skill` ou auto | À la demande |
 | Chargement | À la demande (≠ instructions toujours actives) | À la demande |
 | Stockage | `.github/skills/<domain>/SKILL.md` | `.github/skills/<domain>/SKILL.md` |
 | Partage équipe via Git | ✅ | ✅ (lecture) |
@@ -128,11 +128,13 @@ Ici, les éditeurs **divergent significativement**.
 
 | Mécanisme | VS Code | IntelliJ IDEA |
 |-----------|:-------:|:------------:|
-| Hooks d'éditeur (`onSave`, `onOpen`, `onCodeAction`) | ✅ | ❌ |
-| Hooks de workflow (`pre-commit`, `post-merge`, `on-build-error`) | ✅ | ❌ |
+| Hook `PreToolUse` (avant qu'un outil s'exécute) | ✅ | ❌ |
+| Hook `PostToolUse` (après qu'un outil s'exécute) | ✅ | ❌ |
+| Hook `SessionStart` / `Stop` (début/fin de session) | ✅ | ❌ |
+| Hook `UserPromptSubmit` (à chaque prompt) | ✅ | ❌ |
 | Génération auto de messages de commit | ✅ (icône ✨ Source Control) | ❌ |
 | Intégration GitHub Actions pour revue PR | ✅ | ✅ (via GitHub) |
-| Configuration dans `settings.json` | ✅ | ❌ |
+| Configuration dans `.github/hooks/*.json` | ✅ | ❌ |
 
 **Résultat** : ✅ VS Code exclusif (sauf GitHub Actions)
 
@@ -143,8 +145,8 @@ Ici, les éditeurs **divergent significativement**.
 
 | Mécanisme | VS Code | IntelliJ IDEA |
 |-----------|:-------:|:------------:|
-| `.copilotignore` | ✅ | ❌ |
-| Exclusion dossiers | Limitée | ✅ Natif "Excluded Folders" |
+| Exclusion via settings GitHub (repo/orga/enterprise) | ✅ | ✅ |
+| Exclusion dossiers IDE natif | Limitée | ✅ Natif "Excluded Folders" |
 | Cache context privé | ✅ | ✅ |
 
 ---

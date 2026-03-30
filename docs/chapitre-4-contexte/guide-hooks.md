@@ -12,44 +12,124 @@ Les hooks Copilot sont des **déclencheurs automatiques** qui exécutent des act
 
 ## Concept : Qu'est-ce qu'un hook ?
 
-Un hook est un mécanisme qui **écoute un événement** et déclenche une action automatiquement. Dans le contexte de Copilot :
+Un hook est un mécanisme qui **écoute un événement de session d'agent** et déclenche automatiquement une **commande shell**. Dans le contexte de l'agent Copilot VS Code :
 
 ```
-Événement        →     Hook déclenché     →     Action Copilot
-─────────────────────────────────────────────────────────────
-Sauvegarde      →    pre-save hook       →    Vérification qualité
-Commit Git      →    pre-commit hook     →    Revue Copilot automatique
-Suggestion     →    post-accept hook    →    Application de conventions
-Build fail     →    on-error hook       →    Suggestion de correction
+Événement d'agent   →   Hook déclenché    →   Commande shell exécutée
+──────────────────────────────────────────────────────────────────────
+Avant un outil      →   PreToolUse        →   Validation / blocage
+Après un outil      →   PostToolUse       →   Lint / format automatique
+Début de session    →   SessionStart      →   Injection de contexte
+Fin de session      →   Stop              →   Rapport / nettoyage
+```
+
+!!! warning "Les hooks `onSave`, `onOpen`, `pre-commit` ne sont PAS des hooks Copilot"
+    Ces événements n'existent pas dans l'API de hooks Copilot VS Code. Les hooks Copilot écoutent les **événements de session d'agent** (PreToolUse, PostToolUse, etc.), pas les événements d'éditeur. Pour les hooks Git (`pre-commit`, `post-merge`), voir la section [Git Hooks](#hook-pre-commit-avec-git-hooks) plus bas.
+
+---
+
+## Types de hooks disponibles (réels)
+
+Les hooks Copilot VS Code (Preview) supportent 8 événements de cycle de vie d'agent :
+
+| Événement | Déclencheur | Cas d'usage |
+|-----------|-------------|-------------|
+| `SessionStart` | Première soumission d'un prompt | Injecter du contexte projet, logger le démarrage |
+| `UserPromptSubmit` | Chaque soumission de prompt utilisateur | Auditer les requêtes, injecter du contexte système |
+| `PreToolUse` | Avant qu'un outil soit invoqué | Bloquer des opérations dangereuses, demander confirmation |
+| `PostToolUse` | Après qu'un outil se termine | Lancer un linter/formatter, logger les résultats |
+| `PreCompact` | Avant la compaction du contexte | Exporter l'état important avant troncature |
+| `SubagentStart` | Lancement d'un sous-agent | Tracker l'usage de sous-agents |
+| `SubagentStop` | Fin d'un sous-agent | Agréger les résultats |
+| `Stop` | Fin de la session d'agent | Générer des rapports, nettoyer les ressources |
+
+---
+
+## Configuration des hooks Copilot
+
+### Format de fichier
+
+Les hooks se configurent dans des **fichiers JSON** placés dans `.github/hooks/` :
+
+```
+mon-projet/
+└── .github/
+    └── hooks/
+        ├── format.json      ← Hook de formatage post-édition
+        └── security.json    ← Hook de validation pré-outil
+```
+
+Structure du fichier JSON :
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\""
+      }
+    ],
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "./scripts/validate-tool.sh",
+        "timeout": 15
+      }
+    ]
+  }
+}
+```
+
+### Propriétés d'une commande hook
+
+| Propriété | Type | Description |
+|-----------|------|-------------|
+| `type` | string | Obligatoire — toujours `"command"` |
+| `command` | string | Commande à exécuter (cross-platform) |
+| `windows` | string | Commande spécifique Windows (override) |
+| `linux` | string | Commande spécifique Linux (override) |
+| `osx` | string | Commande spécifique macOS (override) |
+| `cwd` | string | Répertoire de travail (relatif à la racine du repo) |
+| `timeout` | number | Timeout en secondes (défaut : 30) |
+
+### Variables d'environnement disponibles
+
+Les hooks reçoivent des informations via des variables d'environnement et via `stdin` (JSON) :
+
+| Variable | Description |
+|----------|-------------|
+| `$TOOL_INPUT_FILE_PATH` | Chemin du fichier modifié (PostToolUse) |
+| `$TOOL_NAME` | Nom de l'outil invoqué |
+
+!!! tip "Via stdin"
+    Chaque hook reçoit aussi un objet JSON complet via `stdin` avec `tool_name`, `tool_input`, `sessionId`, etc. Utilisez-le dans vos scripts shell pour une logique avancée.
+
+### Exemple minimal : formater après chaque édition
+
+Créez `.github/hooks/format.json` :
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\""
+      }
+    ]
+  }
+}
 ```
 
 ---
 
-## Types de hooks disponibles
+## Personnalisation des messages de commit
 
-### Hooks d'éditeur (VS Code)
+!!! info "Ce n'est pas un hook au sens strict"
+    La génération de message de commit est une fonctionnalité distincte des hooks d'agent. Elle se configure dans `settings.json` et s'active manuellement via l'icône ✨ dans la vue Source Control.
 
-| Hook | Événement déclencheur | Cas d'usage |
-|------|----------------------|-------------|
-| `onSave` | Sauvegarde d'un fichier | Validation format, lint automatique |
-| `onOpen` | Ouverture d'un fichier | Chargement du contexte spécifique |
-| `onCodeAction` | Action de code (ampoule) | Actions contextuelles personnalisées |
-
-### Hooks de workflow
-
-| Hook | Événement | Cas d'usage |
-|------|-----------|-------------|
-| `pre-commit` | Avant un commit Git | Revue de code automatique |
-| `post-merge` | Après un merge | Mise à jour documentation |
-| `on-build-error` | Erreur de build | Suggestion de correction Copilot |
-
----
-
-## Configuration des hooks dans VS Code
-
-### Via les settings VS Code
-
-Les hooks Copilot se configurent dans `settings.json` ou dans un fichier de configuration dédié :
+### Configuration via settings VS Code
 
 ```json
 {
@@ -61,27 +141,11 @@ Les hooks Copilot se configurent dans `settings.json` ou dans un fichier de conf
 }
 ```
 
-### Hook de génération de message de commit
-
-L'un des hooks les plus utiles : Copilot peut générer automatiquement des messages de commit basés sur vos changements.
-
 **Activation :**
 
 1. Dans la vue Source Control de VS Code
 2. Cliquez sur l'icône étoile ✨ dans le champ de message de commit
 3. Copilot analyse vos changements et génère un message
-
-**Personnalisation via settings :**
-
-```json
-{
-    "github.copilot.chat.commitMessageGeneration.instructions": [
-        {
-            "text": "Format: Conventional Commits. Langue: français. Structure: type(scope): description courte\n\nCorps optionnel avec détails."
-        }
-    ]
-}
-```
 
 ---
 

@@ -45,14 +45,14 @@ Personnalisations courantes :
     *.agent.md
   skills/
     <skill-name>/SKILL.md
-AGENT.md
+AGENTS.md
 ```
 
 ---
 
-## Fichier AGENT.md à la racine
+## Fichier AGENTS.md à la racine
 
-Vous pouvez ajouter un fichier `AGENT.md` à la racine pour référencer :
+Vous pouvez ajouter un fichier `AGENTS.md` à la racine pour référencer :
 
 - les agents disponibles.
 - les skills de référence.

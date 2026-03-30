@@ -94,15 +94,15 @@ nav:
   - Contexte & Personnalisation:
     - Accueil: chapitre-4-contexte/index.md
     - Concepts Clés: chapitre-4-contexte/concepts.md
-    - Guide Instructions (.instructions.md): chapitre-4-contexte/guide-instructions.md
+    - Instructions (.instructions.md): chapitre-4-contexte/guide-instructions.md
     - applyTo Avancé: chapitre-4-contexte/applyto-avance.md
     - Prompt Files (.prompt.md): chapitre-4-contexte/prompt-files.md
-    - Guide Agents (.agent.md): chapitre-4-contexte/guide-agents.md
-    - Guide Skills (SKILL.md): chapitre-4-contexte/guide-skills.md
-    - Guide Hooks: chapitre-4-contexte/guide-hooks.md
+    - Agents (.agent.md): chapitre-4-contexte/guide-agents.md
+    - Skills (SKILL.md): chapitre-4-contexte/guide-skills.md
+    - Hooks: chapitre-4-contexte/guide-hooks.md
     - Paramètres du Dépôt: chapitre-4-contexte/parametres-depot.md
-    - VS Code — Configuration Contexte: chapitre-4-contexte/vscode-contexte.md
-    - IntelliJ IDEA — Configuration Contexte: chapitre-4-contexte/intellij-contexte.md
+    - VS Code — Contexte: chapitre-4-contexte/vscode-contexte.md
+    - IntelliJ IDEA — Contexte: chapitre-4-contexte/intellij-contexte.md
     - Comparaison Contexte: chapitre-4-contexte/comparaison-contexte.md
   
   - Prompt Engineering:

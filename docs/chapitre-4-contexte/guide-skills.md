@@ -44,30 +44,39 @@ mon-projet/
 
 ## Structure d'un SKILL.md
 
+!!! warning "Frontmatter obligatoire"
+    Les champs `name` et `description` dans le frontmatter YAML sont **obligatoires**. Sans eux, le skill n'est pas chargé. De plus, la valeur de `name` doit correspondre exactement au **nom du dossier parent** du `SKILL.md`.
+
 ```markdown
+---
+name: nom-du-skill           # Obligatoire — doit correspondre au nom du dossier parent
+description: |               # Obligatoire — décrit ce que fait le skill ET quand l'utiliser
+  Description détaillée du skill. Soyez précis sur les capacités ET les cas d'usage
+  pour que Copilot sache quand charger ce skill automatiquement.
+argument-hint: "[fichier] [options]"   # Optionnel — affiché lors de l'invocation /
+user-invocable: true         # Optionnel — false = masque du menu /
+disable-model-invocation: false  # Optionnel — true = invocation manuelle seulement
+---
+
 # Nom du Skill
 
-## Description
-Courte description du domaine de connaissance couvert par ce skill.
-
-## Prérequis
-Ce que l'utilisateur doit savoir avant d'utiliser ce skill.
-
-## Connaissance principale
-
-### Section 1
-Contenu de connaissance détaillé...
-
-### Section 2
-...
-
-## Exemples
-Exemples concrets d'application de cette connaissance.
-
-## Références
-- Lien vers documentation officielle
-- Ressources complémentaires
+Contenu de connaissance ici. Décrivez :
+- Ce que le skill aide à accomplir
+- Quand utiliser ce skill
+- Les procédures étape par étape
+- Des exemples d'entrée/sortie attendus
+- Des références aux scripts inclus dans le dossier
 ```
+
+### Champs du frontmatter SKILL.md
+
+| Champ | Obligatoire | Description |
+|-------|:-----------:|-------------|
+| `name` | **Oui** | Identifiant unique (minuscules, tirets). Doit = nom du dossier parent |
+| `description` | **Oui** | Description des capacités ET cas d'usage (max 1024 caractères) |
+| `argument-hint` | Non | Texte d'aide affiché dans le champ de saisie (`/skill-name`) |
+| `user-invocable` | Non | `false` = masqué du menu `/` mais chargeable automatiquement |
+| `disable-model-invocation` | Non | `true` = uniquement via `/` manuel, jamais automatique |
 
 ---
 
