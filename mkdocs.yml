@@ -157,8 +157,8 @@ nav:
 
   - Coûts & Gouvernance:
     - Accueil: chapitre-12-couts-gouvernance/index.md
-    - Patterns pour réduire les allers-retours: chapitre-12-couts-gouvernance/patterns-allers-retours.md
-    - "Premium Requests : mécanique": chapitre-12-couts-gouvernance/premium-requests.md
+    - Réduire les allers-retours: chapitre-12-couts-gouvernance/patterns-allers-retours.md
+    - "Premium Requests": chapitre-12-couts-gouvernance/premium-requests.md
     - Les abonnements: chapitre-12-couts-gouvernance/abonnements.md
     - Leviers d'économie: chapitre-12-couts-gouvernance/leviers-economie.md
     - Quand utiliser quel mode ?: chapitre-12-couts-gouvernance/modes-quand-utiliser.md
