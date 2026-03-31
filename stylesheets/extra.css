@@ -5,32 +5,33 @@
 
 /* Zone de contenu principale élargie */
 .md-grid {
-  max-width: 1600px;
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
 }
 
 .md-content {
   max-width: 100%;
 }
 
-/* Sidebars réduites */
+/* Sidebars */
 .md-sidebar {
-  width: 200px;
+  width: 280px;
 }
 
 .md-sidebar__scrollwrap {
-  width: 200px;
+  width: 280px;
+  overflow-y: auto; /* Permet le défilement vertical uniquement */
+  scrollbar-color: transparent transparent; /* Couleur transparente pour la barre et le fond */
+  scrollbar-width: thin; /* Réduction de la largeur de la scrollbar */
+  padding-left: 0.5rem; /* Espace pour éviter que le contenu soit caché derrière la scrollbar */
 }
 
 /* Marges de la zone principale réduites */
 .md-main__inner {
   margin-top: 0.4rem;
-}
-
-@media screen and (min-width: 76.25em) {
-  .md-content {
-    margin-left: 10em;
-    margin-right: 10em;
-  }
+  max-width: 100%;
+  padding-left: 0;
 }
 
 /* Centrage des tableaux Markdown */
@@ -194,6 +195,36 @@ kbd {
   box-shadow: 0 2px 8px rgba(88, 166, 255, 0.15);
 }
 
+/* Vignettes / cartes : agrandies pour meilleure lisibilité */
+.grid.cards > ul > li {
+  min-height: 140px; /* plus d'espace vertical */
+  padding: 1.25rem 1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.grid.cards > ul > li .md-content {
+  flex: 1 1 auto;
+}
+
+.grid.cards > ul > li .md-icon,
+.grid.cards > ul > li .material-icons,
+.grid.cards > ul > li .icon {
+  font-size: 2rem; /* icônes plus grandes */
+  margin-right: 0.75rem;
+}
+
+.grid.cards > ul > li h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.grid.cards > ul > li p {
+  margin: 0;
+  opacity: 0.95;
+}
+
 /* Bloc "placeholder image" */
 .img-placeholder {
   background: var(--md-default-fg-color--lightest);
@@ -296,5 +327,34 @@ figure .doc-screenshot,
 figure .reduced-screenshot {
   margin: 0 auto 0.5rem;
 }
+
+/* Conteneur pour agrandir certains diagrammes Mermaid */
+.mermaid-large {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  margin: 1rem 0 1.5rem;
+}
+
+.mermaid-large .mermaid {
+  display: block;
+  width: auto !important;
+  max-width: 100%;
+}
+
+.mermaid-large .mermaid svg {
+  width: 80% !important;
+  height: auto !important;
+  max-height: 70vh;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Masquer le burger button */
+#sidebar-toggle-btn {
+  display: none !important;
+}
+
 
 

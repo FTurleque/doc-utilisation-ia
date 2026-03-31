@@ -1,0 +1,5595 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation collectée sur l'utilisation de l'IA">
+      
+      
+        <meta name="author" content="FTurleque">
+      
+      
+      
+        <link rel="prev" href="../intellij-contexte/">
+      
+      
+        <link rel="next" href="../../chapitre-5-prompt-engineering/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Comparaison Contexte - Documentation IA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#comparaison-contexte-personnalisation-entre-editeurs" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Documentation IA" class="md-header__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation IA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Comparaison Contexte
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer en mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer en mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentation IA" class="md-nav__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation IA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Copilot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-1-installation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    IntelliJ IDEA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visual Studio Code
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-2-parametrage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramétrage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Paramétrage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/intellij-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/vscode-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/comparaison-parametres/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-3-cli-modes/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modes CLI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/page-principale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI Détail
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexte & Personnalisation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contexte & Personnalisation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Clés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instructions (.instructions.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../applyto-avance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    applyTo Avancé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prompt-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Files (.prompt.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents (.agent.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills (SKILL.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide-hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parametres-depot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramètres du Dépôt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intellij-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Contexte
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#presentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Présentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features-copilot-par-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features Copilot par IDE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Features Copilot par IDE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inline-suggestions-autocompletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline Suggestions (Autocomplétion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chat-interactif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat Interactif
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copilot-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copilot Agents
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copilot-edits-multi-fichiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copilot Edits (Multi-fichiers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-revie-pr-summaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Revie &amp; PR Summaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contextualisation-personnalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contextualisation &amp; Personnalisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contextualisation &amp; Personnalisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instructions-ciblees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instructions Ciblées
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skills-skillmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skills (SKILL.md)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agents-personnalises-agentmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agents Personnalisés (.agent.md)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hooks-automatiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hooks Automatiques
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exclusion-sensibilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exclusion &amp; Sensibilité
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyses-semantique-contexte-inferred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analyses Sémantique &amp; Contexte Inferred
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analyses Sémantique &amp; Contexte Inferred">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comment-ca-fonctionne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment ça fonctionne ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparaison-directe-lsp-vs-psi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparaison directe LSP vs PSI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-concret-la-difference-en-pratique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple concret : la différence en pratique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-utiliser-quel-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand utiliser quel IDE ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avantages-par-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avantages par IDE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Avantages par IDE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intellij-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IntelliJ IDEA ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contexte-par-ecosysteme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contexte par Écosystème
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contexte par Écosystème">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend-react-vue-angular-nextjs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend (React, Vue, Angular, Next.js)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-java-jvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Java / JVM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-nodejs-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Node.js / Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polyglot-mono-repo-frontend-backend-shared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Polyglot (Mono-repo : Frontend + Backend + Shared)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommandations-par-contexte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommandations par Contexte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommandations par Contexte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equipe-frontend-reacttypescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Équipe Frontend React/TypeScript
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equipe-backend-javaspring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Équipe Backend Java/Spring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equipe-pythonfastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Équipe Python/FastAPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mono-repo-frontend-backend-shared-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mono-repo : Frontend + Backend + Shared Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solo-dev-multi-skillee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solo Dev Multi-skillée
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tableau-recapitulatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tableau Récapitulatif
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ressources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ressources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lavantage-dintellij-analyse-semantique-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'avantage d'IntelliJ : analyse sémantique native
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategie-recommandee-selon-le-contexte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stratégie recommandée selon le contexte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stratégie recommandée selon le contexte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vous-travaillez-sur-un-projet-javaspring-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vous travaillez sur un projet Java/Spring Boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vous-travaillez-sur-un-projet-full-stack-typescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vous travaillez sur un projet full-stack TypeScript
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vous-avez-les-deux-ides-et-alternez-selon-les-projets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vous avez les deux IDEs et alternez selon les projets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-de-contexte-dintellij-vers-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration de contexte : d'IntelliJ vers VS Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapitres-suivants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapitres suivants
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-5-prompt-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Engineering
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prompt Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-intermediaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Intermédiaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-avancees/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Avancées
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/avec-copilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompting avec Copilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-6-machine-learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Machine Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/concepts-fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/algorithmes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/copilot-workflow-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot pour le ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/python-data-science/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & Data Science
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/notebooks-jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notebooks Jupyter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/mlops-deploiement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLOps & Déploiement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-ecosystemes-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-outils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-7-rag/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RAG
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts & Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implémentation (Basic→Expert)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implémentation (Basic→Expert)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Présentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 1 (Débutant)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 2 (Intermédiaire)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 3 (Expert)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/cas-usage-secteurs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage par Secteur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/optimisation-avancee/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimisation Avancée
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-9-bonnes-pratiques/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bonnes Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bonnes Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/utilisation-effective/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisation Effective
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/organisation-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Organisation du Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/productivite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Productivité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/securite-qualite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité & Qualité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance & Ressources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/workflows-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflows IA Complets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-10-cas-usage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cas d'Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/comparaison-ecosystemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java-spring-boot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java & Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-react/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & React
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & Express
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/react-typescript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    React 19 & TypeScript
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & FastAPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-11-troubleshooting/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/problemes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problèmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/logs-diagnostic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logs & Diagnostic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/comparaison-problemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Problèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/procedures-reparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procédures de Réparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-12-couts-gouvernance/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coûts & Gouvernance
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Coûts & Gouvernance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/patterns-allers-retours/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réduire les allers-retours
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/premium-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Premium Requests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/abonnements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les abonnements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/leviers-economie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leviers d'économie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/modes-quand-utiliser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quand utiliser quel mode ?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/workflow-recommande/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow recommandé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../appendices/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/raccourcis-clavier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raccourcis Clavier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/ressources-externes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ressources Externes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/templates-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#presentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Présentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features-copilot-par-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features Copilot par IDE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Features Copilot par IDE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inline-suggestions-autocompletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline Suggestions (Autocomplétion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chat-interactif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat Interactif
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copilot-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copilot Agents
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#copilot-edits-multi-fichiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Copilot Edits (Multi-fichiers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-revie-pr-summaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Revie &amp; PR Summaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contextualisation-personnalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contextualisation &amp; Personnalisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contextualisation &amp; Personnalisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instructions-ciblees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instructions Ciblées
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt Files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skills-skillmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skills (SKILL.md)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agents-personnalises-agentmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agents Personnalisés (.agent.md)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hooks-automatiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hooks Automatiques
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exclusion-sensibilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exclusion &amp; Sensibilité
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyses-semantique-contexte-inferred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analyses Sémantique &amp; Contexte Inferred
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analyses Sémantique &amp; Contexte Inferred">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comment-ca-fonctionne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment ça fonctionne ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparaison-directe-lsp-vs-psi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparaison directe LSP vs PSI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exemple-concret-la-difference-en-pratique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple concret : la différence en pratique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quand-utiliser-quel-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quand utiliser quel IDE ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avantages-par-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Avantages par IDE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Avantages par IDE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intellij-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IntelliJ IDEA ✅
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contexte-par-ecosysteme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contexte par Écosystème
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Contexte par Écosystème">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frontend-react-vue-angular-nextjs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frontend (React, Vue, Angular, Next.js)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-java-jvm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Java / JVM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backend-nodejs-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backend Node.js / Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polyglot-mono-repo-frontend-backend-shared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Polyglot (Mono-repo : Frontend + Backend + Shared)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommandations-par-contexte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommandations par Contexte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommandations par Contexte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#equipe-frontend-reacttypescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Équipe Frontend React/TypeScript
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equipe-backend-javaspring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Équipe Backend Java/Spring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equipe-pythonfastapi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Équipe Python/FastAPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mono-repo-frontend-backend-shared-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mono-repo : Frontend + Backend + Shared Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solo-dev-multi-skillee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solo Dev Multi-skillée
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tableau-recapitulatif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tableau Récapitulatif
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ressources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ressources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lavantage-dintellij-analyse-semantique-native" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'avantage d'IntelliJ : analyse sémantique native
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategie-recommandee-selon-le-contexte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stratégie recommandée selon le contexte
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stratégie recommandée selon le contexte">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vous-travaillez-sur-un-projet-javaspring-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vous travaillez sur un projet Java/Spring Boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vous-travaillez-sur-un-projet-full-stack-typescript" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vous travaillez sur un projet full-stack TypeScript
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vous-avez-les-deux-ides-et-alternez-selon-les-projets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vous avez les deux IDEs et alternez selon les projets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-de-contexte-dintellij-vers-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Migration de contexte : d'IntelliJ vers VS Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapitres-suivants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapitres suivants
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Accueil
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Contexte & Personnalisation
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="comparaison-contexte-personnalisation-entre-editeurs">Comparaison — Contexte &amp; Personnalisation entre Éditeurs<a class="headerlink" href="#comparaison-contexte-personnalisation-entre-editeurs" title="Permanent link">&para;</a></h1>
+<p><span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span></p>
+<h2 id="presentation">Présentation<a class="headerlink" href="#presentation" title="Permanent link">&para;</a></h2>
+<p>Cette page compare les fonctionnalités de Copilot entre <strong>VS Code</strong> et <strong>IntelliJ IDEA</strong>. Les deux offrent des capacités riches, mais avec approches différentes.</p>
+<hr />
+<h2 id="features-copilot-par-ide">Features Copilot par IDE<a class="headerlink" href="#features-copilot-par-ide" title="Permanent link">&para;</a></h2>
+<h3 id="inline-suggestions-autocompletion">Inline Suggestions (Autocomplétion)<a class="headerlink" href="#inline-suggestions-autocompletion" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Suggestions en temps réel</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Accepter avec Tab/Enter</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Naviguer entre suggestions</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Mode manuel/auto</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Générer multi-ligne</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ Équivalentes</p>
+<h3 id="chat-interactif">Chat Interactif<a class="headerlink" href="#chat-interactif" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chat panneau dédié</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Inline Chat (dans éditeur)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Slash commands (/explain, /tests)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Contexte participants (@workspace, @project)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Chat multi-fichiers</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ Équivalentes (légère avance VS Code en UX)</p>
+<h3 id="copilot-agents">Copilot Agents<a class="headerlink" href="#copilot-agents" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent autonome</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Créer PR automatiquement</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Implémenter feature depuis issue</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Analyser et corriger bugs</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Plans</td>
+<td style="text-align: center;">Pro+/Enterprise</td>
+<td style="text-align: center;">Pro+/Enterprise</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ Équivalentes</p>
+<h3 id="copilot-edits-multi-fichiers">Copilot Edits (Multi-fichiers)<a class="headerlink" href="#copilot-edits-multi-fichiers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edit mode (aprouver chaque change)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Agent mode (autonome)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Modifications coordonnées</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Itération automatique</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ Équivalentes</p>
+<h3 id="code-revie-pr-summaries">Code Revie &amp; PR Summaries<a class="headerlink" href="#code-revie-pr-summaries" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Review suggestions (Free)</td>
+<td style="text-align: center;">Sélection</td>
+<td style="text-align: center;">Sélection</td>
+</tr>
+<tr>
+<td>Review complète (Pro+)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>PR summary auto</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ Équivalentes</p>
+<hr />
+<h2 id="contextualisation-personnalisation">Contextualisation &amp; Personnalisation<a class="headerlink" href="#contextualisation-personnalisation" title="Permanent link">&para;</a></h2>
+<p>Ici, les éditeurs <strong>divergent significativement</strong>.</p>
+<h3 id="custom-instructions">Custom Instructions<a class="headerlink" href="#custom-instructions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mécanisme</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Repository-level</strong></td>
+<td style="text-align: center;">✅ <code>.github/copilot-instructions.md</code></td>
+<td style="text-align: center;">✅ <code>.github/copilot-instructions.md</code> ou settings</td>
+</tr>
+<tr>
+<td><strong>Personal-level</strong></td>
+<td style="text-align: center;">✅ GitHub settings</td>
+<td style="text-align: center;">✅ GitHub settings</td>
+</tr>
+<tr>
+<td><strong>Format</strong></td>
+<td style="text-align: center;">Markdown</td>
+<td style="text-align: center;">Markdown ou settings UI</td>
+</tr>
+<tr>
+<td><strong>Partage équipe</strong></td>
+<td style="text-align: center;">✅ Via Git</td>
+<td style="text-align: center;">✅ Via <code>.idea/</code> versionnée</td>
+</tr>
+</tbody>
+</table>
+<h3 id="instructions-ciblees">Instructions Ciblées<a class="headerlink" href="#instructions-ciblees" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mécanisme</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.github/instructions/*.instructions.md</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅ (via settings UI)</td>
+</tr>
+<tr>
+<td>Par langage/domaine</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">Partiellement</td>
+</tr>
+<tr>
+<td>Appliqué auto</td>
+<td style="text-align: center;">✅ Basé sur <code>applyTo</code> glob</td>
+<td style="text-align: center;">✅ Basé sur fichier ouvert</td>
+</tr>
+</tbody>
+</table>
+<h3 id="prompt-files">Prompt Files<a class="headerlink" href="#prompt-files" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mécanisme</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prompt files</strong> (<code>.prompt.md</code>)</td>
+<td style="text-align: center;">✅ Réutilisables, invoquables via <code>#fichier</code></td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Stockage</td>
+<td style="text-align: center;"><code>.github/prompts/</code></td>
+<td style="text-align: center;"><code>.github/prompts/</code></td>
+</tr>
+<tr>
+<td>Partage équipe via Git</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<h3 id="skills-skillmd">Skills (<code>SKILL.md</code>)<a class="headerlink" href="#skills-skillmd" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mécanisme</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Création</strong> via interface</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td><strong>Lecture / utilisation</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">⭐ En lecture seule</td>
+</tr>
+<tr>
+<td>Invocation</td>
+<td style="text-align: center;">Commande slash <code>/nom-skill</code> ou auto</td>
+<td style="text-align: center;">À la demande</td>
+</tr>
+<tr>
+<td>Chargement</td>
+<td style="text-align: center;">À la demande (≠ instructions toujours actives)</td>
+<td style="text-align: center;">À la demande</td>
+</tr>
+<tr>
+<td>Stockage</td>
+<td style="text-align: center;"><code>.github/skills/&lt;domain&gt;/SKILL.md</code></td>
+<td style="text-align: center;"><code>.github/skills/&lt;domain&gt;/SKILL.md</code></td>
+</tr>
+<tr>
+<td>Partage équipe via Git</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅ (lecture)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ VS Code (création + usage), ⭐ IntelliJ (lecture seulement)</p>
+<h3 id="agents-personnalises-agentmd">Agents Personnalisés (<code>.agent.md</code>)<a class="headerlink" href="#agents-personnalises-agentmd" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mécanisme</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fichiers <code>.agent.md</code> dans <code>.github/agents/</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Invocation <code>@nom-agent</code> dans le chat</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Restriction des outils par agent</td>
+<td style="text-align: center;">✅ (<code>tools:</code> frontmatter)</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Modèle IA par agent (<code>model:</code> frontmatter)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Instructions permanentes intégrées à l'agent</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Workflows IDE natifs (actions, intentions)</td>
+<td style="text-align: center;">⭐ Via agent mode</td>
+<td style="text-align: center;">✅ Natif IDE</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ Équivalentes</p>
+<h3 id="hooks-automatiques">Hooks Automatiques<a class="headerlink" href="#hooks-automatiques" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mécanisme</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hook <code>PreToolUse</code> (avant qu'un outil s'exécute)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Hook <code>PostToolUse</code> (après qu'un outil s'exécute)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Hook <code>SessionStart</code> / <code>Stop</code> (début/fin de session)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Hook <code>UserPromptSubmit</code> (à chaque prompt)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Génération auto de messages de commit</td>
+<td style="text-align: center;">✅ (icône ✨ Source Control)</td>
+<td style="text-align: center;">❌</td>
+</tr>
+<tr>
+<td>Intégration GitHub Actions pour revue PR</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅ (via GitHub)</td>
+</tr>
+<tr>
+<td>Configuration dans <code>.github/hooks/*.json</code></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Résultat</strong> : ✅ VS Code exclusif (sauf GitHub Actions)</p>
+<div class="admonition info">
+<p class="admonition-title">Hooks et IntelliJ</p>
+<p>IntelliJ IDEA dispose de ses propres mécanismes d'automatisation (file watchers, intentions, macros), mais ceux-ci ne sont pas des hooks Copilot — ils ne déclenchent pas d'actions Copilot directement.</p>
+</div>
+<h3 id="exclusion-sensibilite">Exclusion &amp; Sensibilité<a class="headerlink" href="#exclusion-sensibilite" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mécanisme</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ IDEA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exclusion via settings GitHub (repo/orga/enterprise)</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td>Exclusion dossiers IDE natif</td>
+<td style="text-align: center;">Limitée</td>
+<td style="text-align: center;">✅ Natif "Excluded Folders"</td>
+</tr>
+<tr>
+<td>Cache context privé</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="analyses-semantique-contexte-inferred">Analyses Sémantique &amp; Contexte Inferred<a class="headerlink" href="#analyses-semantique-contexte-inferred" title="Permanent link">&para;</a></h2>
+<p>Les deux IDEs n'utilisent pas la même technologie pour comprendre votre code. Cette différence est fondamentale : elle détermine <strong>combien Copilot "voit" sans que vous ayez à ouvrir des fichiers</strong>.</p>
+<h3 id="comment-ca-fonctionne">Comment ça fonctionne ?<a class="headerlink" href="#comment-ca-fonctionne" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">VS Code — LSP (Language Server Protocol)</label><label for="__tabbed_1_2">IntelliJ IDEA — PSI (Program Structure Interface)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><strong>Principe</strong> : VS Code délègue l'analyse du code à des serveurs de langage externes (un par langage). Copilot récupère le contexte via ces serveurs.</p>
+<p><strong>Ce que Copilot voit automatiquement</strong> :</p>
+<ul>
+<li>Fichiers ouverts dans les onglets (contexte principal)</li>
+<li>Fichiers récemment modifiés</li>
+<li>Imports et dépendances lus depuis <code>package.json</code>, <code>tsconfig.json</code>, <code>pyproject.toml</code>, etc.</li>
+<li>Types et symboles exposés par le Language Server actif</li>
+<li><code>.github/copilot-instructions.md</code> et instructions ciblées</li>
+</ul>
+<p><strong>Profondeur d'analyse</strong> : <strong>Moyenne</strong> — dépend du Language Server installé</p>
+<div class="admonition info">
+<p class="admonition-title">LSP = extensible mais fragmenté</p>
+<p>L'avantage du LSP est que chaque langage peut avoir son propre serveur optimisé (TypeScript LS, Pylance, rust-analyzer…). L'inconvénient : la profondeur varie selon la qualité du serveur, et les fichiers non ouverts sont souvent invisibles.</p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><strong>Principe</strong> : IntelliJ indexe l'intégralité du projet au démarrage via le PSI — un arbre syntaxique <em>et</em> sémantique résolu pour chaque fichier. Copilot hérite de cet index complet.</p>
+<p><strong>Ce que Copilot voit automatiquement</strong> :</p>
+<ul>
+<li>Hiérarchie complète du projet (classes, méthodes, types, interfaces)</li>
+<li>Imports et références détectées sur <strong>tous les fichiers</strong> (pas seulement les ouverts)</li>
+<li>Héritage et polymorphisme résolus nativement</li>
+<li><code>pom.xml</code>, <code>build.gradle</code> pour dépendances et modules</li>
+<li>Structure multi-module Maven/Gradle comprise sans configuration extra</li>
+<li>Annotations Spring, JPA, Jakarta EE interprétées par l'IDE</li>
+</ul>
+<p><strong>Profondeur d'analyse</strong> : <strong>Élevée</strong> — index complet du projet disponible en permanence</p>
+<div class="admonition info">
+<p class="admonition-title">PSI = profond mais spécialisé JVM</p>
+<p>L'avantage du PSI est sa précision exceptionnelle pour Java, Kotlin, Scala. L'inconvénient : il est principalement taillé pour les langages JVM ; pour TypeScript ou Python pur, la valeur ajoutée est moindre.</p>
+</div>
+</div>
+</div>
+</div>
+<hr />
+<h3 id="comparaison-directe-lsp-vs-psi">Comparaison directe LSP vs PSI<a class="headerlink" href="#comparaison-directe-lsp-vs-psi" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Critère</th>
+<th style="text-align: center;">VS Code (LSP)</th>
+<th style="text-align: center;">IntelliJ IDEA (PSI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connaissance des fichiers <strong>non ouverts</strong></td>
+<td style="text-align: center;">⭐ Partielle</td>
+<td style="text-align: center;">✅ Complète</td>
+</tr>
+<tr>
+<td>Résolution de l'héritage de classes</td>
+<td style="text-align: center;">⭐ Via LS actif</td>
+<td style="text-align: center;">✅ Natif, complet</td>
+</tr>
+<tr>
+<td>Inférence de types sans annotations</td>
+<td style="text-align: center;">⭐ Selon LS</td>
+<td style="text-align: center;">✅ Résolu par PSI</td>
+</tr>
+<tr>
+<td>Qualité pour <strong>Java / Kotlin / Scala</strong></td>
+<td style="text-align: center;">Bon</td>
+<td style="text-align: center;"><strong>Excellent</strong></td>
+</tr>
+<tr>
+<td>Qualité pour <strong>TypeScript / JavaScript</strong></td>
+<td style="text-align: center;"><strong>Excellent</strong></td>
+<td style="text-align: center;">Bon</td>
+</tr>
+<tr>
+<td>Qualité pour <strong>Python</strong></td>
+<td style="text-align: center;"><strong>Excellent</strong> (Pylance)</td>
+<td style="text-align: center;">Bon</td>
+</tr>
+<tr>
+<td>Qualité pour <strong>Go / Rust / C++</strong></td>
+<td style="text-align: center;">Très bon</td>
+<td style="text-align: center;">Bon</td>
+</tr>
+<tr>
+<td>Support multi-module Maven/Gradle</td>
+<td style="text-align: center;">Bon</td>
+<td style="text-align: center;"><strong>Natif</strong></td>
+</tr>
+<tr>
+<td>Performance sur très grands projets</td>
+<td style="text-align: center;">Bon</td>
+<td style="text-align: center;"><strong>Excellent</strong> (cache PSI)</td>
+</tr>
+<tr>
+<td>Extensibilité (nouveaux langages)</td>
+<td style="text-align: center;"><strong>Excellent</strong></td>
+<td style="text-align: center;">Limité</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="exemple-concret-la-difference-en-pratique">Exemple concret : la différence en pratique<a class="headerlink" href="#exemple-concret-la-difference-en-pratique" title="Permanent link">&para;</a></h3>
+<p>Imaginons une classe <code>OrderService</code> dans un projet Java de 200 fichiers.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Sur IntelliJ IDEA</label><label for="__tabbed_2_2">Sur VS Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">@Service</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderProcessor</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nd">@Autowired</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">OrderService</span><span class="w"> </span><span class="n">orderService</span><span class="p">;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">orderId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="n">orderService</span><span class="p">.</span><span class="w">  </span><span class="c1">// ← Copilot suggère TOUTES les méthodes</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">                      </span><span class="c1">//   de OrderService avec les bons types,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">                      </span><span class="c1">//   même si OrderService.java n&#39;est PAS ouvert.</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">                      </span><span class="c1">//   PSI a déjà tout indexé.</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">}</span>
+</code></pre></div>
+<p>✅ Copilot voit <code>findById()</code>, <code>save()</code>, <code>cancelOrder()</code> et leurs signatures exactes.</p>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nd">@Service</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">OrderProcessor</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nd">@Autowired</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">OrderService</span><span class="w"> </span><span class="n">orderService</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">Long</span><span class="w"> </span><span class="n">orderId</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="n">orderService</span><span class="p">.</span><span class="w">  </span><span class="c1">// ← Copilot suggère des méthodes génériques</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">                      </span><span class="c1">//   ou rien de précis si OrderService.java</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">                      </span><span class="c1">//   n&#39;est pas dans un onglet ouvert.</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="p">}</span>
+</code></pre></div>
+<p>⭐ Pour obtenir les bonnes suggestions, il faut ouvrir <code>OrderService.java</code> dans un onglet.</p>
+</div>
+</div>
+</div>
+<hr />
+<h3 id="quand-utiliser-quel-ide">Quand utiliser quel IDE ?<a class="headerlink" href="#quand-utiliser-quel-ide" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th style="text-align: center;">IDE recommandé</th>
+<th>Raison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Projet <strong>Java / Spring Boot</strong></td>
+<td style="text-align: center;">✅ IntelliJ</td>
+<td>PSI résout héritage, annotations Spring, injection de dépendances sans configuration</td>
+</tr>
+<tr>
+<td>Projet <strong>Kotlin / Android</strong></td>
+<td style="text-align: center;">✅ IntelliJ</td>
+<td>Support natif Kotlin + PSI = suggestions très précises</td>
+</tr>
+<tr>
+<td>Projet <strong>Scala</strong></td>
+<td style="text-align: center;">✅ IntelliJ</td>
+<td>Analyse complexité Scala (implicits, type classes) via PSI</td>
+</tr>
+<tr>
+<td>Projet <strong>TypeScript / React / Next.js</strong></td>
+<td style="text-align: center;">✅ VS Code</td>
+<td>TypeScript LS = inférence parfaite + extensions frontend riches</td>
+</tr>
+<tr>
+<td>Projet <strong>Python / FastAPI / Django</strong></td>
+<td style="text-align: center;">✅ VS Code</td>
+<td>Pylance LSP = meilleur support Python actuel</td>
+</tr>
+<tr>
+<td>Projet <strong>Node.js / Express</strong></td>
+<td style="text-align: center;">✅ VS Code</td>
+<td>Écosystème npm + LSP = contexte optimal</td>
+</tr>
+<tr>
+<td>Projet <strong>Go / Rust</strong></td>
+<td style="text-align: center;">✅ VS Code</td>
+<td>gopls / rust-analyzer = Language Servers de référence</td>
+</tr>
+<tr>
+<td><strong>Mono-repo multi-langage</strong></td>
+<td style="text-align: center;">✅ VS Code</td>
+<td><code>.instructions.md</code> ciblées + workspace multi-dossiers</td>
+</tr>
+<tr>
+<td>Base de code <strong>Java legacy massive</strong></td>
+<td style="text-align: center;">✅ IntelliJ</td>
+<td>PSI comprend les hiérarchies complexes sans ouvrir chaque fichier</td>
+</tr>
+<tr>
+<td>Dev en <strong>GitHub Codespaces / Cloud</strong></td>
+<td style="text-align: center;">✅ VS Code</td>
+<td>Natif web, LSP disponible en remote</td>
+</tr>
+<tr>
+<td><strong>Gouvernance IA</strong> (instructions, politiques, contrôle)</td>
+<td style="text-align: center;">✅ VS Code</td>
+<td><code>.instructions.md</code> versionnées dans <code>.github/</code>, <code>applyTo</code> pour cibler les équipes, agents avec restriction d'outils, <code>.copilotignore</code> pour exclure le code sensible</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Stratégie combinée</p>
+<p>Vous pouvez tirer le meilleur des deux : créez vos fichiers <code>.github/</code> (instructions, prompts, agents) en VS Code, puis ouvrez le même projet dans IntelliJ pour bénéficier du PSI. <strong>Les instructions <code>.github/copilot-instructions.md</code> sont lues par les deux IDEs.</strong></p>
+</div>
+<hr />
+<h2 id="avantages-par-ide">Avantages par IDE<a class="headerlink" href="#avantages-par-ide" title="Permanent link">&para;</a></h2>
+<h3 id="vs-code">VS Code ✅<a class="headerlink" href="#vs-code" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Personnalisation avancée</strong> : instructions ciblées, skills, agents, prompts réutilisables</li>
+<li><strong>Légèreté</strong> : moins exigeant en ressources</li>
+<li><strong>Écosystème extensible</strong> : MCP (Model Context Protocol) pour intégrer outils externes</li>
+<li><strong>Workflow équipe</strong> : tout se versionne via Git (<code>.github/</code>)</li>
+<li><strong>Web-based</strong> : VS Code Web, GitHub Codespaces</li>
+<li><strong>TypeScript/JS excellence</strong> : contexte optimal pour frontend</li>
+</ul>
+<h3 id="intellij-idea">IntelliJ IDEA ✅<a class="headerlink" href="#intellij-idea" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Analyse JVM native</strong> : Meilleure pour Java, Kotlin, Scala</li>
+<li><strong>Refactorings intelligents</strong> : intégrés avant Copilot</li>
+<li><strong>Multi-module Maven/Gradle natif</strong> : organise auto le contexte</li>
+<li><strong>Inspections &amp; hints intégrées</strong> : Copilot + IDE analysis combinés</li>
+<li><strong>Performance pour gros projets</strong> : PSI cache = réactif</li>
+<li><strong>Workflows IDE sophistiqués</strong> : debugging, profiling intégré</li>
+</ul>
+<hr />
+<h2 id="contexte-par-ecosysteme">Contexte par Écosystème<a class="headerlink" href="#contexte-par-ecosysteme" title="Permanent link">&para;</a></h2>
+<h3 id="frontend-react-vue-angular-nextjs">Frontend (React, Vue, Angular, Next.js)<a class="headerlink" href="#frontend-react-vue-angular-nextjs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contexte langues</td>
+<td style="text-align: center;"><strong>Excellent</strong></td>
+<td style="text-align: center;">Bien</td>
+</tr>
+<tr>
+<td>Resolution types</td>
+<td style="text-align: center;">Excellent</td>
+<td style="text-align: center;">Bien</td>
+</tr>
+<tr>
+<td>Plugins/extensions</td>
+<td style="text-align: center;">Excellent</td>
+<td style="text-align: center;">Limité</td>
+</tr>
+<tr>
+<td>Recommandation</td>
+<td style="text-align: center;"><strong>Préféré</strong></td>
+<td style="text-align: center;">Option secondaire</td>
+</tr>
+</tbody>
+</table>
+<p>⭐ <strong>Gagnant : VS Code</strong> (WebStorm meilleur si acheté)</p>
+<h3 id="backend-java-jvm">Backend Java / JVM<a class="headerlink" href="#backend-java-jvm" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contexte sémantique</td>
+<td style="text-align: center;">Bon</td>
+<td style="text-align: center;"><strong>Excellent</strong></td>
+</tr>
+<tr>
+<td>Héritage multi-génération</td>
+<td style="text-align: center;">Limité</td>
+<td style="text-align: center;"><strong>Compris natif</strong></td>
+</tr>
+<tr>
+<td>Refactorings Copilot</td>
+<td style="text-align: center;">Bon</td>
+<td style="text-align: center;"><strong>Meilleur</strong></td>
+</tr>
+<tr>
+<td>Maven/Gradle multi-module</td>
+<td style="text-align: center;">Bon</td>
+<td style="text-align: center;"><strong>Meilleur</strong></td>
+</tr>
+<tr>
+<td>Recommandation</td>
+<td style="text-align: center;">Acceptable</td>
+<td style="text-align: center;"><strong>Préféré</strong></td>
+</tr>
+</tbody>
+</table>
+<p>⭐ <strong>Gagnant : IntelliJ</strong> (ou IDEA complet)</p>
+<h3 id="backend-nodejs-python">Backend Node.js / Python<a class="headerlink" href="#backend-nodejs-python" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contexte</td>
+<td style="text-align: center;">Excellent</td>
+<td style="text-align: center;">Bon</td>
+</tr>
+<tr>
+<td>Types inference</td>
+<td style="text-align: center;">Excellent</td>
+<td style="text-align: center;">Bon</td>
+</tr>
+<tr>
+<td>Recommandation</td>
+<td style="text-align: center;"><strong>Préféré</strong></td>
+<td style="text-align: center;">Acceptable</td>
+</tr>
+</tbody>
+</table>
+<p>⭐ <strong>Gagnant : VS Code</strong></p>
+<h3 id="polyglot-mono-repo-frontend-backend-shared">Polyglot (Mono-repo : Frontend + Backend + Shared)<a class="headerlink" href="#polyglot-mono-repo-frontend-backend-shared" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th style="text-align: center;">VS Code</th>
+<th style="text-align: center;">IntelliJ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi-dossiers natif</td>
+<td style="text-align: center;">✅ <code>.code-workspace</code></td>
+<td style="text-align: center;">✅ Multi-module</td>
+</tr>
+<tr>
+<td>Contexte partagé</td>
+<td style="text-align: center;">Excellent</td>
+<td style="text-align: center;">Bon</td>
+</tr>
+<tr>
+<td>Recommandation</td>
+<td style="text-align: center;">Très bon (equipé ensemble)</td>
+<td style="text-align: center;">Équipes séparées</td>
+</tr>
+</tbody>
+</table>
+<p>⭐ <strong>Gagnant : VS Code</strong> (meilleur pour équipes mixed)</p>
+<hr />
+<h2 id="recommandations-par-contexte">Recommandations par Contexte<a class="headerlink" href="#recommandations-par-contexte" title="Permanent link">&para;</a></h2>
+<h3 id="equipe-frontend-reacttypescript">Équipe Frontend React/TypeScript<a class="headerlink" href="#equipe-frontend-reacttypescript" title="Permanent link">&para;</a></h3>
+<p>→ <strong>VS Code</strong> (+ optionnel WebStorm pour expérience UI)</p>
+<h3 id="equipe-backend-javaspring">Équipe Backend Java/Spring<a class="headerlink" href="#equipe-backend-javaspring" title="Permanent link">&para;</a></h3>
+<p>→ <strong>IntelliJ IDEA</strong> (meilleure analyse PSI + Spring tooling)</p>
+<h3 id="equipe-pythonfastapi">Équipe Python/FastAPI<a class="headerlink" href="#equipe-pythonfastapi" title="Permanent link">&para;</a></h3>
+<p>→ <strong>VS Code</strong> (avec Pylance)</p>
+<h3 id="mono-repo-frontend-backend-shared-types">Mono-repo : Frontend + Backend + Shared Types<a class="headerlink" href="#mono-repo-frontend-backend-shared-types" title="Permanent link">&para;</a></h3>
+<p>→ <strong>VS Code</strong> (<code>code-workspace</code> + instructions ciblées)</p>
+<p>Fonctionne aussi : <strong>IntelliJ Fleet</strong> (Lightweight, MCP-ready)</p>
+<h3 id="solo-dev-multi-skillee">Solo Dev Multi-skillée<a class="headerlink" href="#solo-dev-multi-skillee" title="Permanent link">&para;</a></h3>
+<p>→ <strong>VS Code</strong> (flexibilité, personnalisation profonde)</p>
+<hr />
+<h2 id="tableau-recapitulatif">Tableau Récapitulatif<a class="headerlink" href="#tableau-recapitulatif" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Catégorie</th>
+<th>Gagnant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Inline suggestions</strong></td>
+<td>🤝 Égalité</td>
+</tr>
+<tr>
+<td><strong>Chat &amp; Agents</strong></td>
+<td>🤝 Égalité</td>
+</tr>
+<tr>
+<td><strong>Edits multi-fichiers</strong></td>
+<td>🤝 Égalité</td>
+</tr>
+<tr>
+<td><strong>Personnalisation avancée</strong></td>
+<td>✅ VS Code</td>
+</tr>
+<tr>
+<td><strong>Prompt files réutilisables</strong></td>
+<td>✅ VS Code</td>
+</tr>
+<tr>
+<td><strong>Skills domaine (SKILL.md)</strong></td>
+<td>✅ VS Code</td>
+</tr>
+<tr>
+<td><strong>Agents personnalisés (.agent.md)</strong></td>
+<td>🤝 Égalité</td>
+</tr>
+<tr>
+<td><strong>Hooks automatiques</strong></td>
+<td>✅ VS Code</td>
+</tr>
+<tr>
+<td><strong>Contexte JVM natif</strong></td>
+<td>✅ IntelliJ</td>
+</tr>
+<tr>
+<td><strong>Frontend excellent</strong></td>
+<td>✅ VS Code</td>
+</tr>
+<tr>
+<td><strong>Backend JVM excellent</strong></td>
+<td>✅ IntelliJ</td>
+</tr>
+<tr>
+<td><strong>Légèreté &amp; flexibilité</strong></td>
+<td>✅ VS Code</td>
+</tr>
+<tr>
+<td><strong>Analyse sémantique</strong></td>
+<td>✅ IntelliJ</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ressources">Ressources<a class="headerlink" href="#ressources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../chapitre-1-installation/vscode/reference/">Guide VS Code Complet</a></li>
+<li><a href="../../chapitre-1-installation/intellij/reference/">Guide IntelliJ Complet</a></li>
+<li><a href="../vscode-contexte/">Contexte VS Code avancé</a></li>
+<li><a href="../intellij-contexte/">Contexte IntelliJ avancé</a></li>
+</ul>
+<hr />
+<h2 id="lavantage-dintellij-analyse-semantique-native">L'avantage d'IntelliJ : analyse sémantique native<a class="headerlink" href="#lavantage-dintellij-analyse-semantique-native" title="Permanent link">&para;</a></h2>
+<p>IntelliJ connaît votre code en profondeur <strong>sans configuration</strong> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Exemple : IntelliJ comprend que orderService est un</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// OrderService et connaît toutes ses méthodes disponibles</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">// sans avoir besoin d&#39;onglets ouverts</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nd">@Autowired</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kd">private</span><span class="w"> </span><span class="n">OrderService</span><span class="w"> </span><span class="n">orderService</span><span class="p">;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">process</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="c1">// Copilot sur IntelliJ suggère exactement les bonnes</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="c1">// méthodes de orderService avec les bons types de paramètres</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="n">orderService</span><span class="p">.</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="c1">//           ↑ Suggestions précises car IntelliJ connaît</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="c1">//             le type exact et toutes ses méthodes</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="p">}</span>
+</code></pre></div>
+<p>Sur VS Code, la même précision nécessiterait que le fichier <code>OrderService.java</code> soit ouvert dans un onglet.</p>
+<hr />
+<h2 id="strategie-recommandee-selon-le-contexte">Stratégie recommandée selon le contexte<a class="headerlink" href="#strategie-recommandee-selon-le-contexte" title="Permanent link">&para;</a></h2>
+<h3 id="vous-travaillez-sur-un-projet-javaspring-boot">Vous travaillez sur un projet Java/Spring Boot<a class="headerlink" href="#vous-travaillez-sur-un-projet-javaspring-boot" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Recommandation : IntelliJ IDEA en IDE principal
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>                 VS Code optionnel pour les fichiers de personnalisation
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Pourquoi : L&#39;analyse PSI d&#39;IntelliJ donne un contexte Java exceptionnel.
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>           Si vous avez besoin d&#39;instructions custom, créez-les sur VS Code
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>           et committez-les dans .github/ — elles bénéficieront à toute l&#39;équipe.
+</code></pre></div>
+<h3 id="vous-travaillez-sur-un-projet-full-stack-typescript">Vous travaillez sur un projet full-stack TypeScript<a class="headerlink" href="#vous-travaillez-sur-un-projet-full-stack-typescript" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Recommandation : VS Code avec workspace multi-dossiers
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Pourquoi : VS Code + Pylance/TypeScript Language Server = contexte TS 
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>           excellent + personnalisation .instructions.md possible + 
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>           .copilotignore pour exclure les fichiers générés.
+</code></pre></div>
+<h3 id="vous-avez-les-deux-ides-et-alternez-selon-les-projets">Vous avez les deux IDEs et alternez selon les projets<a class="headerlink" href="#vous-avez-les-deux-ides-et-alternez-selon-les-projets" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Recommandation : 
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>- Créez les fichiers .github/ dans votre projet (instructions, agents)
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>- Ces fichiers bénéficient à VS Code automatiquement
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>- IntelliJ ignore ces fichiers mais bénéficie de la structure propre 
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  et du README bien écrit
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>- Win-win pour les deux IDEs !
+</code></pre></div>
+<hr />
+<h2 id="migration-de-contexte-dintellij-vers-vs-code">Migration de contexte : d'IntelliJ vers VS Code<a class="headerlink" href="#migration-de-contexte-dintellij-vers-vs-code" title="Permanent link">&para;</a></h2>
+<p>Si vous souhaitez passer d'IntelliJ à VS Code pour un projet :</p>
+<ol>
+<li><strong>Exportez votre connaissance projet</strong> vers un <code>copilot-instructions.md</code></li>
+<li><strong>Créez des instructions</strong> pour les conventions Java/Kotlin de votre équipe</li>
+<li><strong>Installez les extensions</strong> : Extension Pack for Java, Spring Boot Extension Pack</li>
+<li><strong>Configurez le workspace</strong> avec un <code>.code-workspace</code> si multi-module</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>&lt;!-- .github/copilot-instructions.md pour un projet Spring Boot --&gt;
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="gh"># Instructions — MonApp Spring Boot</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Ce projet est une API REST Spring Boot 3.2 avec Java 21.
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Architecture (packages) :
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">-</span><span class="w"> </span><span class="sb">`controller`</span> : <span class="ni">@RestController</span>, validation des entrées, mapping DTOs
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="k">-</span><span class="w"> </span><span class="sb">`service`</span> : <span class="ni">@Service</span>, logique métier, <span class="ni">@Transactional</span> pour les ops write
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="k">-</span><span class="w"> </span><span class="sb">`repository`</span> : interfaces JpaRepository, queries JPQL dans <span class="ni">@Query</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="k">-</span><span class="w"> </span><span class="sb">`model`</span> : entités JPA, enums, DTOs (record Java 16+)
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="k">-</span><span class="w"> </span><span class="sb">`config`</span> : <span class="ni">@Configuration</span>, beans, sécurité Spring Security
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="k">-</span><span class="w"> </span><span class="sb">`exception`</span> : <span class="ni">@ControllerAdvice</span>, hiérarchie d&#39;exceptions
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Conventions Java :
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="k">-</span><span class="w"> </span>Java 21 features : Records, Pattern Matching, Sealed Classes bienvenues
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="k">-</span><span class="w"> </span>Lombok : <span class="ni">@Data</span>, <span class="ni">@Builder</span>, <span class="ni">@RequiredArgsConstructor</span>, <span class="ni">@Slf4j</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="k">-</span><span class="w"> </span>Validation : <span class="ni">@Valid</span> sur les DTOs d&#39;entrée, annotations javax.validation
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="k">-</span><span class="w"> </span>Tests : JUnit 5, Mockito, AssertJ, <span class="ni">@SpringBootTest</span> pour les IT
+</code></pre></div>
+<hr />
+<h2 id="chapitres-suivants">Chapitres suivants<a class="headerlink" href="#chapitres-suivants" title="Permanent link">&para;</a></h2>
+<p><strong><a href="../../chapitre-5-prompt-engineering/">Prompt Engineering</a></strong> : techniques fondamentales et avancées pour écrire des prompts efficaces et obtenir des réponses de qualité du modèle de langage.</p>
+<p><strong><a href="../../chapitre-6-machine-learning/">Machine Learning</a></strong> : utiliser Copilot pour accélérer vos workflows ML, Data Science et la création de modèles d'IA.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/sidebar-toggle.js"></script>
+      
+    
+  </body>
+</html>
