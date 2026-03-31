@@ -411,12 +411,12 @@ figure .reduced-screenshot {
 }
 
 /* ============================================================
-   Sidebar Toggle — bouton collapse desktop
+   Sidebar Toggle — bouton collapse sur tous les écrans
    ============================================================ */
 
 /* Bouton burger injecté par sidebar-toggle.js */
 #sidebar-toggle-btn {
-  display: none; /* masqué sur mobile — le drawer natif prend le relais */
+  display: flex; /* AFFICHER PAR DÉFAUT sur tous les écrans */
   align-items: center;
   justify-content: center;
   width: 2rem;
@@ -443,43 +443,69 @@ figure .reduced-screenshot {
   display: block;
 }
 
-/* Afficher uniquement sur desktop */
+/* ===== Desktop (≥ 76.25em) ===== */
 @media screen and (min-width: 76.25em) {
-  #sidebar-toggle-btn {
-    display: flex;
-  }
-
-  /* Sidebar principale avec transition */
+  /* Sidebar avec transition smooth */
   .md-sidebar--primary {
-    transition: transform 0.2s ease, width 0.2s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
   }
 
-  /* État replié */
+  /* Quand collapsed: masquer la sidebar */
   body.sidebar-collapsed .md-sidebar--primary {
-    transform: translateX(-100%);
-    width: 0;
-    overflow: hidden;
-    min-width: 0;
+    display: none;
   }
 
-  /* La zone de contenu récupère l'espace libéré */
-  body.sidebar-collapsed .md-main__inner {
-    padding-left: 0.8rem;
-  }
-
-  body.sidebar-collapsed .md-content {
+  /* Ajuster les marges du contenu quand sidebar est masquée */
+  body.sidebar-collapsed .md-main {
     margin-left: 0;
   }
 }
 
-/* Réduction de l'espace à gauche sur la navbar */
-.md-main {
-  margin-left: 1em; /* Réduction de l'espace à gauche */
-}
+/* ===== Tablet / Mobile (< 76.25em) ===== */
+@media screen and (max-width: 76.24em) {
+  /* Sidebar en mode overlay (ne repousse pas le contenu) */
+  .md-sidebar--primary {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: inherit;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
 
-/* Alignement du burger menu avec le titre "Documentation IA" */
-#sidebar-toggle-btn {
-  margin-left: 2em; /* Ajustement pour aligner avec le titre */
+  /* Quand NOT collapsed: afficher la sidebar en overlay */
+  body:not(.sidebar-collapsed) .md-sidebar--primary {
+    transform: translateX(0);
+  }
+
+  /* Quand collapsed: masquer la sidebar */
+  body.sidebar-collapsed .md-sidebar--primary {
+    transform: translateX(-100%);
+  }
+
+  /* Overlay scrim pour fermer la sidebar au tap */
+  .sidebar-scrim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 40;
+    animation: fadeIn 0.25s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 
