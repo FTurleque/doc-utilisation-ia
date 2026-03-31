@@ -1,9 +1,3 @@
-﻿---
-hide:
-  - navigation
-  - toc
----
-
 # GitHub Copilot — Configuration & Utilisation
 
 <div class="hero-banner" markdown>
