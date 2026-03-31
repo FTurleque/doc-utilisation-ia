@@ -126,8 +126,14 @@ nav:
 
   - RAG:
     - Introduction: chapitre-7-rag/index.md
-    - Concepts & Types: chapitre-7-rag/concepts.md
-    - Mise en Œuvre: chapitre-7-rag/implementation.md
+    - Concepts & Architectures: chapitre-7-rag/concepts.md
+    - Implémentation (Basic→Expert):
+      - Présentation: chapitre-7-rag/implementation.md
+      - Niveau 1 (Débutant): chapitre-7-rag/niveau-1.md
+      - Niveau 2 (Intermédiaire): chapitre-7-rag/niveau-2.md
+      - Niveau 3 (Expert): chapitre-7-rag/niveau-3.md
+    - Cas d'Usage par Secteur: chapitre-7-rag/cas-usage-secteurs.md
+    - Optimisation Avancée: chapitre-7-rag/optimisation-avancee.md
 
   - Bonnes Pratiques:
     - Accueil: chapitre-9-bonnes-pratiques/index.md
