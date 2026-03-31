@@ -83,16 +83,8 @@ python -m mkdocs serve
 
 **Configuration**:
 ```yaml
-# In .github/workflows/deploy.yml
-- cname: doc-copilot.example.com  # Custom domain (optional)
-- publish_dir: ./site              # Generated site directory
-```
-
-**Custom Domain**:
-```bash
-# Add CNAME to DNS pointing to GitHub Pages
-# In Settings → Pages → Custom domain
-doc-copilot.example.com
+# In mkdocs.yml
+site_url: https://fturleque.github.io/doc-utilisation-ia/
 ```
 
 ### Option 2: Manual Deployment
@@ -169,10 +161,10 @@ Cache-Control: max-age=31536000    # Assets/JS/CSS (1 year)
 
 ```bash
 # Test site is live
-curl -I https://doc-copilot.example.com
+curl -I https://fturleque.github.io/doc-utilisation-ia/
 
 # Check specific page
-curl -I https://doc-copilot.example.com/index.html
+curl -I https://fturleque.github.io/doc-utilisation-ia/index.html
 ```
 
 ### Broken Links
@@ -206,6 +198,23 @@ google_analytics:
 3. Run locally first: `python -m mkdocs build --strict`
 4. Check file encoding (UTF-8 recommended)
 
+### Permission Denied (403) on `mkdocs gh-deploy`
+
+If you see an error like:
+```
+remote: Permission to FTurleque/doc-utilisation-ia.git denied to <username>.
+fatal: unable to access '...': The requested URL returned error: 403
+```
+
+**Local deployment is not recommended.** Use the automated GitHub Actions workflow instead.
+
+To trigger a deployment:
+```bash
+git push origin main
+```
+
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) uses `GITHUB_TOKEN` and the `github-actions[bot]` identity to push to the `gh-pages` branch — no manual deployment is needed.
+
 ### Site Not Updating
 
 1. Verify push succeeded: `git status`
@@ -218,7 +227,7 @@ google_analytics:
 1. Verify DNS CNAME record points to GitHub Pages
 2. Check GitHub Settings → Pages → Custom domain
 3. Wait 5-10 minutes for DNS propagation
-4. Test: `nslookup doc-copilot.example.com`
+4. Test: `nslookup fturleque.github.io`
 
 ---
 
