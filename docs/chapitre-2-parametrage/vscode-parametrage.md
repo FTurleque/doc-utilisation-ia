@@ -13,8 +13,15 @@ Ce guide couvre **tous les paramètres Copilot** pour VS Code : activation par l
 ### Méthode 1 : Interface Graphique (Recommandée pour débuter)
 
 1. Ouvrez les préférences :
-   - Windows/Linux : ++ctrl+comma++
-   - macOS : ++cmd+comma++
+
+=== "Windows/Linux"
+
+    ++ctrl+comma++
+
+=== "macOS"
+
+    ++cmd+comma++
+
 
 2. Tapez `"copilot"` dans la barre de recherche
 
@@ -79,6 +86,7 @@ Ce guide couvre **tous les paramètres Copilot** pour VS Code : activation par l
 ```
 
 Effet :
+
 - ✓ Copilot actif sur `.js`, `.python`, `.java`, etc.
 - ✗ Copilot **inactif** sur `.env` (sécurité clés API), `.md` (documentation), `.sql` (sensible)
 
@@ -122,7 +130,7 @@ Effet : Copilot SEULEMENT sur JS, TS, Python. Désabusé ailleurs.
 | Valeur | Comportement | Quand utiliser |
 |--------|-------------|---|
 | `true` | Suggestions automatiques pendant frappe | Développeurs normaux (défaut) |
-| `false` | Mode manuel : ++alt+backslash++ pour déclencher | Mais très expérimentés / flux spécifique |
+| `false` | Mode manuel : ++alt+backslash++ pour déclencher | Très expérimentés / flux spécifique |
 
 **Exemple** :
 ```json
@@ -374,7 +382,7 @@ Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQ
 Sans MCP, la même demande aurait coûté **1 requête** et ~500 tokens.
 
 !!! tip "Bonnes pratiques — maîtriser la consommation MCP"
-    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requêtes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-5-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
+    Activer trop de MCPs ou formuler des requêtes trop larges multiplie silencieusement requêtes et tokens. Consultez le guide complet : [Performance & Ressources → Maîtriser la consommation MCP](../chapitre-9-bonnes-pratiques/performance.md#maitriser-la-consommation-mcp) (code browsing, règle d'or, accès aux fichiers hors projet).
 
 **Quand l'utiliser :** Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).
 
@@ -538,7 +546,7 @@ Effet : Copilot désactivé **dans ce projet uniquement**, actif ailleurs.
 
 - [Guide Installation](../chapitre-1-installation/vscode/tutoriel.md)
 - [Guide Référence Complet](../chapitre-1-installation/vscode/reference.md)
-- [Contexte & Personnalisation](../chapitre-3-contexte/vscode-contexte.md)
+- [Contexte & Personnalisation](../chapitre-4-contexte/vscode-contexte.md)
 - [Docs Officielles](https://docs.github.com/en/copilot)
 ```
 
@@ -747,8 +755,6 @@ Les settings du workspace **ont la priorité** sur les settings utilisateur. Uti
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
 - [Comparaison des paramètres](comparaison-parametres.md) — IntelliJ vs VS Code côte à côte
-- [Contexte projet VS Code](../chapitre-3-contexte/vscode-contexte.md) — Fichiers `.instructions.md`, `.copilotignore`
-- [Instructions & Personnalisation](../chapitre-3-contexte/instructions.md) — Aller plus loin avec les instructions Copilot

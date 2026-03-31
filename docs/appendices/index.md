@@ -1,4 +1,4 @@
-# Appendices
+﻿# Appendices
 
 Ressources complémentaires, références rapides et templates pour la documentation sur GitHub Copilot.
 
@@ -30,5 +30,5 @@ Ressources complémentaires, références rapides et templates pour la documenta
 
 ## Navigation rapide
 
-- [Retour aux Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md)
-- [Troubleshooting](../chapitre-6-troubleshooting/index.md) — En cas de problème
+- [Retour aux Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)
+- [Troubleshooting](../chapitre-11-troubleshooting/index.md) — En cas de problème

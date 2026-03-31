@@ -1,4 +1,4 @@
-# Comparaison des Paramètres — IntelliJ vs VS Code
+﻿# Comparaison des Paramètres — IntelliJ vs VS Code
 
 ## Présentation
 Cette page compare les options de configuration disponibles entre IntelliJ IDEA et Visual Studio Code pour GitHub Copilot. Les deux IDEs offrent des expériences similaires mais avec des différences notables dans la granularité des paramètres.
@@ -43,9 +43,6 @@ Cette page compare les options de configuration disponibles entre IntelliJ IDEA 
 |----------------|-------------|
 | **`github.copilot.enable` par langage** | Désactiver/activer avec une précision par langage individuel |
 | **`chat.localeOverride`** | Forcer la langue du Chat indépendamment de la langue de l'IDE |
-| **Fichiers `.instructions.md`** | Instructions persistantes pour personnaliser le comportement de Copilot |
-| **Fichiers `.prompt.md`** | Prompts réutilisables stockés dans `.github/prompts/` |
-| **Fichiers `.agent.md`** | Agents Copilot custom avec restrictions d'outils |
 | **Fichiers `SKILL.md`** | Packages de connaissance domaine pour Copilot |
 | **Hooks Copilot** | Automatisations déclenchées par des actions Copilot |
 | **`.copilotignore`** | Exclure des fichiers du contexte Copilot |
@@ -94,8 +91,14 @@ La qualité des suggestions Copilot dépend du contexte fourni à l'IA, pas uniq
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Contexte & Personnalisation](../chapitre-3-contexte/index.md) — Explorer les mécanismes de personnalisation avancée (VS Code)
-- [Bonnes Pratiques](../chapitre-5-bonnes-pratiques/index.md) — Tirer le meilleur des deux IDEs
+**[CLI Modes et Workflows](../chapitre-3-cli-modes/index.md)** : découvrir les différents modes de fonctionnement de Copilot (inline, chat, CLI) et comment les utiliser dans votre workflow.
+
+Concepts clés couverts :
+
+- **Mode inline** — Complétion automatique et suggestions de code
+- **Mode Chat** — Conversation interactive avec Copilot
+- **Mode CLI** — Utilisation de Copilot en ligne de commande
+- **Intégration IDE** — Comment les modes interagissent avec votre éditeur
 
