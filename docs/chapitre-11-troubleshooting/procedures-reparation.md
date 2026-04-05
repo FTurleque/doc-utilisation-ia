@@ -324,6 +324,6 @@ Cette méthode est systématique et garantit d'identifier la bonne extension san
 
 ## Chapitres suivants
 
-**[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : optimiser vos dépenses avec GitHub Copilot, comprendre les modes d'interaction (Free, Pro, Business) et mettre en place un workflow recommandé.
+**[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : comprendre les modes d'abonnement, les premium requests et les leviers pour maîtriser vos dépenses GitHub Copilot.
 
-**[Appendices](../appendices/index.md)** : FAQ, raccourcis clavier, ressources externes et templates de configuration pour tous les IDEs et stacks technologiques.
+**[Outils & Économies](../chapitre-13-outils-economies/index.md)** : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères, préserver votre quota de premium requests et optimiser vos coûts.

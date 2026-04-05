@@ -170,6 +170,12 @@ nav:
     - Quand utiliser quel mode ?: chapitre-12-couts-gouvernance/modes-quand-utiliser.md
     - Workflow recommandé: chapitre-12-couts-gouvernance/workflow-recommande.md
 
+  - Outils & Économies:
+    - Accueil: chapitre-13-outils-economies/index.md
+    - RTK AI: chapitre-13-outils-economies/rtk.md
+    - Outils Complémentaires: chapitre-13-outils-economies/outils-complementaires.md
+    - Comparaison des Outils: chapitre-13-outils-economies/comparaison.md
+
   - Appendices:
     - Accueil: appendices/index.md
     - FAQ: appendices/faq.md

@@ -181,6 +181,6 @@ Copier ce template dans le chat en début de tâche complexe cadre l'interaction
 
 ## Chapitres suivants
 
-**[Appendices](../appendices/index.md)** : ressources de référence complètes — FAQ, raccourcis clavier, templates de configuration prêts à copier-coller.
+**[Outils & Économies](../chapitre-13-outils-economies/index.md)** : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères et préserver votre quota de premium requests.
 
-**[Ressources Externes](../appendices/ressources-externes.md)** : liens vers les documentations officielles, blogs et communautés pour approfondir vos connaissances sur GitHub Copilot.
+**[Appendices](../appendices/index.md)** : ressources de référence complètes — FAQ, raccourcis clavier, templates de configuration prêts à copier-coller.
