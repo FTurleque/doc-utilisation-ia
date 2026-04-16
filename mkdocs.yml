@@ -170,11 +170,20 @@ nav:
     - Quand utiliser quel mode ?: chapitre-12-couts-gouvernance/modes-quand-utiliser.md
     - Workflow recommandé: chapitre-12-couts-gouvernance/workflow-recommande.md
 
-  - Outils & Économies:
+  - Outils:
     - Accueil: chapitre-13-outils-economies/index.md
     - RTK AI: chapitre-13-outils-economies/rtk.md
+    - TOON: chapitre-13-outils-economies/toon.md
+    - OpenSkills: chapitre-13-outils-economies/openskills.md
     - Outils Complémentaires: chapitre-13-outils-economies/outils-complementaires.md
     - Comparaison des Outils: chapitre-13-outils-economies/comparaison.md
+
+  - Veille IA:
+    - Accueil: chapitre-14-veille-ia/index.md
+    - Sources Officielles & Changelogs: chapitre-14-veille-ia/sources-officielles.md
+    - Vidéos, Podcasts & Conférences: chapitre-14-veille-ia/videos-podcasts.md
+    - Sécurité, Risques & Failles: chapitre-14-veille-ia/securite-risques.md
+    - Newsletters & Communautés: chapitre-14-veille-ia/newsletters-communautes.md
 
   - Appendices:
     - Accueil: appendices/index.md
