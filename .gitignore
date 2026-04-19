@@ -24,6 +24,7 @@ tmp/
 
 # Logs MkDocs
 *.log
+logs/
 
 # Rapports générés par IA (session reports, QA reports, etc.)
 ai-reports/
