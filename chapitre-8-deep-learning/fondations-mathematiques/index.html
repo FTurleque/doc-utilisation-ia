@@ -1,0 +1,6368 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation collectée sur l'utilisation de l'IA">
+      
+      
+        <meta name="author" content="FTurleque">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../reseaux-neurones/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Fondations Mathématiques - Documentation IA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fondations-mathematiques-du-deep-learning" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Documentation IA" class="md-header__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation IA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fondations Mathématiques
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer en mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer en mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentation IA" class="md-nav__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation IA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Copilot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-1-installation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    IntelliJ IDEA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visual Studio Code
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-2-parametrage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramétrage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Paramétrage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/intellij-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/vscode-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/comparaison-parametres/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-3-cli-modes/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modes CLI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/page-principale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI Détail
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-4-contexte/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexte & Personnalisation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contexte & Personnalisation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Clés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instructions (.instructions.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/applyto-avance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    applyTo Avancé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/prompt-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Files (.prompt.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents (.agent.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills (SKILL.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/parametres-depot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramètres du Dépôt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/vscode-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/intellij-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/comparaison-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-5-prompt-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Engineering
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prompt Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-intermediaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Intermédiaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-avancees/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Avancées
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/avec-copilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompting avec Copilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-6-machine-learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Machine Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/concepts-fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/algorithmes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/copilot-workflow-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot pour le ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/python-data-science/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & Data Science
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/notebooks-jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notebooks Jupyter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/mlops-deploiement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLOps & Déploiement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-ecosystemes-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-outils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning & Réseaux de Neurones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning & Réseaux de Neurones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondations Mathématiques
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondations Mathématiques
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pourquoi-ces-maths-sont-essentielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pourquoi ces maths sont essentielles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notations-a-connaitre-avant-de-calculer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notations à connaître avant de calculer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-1-probabilites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 1 — Probabilités
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 1 — Probabilités">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-quest-ce-quune-probabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Qu'est-ce qu'une probabilité ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-probabilite-conditionnelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Probabilité conditionnelle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-theoreme-de-bayes-demonstration-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Théorème de Bayes — Démonstration complète
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-esperance-et-variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Espérance et variance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Espérance et variance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esperance-mathbbex-quest-ce-quune-moyenne-ponderee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Espérance \(\mathbb{E}[X]\) — Qu'est-ce qu'une moyenne pondérée ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variance-mathrmvarx-mesurer-la-dispersion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variance \(\mathrm{Var}(X)\) — Mesurer la dispersion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-entropie-de-shannon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Entropie de Shannon
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Entropie de Shannon">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etape-1-lidee-de-surprise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 1 — L'idée de surprise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etape-2-lentropie-surprise-moyenne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 2 — L'entropie : surprise moyenne
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-cross-entropy-perte-de-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Cross-entropy — Perte de classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-fonction-softmax-transformer-un-score-en-probabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Fonction Softmax : transformer un score en probabilité
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-2-algebre-lineaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 2 — Algèbre Linéaire
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 2 — Algèbre Linéaire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-vecteurs-definition-et-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Vecteurs : définition et intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-operations-elementaires-sur-les-vecteurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Opérations élémentaires sur les vecteurs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Opérations élémentaires sur les vecteurs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addition-de-vecteurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addition de vecteurs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplication-par-un-scalaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiplication par un scalaire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-produit-scalaire-dot-product-definition-et-proprietes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Produit scalaire (dot product) — Définition et propriétés
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Produit scalaire (dot product) — Définition et propriétés">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-geometrique-et-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interprétation géométrique et démonstration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-norme-dun-vecteur-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Norme d'un vecteur — Démonstration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-matrices-definition-et-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Matrices : définition et opérations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-produit-matrice-vecteur-demonstration-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Produit matrice-vecteur — Démonstration complète
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-produit-matriciel-et-regle-des-dimensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Produit matriciel et règle des dimensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-transposee-et-propriete-abt-bt-at" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Transposée et propriété \((AB)^T = B^T A^T\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-3-analyse-et-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 3 — Analyse et Optimisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 3 — Analyse et Optimisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-derivee-dune-fonction-dune-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Dérivée d'une fonction d'une variable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Dérivée d&#39;une fonction d&#39;une variable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#regles-de-derivation-fondamentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règles de dérivation fondamentales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regle-de-la-chaine-chain-rule-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règle de la chaîne (chain rule) — Démonstration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-derivee-partielle-et-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Dérivée partielle et gradient
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Dérivée partielle et gradient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivee-partielle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dérivée partielle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-theoreme-de-direction-de-montee-maximale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient — Théorème de direction de montée maximale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-descente-de-gradient-algorithme-intuition-et-convergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Descente de gradient — Algorithme, intuition et convergence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Descente de gradient — Algorithme, intuition et convergence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lalgorithme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'algorithme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intuition-geometrique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition géométrique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#role-crucial-du-learning-rate-eta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rôle crucial du learning rate \(\eta\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preuve-que-la-descente-de-gradient-reduit-la-perte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preuve que la descente de gradient réduit la perte
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-chain-rule-vectorielle-la-retropropagation-expliquee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Chain rule vectorielle : la rétropropagation expliquée
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-4-exemple-guide-complet-etape-par-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 4 — Exemple guidé complet, étape par étape
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 4 — Exemple guidé complet, étape par étape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etape-1-propagation-avant-forward-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 1 — Propagation avant (Forward pass)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etape-2-retropropagation-backward-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 2 — Rétropropagation (Backward pass)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etape-3-mise-a-jour-des-poids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 3 — Mise à jour des poids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-la-perte-a-t-elle-baisse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vérification : la perte a-t-elle baissé ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refaire-ces-calculs-dans-les-ide-avec-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refaire ces calculs dans les IDE avec Copilot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recapitulatif-des-theoremes-demontres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Récapitulatif des théorèmes démontrés
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources-officielles-pour-approfondir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources officielles pour approfondir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Résumé
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaine-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaine étape
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reseaux-neurones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réseaux de Neurones — Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architectures-deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architectures de Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concevoir-entrainer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concevoir et Entraîner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../optimisation-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimisation et Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-7-rag/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RAG
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts & Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implémentation (Basic→Expert)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implémentation (Basic→Expert)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Présentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 1 (Débutant)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 2 (Intermédiaire)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 3 (Expert)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/cas-usage-secteurs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage par Secteur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/optimisation-avancee/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimisation Avancée
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-9-bonnes-pratiques/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bonnes Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bonnes Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/utilisation-effective/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisation Effective
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/organisation-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Organisation du Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/productivite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Productivité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/securite-qualite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité & Qualité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance & Ressources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/workflows-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflows IA Complets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-10-cas-usage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cas d'Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/comparaison-ecosystemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java-spring-boot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java & Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-react/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & React
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & Express
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/react-typescript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    React 19 & TypeScript
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & FastAPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-11-troubleshooting/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/problemes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problèmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/logs-diagnostic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logs & Diagnostic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/comparaison-problemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Problèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/procedures-reparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procédures de Réparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-12-couts-gouvernance/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coûts & Gouvernance
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Coûts & Gouvernance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/patterns-allers-retours/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réduire les allers-retours
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/premium-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Premium Requests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/abonnements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les abonnements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/leviers-economie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leviers d'économie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/modes-quand-utiliser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quand utiliser quel mode ?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/workflow-recommande/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow recommandé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-13-outils-economies/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Outils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/rtk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/toon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TOON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/openskills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenSkills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/outils-complementaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils Complémentaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-14-veille-ia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Veille IA
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Veille IA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/sources-officielles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sources Officielles & Changelogs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/videos-podcasts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vidéos, Podcasts & Conférences
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/securite-risques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité, Risques & Failles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/newsletters-communautes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Newsletters & Communautés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../appendices/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/raccourcis-clavier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raccourcis Clavier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/ressources-externes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ressources Externes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/templates-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pourquoi-ces-maths-sont-essentielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pourquoi ces maths sont essentielles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notations-a-connaitre-avant-de-calculer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notations à connaître avant de calculer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-1-probabilites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 1 — Probabilités
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 1 — Probabilités">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-quest-ce-quune-probabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Qu'est-ce qu'une probabilité ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-probabilite-conditionnelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Probabilité conditionnelle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-theoreme-de-bayes-demonstration-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Théorème de Bayes — Démonstration complète
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-esperance-et-variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Espérance et variance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Espérance et variance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#esperance-mathbbex-quest-ce-quune-moyenne-ponderee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Espérance \(\mathbb{E}[X]\) — Qu'est-ce qu'une moyenne pondérée ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variance-mathrmvarx-mesurer-la-dispersion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variance \(\mathrm{Var}(X)\) — Mesurer la dispersion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-entropie-de-shannon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Entropie de Shannon
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Entropie de Shannon">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etape-1-lidee-de-surprise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 1 — L'idée de surprise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etape-2-lentropie-surprise-moyenne" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 2 — L'entropie : surprise moyenne
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-cross-entropy-perte-de-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Cross-entropy — Perte de classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-fonction-softmax-transformer-un-score-en-probabilite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Fonction Softmax : transformer un score en probabilité
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-2-algebre-lineaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 2 — Algèbre Linéaire
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 2 — Algèbre Linéaire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-vecteurs-definition-et-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Vecteurs : définition et intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-operations-elementaires-sur-les-vecteurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Opérations élémentaires sur les vecteurs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Opérations élémentaires sur les vecteurs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#addition-de-vecteurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Addition de vecteurs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplication-par-un-scalaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiplication par un scalaire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-produit-scalaire-dot-product-definition-et-proprietes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Produit scalaire (dot product) — Définition et propriétés
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Produit scalaire (dot product) — Définition et propriétés">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interpretation-geometrique-et-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interprétation géométrique et démonstration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-norme-dun-vecteur-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Norme d'un vecteur — Démonstration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-matrices-definition-et-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Matrices : définition et opérations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-produit-matrice-vecteur-demonstration-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Produit matrice-vecteur — Démonstration complète
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-produit-matriciel-et-regle-des-dimensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Produit matriciel et règle des dimensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-transposee-et-propriete-abt-bt-at" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Transposée et propriété \((AB)^T = B^T A^T\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-3-analyse-et-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 3 — Analyse et Optimisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 3 — Analyse et Optimisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-derivee-dune-fonction-dune-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Dérivée d'une fonction d'une variable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Dérivée d&#39;une fonction d&#39;une variable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#regles-de-derivation-fondamentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règles de dérivation fondamentales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regle-de-la-chaine-chain-rule-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règle de la chaîne (chain rule) — Démonstration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-derivee-partielle-et-gradient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Dérivée partielle et gradient
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Dérivée partielle et gradient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivee-partielle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dérivée partielle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-theoreme-de-direction-de-montee-maximale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient — Théorème de direction de montée maximale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-descente-de-gradient-algorithme-intuition-et-convergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Descente de gradient — Algorithme, intuition et convergence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Descente de gradient — Algorithme, intuition et convergence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lalgorithme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'algorithme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intuition-geometrique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuition géométrique
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#role-crucial-du-learning-rate-eta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rôle crucial du learning rate \(\eta\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preuve-que-la-descente-de-gradient-reduit-la-perte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preuve que la descente de gradient réduit la perte
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-chain-rule-vectorielle-la-retropropagation-expliquee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Chain rule vectorielle : la rétropropagation expliquée
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partie-4-exemple-guide-complet-etape-par-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partie 4 — Exemple guidé complet, étape par étape
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partie 4 — Exemple guidé complet, étape par étape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#etape-1-propagation-avant-forward-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 1 — Propagation avant (Forward pass)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etape-2-retropropagation-backward-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 2 — Rétropropagation (Backward pass)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#etape-3-mise-a-jour-des-poids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 3 — Mise à jour des poids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-la-perte-a-t-elle-baisse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vérification : la perte a-t-elle baissé ?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refaire-ces-calculs-dans-les-ide-avec-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Refaire ces calculs dans les IDE avec Copilot
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recapitulatif-des-theoremes-demontres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Récapitulatif des théorèmes démontrés
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources-officielles-pour-approfondir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources officielles pour approfondir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Résumé
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaine-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaine étape
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Accueil
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Deep Learning & Réseaux de Neurones
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fondations-mathematiques-du-deep-learning">Fondations Mathématiques du Deep Learning<a class="headerlink" href="#fondations-mathematiques-du-deep-learning" title="Permanent link">&para;</a></h1>
+<p><span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span></p>
+<p>Cette page pose les bases mathématiques indispensables pour comprendre le Deep Learning : probabilités, calcul vectoriel, produits matriciels, gradients et dérivées partielles.</p>
+<p><strong>Objectif</strong> : te permettre de lire une formule de réseau de neurones, de refaire les calculs à la main, de comprendre <strong>pourquoi</strong> chaque règle fonctionne, puis de vérifier le résultat avec ton IDE.</p>
+<p>Pas besoin d'un niveau universitaire en mathématiques. Tout est introduit depuis zéro, avec des analogies, des démonstrations commentées et des exemples numériques concrets.</p>
+<hr />
+<h2 id="pourquoi-ces-maths-sont-essentielles">Pourquoi ces maths sont essentielles<a class="headerlink" href="#pourquoi-ces-maths-sont-essentielles" title="Permanent link">&para;</a></h2>
+<p>Un réseau de neurones apprend en ajustant ses paramètres pour minimiser une erreur. Cette idée repose sur trois piliers :</p>
+<ul>
+<li>les <strong>probabilités</strong> (incertitude, classification, vraisemblance) ;</li>
+<li>l'<strong>algèbre linéaire</strong> (vecteurs, matrices, transformations) ;</li>
+<li>l'<strong>analyse</strong> (dérivées, gradients, optimisation).</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Ce que tu sauras faire à la fin</p>
+<ul>
+<li>Calculer la prédiction d'un neurone à la main</li>
+<li>Calculer une perte (cross-entropy, erreur quadratique)</li>
+<li>Calculer les gradients et mettre à jour les poids</li>
+<li>Reconnaître les notations mathématiques utilisées dans les papers et librairies</li>
+</ul>
+</div>
+<hr />
+<h2 id="notations-a-connaitre-avant-de-calculer">Notations à connaître avant de calculer<a class="headerlink" href="#notations-a-connaitre-avant-de-calculer" title="Permanent link">&para;</a></h2>
+<p>Avant de lire une formule, il faut connaître le dictionnaire de symboles. Voici les notations du Deep Learning.</p>
+<table>
+<thead>
+<tr>
+<th>Symbole</th>
+<th>Signification</th>
+<th>Lecture à voix haute</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(x\)</span></td>
+<td>vecteur d'entrée (features)</td>
+<td>"x"</td>
+<td><span class="arithmatex">\(x = [x_1, x_2, x_3]^T\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x_i\)</span></td>
+<td><span class="arithmatex">\(i\)</span>-ème composante de <span class="arithmatex">\(x\)</span></td>
+<td>"x indice i"</td>
+<td><span class="arithmatex">\(x_2 =\)</span> 2ème feature</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W\)</span></td>
+<td>matrice de poids</td>
+<td>"W"</td>
+<td><span class="arithmatex">\(W \in \mathbb{R}^{m \times n}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W_{ij}\)</span></td>
+<td>poids de la colonne <span class="arithmatex">\(j\)</span> vers la ligne <span class="arithmatex">\(i\)</span></td>
+<td>"W i j"</td>
+<td>connexion j→i</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(b\)</span></td>
+<td>biais</td>
+<td>"b"</td>
+<td><span class="arithmatex">\(b \in \mathbb{R}^{m}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(z\)</span></td>
+<td>pré-activation</td>
+<td>"z"</td>
+<td><span class="arithmatex">\(z = Wx + b\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\hat{y}\)</span></td>
+<td>prédiction du modèle</td>
+<td>"y chapeau"</td>
+<td>probabilité ou valeur</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(y\)</span></td>
+<td>vraie valeur cible</td>
+<td>"y"</td>
+<td>label réel</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(L\)</span></td>
+<td>fonction de perte</td>
+<td>"L"</td>
+<td>erreur à minimiser</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\nabla L\)</span></td>
+<td>gradient de la perte</td>
+<td>"nabla L"</td>
+<td>direction de mise à jour</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathbb{R}^n\)</span></td>
+<td>espace de vecteurs à <span class="arithmatex">\(n\)</span> dimensions réelles</td>
+<td>"R n"</td>
+<td><span class="arithmatex">\([2.1, -0.5]^T \in \mathbb{R}^2\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(^T\)</span></td>
+<td>transposée (lignes↔colonnes)</td>
+<td>"transposé"</td>
+<td><span class="arithmatex">\([a,b]^T\)</span> = colonne</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\sum\)</span></td>
+<td>somme sur un ensemble</td>
+<td>"sigma"</td>
+<td><span class="arithmatex">\(\sum_{i=1}^{3} i = 6\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Transposée : pourquoi écrire <span class="arithmatex">\(x^T\)</span> ?</p>
+<p>Par convention, un vecteur <span class="arithmatex">\(x\)</span> est une <strong>colonne</strong> (vertical). Écrire <span class="arithmatex">\([x_1, x_2, x_3]^T\)</span> signifie : "prends la liste horizontale et redresse-la en colonne". Cela permet les multiplications matricielles.</p>
+</div>
+<hr />
+<h2 id="partie-1-probabilites">Partie 1 — Probabilités<a class="headerlink" href="#partie-1-probabilites" title="Permanent link">&para;</a></h2>
+<h3 id="11-quest-ce-quune-probabilite">1.1 Qu'est-ce qu'une probabilité ?<a class="headerlink" href="#11-quest-ce-quune-probabilite" title="Permanent link">&para;</a></h3>
+<p>Une probabilité est un nombre entre 0 et 1 qui mesure la certitude d'un événement.</p>
+<ul>
+<li><span class="arithmatex">\(P = 0\)</span> : impossible</li>
+<li><span class="arithmatex">\(P = 1\)</span> : certain</li>
+<li><span class="arithmatex">\(P = 0.7\)</span> : 70 chances sur 100</li>
+</ul>
+<p><strong>Règle fondamentale</strong> : la somme des probabilités de tous les événements possibles vaut 1.</p>
+<div class="arithmatex">\[\sum_{i} P(E_i) = 1\]</div>
+<p>Exemple : une image peut être un "chat" (<span class="arithmatex">\(P = 0.8\)</span>) ou un "chien" (<span class="arithmatex">\(P = 0.2\)</span>). Total <span class="arithmatex">\(= 1\)</span>.</p>
+<h3 id="12-probabilite-conditionnelle">1.2 Probabilité conditionnelle<a class="headerlink" href="#12-probabilite-conditionnelle" title="Permanent link">&para;</a></h3>
+<p><span class="arithmatex">\(P(A \mid B)\)</span> se lit "probabilité de A sachant que B est vrai".</p>
+<p><strong>Définition</strong> :</p>
+<div class="arithmatex">\[P(A \mid B) = \frac{P(A \cap B)}{P(B)}\]</div>
+<p><span class="arithmatex">\(P(A \cap B)\)</span> est la probabilité que A et B arrivent ensemble. On la divise par <span class="arithmatex">\(P(B)\)</span> pour restreindre l'univers à "B est déjà vrai".</p>
+<p><strong>Exemple concret</strong> :</p>
+<ul>
+<li><span class="arithmatex">\(P(\text{mail est spam}) = 0.3\)</span></li>
+<li><span class="arithmatex">\(P(\text{mail contient "argent"} \mid \text{spam}) = 0.8\)</span></li>
+<li><span class="arithmatex">\(P(\text{mail contient "argent"}) = 0.35\)</span></li>
+</ul>
+<div class="arithmatex">\[P(\text{spam} \mid \text{"argent"}) = \frac{0.8 \times 0.3}{0.35} \approx 0.69\]</div>
+<p>Ce calcul, c'est Bayes en action (cf. section suivante).</p>
+<h3 id="13-theoreme-de-bayes-demonstration-complete">1.3 Théorème de Bayes — Démonstration complète<a class="headerlink" href="#13-theoreme-de-bayes-demonstration-complete" title="Permanent link">&para;</a></h3>
+<p>Le théorème de Bayes est le pont entre ce qu'on observe (<span class="arithmatex">\(x\)</span>) et ce qu'on veut prédire (<span class="arithmatex">\(y\)</span>).</p>
+<p><strong>Théorème</strong> :</p>
+<div class="arithmatex">\[P(y \mid x) = \frac{P(x \mid y) \cdot P(y)}{P(x)}\]</div>
+<p><strong>Démonstration</strong> :</p>
+<p>On part de la définition de la probabilité conditionnelle appliquée deux fois :</p>
+<div class="arithmatex">\[P(y \mid x) = \frac{P(y \cap x)}{P(x)} \quad \text{(définition 1)}\]</div>
+<div class="arithmatex">\[P(x \mid y) = \frac{P(x \cap y)}{P(y)} \quad \text{(définition 2)}\]</div>
+<p>Or <span class="arithmatex">\(P(y \cap x) = P(x \cap y)\)</span> (l'intersection est symétrique). On isole ce terme depuis la définition 2 :</p>
+<div class="arithmatex">\[P(x \cap y) = P(x \mid y) \cdot P(y)\]</div>
+<p>On substitue dans la définition 1 :</p>
+<div class="arithmatex">\[\boxed{P(y \mid x) = \frac{P(x \mid y) \cdot P(y)}{P(x)}}\]</div>
+<p><strong>Ce que chaque terme signifie</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Nom</th>
+<th>Sens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(P(y \mid x)\)</span></td>
+<td><strong>Postérieur</strong></td>
+<td>Ce qu'on veut : probabilité de la classe après avoir vu <span class="arithmatex">\(x\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(x \mid y)\)</span></td>
+<td><strong>Vraisemblance</strong></td>
+<td>À quel point cette entrée est typique de la classe <span class="arithmatex">\(y\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(y)\)</span></td>
+<td><strong>Prior</strong></td>
+<td>Fréquence naturelle de la classe (avant de voir les données)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(x)\)</span></td>
+<td><strong>Evidence</strong></td>
+<td>Constante de normalisation</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Application en Deep Learning</p>
+<p>Quand un réseau de neurones prédit la classe d'une image, il approxime <span class="arithmatex">\(P(y \mid x)\)</span> implicitement. La perte cross-entropy l'y entraîne directement.</p>
+</div>
+<h3 id="14-esperance-et-variance">1.4 Espérance et variance<a class="headerlink" href="#14-esperance-et-variance" title="Permanent link">&para;</a></h3>
+<h4 id="esperance-mathbbex-quest-ce-quune-moyenne-ponderee">Espérance <span class="arithmatex">\(\mathbb{E}[X]\)</span> — Qu'est-ce qu'une moyenne pondérée ?<a class="headerlink" href="#esperance-mathbbex-quest-ce-quune-moyenne-ponderee" title="Permanent link">&para;</a></h4>
+<p><strong>D'abord : la moyenne ordinaire.</strong></p>
+<p>Si tu as les notes <span class="arithmatex">\([8, 12, 16]\)</span> sur 20, la moyenne est :</p>
+<div class="arithmatex">\[\text{moyenne} = \frac{8 + 12 + 16}{3} = 12\]</div>
+<p>Chaque note compte autant. Chacune a un poids de <span class="arithmatex">\(\frac{1}{3}\)</span>, soit environ 33%.</p>
+<p><strong>Maintenant : la moyenne pondérée.</strong></p>
+<p>Si les matières n'ont pas le même coefficient (poids), on multiplie chaque note par son importance <strong>avant</strong> de sommer. Exemple avec coefficients 1, 2, 3 :</p>
+<div class="arithmatex">\[\text{moy. pondérée} = \frac{8 \times 1\ +\ 12 \times 2\ +\ 16 \times 3}{1 + 2 + 3} = \frac{8 + 24 + 48}{6} = \frac{80}{6} \approx 13.3\]</div>
+<p>La note 16, plus importante (coeff 3), tire la moyenne vers le haut par rapport à la moyenne ordinaire (12).</p>
+<p><strong>L'espérance, c'est exactement ce mécanisme</strong> : on fait la moyenne pondérée de toutes les valeurs possibles d'une variable, où le poids de chaque valeur est sa probabilité d'apparaître.</p>
+<div class="arithmatex">\[\mathbb{E}[X] = \sum_{i} \underbrace{x_i}_{\text{valeur}} \times \underbrace{P(X = x_i)}_{\text{poids = probabilité}}\]</div>
+<div class="admonition tip">
+<p class="admonition-title">Lecture de la formule</p>
+<p>Lis-la mot à mot : « pour chaque valeur possible <span class="arithmatex">\(x_i\)</span>, multiplie-la par la probabilité qu'elle arrive, puis additionne tout ». Le résultat est la valeur <strong>qu'on s'attend à obtenir en moyenne</strong> sur de très nombreuses répétitions.</p>
+</div>
+<p><strong>Exemple équiprobable</strong> : lancer un dé à 6 faces. Chaque face a une probabilité <span class="arithmatex">\(\frac{1}{6}\)</span>.</p>
+<div class="arithmatex">\[\mathbb{E}[X] = 1 \times \frac{1}{6} + 2 \times \frac{1}{6} + 3 \times \frac{1}{6} + 4 \times \frac{1}{6} + 5 \times \frac{1}{6} + 6 \times \frac{1}{6} = \frac{1+2+3+4+5+6}{6} = \frac{21}{6} = 3.5\]</div>
+<p>On ne lancera jamais un dé et on obtiendra 3.5 — ce n'est pas une valeur possible. Mais sur 1 000 lancers, la moyenne des résultats s'approchera de 3.5.</p>
+<p><strong>Exemple non uniforme</strong> : une pièce truquée donne Pile 80% du temps (<span class="arithmatex">\(x = 1\)</span>) et Face 20% (<span class="arithmatex">\(x = 0\)</span>) :</p>
+<div class="arithmatex">\[\mathbb{E}[X] = 1 \times 0.8 + 0 \times 0.2 = 0.8\]</div>
+<p>La probabilité plus haute pour Pile fait peser cette valeur davantage dans la moyenne — c'est le principe du pondéré.</p>
+<h4 id="variance-mathrmvarx-mesurer-la-dispersion">Variance <span class="arithmatex">\(\mathrm{Var}(X)\)</span> — Mesurer la dispersion<a class="headerlink" href="#variance-mathrmvarx-mesurer-la-dispersion" title="Permanent link">&para;</a></h4>
+<p><strong>Intuition : deux élèves, même moyenne, comportements très différents.</strong></p>
+<ul>
+<li>Élève A : notes <span class="arithmatex">\([10, 10, 10, 10]\)</span> — toujours régulier.</li>
+<li>Élève B : notes <span class="arithmatex">\([2, 4, 18, 16]\)</span> — très irrégulier.</li>
+</ul>
+<p>Les deux ont une <strong>moyenne de 10</strong>. Pourtant ils sont très différents. La variance capture cette différence en mesurant à quelle distance les valeurs s'éloignent de la moyenne.</p>
+<p><strong>Étape 1 : calculer les écarts à la moyenne.</strong></p>
+<p>Pour l'élève B (<span class="arithmatex">\(\mu = 10\)</span>) :</p>
+<div class="arithmatex">\[\text{écarts} = [2-10,\ 4-10,\ 18-10,\ 16-10] = [-8,\ -6,\ +8,\ +6]\]</div>
+<p><strong>Étape 2 : problème — les écarts s'annulent.</strong></p>
+<div class="arithmatex">\[\text{somme des écarts} = -8 - 6 + 8 + 6 = 0\]</div>
+<p>Si on fait la moyenne brute des écarts, on obtient 0. Inutile.</p>
+<p><strong>Étape 3 : solution — mettre les écarts au carré.</strong></p>
+<p>Le carré rend tout positif, les grands écarts sont amplifiés :</p>
+<div class="arithmatex">\[\text{écarts}^2 = [(-8)^2,\ (-6)^2,\ 8^2,\ 6^2] = [64,\ 36,\ 64,\ 36]\]</div>
+<div class="arithmatex">\[\text{variance} = \frac{64 + 36 + 64 + 36}{4} = \frac{200}{4} = 50\]</div>
+<p>L'élève A aurait une variance de <span class="arithmatex">\(0\)</span> (tous les écarts valent <span class="arithmatex">\(0\)</span>, donc les carrés aussi).</p>
+<div class="admonition tip">
+<p class="admonition-title">Résumé intuitif</p>
+<ul>
+<li>Variance <span class="arithmatex">\(= 0\)</span> → toutes les valeurs sont identiques (aucune dispersion).</li>
+<li>Variance élevée → les valeurs sont très étalées autour de la moyenne.</li>
+<li>Variance faible → les valeurs se serrent autour de la moyenne.</li>
+</ul>
+</div>
+<p><strong>Formule générale</strong> (pour une variable aléatoire) :</p>
+<div class="arithmatex">\[\mathrm{Var}(X) = \mathbb{E}\left[(X - \mu)^2\right]\]</div>
+<p>avec <span class="arithmatex">\(\mu = \mathbb{E}[X]\)</span>. C'est la même idée : on calcule <span class="arithmatex">\((X - \mu)^2\)</span> pour chaque valeur, puis on fait la moyenne pondérée.</p>
+<p><strong>Forme alternative utile en calcul</strong> : <span class="arithmatex">\(\mathrm{Var}(X) = \mathbb{E}[X^2] - \mu^2\)</span></p>
+<p><strong>Démonstration</strong> :</p>
+<div class="arithmatex">\[\mathrm{Var}(X) = \mathbb{E}[(X - \mu)^2]\]</div>
+<p>On développe le carré <span class="arithmatex">\((X - \mu)^2 = X^2 - 2\mu X + \mu^2\)</span> :</p>
+<div class="arithmatex">\[= \mathbb{E}[X^2 - 2\mu X + \mu^2]\]</div>
+<p>On distribue l'espérance (propriété de <strong>linéarité</strong> : <span class="arithmatex">\(\mathbb{E}[A + B] = \mathbb{E}[A] + \mathbb{E}[B]\)</span>) :</p>
+<div class="arithmatex">\[= \mathbb{E}[X^2] - 2\mu\, \mathbb{E}[X] + \mathbb{E}[\mu^2]\]</div>
+<p><span class="arithmatex">\(\mu\)</span> est une constante, donc <span class="arithmatex">\(\mathbb{E}[\mu^2] = \mu^2\)</span> et <span class="arithmatex">\(\mathbb{E}[X] = \mu\)</span> par définition :</p>
+<div class="arithmatex">\[= \mathbb{E}[X^2] - 2\mu^2 + \mu^2 = \boxed{\mathbb{E}[X^2] - \mu^2}\]</div>
+<p><strong>Note : écart-type vs variance.</strong></p>
+<p>La variance est en unités au carré (notes², euros², etc.). Pour revenir aux unités d'origine, on prend la racine carrée :</p>
+<div class="arithmatex">\[\sigma = \sqrt{\mathrm{Var}(X)} \quad \text{(écart-type, même unité que les données)}\]</div>
+<div class="admonition info">
+<p class="admonition-title">Pourquoi en Deep Learning ?</p>
+<p>Les features d'un dataset peuvent avoir des échelles très différentes : l'âge varie entre 0 et 100, un salaire entre 0 et 100 000. La feature au plus grand écart-type va dominer les calculs et rendre les gradients déséquilibrés. <strong>Normaliser</strong> (soustraire la moyenne, diviser par l'écart-type) ramène tout à une échelle comparable :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Avant : âge ∈ [18, 65],    salaire ∈ [20 000, 80 000]
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Après : âge ∈ [-1.2, 1.4], salaire ∈ [-1.1, 1.3]
+</code></pre></div>
+<p>C'est le principe de la <strong>Batch Normalization</strong> appliqué aux activations d'une couche.</p>
+</div>
+<h3 id="15-entropie-de-shannon">1.5 Entropie de Shannon<a class="headerlink" href="#15-entropie-de-shannon" title="Permanent link">&para;</a></h3>
+<h4 id="etape-1-lidee-de-surprise">Étape 1 — L'idée de surprise<a class="headerlink" href="#etape-1-lidee-de-surprise" title="Permanent link">&para;</a></h4>
+<p><strong>Commence par une question simple</strong> : quelle information apporte un événement quand il se produit ?</p>
+<ul>
+<li>Tu apprends que le soleil s'est levé ce matin → <strong>pas surprenant</strong>, tu le savais déjà.</li>
+<li>Tu apprends qu'il neige en juillet à Paris → <strong>très surprenant</strong>, c'est une vraie information.</li>
+</ul>
+<p>On formalise cette idée : la <strong>surprise</strong> d'un événement de probabilité <span class="arithmatex">\(p\)</span> est définie comme :</p>
+<div class="arithmatex">\[\text{surprise}(p) = -\log(p)\]</div>
+<p><strong>Pourquoi <span class="arithmatex">\(-\log(p)\)</span> capture bien la surprise ?</strong></p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(p\)</span></th>
+<th><span class="arithmatex">\(-\log(p)\)</span></th>
+<th>Interprétation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(p = 1.0\)</span> (certain)</td>
+<td><span class="arithmatex">\(-\log(1) = 0\)</span></td>
+<td>Aucune surprise : on savait que ça arriverait</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(p = 0.5\)</span> (50/50)</td>
+<td><span class="arithmatex">\(-\log(0.5) \approx 0.69\)</span></td>
+<td>Surprise modérée</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(p = 0.1\)</span> (rare)</td>
+<td><span class="arithmatex">\(-\log(0.1) \approx 2.3\)</span></td>
+<td>Assez surprenant</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(p = 0.01\)</span> (très rare)</td>
+<td><span class="arithmatex">\(-\log(0.01) \approx 4.6\)</span></td>
+<td>Très surprenant</td>
+</tr>
+</tbody>
+</table>
+<p>La courbe de <span class="arithmatex">\(-\log(p)\)</span> monte très vite quand <span class="arithmatex">\(p\)</span> est petit : les événements rares apportent beaucoup d'information.</p>
+<div class="admonition tip">
+<p class="admonition-title">Pourquoi le <span class="arithmatex">\(-\)</span> ?</p>
+<p>Pour <span class="arithmatex">\(p \in (0, 1]\)</span>, <span class="arithmatex">\(\log(p) \leq 0\)</span> (le log d'un nombre entre 0 et 1 est négatif). Le <span class="arithmatex">\(-\)</span> devant rend la surprise <strong>positive</strong> — ce serait bizarre d'avoir une surprise négative.</p>
+</div>
+<h4 id="etape-2-lentropie-surprise-moyenne">Étape 2 — L'entropie : surprise moyenne<a class="headerlink" href="#etape-2-lentropie-surprise-moyenne" title="Permanent link">&para;</a></h4>
+<p><strong>L'entropie</strong> est la <strong>surprise moyenne</strong> qu'on s'attend à recevoir si on tire un événement au hasard dans cette distribution. C'est l'espérance (moyenne pondérée) de la surprise :</p>
+<div class="arithmatex">\[H(p) = \mathbb{E}[\text{surprise}] = \sum_{i=1}^{n} p_i \cdot (-\log p_i) = -\sum_{i=1}^{n} p_i \log(p_i)\]</div>
+<p><strong>Lecture mot à mot</strong> : pour chaque issue <span class="arithmatex">\(i\)</span>, multiplie sa surprise (<span class="arithmatex">\(-\log p_i\)</span>) par sa probabilité d'arriver (<span class="arithmatex">\(p_i\)</span>), puis additionne tout.</p>
+<p><strong>Cas limites expliqués</strong> :</p>
+<ul>
+<li><strong>Distribution certaine</strong> <span class="arithmatex">\([1.0, 0.0]\)</span> : on sait d'avance ce qui va arriver. La surprise attendue est 0 — on n'apprendra rien de nouveau.</li>
+<li><strong>Distribution uniforme</strong> <span class="arithmatex">\([0.5, 0.5]\)</span> : on ne sait pas du tout ce qui va arriver. L'incertitude est maximale, donc l'entropie est maximale.</li>
+</ul>
+<p><strong>Calcul détaillé de chaque cas</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>Calcul détaillé</th>
+<th>Valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\([1.0, 0.0]\)</span> (certaine)</td>
+<td><span class="arithmatex">\(-(1.0 \times \log 1.0 + 0.0 \times \log 0.0)\)</span> → $-(0 + 0) $</td>
+<td><span class="arithmatex">\(H = 0\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\([0.5, 0.5]\)</span> (uniforme)</td>
+<td><span class="arithmatex">\(-(0.5 \times \log 0.5 + 0.5 \times \log 0.5) = -(2 \times 0.5 \times (-0.693))\)</span></td>
+<td><span class="arithmatex">\(H \approx 0.693\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\([0.9, 0.1]\)</span> (presque sûre)</td>
+<td><span class="arithmatex">\(-(0.9 \times (-0.105) + 0.1 \times (-2.303)) = -(- 0.095 - 0.230)\)</span></td>
+<td><span class="arithmatex">\(H \approx 0.325\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Convention pour <span class="arithmatex">\(0 \times \log 0\)</span></p>
+<p><span class="arithmatex">\(\log(0) = -\infty\)</span>, mais <span class="arithmatex">\(\lim_{p \to 0} p \log p = 0\)</span>. Par convention, on pose <span class="arithmatex">\(0 \times \log 0 = 0\)</span> dans les calculs d'entropie.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Interprétation concrète en Deep Learning</p>
+<p>L'entropie répond à la question : « Combien d'incertitude mon modèle a-t-il sur cette prédiction ? »</p>
+<ul>
+<li><strong>Entropie élevée</strong> sur la sortie → le modèle est très incertain, il n'a pas encore bien appris.</li>
+<li><strong>Entropie faible</strong> → le modèle est confiant sur sa prédiction.</li>
+</ul>
+<p>La <strong>perte cross-entropy</strong> entraîne le modèle à réduire l'entropie de ses prédictions en les rapprochant de la vraie distribution.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Convention log en Deep Learning</p>
+<p>On utilise le logarithme naturel <span class="arithmatex">\(\ln\)</span> (base <span class="arithmatex">\(e\)</span>) dans les formules. En pratique, <code>torch.log</code> (PyTorch) et <code>tf.math.log</code> (TensorFlow) utilisent la base <span class="arithmatex">\(e\)</span>. Le choix de la base change l'unité (nats vs bits) mais pas le comportement relatif.</p>
+</div>
+<h3 id="16-cross-entropy-perte-de-classification">1.6 Cross-entropy — Perte de classification<a class="headerlink" href="#16-cross-entropy-perte-de-classification" title="Permanent link">&para;</a></h3>
+<p>La cross-entropy entre la vraie distribution <span class="arithmatex">\(y\)</span> et la distribution prédite <span class="arithmatex">\(\hat{y}\)</span> est :</p>
+<div class="arithmatex">\[L = -\sum_{i=1}^{n} y_i \log(\hat{y}_i)\]</div>
+<p><strong>Pourquoi cette formule punit les mauvaises prédictions ?</strong></p>
+<p>Si la vraie classe est <span class="arithmatex">\(i=2\)</span> (donc <span class="arithmatex">\(y_2 = 1\)</span>, les autres <span class="arithmatex">\(y_i = 0\)</span>), la formule se simplifie à :</p>
+<div class="arithmatex">\[L = -\log(\hat{y}_2)\]</div>
+<p>Or <span class="arithmatex">\(-\log(p)\)</span> est une fonction décroissante : plus <span class="arithmatex">\(\hat{y}_2\)</span> est proche de 1 (bonne prédiction), plus <span class="arithmatex">\(L\)</span> est proche de 0. Plus <span class="arithmatex">\(\hat{y}_2\)</span> est proche de 0 (mauvaise prédiction), plus <span class="arithmatex">\(L \to +\infty\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Prédiction <span class="arithmatex">\(\hat{y}_2\)</span></th>
+<th><span class="arithmatex">\(-\log(\hat{y}_2)\)</span></th>
+<th>Interprétation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.99</td>
+<td>0.01</td>
+<td>Excellente prédiction, faible pénalité</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.69</td>
+<td>Incertain</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>2.30</td>
+<td>Mauvaise prédiction, forte pénalité</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>4.61</td>
+<td>Catastrophique</td>
+</tr>
+</tbody>
+</table>
+<h3 id="17-fonction-softmax-transformer-un-score-en-probabilite">1.7 Fonction Softmax : transformer un score en probabilité<a class="headerlink" href="#17-fonction-softmax-transformer-un-score-en-probabilite" title="Permanent link">&para;</a></h3>
+<p>Un réseau de neurones produit des scores bruts <span class="arithmatex">\(z_i\)</span> (appelés logits), qui peuvent être négatifs ou supérieurs à 1. Pour les convertir en probabilités valides, on utilise Softmax :</p>
+<div class="arithmatex">\[\text{Softmax}(z_i) = \frac{e^{z_i}}{\sum_{j=1}^{n} e^{z_j}}\]</div>
+<p><strong>Preuve que Softmax produit bien des probabilités</strong> :</p>
+<ol>
+<li><strong>Positivité</strong> : <span class="arithmatex">\(e^{z_i} &gt; 0\)</span> pour tout <span class="arithmatex">\(z_i\)</span>, donc <span class="arithmatex">\(\text{Softmax}(z_i) &gt; 0\)</span>. ✓</li>
+<li><strong>Somme à 1</strong> :</li>
+</ol>
+<div class="arithmatex">\[\sum_{i=1}^{n} \text{Softmax}(z_i) = \sum_{i=1}^{n} \frac{e^{z_i}}{\sum_{j} e^{z_j}} = \frac{\sum_{i} e^{z_i}}{\sum_{j} e^{z_j}} = 1 \checkmark\]</div>
+<p><strong>Exemple numérique</strong> avec 3 classes, scores <span class="arithmatex">\(z = [2.0, 1.0, 0.1]\)</span> :</p>
+<div class="arithmatex">\[e^{2.0} = 7.39,\quad e^{1.0} = 2.72,\quad e^{0.1} = 1.11 \quad\Rightarrow\quad \text{Somme} = 11.22\]</div>
+<div class="arithmatex">\[\hat{y} = \left[\frac{7.39}{11.22},\ \frac{2.72}{11.22},\ \frac{1.11}{11.22}\right] = [0.659,\ 0.242,\ 0.099]\]</div>
+<p>La somme vaut bien <span class="arithmatex">\(1\)</span>.</p>
+<hr />
+<h2 id="partie-2-algebre-lineaire">Partie 2 — Algèbre Linéaire<a class="headerlink" href="#partie-2-algebre-lineaire" title="Permanent link">&para;</a></h2>
+<h3 id="21-vecteurs-definition-et-intuition">2.1 Vecteurs : définition et intuition<a class="headerlink" href="#21-vecteurs-definition-et-intuition" title="Permanent link">&para;</a></h3>
+<p>Un <strong>vecteur</strong> est une liste ordonnée de nombres, qui peut représenter :</p>
+<ul>
+<li>un point dans l'espace (<span class="arithmatex">\([x, y, z]\)</span>)</li>
+<li>un objet avec plusieurs caractéristiques (ex. : <span class="arithmatex">\([\text{âge}, \text{salaire}, \text{taille}]\)</span>)</li>
+<li>les poids d'une couche de neurones</li>
+</ul>
+<p><strong>Notation</strong> : un vecteur de dimension <span class="arithmatex">\(n\)</span> s'écrit :</p>
+<div class="arithmatex">\[x = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} \in \mathbb{R}^n\]</div>
+<p>Chaque <span class="arithmatex">\(x_i\)</span> est un nombre réel. L'ensemble <span class="arithmatex">\(\mathbb{R}^n\)</span> est l'espace de tous les vecteurs à <span class="arithmatex">\(n\)</span> dimensions.</p>
+<h3 id="22-operations-elementaires-sur-les-vecteurs">2.2 Opérations élémentaires sur les vecteurs<a class="headerlink" href="#22-operations-elementaires-sur-les-vecteurs" title="Permanent link">&para;</a></h3>
+<h4 id="addition-de-vecteurs">Addition de vecteurs<a class="headerlink" href="#addition-de-vecteurs" title="Permanent link">&para;</a></h4>
+<p>Deux vecteurs de même dimension s'additionnent composante par composante :</p>
+<div class="arithmatex">\[a + b = \begin{bmatrix} a_1 + b_1 \\ a_2 + b_2 \\ \vdots \end{bmatrix}\]</div>
+<p>Exemple :</p>
+<div class="arithmatex">\[\begin{bmatrix} 1 \\ 3 \end{bmatrix} + \begin{bmatrix} 2 \\ -1 \end{bmatrix} = \begin{bmatrix} 3 \\ 2 \end{bmatrix}\]</div>
+<p><strong>En Deep Learning</strong> : ajouter le biais <span class="arithmatex">\(b\)</span> au résultat <span class="arithmatex">\(Wx\)</span> est une addition de vecteurs.</p>
+<h4 id="multiplication-par-un-scalaire">Multiplication par un scalaire<a class="headerlink" href="#multiplication-par-un-scalaire" title="Permanent link">&para;</a></h4>
+<p>Multiplier un vecteur par un nombre <span class="arithmatex">\(\lambda\)</span> multiplie chaque composante :</p>
+<div class="arithmatex">\[\lambda \cdot x = \begin{bmatrix} \lambda x_1 \\ \lambda x_2 \\ \vdots \end{bmatrix}\]</div>
+<p><strong>En Deep Learning</strong> : le taux d'apprentissage <span class="arithmatex">\(\eta\)</span> multiplie le gradient vecteur lors de la mise à jour des poids.</p>
+<h3 id="23-produit-scalaire-dot-product-definition-et-proprietes">2.3 Produit scalaire (dot product) — Définition et propriétés<a class="headerlink" href="#23-produit-scalaire-dot-product-definition-et-proprietes" title="Permanent link">&para;</a></h3>
+<p><strong>Définition</strong> : le produit scalaire de deux vecteurs <span class="arithmatex">\(a, b \in \mathbb{R}^n\)</span> est :</p>
+<div class="arithmatex">\[a \cdot b = \sum_{i=1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \cdots + a_n b_n\]</div>
+<p>Le résultat est un <strong>scalaire</strong> (un seul nombre), pas un vecteur.</p>
+<p><strong>Exemple</strong> :</p>
+<div class="arithmatex">\[[2, -1, 3] \cdot [4, 0, 5] = 2 \times 4 + (-1) \times 0 + 3 \times 5 = 8 + 0 + 15 = 23\]</div>
+<h4 id="interpretation-geometrique-et-demonstration">Interprétation géométrique et démonstration<a class="headerlink" href="#interpretation-geometrique-et-demonstration" title="Permanent link">&para;</a></h4>
+<p>Le produit scalaire est aussi égal à :</p>
+<div class="arithmatex">\[a \cdot b = \|a\| \cdot \|b\| \cdot \cos(\theta)\]</div>
+<p>où <span class="arithmatex">\(\theta\)</span> est l'angle entre les deux vecteurs.</p>
+<p><strong>Démonstration via la loi des cosinus</strong> :</p>
+<p>Considère un triangle de côtés <span class="arithmatex">\(\|a\|\)</span>, <span class="arithmatex">\(\|b\|\)</span>, <span class="arithmatex">\(\|a - b\|\)</span>. La loi des cosinus donne :</p>
+<div class="arithmatex">\[\|a - b\|^2 = \|a\|^2 + \|b\|^2 - 2\|a\|\|b\|\cos\theta\]</div>
+<p>Or on peut développer <span class="arithmatex">\(\|a - b\|^2 = (a-b)\cdot(a-b)\)</span> :</p>
+<div class="arithmatex">\[(a-b)\cdot(a-b) = a\cdot a - 2(a\cdot b) + b\cdot b = \|a\|^2 - 2(a\cdot b) + \|b\|^2\]</div>
+<p>En égalisant les deux expressions :</p>
+<div class="arithmatex">\[\|a\|^2 - 2(a\cdot b) + \|b\|^2 = \|a\|^2 + \|b\|^2 - 2\|a\|\|b\|\cos\theta\]</div>
+<p>On simplifie :</p>
+<div class="arithmatex">\[\boxed{a \cdot b = \|a\|\|b\|\cos\theta}\]</div>
+<p><strong>Conséquences importantes</strong> :</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th><span class="arithmatex">\(\theta\)</span></th>
+<th>Produit scalaire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vecteurs dans la même direction</td>
+<td><span class="arithmatex">\(0°\)</span></td>
+<td><span class="arithmatex">\(\|a\|\|b\|\)</span> (maximum positif)</td>
+</tr>
+<tr>
+<td>Vecteurs perpendiculaires</td>
+<td><span class="arithmatex">\(90°\)</span></td>
+<td><span class="arithmatex">\(0\)</span></td>
+</tr>
+<tr>
+<td>Vecteurs opposés</td>
+<td><span class="arithmatex">\(180°\)</span></td>
+<td><span class="arithmatex">\(-\|a\|\|b\|\)</span> (maximum négatif)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Application en Deep Learning : similarité cosinus</p>
+<p>En NLP et en recherche de similarité (RAG, embeddings), on compare des vecteurs en calculant <span class="arithmatex">\(\cos\theta = \frac{a \cdot b}{\|a\|\|b\|}\)</span>. Plus cette valeur est proche de 1, plus les textes sont sémantiquement proches.</p>
+</div>
+<h3 id="24-norme-dun-vecteur-demonstration">2.4 Norme d'un vecteur — Démonstration<a class="headerlink" href="#24-norme-dun-vecteur-demonstration" title="Permanent link">&para;</a></h3>
+<p>La <strong>norme</strong> est la longueur d'un vecteur. La plus utilisée est la norme <span class="arithmatex">\(L_2\)</span> (euclidienne) :</p>
+<div class="arithmatex">\[\|x\|_2 = \sqrt{\sum_{i=1}^{n} x_i^2} = \sqrt{x \cdot x}\]</div>
+<p><strong>Démonstration</strong> (théorème de Pythagore généralisé) :</p>
+<ul>
+<li>En 2D : <span class="arithmatex">\(\|[a, b]\|_2 = \sqrt{a^2 + b^2}\)</span> par Pythagore classique.</li>
+<li>En 3D : on applique Pythagore deux fois sur les projections : <span class="arithmatex">\(\|[a, b, c]\|_2 = \sqrt{a^2 + b^2 + c^2}\)</span>.</li>
+<li>En <span class="arithmatex">\(n\)</span> dimensions : par récurrence sur les coordonnées, on obtient <span class="arithmatex">\(\|x\|_2 = \sqrt{\sum_{i=1}^{n} x_i^2}\)</span>.</li>
+</ul>
+<p><strong>Exemple</strong> : <span class="arithmatex">\(x = [3, 4]\)</span>, <span class="arithmatex">\(\|x\|_2 = \sqrt{9 + 16} = \sqrt{25} = 5\)</span>.</p>
+<p>Il existe aussi la norme <span class="arithmatex">\(L_1\)</span> :</p>
+<div class="arithmatex">\[\|x\|_1 = \sum_{i=1}^{n} |x_i|\]</div>
+<table>
+<thead>
+<tr>
+<th>Norme</th>
+<th>Formule</th>
+<th>Usage en Deep Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(L_1\)</span></td>
+<td>$\sum</td>
+<td>x_i</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(L_2\)</span></td>
+<td><span class="arithmatex">\(\sqrt{\sum x_i^2}\)</span></td>
+<td>Régularisation Ridge, gradient, similarité</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(L_\infty\)</span></td>
+<td>$\max_i</td>
+<td>x_i</td>
+</tr>
+</tbody>
+</table>
+<h3 id="25-matrices-definition-et-operations">2.5 Matrices : définition et opérations<a class="headerlink" href="#25-matrices-definition-et-operations" title="Permanent link">&para;</a></h3>
+<p>Une <strong>matrice</strong> <span class="arithmatex">\(W \in \mathbb{R}^{m \times n}\)</span> est un tableau de <span class="arithmatex">\(m\)</span> lignes et <span class="arithmatex">\(n\)</span> colonnes :</p>
+<div class="arithmatex">\[W = \begin{bmatrix}
+w_{11} &amp; w_{12} &amp; \cdots &amp; w_{1n} \\
+w_{21} &amp; w_{22} &amp; \cdots &amp; w_{2n} \\
+\vdots  &amp; \vdots  &amp; \ddots &amp; \vdots  \\
+w_{m1} &amp; w_{m2} &amp; \cdots &amp; w_{mn}
+\end{bmatrix}\]</div>
+<p><strong>Interprétation en Deep Learning</strong> : dans une couche linéaire, <span class="arithmatex">\(W\)</span> encode toutes les connexions entre les <span class="arithmatex">\(n\)</span> entrées et les <span class="arithmatex">\(m\)</span> neurones de la couche.</p>
+<h3 id="26-produit-matrice-vecteur-demonstration-complete">2.6 Produit matrice-vecteur — Démonstration complète<a class="headerlink" href="#26-produit-matrice-vecteur-demonstration-complete" title="Permanent link">&para;</a></h3>
+<p>Le produit <span class="arithmatex">\(z = Wx\)</span> avec <span class="arithmatex">\(W \in \mathbb{R}^{m \times n}\)</span> et <span class="arithmatex">\(x \in \mathbb{R}^{n}\)</span> produit <span class="arithmatex">\(z \in \mathbb{R}^{m}\)</span>.</p>
+<p><strong>Règle de calcul</strong> : chaque composante <span class="arithmatex">\(z_i\)</span> est le produit scalaire de la <span class="arithmatex">\(i\)</span>-ème ligne de <span class="arithmatex">\(W\)</span> avec <span class="arithmatex">\(x\)</span>.</p>
+<div class="arithmatex">\[z_i = \sum_{j=1}^{n} W_{ij} \cdot x_j = W_{i,1} x_1 + W_{i,2} x_2 + \cdots + W_{i,n} x_n\]</div>
+<p><strong>Exemple complet avec 3 entrées → 2 neurones</strong> :</p>
+<div class="arithmatex">\[W = \begin{bmatrix}
+1 &amp; 2 &amp; 0 \\
+3 &amp; 0 &amp; -1
+\end{bmatrix} \in \mathbb{R}^{2\times3},\quad
+x = \begin{bmatrix}
+5 \\ 6 \\ 2
+\end{bmatrix} \in \mathbb{R}^3\]</div>
+<p>Calcul ligne par ligne :</p>
+<div class="arithmatex">\[z_1 = 1 \times 5 + 2 \times 6 + 0 \times 2 = 5 + 12 + 0 = 17\]</div>
+<div class="arithmatex">\[z_2 = 3 \times 5 + 0 \times 6 + (-1) \times 2 = 15 + 0 - 2 = 13\]</div>
+<p>Résultat : <span class="arithmatex">\(z = \begin{bmatrix} 17 \\ 13 \end{bmatrix} \in \mathbb{R}^2\)</span></p>
+<p>On ajoute le biais <span class="arithmatex">\(b = \begin{bmatrix} 1 \\ -1 \end{bmatrix}\)</span> :</p>
+<div class="arithmatex">\[z + b = \begin{bmatrix} 18 \\ 12 \end{bmatrix}\]</div>
+<p><strong>Ce que cela représente</strong> : <span class="arithmatex">\(W\)</span> transforme un vecteur de 3 features en 2 neurones. C'est exactement ce que fait une couche <code>Dense(2)</code> avec 3 inputs.</p>
+<h3 id="27-produit-matriciel-et-regle-des-dimensions">2.7 Produit matriciel et règle des dimensions<a class="headerlink" href="#27-produit-matriciel-et-regle-des-dimensions" title="Permanent link">&para;</a></h3>
+<p>Le produit <span class="arithmatex">\(A \cdot B\)</span> de deux matrices est défini si <strong>le nombre de colonnes de <span class="arithmatex">\(A\)</span> égale le nombre de lignes de <span class="arithmatex">\(B\)</span></strong>.</p>
+<div class="arithmatex">\[A \in \mathbb{R}^{m \times k},\quad B \in \mathbb{R}^{k \times n} \quad\Rightarrow\quad AB \in \mathbb{R}^{m \times n}\]</div>
+<p><strong>Règle mnémotechnique</strong> : <span class="arithmatex">\((m \times \underline{k})(\underline{k} \times n) \to (m \times n)\)</span>. Les dimensions intérieures doivent correspondre.</p>
+<p><strong>Exemple</strong> : propagation d'un mini-batch de 4 exemples.</p>
+<div class="arithmatex">\[W \in \mathbb{R}^{3 \times 2},\quad X \in \mathbb{R}^{2 \times 4} \quad\Rightarrow\quad WX \in \mathbb{R}^{3 \times 4}\]</div>
+<p>4 exemples passent simultanément dans une couche de 3 neurones.</p>
+<div class="admonition warning">
+<p class="admonition-title">Non-commutativité : <span class="arithmatex">\(AB \neq BA\)</span> en général</p>
+<p>Contrairement aux nombres, l'ordre compte pour les matrices. Intervertir les matrices produit (souvent) un résultat différent, voire un calcul invalide si les dimensions ne coïncident pas dans l'autre sens.</p>
+</div>
+<h3 id="28-transposee-et-propriete-abt-bt-at">2.8 Transposée et propriété <span class="arithmatex">\((AB)^T = B^T A^T\)</span><a class="headerlink" href="#28-transposee-et-propriete-abt-bt-at" title="Permanent link">&para;</a></h3>
+<p>La transposée <span class="arithmatex">\(W^T\)</span> de <span class="arithmatex">\(W \in \mathbb{R}^{m \times n}\)</span> est la matrice <span class="arithmatex">\(\in \mathbb{R}^{n \times m}\)</span> obtenue en échangeant lignes et colonnes :</p>
+<div class="arithmatex">\[(W^T)_{ij} = W_{ji}\]</div>
+<p><strong>Exemple</strong> :</p>
+<div class="arithmatex">\[W = \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 4 &amp; 5 &amp; 6 \end{bmatrix} \in \mathbb{R}^{2 \times 3}
+\quad\Rightarrow\quad
+W^T = \begin{bmatrix} 1 &amp; 4 \\ 2 &amp; 5 \\ 3 &amp; 6 \end{bmatrix} \in \mathbb{R}^{3 \times 2}\]</div>
+<p><strong>Théorème</strong> : <span class="arithmatex">\((AB)^T = B^T A^T\)</span></p>
+<p><strong>Démonstration</strong> : l'élément en position <span class="arithmatex">\((i,j)\)</span> de <span class="arithmatex">\((AB)^T\)</span> est, par définition, l'élément <span class="arithmatex">\((j,i)\)</span> de <span class="arithmatex">\(AB\)</span> :</p>
+<div class="arithmatex">\[[(AB)^T]_{ij} = [AB]_{ji} = \sum_k A_{jk} B_{ki}\]</div>
+<p>Or <span class="arithmatex">\(A_{jk} = [A^T]_{kj}\)</span> et <span class="arithmatex">\(B_{ki} = [B^T]_{ik}\)</span>, donc :</p>
+<div class="arithmatex">\[\sum_k A_{jk} B_{ki} = \sum_k [B^T]_{ik} [A^T]_{kj} = [B^T A^T]_{ij}\]</div>
+<p>Ce qui démontre que <span class="arithmatex">\([(AB)^T]_{ij} = [B^T A^T]_{ij}\)</span> pour tous <span class="arithmatex">\(i,j\)</span>, donc <span class="arithmatex">\(\boxed{(AB)^T = B^T A^T}\)</span>.</p>
+<div class="admonition info">
+<p class="admonition-title">Pourquoi c'est utile en rétropropagation</p>
+<p>Pour remonter les gradients d'une couche vers la précédente, on calcule <span class="arithmatex">\(W^T \delta\)</span> (transposée des poids fois l'erreur propagée). Cette formule vient directement de ce théorème appliqué à la chain rule.</p>
+</div>
+<hr />
+<h2 id="partie-3-analyse-et-optimisation">Partie 3 — Analyse et Optimisation<a class="headerlink" href="#partie-3-analyse-et-optimisation" title="Permanent link">&para;</a></h2>
+<h3 id="31-derivee-dune-fonction-dune-variable">3.1 Dérivée d'une fonction d'une variable<a class="headerlink" href="#31-derivee-dune-fonction-dune-variable" title="Permanent link">&para;</a></h3>
+<p><strong>Intuition</strong> : la dérivée mesure le <strong>taux de variation instantanée</strong> d'une fonction. Si <span class="arithmatex">\(f(x)\)</span> représente la perte d'un modèle en fonction d'un seul poids <span class="arithmatex">\(x\)</span>, la dérivée indique si augmenter <span class="arithmatex">\(x\)</span> fait monter ou descendre la perte.</p>
+<p><strong>Définition formelle</strong> :</p>
+<div class="arithmatex">\[f'(x) = \frac{df}{dx} = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}\]</div>
+<p><strong>Interprétation géométrique</strong> : c'est la pente de la tangente au graphe de <span class="arithmatex">\(f\)</span> en <span class="arithmatex">\(x\)</span>.</p>
+<h4 id="regles-de-derivation-fondamentales">Règles de dérivation fondamentales<a class="headerlink" href="#regles-de-derivation-fondamentales" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Fonction</th>
+<th>Dérivée</th>
+<th>Exemple d'usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(f(x) = c\)</span> (constante)</td>
+<td><span class="arithmatex">\(0\)</span></td>
+<td>Le biais seul (biais constant, gradient nul)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(x) = x^n\)</span></td>
+<td><span class="arithmatex">\(nx^{n-1}\)</span></td>
+<td>Perte quadratique <span class="arithmatex">\((x^2)' = 2x\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(x) = e^x\)</span></td>
+<td><span class="arithmatex">\(e^x\)</span></td>
+<td>Softmax, exponentielle</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(x) = \ln(x)\)</span></td>
+<td><span class="arithmatex">\(\frac{1}{x}\)</span></td>
+<td>Dérivée de la cross-entropy</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(f(x) = ax + b\)</span></td>
+<td><span class="arithmatex">\(a\)</span></td>
+<td>Couche linéaire</td>
+</tr>
+</tbody>
+</table>
+<h4 id="regle-de-la-chaine-chain-rule-demonstration">Règle de la chaîne (chain rule) — Démonstration<a class="headerlink" href="#regle-de-la-chaine-chain-rule-demonstration" title="Permanent link">&para;</a></h4>
+<p>C'est la règle <strong>la plus importante pour la rétropropagation</strong>. Si <span class="arithmatex">\(f = g(h(x))\)</span>, alors :</p>
+<div class="arithmatex">\[\frac{df}{dx} = \frac{dg}{dh} \cdot \frac{dh}{dx}\]</div>
+<p><strong>Démonstration</strong> :</p>
+<p>Par définition des dérivées, si <span class="arithmatex">\(u = h(x)\)</span> :</p>
+<div class="arithmatex">\[\frac{dg}{dx} = \lim_{\Delta x \to 0} \frac{g(h(x+\Delta x)) - g(h(x))}{\Delta x}\]</div>
+<p>On multiplie et divise par <span class="arithmatex">\(h(x+\Delta x) - h(x) = \Delta u\)</span> (en supposant <span class="arithmatex">\(\Delta u \neq 0\)</span>) :</p>
+<div class="arithmatex">\[= \lim_{\Delta x \to 0} \frac{g(u + \Delta u) - g(u)}{\Delta u} \cdot \frac{\Delta u}{\Delta x}\]</div>
+<p>Quand <span class="arithmatex">\(\Delta x \to 0\)</span>, <span class="arithmatex">\(\Delta u \to 0\)</span> aussi (car <span class="arithmatex">\(h\)</span> est continue), donc chaque limite converge séparément :</p>
+<div class="arithmatex">\[\boxed{\frac{df}{dx} = \frac{dg}{du} \cdot \frac{du}{dx}}\]</div>
+<p><strong>Exemple concret</strong> : dériver <span class="arithmatex">\(f(x) = (2x + 1)^2\)</span>.</p>
+<p>On pose <span class="arithmatex">\(u = h(x) = 2x+1\)</span> et <span class="arithmatex">\(g(u) = u^2\)</span>.</p>
+<div class="arithmatex">\[\frac{df}{dx} = \frac{d(u^2)}{du} \cdot \frac{d(2x+1)}{dx} = 2u \cdot 2 = 2(2x+1) \cdot 2 = 4(2x+1)\]</div>
+<p><strong>Pourquoi c'est crucial en Deep Learning</strong> : calculer le gradient de la perte par rapport aux poids de la première couche nécessite de composer des dizaines de dérivées via la chain rule. C'est exactement ce que fait la rétropropagation automatiquement.</p>
+<h3 id="32-derivee-partielle-et-gradient">3.2 Dérivée partielle et gradient<a class="headerlink" href="#32-derivee-partielle-et-gradient" title="Permanent link">&para;</a></h3>
+<h4 id="derivee-partielle">Dérivée partielle<a class="headerlink" href="#derivee-partielle" title="Permanent link">&para;</a></h4>
+<p>Si la fonction <span class="arithmatex">\(L\)</span> dépend de plusieurs variables <span class="arithmatex">\(w_1, w_2, \ldots, w_n\)</span>, la <strong>dérivée partielle</strong> <span class="arithmatex">\(\frac{\partial L}{\partial w_j}\)</span> mesure comment <span class="arithmatex">\(L\)</span> varie quand on ne bouge que <span class="arithmatex">\(w_j\)</span>, les autres étant fixés.</p>
+<p><strong>Règle de calcul</strong> : on dérive <span class="arithmatex">\(L\)</span> par rapport à <span class="arithmatex">\(w_j\)</span> exactement comme une dérivée ordinaire, en traitant toutes les autres variables comme des constantes.</p>
+<p><strong>Exemple</strong> : <span class="arithmatex">\(L(w_1, w_2) = w_1^2 + 3w_1 w_2 + w_2^2\)</span></p>
+<div class="arithmatex">\[\frac{\partial L}{\partial w_1} = 2w_1 + 3w_2 \quad \text{($w_2$ traité comme constante)}\]</div>
+<div class="arithmatex">\[\frac{\partial L}{\partial w_2} = 3w_1 + 2w_2 \quad \text{($w_1$ traité comme constante)}\]</div>
+<h4 id="gradient-theoreme-de-direction-de-montee-maximale">Gradient — Théorème de direction de montée maximale<a class="headerlink" href="#gradient-theoreme-de-direction-de-montee-maximale" title="Permanent link">&para;</a></h4>
+<p>Le <strong>gradient</strong> regroupe toutes les dérivées partielles dans un vecteur :</p>
+<div class="arithmatex">\[\nabla_w L = \begin{bmatrix}
+\frac{\partial L}{\partial w_1} \\
+\frac{\partial L}{\partial w_2} \\
+\vdots \\
+\frac{\partial L}{\partial w_n}
+\end{bmatrix}\]</div>
+<p><strong>Théorème</strong> : le gradient pointe dans la direction de <strong>plus forte croissance</strong> de <span class="arithmatex">\(L\)</span>.</p>
+<p><strong>Démonstration</strong> :</p>
+<p>La variation de <span class="arithmatex">\(L\)</span> dans une direction quelconque <span class="arithmatex">\(v\)</span> (vecteur unitaire <span class="arithmatex">\(\|v\|=1\)</span>) est la dérivée directionnelle :</p>
+<div class="arithmatex">\[D_v L = \nabla L \cdot v\]</div>
+<p>En appliquant la relation produit scalaire–angle :</p>
+<div class="arithmatex">\[D_v L = \|\nabla L\| \cdot \|v\| \cdot \cos\theta = \|\nabla L\| \cos\theta\]</div>
+<p>(car <span class="arithmatex">\(\|v\| = 1\)</span>). Cette quantité est <strong>maximale</strong> quand <span class="arithmatex">\(\cos\theta = 1\)</span>, soit <span class="arithmatex">\(\theta = 0°\)</span> : quand <span class="arithmatex">\(v\)</span> est exactement dans la même direction que <span class="arithmatex">\(\nabla L\)</span>.</p>
+<p>Donc le gradient est bien la direction de montée maximale. <strong>Pour minimiser</strong>, on part dans la direction opposée : <span class="arithmatex">\(-\nabla L\)</span>.</p>
+<h3 id="33-descente-de-gradient-algorithme-intuition-et-convergence">3.3 Descente de gradient — Algorithme, intuition et convergence<a class="headerlink" href="#33-descente-de-gradient-algorithme-intuition-et-convergence" title="Permanent link">&para;</a></h3>
+<h4 id="lalgorithme">L'algorithme<a class="headerlink" href="#lalgorithme" title="Permanent link">&para;</a></h4>
+<p>Mise à jour d'un paramètre à chaque itération :</p>
+<div class="arithmatex">\[w \leftarrow w - \eta \cdot \frac{\partial L}{\partial w}\]</div>
+<p>Pour tous les paramètres simultanément (notation vectorielle) :</p>
+<div class="arithmatex">\[\theta \leftarrow \theta - \eta \cdot \nabla_\theta L\]</div>
+<p>avec <span class="arithmatex">\(\eta &gt; 0\)</span> le <strong>taux d'apprentissage</strong> (<em>learning rate</em>).</p>
+<h4 id="intuition-geometrique">Intuition géométrique<a class="headerlink" href="#intuition-geometrique" title="Permanent link">&para;</a></h4>
+<pre class="mermaid"><code>graph LR
+    A["Position initiale\n(grande perte)"] --&gt;|"−η·∇L"| B["Pas 1"]
+    B --&gt;|"−η·∇L"| C["Pas 2"]
+    C --&gt;|"−η·∇L"| D["Minimum local\n(faible perte)"]
+    style A fill:#ffccbc
+    style D fill:#c8e6c9</code></pre>
+<p>Imagine une vallée (le minimum de perte) et une bille placée sur le flanc d'une montagne :</p>
+<ul>
+<li>La pente locale (gradient) indique quelle direction monte.</li>
+<li>La bille descend dans la direction opposée à la pente.</li>
+<li>Elle avance d'un pas proportionnel à <span class="arithmatex">\(\eta\)</span>.</li>
+</ul>
+<h4 id="role-crucial-du-learning-rate-eta">Rôle crucial du learning rate <span class="arithmatex">\(\eta\)</span><a class="headerlink" href="#role-crucial-du-learning-rate-eta" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Valeur de <span class="arithmatex">\(\eta\)</span></th>
+<th>Comportement</th>
+<th>Problème</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trop grand</td>
+<td>Pas énorme, saute par-dessus le minimum</td>
+<td>Divergence : la perte augmente</td>
+</tr>
+<tr>
+<td>Trop petit</td>
+<td>Pas minuscule</td>
+<td>Convergence très lente, coûteux</td>
+</tr>
+<tr>
+<td>Bien choisi</td>
+<td>Convergence progressive</td>
+<td>Optimisation réussie</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Valeur de départ recommandée</p>
+<p>Commencer avec <span class="arithmatex">\(\eta = 0.001\)</span> (valeur par défaut de l'optimiseur <code>Adam</code>). Diviser par 10 si le modèle n'apprend pas, multiplier par 10 si c'est trop lent.</p>
+</div>
+<h4 id="preuve-que-la-descente-de-gradient-reduit-la-perte">Preuve que la descente de gradient réduit la perte<a class="headerlink" href="#preuve-que-la-descente-de-gradient-reduit-la-perte" title="Permanent link">&para;</a></h4>
+<p><strong>Théorème</strong> : pour <span class="arithmatex">\(\eta\)</span> suffisamment petit et <span class="arithmatex">\(\nabla L \neq 0\)</span>, on a <span class="arithmatex">\(L(w - \eta \nabla L) &lt; L(w)\)</span>.</p>
+<p><strong>Démonstration par développement de Taylor au premier ordre</strong> :</p>
+<p>L'approximation de Taylor dit que pour <span class="arithmatex">\(\eta\)</span> petit :</p>
+<div class="arithmatex">\[L(w - \eta \nabla L) \approx L(w) + \nabla L \cdot (-\eta \nabla L) + O(\eta^2)\]</div>
+<p>Le terme <span class="arithmatex">\(\nabla L \cdot (-\eta \nabla L)\)</span> est le produit scalaire du gradient avec la direction de mise à jour :</p>
+<div class="arithmatex">\[\nabla L \cdot (-\eta \nabla L) = -\eta \|\nabla L\|^2\]</div>
+<p>Donc :</p>
+<div class="arithmatex">\[L(w - \eta \nabla L) \approx L(w) - \eta \|\nabla L\|^2 + O(\eta^2)\]</div>
+<p>Pour <span class="arithmatex">\(\eta\)</span> suffisamment petit, <span class="arithmatex">\(O(\eta^2) \ll \eta \|\nabla L\|^2\)</span>, d'où :</p>
+<div class="arithmatex">\[L(w - \eta \nabla L) &lt; L(w) \quad \text{si } \|\nabla L\|^2 &gt; 0\]</div>
+<p>La perte <strong>diminue strictement</strong> à chaque pas, tant qu'on n'est pas au minimum (<span class="arithmatex">\(\nabla L = 0\)</span>).</p>
+<h3 id="34-chain-rule-vectorielle-la-retropropagation-expliquee">3.4 Chain rule vectorielle : la rétropropagation expliquée<a class="headerlink" href="#34-chain-rule-vectorielle-la-retropropagation-expliquee" title="Permanent link">&para;</a></h3>
+<p>Dans un réseau de neurones, la perte <span class="arithmatex">\(L\)</span> dépend des poids de la dernière couche, qui dépendent des couches précédentes, etc. La chain rule s'applique en cascade.</p>
+<p>Soit un réseau à deux couches (simplifié) :</p>
+<div class="arithmatex">\[z^{(1)} = W^{(1)} x + b^{(1)}, \quad a^{(1)} = f(z^{(1)}), \quad z^{(2)} = W^{(2)} a^{(1)} + b^{(2)}, \quad L = \text{perte}(z^{(2)}, y)\]</div>
+<p>Gradient de <span class="arithmatex">\(L\)</span> par rapport à <span class="arithmatex">\(W^{(1)}\)</span> (chain rule vectorielle, de droite à gauche) :</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial W^{(1)}} = \underbrace{\frac{\partial L}{\partial z^{(2)}}}_{\delta^{(2)}} \cdot \underbrace{\frac{\partial z^{(2)}}{\partial a^{(1)}}}_{W^{(2)}} \cdot \underbrace{\frac{\partial a^{(1)}}{\partial z^{(1)}}}_{f'(z^{(1)})} \cdot \underbrace{\frac{\partial z^{(1)}}{\partial W^{(1)}}}_{x^T}\]</div>
+<p>Chaque terme est calculable avec les formules précédentes. On les calcule dans l'ordre inverse des couches (de la sortie vers l'entrée), d'où le nom <strong>rétropropagation</strong> (<em>backpropagation</em>).</p>
+<hr />
+<h2 id="partie-4-exemple-guide-complet-etape-par-etape">Partie 4 — Exemple guidé complet, étape par étape<a class="headerlink" href="#partie-4-exemple-guide-complet-etape-par-etape" title="Permanent link">&para;</a></h2>
+<p>On va suivre un mini-réseau de bout en bout, <strong>uniquement avec des calculs à la main</strong>.</p>
+<p><strong>Architecture</strong> : 1 neurone caché, activation ReLU, sortie linéaire, perte quadratique (MSE).</p>
+<p><strong>Données</strong> : <span class="arithmatex">\(x = 2\)</span>, <span class="arithmatex">\(y = 1\)</span> (on prédit <span class="arithmatex">\(1\)</span> depuis l'entrée <span class="arithmatex">\(2\)</span>).</p>
+<p><strong>Paramètres initiaux</strong> : <span class="arithmatex">\(w_1 = 0.4\)</span>, <span class="arithmatex">\(b_1 = 0.1\)</span>, <span class="arithmatex">\(w_2 = 0.5\)</span>, <span class="arithmatex">\(b_2 = 0\)</span>.</p>
+<p><strong>Taux d'apprentissage</strong> : <span class="arithmatex">\(\eta = 0.1\)</span>.</p>
+<pre class="mermaid"><code>graph LR
+    X["x = 2"] --&gt;|"×w₁+b₁"| Z1["z₁ = 0.9"]
+    Z1 --&gt;|"ReLU"| A1["a₁ = 0.9"]
+    A1 --&gt;|"×w₂+b₂"| Y["ŷ = 0.45"]
+    Y --&gt;|"perte"| L["L = 0.151"]
+    style X fill:#e3f2fd
+    style L fill:#ffccbc</code></pre>
+<h3 id="etape-1-propagation-avant-forward-pass">Étape 1 — Propagation avant (Forward pass)<a class="headerlink" href="#etape-1-propagation-avant-forward-pass" title="Permanent link">&para;</a></h3>
+<p><strong>Couche 1</strong> :</p>
+<div class="arithmatex">\[z_1 = w_1 \cdot x + b_1 = 0.4 \times 2 + 0.1 = 0.9\]</div>
+<p><strong>Activation ReLU</strong> : <span class="arithmatex">\(\text{ReLU}(x) = \max(0, x)\)</span></p>
+<div class="arithmatex">\[a_1 = \text{ReLU}(0.9) = 0.9 \quad (\text{positif, donc inchangé})\]</div>
+<p><strong>Couche 2</strong> (sortie linéaire) :</p>
+<div class="arithmatex">\[\hat{y} = w_2 \cdot a_1 + b_2 = 0.5 \times 0.9 + 0 = 0.45\]</div>
+<p><strong>Perte</strong> (MSE : <span class="arithmatex">\(\frac{1}{2}(\hat{y}-y)^2\)</span>) :</p>
+<div class="arithmatex">\[L = \frac{1}{2}(0.45 - 1)^2 = \frac{1}{2}(-0.55)^2 = \frac{1}{2} \times 0.3025 = 0.151\]</div>
+<h3 id="etape-2-retropropagation-backward-pass">Étape 2 — Rétropropagation (Backward pass)<a class="headerlink" href="#etape-2-retropropagation-backward-pass" title="Permanent link">&para;</a></h3>
+<p>On calcule les gradients en appliquant la chain rule <strong>de la sortie vers l'entrée</strong>.</p>
+<p><strong>Gradient de la perte par rapport à <span class="arithmatex">\(\hat{y}\)</span></strong> (dérivée de <span class="arithmatex">\(\frac{1}{2}(\hat{y}-y)^2\)</span> par rapport à <span class="arithmatex">\(\hat{y}\)</span>) :</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial \hat{y}} = \hat{y} - y = 0.45 - 1 = -0.55\]</div>
+<p><strong>Gradient par rapport à <span class="arithmatex">\(w_2\)</span></strong> (chain rule : <span class="arithmatex">\(\hat{y} = w_2 a_1\)</span>) :</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial w_2} = \frac{\partial L}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial w_2} = (-0.55) \times a_1 = (-0.55) \times 0.9 = -0.495\]</div>
+<p><strong>Gradient par rapport à <span class="arithmatex">\(b_2\)</span></strong> (<span class="arithmatex">\(\frac{\partial \hat{y}}{\partial b_2} = 1\)</span>) :</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial b_2} = \frac{\partial L}{\partial \hat{y}} \cdot 1 = -0.55\]</div>
+<p><strong>Gradient remontant vers la couche 1</strong> (signal propagé à travers <span class="arithmatex">\(w_2\)</span>) :</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial a_1} = \frac{\partial L}{\partial \hat{y}} \cdot w_2 = (-0.55) \times 0.5 = -0.275\]</div>
+<p><strong>Gradient à travers ReLU</strong> : la dérivée de ReLU est <span class="arithmatex">\(1\)</span> si l'entrée <span class="arithmatex">\(&gt; 0\)</span>, <span class="arithmatex">\(0\)</span> sinon.</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial z_1} = \frac{\partial L}{\partial a_1} \cdot \underbrace{\mathbf{1}[z_1 &gt; 0]}_{=1 \text{ car } z_1=0.9&gt;0} = -0.275 \times 1 = -0.275\]</div>
+<p><strong>Gradient par rapport à <span class="arithmatex">\(w_1\)</span></strong> (<span class="arithmatex">\(z_1 = w_1 x\)</span>, donc <span class="arithmatex">\(\frac{\partial z_1}{\partial w_1} = x\)</span>) :</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial w_1} = \frac{\partial L}{\partial z_1} \cdot x = -0.275 \times 2 = -0.55\]</div>
+<p><strong>Gradient par rapport à <span class="arithmatex">\(b_1\)</span></strong> (<span class="arithmatex">\(\frac{\partial z_1}{\partial b_1} = 1\)</span>) :</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial b_1} = \frac{\partial L}{\partial z_1} \cdot 1 = -0.275\]</div>
+<h3 id="etape-3-mise-a-jour-des-poids">Étape 3 — Mise à jour des poids<a class="headerlink" href="#etape-3-mise-a-jour-des-poids" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[w_1 \leftarrow 0.4 - 0.1 \times (-0.55) = 0.455\]</div>
+<div class="arithmatex">\[b_1 \leftarrow 0.1 - 0.1 \times (-0.275) = 0.1275\]</div>
+<div class="arithmatex">\[w_2 \leftarrow 0.5 - 0.1 \times (-0.495) = 0.5495\]</div>
+<div class="arithmatex">\[b_2 \leftarrow 0 - 0.1 \times (-0.55) = 0.055\]</div>
+<p>Tous les poids ont augmenté car les gradients étaient négatifs (la prédiction <span class="arithmatex">\(0.45\)</span> était inférieure à la cible <span class="arithmatex">\(1\)</span>, il fallait "pousser" les paramètres vers le haut).</p>
+<h3 id="verification-la-perte-a-t-elle-baisse">Vérification : la perte a-t-elle baissé ?<a class="headerlink" href="#verification-la-perte-a-t-elle-baisse" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[z_1' = 0.455 \times 2 + 0.1275 = 1.0375 \quad\Rightarrow\quad a_1' = 1.0375\]</div>
+<div class="arithmatex">\[\hat{y}' = 0.5495 \times 1.0375 + 0.055 = 0.625\]</div>
+<div class="arithmatex">\[L' = \frac{1}{2}(0.625 - 1)^2 = \frac{1}{2}(0.375)^2 = 0.0703\]</div>
+<p>La perte est passée de <span class="arithmatex">\(0.151\)</span> à <span class="arithmatex">\(0.070\)</span> : <strong>divisée par 2 en un seul pas de gradient</strong>, conformément au théorème de convergence.</p>
+<hr />
+<h2 id="refaire-ces-calculs-dans-les-ide-avec-copilot">Refaire ces calculs dans les IDE avec Copilot<a class="headerlink" href="#refaire-ces-calculs-dans-les-ide-avec-copilot" title="Permanent link">&para;</a></h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">IntelliJ IDEA</label><label for="__tabbed_1_2">Visual Studio Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ol>
+<li>Crée un fichier <code>test_gradients.py</code> dans ton projet Python.</li>
+<li>Demande à Copilot Chat : <em>"Implémente pas à pas le forward pass et le backward pass pour ce réseau à un neurone caché : w1=0.4, b1=0.1, w2=0.5, b2=0, x=2, y=1. Calcule la perte MSE et les gradients sans utiliser PyTorch autograd."</em></li>
+<li>Compare les valeurs avec les calculs de cette page.</li>
+<li>Ensuite demande : <em>"Ajoute une version PyTorch avec <code>autograd</code> et vérifie que les gradients correspondent."</em></li>
+</ol>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>Ouvre un notebook Jupyter (<code>Ctrl+Shift+P</code> → "New Jupyter Notebook").</li>
+<li>Dans la première cellule, demande à Copilot : <em>"Génère une cellule NumPy qui vérifie le produit matrice-vecteur, la norme L2 et une étape de descente de gradient pour l'exemple de cette page."</em></li>
+<li>Ajoute une deuxième cellule : <em>"Trace la courbe de la perte en fonction du learning rate η entre 0.001 et 1 pour cet exemple."</em></li>
+<li>Lance cellule par cellule.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Objectif pratique</p>
+<p>Faire tourner ces calculs dans un notebook avec des <code>print()</code> à chaque étape est la meilleure façon de s'assurer que la compréhension est solide avant d'utiliser PyTorch ou TensorFlow.</p>
+</div>
+<hr />
+<h2 id="recapitulatif-des-theoremes-demontres">Récapitulatif des théorèmes démontrés<a class="headerlink" href="#recapitulatif-des-theoremes-demontres" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Théorème</th>
+<th>Formule clé</th>
+<th>Usage en Deep Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bayes</td>
+<td><span class="arithmatex">\(P(y\mid x) = \frac{P(x\mid y)P(y)}{P(x)}\)</span></td>
+<td>Classification probabiliste</td>
+</tr>
+<tr>
+<td>Variance (forme alternative)</td>
+<td><span class="arithmatex">\(\mathrm{Var}(X) = \mathbb{E}[X^2] - \mu^2\)</span></td>
+<td>Normalisation des données</td>
+</tr>
+<tr>
+<td>Produit scalaire et angle</td>
+<td><span class="arithmatex">\(a \cdot b = \|a\|\|b\|\cos\theta\)</span></td>
+<td>Similarité cosinus</td>
+</tr>
+<tr>
+<td>Softmax = probabilité valide</td>
+<td><span class="arithmatex">\(\sum_i \text{Softmax}(z_i) = 1\)</span></td>
+<td>Sortie de classification</td>
+</tr>
+<tr>
+<td>Transposée d'un produit</td>
+<td><span class="arithmatex">\((AB)^T = B^T A^T\)</span></td>
+<td>Rétropropagation couche→couche</td>
+</tr>
+<tr>
+<td>Gradient = direction de montée</td>
+<td><span class="arithmatex">\(D_v L = \|\nabla L\|\cos\theta\)</span></td>
+<td>Justification de la descente de gradient</td>
+</tr>
+<tr>
+<td>Descente réduit la perte</td>
+<td><span class="arithmatex">\(L(w - \eta\nabla L) &lt; L(w)\)</span></td>
+<td>Convergence de l'entraînement</td>
+</tr>
+<tr>
+<td>Chain rule</td>
+<td><span class="arithmatex">\(\frac{df}{dx} = \frac{dg}{dh}\cdot\frac{dh}{dx}\)</span></td>
+<td>Rétropropagation en cascade</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="sources-officielles-pour-approfondir">Sources officielles pour approfondir<a class="headerlink" href="#sources-officielles-pour-approfondir" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/">MIT OpenCourseWare — 18.06 Linear Algebra (Gilbert Strang)</a> — Le cours d'algèbre linéaire de référence mondiale</li>
+<li><a href="https://ocw.mit.edu/courses/6-041sc-probabilistic-systems-analysis-and-applied-probability-fall-2013/">MIT OpenCourseWare — 6.041SC Probabilistic Systems Analysis</a> — Probabilités appliquées</li>
+<li><a href="https://cs229.stanford.edu/materials.html">Stanford CS229 — Lecture Notes (Supervised Learning, Probability, Optimization)</a> — Notes de cours de Andrew Ng</li>
+<li><a href="https://www.deeplearning.ai/courses/mathematics-for-machine-learning-and-data-science-specialization/">DeepLearning.AI — Mathematics for Machine Learning and Data Science</a> — Spécialisation complète en 3 cours</li>
+<li><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">3Blue1Brown — Essence of Linear Algebra (YouTube)</a> — Visualisations géométriques animées (en anglais)</li>
+<li><a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr">3Blue1Brown — Calculus series (YouTube)</a> — Intuitions sur les dérivées (en anglais)</li>
+<li><a href="https://numpy.org/doc/stable/reference/routines.linalg.html">NumPy — Référence officielle de l'algèbre linéaire</a></li>
+<li><a href="https://pytorch.org/docs/stable/index.html">PyTorch — Documentation officielle des tenseurs et autograd</a></li>
+<li><a href="https://www.tensorflow.org/guide">TensorFlow — Documentation officielle (Tensor, GradientTape)</a></li>
+<li><a href="https://explained.ai/matrix-calculus/">The Matrix Calculus You Need For Deep Learning (Parr &amp; Howard)</a> — Dérivées matricielles expliquées pour le DL</li>
+</ul>
+<hr />
+<h2 id="resume">Résumé<a class="headerlink" href="#resume" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Les <strong>probabilités</strong> (Bayes, entropie, cross-entropy) quantifient l'incertitude et guident le choix de la fonction de perte.</li>
+<li>Les <strong>vecteurs et matrices</strong> sont le langage des couches de neurones : tout calcul d'activation est un produit <span class="arithmatex">\(Wx + b\)</span>.</li>
+<li>Le <strong>gradient</strong> pointe vers la montée, la descente de gradient vers la baisse — la preuve par Taylor garantit la convergence.</li>
+<li>La <strong>chain rule</strong> est le moteur de la rétropropagation : les gradients se multiplient de la sortie vers l'entrée.</li>
+<li>Refaire un mini-réseau à la main confirme la compréhension avant de déléguer à PyTorch/TensorFlow.</li>
+</ul>
+<hr />
+<h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>
+<p><strong><a href="../reseaux-neurones/">Réseaux de neurones : fondamentaux</a></strong> : passer des bases mathématiques au fonctionnement complet d'un réseau de neurones (neurones, activations, propagation avant et entraînement).</p>
+<p>Concepts clés couverts :</p>
+<ul>
+<li><strong>Perceptron</strong> — neurone artificiel et somme pondérée</li>
+<li><strong>Propagation avant</strong> — calcul de sortie couche par couche</li>
+<li><strong>Fonctions d'activation</strong> — non-linéarité et capacité de modélisation</li>
+<li><strong>Fonction de perte</strong> — mesure d'erreur à minimiser</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/sidebar-toggle.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

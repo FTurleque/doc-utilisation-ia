@@ -1,0 +1,5525 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation collectée sur l'utilisation de l'IA">
+      
+      
+        <meta name="author" content="FTurleque">
+      
+      
+      
+        <link rel="prev" href="../fondations-mathematiques/">
+      
+      
+        <link rel="next" href="../architectures-deep-learning/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Réseaux de Neurones — Fondamentaux - Documentation IA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#reseaux-de-neurones-fondamentaux" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Documentation IA" class="md-header__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation IA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Réseaux de Neurones — Fondamentaux
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer en mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer en mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentation IA" class="md-nav__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation IA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Copilot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-1-installation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    IntelliJ IDEA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visual Studio Code
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-2-parametrage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramétrage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Paramétrage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/intellij-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/vscode-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/comparaison-parametres/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-3-cli-modes/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modes CLI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/page-principale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI Détail
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-4-contexte/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexte & Personnalisation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contexte & Personnalisation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Clés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instructions (.instructions.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/applyto-avance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    applyTo Avancé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/prompt-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Files (.prompt.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents (.agent.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills (SKILL.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/parametres-depot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramètres du Dépôt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/vscode-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/intellij-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/comparaison-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-5-prompt-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Engineering
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prompt Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-intermediaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Intermédiaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-avancees/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Avancées
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/avec-copilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompting avec Copilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-6-machine-learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Machine Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/concepts-fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/algorithmes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/copilot-workflow-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot pour le ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/python-data-science/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & Data Science
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/notebooks-jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notebooks Jupyter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/mlops-deploiement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLOps & Déploiement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-ecosystemes-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-outils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning & Réseaux de Neurones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning & Réseaux de Neurones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fondations-mathematiques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondations Mathématiques
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réseaux de Neurones — Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réseaux de Neurones — Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#acronymes-et-notations-a-lire-avant-les-formules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acronymes et notations (à lire avant les formules)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Acronymes et notations (à lire avant les formules)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acronymes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acronymes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symboles-mathematiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symboles mathématiques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quest-ce-quun-reseau-de-neurones-artificiel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qu'est-ce qu'un réseau de neurones artificiel ?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qu&#39;est-ce qu&#39;un réseau de neurones artificiel ?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#neurone-artificiel-perceptron" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neurone artificiel (perceptron)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonctions-dactivation-explication-concrete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fonctions d'activation : explication concrète
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fonctions d&#39;activation : explication concrète">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vue-densemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vue d'ensemble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigmoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sigmoid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tanh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReLU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaky-relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaky ReLU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Softmax
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-dun-reseau-multicouche" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture d'un réseau multicouche
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-le-reseau-apprend-retropropagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment le réseau apprend : rétropropagation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comment le réseau apprend : rétropropagation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fonctions-de-perte-courantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fonctions de perte courantes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fonctions de perte courantes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mse-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MSE (régression)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bce-classification-binaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCE (classification binaire)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cce-classification-multiclasse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CCE (classification multiclasse)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regle-de-la-chaine-idee-cle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règle de la chaîne (idée clé)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mise-a-jour-des-poids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mise à jour des poids
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descente-de-gradient-et-optimiseurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descente de gradient et optimiseurs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemple-pratique-reseau-simple-en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple pratique : réseau simple en Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-officielles-des-formules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Références officielles des formules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#points-cles-a-retenir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Points clés à retenir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaine-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaine étape
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architectures-deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architectures de Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concevoir-entrainer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concevoir et Entraîner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../optimisation-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimisation et Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-7-rag/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RAG
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts & Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implémentation (Basic→Expert)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implémentation (Basic→Expert)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Présentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 1 (Débutant)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 2 (Intermédiaire)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 3 (Expert)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/cas-usage-secteurs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage par Secteur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/optimisation-avancee/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimisation Avancée
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-9-bonnes-pratiques/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bonnes Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bonnes Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/utilisation-effective/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisation Effective
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/organisation-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Organisation du Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/productivite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Productivité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/securite-qualite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité & Qualité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance & Ressources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/workflows-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflows IA Complets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-10-cas-usage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cas d'Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/comparaison-ecosystemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java-spring-boot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java & Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-react/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & React
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & Express
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/react-typescript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    React 19 & TypeScript
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & FastAPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-11-troubleshooting/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/problemes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problèmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/logs-diagnostic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logs & Diagnostic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/comparaison-problemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Problèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/procedures-reparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procédures de Réparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-12-couts-gouvernance/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coûts & Gouvernance
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Coûts & Gouvernance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/patterns-allers-retours/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réduire les allers-retours
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/premium-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Premium Requests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/abonnements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les abonnements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/leviers-economie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leviers d'économie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/modes-quand-utiliser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quand utiliser quel mode ?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/workflow-recommande/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow recommandé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-13-outils-economies/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Outils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/rtk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/toon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TOON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/openskills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenSkills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/outils-complementaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils Complémentaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-14-veille-ia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Veille IA
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Veille IA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/sources-officielles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sources Officielles & Changelogs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/videos-podcasts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vidéos, Podcasts & Conférences
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/securite-risques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité, Risques & Failles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/newsletters-communautes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Newsletters & Communautés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../appendices/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/raccourcis-clavier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raccourcis Clavier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/ressources-externes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ressources Externes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/templates-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#acronymes-et-notations-a-lire-avant-les-formules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acronymes et notations (à lire avant les formules)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Acronymes et notations (à lire avant les formules)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#acronymes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acronymes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symboles-mathematiques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symboles mathématiques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quest-ce-quun-reseau-de-neurones-artificiel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qu'est-ce qu'un réseau de neurones artificiel ?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Qu&#39;est-ce qu&#39;un réseau de neurones artificiel ?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#neurone-artificiel-perceptron" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neurone artificiel (perceptron)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fonctions-dactivation-explication-concrete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fonctions d'activation : explication concrète
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fonctions d&#39;activation : explication concrète">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vue-densemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vue d'ensemble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigmoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sigmoid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tanh
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReLU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leaky-relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaky ReLU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#softmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Softmax
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-dun-reseau-multicouche" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture d'un réseau multicouche
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comment-le-reseau-apprend-retropropagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comment le réseau apprend : rétropropagation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Comment le réseau apprend : rétropropagation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fonctions-de-perte-courantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fonctions de perte courantes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fonctions de perte courantes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mse-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MSE (régression)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bce-classification-binaire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BCE (classification binaire)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cce-classification-multiclasse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CCE (classification multiclasse)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regle-de-la-chaine-idee-cle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règle de la chaîne (idée clé)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mise-a-jour-des-poids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mise à jour des poids
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#descente-de-gradient-et-optimiseurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descente de gradient et optimiseurs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exemple-pratique-reseau-simple-en-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exemple pratique : réseau simple en Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references-officielles-des-formules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Références officielles des formules
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#points-cles-a-retenir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Points clés à retenir
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaine-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaine étape
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Accueil
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Deep Learning & Réseaux de Neurones
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="reseaux-de-neurones-fondamentaux">Réseaux de Neurones : Fondamentaux<a class="headerlink" href="#reseaux-de-neurones-fondamentaux" title="Permanent link">&para;</a></h1>
+<p><span class="badge-intermediate">Intermédiaire</span></p>
+<p>Ce guide explique le fonctionnement des réseaux de neurones artificiels (RNA),
+avec des formules lisibles, des acronymes explicités, des exemples concrets et
+des liens vers les documentations officielles associées.</p>
+<hr />
+<h2 id="acronymes-et-notations-a-lire-avant-les-formules">Acronymes et notations (à lire avant les formules)<a class="headerlink" href="#acronymes-et-notations-a-lire-avant-les-formules" title="Permanent link">&para;</a></h2>
+<h3 id="acronymes">Acronymes<a class="headerlink" href="#acronymes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Acronyme</th>
+<th>Signification</th>
+<th>Explication rapide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RNA / ANN</strong></td>
+<td>Réseau de Neurones Artificiels / Artificial Neural Network</td>
+<td>Modèle composé de neurones artificiels organisés en couches</td>
+</tr>
+<tr>
+<td><strong>ML</strong></td>
+<td>Machine Learning</td>
+<td>Apprentissage automatique à partir de données</td>
+</tr>
+<tr>
+<td><strong>DL</strong></td>
+<td>Deep Learning</td>
+<td>Sous-domaine du ML avec réseaux profonds</td>
+</tr>
+<tr>
+<td><strong>MSE</strong></td>
+<td>Mean Squared Error</td>
+<td>Erreur quadratique moyenne (régression)</td>
+</tr>
+<tr>
+<td><strong>BCE</strong></td>
+<td>Binary Cross-Entropy</td>
+<td>Perte pour classification binaire</td>
+</tr>
+<tr>
+<td><strong>CCE</strong></td>
+<td>Categorical Cross-Entropy</td>
+<td>Perte pour classification multiclasse</td>
+</tr>
+<tr>
+<td><strong>GD</strong></td>
+<td>Gradient Descent</td>
+<td>Descente de gradient</td>
+</tr>
+<tr>
+<td><strong>SGD</strong></td>
+<td>Stochastic Gradient Descent</td>
+<td>Descente de gradient stochastique</td>
+</tr>
+<tr>
+<td><strong>RNN</strong></td>
+<td>Recurrent Neural Network</td>
+<td>Réseau récurrent pour séquences</td>
+</tr>
+<tr>
+<td><strong>CNN</strong></td>
+<td>Convolutional Neural Network</td>
+<td>Réseau convolutionnel pour images</td>
+</tr>
+</tbody>
+</table>
+<h3 id="symboles-mathematiques">Symboles mathématiques<a class="headerlink" href="#symboles-mathematiques" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symbole</th>
+<th>Lecture</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(x_i\)</span></td>
+<td>"x indice i"</td>
+<td>i-e feature en entrée</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(w_i\)</span></td>
+<td>"w indice i"</td>
+<td>poids associé à <span class="arithmatex">\(x_i\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(b\)</span></td>
+<td>"b"</td>
+<td>biais</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(z\)</span></td>
+<td>"z"</td>
+<td>somme pondérée avant activation</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\hat{y}\)</span></td>
+<td>"y chapeau"</td>
+<td>prédiction du modèle</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(y\)</span></td>
+<td>"y"</td>
+<td>valeur réelle (label)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(L\)</span></td>
+<td>"L"</td>
+<td>fonction de perte</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\eta\)</span></td>
+<td>"eta"</td>
+<td>learning rate (pas d'apprentissage)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\partial\)</span></td>
+<td>"dérivée partielle"</td>
+<td>variation locale d'une fonction</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\sum\)</span></td>
+<td>"somme"</td>
+<td>addition sur un ensemble d'indices</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Comment lire une formule</p>
+<p>Lis de gauche à droite :
+1. ce que l'on veut calculer,
+2. avec quelles opérations,
+3. et quels paramètres sont appris pendant l'entraînement.</p>
+</div>
+<hr />
+<h2 id="quest-ce-quun-reseau-de-neurones-artificiel">Qu'est-ce qu'un réseau de neurones artificiel ?<a class="headerlink" href="#quest-ce-quun-reseau-de-neurones-artificiel" title="Permanent link">&para;</a></h2>
+<p>Un <strong>réseau de neurones artificiels</strong> est un modèle inspiré du cerveau humain.
+Il prend des entrées numériques, applique des transformations successives dans
+des couches de neurones, puis produit une prédiction.</p>
+<h3 id="neurone-artificiel-perceptron">Neurone artificiel (perceptron)<a class="headerlink" href="#neurone-artificiel-perceptron" title="Permanent link">&para;</a></h3>
+<p>Le neurone est l'unité de base d'un réseau.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph "Entrées"
+        X1["x1"]
+        X2["x2"]
+        X3["x3"]
+    end
+    subgraph "Neurone"
+        S["z = somme pondérée"] --&gt; F["activation f(z)"]
+    end
+    X1 --&gt;|"w1"| S
+    X2 --&gt;|"w2"| S
+    X3 --&gt;|"w3"| S
+    B["biais b"] --&gt; S
+    F --&gt; Y["y chapeau"]</code></pre>
+<p>Formule du neurone :</p>
+<div class="arithmatex">\[
+z = \sum_{i=1}^{n} w_i x_i + b
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(z\)</span> : somme pondérée avant activation.</li>
+<li><span class="arithmatex">\(x_i\)</span> : i-e entrée (feature).</li>
+<li><span class="arithmatex">\(w_i\)</span> : poids appris pour l'entrée <span class="arithmatex">\(x_i\)</span>.</li>
+<li><span class="arithmatex">\(b\)</span> : biais.</li>
+<li><span class="arithmatex">\(n\)</span> : nombre total d'entrées.</li>
+</ul>
+<div class="arithmatex">\[
+\hat{y} = f(z)
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(\hat{y}\)</span> : sortie prédite.</li>
+<li><span class="arithmatex">\(f(\cdot)\)</span> : fonction d'activation.</li>
+<li><span class="arithmatex">\(z\)</span> : valeur calculée à la formule précédente.</li>
+</ul>
+<p>Exemple concret : si <span class="arithmatex">\(x=[2,1]\)</span>, <span class="arithmatex">\(w=[0.5,-1]\)</span>, <span class="arithmatex">\(b=0.2\)</span> alors</p>
+<div class="arithmatex">\[
+z = 0.5 \cdot 2 + (-1) \cdot 1 + 0.2 = 0.2
+\]</div>
+<p>Puis la sortie dépend de l'activation choisie.</p>
+<div class="admonition tip">
+<p class="admonition-title">Rôle du biais</p>
+<p>Sans biais, le neurone est trop contraint. Le biais déplace la frontière de
+décision et améliore la capacité d'ajustement.</p>
+</div>
+<hr />
+<h2 id="fonctions-dactivation-explication-concrete">Fonctions d'activation : explication concrète<a class="headerlink" href="#fonctions-dactivation-explication-concrete" title="Permanent link">&para;</a></h2>
+<p>La fonction d'activation transforme <span class="arithmatex">\(z\)</span> en sortie utile. Elle ajoute de la
+non-linéarité, indispensable pour apprendre des motifs complexes.</p>
+<h3 id="vue-densemble">Vue d'ensemble<a class="headerlink" href="#vue-densemble" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Fonction</th>
+<th>Formule</th>
+<th>Plage de sortie</th>
+<th>Quand l'utiliser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid</td>
+<td><span class="arithmatex">\(\sigma(x)=\frac{1}{1+e^{-x}}\)</span></td>
+<td><span class="arithmatex">\((0,1)\)</span></td>
+<td>Sortie binaire</td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td><span class="arithmatex">\(\tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}\)</span></td>
+<td><span class="arithmatex">\((-1,1)\)</span></td>
+<td>Couches cachées (moins courant aujourd'hui)</td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td><span class="arithmatex">\(\text{ReLU}(x)=\max(0,x)\)</span></td>
+<td><span class="arithmatex">\([0,+\infty)\)</span></td>
+<td>Standard en couche cachée</td>
+</tr>
+<tr>
+<td>Leaky ReLU</td>
+<td><span class="arithmatex">\(\max(\alpha x,x)\)</span></td>
+<td><span class="arithmatex">\((-\infty,+\infty)\)</span></td>
+<td>Quand ReLU "meurt"</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td><span class="arithmatex">\(\text{softmax}(x_i)=\frac{e^{x_i}}{\sum_j e^{x_j}}\)</span></td>
+<td><span class="arithmatex">\((0,1)\)</span> et somme <span class="arithmatex">\(=1\)</span></td>
+<td>Sortie multiclasse</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sigmoid">Sigmoid<a class="headerlink" href="#sigmoid" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\sigma(x)=\frac{1}{1+e^{-x}}
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(x\)</span> : score d'entrée du neurone.</li>
+<li><span class="arithmatex">\(e\)</span> : constante d'Euler (environ 2.71828).</li>
+<li>
+<p><span class="arithmatex">\(\sigma(x)\)</span> : probabilité de sortie entre 0 et 1.</p>
+</li>
+<li>
+<p>Intuition : convertit un score en probabilité.</p>
+</li>
+<li>Exemple : pour <span class="arithmatex">\(x=0\)</span>, <span class="arithmatex">\(\sigma(0)=0.5\)</span>.</li>
+<li>Limite : saturation pour grandes valeurs absolues, gradient faible.</li>
+</ul>
+<h3 id="tanh">Tanh<a class="headerlink" href="#tanh" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(x\)</span> : score d'entrée.</li>
+<li><span class="arithmatex">\(e\)</span> : constante d'Euler.</li>
+<li>
+<p><span class="arithmatex">\(\tanh(x)\)</span> : sortie centrée entre -1 et 1.</p>
+</li>
+<li>
+<p>Intuition : similaire à Sigmoid mais centrée autour de 0.</p>
+</li>
+<li>Exemple : <span class="arithmatex">\(\tanh(0)=0\)</span>, <span class="arithmatex">\(\tanh(2)\approx0.964\)</span>.</li>
+<li>Limite : peut aussi saturer.</li>
+</ul>
+<h3 id="relu">ReLU<a class="headerlink" href="#relu" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\text{ReLU}(x)=\max(0,x)
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(x\)</span> : score d'entrée.</li>
+<li>
+<p><span class="arithmatex">\(\max(0,x)\)</span> : retourne la plus grande valeur entre 0 et <span class="arithmatex">\(x\)</span>.</p>
+</li>
+<li>
+<p>Intuition : coupe les valeurs négatives, laisse passer les positives.</p>
+</li>
+<li>Exemple : ReLU(-3)=0, ReLU(2.5)=2.5.</li>
+<li>Avantage : simple, rapide, efficace en pratique.</li>
+</ul>
+<h3 id="leaky-relu">Leaky ReLU<a class="headerlink" href="#leaky-relu" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\text{LeakyReLU}(x)=\max(\alpha x,x),\; \alpha \approx 0.01
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(x\)</span> : score d'entrée.</li>
+<li>
+<p><span class="arithmatex">\(\alpha\)</span> : petite pente appliquée si <span class="arithmatex">\(x&lt;0\)</span>.</p>
+</li>
+<li>
+<p>Intuition : version ReLU qui garde une petite pente côté négatif.</p>
+</li>
+<li>Exemple : avec <span class="arithmatex">\(\alpha=0.01\)</span>, LeakyReLU(-3)=-0.03.</li>
+<li>Avantage : réduit les neurones bloqués à 0.</li>
+</ul>
+<h3 id="softmax">Softmax<a class="headerlink" href="#softmax" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\text{softmax}(x_i)=\frac{e^{x_i}}{\sum_{j=1}^{K} e^{x_j}}
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(x_i\)</span> : score de la classe <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(K\)</span> : nombre total de classes.</li>
+<li><span class="arithmatex">\(\sum_{j=1}^{K}\)</span> : somme sur toutes les classes.</li>
+<li>
+<p>sortie : probabilité de la classe <span class="arithmatex">\(i\)</span>.</p>
+</li>
+<li>
+<p>Intuition : transforme un vecteur de scores en distribution de probabilités.</p>
+</li>
+<li>Exemple : scores [2.0, 1.0, 0.1] deviennent environ [0.66, 0.24, 0.10].</li>
+<li>Usage : dernière couche d'une classification à <span class="arithmatex">\(K\)</span> classes.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Pourquoi ReLU est souvent le choix par défaut</p>
+<p>Sigmoid et Tanh saturent plus facilement, ce qui ralentit l'apprentissage
+dans les réseaux profonds (gradient qui disparaît). ReLU est en général plus
+stable et plus rapide à entraîner.</p>
+</div>
+<hr />
+<h2 id="architecture-dun-reseau-multicouche">Architecture d'un réseau multicouche<a class="headerlink" href="#architecture-dun-reseau-multicouche" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>graph LR
+    subgraph "Couche d'entrée"
+        I1["x1"] &amp; I2["x2"] &amp; I3["x3"] &amp; I4["x4"]
+    end
+    subgraph "Couche cachée 1"
+        H1a["h1"] &amp; H1b["h2"] &amp; H1c["h3"]
+    end
+    subgraph "Couche cachée 2"
+        H2a["h4"] &amp; H2b["h5"]
+    end
+    subgraph "Couche de sortie"
+        O1["prediction"]
+    end
+    I1 &amp; I2 &amp; I3 &amp; I4 --&gt; H1a &amp; H1b &amp; H1c
+    H1a &amp; H1b &amp; H1c --&gt; H2a &amp; H2b
+    H2a &amp; H2b --&gt; O1</code></pre>
+<table>
+<thead>
+<tr>
+<th>Couche</th>
+<th>Rôle</th>
+<th>Exemple</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entrée</td>
+<td>Reçoit les features</td>
+<td>taille = nombre de variables</td>
+</tr>
+<tr>
+<td>Cachée</td>
+<td>Extrait des motifs</td>
+<td>combinaisons non linéaires</td>
+</tr>
+<tr>
+<td>Sortie</td>
+<td>Produit la prédiction</td>
+<td>1 neurone (binaire) ou K (multiclasse)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="comment-le-reseau-apprend-retropropagation">Comment le réseau apprend : rétropropagation<a class="headerlink" href="#comment-le-reseau-apprend-retropropagation" title="Permanent link">&para;</a></h2>
+<p>Cycle d'entraînement :</p>
+<ol>
+<li><strong>Forward pass</strong> : calcul de <span class="arithmatex">\(\hat{y}\)</span></li>
+<li><strong>Calcul de la loss</strong> : mesure de l'erreur</li>
+<li><strong>Backpropagation</strong> : calcul des gradients</li>
+<li><strong>Mise à jour</strong> : ajustement des poids</li>
+</ol>
+<h3 id="fonctions-de-perte-courantes">Fonctions de perte courantes<a class="headerlink" href="#fonctions-de-perte-courantes" title="Permanent link">&para;</a></h3>
+<h4 id="mse-regression">MSE (régression)<a class="headerlink" href="#mse-regression" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+L = \frac{1}{n} \sum_{i=1}^{n} (y_i-\hat{y}_i)^2
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(L\)</span> : valeur de la perte.</li>
+<li><span class="arithmatex">\(n\)</span> : nombre d'exemples.</li>
+<li><span class="arithmatex">\(y_i\)</span> : valeur réelle de l'exemple <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(\hat{y}_i\)</span> : prédiction du modèle pour l'exemple <span class="arithmatex">\(i\)</span>.</li>
+</ul>
+<p>Lecture : on fait la moyenne des carrés des écarts prédiction-réalité.</p>
+<h4 id="bce-classification-binaire">BCE (classification binaire)<a class="headerlink" href="#bce-classification-binaire" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+L = -\left[y\log(\hat{y}) + (1-y)\log(1-\hat{y})\right]
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(y \in \{0,1\}\)</span> : classe réelle.</li>
+<li><span class="arithmatex">\(\hat{y} \in (0,1)\)</span> : probabilité prédite pour la classe positive.</li>
+<li><span class="arithmatex">\(\log\)</span> : logarithme naturel.</li>
+</ul>
+<p>Lecture : forte pénalité quand le modèle est très confiant et faux.</p>
+<h4 id="cce-classification-multiclasse">CCE (classification multiclasse)<a class="headerlink" href="#cce-classification-multiclasse" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+L = -\sum_{i=1}^{K} y_i \log(\hat{y}_i)
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(K\)</span> : nombre de classes.</li>
+<li><span class="arithmatex">\(y_i\)</span> : composante réelle (souvent one-hot) de la classe <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(\hat{y}_i\)</span> : probabilité prédite pour la classe <span class="arithmatex">\(i\)</span>.</li>
+</ul>
+<p>Lecture : compare distribution vraie (souvent one-hot) et distribution prédite.</p>
+<h3 id="regle-de-la-chaine-idee-cle">Règle de la chaîne (idée clé)<a class="headerlink" href="#regle-de-la-chaine-idee-cle" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+\frac{\partial L}{\partial w_i}
+=
+\frac{\partial L}{\partial \hat{y}}
+\cdot
+\frac{\partial \hat{y}}{\partial z}
+\cdot
+\frac{\partial z}{\partial w_i}
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(\frac{\partial L}{\partial w_i}\)</span> : effet du poids <span class="arithmatex">\(w_i\)</span> sur la perte.</li>
+<li><span class="arithmatex">\(\frac{\partial L}{\partial \hat{y}}\)</span> : effet de la prédiction sur la perte.</li>
+<li><span class="arithmatex">\(\frac{\partial \hat{y}}{\partial z}\)</span> : effet de <span class="arithmatex">\(z\)</span> sur la prédiction.</li>
+<li><span class="arithmatex">\(\frac{\partial z}{\partial w_i}\)</span> : effet de <span class="arithmatex">\(w_i\)</span> sur <span class="arithmatex">\(z\)</span>.</li>
+</ul>
+<p>Lecture : impact d'un poids sur la perte = produit d'impacts intermédiaires.</p>
+<h3 id="mise-a-jour-des-poids">Mise à jour des poids<a class="headerlink" href="#mise-a-jour-des-poids" title="Permanent link">&para;</a></h3>
+<div class="arithmatex">\[
+w \leftarrow w - \eta \frac{\partial L}{\partial w}
+\]</div>
+<p>Symboles utilisés ici :</p>
+<ul>
+<li><span class="arithmatex">\(w\)</span> : paramètre avant mise à jour.</li>
+<li><span class="arithmatex">\(\eta\)</span> : learning rate (taille du pas).</li>
+<li><span class="arithmatex">\(\frac{\partial L}{\partial w}\)</span> : gradient de la perte par rapport à <span class="arithmatex">\(w\)</span>.</li>
+</ul>
+<p>Si <span class="arithmatex">\(\eta\)</span> est trop grand, l'entraînement diverge. S'il est trop petit,
+l'apprentissage devient très lent.</p>
+<hr />
+<h2 id="descente-de-gradient-et-optimiseurs">Descente de gradient et optimiseurs<a class="headerlink" href="#descente-de-gradient-et-optimiseurs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>Principe</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Batch GD</td>
+<td>Gradient sur tout le dataset</td>
+<td>Stable mais coûteux</td>
+</tr>
+<tr>
+<td>SGD</td>
+<td>Gradient sur un échantillon</td>
+<td>Rapide mais bruité</td>
+</tr>
+<tr>
+<td>Mini-batch GD</td>
+<td>Gradient sur un lot (ex. 32, 64)</td>
+<td>Compromis standard</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Optimiseur</th>
+<th>Idée</th>
+<th>Recommandation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SGD + Momentum</td>
+<td>Ajoute une inertie</td>
+<td>Bon baseline</td>
+</tr>
+<tr>
+<td>RMSprop</td>
+<td>Adapte le pas par paramètre</td>
+<td>Souvent utile en séquentiel</td>
+</tr>
+<tr>
+<td>Adam</td>
+<td>Momentum + adaptation</td>
+<td>Choix de départ courant</td>
+</tr>
+<tr>
+<td>AdamW</td>
+<td>Adam + weight decay découplé</td>
+<td>Souvent préférable pour grands modèles</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="exemple-pratique-reseau-simple-en-python">Exemple pratique : réseau simple en Python<a class="headerlink" href="#exemple-pratique-reseau-simple-en-python" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_iris</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="kn">import</span> <span class="n">keras</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras</span><span class="w"> </span><span class="kn">import</span> <span class="n">layers</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># 1) Donnees</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">X_train</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">X_test</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># 2) Modele</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">model</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,)),</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="p">])</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="c1"># 3) Compilation</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;sparse_categorical_crossentropy&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="c1"># 4) Entrainement</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="c1"># 5) Evaluation</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="n">test_loss</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision test: </span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="admonition example">
+<p class="admonition-title">Ce que fait ce code</p>
+<ul>
+<li>4 entrées numériques par fleur.</li>
+<li>2 couches cachées avec ReLU.</li>
+<li>3 sorties avec Softmax pour 3 classes.</li>
+<li>Optimiseur Adam et loss catégorielle sparse.</li>
+</ul>
+</div>
+<hr />
+<h2 id="references-officielles-des-formules">Références officielles des formules<a class="headerlink" href="#references-officielles-des-formules" title="Permanent link">&para;</a></h2>
+<p>Le tableau ci-dessous relie chaque formule importante à une documentation
+officielle (framework ou référence mathématique standard).</p>
+<table>
+<thead>
+<tr>
+<th>Formule / concept</th>
+<th>Référence officielle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sigmoid <span class="arithmatex">\(\sigma(x)=\frac{1}{1+e^{-x}}\)</span></td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.nn.Sigmoid.html">PyTorch - torch.nn.Sigmoid</a></td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.nn.Tanh.html">PyTorch - torch.nn.Tanh</a></td>
+</tr>
+<tr>
+<td>ReLU</td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.nn.ReLU.html">PyTorch - torch.nn.ReLU</a></td>
+</tr>
+<tr>
+<td>Leaky ReLU</td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.nn.LeakyReLU.html">PyTorch - torch.nn.LeakyReLU</a></td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.nn.Softmax.html">PyTorch - torch.nn.Softmax</a></td>
+</tr>
+<tr>
+<td>MSE</td>
+<td><a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/MeanSquaredError">TensorFlow - tf.keras.losses.MeanSquaredError</a></td>
+</tr>
+<tr>
+<td>BCE</td>
+<td><a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy">TensorFlow - tf.keras.losses.BinaryCrossentropy</a></td>
+</tr>
+<tr>
+<td>CCE</td>
+<td><a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/CategoricalCrossentropy">TensorFlow - tf.keras.losses.CategoricalCrossentropy</a></td>
+</tr>
+<tr>
+<td>Descente de gradient / SGD</td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.optim.SGD.html">PyTorch - torch.optim.SGD</a></td>
+</tr>
+<tr>
+<td>Adam</td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.optim.Adam.html">PyTorch - torch.optim.Adam</a></td>
+</tr>
+<tr>
+<td>AdamW</td>
+<td><a href="https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html">PyTorch - torch.optim.AdamW</a></td>
+</tr>
+<tr>
+<td>Règle de la chaîne</td>
+<td><a href="https://mathworld.wolfram.com/ChainRule.html">Wolfram MathWorld - Chain Rule</a></td>
+</tr>
+<tr>
+<td>Standardisation des features (exemple)</td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">scikit-learn - StandardScaler</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Pourquoi des liens de frameworks ?</p>
+<p>Les docs de PyTorch et TensorFlow donnent les implémentations exactes
+utilisées en pratique (API, comportement numérique, options), ce qui est
+généralement plus utile en développement qu'une formule isolée.</p>
+</div>
+<hr />
+<h2 id="points-cles-a-retenir">Points clés à retenir<a class="headerlink" href="#points-cles-a-retenir" title="Permanent link">&para;</a></h2>
+<div class="admonition success">
+<p class="admonition-title">Résumé</p>
+<ul>
+<li>Les acronymes et symboles doivent être maîtrisés avant de lire les équations.</li>
+<li>Un neurone calcule une somme pondérée puis applique une activation.</li>
+<li>ReLU est souvent le meilleur choix de départ en couche cachée.</li>
+<li>Le couple Softmax + CCE est standard en multiclasse.</li>
+<li>L'apprentissage repose sur backpropagation + descente de gradient.</li>
+<li>Les références officielles permettent de valider chaque formule en contexte réel.</li>
+</ul>
+</div>
+<hr />
+<h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>
+<p><strong><a href="../architectures-deep-learning/">Architectures spécialisées du Deep Learning</a></strong> : comparer CNN, RNN et Transformers, comprendre leurs cas d'usage, leurs forces et leurs limites.</p>
+<p>Concepts clés couverts :</p>
+<ul>
+<li><strong>CNN</strong> - extraction locale de motifs pour images</li>
+<li><strong>RNN</strong> - traitement de séquences et dépendances temporelles</li>
+<li><strong>Transformers</strong> - attention et parallélisation à grande échelle</li>
+<li><strong>Choix d'architecture</strong> - aligner le modèle avec le type de données</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/sidebar-toggle.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
