@@ -34,6 +34,8 @@ extra_css:
 
 extra_javascript:
   - javascripts/sidebar-toggle.js
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 exclude_docs: |
   **/README.md
@@ -45,6 +47,8 @@ plugins:
       lang: fr
 
 markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
@@ -123,6 +127,15 @@ nav:
     - MLOps & Déploiement: chapitre-6-machine-learning/mlops-deploiement.md
     - Comparaison Écosystèmes ML: chapitre-6-machine-learning/comparaison-ecosystemes-ml.md
     - Comparaison des Outils: chapitre-6-machine-learning/comparaison-outils.md
+
+  - Deep Learning & Réseaux de Neurones:
+    - Accueil: chapitre-8-deep-learning/index.md
+    - Fondations Mathématiques: chapitre-8-deep-learning/fondations-mathematiques.md
+    - Réseaux de Neurones — Fondamentaux: chapitre-8-deep-learning/reseaux-neurones.md
+    - Architectures de Deep Learning: chapitre-8-deep-learning/architectures-deep-learning.md
+    - Concevoir et Entraîner: chapitre-8-deep-learning/concevoir-entrainer.md
+    - Optimisation et Performance: chapitre-8-deep-learning/optimisation-performance.md
+    - Comparaison des Frameworks: chapitre-8-deep-learning/comparaison.md
 
   - RAG:
     - Introduction: chapitre-7-rag/index.md

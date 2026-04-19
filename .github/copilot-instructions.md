@@ -108,6 +108,7 @@ graph TD
 4. **Validation** : après modification, vérifier que `py -m mkdocs build` ne produit pas d'erreurs
 5. **Pas de contenu spécifique à un seul IDE** dans les pages de chapitre générales — utiliser des onglets ou des pages dédiées
 6. **Rapports IA** : tout fichier généré automatiquement par une IA (rapport de session, résumé de session, certificat, QA report, rapport de monitoring, etc.) doit être créé dans `ai-reports/` à la racine du projet — jamais à la racine directement. Ce dossier est exclu de git via `.gitignore`.
+7. **Logs techniques** : tout fichier de log local (`*.log`, `*.txt` de diagnostic/build/check) doit être placé dans `logs/` à la racine du projet, jamais à la racine directement. Le dossier `logs/` est exclu de git via `.gitignore`.
 
 ## Ressources de référence internes
 
