@@ -68,8 +68,10 @@ Quand tu utilises un LLM cloud (Copilot, Claude, ChatGPT…), le code que tu env
 - **Secrets** (API keys, tokens) copiés accidentellement
 - **Données personnelles** (PII) dans les exemples
 
-!!! info "Copilot Business/Enterprise"
-    Avec les plans **Copilot Business** et **Enterprise**, GitHub garantit que ton code **n'est pas utilisé pour l'entraînement** des modèles. Ce n'est pas le cas avec le plan Individual (opt-out disponible dans les paramètres).
+!!! info "Copilot Business/Enterprise — Garanties d'entraînement (Vérifié le 4 mai 2026)"
+    Avec les plans **Copilot Business** et **Enterprise**, GitHub garantit que ton code **n'est pas utilisé pour l'entraînement** des modèles. 
+    
+    Avec le plan **Free ou Pro (Copilot Individual)**, un opt-out est disponible dans les paramètres Copilot, mais est désactivé par défaut. Pour les conditions exactes, consultez [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans) et la [politique de confidentialité GitHub](https://docs.github.com/fr/site-policy/privacy-policies/github-privacy-statement#github-copilot).
 
 ### Excessive Agency (Agent mode)
 

@@ -8,18 +8,18 @@
 
 ## Levier 1 — Choisir le bon modèle pour la bonne tâche
 
-Le levier le plus impactant. Les modèles premium (Claude 3.5 Sonnet, o1, o3) ne sont pas toujours meilleurs — ils sont juste plus puissants. Et la puissance dont vous avez besoin dépend de la tâche.
+Le levier le plus impactant. Les modèles premium ne sont pas toujours meilleurs — ils sont surtout plus coûteux. La bonne stratégie est d'adapter le modèle au niveau de complexité réel de la tâche.
 
 | Type de tâche | Modèle recommandé | Justification |
 |---------------|-------------------|---------------|
-| Autocomplétion, snippets courts | Standard (GPT-4o mini) | Vitesse > précision, pas de premium |
-| Refactoring simple, renommage | Standard | Tâche mécanique, faible raisonnement |
-| Génération de tests unitaires | Standard ou Premium | Standard suffisant sur des patterns connus |
-| Implémentation d'algo complexe | Claude 3.5 Sonnet | Raisonnement + qualité du code |
-| Debug multi-fichiers | Claude 3.5 Sonnet | Compréhension du contexte large |
-| Architecture / design système | o1-mini ou Claude 3.5 | Chaîne de raisonnement longue |
-| Revue de sécurité approfondie | o1 | Raisonnement critique — mais utiliser avec parcimonie |
-| Simple question de syntaxe | Standard, voire documentation | Requête premium inutile |
+| Autocomplétion, snippets courts | Modèle inclus (GPT-5 mini / GPT-4.1) | Vitesse > profondeur, coût minimal |
+| Refactoring simple, renommage | Modèle inclus | Tâche mécanique, faible raisonnement |
+| Génération de tests unitaires | Modèle inclus ou premium léger | Standard suffisant sur des patterns connus |
+| Implémentation d'algo complexe | Sonnet 4.x ou GPT-5.x Codex | Raisonnement + qualité du code |
+| Debug multi-fichiers | Sonnet 4.x | Compréhension du contexte large |
+| Architecture / design système | Modèle premium "powerful" | Chaîne de raisonnement longue |
+| Revue de sécurité approfondie | Modèle premium "powerful" | Analyse critique plus robuste |
+| Question de syntaxe | Modèle inclus, voire documentation | Premium inutile |
 
 !!! tip "Règle heuristique"
     Si la tâche peut être résolue en recherchant dans la documentation en moins de 2 minutes, n'utilisez pas de modèle premium.

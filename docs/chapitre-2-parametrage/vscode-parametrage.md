@@ -357,13 +357,13 @@ Les MCPs se configurent dans un fichier `.vscode/mcp.json` à la racine du works
 - **DBHub** (Bytebase) — Requêtes et gestion bases de données
 - Et bien d'autres sur le [Registry GitHub MCP](https://github.com/modelcontextprotocol/servers)
 
-### Impact sur la consommation de tokens et de requêtes
+### Impact sur la consommation de tokens et de coûts
 
-L'utilisation d'un serveur MCP a un **double impact** sur votre quota Copilot, qu'il est important de comprendre avant d'activer plusieurs MCPs simultanément.
+L'utilisation d'un serveur MCP augmente la consommation Copilot via deux mécanismes principaux.
 
-**1. Chaque appel d'outil MCP = 1 requête**
+**1. Les interactions utilisateur restent l'unité de facturation principale**
 
-Lorsque Copilot invoque un outil MCP (ex. interroger Jira, effectuer une recherche dans la doc, exécuter une requête SQL), cette invocation est comptabilisée comme **une requête individuelle** dans votre compteur d'utilisation GitHub Copilot — exactement comme si vous posiez une question dans le Chat. Sur un plan Free ou Pro avec un quota mensuel, les appels MCP s'accumulent si Copilot les enchaîne en mode Agent.
+En mode agentique, les prompts que vous envoyez sont facturés selon le modèle sélectionné (et la logique de billing active: premium requests ou AI Credits). Les appels d'outils MCP peuvent augmenter le travail effectué, mais ne doivent pas être interprétés systématiquement comme une facturation "1 appel = 1 requête".
 
 **2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés**
 
@@ -424,20 +424,20 @@ Cherchez `editor.action.inlineSuggest.commit` et modifiez la bind :
 
 ---
 
-## Modèles IA par Plan
+## Modèles IA par plan
 
-Copilot supporte plusieurs modèles IA selon votre plan :
+La disponibilité des modèles évolue fréquemment. Utilisez la page officielle comme source de vérité: [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans).
 
-| Plan | Modèles Disponibles |
-|------|---|
-| **Free** | Claude Haiku 4.5, GPT-5 mini, Grok Code Fast 1 |
-| **Pro** | Claude Haiku 4.5, GPT-5, Claude 3.5 Sonnet, Gemini 2 |
-| **Pro+** | ✓ **Tous les modèles** (complet) |
-| **Enterprise** | Selon config org + custom models |
+| Plan | Positionnement |
+|------|----------------|
+| **Free** | Accès limité à un sous-ensemble de modèles |
+| **Pro** | Modèles inclus + accès premium selon allocation |
+| **Pro+** | Accès élargi aux modèles avancés |
+| **Business / Enterprise** | Accès piloté par l'organisation et ses politiques |
 
-Sélection du modèle :
-- Dans Chat : Vous sélectionnez via dropdown
-- Dans suggestions inline : Copilot choisit le mieux adapté
+Sélection du modèle:
+- Dans Chat: choix via le sélecteur de modèle
+- En suggestions inline: sélection automatique par Copilot selon le contexte
 
 ---
 

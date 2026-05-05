@@ -35,7 +35,7 @@ mon-projet/
 ---
 name: Nom de l'Agent
 description: Description courte (affichée dans le sélecteur)
-model: claude-3.5-sonnet    # Modèle IA à utiliser (optionnel)
+model: claude-sonnet        # Modèle IA à utiliser (optionnel — vérifiez la disponibilité actuelle)
 tools:                       # Liste des outils autorisés
   - codebase
   - editFiles
@@ -65,13 +65,16 @@ Tu es [rôle], spécialisé dans [domaine].
 ---
 name: Documentation Writer          # Nom affiché dans le sélecteur
 description: Génère documentation technique, diagrammes et maintient la parité code/docs
-model: gpt-4o                       # Modèle optionnel (défaut : modèle configuré par l'utilisateur)
+model: gpt-4o-mini                  # Modèle optionnel (défaut : modèle configuré par l'utilisateur — consultez les modèles disponibles)
 tools:                              # Outils disponibles pour cet agent
   - codebase                        # Accès au workspace
   - editFiles                       # Modification de fichiers
   - githubRepo                      # Infos GitHub
 ---
 ```
+
+!!! warning "Modèles disponibles"
+    Les modèles et leurs disponibilités évoluent régulièrement. Consultez [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans) pour vérifier quels modèles sont inclus dans votre plan (Vérifié le 4 mai 2026).
 
 ### Champs avancés souvent utiles
 

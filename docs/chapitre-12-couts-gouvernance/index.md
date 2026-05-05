@@ -2,6 +2,10 @@
 
 Utiliser GitHub Copilot efficacement, c'est aussi savoir gérer ce qu'il consomme. Ce chapitre couvre les mécanismes de facturation, les leviers pour optimiser l'usage quotidien, et les workflows qui maximisent la valeur tout en minimisant le gaspillage de requêtes.
 
+!!! info "État de référence"
+    Contenu vérifié le **4 mai 2026**.
+    La facturation Copilot bascule vers un modèle **usage-based avec AI Credits** à partir du **1er juin 2026**. Ce chapitre documente la période de transition et fournit un suivi avant/après.
+
 ---
 
 ## Pages du Chapitre
@@ -15,6 +19,10 @@ Utiliser GitHub Copilot efficacement, c'est aussi savoir gérer ce qu'il consomm
 - :material-star-circle: **[Premium Requests : mécanique](premium-requests.md)**
 
     Ce qu'est une premium request, quels modèles la consomment, comment surveiller son solde et anticiper les limites.
+
+- :material-history: **[Historique des changements coûts & modèles](historique-modifications.md)**
+
+    Suivi mensuel daté avec comparaison **Avant / Après** sur les plans, quotas, modèles et règles de facturation.
 
 - :material-credit-card: **[Les abonnements](abonnements.md)**
 
@@ -41,8 +49,9 @@ Utiliser GitHub Copilot efficacement, c'est aussi savoir gérer ce qu'il consomm
 | Sujet | Résumé |
 |-------|--------|
 | [Allers-retours](patterns-allers-retours.md) | Chaque itération coûte des requêtes — le contexte complet dès le départ réduit les cycles |
-| [Premium requests](premium-requests.md) | Quota mensuel par plan, déclenché par les modèles avancés (Claude 3.5, o1, o3...) |
-| [Abonnements](abonnements.md) | Free · Pro ($10) · Business ($19) · Enterprise ($39) — différences clés |
+| [Premium requests](premium-requests.md) | Fonctionnement request-based actuel, transition AI Credits et impacts par mode |
+| [Historique](historique-modifications.md) | Traçabilité mensuelle des évolutions coûts/modèles avec diff Avant/Après |
+| [Abonnements](abonnements.md) | Free · Pro · Pro+ · Business · Enterprise — comparaison datée et périmètres |
 | [Économies](leviers-economie.md) | Choisir le modèle le plus léger adapté à la tâche |
 | [Modes](modes-quand-utiliser.md) | Inline < Chat < Edits < Agent en termes de coût de requêtes |
 | [Workflow](workflow-recommande.md) | Inline pour la répétition, Chat pour l'exploration, Agent pour les grandes tâches |

@@ -125,20 +125,19 @@ sequenceDiagram
 
 ---
 
-## Gestion du quota mensuel
+## Gestion du budget mensuel
 
-**Stratégie de répartition sur 300 premium requests / mois :**
+La gestion dépend désormais de votre plan et de la logique de facturation active (premium requests en transition, puis AI Credits).
 
-| Usage | Requêtes/semaine | Requêtes/mois |
-|-------|-----------------|---------------|
-| Implémentations complexes (Agent Mode) | 20–30 | 80–120 |
-| Edits multi-fichiers | 15–20 | 60–80 |
-| Chat exploratory (modèle premium) | 10–15 | 40–60 |
-| **Total estimé** | **45–65** | **180–260** |
-| **Marge de sécurité** | — | **40–120** |
+| Profil d'usage | Plan conseillé | Règle de pilotage |
+|---------------|----------------|-------------------|
+| Usage modéré solo | Pro | Réserver les modèles premium aux tâches complexes |
+| Usage intensif solo | Pro+ | Allouer un budget hebdomadaire et surveiller les pics |
+| Équipe | Business | Définir budgets et garde-fous au niveau organisation |
+| Grande organisation | Enterprise | Piloter par budgets, observabilité et politiques |
 
-!!! tip "Réserver la marge pour les fins de sprint"
-    Les derniers jours d'un sprint concentrent souvent les tâches les plus complexes (intégration, debug de dernière minute). Ne pas épuiser le quota en semaine 1.
+!!! tip "Approche pragmatique"
+    Fixer un budget hebdomadaire, puis comparer la consommation réelle à la planification dans [Historique des changements coûts & modèles](historique-modifications.md).
 
 ---
 

@@ -42,7 +42,10 @@ Cette page compare les fonctionnalités de Copilot entre **VS Code** et **Intell
 | Créer PR automatiquement | ✅ | ✅ |
 | Implémenter feature depuis issue | ✅ | ✅ |
 | Analyser et corriger bugs | ✅ | ✅ |
-| Plans | Pro+/Enterprise | Pro+/Enterprise |
+| Plans | [Pro+/Enterprise](../chapitre-12-couts-gouvernance/abonnements.md) | [Pro+/Enterprise](../chapitre-12-couts-gouvernance/abonnements.md) |
+
+!!! note "Disponibilité par plan"
+    La disponibilité exacte des fonctionnalités par plan peut évoluer. Consultez [Les abonnements](../chapitre-12-couts-gouvernance/abonnements.md) pour les informations à jour (Vérifié le 4 mai 2026).
 
 **Résultat** : ✅ Équivalentes
 

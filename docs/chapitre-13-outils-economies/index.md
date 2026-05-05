@@ -34,13 +34,13 @@ Les premium requests de GitHub Copilot sont limitées par abonnement. Ce chapitr
 
 ## Pourquoi ce chapitre existe
 
-Un abonnement GitHub Copilot Pro inclut **300 premium requests/mois** — suffisant pour une utilisation raisonnée, mais vite épuisé si vous utilisez systématiquement Claude 3.5 Sonnet ou o3 pour des tâches simples.
+La consommation Copilot évolue en 2026: logique premium requests en transition vers une logique d'usage avec AI Credits. Les outils de ce chapitre restent utiles pour limiter la consommation sur les tâches légères.
 
 ```
-Autocomplétion    → toujours gratuite (aucune premium request)
-Chat GPT-4o mini  → gratuite ou peu consommatrice selon le plan
-Chat Claude 3.5   → 1 premium request par échange
-Agent (o3-mini)   → comptabilisé, parfois multiple par tâche complexe
+Autocomplétion et next edit suggestions → non facturées en AI Credits
+Chat/Agent/CLI/Spaces/Spark             → consommation selon modèle et tokens
+Modèles inclus                          → coût plus faible ou nul selon plan
+Modèles premium                         → coût plus élevé (multiplicateur / tarification token)
 ```
 
 L'idée directrice de ce chapitre : **utiliser les bons outils pour les bonnes tâches**, de façon à réserver votre quota premium aux moments où la puissance des grands modèles fait vraiment la différence.

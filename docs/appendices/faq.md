@@ -3,14 +3,17 @@
 ## Installation & Abonnement
 
 ??? question "Faut-il payer pour utiliser GitHub Copilot ?"
-    GitHub Copilot est un service payant pour la plupart des utilisateurs. Plusieurs plans sont disponibles :
-    
-    - **Copilot Free** : limité (2000 complétions/mois, 50 messages Chat/mois) — disponible depuis fin 2024
-    - **Copilot Individual** : ~10$/mois ou 100$/an, usage illimité
-    - **Copilot Business** : ~19$/utilisateur/mois, fonctionnalités avancées, politiques organisationnelles
-    - **Copilot Enterprise** : tarification négociée, intégration GitHub Enterprise
-    
-    Les **étudiants et mainteneurs open source** peuvent obtenir Copilot gratuitement via [GitHub Education](https://education.github.com/) ou le programme [GitHub for Open Source](https://github.com/github-community/community/discussions).
+    GitHub Copilot propose plusieurs plans, dont un plan gratuit limité.
+
+    - **Copilot Free** : limité (complétions et interactions mensuelles plafonnées)
+    - **Copilot Pro** : plan individuel payant
+    - **Copilot Pro+** : plan individuel payant avec capacité premium plus élevée
+    - **Copilot Business** : plan organisation avec gestion centralisée
+    - **Copilot Enterprise** : plan entreprise avec gouvernance avancée
+
+    Les montants exacts et allocations peuvent évoluer. Vérifiez toujours la page officielle : [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans).
+
+    Les **étudiants et mainteneurs open source** peuvent être éligibles à un accès gratuit via [GitHub Education](https://education.github.com/) ou les programmes GitHub dédiés.
 
 ??? question "Puis-je utiliser Copilot sur plusieurs machines avec le même compte ?"
     Oui. Votre abonnement GitHub Copilot est lié à votre compte GitHub, pas à une machine. Vous pouvez l'utiliser sur autant de machines que vous souhaitez avec la même authentification. Les sessions simultanées sont supportées.

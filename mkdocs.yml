@@ -178,6 +178,7 @@ nav:
     - Accueil: chapitre-12-couts-gouvernance/index.md
     - Réduire les allers-retours: chapitre-12-couts-gouvernance/patterns-allers-retours.md
     - "Premium Requests": chapitre-12-couts-gouvernance/premium-requests.md
+    - Historique restrictions & évolutions: chapitre-12-couts-gouvernance/historique-modifications.md
     - Les abonnements: chapitre-12-couts-gouvernance/abonnements.md
     - Leviers d'économie: chapitre-12-couts-gouvernance/leviers-economie.md
     - Quand utiliser quel mode ?: chapitre-12-couts-gouvernance/modes-quand-utiliser.md
@@ -197,6 +198,20 @@ nav:
     - Vidéos, Podcasts & Conférences: chapitre-14-veille-ia/videos-podcasts.md
     - Sécurité, Risques & Failles: chapitre-14-veille-ia/securite-risques.md
     - Newsletters & Communautés: chapitre-14-veille-ia/newsletters-communautes.md
+
+  - Hacker:
+    - Introduction: chapitre-15-hacker-ia/index.md
+    - IA et hacking: chapitre-15-hacker-ia/page-principale.md
+    - Études de cas 2024-2026: chapitre-15-hacker-ia/etudes-de-cas-2024-2026.md
+    - Playbook incident IA: chapitre-15-hacker-ia/playbook-incident-ia.md
+    - KPI & SOC pour menaces IA: chapitre-15-hacker-ia/kpi-soc-ia.md
+    - Exercices tabletop IA: chapitre-15-hacker-ia/exercices-tabletop-ia.md
+    - Cas sectoriels IA et cybersécurité: chapitre-15-hacker-ia/cas-sectoriels-ia.md
+    - Matrice menaces IA -> contrôles: chapitre-15-hacker-ia/matrice-controles-menaces.md
+    - Checklist audit interne IA: chapitre-15-hacker-ia/checklist-audit-interne.md
+    - Modèles fiches incident & post-mortem: chapitre-15-hacker-ia/modeles-fiches-incident.md
+    - Plan 90 jours — Passer à l'action: chapitre-15-hacker-ia/plan-90-jours.md
+    - Comparaison: chapitre-15-hacker-ia/comparaison.md
 
   - Appendices:
     - Accueil: appendices/index.md

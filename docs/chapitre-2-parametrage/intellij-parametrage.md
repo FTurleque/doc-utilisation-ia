@@ -125,7 +125,7 @@ Le paramètre `Anthropic Thinking Budget Tokens` contrôle le **budget maximal d
     Un budget élevé ne garantit pas une meilleure réponse si la tâche est simple — les tokens de raisonnement seront consommés inutilement. Calibrez ce paramètre selon la **complexité réelle** de vos interactions habituelles. Pour un usage quotidien standard, 1 024–2 048 est le bon équilibre entre qualité et consommation.
 
 !!! warning "Impact sur la consommation"
-    Augmenter le thinking budget augmente la consommation de tokens de votre abonnement Copilot, même si la réponse affichée semble identique. En cas de quota limité (plan Copilot Individual), préférez garder la valeur par défaut et n'augmentez que ponctuellement.
+    Augmenter le thinking budget augmente la consommation de tokens. Avec la transition vers la facturation à l'usage (AI Credits), ce réglage peut avoir un impact financier direct. Conserver une valeur modérée par défaut et n'augmenter que pour les tâches complexes.
 
 ![Section Chat > Agent - Configuration des agents](../assets/images/intellij/chat-copilot-2.png){ .doc-screenshot }
 *Mode Agent : activation des agents personnalisés, skills, et code review*
@@ -278,13 +278,13 @@ Les MCPs se configurent dans un fichier JSON (localisation selon l'IDE).
 - **Guru** — Base de connaissance Guru
 - Et bien d'autres...
 
-#### Impact sur la consommation de tokens et de requêtes
+#### Impact sur la consommation de tokens et de coûts
 
-L'utilisation d'un serveur MCP a un **double impact** sur votre quota Copilot, qu'il est important de comprendre avant d'activer plusieurs MCPs simultanément.
+L'utilisation d'un serveur MCP a un **double impact** qu'il faut anticiper avant d'activer plusieurs connecteurs.
 
-**1. Chaque appel d'outil MCP = 1 requête**
+**1. Les prompts utilisateur restent l'unité de facturation principale**
 
-Lorsque Copilot invoque un outil MCP (ex. interroger Jira, effectuer une recherche dans la doc, exécuter une requête SQL), cette invocation est comptabilisée comme **une requête individuelle** dans votre compteur d'utilisation GitHub Copilot — exactement comme si vous posiez une question dans le Chat. Sur un plan Free ou Pro avec un quota mensuel, les appels MCP s'accumulent si Copilot les enchaîne en mode Agent.
+La facturation dépend du mode et du modèle (premium requests en transition, puis AI Credits). Les appels MCP déclenchés par l'agent peuvent augmenter le volume de travail, sans être interprétés mécaniquement comme "1 appel = 1 requête facturée".
 
 **2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés**
 
@@ -308,6 +308,7 @@ Sans MCP, la même demande aurait coûté **1 requête** et ~500 tokens.
 **Quand l'utiliser :** Pour des workflows spécialisés nécessitant l'intégration directe au Chat (configuration avancée).
 
 **Ressources utiles :**
+
 - [Registry GitHub MCP](https://github.com/modelcontextprotocol/servers) — Tous les serveurs disponibles
 - Documentation officielle MCP — Pour configuration détaillée
 
