@@ -35,7 +35,7 @@ L'IA évolue à un rythme effréné. Ce chapitre centralise toutes les sources f
 | **Nouvelles fonctionnalités** | Copilot Agent mode, Claude Code hooks, Cursor Composer… |
 | **Modèles qui changent** | GPT-4o → o3, Claude 3.5 → Claude 4, Gemini 2.5… |
 | **Sécurité** | Prompt injection, exfiltration de code, packages hallucinated… |
-| **Coûts qui évoluent** | Quotas premium requests, nouveaux tiers d'abonnement… |
+| **Coûts qui évoluent** | Quotas premium requests, nouveaux tiers d'abonnement… (Voir [Historique des modifications](../chapitre-12-couts-gouvernance/historique-modifications.md)) |
 | **Outils émergents** | RTK, TOON, OpenSkills, MCP servers… |
 | **Réglementation** | AI Act (UE), NIST AI RMF, directives CNIL… |
 

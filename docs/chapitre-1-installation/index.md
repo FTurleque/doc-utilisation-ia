@@ -9,15 +9,16 @@ Ce chapitre vous guide à travers l'installation complète de GitHub Copilot sur
 Avant de commencer, vérifiez que vous disposez de :
 
 !!! warning "Compte GitHub avec Copilot activé"
-    GitHub Copilot est un service payant (ou Free avec limites). Vous devez disposer d'un abonnement actif *avant* d'installer le plugin/extension.
+    GitHub Copilot nécessite un plan actif (Free, Pro, Pro+, Business ou Enterprise) avant installation du plugin/extension.
 
     - [Activer GitHub Copilot](https://github.com/features/copilot) sur votre compte GitHub
-    - Vérifier votre abonnement : [github.com/settings/copilot](https://github.com/settings/copilot)
+    - Vérifier votre plan : [github.com/settings/copilot](https://github.com/settings/copilot)
+    - Vérifier les plans officiels : [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans)
 
 | Prérequis | Détail |
 |-----------|--------|
 | **Compte GitHub** | Compte personnel ou compte d'organisation avec Copilot activé |
-| **Abonnement** | Copilot Free, Individual, Business, ou Enterprise |
+| **Abonnement** | Copilot Free, Pro, Pro+, Business, ou Enterprise |
 | **Connexion internet** | Requise lors de l'installation et de l'authentification |
 | **IDE à jour** | Voir versions minimales ci-dessous |
 

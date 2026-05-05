@@ -48,7 +48,7 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
 
 === ":material-microsoft-visual-studio-code: VS Code"
 
-    Panneau Copilot Chat (`Ctrl+Alt+I`) avec les participants `@workspace`, `@vscode`, `@terminal` et les variables `#file`, `#selection`, `#codebase`.
+    Panneau Copilot Chat avec sélection de mode (Ask, Plan, Agent). Les participants et variables évoluent: saisir `@`, `/` et `#` dans la zone de chat pour afficher la liste réellement disponible dans votre version.
 
 === ":simple-intellijidea: IntelliJ IDEA"
 
@@ -98,7 +98,7 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
 
 **Nature :** mode autonome où Copilot planifie, exécute des tool calls (lecture, écriture, recherche), et itère jusqu'à complétion d'une tâche complexe.
 
-**Coût :** élevé — chaque tool call avec un modèle premium compte. Une tâche agent typique = 5–20 premium requests.
+**Coût :** variable selon le modèle et le nombre de prompts utilisateur. En mode agentique, ce sont les invites utilisateur qui sont comptabilisées (avec multiplicateur de modèle), pas chaque action interne de l'agent.
 
 **Quand l'utiliser :**
 - Créer une fonctionnalité complète de bout en bout (API + service + tests + types)

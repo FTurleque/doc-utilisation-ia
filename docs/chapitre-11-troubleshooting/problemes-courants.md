@@ -246,13 +246,13 @@ VS Code : l'option "Copilot Edits" ou le mode Agent dans Chat n'est pas disponib
 
 ### Prérequis par offre
 
-| Fonctionnalité | Copilot Free | Copilot Pro | Copilot Business/Enterprise |
-|---------------|:------------:|:-----------:|:---------------------------:|
+| Fonctionnalité | Copilot Free | Copilot Pro / Pro+ | Copilot Business / Enterprise |
+|---------------|:------------:|:------------------:|:-----------------------------:|
 | Suggestions inline | ✅ | ✅ | ✅ |
 | Copilot Chat | ✅ (limité) | ✅ | ✅ |
-| Mode Agent (Ask/Edit/Agent) | ❌ | ✅ | ✅ |
-| Copilot Edits multi-fichiers | ❌ | ✅ | ✅ |
-| Modèles premium (GPT-4o, Claude) | ❌ | ✅ | ✅ |
+| Mode Agent (Ask/Plan/Agent) | ✅ | ✅ | ✅ |
+| Copilot Edits multi-fichiers | ✅ (périmètre variable) | ✅ | ✅ |
+| Accès modèles premium | Limité | ✅ | ✅ |
 
 ### Solution
 
@@ -261,8 +261,8 @@ Extensions → GitHub Copilot Chat → Vérifier la version (doit être ≥ 0.13
 Si version ancienne : clic sur Update
 ```
 
-!!! warning "Offre insuffisante"
-    Si vous avez Copilot Free, certaines fonctionnalités (mode Agent, Copilot Edits) sont réservées à Pro et Business. Consultez [github.com/settings/copilot](https://github.com/settings/copilot) pour vérifier et mettre à niveau votre offre.
+!!! warning "Vérifier votre plan et vos politiques"
+    Si une fonctionnalité est absente, vérifiez votre plan, la version de l'extension et les politiques d'organisation (le mode agent peut être désactivé côté admin). Consultez [github.com/settings/copilot](https://github.com/settings/copilot) pour confirmer l'état de votre accès.
 
 ---
 
