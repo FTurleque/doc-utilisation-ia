@@ -3,7 +3,7 @@
 <span class="badge-intermediate">Intermédiaire</span>
 <span class="badge-expert">Expert</span>
 
-GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puissance, de coût et d'autonomie différent. Utiliser le bon mode selon la tâche est la décision la plus impactante pour équilibrer productivité et consommation de requêtes.
+GitHub Copilot propose quatre modes d'interaction principaux, chacun avec un niveau de puissance, de coût et d'autonomie différent. Utiliser le bon mode selon la tâche est la décision la plus impactante pour équilibrer productivité et consommation d'AI Credits.
 
 ---
 
@@ -13,7 +13,7 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
 |------|--------------|-----------|------|---------------|
 | **Inline / Autocomplétion** | Automatique en tapant | Aucune | Très faible | Code répétitif, patterns connus |
 | **Chat (Ask)** | Manuel, panneau dédié | Faible | Modéré | Exploration, questions, explications |
-| **Edits** | Manuel, sélection | Modérée | Modéré | Refactoring ciblé, transformations |
+| **Plan** | Manuel, panneau dédié | Modérée (lecture seule) | Modéré | Décomposer une tâche, clarifier le scope |
 | **Agent** | Manuel, tâche décrite | Haute | Élevé | Fonctionnalités complètes, migration |
 
 ---
@@ -25,12 +25,14 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
 **Coût :** nul sur les plans payants — utilise le modèle standard.
 
 **Quand l'utiliser :**
+
 - Implémenter un pattern déjà présent dans le projet
 - Écrire du boilerplate (getters, constructeurs, interfaces)
 - Compléter des imports, des switch/case, des queries SQL connues
 - Taper rapidement quand on sait exactement ce qu'on veut
 
 **Quand ne pas l'utiliser :**
+
 - Quand la logique est ambiguë — Copilot devinera mal
 - Pour des décisions d'architecture
 - Quand le fichier courant n'a pas assez de contexte
@@ -44,7 +46,7 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
 
 **Nature :** conversation en langage naturel dans un panneau dédié.
 
-**Coût :** modéré — 1 message = 1 requête (standard ou premium selon le modèle choisi).
+**Coût :** modéré — 1 message = 1 interaction facturable (selon modèle et tokens).
 
 === ":material-microsoft-visual-studio-code: VS Code"
 
@@ -55,6 +57,7 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
     Fenêtre **GitHub Copilot Chat** (vue dédiée) avec support des fichiers référencés manuellement.
 
 **Quand l'utiliser :**
+
 - Comprendre un code existant (`/explain`)
 - Corriger un bug avec contexte (`/fix`)
 - Générer des tests (`/tests`)
@@ -73,24 +76,25 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
 
 ---
 
-## Mode Edits
+## Mode Plan
 
-**Nature :** transformation du code sur une sélection ou un ensemble de fichiers définis manuellement.
+**Nature :** mode de planification avant exécution. Il produit un plan d'implémentation et peut poser des questions de clarification.
 
-**Coût :** modéré à élevé selon le nombre de fichiers — 1–3 premium requests pour un edit multi-fichiers.
+**Coût :** modéré (interactions de chat). En général moins coûteux qu'une exécution agent complète sur une tâche mal cadrée.
 
 **Quand l'utiliser :**
-- Refactoriser un fichier complet
-- Renommer et adapter un concept dans 2–4 fichiers
-- Convertir un format (ex. : JS → TS, callbacks → async/await)
-- Appliquer un pattern de façon cohérente sur des fichiers ciblés
+
+- Quand le besoin est encore ambigu
+- Avant une fonctionnalité multi-fichiers
+- Quand tu veux valider la stratégie avant de modifier le code
 
 **Quand ne pas l'utiliser :**
-- Pour des modifications qui touchent 10+ fichiers → préférer Agent Mode
-- Pour une simple correction d'une ligne → Chat ou autocomplétion plus rapide
 
-!!! example "Exemple d'usage typique"
-    Sélectionner `UserController.ts` et `UserService.ts` → Edits → "Remplace les callbacks par des Promises avec async/await. Conserve la gestion d'erreurs existante."
+- Pour une correction triviale sur un seul fichier
+- Quand tu as déjà un plan validé et prêt à exécution
+
+!!! tip "Chaîne recommandée"
+    Ask pour comprendre, Plan pour cadrer, Agent pour exécuter.
 
 ---
 
@@ -98,16 +102,18 @@ GitHub Copilot propose quatre modes d'interaction, chacun avec un niveau de puis
 
 **Nature :** mode autonome où Copilot planifie, exécute des tool calls (lecture, écriture, recherche), et itère jusqu'à complétion d'une tâche complexe.
 
-**Coût :** variable selon le modèle et le nombre de prompts utilisateur. En mode agentique, ce sont les invites utilisateur qui sont comptabilisées (avec multiplicateur de modèle), pas chaque action interne de l'agent.
+**Coût :** variable selon le modèle, la taille du contexte et le nombre de prompts utilisateur. En mode agentique, la consommation totale dépend des appels modèle effectués pendant la session.
 
 **Quand l'utiliser :**
+
 - Créer une fonctionnalité complète de bout en bout (API + service + tests + types)
 - Migrer un module entier vers une nouvelle technologie
 - Implémenter un ticket JIRA / GitHub Issue complet
 - Générer un scaffold de projet avec structure de dossiers
 
 **Quand ne pas l'utiliser :**
-- Pour des modifications single-file → Edits est plus précis et moins coûteux
+
+- Pour des modifications single-file → Chat ou autocomplétion sont souvent plus rapides
 - Pour des explorations ou des questions → Chat
 - Quand le périmètre est flou → définir le scope avant de lancer l'agent
 
@@ -123,11 +129,12 @@ graph TD
     A[Tâche à réaliser] --> B{Je sais exactement\nce que je veux écrire ?}
     B -->|Oui| C["→ Autocomplétion inline\n(taper et accepter)"]
     B -->|Non| D{Tâche simple :\n1 fichier, question, explication ?}
-    D -->|Oui| E["→ Chat\n(/explain, /fix, /tests)"]
+    D -->|Oui| E["→ Chat (Ask)\n(/explain, /fix, /tests)"]
     D -->|Non| F{Transformation ciblée\nsur 2-5 fichiers connus ?}
-    F -->|Oui| G["→ Copilot Edits\n(sélection manuelle des fichiers)"]
+    F -->|Oui| G["→ Chat guidé\navec fichiers ciblés"]
     F -->|Non| H{Fonctionnalité complète\nou migration ?}
-    H -->|Oui| I["→ Agent Mode\n(tâche décrite, validation du plan)"]
+    H -->|Oui| P["→ Plan\n(valider le plan)"]
+    P --> I["→ Agent Mode\n(exécuter le plan)"]
     H -->|Non| E
 
     style C fill:#d4edda,color:#000
@@ -146,11 +153,12 @@ graph TD
 |-------------|---------------------|-------|---------|
 | Autocomplétion | 0 | 2 min | Bonne si pattern connu |
 | Chat + /fix | 1 | 3 min | Très bonne |
-| Edits (UserService seul) | 1 | 2 min | Très bonne |
+| Plan puis Agent | 2+ | 4-8 min | Très bonne (moins de retours) |
+| Chat guidé (UserService seul) | 1 | 2-3 min | Très bonne |
 | Agent Mode | 5–10 | 5 min | Très bonne... pour rien de plus |
 
 !!! danger "Anti-pattern"
-    Lancer Agent Mode par défaut sur toutes les tâches parce que "c'est plus rapide à formuler" — c'est le principal vecteur de gaspillage de premium requests.
+    Lancer Agent Mode par défaut sur toutes les tâches parce que "c'est plus rapide à formuler" — c'est le principal vecteur de gaspillage d'AI Credits.
 
 ---
 

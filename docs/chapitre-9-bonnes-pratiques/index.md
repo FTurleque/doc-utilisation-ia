@@ -27,7 +27,7 @@ Installer et configurer Copilot, c'est bien. L'utiliser efficacement au quotidie
 
 - :material-comment-text: **[Utilisation Effective](utilisation-effective.md)**
 
-    Prompts efficaces, slash commands, variables de contexte (`#file`, `@workspace`), NES, Copilot Edits
+    Prompts efficaces, slash commands, variables de contexte (`#file`, `@workspace`), NES, édition multi-fichiers assistée
 
 - :material-code-tags: **[Organisation du Code](organisation-code.md)**
 
@@ -85,4 +85,4 @@ Concepts clés couverts :
 - **Mini-PRD** — formaliser le besoin avant de coder pour guider Copilot Chat
 - **Slash commands** `/explain`, `/tests`, `/fix`, `/doc` — raccourcis pour les tâches courantes
 - **Variables de contexte** `#file`, `#selection`, `@workspace` — cibler le bon périmètre
-- **NES & Copilot Edits** — anticiper les prochaines modifications et éditer plusieurs fichiers à la fois
+- **NES & édition multi-fichiers assistée** — anticiper les prochaines modifications et éditer plusieurs fichiers à la fois

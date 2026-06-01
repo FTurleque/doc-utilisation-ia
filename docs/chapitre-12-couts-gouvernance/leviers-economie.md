@@ -2,13 +2,13 @@
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Économiser des requêtes Copilot ne signifie pas moins s'en servir — cela signifie **mieux s'en servir**. La plupart des gaspillages viennent de mauvaises habitudes facilement corrigeables.
+Économiser des **AI Credits** ne signifie pas moins utiliser Copilot. Cela signifie l'utiliser de façon plus ciblée. La plupart des gaspillages viennent de mauvaises habitudes facilement corrigeables.
 
 ---
 
 ## Levier 1 — Choisir le bon modèle pour la bonne tâche
 
-Le levier le plus impactant. Les modèles premium ne sont pas toujours meilleurs — ils sont surtout plus coûteux. La bonne stratégie est d'adapter le modèle au niveau de complexité réel de la tâche.
+Le levier le plus impactant. Les modèles puissants ne sont pas toujours meilleurs pour la tâche. La bonne stratégie est d'adapter le modèle au niveau de complexité réel.
 
 | Type de tâche | Modèle recommandé | Justification |
 |---------------|-------------------|---------------|
@@ -22,7 +22,10 @@ Le levier le plus impactant. Les modèles premium ne sont pas toujours meilleurs
 | Question de syntaxe | Modèle inclus, voire documentation | Premium inutile |
 
 !!! tip "Règle heuristique"
-    Si la tâche peut être résolue en recherchant dans la documentation en moins de 2 minutes, n'utilisez pas de modèle premium.
+    Si la tâche peut être résolue en 2 minutes via doc ou autocomplétion, évite un modèle coûteux.
+
+!!! info "Réduction officielle"
+    Sur les plans payants, GitHub indique une réduction de **10%** sur le coût des modèles lorsque l'**auto model selection** est utilisé dans Copilot Chat, Copilot CLI ou Copilot cloud agent.
 
 ---
 
@@ -100,20 +103,20 @@ Ces instructions sont incluses automatiquement dans chaque échange — sans ré
 La recherche d'idées, la brainstorming d'architecture, l'exploration de solutions alternatives : ces activités génèrent beaucoup d'échanges courts. Utiliser le modèle standard pour ces phases d'exploration, puis basculer en premium uniquement pour l'implémentation finale.
 
 ```
-Phase exploration  → modèle standard (cheap, rapide)
-Phase implémentation → modèle premium (précis, puissant)
+Phase exploration  → modèle léger (rapide, faible coût)
+Phase implémentation → modèle plus puissant si nécessaire
 ```
 
 ---
 
 ## Levier 7 — Limiter l'Agent Mode aux vraies tâches multi-fichiers
 
-L'Agent Mode multiplie les tool calls (lecture de fichiers, recherches, écritures) et donc les tokens consommés. Il est contre-productif sur des tâches single-file.
+L'Agent Mode multiplie les appels et donc les tokens consommés. Il est contre-productif sur des tâches single-file.
 
 | Tâche | Mode optimal |
 |-------|-------------|
 | Ajouter une méthode à une classe existante | Chat ou autocomplétion |
-| Refactoriser un seul fichier | Copilot Edits |
+| Refactoriser un seul fichier | Chat guidé |
 | Créer une fonctionnalité traversant 3+ fichiers | Agent Mode |
 | Migrer un module complet | Agent Mode |
 
@@ -125,7 +128,7 @@ L'Agent Mode multiplie les tool calls (lecture de fichiers, recherches, écritur
 □ Autocomplétion en premier pour tout code répétitif
 □ Fermer les onglets non pertinents avant une session Chat/Agent
 □ Ouvrir une nouvelle conversation si le sujet change
-□ Modèle standard pour l'exploration, premium pour l'implémentation
+□ Modèle léger pour l'exploration, modèle puissant uniquement si nécessaire
 □ Instructions communes dans copilot-instructions.md (pas réexpliquées)
 □ Agent Mode uniquement pour les tâches ≥ 3 fichiers
 ```
@@ -134,11 +137,11 @@ L'Agent Mode multiplie les tool calls (lecture de fichiers, recherches, écritur
 
 ## Prochaine étape
 
-**[Quand utiliser quel mode ?](modes-quand-utiliser.md)** : guide complet des quatre modes Copilot (Inline, Chat, Edits, Agent) avec tableau de coûts et matrice décision par tâche.
+**[Quand utiliser quel mode ?](modes-quand-utiliser.md)** : guide complet des modes Copilot (Inline, Chat, Plan, Agent) avec impact AI Credits et matrice de décision.
 
 Concepts clés couverts :
 
-- **Quatre modes disponibles** — Inline, Chat, Edits, Agent avec coûts croissants
+- **Quatre modes principaux** — Inline, Chat, Plan, Agent avec coûts croissants
 - **Matrice décision par tâche** — Quel mode pour refactoring, génération, exploration
 - **Comparatif de coûts** — Validée sur des exemples concrets
 - **Anti-patterns courants** — Agent Mode par défaut = gaspillage maximal

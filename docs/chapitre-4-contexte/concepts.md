@@ -23,7 +23,7 @@ Copilot utilise une fenêtre de contexte qui varie selon le mode d'utilisation :
 |------|----------------------------------|
 | **Suggestions inline** | ~2 000 tokens (~1 500 mots / ~6 Ko de code) |
 | **Copilot Chat** | ~8 000 à 128 000 tokens selon le modèle |
-| **Copilot Edits** | ~32 000 tokens |
+| **Édition multi-fichiers assistée (Chat/Agent)** | ~32 000 tokens |
 | **Mode Agent** | ~128 000 tokens (avec outils) |
 
 !!! info "C'est quoi un token ?"

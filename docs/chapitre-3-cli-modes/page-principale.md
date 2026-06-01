@@ -41,7 +41,7 @@ La CLI Copilot permet d'utiliser différents modes pour automatiser des tâches 
 - Usage : Analyse du code, suggestions d'amélioration
 - Résultat : Rapport structuré, corrections proposées
 
-### Mode Edit
+### Commande edit
 
 - Commande : `copilot edit <fichier> --prompt "Refactorise en TypeScript strict"`
 - Usage : Modification ciblée selon un prompt

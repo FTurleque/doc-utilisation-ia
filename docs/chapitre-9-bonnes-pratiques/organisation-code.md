@@ -429,8 +429,8 @@ La **fenêtre de contexte** (context window) est la quantité maximale de texte 
 
 Concepts clés couverts :
 
-- **Les 3 modes de suggestion** — Inline, Inline Chat, Chat Panel : choisir le bon outil selon la complexité
+- **Les 4 modes d'interaction** — Inline, Inline Chat, Chat Panel, Plan/Agent : choisir le bon outil selon la complexité
 - **Raccourcis essentiels** — les gestes indispensables sur VS Code et IntelliJ
 - **Gestion de la fenêtre de contexte** — quels fichiers garder ouverts, comment structurer les sessions
-- **Copilot Edits multi-fichiers** — Working Set, mode collaboratif et autonome
+- **Exécution multi-fichiers en Agent** — cadrage avec Plan, puis exécution guidée
 - **Workflows TDD, refactoring, débogage** — intégrer Copilot dans les cycles de développement

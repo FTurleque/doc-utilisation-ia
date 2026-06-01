@@ -39,7 +39,7 @@ graph TD
     |------|-----------------------|
     | Suggestions inline | ~2 000 tokens |
     | Copilot Chat | ~8 000 à 128 000 tokens selon le modèle |
-    | Copilot Edits | ~32 000 tokens |
+    | Édition multi-fichiers assistée (Chat/Agent) | ~32 000 tokens |
     | Mode Agent | ~128 000 tokens |
 
 ---
@@ -357,4 +357,3 @@ graph TD
 
 **[Machine Learning](../chapitre-6-machine-learning/index.md)** — Utiliser Copilot pour vos workflows ML et Data Science
 **[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** — Comprendre la mécanique de contexte qui sous-tend les suggestions Copilot
-

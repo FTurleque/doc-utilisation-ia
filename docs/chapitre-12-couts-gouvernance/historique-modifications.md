@@ -230,4 +230,4 @@ Ce registre documente ces changements **avec des preuves**, pour permettre à un
 - **[Les abonnements](abonnements.md)** — comparatif détaillé des plans actuels (Free, Pro, Pro+, Business, Enterprise)
 - **[Premium Requests](premium-requests.md)** — mécanique des quotas et multiplicateurs par modèle
 - **[Leviers d'économie](leviers-economie.md)** — comment réduire la consommation quel que soit le plan
-- **[Quand utiliser quel mode ?](modes-quand-utiliser.md)** — impact des modes Inline, Chat, Edits, Agent sur la consommation
+- **[Quand utiliser quel mode ?](modes-quand-utiliser.md)** — impact des modes Inline, Chat, Plan, Agent sur la consommation
