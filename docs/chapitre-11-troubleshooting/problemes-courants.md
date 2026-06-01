@@ -239,10 +239,10 @@ Copilot génère les imports selon le contexte visible. Si les dépendances ne s
 
 ---
 
-## 8. Copilot Edits / Agent mode ne fonctionne pas
+## 8. Modes Ask/Plan/Agent indisponibles
 
 ### Symptôme
-VS Code : l'option "Copilot Edits" ou le mode Agent dans Chat n'est pas disponible.
+VS Code : les modes Ask, Plan ou Agent ne sont pas disponibles dans Copilot Chat.
 
 ### Prérequis par offre
 
@@ -251,7 +251,7 @@ VS Code : l'option "Copilot Edits" ou le mode Agent dans Chat n'est pas disponib
 | Suggestions inline | ✅ | ✅ | ✅ |
 | Copilot Chat | ✅ (limité) | ✅ | ✅ |
 | Mode Agent (Ask/Plan/Agent) | ✅ | ✅ | ✅ |
-| Copilot Edits multi-fichiers | ✅ (périmètre variable) | ✅ | ✅ |
+| Exécution multi-fichiers via Agent | ✅ (périmètre variable) | ✅ | ✅ |
 | Accès modèles premium | Limité | ✅ | ✅ |
 
 ### Solution

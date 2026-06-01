@@ -21,5 +21,5 @@ Concepts clés couverts :
 
 - **Mode Yolo** — exécution autonome sans confirmation, idéal pour les tâches rapides
 - **Mode Review** — analyse de code et rapport structuré de corrections
-- **Mode Edit** — modification ciblée d'un fichier via un prompt
+- **Commande edit** — modification ciblée d'un fichier via un prompt
 - **Mode Chat / Explain / Test** — dialogue interactif, explication et génération de tests

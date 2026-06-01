@@ -101,8 +101,8 @@
     - `.prompt.md` (prompt files)
     - `.agent.md` et agents custom
     - `SKILL.md`
-    - Mode Agent dans Chat (ask/edit/agent)
-    - Copilot Edits (édition multi-fichiers)
+    - Modes Chat (Ask/Plan/Agent)
+    - Édition multi-fichiers assistée
     - `.copilotignore`
     
     IntelliJ offre une meilleure **analyse sémantique** du code Java/Kotlin via PSI, mais moins de fonctionnalités de personnalisation.

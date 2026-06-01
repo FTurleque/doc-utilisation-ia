@@ -16,8 +16,9 @@ Monter en puissance uniquement si nécessaire.
 ```mermaid
 graph LR
     A["Inline\n(gratuit)"] -->|"Pas assez"| B["Chat Ask\n(1 req)"]
-    B -->|"Besoin de modifier\nplusieurs fichiers"| C["Edits\n(1-3 req)"]
-    C -->|"Tâche complexe,\nmulti-fichiers ≥ 5"| D["Agent\n(5-20 req)"]
+    B -->|"Besoin de cadrer\nune tâche complexe"| P["Plan\n(1-2 interactions)"]
+    P -->|"Plan validé"| D["Agent\n(5-20 req)"]
+    B -->|"Besoin de modifier\n2-3 fichiers"| C["Chat guide\n(1-3 interactions)"]
 
     style A fill:#d4edda,color:#000
     style B fill:#cce5ff,color:#000
@@ -56,7 +57,7 @@ sequenceDiagram
     D->>C: 3. Chat : "Explique la structure actuelle de UserService"
     C-->>D: Résumé clair du code existant
     D->>D: 4. Rédiger le prompt complet (contexte + contraintes + format)
-    D->>C: 5. Edits (2-3 fichiers) ou Agent si ≥ 5 fichiers
+    D->>C: 5. Plan (valider la stratégie) puis Agent si ≥ 5 fichiers
     C-->>D: Implémentation proposée
     D->>D: 6. Relire, tester, valider
     D->>C: 7. Chat /tests pour les tests manquants
@@ -64,7 +65,7 @@ sequenceDiagram
     D->>D: 8. Validation finale manuelle
 ```
 
-**Budget type :** 2–4 premium requests pour une fonctionnalité moyenne.
+**Budget type :** consommation faible à modérée en AI Credits pour une fonctionnalité moyenne, selon modèle et contexte transmis.
 
 ---
 
@@ -101,7 +102,7 @@ sequenceDiagram
 | 4 | Si problème identifié : `/fix` sur la section | Chat |
 | 5 | Générer les tests manquants : `/tests` | Chat |
 
-**Budget type :** 2–5 messages standard, 0 premium requests si le modèle n'est pas changé.
+**Budget type :** 2–5 messages avec coût souvent faible si modèle léger et contexte maîtrisé.
 
 ---
 
@@ -115,11 +116,11 @@ sequenceDiagram
    → Non : continuer
 
 2. La tâche touche 1 ou 2 fichiers max ?
-   → Oui : Chat ou Edits (modèle standard si la tâche est simple)
+    → Oui : Chat (modèle standard si la tâche est simple)
    → Non : continuer
 
 3. La tâche nécessite un vrai raisonnement ou traverse 5+ fichiers ?
-   → Oui : Agent Mode avec modèle premium
+    → Oui : Plan puis Agent Mode avec modèle adapté
    → Non : revenir à Chat avec contexte enrichi
 ```
 
@@ -127,7 +128,7 @@ sequenceDiagram
 
 ## Gestion du budget mensuel
 
-La gestion dépend désormais de votre plan et de la logique de facturation active (premium requests en transition, puis AI Credits).
+La gestion dépend de votre plan, de vos allocations AI Credits, et de vos politiques de budget.
 
 | Profil d'usage | Plan conseillé | Règle de pilotage |
 |---------------|----------------|-------------------|
@@ -167,11 +168,12 @@ La gestion dépend désormais de votre plan et de la logique de facturation acti
 
 ## Plan d'exécution
 1. Chat /explain sur [composant existant]
-2. Edits sur [fichier-cible] avec modèle [standard/premium]
-3. /tests pour la couverture
+2. Plan rapide si ambiguïté de scope
+3. Agent ou Chat guidé selon complexité
+4. /tests pour la couverture
 
 ## Budget estimé
-~[N] premium requests
+~[N] AI Credits (estimation)
 ```
 
 Copier ce template dans le chat en début de tâche complexe cadre l'interaction dès le premier message.
@@ -180,6 +182,6 @@ Copier ce template dans le chat en début de tâche complexe cadre l'interaction
 
 ## Chapitres suivants
 
-**[Outils & Économies](../chapitre-13-outils-economies/index.md)** : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères et préserver votre quota de premium requests.
+**[Outils & Économies](../chapitre-13-outils-economies/index.md)** : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères et préserver vos AI Credits.
 
 **[Appendices](../appendices/index.md)** : ressources de référence complètes — FAQ, raccourcis clavier, templates de configuration prêts à copier-coller.

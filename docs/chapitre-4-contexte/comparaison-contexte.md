@@ -49,11 +49,11 @@ Cette page compare les fonctionnalités de Copilot entre **VS Code** et **Intell
 
 **Résultat** : ✅ Équivalentes
 
-### Copilot Edits (Multi-fichiers)
+### Édition Multi-fichiers Assistée
 
 | Feature | VS Code | IntelliJ IDEA |
 |---------|:-------:|:------------:|
-| Edit mode (aprouver chaque change) | ✅ | ✅ |
+| Mode collaboratif (approuver chaque changement) | ✅ | ✅ |
 | Agent mode (autonome) | ✅ | ✅ |
 | Modifications coordonnées | ✅ | ✅ |
 | Itération automatique | ✅ | ✅ |

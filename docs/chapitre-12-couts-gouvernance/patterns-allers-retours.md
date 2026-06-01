@@ -26,8 +26,8 @@ Un aller-retour typique sur une tâche d'implémentation :
 
 | Cycle | Requêtes consommées | Temps perdu |
 |-------|---------------------|-------------|
-| Prompt vague → correction × 3 | 3–5 premium requests | 5–10 min |
-| Prompt complet dès le départ | 1 premium request | 1–2 min |
+| Prompt vague → correction × 3 | 3–5 interactions facturables AI Credits | 5–10 min |
+| Prompt complet dès le départ | 1 interaction facturable AI Credits | 1–2 min |
 
 ---
 
@@ -156,11 +156,11 @@ Pour les tâches longues, découper en étapes avec validation intermédiaire :
 
 ## Prochaine étape
 
-**[Premium Requests : mécanique](premium-requests.md)** : comprendre ce qu'est une premium request, quels modèles la consomment, et comment surveiller son quota mensuel.
+**[AI Credits : consommation détaillée](premium-requests.md)** : comprendre ce qui consomme des crédits, comment lire la facturation, et comment éviter les dérives.
 
 Concepts clés couverts :
 
-- **Coût des modèles** — Standard gratuit, Claude/o1/o3 = premium requests
-- **Quotas par plan** — Free 50, Pro 300, Business/Enterprise 300 par utilisateur
-- **Surveiller son solde** — GitHub Copilot usage dashboard
-- **Comportement après épuisement** — Basculage automatique au modèle standard
+- **Coût des modèles** — impact direct du prix/token sur les crédits
+- **Allocations par plan** — individuel ou pool organisation
+- **Surveiller son solde** — dashboards de facturation GitHub
+- **Comportement après épuisement** — dépend des budgets et politiques

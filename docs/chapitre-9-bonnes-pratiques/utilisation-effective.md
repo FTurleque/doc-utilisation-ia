@@ -11,7 +11,7 @@ graph TD
     A["Besoin Copilot ?"] --> B{Complexité ?}
     B -->|Simple, répétitif| C["Suggestions Inline <br/> Tab + Génériques"]
     B -->|Question, exploration| D["Copilot Chat <br/> Ctrl+Alt+I "]
-    B -->|Grosse refactor| E["Copilot Edits <br/> Ctrl+Shift+Alt+O "]
+    B -->|Grosse refactor| E["Édition multi-fichiers <br/> Ctrl+Shift+Alt+O "]
     B -->|Automatiser issue| F["Copilot Agents <br/> Pro+ seulement "]
     
     C --> G["Accepter avec Tab <br/> Ou rejeter Esc"]
@@ -280,23 +280,23 @@ Ou via ++ctrl+shift+p++ → `Preferences: Open Settings` → rechercher `nextEdi
 
 ---
 
-## Copilot Edits : Modifications Multi-Fichiers
+## Édition Multi-Fichiers Assistée
 
-Copilot Edits est le mode de Copilot conçu pour les **modifications qui touchent plusieurs fichiers simultanément**. Contrairement au Chat (conversationnel) ou aux suggestions inline (locales), Edits peut proposer des changements cohérents à travers votre codebase.
+L'édition multi-fichiers assistée est conçue pour les **modifications qui touchent plusieurs fichiers simultanément**. Contrairement au Chat (conversationnel) ou aux suggestions inline (locales), elle peut proposer des changements cohérents à travers votre codebase.
 
-### Ouvrir Copilot Edits
+### Ouvrir la vue d'édition multi-fichiers
 
 === ":material-microsoft-visual-studio-code: VS Code"
     ++ctrl+shift+alt+i++ (Windows/Linux) ou ++cmd+shift+alt+i++ (macOS)
     
-    Ou : Copilot Chat → icône ✏️ **Edits**
+    Ou : Copilot Chat → vue d'édition multi-fichiers
 
 === ":simple-intellijidea: IntelliJ IDEA"
     Panel GitHub Copilot → bouton **Edit** (disponible depuis la version 1.5+ du plugin)
 
 ### Le Working Set
 
-Avant de lancer une session Edits, vous définissez un **Working Set** : la liste des fichiers que Copilot est autorisé à modifier.
+Avant de lancer une session d'édition multi-fichiers, vous définissez un **Working Set** : la liste des fichiers que Copilot est autorisé à modifier.
 
 ```
 Working Set recommandé pour une fonctionnalité :
@@ -317,7 +317,7 @@ Working Set recommandé pour une fonctionnalité :
 ### Workflow typique en mode Collaboratif
 
 ```
-1. Ouvrir Copilot Edits (++ctrl+shift+alt+i++)
+1. Ouvrir la vue d'édition multi-fichiers (++ctrl+shift+alt+i++)
 2. Ajouter les fichiers au Working Set
 3. Décrire la modification :
    "Ajoute la gestion du champ `deletedAt` (soft delete) à UserService.
@@ -481,7 +481,7 @@ et les risques potentiels.
 - **Slash commands** `/explain`, `/tests`, `/fix`, `/doc` : des raccourcis de prompt pour les tâches courantes
 - **Variables de contexte** `#file`, `#selection`, `@workspace` : donnez à Copilot exactement le bon périmètre
 - **NES** (Next Edit Suggestions) : laissez Copilot anticiper vos prochaines modifications avec `Tab`
-- **Copilot Edits** pour les modifications multi-fichiers : définissez un Working Set et choisissez le mode collaboratif ou autonome
+- **Édition multi-fichiers assistée** : définissez un Working Set et choisissez le mode collaboratif ou autonome
 - **Acceptez de manière sélective** : mot par mot (++ctrl+right++) pour garder le contrôle
 - **Explorez les alternatives** avec ++alt+bracket-right++ avant de rejeter une suggestion
 

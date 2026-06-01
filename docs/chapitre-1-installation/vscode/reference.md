@@ -130,22 +130,22 @@ Clic droit sur du code sélectionné → *Copilot* :
 - **Generate Tests** : Crée des tests unitaires
 - **Generate Docs** : Génère la documentation
 
-### Copilot Edits (Modification Multi-Fichiers)
+### Édition Multi-Fichiers Assistée (Chat/Agent)
 
 === "Windows / Linux"
 
     | Action | Raccourci |
     |--------|-----------|
-    | **Ouvrir Copilot Edits** | ++ctrl+shift+alt+o++ |
-    | **Mode d'édition** | Utiliser l'interface Edits (GUI) |
+    | **Ouvrir la vue multi-fichiers** | ++ctrl+shift+alt+o++ |
+    | **Mode d'édition** | Utiliser la vue d'édition multi-fichiers |
 
 === "macOS"
 
     | Action | Raccourci |
     |--------|-----------|
-    | **Ouvrir Copilot Edits** | ++cmd+shift+alt+o++ |
+    | **Ouvrir la vue multi-fichiers** | ++cmd+shift+alt+o++ |
 
-!!! info "Copilot Edits"
+!!! info "Édition multi-fichiers assistée"
     Permet d'effectuer des modifications sur **plusieurs fichiers** à la fois, soit en mode AI autonome (agent) soit en mode collaboratif (vous approuvez chaque changement).
 
 ---
@@ -189,11 +189,11 @@ Clic droit sur du code sélectionné → *Copilot* :
 
 ---
 
-### Copilot Edits (Multi-fichiers)
+### Édition Multi-fichiers Assistée
 
 **Quoi** : Modification AI-autonome ou semi-autonome de **plusieurs fichiers**.
 
-**Où** : Interface dédiée (vue Edits).
+**Où** : Interface dédiée (vue d'édition multi-fichiers).
 
 **Cas d'usage** :
 
@@ -201,7 +201,7 @@ Clic droit sur du code sélectionné → *Copilot* :
 - Migrations de dépendances
 - Restructurations d'architecture
 
-**Raccourci** : ++ctrl+shift+alt+o++ / Commande *"Copilot: Open Edits"*
+**Raccourci** : ++ctrl+shift+alt+o++ / Commande *"Copilot: Open Multi-file Edit"*
 
 **Avantage** : Effectue plusieurs changements coordonnés, itère automatiquement.
 

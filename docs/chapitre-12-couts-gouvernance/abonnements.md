@@ -2,122 +2,99 @@
 
 <span class="badge-beginner">Débutant</span>
 
-GitHub Copilot propose quatre formules d'abonnement. Le bon choix dépend du profil (individuel ou organisation), du volume d'usage, et des besoins d'administration.
+Le choix d'un plan Copilot se fait maintenant avec une logique claire: **prix de licence + allocation AI Credits + politique de dépassement**.
 
 !!! info "Référence de cette page"
-    Valeurs vérifiées le **4 mai 2026** sur la documentation officielle GitHub Copilot.
-    À partir du **1er juin 2026**, GitHub introduit la facturation **usage-based** avec **AI Credits**. Les plans et prix restent, mais la logique de consommation évolue.
+    Valeurs revérifiées le **1 juin 2026** sur la documentation officielle GitHub Copilot.
 
 ---
 
-## Comparatif des plans
+## Vue rapide des plans
 
-| Fonctionnalité | Free | Pro | Pro+ | Business | Enterprise |
-|----------------|------|-----|------|----------|------------|
-| **Prix** | Gratuit | $10/mois | $39/mois | $19/user/mois | $39/user/mois |
-| **Complétions inline** | 2 000/mois | Illimitées | Illimitées | Illimitées | Illimitées |
-| **Messages chat avec modèles inclus** | 50/mois | Illimités | Illimités | Illimités | Illimités |
-| **Premium requests incluses** | 50/mois | 300/mois | 1 500/mois | 300/user/mois | 1 000/user/mois |
-| **Achat de capacité additionnelle** | Non | Oui | Oui | Oui | Oui |
-| **Agent mode (IDE)** | Oui | Oui | Oui | Oui | Oui |
-| **Copilot cloud agent** | Non | Oui | Oui | Oui | Oui |
-| **Copilot Chat dans GitHub** | Oui | Oui | Oui | Oui | Oui |
-| **Exclusion de fichiers / content exclusion (orga)** | Non | Non | Non | Oui | Oui |
-| **Gestion centralisée des licences** | Non | Non | Non | Oui | Oui |
-| **Audit logs** | Non | Non | Oui | Oui | Oui |
+| Plan | Prix | Allocation AI Credits | Remarques clés |
+|------|------|------------------------|----------------|
+| Free | Gratuit | Incluse (limitée) | 2000 completions/mois, modèles sélectionnés |
+| Student | Gratuit (éligible) | Incluse (limitée) | Completions illimitées, modèles sélectionnés |
+| Pro | 10 USD/mois | 1500 (1000 base + 500 flex) | Individuel, usage régulier |
+| Pro+ | 39 USD/mois | 7000 (3900 base + 3100 flex) | Individuel intensif |
+| Max | 100 USD/mois | 20000 (10000 base + 10000 flex) | Très gros volume |
+| Business | 19 USD/utilisateur/mois | 1900 par siège (poolé) | Gouvernance organisation |
+| Enterprise | 39 USD/utilisateur/mois | 3900 par siège (poolé) | Gouvernance avancée |
 
-!!! warning "Point d'attention 2026"
-    Les inscriptions self-serve sur certains plans peuvent être temporairement limitées selon les annonces GitHub 2026. Vérifier l'état en temps réel avant décision d'achat.
+!!! note "Période promotionnelle 2026 (orga/enterprise existants)"
+    Pour les clients existants, GitHub annonce des montants inclus plus élevés sur la fenêtre de transition (juin à septembre 2026).
 
 ---
 
-## Request-based aujourd'hui, AI Credits demain
+## Ce qui est facturé en AI Credits
 
-### Jusqu'au 31 mai 2026 (modèle request-based)
+Fonctionnalités facturées:
 
-- Le suivi principal se fait via les **premium requests** (quotas mensuels par plan).
-- Les fonctionnalités agentiques consomment selon le mode et le modèle.
+- Copilot Chat
+- Copilot CLI
+- Copilot cloud agent
+- Copilot Spaces
+- Spark
+- Agents tiers
 
-### À partir du 1er juin 2026 (usage-based)
+Fonctionnalités non facturées en AI Credits:
 
-- La consommation est exprimée en **AI Credits** (1 AI Credit = $0.01 USD).
-- Le coût dépend du **modèle** et du **nombre de tokens** (entrée, sortie, cache).
-- Les plans conservent leurs prix, mais les allocations et budgets passent à une logique d'usage.
-
-!!! tip "Lecture recommandée"
-    Utiliser [Historique des changements coûts & modèles](historique-modifications.md) pour suivre les deltas avant/après mois par mois.
-
----
-
-## Plan Free — Pour commencer sans risque
-
-**Idéal pour :**
-
-- Découverte de Copilot
-- Projets personnels à usage occasionnel
-- Étudiants (au-delà du pack GitHub Education)
-
-**Limites à connaître :**
-
-- 2 000 complétions et 50 messages de chat par mois — le compteur repart à zéro chaque mois
-- Accès limité aux modèles, avec consommation premium sur les interactions avancées
-- Suspend automatiquement quand les quotas sont épuisés
+- Code completions
+- Next edit suggestions
 
 ---
 
-## Plan Pro — L'essentiel pour un développeur solo
+## Individuels: comment lire Pro, Pro+, Max
 
-**Idéal pour :** développeurs individuels avec un usage régulier, freelances, side-projects intensifs.
+### Pro
 
-**Ce que ça change par rapport au Free :**
+- Point d'entrée pour usage quotidien
+- 1500 AI Credits inclus (base + flex)
+- Convient pour chat fréquent et tâches de développement standard
 
-- Complétions et chat illimités
-- 300 premium requests/mois — suffisant pour un usage quotidien raisonné
-- Accès complet à Agent Mode et Copilot Edits
+### Pro+
 
----
+- Plus de marge sur tâches complexes et agentiques
+- 7000 AI Credits inclus
+- Adapté aux usages multi-projets et modèles plus coûteux
 
-## Plan Pro+ — Pour les usages intensifs
+### Max
 
-**Idéal pour :** développeurs qui utilisent fréquemment des modèles avancés, des workflows agentiques et des sessions longues.
-
-**Ce que ça ajoute par rapport à Pro :**
-
-- Quota premium beaucoup plus élevé (1 500/mois)
-- Accès étendu à des modèles avancés dans le sélecteur
-- Plus de marge pour les tâches complexes sans arbitrage constant
-
-!!! tip "GitHub Education"
-    Les étudiants et enseignants éligibles obtiennent Pro **gratuitement** via le [GitHub Student Developer Pack](https://education.github.com/pack).
+- Cible power users à fort volume
+- 20000 AI Credits inclus
+- Utile si l'usage avancé est quotidien et soutenu
 
 ---
 
-## Plan Business — Pour les équipes
+## Organisations: logique de pool
 
-**Idéal pour :** équipes de développement en entreprise (PME, scale-up), nécessitant un contrôle centralisé.
+Pour Business et Enterprise:
 
-**Fonctionnalités clés au-delà de Pro :**
+- chaque siège contribue à un **pool partagé**
+- un utilisateur lourd peut consommer plus, compensé par des utilisateurs légers
+- ajout de sièges en cours de cycle: le pool augmente immédiatement
+- retrait de sièges en cours de cycle: effet au cycle suivant
 
-- Licences gérées par l'organisation (attribution, révocation)
-- Politique d'exclusion de fichiers : empêcher Copilot d'accéder à certains fichiers (secrets, données sensibles)
-- Audit logs : qui utilise Copilot, quand, quels modèles
-- Désactivation des suggestions de code correspondant à du code public (duplication filter)
-
-!!! warning "Facturation à l'utilisateur actif"
-    Business est facturé par siège actif. Un développeur qui n'utilise pas Copilot un mois donné peut ne pas être facturé selon la politique GitHub en vigueur — vérifier les CGU.
+!!! tip "Lecture finance"
+    En organisation, le coût réel est: licences + éventuelle consommation additionnelle (si autorisée).
 
 ---
 
-## Plan Enterprise — Pour les grandes organisations
+## Dépassement et contrôle budgétaire
 
-**Idéal pour :** grandes entreprises, secteurs réglementés (banque, santé, défense), organisations avec des exigences de conformité.
+### Individuels
 
-**Fonctionnalités exclusives :**
+- soit budget additionnel
+- soit attente du prochain cycle
 
-- **Gouvernance avancée** : politiques et gestion centralisée à l'échelle entreprise
-- **Personnalisation profonde** : instructions au niveau de l'organisation
-- **Custom models** : possibilité de fine-tuner Copilot sur le code interne (sur demande)
-- **Conformité et résidentialité des données** selon les contrats Entreprise
+### Organisations / entreprises
+
+- si usage additionnel autorisé: facturation continue
+- si usage additionnel bloqué: blocage des fonctionnalités consommatrices d'AI Credits
+
+Important:
+
+- Pas de fallback automatique vers un modèle moins cher quand un budget bloque l'usage.
 
 ---
 
@@ -125,49 +102,40 @@ GitHub Copilot propose quatre formules d'abonnement. Le bon choix dépend du pro
 
 ```mermaid
 graph TD
-    A[Quel est ton contexte ?] --> B{Usage personnel\nou professionnel ?}
-    B -->|Personnel| C{Usage régulier\n> 50 messages/mois ?}
-    C -->|Non| D["✓ Free\nSuffisant"]
-    C -->|Oui| E["✓ Pro\n$10/mois"]
-    B -->|Professionnel| F{Équipe ou solo ?}
-    F -->|Solo / Freelance| E
-    F -->|Équipe| G{Conformité / audit\nnécessaire ?}
-    G -->|Non| H["✓ Business\n$19/user/mois"]
-    G -->|Oui ou grande orga| I["✓ Enterprise\n$39/user/mois"]
+    A[Quel est ton contexte ?] --> B{Individuel\nou organisation ?}
+    B -->|Individuel| C{Volume AI\nfaible, moyen, élevé ?}
+    C -->|Faible| D[Free ou Student]
+    C -->|Moyen| E[Pro]
+    C -->|Élevé| F[Pro+ ou Max]
+    B -->|Organisation| G{Besoins de\ngouvernance avancée ?}
+    G -->|Oui| H[Enterprise]
+    G -->|Non| I[Business]
 
     style D fill:#d4edda,color:#000
     style E fill:#d4edda,color:#000
-    style H fill:#d4edda,color:#000
+    style F fill:#fff3cd,color:#000
+    style H fill:#f8d7da,color:#000
     style I fill:#d4edda,color:#000
 ```
 
 ---
 
-## Ce que les plans ne couvrent pas
+## Sources officielles
 
-- Les API Copilot pour intégrations tierces (facturation séparée)
-- L'usage de Copilot Extensions de third-parties (peuvent avoir leur propre facturation)
-- Les modèles via GitHub Models dans les Codespaces (quota séparé)
-
----
-
-## Comparer avant/après facilement
-
-Pour suivre l'évolution des coûts et des modèles accessibles dans le temps :
-
-- utiliser la timeline dans [Historique des changements coûts & modèles](historique-modifications.md)
-- vérifier les mises à jour mensuelles (rubrique "comparaison Avant / Après")
-- garder la date de vérification dans chaque section chiffrée
+- [Plans for GitHub Copilot](https://docs.github.com/en/copilot/about-github-copilot/plans-for-github-copilot) - consulté le 2026-06-01
+- [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-01
+- [About billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/organizations-and-enterprises) - consulté le 2026-06-01
+- [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) - consulté le 2026-06-01
 
 ---
 
 ## Prochaine étape
 
-**[Leviers d'économie](leviers-economie.md)** : sept stratégies pragmatiques pour réduire les dépenses de premium requests sans sacrifier la productivité.
+**[Leviers d'économie](leviers-economie.md)** : stratégies concrètes pour réduire la consommation d'AI Credits sans réduire la qualité de sortie.
 
 Concepts clés couverts :
 
-- **Choisir le bon modèle par tâche** — Standard pour l'exploration, premium pour l'implémentation
-- **Utiliser l'autocomplétion au maximum** — Gratuite sur les plans payants, très efficace
-- **Gérer le contexte des fichiers ouverts** — Moins d'onglets = moins de tokens
-- **Limiter la taille des conversations** — Nouvelles conversations courtes meilleur marché
+- **Choix de modèle par tâche** — aligner coût et complexité
+- **Réduction des tokens** — moins de contexte inutile
+- **Budgets et garde-fous** — éviter les dépassements
+- **Pilotage des usages** — décisions basées sur les métriques

@@ -45,7 +45,7 @@ Certains problèmes sont communs aux deux IDEs, d'autres sont spécifiques à l'
 | Inline Chat (Ctrl+I) inactif | VS Code version < 1.83 | Mettre à jour VS Code |
 | `.instructions.md` ignoré | Feature flag désactivé | Activer `github.copilot.chat.codeGeneration.useInstructionFiles` |
 | `.agent.md` non reconnu | VS Code version ou Copilot Chat obsolète | Mettre à jour les deux |
-| Mode Edits fermé sans raison | Bug d'interface | Réouvrir le panneau Copilot Edits |
+| Vue d'édition multi-fichiers indisponible | Bug d'interface | Réouvrir Copilot Chat puis relancer la tâche |
 | Suggestions désactivées pour un fichier | Fichier dans `.copilotignore` | Vérifier `.copilotignore` |
 | Paramétrage `.vscode/settings.json` ignoré | Syntaxe JSON incorrecte | Valider avec un linter JSON |
 | Extension ne se met pas à jour | Cache VS Code corrompu | `code --uninstall-extension GitHub.copilot` puis réinstaller |
@@ -69,7 +69,7 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 | Support `.prompt.md` | ✅ Supporté | ✅ Supporté | Supporté dans les deux IDEs |
 | Support `SKILL.md` | ⭐ Lecture seule | ✅ Création + usage | VS Code : création via interface |
 | Mode Agent (Chat) | ✅ Disponible | ✅ Disponible | Supporté dans les deux IDEs |
-| Copilot Edits multi-fichiers | ✅ Disponible | ✅ Disponible | Supporté dans les deux IDEs |
+| Édition multi-fichiers assistée | ✅ Disponible | ✅ Disponible | Supporté dans les deux IDEs |
 | Hooks Copilot | ❌ Non disponible | ✅ Disponible | VS Code exclusif (onSave, pre-commit…) |
 | `.copilotignore` | ❌ Non supporté | ✅ Supporté | Exclusion de fichiers du contexte Copilot |
 | Génération auto message de commit | ❌ Non disponible | ✅ Icône ✨ Source Control | VS Code exclusif |
@@ -95,8 +95,8 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 | Prompt files | ✅ | ✅ (≥ 1.91) |
 | `.agent.md` | ✅ | ✅ (Preview) |
 | `SKILL.md` | ⭐ (lecture seule) | ✅ (Preview) |
-| Mode Agent (Ask/Edit/Agent) | ✅ | ✅ (≥ 1.90) |
-| Copilot Edits | ✅ | ✅ (≥ 1.91) |
+| Modes Chat (Ask/Plan/Agent) | ✅ | ✅ (≥ 1.90) |
+| Édition multi-fichiers assistée | ✅ | ✅ (≥ 1.91) |
 | Désactiver par langage | ✅ | ✅ |
 | `.copilotignore` | ❌ | ✅ |
 | Hooks Copilot | ❌ | ✅ |

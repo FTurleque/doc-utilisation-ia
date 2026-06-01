@@ -1,142 +1,156 @@
-# Premium Requests : mécanique
+# AI Credits : consommation detaillee (et legacy premium requests)
 
-<span class="badge-intermediate">Intermédiaire</span>
+<span class="badge-intermediate">Intermediaire</span>
 
-GitHub Copilot distingue deux types de requêtes : les **requêtes standard** (illimitées sur les plans payants) et les **premium requests** (contingentées). Comprendre cette distinction permet d'éviter les mauvaises surprises en milieu de mois.
+Depuis juin 2026, le referentiel principal de facturation Copilot est la consommation en **AI Credits**. Cette page explique comment la consommation est calculee, ce qui est facture, et comment optimiser l'usage pour garder un bon niveau de productivite sans derive de cout.
 
-!!! info "Référence de cette page"
-    Contenu vérifié le **4 mai 2026**. La logique request-based reste utile pour comprendre l'existant, mais la bascule **usage-based (AI Credits)** est annoncée pour le **1er juin 2026**.
+!!! info "Reference de cette page"
+    Contenu reverifie le **1 juin 2026** sur la documentation officielle GitHub Copilot.
 
----
-
-## Qu'est-ce qu'une premium request ?
-
-Une **premium request** est une requête qui sollicite un modèle d'IA avancé — plus puissant et plus coûteux à faire tourner. GitHub facture ces requêtes sur un quota mensuel plutôt qu'à l'usage pour maintenir un prix prévisible.
-
-En mode agentique, seule **l'invite utilisateur** est comptabilisée comme demande premium. Les actions internes de l'agent (appels d'outils, étapes automatiques) ne sont pas facturées comme demandes premium supplémentaires.
-
-??? example "Illustration : 1 prompt → N actions internes → 1 seule premium request"
-    **Vous écrivez un seul prompt :**
-    > "Crée une API REST avec tests unitaires"
-
-    **Copilot Agent exécute en interne :**
-
-    1. Lit les fichiers existants (`read_file`)
-    2. Analyse la structure du projet (appel terminal)
-    3. Crée 3 fichiers (`create_file` × 3)
-    4. Lance les tests (appel terminal)
-    5. Corrige les erreurs détectées (`edit_file`)
-
-    **Résultat :** **1 seule premium request** décomptée — celle de votre prompt initial. Les 6 actions internes de l'agent ne comptent pas.
-
-    ---
-
-    **Contre-exemple :** si vous envoyez **3 messages** dans la même session agent pour guider l'agent (`"Fais ça"` → `"Maintenant ajoute ça"` → `"Corrige ça"`), ce sont **3 premium requests** — une par invite utilisateur.
-
-```mermaid
-graph TD
-    A[Requête Copilot] --> B{Modèle sélectionné}
-    B -->|Modèle standard| C["Requête normale ✓\n(quota illimité sur plans payants)"]
-    B -->|Modèle avancé| D["Premium request 🌟\n(décompté du quota mensuel)"]
-
-    style C fill:#d4edda,color:#000
-    style D fill:#fff3cd,color:#000
-```
+!!! warning "Important"
+    Le modele **premium requests** est desormais **legacy** pour des cas specifiques (notamment certains abonnements annuels restes sur l'ancien mode). Pour la majorite des usages, piloter la consommation en **AI Credits**.
 
 ---
 
-## Modèles et leur coût
+## Comment sont calcules les AI Credits
 
-| Modèle | Type | Coût en premium requests |
-|--------|------|--------------------------|
-| GPT-5 mini (modèle inclus) | Inclus | 0 sur plan payant |
-| GPT-4.1 (modèle inclus) | Inclus | 0 sur plan payant |
-| GPT-4o (modèle inclus) | Inclus | 0 sur plan payant |
-| Claude Sonnet 4.x | Premium | multiplicateur 1x |
-| Claude Haiku 4.5 | Premium léger | multiplicateur 0.33x |
-| Gemini 3 Flash | Premium léger | multiplicateur 0.33x |
-| GPT-5.2 / 5.3-Codex / 5.4 | Premium | multiplicateur 1x |
-| GPT-5.5 | Premium élevé | multiplicateur 7.5x |
+Le cout d'une interaction Copilot depend de deux variables:
 
-!!! warning "Modèles et multiplicateurs dynamiques"
-    Les modèles accessibles et leurs multiplicateurs changent régulièrement. Ne pas figer une liste comme définitive sans date de vérification.
+- le **modele** utilise
+- le nombre de **tokens** consommes (entree, sortie, cache)
 
-!!! info "Les quotas évoluent"
-    GitHub ajuste régulièrement les quotas et les modèles disponibles. Vérifier la page officielle [GitHub Copilot pricing](https://github.com/features/copilot#pricing) pour les valeurs à jour.
+Regle de conversion officielle:
 
----
+- **1 AI Credit = 0,01 USD**
 
-## Quota par plan
+Formule pratique:
 
-| Plan | Premium requests / mois | Base incluse |
-|------|--------------------------|--------------|
-| **Free** | 50 | 2 000 complétions + 50 messages chat |
-| **Pro** ($10/mois) | 300 | Complétions illimitées |
-| **Pro+** ($39/mois) | 1 500 | Complétions illimitées |
-| **Business** ($19/user/mois) | 300 par utilisateur | Complétions illimitées |
-| **Enterprise** ($39/user/mois) | 1 000 par utilisateur | Complétions illimitées + admin avancé |
+$$
+\text{AI Credits} = \frac{\text{cout total en USD}}{0{,}01}
+$$
 
-!!! tip "Complétions ≠ premium requests"
-    L'autocomplétion inline (le ghost text) utilise presque toujours le modèle standard — elle ne grignote **pas** votre quota premium. C'est votre allié gratuit.
+ou le cout total en USD depend des tarifs par million de tokens du modele.
+
+!!! tip "Lecture des tarifs"
+    Utiliser la page officielle "Models and pricing for GitHub Copilot" pour convertir les volumes de tokens en credits selon le modele exact.
 
 ---
 
-## Ce qui consomme des premium requests
+## Ce qui consomme des AI Credits (et ce qui ne consomme pas)
 
-### Consomme fortement (éviter sans bonne raison)
+Consomme des AI Credits:
 
-- **Sessions agentiques longues avec modèles à fort multiplicateur** : une tâche agent complexe peut brûler rapidement le budget.
-- **Modèles à multiplicateurs élevés** (ex. familles "powerful") : à réserver aux raisonnements complexes.
-- **Longues conversations chat avec modèle premium** : chaque message dans une conversation longue réenvoie l'historique complet.
+- Copilot Chat
+- Copilot CLI
+- Copilot cloud agent
+- Copilot Spaces
+- Spark
+- Agents tiers
 
-### Consomme modérément
+Ne consomme pas d'AI Credits:
 
-- **Chat one-shot avec Claude 3.5 Sonnet** : 1 request par échange — raisonnable.
-- **Copilot Edits multi-fichiers** : 1–3 requests selon la complexité.
+- Code completions (autocompletion)
+- Next edit suggestions
 
-### Ne consomme pas de quota premium
-
-- **Autocomplétion inline** (ghost text) — modèle standard.
-- **Questions simples en chat avec GPT-4o mini**.
-- **Copilot en IntelliJ** avec le modèle par défaut non changé.
+!!! info "Point cle"
+    Les completions et suggestions d'edition restent non facturees en AI Credits sur les plans payants.
 
 ---
 
-## Surveiller son solde
+## Facteurs qui font varier la consommation
+
+Les principaux leviers de consommation sont:
+
+- **Longueur et complexite** de la conversation
+- **Usage agentique** (plus d'appels modele au sein d'une tache)
+- **Choix du modele** (cout/token different selon le modele)
+- **Taille du contexte** (tokens envoyes en entree)
+
+!!! tip "Reduction immediate"
+    Reduire le contexte aux fichiers utiles et preferer un modele leger pour les taches simples est la maniere la plus rapide de diminuer les credits consommes.
+
+---
+
+## Exemples concrets de consommation
+
+### Exemple A - Chat court, modele leger
+
+- Prompt court + reponse courte
+- Modele leger (ex. GPT-5 mini / Claude Haiku)
+- Cout: souvent une fraction de credit a quelques credits
+
+### Exemple B - Session agent longue, modele puissant
+
+- Tache multi-fichiers avec iterations
+- Modele frontier
+- Cout: nettement plus eleve, potentiellement des dizaines a centaines de credits selon le volume de tokens
+
+---
+
+## Que se passe-t-il quand les credits sont epuises?
+
+### Comptes individuels
+
+- Definir un budget additionnel (facture en USD), ou
+- Attendre le cycle mensuel suivant
+
+### Organisations et entreprises
+
+- Les credits inclus sont **pooles** au niveau de l'entite de facturation
+- Si le pool est epuise:
+  - usage additionnel autorise: la facturation continue
+  - usage additionnel bloque: acces aux fonctionnalites consommatrices de credits bloque jusqu'au cycle suivant
+
+Important:
+
+- Il n'y a **pas de fallback automatique** vers un modele moins cher quand un budget bloque l'usage.
+- Les code completions et next edit suggestions continuent de fonctionner.
+
+---
+
+## Surveiller la consommation
 
 === ":material-microsoft-visual-studio-code: VS Code"
 
-    **Icône Copilot** dans la barre de statut → cliquer → **"Open GitHub Copilot settings"** → section **Usage**.
-    
-    Ou directement sur [github.com/settings/copilot](https://github.com/settings/copilot) : section **Premium requests usage**.
+    Icone Copilot dans la barre de statut puis parametres Copilot pour un apercu local.
+
+    Pour la facturation detaillee: [github.com/settings/billing](https://github.com/settings/billing).
 
 === ":simple-intellijidea: IntelliJ IDEA"
 
-    IntelliJ ne dispose pas d'affichage du quota dans l'IDE. Consulter directement [github.com/settings/copilot](https://github.com/settings/copilot).
+    Selon la version, le quota est visible via l'icone Copilot.
+
+    Pour les details complets: [github.com/settings/billing](https://github.com/settings/billing).
 
 ---
 
-## Que se passe-t-il quand le quota est épuisé ?
+## Legacy : premium requests (cas restants)
 
-Copilot **ne s'arrête pas** — il bascule automatiquement sur le modèle standard (GPT-4o mini). Les complétions continuent, le chat aussi. La différence : les modèles premium ne sont plus disponibles jusqu'au renouvellement du quota.
+Le modele premium requests reste documente pour certains abonnements annuels legacy.
 
-À partir du passage en AI Credits, le comportement dépend des budgets configurés :
+A retenir:
 
-- si un budget additionnel est autorisé, l'usage continue avec surcoût
-- si l'usage additionnel est bloqué, l'accès premium est restreint jusqu'au cycle suivant
-
-!!! warning "Comportement selon le plan"
-    Sur le plan **Free**, une fois le quota de complétions ET de messages épuisé, Copilot est désactivé jusqu'au mois suivant. Sur les plans payants, seuls les modèles premium sont restreints.
+- ce n'est plus le modele cible pour la majorite des nouveaux usages
+- les pages legacy servent surtout a comprendre un heritage de facturation
 
 ---
 
-## Prochaine étape
+## Sources officielles
 
-**[Les abonnements](abonnements.md)** : comparatif détaillé des quatre plans GitHub Copilot (Free, Pro, Business, Enterprise) avec quotas, fonctionnalités et critères de choix.
+- [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulte le 2026-06-01
+- [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) - consulte le 2026-06-01
+- [Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing) - consulte le 2026-06-01
+- [Requests in GitHub Copilot (legacy)](https://docs.github.com/en/copilot/concepts/billing/copilot-requests) - consulte le 2026-06-01
 
-Concepts clés couverts :
+---
 
-- **Plans disponibles** — Free, Pro, Pro+, Business, Enterprise
-- **Limites et quotas** — Complétions, messages chat, premium requests par plan
-- **Fonctionnalités exclusives** — Agent Mode, Audit logs, Custom models
-- **Quel plan choisir** — Matrice décision selon profil (solo, équipe, conformité)
+## Prochaine etape
+
+**[Les abonnements](abonnements.md)** : comparatif detaille des plans GitHub Copilot avec allocations AI Credits, gouvernance et criteres de choix.
+
+Concepts cles couverts :
+
+- **Plans disponibles** - Free, Student, Pro, Pro+, Max, Business, Enterprise
+- **Allocations AI Credits** - individuel, pool organisation, depassement
+- **Fonctionnalites exclusives** - Agent, gouvernance, audit, politiques
+- **Quel plan choisir** - matrice decision selon volume, budget et conformite

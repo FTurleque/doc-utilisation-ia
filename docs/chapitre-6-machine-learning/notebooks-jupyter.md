@@ -227,7 +227,7 @@ Outputs:
     - Suggestions inline dans chaque cellule
     - Copilot Chat accessible en sidebar
     - Commande `/explain` pour expliquer une cellule sélectionnée
-    - **Copilot Edits** peut modifier plusieurs cellules à la fois
+    - **Édition multi-fichiers assistée** peut modifier plusieurs cellules à la fois
     
     ```json
     // settings.json — améliorer Copilot dans Jupyter

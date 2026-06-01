@@ -242,7 +242,7 @@ Avancé :
 
 - Custom instructions (`.github/copilot-instructions.md`)
 - Agents autonomes
-- Copilot Edits (modification multi-fichiers)
+- Édition multi-fichiers assistée (Chat/Agent)
 
 ---
 

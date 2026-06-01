@@ -4,19 +4,20 @@
 
 ## Optimiser votre Workflow Copilot
 
-### ⚡ Les 3 Modes de Suggestion
+### ⚡ Les 4 Modes d'Interaction
 
 | Mode | Usage | Productivité | Qualité |
 |------|-------|--------------|---------|
 | **Inline Suggestions** | Auto-complétion en temps réel | Très rapide (2-5 sec/ligne) | 60-75% acceptable |
 | **Inline Chat** | Question ciblée sur sélection | Rapide (10-20 sec) | 80-90% bon |
 | **Chat Panel** | Architectural, multi-fichier, complex | Lent (30-60 sec) | 90-95% excellent |
-| **Agents / Edits** | Modification auto-propagée | Très rapide (émulation) | Dépend setup |
+| **Plan + Agent** | Planifier puis exécuter une tâche complexe | Plus lent au départ, plus robuste | Élevée si le scope est clair |
 
 **Recommandation** :
+
 - Inline Suggestions : 60% du temps (autocomplétion simple)
 - Inline Chat : 30% du temps (corrections, tests, refactor)
-- Chat Panel : 10% du temps (architecture, design decisions)
+- Chat Panel / Plan / Agent : 10% du temps (architecture, tâches complexes)
 
 ---
 
@@ -278,7 +279,7 @@ Imaginez que Copilot lit vos fichiers ouverts comme un développeur qui relit du
 
 ## Workflows Avancés
 
-### Workflow 6 : Session Copilot Edits Multi-Fichiers
+### Workflow 6 : Session d'Édition Multi-Fichiers Assistée
 
 **Objectif** : Modifier une fonctionnalité qui touche plusieurs fichiers en une seule session cohérente.
 
@@ -286,7 +287,7 @@ Imaginez que Copilot lit vos fichiers ouverts comme un développeur qui relit du
 Scénario : Ajouter un champ `phone` optionnel au modèle User
 (impacts : types, service, controller, tests, migration DB)
 
-1. Ouvrir Copilot Edits (++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++)
+1. Ouvrir la vue d'édition multi-fichiers (++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++)
 
 2. Constituer le Working Set :
    + src/types/User.ts          ← Type User
@@ -319,7 +320,7 @@ Scénario : Ajouter un champ `phone` optionnel au modèle User
 **Objectif** : Déléguer une tâche bien définie à Copilot en mode entièrement autonome.
 
 !!! info "Prérequis"
-    Le mode Agent nécessite **GitHub Copilot Pro+** (ou Business/Enterprise). Il est accessible dans VS Code depuis le menu Copilot Edits → bouton **Agent**.
+   Le mode Agent nécessite **GitHub Copilot Pro+** (ou Business/Enterprise). Il est accessible dans VS Code depuis le sélecteur de modes Chat (**Ask / Plan / Agent**).
 
 ```
 Scénario : Migrer tous les callbacks async vers async/await dans un module
@@ -329,7 +330,7 @@ Scénario : Migrer tous les callbacks async vers async/await dans un module
     en async/await. Garde la même signature publique des fonctions.
     Exécute les tests après chaque fichier modifié pour valider."
 
-2. Activer le mode Agent dans Copilot Edits
+2. Activer le mode Agent dans Copilot Chat
 
 3. Copilot va :
    → Analyser les fichiers ciblés
@@ -363,7 +364,7 @@ Scénario : Migrer tous les callbacks async vers async/await dans un module
 2. **++ctrl+right++ / ++option+right++** — Accepter mot par mot pour garder le contrôle
 3. **++ctrl+i++ / ++cmd+i++** — Inline Chat directement dans l'éditeur
 4. **++alt+bracket-right++** — Parcourir les suggestions alternatives avant de rejeter
-5. **++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++** — Ouvrir Copilot Edits (multi-fichiers)
+5. **++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++** — Ouvrir la vue d'édition multi-fichiers
 
 ---
 
