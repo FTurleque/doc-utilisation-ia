@@ -3325,7 +3325,7 @@
   <span class="md-ellipsis">
     
   
-    Premium Requests
+    AI Credits
   
 
     
@@ -4921,8 +4921,9 @@
 </code></pre></div>
 <pre class="mermaid"><code>graph LR
     A["Inline\n(gratuit)"] --&gt;|"Pas assez"| B["Chat Ask\n(1 req)"]
-    B --&gt;|"Besoin de modifier\nplusieurs fichiers"| C["Edits\n(1-3 req)"]
-    C --&gt;|"Tâche complexe,\nmulti-fichiers ≥ 5"| D["Agent\n(5-20 req)"]
+    B --&gt;|"Besoin de cadrer\nune tâche complexe"| P["Plan\n(1-2 interactions)"]
+    P --&gt;|"Plan validé"| D["Agent\n(5-20 req)"]
+    B --&gt;|"Besoin de modifier\n2-3 fichiers"| C["Chat guide\n(1-3 interactions)"]
 
     style A fill:#d4edda,color:#000
     style B fill:#cce5ff,color:#000
@@ -4952,13 +4953,13 @@
     D-&gt;&gt;C: 3. Chat : "Explique la structure actuelle de UserService"
     C--&gt;&gt;D: Résumé clair du code existant
     D-&gt;&gt;D: 4. Rédiger le prompt complet (contexte + contraintes + format)
-    D-&gt;&gt;C: 5. Edits (2-3 fichiers) ou Agent si ≥ 5 fichiers
+    D-&gt;&gt;C: 5. Plan (valider la stratégie) puis Agent si ≥ 5 fichiers
     C--&gt;&gt;D: Implémentation proposée
     D-&gt;&gt;D: 6. Relire, tester, valider
     D-&gt;&gt;C: 7. Chat /tests pour les tests manquants
     C--&gt;&gt;D: Tests générés
     D-&gt;&gt;D: 8. Validation finale manuelle</code></pre>
-<p><strong>Budget type :</strong> 2–4 premium requests pour une fonctionnalité moyenne.</p>
+<p><strong>Budget type :</strong> consommation faible à modérée en AI Credits pour une fonctionnalité moyenne, selon modèle et contexte transmis.</p>
 <hr />
 <h3 id="sequence-type-deboguer-un-bug">Séquence type — Déboguer un bug<a class="headerlink" href="#sequence-type-deboguer-un-bug" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>sequenceDiagram
@@ -5014,7 +5015,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Budget type :</strong> 2–5 messages standard, 0 premium requests si le modèle n'est pas changé.</p>
+<p><strong>Budget type :</strong> 2–5 messages avec coût souvent faible si modèle léger et contexte maîtrisé.</p>
 <hr />
 <h2 id="regles-de-decision-rapide">Règles de décision rapide<a class="headerlink" href="#regles-de-decision-rapide" title="Permanent link">&para;</a></h2>
 <h3 id="le-modele-mental-en-3-questions">Le "modèle mental" en 3 questions<a class="headerlink" href="#le-modele-mental-en-3-questions" title="Permanent link">&para;</a></h3>
@@ -5023,16 +5024,16 @@
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   → Non : continuer
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>2. La tâche touche 1 ou 2 fichiers max ?
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>   → Oui : Chat ou Edits (modèle standard si la tâche est simple)
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    → Oui : Chat (modèle standard si la tâche est simple)
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>   → Non : continuer
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>3. La tâche nécessite un vrai raisonnement ou traverse 5+ fichiers ?
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>   → Oui : Agent Mode avec modèle premium
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    → Oui : Plan puis Agent Mode avec modèle adapté
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>   → Non : revenir à Chat avec contexte enrichi
 </code></pre></div>
 <hr />
 <h2 id="gestion-du-budget-mensuel">Gestion du budget mensuel<a class="headerlink" href="#gestion-du-budget-mensuel" title="Permanent link">&para;</a></h2>
-<p>La gestion dépend désormais de votre plan et de la logique de facturation active (premium requests en transition, puis AI Credits).</p>
+<p>La gestion dépend de votre plan, de vos allocations AI Credits, et de vos politiques de budget.</p>
 <table>
 <thead>
 <tr>
@@ -5119,16 +5120,17 @@
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
 <a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="gu">## Plan d&#39;exécution</span>
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">1.</span> Chat /explain sur [composant existant]
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="k">2.</span> Edits sur [fichier-cible] avec modèle [standard/premium]
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="k">3.</span> /tests pour la couverture
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="gu">## Budget estimé</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>~[N] premium requests
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="k">2.</span> Plan rapide si ambiguïté de scope
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="k">3.</span> Agent ou Chat guidé selon complexité
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="k">4.</span> /tests pour la couverture
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="gu">## Budget estimé</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>~[N] AI Credits (estimation)
 </code></pre></div>
 <p>Copier ce template dans le chat en début de tâche complexe cadre l'interaction dès le premier message.</p>
 <hr />
 <h2 id="chapitres-suivants">Chapitres suivants<a class="headerlink" href="#chapitres-suivants" title="Permanent link">&para;</a></h2>
-<p><strong><a href="../../chapitre-13-outils-economies/">Outils &amp; Économies</a></strong> : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères et préserver votre quota de premium requests.</p>
+<p><strong><a href="../../chapitre-13-outils-economies/">Outils &amp; Économies</a></strong> : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères et préserver vos AI Credits.</p>
 <p><strong><a href="../../appendices/">Appendices</a></strong> : ressources de référence complètes — FAQ, raccourcis clavier, templates de configuration prêts à copier-coller.</p>
 
 
