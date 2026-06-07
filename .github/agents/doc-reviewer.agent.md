@@ -1,7 +1,7 @@
 ---
-description: "Réviseur de documentation MkDocs Material. Analyse une page existante et produit un rapport d'audit : qualité du contenu, accessibilité, conformité aux conventions du projet, complétude. Ne modifie aucun fichier."
 name: "Doc Reviewer"
-tools: [read, search]
+description: "Réviseur de documentation MkDocs Material. Analyse une page existante et produit un rapport d'audit : qualité du contenu, accessibilité, conformité aux conventions du projet, complétude. Ne modifie aucun fichier."
+tools: ['read_file', 'file_search', 'grep_search', 'semantic_search']
 user-invocable: true
 ---
 

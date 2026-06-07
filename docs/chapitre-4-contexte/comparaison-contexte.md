@@ -4,497 +4,153 @@
 
 ## Présentation
 
-Cette page compare les fonctionnalités de Copilot entre **VS Code** et **IntelliJ IDEA**. Les deux offrent des capacités riches, mais avec approches différentes.
+Cette page compare la manière dont **VS Code** et **IntelliJ IDEA** enrichissent le contexte de GitHub Copilot. Les deux IDEs peuvent aujourd'hui offrir une expérience solide, mais ils ne brillent pas au même endroit :
+
+- **VS Code** est généralement **mieux documenté** sur les artefacts de personnalisation avancés
+- **IntelliJ IDEA** apporte un **contexte sémantique très fort** sur les projets JVM
+
+!!! info "Principe de prudence"
+    Quand une fonctionnalité est documentée explicitement côté GitHub pour VS Code mais pas avec le même niveau de détail pour JetBrains, nous la présentons comme **mieux documentée dans VS Code** plutôt que comme strictement identique partout.
 
 ---
 
-## Features Copilot par IDE
+## Vue d'ensemble
 
-### Inline Suggestions (Autocomplétion)
-
-| Feature | VS Code | IntelliJ IDEA |
-|---------|:-------:|:------------:|
-| Suggestions en temps réel | ✅ | ✅ |
-| Accepter avec Tab/Enter | ✅ | ✅ |
-| Naviguer entre suggestions | ✅ | ✅ |
-| Mode manuel/auto | ✅ | ✅ |
-| Générer multi-ligne | ✅ | ✅ |
-
-**Résultat** : ✅ Équivalentes
-
-### Chat Interactif
-
-| Feature | VS Code | IntelliJ IDEA |
-|---------|:-------:|:------------:|
-| Chat panneau dédié | ✅ | ✅ |
-| Inline Chat (dans éditeur) | ✅ | ✅ |
-| Slash commands (/explain, /tests) | ✅ | ✅ |
-| Contexte participants (@workspace, @project) | ✅ | ✅ |
-| Chat multi-fichiers | ✅ | ✅ |
-
-**Résultat** : ✅ Équivalentes (légère avance VS Code en UX)
-
-### Copilot Agents
-
-| Feature | VS Code | IntelliJ IDEA |
-|---------|:-------:|:------------:|
-| Agent autonome | ✅ | ✅ |
-| Créer PR automatiquement | ✅ | ✅ |
-| Implémenter feature depuis issue | ✅ | ✅ |
-| Analyser et corriger bugs | ✅ | ✅ |
-| Plans | [Pro+/Enterprise](../chapitre-12-couts-gouvernance/abonnements.md) | [Pro+/Enterprise](../chapitre-12-couts-gouvernance/abonnements.md) |
-
-!!! note "Disponibilité par plan"
-    La disponibilité exacte des fonctionnalités par plan peut évoluer. Consultez [Les abonnements](../chapitre-12-couts-gouvernance/abonnements.md) pour les informations à jour (Vérifié le 4 mai 2026).
-
-**Résultat** : ✅ Équivalentes
-
-### Édition Multi-fichiers Assistée
-
-| Feature | VS Code | IntelliJ IDEA |
-|---------|:-------:|:------------:|
-| Mode collaboratif (approuver chaque changement) | ✅ | ✅ |
-| Agent mode (autonome) | ✅ | ✅ |
-| Modifications coordonnées | ✅ | ✅ |
-| Itération automatique | ✅ | ✅ |
-
-**Résultat** : ✅ Équivalentes
-
-### Code Revie & PR Summaries
-
-| Feature | VS Code | IntelliJ IDEA |
-|---------|:-------:|:------------:|
-| Review suggestions (Free) | Sélection | Sélection |
-| Review complète (Pro+) | ✅ | ✅ |
-| PR summary auto | ✅ | ✅ |
-
-**Résultat** : ✅ Équivalentes
+| Axe | VS Code | IntelliJ IDEA |
+|---|---|---|
+| **Complétions inline** | ✅ Très bon | ✅ Très bon |
+| **Chat intégré** | ✅ Très bon | ✅ Très bon |
+| **Instructions de dépôt** | ✅ Oui | ✅ Oui |
+| **Instructions ciblées** | ✅ Très bien documentées | ⚠️ Utiles, mais moins explicitement documentées |
+| **Prompt files / artefacts avancés** | ✅ Très bien documentés | ⚠️ Selon version / workflow |
+| **Hooks Copilot** | ✅ Oui | ⚠️ Présents via plugin selon version/politiques, documentation moins centralisée |
+| **MCP / contexte externe** | ✅ Très bien documenté | ✅ Présent dans l'écosystème Copilot, à vérifier selon l'environnement |
+| **Contexte JVM** | ⚠️ Bon | ✅ Excellente force native |
+| **Contexte multi-langage très personnalisable** | ✅ Excellent | ✅ Bon |
+| **Portabilité par Git** | ✅ Excellente | ✅ Excellente |
 
 ---
 
-## Contextualisation & Personnalisation
+## Personnalisation : ce qui est commun et ce qui diverge
 
-Ici, les éditeurs **divergent significativement**.
+### Ce qui est réellement commun
 
-### Custom Instructions
+Les deux IDEs peuvent tirer profit d'un dépôt bien préparé avec :
 
-| Mécanisme | VS Code | IntelliJ IDEA |
-|-----------|:-------:|:------------:|
-| **Repository-level** | ✅ `.github/copilot-instructions.md` | ✅ `.github/copilot-instructions.md` ou settings |
-| **Personal-level** | ✅ GitHub settings | ✅ GitHub settings |
-| **Format** | Markdown | Markdown ou settings UI |
-| **Partage équipe** | ✅ Via Git | ✅ Via `.idea/` versionnée |
+- `README.md`
+- `.github/copilot-instructions.md`
+- une structure de dossiers explicite
+- des exclusions de contenu adaptées
+- un périmètre de travail propre
 
-### Instructions Ciblées
+### Ce qui diverge encore
 
-| Mécanisme | VS Code | IntelliJ IDEA |
-|-----------|:-------:|:------------:|
-| `.github/instructions/*.instructions.md` | ✅ | ✅ (via settings UI) |
-| Par langage/domaine | ✅ | Partiellement |
-| Appliqué auto | ✅ Basé sur `applyTo` glob | ✅ Basé sur fichier ouvert |
-
-### Prompt Files
-
-| Mécanisme | VS Code | IntelliJ IDEA |
-|-----------|:-------:|:------------:|
-| **Prompt files** (`.prompt.md`) | ✅ Réutilisables, invoquables via `#fichier` | ✅ |
-| Stockage | `.github/prompts/` | `.github/prompts/` |
-| Partage équipe via Git | ✅ | ✅ |
-
-### Skills (`SKILL.md`)
-
-| Mécanisme | VS Code | IntelliJ IDEA |
-|-----------|:-------:|:------------:|
-| **Création** via interface | ✅ | ❌ |
-| **Lecture / utilisation** | ✅ | ⭐ En lecture seule |
-| Invocation | Commande slash `/nom-skill` ou auto | À la demande |
-| Chargement | À la demande (≠ instructions toujours actives) | À la demande |
-| Stockage | `.github/skills/<domain>/SKILL.md` | `.github/skills/<domain>/SKILL.md` |
-| Partage équipe via Git | ✅ | ✅ (lecture) |
-
-**Résultat** : ✅ VS Code (création + usage), ⭐ IntelliJ (lecture seulement)
-
-### Agents Personnalisés (`.agent.md`)
-
-| Mécanisme | VS Code | IntelliJ IDEA |
-|-----------|:-------:|:------------:|
-| Fichiers `.agent.md` dans `.github/agents/` | ✅ | ✅ |
-| Invocation `@nom-agent` dans le chat | ✅ | ✅ |
-| Restriction des outils par agent | ✅ (`tools:` frontmatter) | ✅ |
-| Modèle IA par agent (`model:` frontmatter) | ✅ | ✅ |
-| Instructions permanentes intégrées à l'agent | ✅ | ✅ |
-| Workflows IDE natifs (actions, intentions) | ⭐ Via agent mode | ✅ Natif IDE |
-
-**Résultat** : ✅ Équivalentes
-
-### Hooks Automatiques
-
-| Mécanisme | VS Code | IntelliJ IDEA |
-|-----------|:-------:|:------------:|
-| Hook `PreToolUse` (avant qu'un outil s'exécute) | ✅ | ❌ |
-| Hook `PostToolUse` (après qu'un outil s'exécute) | ✅ | ❌ |
-| Hook `SessionStart` / `Stop` (début/fin de session) | ✅ | ❌ |
-| Hook `UserPromptSubmit` (à chaque prompt) | ✅ | ❌ |
-| Génération auto de messages de commit | ✅ (icône ✨ Source Control) | ❌ |
-| Intégration GitHub Actions pour revue PR | ✅ | ✅ (via GitHub) |
-| Configuration dans `.github/hooks/*.json` | ✅ | ❌ |
-
-**Résultat** : ✅ VS Code exclusif (sauf GitHub Actions)
-
-!!! info "Hooks et IntelliJ"
-    IntelliJ IDEA dispose de ses propres mécanismes d'automatisation (file watchers, intentions, macros), mais ceux-ci ne sont pas des hooks Copilot — ils ne déclenchent pas d'actions Copilot directement.
-
-### Exclusion & Sensibilité
-
-| Mécanisme | VS Code | IntelliJ IDEA |
-|-----------|:-------:|:------------:|
-| Exclusion via settings GitHub (repo/orga/enterprise) | ✅ | ✅ |
-| Exclusion dossiers IDE natif | Limitée | ✅ Natif "Excluded Folders" |
-| Cache context privé | ✅ | ✅ |
+| Sujet | VS Code | IntelliJ IDEA |
+|---|---|---|
+| **Documentation officielle sur les prompt files** | ✅ Oui | ⚠️ Pas au même niveau de détail |
+| **Documentation officielle sur les hooks** | ✅ Oui | ⚠️ Support via plugin, mais documentation moins explicite côté JetBrains |
+| **Documentation officielle sur les artefacts avancés** | ✅ Plus centralisée | ⚠️ Plus fragmentée |
+| **Pilotage fin par fichiers du dépôt** | ✅ Très naturel | ✅ Possible, mais à vérifier selon le build |
+| **Partage de réglages IDE** | ✅ Très simple via `.vscode/` | ⚠️ Moins portable via fichiers internes IDE |
 
 ---
 
-## Analyses Sémantique & Contexte Inferred
+## Le vrai avantage d'IntelliJ : le contexte structurel sur JVM
 
-Les deux IDEs n'utilisent pas la même technologie pour comprendre votre code. Cette différence est fondamentale : elle détermine **combien Copilot "voit" sans que vous ayez à ouvrir des fichiers**.
+Sur Java / Kotlin / gros projets Maven-Gradle, IntelliJ garde un avantage concret :
 
-### Comment ça fonctionne ?
+- résolution des types et symboles très robuste
+- compréhension native des modules
+- navigation et diagnostics particulièrement forts
+- intégration naturelle avec la structure du projet
 
-=== "VS Code — LSP (Language Server Protocol)"
+En pratique, cela signifie souvent que sur un projet Spring Boot ou Kotlin multi-module, IntelliJ aide Copilot à raisonner plus proprement sur :
 
-    **Principe** : VS Code délègue l'analyse du code à des serveurs de langage externes (un par langage). Copilot récupère le contexte via ces serveurs.
+- les services
+- les repositories
+- les annotations et points d'entrée applicatifs
+- les relations inter-modules
 
-    **Ce que Copilot voit automatiquement** :
-
-    - Fichiers ouverts dans les onglets (contexte principal)
-    - Fichiers récemment modifiés
-    - Imports et dépendances lus depuis `package.json`, `tsconfig.json`, `pyproject.toml`, etc.
-    - Types et symboles exposés par le Language Server actif
-    - `.github/copilot-instructions.md` et instructions ciblées
-
-    **Profondeur d'analyse** : **Moyenne** — dépend du Language Server installé
-
-    !!! info "LSP = extensible mais fragmenté"
-        L'avantage du LSP est que chaque langage peut avoir son propre serveur optimisé (TypeScript LS, Pylance, rust-analyzer…). L'inconvénient : la profondeur varie selon la qualité du serveur, et les fichiers non ouverts sont souvent invisibles.
-
-=== "IntelliJ IDEA — PSI (Program Structure Interface)"
-
-    **Principe** : IntelliJ indexe l'intégralité du projet au démarrage via le PSI — un arbre syntaxique *et* sémantique résolu pour chaque fichier. Copilot hérite de cet index complet.
-
-    **Ce que Copilot voit automatiquement** :
-
-    - Hiérarchie complète du projet (classes, méthodes, types, interfaces)
-    - Imports et références détectées sur **tous les fichiers** (pas seulement les ouverts)
-    - Héritage et polymorphisme résolus nativement
-    - `pom.xml`, `build.gradle` pour dépendances et modules
-    - Structure multi-module Maven/Gradle comprise sans configuration extra
-    - Annotations Spring, JPA, Jakarta EE interprétées par l'IDE
-
-    **Profondeur d'analyse** : **Élevée** — index complet du projet disponible en permanence
-
-    !!! info "PSI = profond mais spécialisé JVM"
-        L'avantage du PSI est sa précision exceptionnelle pour Java, Kotlin, Scala. L'inconvénient : il est principalement taillé pour les langages JVM ; pour TypeScript ou Python pur, la valeur ajoutée est moindre.
+!!! tip "Traduction pratique"
+    Si votre enjeu principal est la **précision sur une base Java/JVM**, IntelliJ est souvent le meilleur point de travail. Si votre enjeu principal est la **gouvernance avancée par artefacts Copilot**, VS Code garde un avantage documentaire.
 
 ---
 
-### Comparaison directe LSP vs PSI
+## Le vrai avantage de VS Code : la documentation et la gouvernance fine
 
-| Critère | VS Code (LSP) | IntelliJ IDEA (PSI) |
-|---------|:-------------:|:-------------------:|
-| Connaissance des fichiers **non ouverts** | ⭐ Partielle | ✅ Complète |
-| Résolution de l'héritage de classes | ⭐ Via LS actif | ✅ Natif, complet |
-| Inférence de types sans annotations | ⭐ Selon LS | ✅ Résolu par PSI |
-| Qualité pour **Java / Kotlin / Scala** | Bon | **Excellent** |
-| Qualité pour **TypeScript / JavaScript** | **Excellent** | Bon |
-| Qualité pour **Python** | **Excellent** (Pylance) | Bon |
-| Qualité pour **Go / Rust / C++** | Très bon | Bon |
-| Support multi-module Maven/Gradle | Bon | **Natif** |
-| Performance sur très grands projets | Bon | **Excellent** (cache PSI) |
-| Extensibilité (nouveaux langages) | **Excellent** | Limité |
+VS Code reste plus confortable si vous voulez industrialiser fortement la personnalisation Copilot via des artefacts versionnés et des workflows très structurés.
+
+Situations typiques où VS Code reste plus lisible :
+
+- démontrer un usage de **prompt files**
+- documenter ou maintenir des **hooks** avec une documentation plus centralisée
+- outiller un dépôt avec beaucoup d'artefacts de personnalisation avancés
+- piloter finement des workflows d'équipe depuis les fichiers du repo
 
 ---
 
-### Exemple concret : la différence en pratique
+## Coût et discipline de contexte : égalité sur le principe, différence sur l'ergonomie
 
-Imaginons une classe `OrderService` dans un projet Java de 200 fichiers.
+Sur le plan du coût, la règle est la même dans les deux IDEs :
 
-=== "Sur IntelliJ IDEA"
+- un contexte mieux cadré coûte moins cher
+- des instructions plus courtes donnent souvent de meilleurs résultats
+- les sorties MCP volumineuses augmentent la consommation
+- les demandes trop larges créent du rework
 
-    ```java
-    @Service
-    public class OrderProcessor {
+### Réflexe recommandé quel que soit l'IDE
 
-        @Autowired
-        private OrderService orderService;
-
-        public void process(Long orderId) {
-            orderService.  // ← Copilot suggère TOUTES les méthodes
-                          //   de OrderService avec les bons types,
-                          //   même si OrderService.java n'est PAS ouvert.
-                          //   PSI a déjà tout indexé.
-        }
-    }
-    ```
-
-    ✅ Copilot voit `findById()`, `save()`, `cancelOrder()` et leurs signatures exactes.
-
-=== "Sur VS Code"
-
-    ```java
-    @Service
-    public class OrderProcessor {
-
-        @Autowired
-        private OrderService orderService;
-
-        public void process(Long orderId) {
-            orderService.  // ← Copilot suggère des méthodes génériques
-                          //   ou rien de précis si OrderService.java
-                          //   n'est pas dans un onglet ouvert.
-        }
-    }
-    ```
-
-    ⭐ Pour obtenir les bonnes suggestions, il faut ouvrir `OrderService.java` dans un onglet.
+1. Maintenir `.github/copilot-instructions.md`
+2. Ouvrir seulement les fichiers utiles
+3. Exclure le bruit du dépôt
+4. Découper les tâches en étapes
+5. N'activer les mécanismes avancés qu'en cas de vrai besoin
 
 ---
 
-### Quand utiliser quel IDE ?
+## Recommandations par type de projet
 
-| Situation | IDE recommandé | Raison |
-|-----------|:--------------:|--------|
-| Projet **Java / Spring Boot** | ✅ IntelliJ | PSI résout héritage, annotations Spring, injection de dépendances sans configuration |
-| Projet **Kotlin / Android** | ✅ IntelliJ | Support natif Kotlin + PSI = suggestions très précises |
-| Projet **Scala** | ✅ IntelliJ | Analyse complexité Scala (implicits, type classes) via PSI |
-| Projet **TypeScript / React / Next.js** | ✅ VS Code | TypeScript LS = inférence parfaite + extensions frontend riches |
-| Projet **Python / FastAPI / Django** | ✅ VS Code | Pylance LSP = meilleur support Python actuel |
-| Projet **Node.js / Express** | ✅ VS Code | Écosystème npm + LSP = contexte optimal |
-| Projet **Go / Rust** | ✅ VS Code | gopls / rust-analyzer = Language Servers de référence |
-| **Mono-repo multi-langage** | ✅ VS Code | `.instructions.md` ciblées + workspace multi-dossiers |
-| Base de code **Java legacy massive** | ✅ IntelliJ | PSI comprend les hiérarchies complexes sans ouvrir chaque fichier |
-| Dev en **GitHub Codespaces / Cloud** | ✅ VS Code | Natif web, LSP disponible en remote |
-| **Gouvernance IA** (instructions, politiques, contrôle) | ✅ VS Code | `.instructions.md` versionnées dans `.github/`, `applyTo` pour cibler les équipes, agents avec restriction d'outils, `.copilotignore` pour exclure le code sensible |
-
-!!! tip "Stratégie combinée"
-    Vous pouvez tirer le meilleur des deux : créez vos fichiers `.github/` (instructions, prompts, agents) en VS Code, puis ouvrez le même projet dans IntelliJ pour bénéficier du PSI. **Les instructions `.github/copilot-instructions.md` sont lues par les deux IDEs.**
+| Situation | IDE recommandé | Pourquoi |
+|---|---|---|
+| Projet **Java / Spring Boot** | ✅ IntelliJ | Contexte sémantique JVM fort |
+| Projet **Kotlin / Android** | ✅ IntelliJ | Intégration IDE très riche |
+| Projet **TypeScript / React / Next.js** | ✅ VS Code | Documentation Copilot plus riche et écosystème naturel |
+| Projet **Python / FastAPI / Django** | ✅ VS Code | Très bon compromis personnalisation / doc / outillage |
+| Mono-repo **polyglotte** | ✅ VS Code ou duo VS Code + IntelliJ | VS Code pour la gouvernance, IntelliJ pour les zones JVM |
+| Équipe voulant réduire le coût rapidement | 🤝 Les deux | Le vrai levier est la qualité du dépôt et du contexte |
 
 ---
 
-## Avantages par IDE
+## Stratégie recommandée si vous utilisez les deux IDEs
 
-### VS Code ✅
+La stratégie la plus robuste pour beaucoup d'équipes est hybride :
 
-- **Personnalisation avancée** : instructions ciblées, skills, agents, prompts réutilisables
-- **Légèreté** : moins exigeant en ressources
-- **Écosystème extensible** : MCP (Model Context Protocol) pour intégrer outils externes
-- **Workflow équipe** : tout se versionne via Git (`.github/`)
-- **Web-based** : VS Code Web, GitHub Codespaces
-- **TypeScript/JS excellence** : contexte optimal pour frontend
+- préparez le dépôt pour **Copilot lui-même**, pas pour un seul IDE
+- versionnez les fichiers de contexte dans le dépôt
+- utilisez IntelliJ sur les zones JVM complexes
+- utilisez VS Code quand vous avez besoin d'une documentation plus centralisée pour industrialiser des artefacts de personnalisation avancés
 
-### IntelliJ IDEA ✅
-
-- **Analyse JVM native** : Meilleure pour Java, Kotlin, Scala
-- **Refactorings intelligents** : intégrés avant Copilot
-- **Multi-module Maven/Gradle natif** : organise auto le contexte
-- **Inspections & hints intégrées** : Copilot + IDE analysis combinés
-- **Performance pour gros projets** : PSI cache = réactif
-- **Workflows IDE sophistiqués** : debugging, profiling intégré
-
----
-
-## Contexte par Écosystème
-
-### Frontend (React, Vue, Angular, Next.js)
-
-| Aspect | VS Code | IntelliJ |
-|--------|:-------:|:--------:|
-| Contexte langues | **Excellent** | Bien |
-| Resolution types | Excellent | Bien |
-| Plugins/extensions | Excellent | Limité |
-| Recommandation | **Préféré** | Option secondaire|
-
-⭐ **Gagnant : VS Code** (WebStorm meilleur si acheté)
-
-### Backend Java / JVM
-
-| Aspect | VS Code | IntelliJ |
-|--------|:-------:|:--------:|
-| Contexte sémantique | Bon | **Excellent** |
-| Héritage multi-génération | Limité | **Compris natif** |
-| Refactorings Copilot | Bon | **Meilleur** |
-| Maven/Gradle multi-module | Bon | **Meilleur** |
-| Recommandation | Acceptable | **Préféré** |
-
-⭐ **Gagnant : IntelliJ** (ou IDEA complet)
-
-### Backend Node.js / Python
-
-| Aspect | VS Code | IntelliJ |
-|--------|:-------:|:--------:|
-| Contexte | Excellent | Bon |
-| Types inference | Excellent | Bon |
-| Recommandation | **Préféré** | Acceptable |
-
-⭐ **Gagnant : VS Code**
-
-### Polyglot (Mono-repo : Frontend + Backend + Shared)
-
-| Aspect | VS Code | IntelliJ |
-|--------|:-------:|:--------:|
-| Multi-dossiers natif | ✅ `.code-workspace` | ✅ Multi-module |
-| Contexte partagé | Excellent | Bon |
-| Recommandation | Très bon (equipé ensemble) | Équipes séparées |
-
-⭐ **Gagnant : VS Code** (meilleur pour équipes mixed)
-
----
-
-## Recommandations par Contexte
-
-### Équipe Frontend React/TypeScript
-→ **VS Code** (+ optionnel WebStorm pour expérience UI)
-
-### Équipe Backend Java/Spring
-→ **IntelliJ IDEA** (meilleure analyse PSI + Spring tooling)
-
-### Équipe Python/FastAPI
-→ **VS Code** (avec Pylance)
-
-### Mono-repo : Frontend + Backend + Shared Types
-→ **VS Code** (`code-workspace` + instructions ciblées)
-  
-   Fonctionne aussi : **IntelliJ Fleet** (Lightweight, MCP-ready)
-
-### Solo Dev Multi-skillée
-→ **VS Code** (flexibilité, personnalisation profonde)
-
----
-
-## Tableau Récapitulatif
-
-| Catégorie | Gagnant |
-|-----------|--------|
-| **Inline suggestions** | 🤝 Égalité |
-| **Chat & Agents** | 🤝 Égalité |
-| **Edits multi-fichiers** | 🤝 Égalité |
-| **Personnalisation avancée** | ✅ VS Code |
-| **Prompt files réutilisables** | ✅ VS Code |
-| **Skills domaine (SKILL.md)** | ✅ VS Code |
-| **Agents personnalisés (.agent.md)** | 🤝 Égalité |
-| **Hooks automatiques** | ✅ VS Code |
-| **Contexte JVM natif** | ✅ IntelliJ |
-| **Frontend excellent** | ✅ VS Code |
-| **Backend JVM excellent** | ✅ IntelliJ |
-| **Légèreté & flexibilité** | ✅ VS Code |
-| **Analyse sémantique** | ✅ IntelliJ |
-
----
-
-## Ressources
-
-- [Guide VS Code Complet](../chapitre-1-installation/vscode/reference.md)
-- [Guide IntelliJ Complet](../chapitre-1-installation/intellij/reference.md)
-- [Contexte VS Code avancé](vscode-contexte.md)
-- [Contexte IntelliJ avancé](intellij-contexte.md)
-
----
-
-## L'avantage d'IntelliJ : analyse sémantique native
-
-IntelliJ connaît votre code en profondeur **sans configuration** :
-
-```java
-// Exemple : IntelliJ comprend que orderService est un
-// OrderService et connaît toutes ses méthodes disponibles
-// sans avoir besoin d'onglets ouverts
-
-@Autowired
-private OrderService orderService;
-
-public void process() {
-    // Copilot sur IntelliJ suggère exactement les bonnes
-    // méthodes de orderService avec les bons types de paramètres
-    orderService.
-    //           ↑ Suggestions précises car IntelliJ connaît
-    //             le type exact et toutes ses méthodes
-}
-```
-
-Sur VS Code, la même précision nécessiterait que le fichier `OrderService.java` soit ouvert dans un onglet.
-
----
-
-## Stratégie recommandée selon le contexte
-
-### Vous travaillez sur un projet Java/Spring Boot
-
-```
-Recommandation : IntelliJ IDEA en IDE principal
-                 VS Code optionnel pour les fichiers de personnalisation
-
-Pourquoi : L'analyse PSI d'IntelliJ donne un contexte Java exceptionnel.
-           Si vous avez besoin d'instructions custom, créez-les sur VS Code
-           et committez-les dans .github/ — elles bénéficieront à toute l'équipe.
-```
-
-### Vous travaillez sur un projet full-stack TypeScript
-
-```
-Recommandation : VS Code avec workspace multi-dossiers
-
-Pourquoi : VS Code + Pylance/TypeScript Language Server = contexte TS 
-           excellent + personnalisation .instructions.md possible + 
-           .copilotignore pour exclure les fichiers générés.
-```
-
-### Vous avez les deux IDEs et alternez selon les projets
-
-```
-Recommandation : 
-- Créez les fichiers .github/ dans votre projet (instructions, agents)
-- Ces fichiers bénéficient à VS Code automatiquement
-- IntelliJ ignore ces fichiers mais bénéficie de la structure propre 
-  et du README bien écrit
-- Win-win pour les deux IDEs !
+```text
+Dépôt propre + instructions versionnées + périmètre réduit
+→ bénéfice dans les deux IDEs
 ```
 
 ---
 
-## Migration de contexte : d'IntelliJ vers VS Code
+## Sources
 
-Si vous souhaitez passer d'IntelliJ à VS Code pour un projet :
-
-1. **Exportez votre connaissance projet** vers un `copilot-instructions.md`
-2. **Créez des instructions** pour les conventions Java/Kotlin de votre équipe
-3. **Installez les extensions** : Extension Pack for Java, Spring Boot Extension Pack
-4. **Configurez le workspace** avec un `.code-workspace` si multi-module
-
-```markdown
-<!-- .github/copilot-instructions.md pour un projet Spring Boot -->
-# Instructions — MonApp Spring Boot
-
-Ce projet est une API REST Spring Boot 3.2 avec Java 21.
-
-Architecture (packages) :
-- `controller` : @RestController, validation des entrées, mapping DTOs
-- `service` : @Service, logique métier, @Transactional pour les ops write
-- `repository` : interfaces JpaRepository, queries JPQL dans @Query
-- `model` : entités JPA, enums, DTOs (record Java 16+)
-- `config` : @Configuration, beans, sécurité Spring Security
-- `exception` : @ControllerAdvice, hiérarchie d'exceptions
-
-Conventions Java :
-- Java 21 features : Records, Pattern Matching, Sealed Classes bienvenues
-- Lombok : @Data, @Builder, @RequiredArgsConstructor, @Slf4j
-- Validation : @Valid sur les DTOs d'entrée, annotations javax.validation
-- Tests : JUnit 5, Mockito, AssertJ, @SpringBootTest pour les IT
-```
+- GitHub Docs — *[Using GitHub Copilot in a JetBrains IDE](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-github-copilot-in-a-jetbrains-ide)* (consulté le 2026-06-07)
+- GitHub Docs — *[Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support)* (consulté le 2026-06-07)
+- GitHub Docs — *[Adding repository custom instructions for GitHub Copilot in your IDE](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide)* (consulté le 2026-06-07)
+- GitHub Docs — *[Install GitHub Copilot in your environment](https://docs.github.com/en/copilot/how-tos/set-up/install-github-copilot-in-your-environment)* (consulté le 2026-06-07)
+- GitHub Docs — *[Customizing GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot)* (consulté le 2026-06-07)
+- JetBrains Help — *[GitHub Copilot](https://www.jetbrains.com/help/idea/github-copilot.html)* (consulté le 2026-06-07)
+- Visual Studio Code Docs — *[Prompt files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)* (consulté le 2026-06-07)
 
 ---
 
 ## Chapitres suivants
 
-**[Prompt Engineering](../chapitre-5-prompt-engineering/index.md)** : techniques fondamentales et avancées pour écrire des prompts efficaces et obtenir des réponses de qualité du modèle de langage.
+**[Prompt Engineering](../chapitre-5-prompt-engineering/index.md)** : apprendre à formuler des demandes plus précises, plus courtes et plus efficaces pour augmenter la qualité des réponses.
 
-**[Machine Learning](../chapitre-6-machine-learning/index.md)** : utiliser Copilot pour accélérer vos workflows ML, Data Science et la création de modèles d'IA.
-
+**[Machine Learning](../chapitre-6-machine-learning/index.md)** : découvrir comment utiliser Copilot sur des workflows ML et data avec un bon niveau de contexte et de validation.

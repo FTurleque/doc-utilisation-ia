@@ -7,6 +7,9 @@ Le choix d'un plan Copilot se fait maintenant avec une logique claire: **prix de
 !!! info "Référence de cette page"
     Valeurs revérifiées le **1 juin 2026** sur la documentation officielle GitHub Copilot.
 
+!!! warning "Valeurs susceptibles d'évoluer"
+    Les prix, crédits inclus et politiques de dépassement peuvent changer. Vérifiez toujours les pages officielles avant une décision budgétaire.
+
 ---
 
 ## Vue rapide des plans
@@ -122,7 +125,7 @@ graph TD
 
 ## Sources officielles
 
-- [Plans for GitHub Copilot](https://docs.github.com/en/copilot/about-github-copilot/plans-for-github-copilot) - consulté le 2026-06-01
+- [Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-03
 - [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-01
 - [About billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/organizations-and-enterprises) - consulté le 2026-06-01
 - [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) - consulté le 2026-06-01

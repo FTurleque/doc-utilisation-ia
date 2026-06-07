@@ -2,6 +2,9 @@
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
 
+!!! info "Référence de cette page"
+    Procédures revérifiées le **3 juin 2026** à partir des guides officiels GitHub Copilot.
+
 ## 1. Copilot ne génère aucune suggestion
 
 ### Symptôme
@@ -141,10 +144,9 @@ Les suggestions apparaissent parfois, avec 2-5 secondes de délai, ou s'interrom
 
 **Réseau lent — augmenter la tolérance :**
 ```json
-// VS Code
 {
     "github.copilot.advanced": {
-        "requestTimeout": 10000  // 10 secondes (défaut: 5000)
+        "requestTimeout": 10000
     }
 }
 ```
@@ -177,7 +179,7 @@ Copilot génère du code qui ne correspond pas au contexte du projet : mauvais f
         function get(e) {
         ```
 
-5. **Vérifier `.copilotignore`** — si le fichier en cours est listé dans `.copilotignore`, Copilot l'ignore entièrement (voir [Problème 11](#11-fichier-ignore-par-copilot))
+5. **Vérifier `.copilotignore`** — si le fichier en cours est listé dans `.copilotignore`, Copilot l'ignore entièrement (voir la section **11. Fichier ignoré par Copilot**)
 
 ---
 
@@ -214,7 +216,6 @@ Les instructions dans `.github/copilot-instructions.md` ou `.github/instructions
 | IntelliJ | Fonctionnalité absente — voir [comparaison contexte](../chapitre-4-contexte/comparaison-contexte.md) |
 
 ```json
-// S'assurer que les instruction files sont actifs
 {
     "github.copilot.chat.codeGeneration.useInstructionFiles": true
 }
@@ -434,6 +435,15 @@ La suggestion apparaît mais s'arrête au milieu d'une ligne, d'une fonction, ou
     Si le fichier est très long, essayez de diviser le fichier ou de fermer des onglets inutilisés.
     
     Si le problème est reproductible : **Help → Submit a Bug Report** avec le log filtré.
+
+---
+
+## Sources officielles
+
+- [Troubleshoot GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot) - consulté le 2026-06-03
+- [Troubleshoot common issues](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues) - consulté le 2026-06-03
+- [View logs for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/view-logs) - consulté le 2026-06-03
+- [Get code suggestions in your IDE](https://docs.github.com/en/copilot/how-tos/get-code-suggestions/get-ide-code-suggestions) - consulté le 2026-06-03
 
 ---
 

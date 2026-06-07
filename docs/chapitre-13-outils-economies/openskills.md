@@ -91,7 +91,7 @@ npx openskills install git@github.com:your-org/private-skills.git
 | `npx openskills install <source>` | Installe des skills depuis GitHub, local ou SSH |
 | `npx openskills sync` | Met à jour `AGENTS.md` avec la liste des skills |
 | `npx openskills list` | Affiche les skills installées |
-| `npx openskills read <name>` | Charge le contenu d'une skill (utilisé par les agents) |
+| `npx openskills read &lt;name&gt;` | Charge le contenu d'une skill (utilisé par les agents) |
 | `npx openskills update [name...]` | Met à jour une ou toutes les skills |
 | `npx openskills manage` | Interface interactive de gestion |
 

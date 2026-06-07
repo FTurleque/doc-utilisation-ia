@@ -1,7 +1,8 @@
 ---
+name: "Révision de page"
 description: "Réviser une page de documentation existante : qualité du contenu, accessibilité, cohérence de style MkDocs Material, hiérarchie des titres et complétude."
 argument-hint: "Chemin de la page à réviser (ex: docs/chapitre-3-contexte/concepts.md)"
-agent: "ask"
+mode: ask
 ---
 
 # Révision d'une page de documentation

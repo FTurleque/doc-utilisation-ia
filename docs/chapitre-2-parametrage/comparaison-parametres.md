@@ -1,7 +1,13 @@
 ﻿# Comparaison des Paramètres — IntelliJ vs VS Code
 
+<span class="badge-intellij">IntelliJ</span> <span class="badge-vscode">VS Code</span>
+
 ## Présentation
-Cette page compare les options de configuration disponibles entre IntelliJ IDEA et Visual Studio Code pour GitHub Copilot. Les deux IDEs offrent des expériences similaires mais avec des différences notables dans la granularité des paramètres.
+
+Cette page compare les options de configuration disponibles entre IntelliJ IDEA et Visual Studio Code pour GitHub Copilot. Les deux IDEs offrent aujourd'hui un socle fonctionnel proche, mais la **documentation officielle** n'est pas aussi détaillée sur tous les mécanismes dans les deux environnements.
+
+!!! info "Règle de lecture"
+    Quand un mécanisme est **documenté explicitement** côté GitHub pour VS Code mais pas détaillé de la même façon pour JetBrains, nous l'indiquons comme **mieux documenté** plutôt que comme automatiquement identique.
 
 ---
 
@@ -9,96 +15,103 @@ Cette page compare les options de configuration disponibles entre IntelliJ IDEA 
 
 | Paramètre / Fonctionnalité | IntelliJ IDEA | VS Code |
 |---------------------------|:-------------:|:-------:|
-| **Activer/Désactiver Copilot** | ✅ Settings UI | ✅ `github.copilot.enable` |
-| **Désactiver par langage** | ✅ Liste dans Settings | ✅ Object par langage dans JSON |
-| **Auto-complétion activée** | ✅ Case à cocher | ✅ `enableAutoCompletions` |
-| **Délai de suggestion** | ✅ Paramètre en ms | ⚠️ Non exposé directement |
-| **Nombre de suggestions inline** | ⚠️ Limité | ✅ `advanced.inlineSuggestCount` |
-| **Langue du Chat** | ⚠️ Suit la langue de l'IDE | ✅ `chat.localeOverride` |
-| **Code actions (ampoule IA)** | ✅ Activé par défaut | ✅ `enableCodeActions` |
-| **Suggestions de renommage** | ⚠️ Automatique non configurable | ✅ `renameSuggestions.triggerAutomatically` |
-| **Settings par workspace** | ✅ Via projet partagé JetBrains | ✅ `.vscode/settings.json` |
-| **Export/partage de config** | ✅ Export IDE Settings | ✅ `settings.json` versionnable |
-| **Niveau de logs** | ✅ Configurable | ⚠️ Via `debug.overrideLogLevels` |
-| **Notifications** | ✅ Granularité par type | ⚠️ Limité aux notifications VS Code |
+| **Activer/Désactiver Copilot** | ✅ Interface Settings | ✅ `settings.json` / UI |
+| **Configurer le chat et les complétions** | ✅ UI | ✅ UI + JSON |
+| **Choisir un modèle** | ✅ Selon plan / build | ✅ Selon plan / build |
+| **Instructions de dépôt `.github/copilot-instructions.md`** | ✅ Oui | ✅ Oui |
+| **Instructions ciblées** | ⚠️ Oui, mais UX/documentation moins explicites | ✅ Très bien documenté |
+| **Prompt files / artefacts avancés** | ⚠️ Selon version et workflow | ✅ Très bien documenté |
+| **Hooks Copilot** | ❌ Non documenté pour JetBrains | ✅ Documenté |
+| **MCP / contexte externe** | ✅ Présent dans l'écosystème Copilot, disponibilité selon environnement | ✅ Très bien documenté |
+| **Partage d'équipe par Git** | ✅ Via fichiers du dépôt | ✅ Via fichiers du dépôt |
+| **Partage de réglages IDE** | ⚠️ Possible mais moins portable | ✅ Très naturel avec `.vscode/` |
+| **Pilotage fin du contexte** | ✅ Bon niveau avec instructions + structure projet | ✅ Excellent niveau avec doc plus riche |
+| **Contexte sémantique JVM** | ✅ Excellente force d'IntelliJ | ⚠️ Bon, mais moins natif |
 
-**Légende :** ✅ Bien supporté · ⚠️ Support partiel ou indirect · ❌ Non disponible
-
----
-
-## Fonctionnalités exclusives à IntelliJ IDEA
-
-| Fonctionnalité | Description |
-|----------------|-------------|
-| **Délai de suggestion configurable** | Paramètre précis en millisecondes directement dans l'UI |
-| **Suggest Delay slider** | Interface graphique pour ajuster finement la réactivité |
-| **Intégration native JetBrains** | Les suggestions tiennent compte du modèle sémantique complet de l'IDE (types, imports, PSI) |
-| **Quick Documentation avec Copilot** | Copilot peut générer de la documentation dans le format natif de l'IDE (Javadoc, KDoc) |
+**Légende :** ✅ Bien supporté · ⚠️ Disponible mais moins explicite / dépendant de la version · ❌ Non documenté comme mécanisme de référence dans cet IDE
 
 ---
 
-## Fonctionnalités exclusives à VS Code
+## Ce qui a réellement progressé côté IntelliJ
 
-| Fonctionnalité | Description |
-|----------------|-------------|
-| **`github.copilot.enable` par langage** | Désactiver/activer avec une précision par langage individuel |
-| **`chat.localeOverride`** | Forcer la langue du Chat indépendamment de la langue de l'IDE |
-| **Fichiers `SKILL.md`** | Packages de connaissance domaine pour Copilot |
-| **Hooks Copilot** | Automatisations déclenchées par des actions Copilot |
-| **`.copilotignore`** | Exclure des fichiers du contexte Copilot |
-| **Panneau "10 suggestions"** | ++ctrl+enter++ ouvre un panneau avec 10 variantes de suggestion |
-| **`advanced.listCount`** | Configurer le nombre de suggestions dans le panneau |
+L'écosystème GitHub Copilot a désormais une documentation officielle plus large sur :
 
-!!! warning "Différence fondamentale"
-    La personnalisation avancée via fichiers (`.instructions.md`, `.agent.md`, `.prompt.md`, `SKILL.md`) est une fonctionnalité **exclusive à VS Code**. Si vous avez besoin de cette personnalisation avancée dans votre workflow, VS Code est indispensable.
+- les **instructions de dépôt**
+- la **configuration du contexte**
+- le **choix des modèles**
+- MCP comme mécanisme d'extension du contexte
+- les fonctions avancées liées aux usages agentiques
 
----
+Conséquence pratique : **IntelliJ n'est plus seulement un IDE de complétion**. Pour beaucoup d'équipes, il permet maintenant un niveau de personnalisation utile et rentable à condition de partir d'un socle simple et portable :
 
-## Équivalences de paramètres
-
-| Objectif | IntelliJ | VS Code (`settings.json`) |
-|----------|----------|--------------------------|
-| Désactiver Copilot | Settings → Décocher "Enable" | `"github.copilot.enable": {"*": false}` |
-| Désactiver sur Markdown | Settings → Disabled Languages → markdown | `"github.copilot.enable": {"markdown": false}` |
-| Mode manuel uniquement | Settings → Décocher "Auto-completions" | `"github.copilot.editor.enableAutoCompletions": false` |
-| Ouvrir les Settings | ++ctrl+alt+s++ → GitHub Copilot | ++ctrl+comma++ → rechercher "copilot" |
-| Désactiver temporairement | Icône barre d'état → Disable | Icône barre de statut → Disable |
+1. `README.md` à jour
+2. `.github/copilot-instructions.md` propre
+3. règles ciblées seulement si elles corrigent un vrai bruit
+4. exclusions des dossiers générés / sensibles
 
 ---
 
-## Comparaison de la qualité des suggestions
+## Fonctionnalités où VS Code reste mieux documenté
 
-La qualité des suggestions Copilot dépend du contexte fourni à l'IA, pas uniquement de l'IDE. Cependant, certaines différences existent :
+| Sujet | IntelliJ IDEA | VS Code |
+|---|---|---|
+| **Prompt files** | ⚠️ À vérifier selon votre version / workflow | ✅ Documentation explicite |
+| **Custom agents** | ⚠️ Disponibilité à valider dans votre environnement | ✅ Documentation explicite |
+| **Hooks** | ❌ | ✅ |
+| **Instruction files avancés** | ⚠️ Moins lisible côté doc JetBrains | ✅ Très bien expliqué |
+| **Références de personnalisation** | ⚠️ Plus dispersées | ✅ Plus centralisées |
 
-| Aspect | IntelliJ IDEA | VS Code |
-|--------|:-------------:|:-------:|
-| **Analyse sémantique du code** | Très profonde (PSI tree) | Bonne (Language Server) |
-| **Complétion Java/Kotlin** | ⭐⭐⭐⭐⭐ Excellente | ⭐⭐⭐⭐ Très bonne |
-| **Complétion JavaScript/TypeScript** | ⭐⭐⭐⭐ Très bonne | ⭐⭐⭐⭐⭐ Excellente |
-| **Complétion Python** | ⭐⭐⭐⭐ Très bonne (PyCharm) | ⭐⭐⭐⭐⭐ Excellente (avec Pylance) |
-| **Personnalisation du contexte** | ⭐⭐⭐ Bonne | ⭐⭐⭐⭐⭐ Excellente (instructions, agents) |
-| **Qualité globale** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+!!! warning "Ne pas confondre produit et interface"
+    GitHub Copilot propose aujourd'hui plus de mécanismes avancés au niveau produit. Cela ne signifie pas que **chaque écran IntelliJ** expose toutes les options avec la même granularité que VS Code.
+
+---
+
+## Équivalences utiles pour une équipe
+
+| Objectif | IntelliJ | VS Code |
+|----------|----------|---------|
+| Réduire le bruit des suggestions | Désactiver certains langages / ajuster les complétions | `settings.json` ciblé |
+| Stabiliser le style des réponses | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` |
+| Réduire le coût des sessions longues | Fonctions avancées à la demande, peu d'auto-approve | Idem, avec réglages plus visibles |
+| Partager la gouvernance IA | Fichiers du dépôt versionnés | Fichiers du dépôt versionnés |
+| Travailler sur Java / Kotlin | Avantage fort IntelliJ | Bon support, moins natif |
+| Travailler sur workflows de personnalisation très poussés | Possible, mais à valider version par version | Plus simple et mieux documenté |
 
 ---
 
 ## Recommandation
 
-**Pour un usage standard** (suggestions inline + Chat) : les deux IDEs sont équivalents.
+**Pour un usage standard** (complétions + chat + instructions de dépôt) : les deux IDEs sont aujourd'hui **beaucoup plus proches** qu'avant.
 
-**Pour une personnalisation avancée** : VS Code est nettement supérieur grâce au système de fichiers `.github/`.
+**Pour une personnalisation avancée et très documentée** : **VS Code** garde un avantage grâce à la richesse de sa documentation officielle sur les artefacts de personnalisation.
 
-**Pour des projets Java/JVM** : IntelliJ offre une meilleure intégration grâce à son modèle sémantique plus riche.
+**Pour des projets Java / JVM** : **IntelliJ IDEA** reste souvent le meilleur choix grâce à son contexte sémantique natif et à sa compréhension du projet.
+
+**Pour optimiser précision + coût dans IntelliJ** : commencez par le trio suivant avant tout raffinement avancé :
+
+- `README.md` clair
+- `.github/copilot-instructions.md` maintenu
+- périmètre de fichiers et de dossiers réduit au strict utile
+
+---
+
+## Sources
+
+- GitHub Docs — *[Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support)* (consulté le 2026-06-03)
+- GitHub Docs — *[Adding repository custom instructions for GitHub Copilot in your IDE](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide)* (consulté le 2026-06-03)
+- GitHub Docs — *[Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing)* (consulté le 2026-06-03)
+- GitHub Docs — *[Improving agent quality to optimize AI usage](https://docs.github.com/en/copilot/tutorials/optimize-ai-usage)* (consulté le 2026-06-03)
+- Visual Studio Code Docs — *[Prompt files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)* (consulté le 2026-06-03)
 
 ---
 
 ## Prochaine étape
 
-**[CLI Modes et Workflows](../chapitre-3-cli-modes/index.md)** : découvrir les différents modes de fonctionnement de Copilot (inline, chat, CLI) et comment les utiliser dans votre workflow.
+**[CLI Modes et Workflows](../chapitre-3-cli-modes/index.md)** : découvrir les différents modes de fonctionnement de Copilot et savoir quand passer d'une interaction simple à un workflow plus agentique.
 
 Concepts clés couverts :
 
-- **Mode inline** — Complétion automatique et suggestions de code
-- **Mode Chat** — Conversation interactive avec Copilot
-- **Mode CLI** — Utilisation de Copilot en ligne de commande
-- **Intégration IDE** — Comment les modes interagissent avec votre éditeur
-
+- **Mode inline** — complétion automatique et suggestions de code
+- **Mode Chat** — conversation interactive avec Copilot
+- **Mode CLI** — usage orienté tâches et automatisation
+- **Choix du bon mode** — comment limiter coût, bruit et rework selon le besoin

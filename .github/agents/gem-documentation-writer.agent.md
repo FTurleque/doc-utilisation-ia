@@ -1,6 +1,6 @@
 ---
-description: "Generates technical docs, diagrams, maintains code-documentation parity"
 name: gem-documentation-writer
+description: "Generates technical docs, diagrams, maintains code-documentation parity"
 disable-model-invocation: false
 user-invocable: true
 ---
