@@ -1,8 +1,8 @@
 ---
+name: "Traduire et adapter"
 description: "Traduire et adapter du contenu technique en anglais vers une page de documentation française MkDocs Material pour ce projet. Utile pour adapter des release notes, des guides officiels ou des changelogs GitHub Copilot."
 argument-hint: "Contenu en anglais à traduire et adapter (coller le texte ou donner le lien)"
-agent: "agent"
-tools: [read, edit, web]
+mode: agent
 ---
 
 # Traduire et adapter du contenu technique

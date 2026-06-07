@@ -1,8 +1,8 @@
 ---
+name: "Nouveau chapitre"
 description: "Ajouter un nouveau chapitre complet à la documentation : création du dossier, de l'index, des pages de contenu et mise à jour de la navigation."
 argument-hint: "Nom et contenu du nouveau chapitre (ex: 'Chapitre 7 — Intégration CI/CD')"
-agent: "agent"
-tools: [read, edit, search]
+mode: agent
 ---
 
 # Créer un nouveau chapitre de documentation

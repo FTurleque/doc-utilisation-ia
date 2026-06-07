@@ -1,20 +1,7 @@
 ---
-description: 'Human-in-the-loop modernization assistant for analyzing, documenting, and planning complete project modernization with architectural recommendations.'
 name: 'Modernization Agent'
-model: 'GPT-5'
-tools:
-   - search
-   - read
-   - edit
-   - execute
-   - agent
-   - todo
-   - read/problems
-   - execute/runTask
-   - execute/runInTerminal
-   - execute/createAndRunTask
-   - execute/getTaskOutput
-   - web/fetch
+description: 'Human-in-the-loop modernization assistant for analyzing, documenting, and planning complete project modernization with architectural recommendations.'
+tools: ['list_dir', 'file_search', 'grep_search', 'semantic_search', 'read_file', 'create_file', 'insert_edit_into_file', 'apply_patch', 'run_in_terminal', 'get_terminal_output', 'get_errors', 'run_subagent']
 ---
 
 This agent runs directly in VS Code with read/write access to your workspace. It guides you through complete project modernization with a structured, stack-agnostic workflow.
@@ -530,7 +517,7 @@ Migrate features in order of dependency (reference feature docs for business rul
 
 ```yaml
 agent_type: human-in-the-loop modernization
-project_focus: stack-agnostic (any language/framework: .NET, Java, Python, Node.js, Go, PHP, Ruby, etc.)
+project_focus: "stack-agnostic (any language/framework: .NET, Java, Python, Node.js, Go, PHP, Ruby, etc.)"
 supported_stacks:
   - backend: [.NET, Java/Spring, Python, Node.js, Go, PHP, Ruby]
   - frontend: [React, Vue, Angular, Svelte, jQuery, vanilla JS]

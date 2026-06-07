@@ -1,54 +1,91 @@
 # Concepts Fondamentaux du Contexte Copilot
 
+<span class="badge-intermediate">Intermédiaire</span>
+
 ## Qu'est-ce que le "contexte" ?
 
-GitHub Copilot est un modèle de langage (LLM) qui génère des suggestions en se basant sur un **prompt** construit automatiquement à partir de votre environnement de développement. Ce prompt contient :
+GitHub Copilot génère ses réponses à partir d'un **prompt de travail** construit automatiquement avec différents éléments de votre environnement. Ce contexte peut inclure :
 
-1. Le contenu du fichier actuel (avant et après le curseur)
-2. Des extraits des fichiers ouverts dans vos onglets
-3. Les instructions de personnalisation configurées
-4. Des métadonnées sur le langage et la structure du projet
+1. le contenu du fichier actuel
+2. des extraits d'autres fichiers pertinents
+3. des instructions personnalisées
+4. des informations sur le dépôt, la stack et les outils
+5. des éléments externes si vous utilisez MCP ou d'autres mécanismes de contexte
 
-Ce prompt est limité en taille : c'est ce qu'on appelle la **fenêtre de contexte**.
+Le point clé à retenir : **tout n'entre pas en même temps**. Copilot travaille toujours dans une **fenêtre de contexte limitée**, dont la taille et le coût varient selon le mode, le modèle et le type d'interaction.
 
 ---
 
 ## La fenêtre de contexte
 
-### Taille et limites
+### Une limite réelle, mais variable
 
-Copilot utilise une fenêtre de contexte qui varie selon le mode d'utilisation :
+Il est tentant de raisonner avec des chiffres fixes du type « tant de tokens pour le chat » ou « tant de tokens pour l'agent ». En pratique, ces valeurs évoluent selon :
 
-| Mode | Fenêtre de contexte approximative |
-|------|----------------------------------|
-| **Suggestions inline** | ~2 000 tokens (~1 500 mots / ~6 Ko de code) |
-| **Copilot Chat** | ~8 000 à 128 000 tokens selon le modèle |
-| **Édition multi-fichiers assistée (Chat/Agent)** | ~32 000 tokens |
-| **Mode Agent** | ~128 000 tokens (avec outils) |
+- le **modèle** utilisé
+- le **mode** (complétion, chat, agent, revue, etc.)
+- l'**environnement** (IDE, CLI, GitHub.com)
+- les **fonctionnalités actives** (MCP, fonctions agentiques, mémoire, etc.)
 
-!!! info "C'est quoi un token ?"
-    Un token correspond approximativement à 3-4 caractères de texte. La ligne `function calculateTotal(items)` représente environ 7-8 tokens. Un fichier TypeScript de 200 lignes représente environ 800-1200 tokens.
+!!! info "Bonne règle mentale"
+    Pensez la fenêtre de contexte comme un **budget partagé**. Si vous ajoutez plus d'instructions, plus de fichiers, plus de résultats d'outils ou plus de sortie MCP, il reste moins de place pour le reste.
 
-### Priorité du contexte pour les suggestions inline
+### Ce qui compte plus qu'un chiffre exact
 
-Copilot sélectionne le contenu à inclure dans le prompt selon cet ordre de priorité :
+| Élément | Effet sur la qualité | Effet sur le coût |
+|---|---|---|
+| Fichier courant bien structuré | Très fort | Faible à moyen |
+| Fichiers voisins pertinents | Fort | Moyen |
+| Instructions de dépôt concises | Très fort | Faible |
+| Instructions longues et bavardes | Faible à négatif | Moyen à fort |
+| Sorties MCP volumineuses | Variable | Fort |
+| Questions floues ou trop larges | Faible | Fort |
 
+---
+
+## Ordre de priorité pratique du contexte
+
+Dans la plupart des usages, Copilot raisonne mieux quand le contexte suit cet ordre :
+
+```text
+1. Le fichier courant et la zone proche du curseur
+2. Les fichiers directement liés à la tâche
+3. Les fichiers de structure du projet (README, build, config)
+4. Les instructions de dépôt et règles ciblées
+5. Les outils externes / contextes additionnels si vraiment nécessaires
 ```
-1. Fichier actuel (obligatoire, priorité absolue)
-   └── Code avant le curseur (contexte immédiat)
-   └── Code après le curseur (contexte lookahead)
 
-2. Fichiers ouverts dans les onglets (par ordre de pertinence)
-   └── Même langage que le fichier actuel en priorité
-   └── Fichiers récemment édités
+!!! tip "Règle d'or"
+    Plus un élément est **proche de la tâche**, plus il mérite d'entrer dans le contexte. Le reste doit être soit supprimé, soit repoussé à une étape suivante.
 
-3. Fichiers de configuration du projet
-   └── package.json, tsconfig.json, pom.xml, etc.
+---
 
-4. Instructions de personnalisation
-   └── .github/copilot-instructions.md
-   └── .github/instructions/*.instructions.md
-```
+## Le contexte est aussi un budget de coût
+
+Depuis la facturation basée sur les **AI Credits**, mieux gérer le contexte n'est plus seulement une question de qualité : c'est aussi une question de **coût**.
+
+### Pourquoi un mauvais contexte coûte plus cher
+
+Un contexte médiocre entraîne souvent :
+
+- plus de reformulations
+- plus d'itérations
+- plus d'étapes agentiques inutiles
+- plus de relectures de fichiers non pertinents
+- plus de sorties intermédiaires volumineuses
+
+### Pourquoi un bon contexte coûte moins cher
+
+Un contexte bien préparé permet souvent à Copilot de :
+
+- comprendre plus vite la demande
+- éviter des hypothèses erronées
+- proposer un premier résultat plus proche du besoin
+- demander moins de corrections
+- terminer une tâche en moins d'étapes
+
+!!! success "Conséquence pratique"
+    Le moyen le plus simple de réduire votre facture n'est pas seulement de choisir un modèle moins cher : c'est de **mieux cadrer la tâche**.
 
 ---
 
@@ -56,79 +93,67 @@ Copilot sélectionne le contenu à inclure dans le prompt selon cet ordre de pri
 
 ### 1. Garder les fichiers pertinents ouverts
 
-Copilot utilise vos onglets ouverts comme contexte supplémentaire. Si vous travaillez sur un service qui dépend d'un modèle de données, **gardez le fichier du modèle ouvert** en parallèle.
+Si vous travaillez sur un service qui dépend d'un type ou d'un repository, gardez ouverts uniquement les fichiers qui ont une vraie valeur pour la tâche.
 
-```
-Exemple :
-├── UserService.ts (fichier actuel)  ← Contexte principal
-├── User.ts (onglet ouvert)          ← Copilot verra les types User
-├── UserRepository.ts (onglet)       ← Copilot verra les méthodes disponibles
+```text
+Exemple utile :
+├── UserService.ts      ← fichier courant
+├── User.ts             ← type principal
+├── UserRepository.ts   ← contrat d'accès aux données
+└── README.md           ← conventions utiles si nécessaire
 ```
 
 ### 2. Positionner le curseur intelligemment
 
-Copilot priorise le code **proche du curseur**. Pour obtenir de meilleures suggestions pour une fonction :
-
-- Écrivez d'abord le nom de la fonction + signature
-- Ajoutez un commentaire décrivant ce que la fonction doit faire
-- Puis demandez à Copilot de compléter
+Copilot réagit mieux quand le point d'insertion est clair et déjà cadré.
 
 ```typescript
-// ❌ Moins efficace — pas de contexte pour Copilot
-function process() {
-    // curseur ici
-
-// ✅ Plus efficace — contexte clair
 /**
- * Filtre les utilisateurs actifs et retourne ceux créés dans les 30 derniers jours
- * @param users Liste complète des utilisateurs
- * @returns Utilisateurs actifs créés récemment
+ * Filtre les utilisateurs actifs créés dans les 30 derniers jours.
  */
 function filterRecentActiveUsers(users: User[]): User[] {
-    // curseur ici
+  // curseur ici
+}
 ```
 
 ### 3. Utiliser des noms explicites
 
-Copilot comprend mieux un code bien nommé :
+```text
+# ❌ Contexte pauvre
 
-```python
-# ❌ Contexte pauvre pour Copilot
 def calc(x, y, z):
     pass
 
-# ✅ Contexte riche pour Copilot  
+# ✅ Contexte riche
+
 def calculate_compound_interest(principal: float, rate: float, periods: int) -> float:
     pass
 ```
 
-### 4. Documenter les interfaces et types
+### 4. Documenter les types et interfaces
 
-Les types et interfaces bien documentés aident Copilot à générer du code correct :
+Les types bien nommés et bien structurés réduisent les ambiguïtés.
 
 ```typescript
-// ✅ Copilot comprendra exactement ce qu'il doit retourner
 interface ProductSearchResult {
-    products: Product[];
-    totalCount: number;
-    hasNextPage: boolean;
-    filters: AppliedFilter[];
+  products: Product[];
+  totalCount: number;
+  hasNextPage: boolean;
+  filters: AppliedFilter[];
 }
 ```
 
 ### 5. Structurer le projet clairement
 
-La structure des dossiers fournit un contexte implicite :
-
-```
-✅ Structure claire → meilleures suggestions
+```text
+✅ Structure claire
 src/
-├── controllers/     ← Copilot comprend que c'est la couche HTTP
-├── services/        ← Copilot comprend la logique métier
-├── repositories/    ← Copilot comprend l'accès aux données
-└── models/          ← Copilot comprend les structures de données
+├── controllers/
+├── services/
+├── repositories/
+└── models/
 
-❌ Structure ambiguë → suggestions génériques
+❌ Structure ambiguë
 src/
 ├── stuff/
 ├── things/
@@ -137,201 +162,144 @@ src/
 
 ---
 
-## Ce que Copilot ne voit PAS
+## Les meilleurs leviers de contexte à faible coût
 
-Il est important de comprendre les **limites du contexte** pour éviter les attentes déçues :
+### `.github/copilot-instructions.md`
 
-| Ce que Copilot ne voit pas | Conséquence |
-|---------------------------|-------------|
-| Fichiers non ouverts dans les onglets | Ne peut pas utiliser du code non chargé en mémoire |
-| Variables d'environnement (`.env`) | Ne connaît pas vos vraies valeurs de config |
-| Données de base de données | Ne sait pas ce que contient votre DB |
-| Documentation externe (Confluence, Notion) | Ne lit pas vos docs d'architecture |
-| Commits Git non ouverts | Ne lit pas l'historique Git automatiquement |
-| Fichiers dans `.copilotignore` | Explicitement exclus du contexte (IntelliJ utilise les exclusions de projet et `.gitignore`) |
+C'est le meilleur levier global pour donner à Copilot :
 
-!!! tip "Copilot Chat voit plus"
-    Dans Copilot Chat, Copilot peut indexer et rechercher dans l'ensemble du projet. Sur **VS Code**, utilisez le participant `@workspace` ; sur **IntelliJ**, posez directement une question dans le chat — Copilot accède à l'index du projet automatiquement. Dans les deux cas, c'est le bon mode pour des questions sur votre projet globalement.
+- les conventions importantes
+- la stack
+- les validations obligatoires
+- les anti-patterns à éviter
+- les commandes build/test utiles
 
----
+### `README.md`
 
-## À quoi sert vraiment `copilot-instructions.md` ?
+Il donne une vue d'ensemble rapide du projet sans surcharger chaque interaction.
 
-Le fichier `.github/copilot-instructions.md` est le **contrat permanent du dépôt** : GitHub Copilot (Chat, Agent, Code Review) l'intègre automatiquement comme contexte de base pour toutes les interactions sur ce projet.
+### Quelques fichiers de référence bien choisis
 
-!!! info "Pourquoi ce fichier change tout"
-    Un modèle de langage sans instructions est comme un développeur qui rejoint votre équipe sans onboarding : il devine, improvise, et commet des erreurs évitables. `copilot-instructions.md` lui donne le contexte métier, les conventions et les règles dès le premier prompt.
+Mieux vaut **3 fichiers très pertinents** que **20 fichiers ouverts par habitude**.
 
-Ce fichier contient typiquement :
+### Une demande découpée en étapes
 
-- **Les contraintes non négociables** — conventions de nommage, frameworks imposés, patterns interdits
-- **Le format attendu** — structure de réponse, niveau de détail, langue de sortie
-- **L'architecture du projet** — structure des dossiers, rôle de chaque module
-- **Les commandes essentielles** — comment builder, tester, déployer
-- **Les choses à ne jamais faire** — règles de sécurité, anti-patterns connus
+Préférez :
 
-```markdown
-# Mon Projet — Instructions Copilot
+1. comprendre
+2. planifier
+3. implémenter
+4. valider
 
-## Stack
-API REST Node.js 20 / TypeScript / PostgreSQL + Prisma
-
-## Conventions
-- camelCase pour variables, PascalCase pour classes
-- Messages d'erreur en français, logs en anglais
-
-## Commandes
-- Build : `npm run build`
-- Tests : `npm test` (Jest, coverage > 80 %)
-
-## Ne jamais faire
-- Utiliser `any` en TypeScript
-- Committer des secrets ou variables d'env
-```
-
-**Bénéfice concret** : moins d'itérations de correction → meilleure qualité → coût en tokens maîtrisé.
+plutôt qu'une requête unique trop large.
 
 ---
 
-## Contexte vs. Capacité : deux notions complémentaires
+## Ce que Copilot ne voit pas toujours automatiquement
 
-Ces deux concepts sont souvent confondus, mais ils jouent des rôles fondamentalement différents :
+Il faut éviter les formulations absolues du type « Copilot voit tout » ou « Copilot ne voit jamais cela ». Selon l'IDE, le mode et les outils activés, la réalité est plus nuancée.
 
-<div class="grid cards" markdown>
+### Ce qui n'est généralement pas pris en compte automatiquement
 
-- :material-map-marker-radius: **Contexte**
+| Élément | Point d'attention |
+|---|---|
+| Secrets et vraies valeurs de `.env` | Ne pas compter dessus pour guider Copilot |
+| Données de bases réelles | Le modèle ne connaît pas votre contenu métier réel |
+| Documentation externe non reliée | Elle doit être fournie ou intégrée via un mécanisme explicite |
+| Fichiers hors périmètre de travail | Ils ne sont pas toujours utilisés de façon utile |
+| Dossiers générés ou bruités | Ils dégradent souvent le contexte plus qu'ils ne l'aident |
 
-    ---
+!!! warning "Ne comptez pas sur l'implicite"
+    Si une règle, une contrainte métier ou une étape de validation est importante, écrivez-la dans le dépôt au lieu de supposer que Copilot va la deviner.
 
-    L'ensemble des informations pertinentes pour raisonner et agir **dans la situation présente** : besoin exprimé, état du projet, contraintes du moment, décisions déjà prises.
+---
 
-    > "Ce que tu sais *là, maintenant*"
+## Contexte vs capacité : deux notions complémentaires
 
-    Analogie : **la recette + les ingrédients réellement disponibles dans le frigo aujourd'hui.**
+Ces deux concepts sont souvent confondus, alors qu'ils remplissent des rôles différents.
 
-    ↺ Change constamment, spécifique à chaque situation.
+### Contexte
 
-- :material-cog-outline: **Capacité (Skill)**
+L'ensemble des informations utiles pour raisonner **dans la situation actuelle** : besoin, état du projet, contraintes, fichiers pertinents, décisions déjà prises.
 
-    ---
+> Ce que Copilot doit savoir *maintenant* pour réussir cette tâche.
 
-    Des procédures, checklists et règles **réutilisables** pour exécuter une tâche de façon fiable et répétable, quel que soit le projet ou la situation.
+### Capacité
 
-    > "Ce que tu sais *faire*, indépendamment du contexte"
+Une procédure ou un savoir-faire réutilisable : écrire des tests, faire une revue, migrer du code, auditer une doc, etc.
 
-    Analogie : **savoir conduire + connaître le code de la route.**
-
-    ↺ Stable, versionnable, transférable d'un projet à l'autre.
-
-</div>
+> Ce que Copilot sait *faire* indépendamment du projet.
 
 !!! warning "La règle d'or"
     **Sans contexte, une capacité est aveugle.**
-    **Sans capacité, le contexte est inutilisable.**
-
-    Un agent avec un excellent Skill de rédaction mais sans contexte sur votre projet produira un contenu générique. Un agent avec tout le contexte du projet mais sans méthode structurée produira du contenu incohérent. Les deux sont nécessaires.
-
-Dans les fichiers de configuration Copilot, cette distinction se traduit directement :
-
-| Concept | Fichier correspondant | Stabilité |
-|---------|----------------------|-----------|
-| **Contexte** | `.github/copilot-instructions.md` | Évolue avec le projet |
-| **Contexte** | `.github/instructions/*.instructions.md` | Évolue avec les règles |
-| **Capacité** | `.github/skills/*/SKILL.md` | Stable, réutilisable |
-| **Capacité** | `.github/agents/*.agent.md` | Stable, spécialisé |
+    **Sans capacité, le contexte reste sous-exploité.**
 
 ---
 
-## La technologie de prompt
+## La technologie de prompt : penser en système, pas en phrase unique
 
-La **technologie de prompt** est la couche de pilotage au-dessus du modèle de langage. Elle permet de passer d'une IA générique à un assistant précis et fiable.
+Un bon prompt ne se résume pas à une demande bien formulée. Il s'appuie aussi sur :
 
-### Les éléments d'un prompt bien structuré
+- le rôle implicite ou explicite donné à Copilot
+- le périmètre de la tâche
+- le format attendu
+- les critères de validation
+- le contexte déjà présent dans le dépôt
 
-```
-┌─────────────────────────────────────────┐
-│  PROMPT ENGINEERING                      │
-│                                          │
-│  Rôle       → Qui est l'agent ?          │
-│  Objectif   → Que doit-il produire ?     │
-│  Périmètre  → Ce qui est dans/hors scope │
-│  Format     → JSON / Markdown / DTO...   │
-│  Qualité    → Critères de validation     │
-└──────────────────┬──────────────────────┘
-                   ↓
-┌─────────────────────────────────────────┐
-│  LLM (Large Language Model)              │
-│  Entraîné sur d'énormes volumes de texte │
-│  → génération, synthèse, transformation  │
-│  → raisonnement, planification           │
-└──────────────────┬──────────────────────┘
-                   ↓
-┌─────────────────────────────────────────┐
-│  INDUSTRIALISATION                       │
-│  Templates de prompts réutilisables      │
-│  Tool-calling : API, fichiers, DB...     │
-│  Contraintes de schéma de sortie         │
-└─────────────────────────────────────────┘
+### Les éléments d'un prompt efficace
+
+```text
+Rôle       → Qui agit ?
+Objectif   → Que faut-il produire ?
+Périmètre  → Ce qui est inclus / exclu
+Contexte   → Quels fichiers, règles, contraintes ?
+Validation → Comment sait-on que c'est correct ?
 ```
 
 ### Traiter les prompts comme du code
 
-Un prompt de production se gère avec les mêmes exigences que du code :
-
-| Pratique dev | Équivalent prompt |
-|-------------|-------------------|
-| Versioning Git | Versionner ses fichiers `.prompt.md` |
-| Tests unitaires | Tests de régression (détecter les sorties qui changent) |
-| Monitoring | Observabilité : logs, métriques de qualité des réponses |
-| Code review | Relire et itérer sur les instructions |
-| Guard-rails | Garde-fous contre les dérives de comportement |
-
-!!! tip "Qui mieux que l'IA pour écrire pour l'IA ?"
-    Un document rédigé avec Copilot, en lui donnant le bon contexte et les bonnes contraintes, sera souvent **structuré de façon plus compréhensible par un modèle de langage** qu'un document écrit librement. L'IA optimise naturellement pour sa propre lisibilité.
-
-### L'impact sur la productivité
-
-En formalisant le rôle, l'objectif et le format attendu :
-
-- **Réduction des itérations** : moins de corrections manuelles post-génération
-- **Fiabilité accrue** : sorties cohérentes et prévisibles
-- **Coût maîtrisé** : moins de tokens consommés en reformulations
+| Pratique de développement | Équivalent côté Copilot |
+|---|---|
+| Versioning Git | Versionner les instructions et artefacts de personnalisation |
+| Refactoring | Raccourcir les règles devenues trop bavardes |
+| Tests | Vérifier que les réponses suivent encore les conventions |
+| Observabilité | Suivre le coût, le bruit, les itérations |
+| Code review | Relire les instructions importantes |
 
 ---
 
-## L'importance du README
+## Les 5 réflexes les plus rentables ce mois-ci
 
-Un `README.md` bien écrit à la racine du projet améliore significativement le contexte :
+Avec la hausse des coûts, voici les réflexes qui donnent le plus de valeur rapidement :
 
-```markdown
-# Mon Projet API
+1. **Maintenir un `copilot-instructions.md` concis**
+2. **Choisir le bon modèle pour la bonne tâche**
+3. **Découper les demandes larges en étapes**
+4. **Limiter le bruit du dépôt et des onglets ouverts**
+5. **N'activer les outils externes et fonctions agentiques qu'en cas de vrai besoin**
 
-## Description
-API REST Node.js/TypeScript pour la gestion d'une plateforme e-commerce.
-Stack : Node.js 20, Express 4, PostgreSQL, Prisma ORM.
+!!! tip "Si vous ne savez pas par quoi commencer"
+    Commencez par réduire de moitié la longueur de vos instructions globales, puis retirez du périmètre les dossiers inutiles. C'est souvent le gain le plus rapide sur la précision **et** le coût.
 
-## Architecture
-- /src/controllers : Handlers HTTP (Express)
-- /src/services : Logique métier
-- /src/repositories : Accès données (Prisma)
+---
 
-## Conventions
-- Nommage : camelCase pour variables, PascalCase pour classes
-- Erreurs : custom Error classes dans /src/errors
-- Tests : Jest, coverage minimum 80%
-```
+## Sources
 
-Avec ce README, Copilot comprend votre stack, votre architecture et vos conventions — sans que vous ayez à le répéter à chaque suggestion.
+- GitHub Docs — *[Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support)* (consulté le 2026-06-03)
+- GitHub Docs — *[Adding repository custom instructions for GitHub Copilot in your IDE](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide)* (consulté le 2026-06-03)
+- GitHub Docs — *[Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing)* (consulté le 2026-06-03)
+- GitHub Docs — *[Improving agent quality to optimize AI usage](https://docs.github.com/en/copilot/tutorials/optimize-ai-usage)* (consulté le 2026-06-03)
+- GitHub Docs — *[Extending GitHub Copilot Chat with Model Context Protocol (MCP) servers](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp)* (consulté le 2026-06-03)
 
 ---
 
 ## Prochaine étape
 
-**[Guide Instructions (.instructions.md)](guide-instructions.md)** : formaliser vos conventions en instructions Copilot persistantes qui s'appliquent automatiquement.
+**[Guide Instructions (.instructions.md)](guide-instructions.md)** : formaliser vos conventions en règles persistantes et ciblées pour améliorer la précision sans surcharger le contexte global.
 
 Concepts clés couverts :
 
-- **Frontmatter YAML** — `description`, `applyTo`, et autres champs pour cibler les instructions
-- **Patterns applyTo** — Globber syntax pour cibler précisément vos fichiers
-- **Instructions ciblées vs. globales** — Quand utiliser chaque type
-- **Exemples concrets** — Structures TypeScript, tests, API standards
+- **Frontmatter YAML** — `description`, `applyTo` et autres champs utiles
+- **Portée des règles** — quand rester global et quand cibler un dossier ou un langage
+- **Éviter la surcharge** — comment écrire des instructions courtes et efficaces
+- **Patterns concrets** — exemples réutilisables par type de fichier

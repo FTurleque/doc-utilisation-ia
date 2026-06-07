@@ -1,8 +1,8 @@
 ---
+name: "Mise à jour de navigation"
 description: "Mettre à jour la section nav: de mkdocs.yml après l'ajout d'une ou plusieurs nouvelles pages de documentation."
 argument-hint: "Chemin(s) de la/les nouvelle(s) page(s) à ajouter à la navigation"
-agent: "agent"
-tools: [read, edit]
+mode: agent
 ---
 
 # Mise à jour de la navigation MkDocs

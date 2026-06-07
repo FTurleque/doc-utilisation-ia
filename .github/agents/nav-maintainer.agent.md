@@ -1,7 +1,7 @@
 ---
-description: "Mainteneur de la navigation MkDocs. Vérifie la cohérence entre les fichiers docs/ et la section nav: de mkdocs.yml, détecte les pages orphelines ou manquantes dans la nav, et met à jour mkdocs.yml."
 name: "Nav Maintainer"
-tools: [read, edit, search]
+description: "Mainteneur de la navigation MkDocs. Vérifie la cohérence entre les fichiers docs/ et la section nav: de mkdocs.yml, détecte les pages orphelines ou manquantes dans la nav, et met à jour mkdocs.yml."
+tools: ['read_file', 'file_search', 'grep_search', 'list_dir', 'insert_edit_into_file', 'apply_patch']
 user-invocable: true
 ---
 

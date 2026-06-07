@@ -2,13 +2,13 @@
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-**TOON** ([GitHub](https://github.com/toon-format/toon) · [Spécification](https://github.com/toon-format/spec/blob/main/SPEC.md) · [Playground](https://toon-format.github.io/playground)) est un **format de données compact**, lisible par l'humain, qui réduit la consommation de tokens de **40 % par rapport à JSON**. Il combine la structure indentée de YAML avec un format tabulaire style CSV pour les arrays uniformes.
+**TOON** ([GitHub](https://github.com/toon-format/toon) · [Spécification](https://github.com/toon-format/spec/blob/main/SPEC.md) · [Playground](https://toon-format.github.io/playground)) est un **format de données compact**, lisible par l'humain, qui peut réduire fortement la consommation de tokens (jusqu'à ~40 % dans les benchmarks publics) par rapport à JSON. Il combine la structure indentée de YAML avec un format tabulaire style CSV pour les arrays uniformes.
 
 TOON est *lossless* : toute donnée JSON peut être convertie en TOON et reconvertie sans perte.
 
 ---
 
-## Pourquoi TOON réduit les premium requests
+## Pourquoi TOON reste pertinent avec la facturation token-based
 
 Quand tu fournis des données à Copilot — configuration, logs, inventaire, données métier — chaque token compte dans la fenêtre de contexte. TOON compacte ces données **sans perte d'information** :
 
@@ -16,7 +16,10 @@ Quand tu fournis des données à Copilot — configuration, logs, inventaire, do
 JSON (4 587 tokens)  →  TOON (2 759 tokens)  =  -40 % de tokens
 ```
 
-Moins de tokens dans le contexte = plus de place pour le code, les instructions et les réponses du modèle. Sur des sessions longues avec beaucoup de données, l'économie est significative.
+Moins de tokens dans le contexte = plus de place pour le code, les instructions et les réponses du modèle. Sur des sessions longues avec beaucoup de données, l'économie peut être significative.
+
+!!! info "Nuance importante sur les coûts"
+    Le **gain exact** dépend du fournisseur, du tokenizer du modèle, du type de données (uniformes ou non) et du mode de facturation (input/output/cache). TOON reste pertinent, mais il faut mesurer sur tes cas réels.
 
 ---
 
@@ -118,6 +121,11 @@ pnpm add @toon-format/toon
 | Go | `go-toon` |
 | Rust | `toon-rs` |
 | .NET | `Toon.CSharp` |
+| Java | Utilisable via CLI (`npx @toon-format/cli`) ou wrapper |
+| C | Utilisable surtout via conversion en frontière (outil externe/CLI) |
+
+!!! tip "Architecture recommandée (Java/C et systèmes mixtes)"
+    Garde **JSON comme format interne** (stockage, échanges inter-services), puis convertis en **TOON juste avant le prompt**. Tu limites le risque technique tout en profitant de la réduction de tokens côté LLM.
 
 ---
 
@@ -199,14 +207,17 @@ Données :
 
 ## Quand utiliser TOON
 
-| Situation | Recommandation |
-|-----------|---------------|
-| Arrays uniformes de 10+ items | ✅ **Utiliser TOON** — sweet spot : 50-1000 items |
-| Données tabulaires (logs, users, repos…) | ✅ **Utiliser TOON** |
-| Structures profondément imbriquées (5+ niveaux) | ❌ Garder JSON |
-| Données très hétérogènes | ❌ Garder JSON |
-| Données plates pures | ❌ CSV est plus simple |
-| Prompt avec peu de données | ❌ Le gain en tokens ne justifie pas la conversion |
+### Cadre décisionnel TOON vs JSON
+
+| Question | Si oui | Si non |
+|----------|--------|--------|
+| Tes données sont-elles tabulaires et uniformes ? | **TOON** | JSON |
+| Tu envoies souvent de gros volumes au modèle (logs, catalogues, inventaires) ? | **TOON** | JSON |
+| Tes objets sont très imbriqués ou hétérogènes ? | JSON | **TOON possible** |
+| Tu as besoin d'un format interne universel pour toute l'app ? | JSON interne + TOON à la frontière prompt | **TOON direct** possible |
+
+!!! example "Règle simple"
+    **TOON pour compresser l'entrée LLM**, **JSON pour l'interopérabilité applicative**. Si tu hésites, commence en JSON puis mesure le gain token/coût avec une conversion TOON sur un échantillon réel.
 
 ---
 
@@ -245,12 +256,12 @@ npx @toon-format/cli input.json [options]
 | Spécification | [SPEC.md v3.0](https://github.com/toon-format/spec/blob/main/SPEC.md) |
 | Installation | `npx @toon-format/cli` (aucune install permanente) |
 | Gratuit | Oui, entièrement |
-| Économie mesurée | -40 % de tokens vs JSON |
+| Économie mesurée | Jusqu'à ~-40 % de tokens vs JSON (selon jeux de données) |
 | Précision LLM | +1,4 % vs JSON (76,4 % contre 75,0 %) |
 | Meilleur pour | Arrays uniformes de 10+ items dans les prompts |
 
 !!! success "Recommandation"
-    Utilise TOON chaque fois que tu dois passer des **tableaux de données uniformes** à Copilot (Chat ou Agent). La conversion est instantanée via `npx` et l'économie de 40 % de tokens se cumule rapidement sur des sessions longues.
+    Utilise TOON quand tu passes des **tableaux de données uniformes** à Copilot (Chat ou Agent), surtout sur des volumes importants. Le gain de tokens est souvent net, mais varie selon modèle, tokenizer et nature des données.
 
 ---
 

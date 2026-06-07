@@ -126,6 +126,24 @@ Sans configuration supplémentaire, vous devez préfixer chaque commande avec `r
 rtk init --global
 ```
 
+!!! note "Traçabilité — option `--copilot`"
+    Des retours communautaires indiquent qu'une variante dédiée Copilot peut
+    fonctionner, et elle a été testée avec succès dans ce contexte :
+    ```powershell
+    rtk init -g --copilot
+    ```
+    Cette option n'est pas documentée officiellement à date dans la
+    documentation RTK. Utilisez-la de manière prudente (selon version), et
+    conservez `rtk init --global` comme commande de référence si l'option est
+    refusée.
+
+!!! info "Copilot : commande à utiliser"
+    La commande officiellement documentée pour activer RTK reste
+    `rtk init --global` dans un terminal (PowerShell, bash ou zsh), pas dans le
+    chat Copilot.
+    Une fois exécutée, le hook shell s'applique automatiquement aux commandes
+    suivantes.
+
 !!! info "Où lancer cette commande ?"
     - **VS Code** : terminal intégré (++ctrl+grave++) → PowerShell
     - **IntelliJ** : onglet Terminal en bas de l'IDE

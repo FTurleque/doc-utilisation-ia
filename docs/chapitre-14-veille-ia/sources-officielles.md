@@ -16,11 +16,17 @@ La source numéro 1 pour tout ce qui concerne Copilot.
 | **GitHub Changelog** | [github.blog/changelog](https://github.blog/changelog/) | Toutes les modifications produit, filtrable par catégorie | Quotidienne |
 | **Copilot Changelog** | [github.blog/changelog (filtre Copilot)](https://github.blog/changelog/?query=copilot) | Uniquement les changements Copilot | Hebdomadaire |
 | **GitHub Docs — Copilot** | [docs.github.com/copilot](https://docs.github.com/en/copilot) | Documentation officielle à jour | Continue |
+| **Copilot Plans** | [Docs — Plans](https://docs.github.com/en/copilot/get-started/plans) | Plans individuels et organisationnels | Continue |
+| **Copilot Billing & Pricing** | [Docs — Models and pricing](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing) | Tarification par modèle et impacts coûts | Continue |
+| **Copilot Troubleshooting** | [Docs — Troubleshoot Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot) | Procédures officielles de diagnostic | Continue |
 | **VS Code Release Notes** | [code.visualstudio.com/updates](https://code.visualstudio.com/updates) | Mises à jour mensuelles de VS Code (incluant Copilot) | Mensuelle |
 | **GitHub Universe** | [githubuniverse.com](https://githubuniverse.com) | Conférence annuelle — annonces majeures Copilot | Annuelle (octobre) |
 
 !!! tip "Astuce : le Changelog filtré"
     Le [GitHub Changelog filtré sur Copilot](https://github.blog/changelog/?query=copilot) est la source la plus précise pour suivre chaque mise à jour de Copilot. Ajoute-le à ton lecteur RSS ou vérifie-le chaque semaine.
+
+!!! info "Mise à jour"
+    Les liens Copilot de cette page ont été revérifiés le **3 juin 2026**.
 
 ---
 

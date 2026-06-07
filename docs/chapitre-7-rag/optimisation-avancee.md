@@ -334,7 +334,7 @@ result = evaluate(
 
 Tracer requests LangChain, visualiser chains, debug issues.
 
-Dashboard: https://smith.langchain.com/
+Dashboard: [smith.langchain.com](https://smith.langchain.com/)
 
 ### TruLens (RAG Observability)
 
@@ -350,11 +350,11 @@ tru.run_dashboard()  # Launch observability UI
 
 ### Sources
 
-- **RAGAS Research Paper**: "Evaluating RAG Systems" (https://arxiv.org/abs/2309.15217)
-- **OpenAI Prompt Caching**: Official docs (https://platform.openai.com/docs/)
-- **Langsmith**: https://smith.langchain.com/
-- **TruLens**: https://github.com/truera/trulens
-- **Cohere Reranking**: https://docs.cohere.ai/docs/rerank
+- **RAGAS Research Paper** — *[Evaluating RAG Systems](https://arxiv.org/abs/2309.15217)*
+- **OpenAI Prompt Caching** — *[Official docs](https://platform.openai.com/docs/)*
+- **Langsmith** — *[smith.langchain.com](https://smith.langchain.com/)*
+- **TruLens** — *[github.com/truera/trulens](https://github.com/truera/trulens)*
+- **Cohere Reranking** — *[docs.cohere.ai/docs/rerank](https://docs.cohere.ai/docs/rerank)*
 
 ---
 

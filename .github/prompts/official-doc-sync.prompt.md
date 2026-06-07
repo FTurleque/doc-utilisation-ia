@@ -1,9 +1,8 @@
 ---
-description: "Mettre à jour une page de documentation en s'appuyant sur des sources officielles, avec section Sources obligatoire."
 name: "Official Doc Sync"
+description: "Mettre à jour une page de documentation en s'appuyant sur des sources officielles, avec section Sources obligatoire."
 argument-hint: "Chemin de page, périmètre de mise à jour, contexte produit/version"
-agent: "Official Doc Sync"
-model: "GPT-5 (copilot)"
+mode: agent
 ---
 
 # Mise à jour documentaire depuis sources officielles

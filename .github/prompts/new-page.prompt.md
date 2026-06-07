@@ -1,8 +1,8 @@
 ---
+name: "Nouvelle page"
 description: "Créer une nouvelle page de documentation MkDocs Material en français pour ce projet. Fournir le sujet, le chapitre cible et le niveau de difficulté."
 argument-hint: "Sujet de la page, chapitre cible et niveau (débutant/intermédiaire/expert)"
-agent: "agent"
-tools: [read, edit, search]
+mode: agent
 ---
 
 # Créer une nouvelle page de documentation
