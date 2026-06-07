@@ -5117,6 +5117,25 @@
 <p>Sans configuration supplémentaire, vous devez préfixer chaque commande avec <code>rtk</code>. Pour que <strong>toutes les commandes soient automatiquement compressées</strong> sans effort, lancez cette commande <strong>dans votre terminal système</strong> (PowerShell sous Windows, ou bash/zsh sur macOS/Linux) — <strong>pas dans le chat IA</strong> :</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">rtk</span> <span class="n">init</span> <span class="p">-</span><span class="n">-global</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Traçabilité — option <code>--copilot</code></p>
+<p>Des retours communautaires indiquent qu'une variante dédiée Copilot peut
+fonctionner, et elle a été testée avec succès dans ce contexte :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">rtk</span> <span class="n">init</span> <span class="n">-g</span> <span class="p">-</span><span class="n">-copilot</span>
+</code></pre></div>
+Cette option n'est pas documentée officiellement à date dans la
+documentation RTK. Utilisez-la de manière prudente (selon version), et
+conservez <code>rtk init --global</code> comme commande de référence si l'option est
+refusée.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Copilot : commande à utiliser</p>
+<p>La commande officiellement documentée pour activer RTK reste
+<code>rtk init --global</code> dans un terminal (PowerShell, bash ou zsh), pas dans le
+chat Copilot.
+Une fois exécutée, le hook shell s'applique automatiquement aux commandes
+suivantes.</p>
+</div>
 <div class="admonition info">
 <p class="admonition-title">Où lancer cette commande ?</p>
 <ul>
@@ -5133,32 +5152,32 @@
 </div>
 <h3 id="utilisation-explicite-sans-hook">Utilisation explicite (sans hook)<a class="headerlink" href="#utilisation-explicite-sans-hook" title="Permanent link">&para;</a></h3>
 <p>Préfixez simplement <code>rtk</code> devant vos commandes habituelles :</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>rtk<span class="w"> </span>git<span class="w"> </span>status
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>rtk<span class="w"> </span>git<span class="w"> </span>log
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>rtk<span class="w"> </span>npm<span class="w"> </span><span class="nb">test</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>rtk<span class="w"> </span>cargo<span class="w"> </span><span class="nb">test</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>rtk<span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;pattern&quot;</span><span class="w"> </span>src/
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>rtk<span class="w"> </span>ls<span class="w"> </span>-la
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>rtk<span class="w"> </span>git<span class="w"> </span>status
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>rtk<span class="w"> </span>git<span class="w"> </span>log
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>rtk<span class="w"> </span>npm<span class="w"> </span><span class="nb">test</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>rtk<span class="w"> </span>cargo<span class="w"> </span><span class="nb">test</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>rtk<span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;pattern&quot;</span><span class="w"> </span>src/
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>rtk<span class="w"> </span>ls<span class="w"> </span>-la
 </code></pre></div>
 <h3 id="avec-le-hook-automatique">Avec le hook (automatique)<a class="headerlink" href="#avec-le-hook-automatique" title="Permanent link">&para;</a></h3>
 <p>Après <code>rtk init --global</code>, continuez à écrire vos commandes normalement — RTK s'intercale automatiquement.</p>
 <h3 id="suivi-des-economies">Suivi des économies<a class="headerlink" href="#suivi-des-economies" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>rtk<span class="w"> </span>gain
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>rtk<span class="w"> </span>gain
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>📊 RTK Token Savings
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>════════════════════════════════════════
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>Total commands:    2,927
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Input tokens:      11.6M
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Output tokens:     1.4M
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>Tokens saved:      10.3M (89.2%)
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>By Command:
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>────────────────────────────────────────
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>Command               Count      Saved     Avg%
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>rtk find                324       6.8M    78.3%
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>rtk git status          215       1.4M    80.8%
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>rtk grep                227     786.7K    49.5%
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>rtk cargo test           16      50.1K    91.8%
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>📊 RTK Token Savings
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>════════════════════════════════════════
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Total commands:    2,927
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>Input tokens:      11.6M
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Output tokens:     1.4M
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>Tokens saved:      10.3M (89.2%)
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>By Command:
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>────────────────────────────────────────
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>Command               Count      Saved     Avg%
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>rtk find                324       6.8M    78.3%
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>rtk git status          215       1.4M    80.8%
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>rtk grep                227     786.7K    49.5%
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>rtk cargo test           16      50.1K    91.8%
 </code></pre></div>
 <hr />
 <h2 id="commandes-supportees">Commandes supportées<a class="headerlink" href="#commandes-supportees" title="Permanent link">&para;</a></h2>

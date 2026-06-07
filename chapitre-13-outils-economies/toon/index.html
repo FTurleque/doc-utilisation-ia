@@ -3653,10 +3653,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pourquoi-toon-reduit-les-premium-requests" class="md-nav__link">
+  <a href="#pourquoi-toon-reste-pertinent-avec-la-facturation-token-based" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pourquoi TOON réduit les premium requests
+        Pourquoi TOON reste pertinent avec la facturation token-based
       
     </span>
   </a>
@@ -3888,6 +3888,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Quand utiliser TOON">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cadre-decisionnel-toon-vs-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadre décisionnel TOON vs JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4839,10 +4856,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#pourquoi-toon-reduit-les-premium-requests" class="md-nav__link">
+  <a href="#pourquoi-toon-reste-pertinent-avec-la-facturation-token-based" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Pourquoi TOON réduit les premium requests
+        Pourquoi TOON reste pertinent avec la facturation token-based
       
     </span>
   </a>
@@ -5075,6 +5092,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Quand utiliser TOON">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cadre-decisionnel-toon-vs-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadre décisionnel TOON vs JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -5191,14 +5225,18 @@
 
 <h1 id="toon-token-oriented-object-notation">TOON — Token-Oriented Object Notation<a class="headerlink" href="#toon-token-oriented-object-notation" title="Permanent link">&para;</a></h1>
 <p><span class="badge-intermediate">Intermédiaire</span></p>
-<p><strong>TOON</strong> (<a href="https://github.com/toon-format/toon">GitHub</a> · <a href="https://github.com/toon-format/spec/blob/main/SPEC.md">Spécification</a> · <a href="https://toon-format.github.io/playground">Playground</a>) est un <strong>format de données compact</strong>, lisible par l'humain, qui réduit la consommation de tokens de <strong>40 % par rapport à JSON</strong>. Il combine la structure indentée de YAML avec un format tabulaire style CSV pour les arrays uniformes.</p>
+<p><strong>TOON</strong> (<a href="https://github.com/toon-format/toon">GitHub</a> · <a href="https://github.com/toon-format/spec/blob/main/SPEC.md">Spécification</a> · <a href="https://toon-format.github.io/playground">Playground</a>) est un <strong>format de données compact</strong>, lisible par l'humain, qui peut réduire fortement la consommation de tokens (jusqu'à ~40 % dans les benchmarks publics) par rapport à JSON. Il combine la structure indentée de YAML avec un format tabulaire style CSV pour les arrays uniformes.</p>
 <p>TOON est <em>lossless</em> : toute donnée JSON peut être convertie en TOON et reconvertie sans perte.</p>
 <hr />
-<h2 id="pourquoi-toon-reduit-les-premium-requests">Pourquoi TOON réduit les premium requests<a class="headerlink" href="#pourquoi-toon-reduit-les-premium-requests" title="Permanent link">&para;</a></h2>
+<h2 id="pourquoi-toon-reste-pertinent-avec-la-facturation-token-based">Pourquoi TOON reste pertinent avec la facturation token-based<a class="headerlink" href="#pourquoi-toon-reste-pertinent-avec-la-facturation-token-based" title="Permanent link">&para;</a></h2>
 <p>Quand tu fournis des données à Copilot — configuration, logs, inventaire, données métier — chaque token compte dans la fenêtre de contexte. TOON compacte ces données <strong>sans perte d'information</strong> :</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>JSON (4 587 tokens)  →  TOON (2 759 tokens)  =  -40 % de tokens
 </code></pre></div>
-<p>Moins de tokens dans le contexte = plus de place pour le code, les instructions et les réponses du modèle. Sur des sessions longues avec beaucoup de données, l'économie est significative.</p>
+<p>Moins de tokens dans le contexte = plus de place pour le code, les instructions et les réponses du modèle. Sur des sessions longues avec beaucoup de données, l'économie peut être significative.</p>
+<div class="admonition info">
+<p class="admonition-title">Nuance importante sur les coûts</p>
+<p>Le <strong>gain exact</strong> dépend du fournisseur, du tokenizer du modèle, du type de données (uniformes ou non) et du mode de facturation (input/output/cache). TOON reste pertinent, mais il faut mesurer sur tes cas réels.</p>
+</div>
 <hr />
 <h2 id="le-format-en-2-minutes">Le format en 2 minutes<a class="headerlink" href="#le-format-en-2-minutes" title="Permanent link">&para;</a></h2>
 <h3 id="avant-json">Avant — JSON<a class="headerlink" href="#avant-json" title="Permanent link">&para;</a></h3>
@@ -5348,8 +5386,20 @@
 <td>.NET</td>
 <td><code>Toon.CSharp</code></td>
 </tr>
+<tr>
+<td>Java</td>
+<td>Utilisable via CLI (<code>npx @toon-format/cli</code>) ou wrapper</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Utilisable surtout via conversion en frontière (outil externe/CLI)</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition tip">
+<p class="admonition-title">Architecture recommandée (Java/C et systèmes mixtes)</p>
+<p>Garde <strong>JSON comme format interne</strong> (stockage, échanges inter-services), puis convertis en <strong>TOON juste avant le prompt</strong>. Tu limites le risque technique tout en profitant de la réduction de tokens côté LLM.</p>
+</div>
 <hr />
 <h2 id="utilisation-avec-github-copilot">Utilisation avec GitHub Copilot<a class="headerlink" href="#utilisation-avec-github-copilot" title="Permanent link">&para;</a></h2>
 <h3 id="strategie-convertir-tes-donnees-avant-de-les-passer-a-copilot">Stratégie : convertir tes données avant de les passer à Copilot<a class="headerlink" href="#strategie-convertir-tes-donnees-avant-de-les-passer-a-copilot" title="Permanent link">&para;</a></h3>
@@ -5411,40 +5461,42 @@
 </code></pre></div>
 <hr />
 <h2 id="quand-utiliser-toon">Quand utiliser TOON<a class="headerlink" href="#quand-utiliser-toon" title="Permanent link">&para;</a></h2>
+<h3 id="cadre-decisionnel-toon-vs-json">Cadre décisionnel TOON vs JSON<a class="headerlink" href="#cadre-decisionnel-toon-vs-json" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Situation</th>
-<th>Recommandation</th>
+<th>Question</th>
+<th>Si oui</th>
+<th>Si non</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Arrays uniformes de 10+ items</td>
-<td>✅ <strong>Utiliser TOON</strong> — sweet spot : 50-1000 items</td>
+<td>Tes données sont-elles tabulaires et uniformes ?</td>
+<td><strong>TOON</strong></td>
+<td>JSON</td>
 </tr>
 <tr>
-<td>Données tabulaires (logs, users, repos…)</td>
-<td>✅ <strong>Utiliser TOON</strong></td>
+<td>Tu envoies souvent de gros volumes au modèle (logs, catalogues, inventaires) ?</td>
+<td><strong>TOON</strong></td>
+<td>JSON</td>
 </tr>
 <tr>
-<td>Structures profondément imbriquées (5+ niveaux)</td>
-<td>❌ Garder JSON</td>
+<td>Tes objets sont très imbriqués ou hétérogènes ?</td>
+<td>JSON</td>
+<td><strong>TOON possible</strong></td>
 </tr>
 <tr>
-<td>Données très hétérogènes</td>
-<td>❌ Garder JSON</td>
-</tr>
-<tr>
-<td>Données plates pures</td>
-<td>❌ CSV est plus simple</td>
-</tr>
-<tr>
-<td>Prompt avec peu de données</td>
-<td>❌ Le gain en tokens ne justifie pas la conversion</td>
+<td>Tu as besoin d'un format interne universel pour toute l'app ?</td>
+<td>JSON interne + TOON à la frontière prompt</td>
+<td><strong>TOON direct</strong> possible</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition example">
+<p class="admonition-title">Règle simple</p>
+<p><strong>TOON pour compresser l'entrée LLM</strong>, <strong>JSON pour l'interopérabilité applicative</strong>. Si tu hésites, commence en JSON puis mesure le gain token/coût avec une conversion TOON sur un échantillon réel.</p>
+</div>
 <hr />
 <h2 id="options-cli">Options CLI<a class="headerlink" href="#options-cli" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>npx<span class="w"> </span>@toon-format/cli<span class="w"> </span>input.json<span class="w"> </span><span class="o">[</span>options<span class="o">]</span>
@@ -5500,7 +5552,7 @@
 </tr>
 <tr>
 <td>Économie mesurée</td>
-<td>-40 % de tokens vs JSON</td>
+<td>Jusqu'à ~-40 % de tokens vs JSON (selon jeux de données)</td>
 </tr>
 <tr>
 <td>Précision LLM</td>
@@ -5514,7 +5566,7 @@
 </table>
 <div class="admonition success">
 <p class="admonition-title">Recommandation</p>
-<p>Utilise TOON chaque fois que tu dois passer des <strong>tableaux de données uniformes</strong> à Copilot (Chat ou Agent). La conversion est instantanée via <code>npx</code> et l'économie de 40 % de tokens se cumule rapidement sur des sessions longues.</p>
+<p>Utilise TOON quand tu passes des <strong>tableaux de données uniformes</strong> à Copilot (Chat ou Agent), surtout sur des volumes importants. Le gain de tokens est souvent net, mais varie selon modèle, tokenizer et nature des données.</p>
 </div>
 <hr />
 <h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>

@@ -3739,6 +3739,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sources-officielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources officielles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prochaine-etape" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5735,6 +5746,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sources-officielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources officielles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#prochaine-etape" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5815,6 +5837,10 @@
 
 <h1 id="problemes-courants">Problèmes Courants<a class="headerlink" href="#problemes-courants" title="Permanent link">&para;</a></h1>
 <p><span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span></p>
+<div class="admonition info">
+<p class="admonition-title">Référence de cette page</p>
+<p>Procédures revérifiées le <strong>3 juin 2026</strong> à partir des guides officiels GitHub Copilot.</p>
+</div>
 <h2 id="1-copilot-ne-genere-aucune-suggestion">1. Copilot ne génère aucune suggestion<a class="headerlink" href="#1-copilot-ne-genere-aucune-suggestion" title="Permanent link">&para;</a></h2>
 <h3 id="symptome">Symptôme<a class="headerlink" href="#symptome" title="Permanent link">&para;</a></h3>
 <p>Le curseur est dans un fichier de code, vous tapez, mais aucune suggestion "ghost text" n'apparaît.</p>
@@ -5959,12 +5985,11 @@
 </div>
 </div>
 <p><strong>Réseau lent — augmenter la tolérance :</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// VS Code</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;github.copilot.advanced&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="nt">&quot;requestTimeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="w">  </span><span class="c1">// 10 secondes (défaut: 5000)</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;github.copilot.advanced&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="nt">&quot;requestTimeout&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
 </code></pre></div></p>
 <hr />
 <h2 id="4-suggestions-incorrectes-ou-hors-sujet">4. Suggestions incorrectes ou hors sujet<a class="headerlink" href="#4-suggestions-incorrectes-ou-hors-sujet" title="Permanent link">&para;</a></h2>
@@ -5995,7 +6020,7 @@
 </div>
 </li>
 <li>
-<p><strong>Vérifier <code>.copilotignore</code></strong> — si le fichier en cours est listé dans <code>.copilotignore</code>, Copilot l'ignore entièrement (voir <a href="#11-fichier-ignore-par-copilot">Problème 11</a>)</p>
+<p><strong>Vérifier <code>.copilotignore</code></strong> — si le fichier en cours est listé dans <code>.copilotignore</code>, Copilot l'ignore entièrement (voir la section <strong>11. Fichier ignoré par Copilot</strong>)</p>
 </li>
 </ol>
 <hr />
@@ -6052,10 +6077,9 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// S&#39;assurer que les instruction files sont actifs</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">{</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&quot;github.copilot.chat.codeGeneration.useInstructionFiles&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="nt">&quot;github.copilot.chat.codeGeneration.useInstructionFiles&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="p">}</span>
 </code></pre></div>
 <hr />
 <h2 id="7-code-genere-avec-des-imports-manquants">7. Code généré avec des imports manquants<a class="headerlink" href="#7-code-genere-avec-des-imports-manquants" title="Permanent link">&para;</a></h2>
@@ -6306,6 +6330,14 @@
 </div>
 </div>
 </div>
+<hr />
+<h2 id="sources-officielles">Sources officielles<a class="headerlink" href="#sources-officielles" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot">Troubleshoot GitHub Copilot</a> - consulté le 2026-06-03</li>
+<li><a href="https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues">Troubleshoot common issues</a> - consulté le 2026-06-03</li>
+<li><a href="https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/view-logs">View logs for GitHub Copilot</a> - consulté le 2026-06-03</li>
+<li><a href="https://docs.github.com/en/copilot/how-tos/get-code-suggestions/get-ide-code-suggestions">Get code suggestions in your IDE</a> - consulté le 2026-06-03</li>
+</ul>
 <hr />
 <h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>
 <p><strong><a href="../logs-diagnostic/">Logs &amp; Diagnostic</a></strong> : comment activer, lire et interpréter les logs Copilot dans VS Code et IntelliJ pour diagnostiquer les problèmes persistants.</p>
