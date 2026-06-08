@@ -1,10 +1,10 @@
-# Outils complémentaires pour économiser les crédits IA
+# Vue d'ensemble des outils complémentaires
 
 <span class="badge-intermediate">Intermédiaire</span>
 
 Au-delà de RTK, tu peux construire une stack d'outils locaux ou low-cost
 pour déléguer les tâches simples hors quota Copilot.
-Cette page sert de sommaire: chaque outil a maintenant sa page détaillée.
+Cette page sert de sommaire : chaque outil dispose de sa page détaillée.
 
 ---
 
@@ -25,6 +25,8 @@ Chaque page outil couvre:
 
 | Outil | Utilité principale | Page détaillée |
 |------|---------------------|----------------|
+| TOON | Automatiser et compiler des configurations IA complexes | [TOON](toon.md) |
+| OpenSkills | Installer et partager des skills universels entre agents IA | [OpenSkills](openskills.md) |
 | Continue.dev | Orchestrer chat + complétion avec modèles locaux/cloud | [Continue.dev](continue-dev.md) |
 | Ollama | Exécuter des LLM en local via CLI/API | [Ollama](ollama.md) |
 | LM Studio | Exécuter des LLM locaux via interface graphique | [LM Studio](lm-studio.md) |
