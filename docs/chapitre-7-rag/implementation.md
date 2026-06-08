@@ -164,7 +164,7 @@ async fn main() {
 
 - [langchain-rust](https://github.com/Abraxas-365/langchain-rust) — Port en cours, jeune écosystème
 - [Qdrant Rust SDK](https://qdrant.tech/documentation/quick-start/) — Vector DB native Rust
-- [Ollama](https://ollama.ai) + local LLMs — RAG totalement offline + performant
+- [Ollama](https://ollama.com) + local LLMs — RAG totalement offline + performant
 
 ### Comparaison d'Écosystèmes
 

@@ -487,7 +487,7 @@ Le résultat retourné par le serveur MCP est transmis au modèle IA avec votre 
 
 **Ressources utiles :**
 
-- [GitHub MCP Registry](https://github.com/mcp) — Point d'entrée officiel GitHub cité dans la documentation MCP
+- [GitHub MCP Registry](https://github.com/mcp/registry) — Point d'entrée officiel GitHub cité dans la documentation MCP
 - [Documentation GitHub Copilot sur MCP](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp) — Pour la configuration détaillée selon votre environnement
 
 ---

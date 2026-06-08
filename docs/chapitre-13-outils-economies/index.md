@@ -1,69 +1,250 @@
-# Outils pour Économiser les Premium Requests
+# Outils pour économiser les crédits IA
 
-Les premium requests de GitHub Copilot sont limitées par abonnement. Ce chapitre recense les outils complémentaires — comme **RTK AI** — qui permettent de réduire cette consommation en déléguant certaines tâches à des assistants gratuits, locaux ou spécialisés, sans sacrifier la productivité.
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-intellij">IntelliJ</span>
 
----
-
-## Pages du Chapitre
-
-<div class="grid cards" markdown>
-
-- :material-lightning-bolt: **[RTK (Rust Token Killer)](rtk.md)**
-
-    Outil CLI open source qui compresse les sorties de commandes terminal de 60 à 90 % avant qu'elles n'atteignent la fenêtre de contexte de l'agent IA. Aucun plugin IDE — s'installe en une commande.
-
-- :material-format-text: **[TOON (Token-Oriented Object Notation)](toon.md)**
-
-    Format de données compact qui réduit la consommation de tokens de 40 % par rapport à JSON. Idéal pour passer des tableaux de données à Copilot.
-
-- :material-puzzle: **[OpenSkills](openskills.md)**
-
-    Installateur universel de skills pour agents IA. Standardise et partage des capacités entre Copilot, Claude Code, Cursor et d'autres agents via un format SKILL.md unique.
-
-- :material-toolbox: **[Outils Complémentaires](outils-complementaires.md)**
-
-    Continue.dev, Ollama, Codeium, Tabnine, Amazon Q, LM Studio et Supermaven : des outils gratuits ou locaux pour prendre le relais de Copilot sur les tâches légères.
-
-- :material-compare: **[Comparaison des Outils](comparaison.md)**
-
-    Tableau récapitulatif : quel outil pour quel cas d'usage, par niveau de complexité et par IDE.
-
-</div>
+Ce chapitre te propose une méthode concrète pour réduire les crédits Copilot consommés dans un workflow IntelliJ. L'objectif est simple : traiter d'abord ce qui est déterministe, local et automatisable. Copilot reste réservé aux tâches complexes à forte valeur.
 
 ---
 
-## Pourquoi ce chapitre existe
+## Objectif du chapitre
 
-La consommation Copilot évolue en 2026: logique premium requests en transition vers une logique d'usage avec AI Credits. Les outils de ce chapitre restent utiles pour limiter la consommation sur les tâches légères.
+Objectif opérationnel : **diminuer les appels IA coûteux** en appliquant une séquence outillée avant d'ouvrir Copilot Chat ou Copilot Agent.
 
+!!! info "Règle globale"
+    Si IntelliJ, la CLI ou un outil d'automatisation peut répondre en local, ne consomme pas de crédits IA.
+
+---
+
+## Principe général
+
+1. **Réduire le contexte avant envoi** (logs, diff, arborescence, données).
+2. **Exploiter IntelliJ natif en premier** (inspections, refactorings, SSR, navigation).
+3. **Industrialiser sans IA** (qualité statique, réécriture, règles d'architecture).
+4. **Monter en gamme IA uniquement si nécessaire** (Copilot en dernier recours).
+
+!!! tip "Impact direct"
+    Cette séquence évite les prompts trop larges, réduit les allers-retours et limite la consommation en chat/agent.
+
+---
+
+## Famille 1 — Réduire et préparer le contexte
+
+Avant toute interaction IA, prépare un contexte minimal et exploitable.
+
+### RTK
+- **Rôle** : compresser et nettoyer les sorties terminal.
+- **Cas d'usage** : logs d'erreur volumineux Maven/Gradle/tests.
+- **Évite de demander à Copilot** : "résume ces 500 lignes de logs".
+- **Impact crédits** : **fort** (moins de tokens envoyés).
+
+### TOON
+- **Rôle** : compacter les données tabulaires.
+- **Cas d'usage** : exports CSV, tableaux de métriques, résultats batch.
+- **Évite de demander à Copilot** : "analyse tout ce tableau brut".
+- **Impact crédits** : **fort** sur les prompts data.
+
+### ripgrep (`rg`)
+- **Rôle** : rechercher vite et précisément dans le code.
+- **Cas d'usage** : retrouver une classe, un appel, une exception.
+- **Évite de demander à Copilot** : "où est utilisée cette classe ?" sur tout le repo.
+- **Impact crédits** : **moyen à fort**.
+
+### ast-grep
+- **Rôle** : recherche syntaxique (AST), pas seulement textuelle.
+- **Cas d'usage** : retrouver un pattern de code exact (throw, annotations, appels).
+- **Évite de demander à Copilot** : "trouve tous les endroits qui ressemblent à...".
+- **Impact crédits** : **fort** en phase de refactor.
+
+### tree
+- **Rôle** : visualiser l'arborescence utile.
+- **Cas d'usage** : partager la structure d'un module sans tout envoyer.
+- **Évite de demander à Copilot** : "explore mon workspace".
+- **Impact crédits** : **moyen**.
+
+### jq / yq
+- **Rôle** : filtrer JSON/YAML localement.
+- **Cas d'usage** : isoler erreurs API, config CI, payloads.
+- **Évite de demander à Copilot** : "parse et filtre ce gros JSON/YAML".
+- **Impact crédits** : **fort**.
+
+### MCP local de réduction
+- **Rôle** : filtrer/résumer localement avant envoi à une IA distante.
+- **Cas d'usage** : traces, logs multi-sources, gros diffs.
+- **Évite de demander à Copilot** : analyse brute d'un volume non filtré.
+- **Impact crédits** : **très fort**.
+
+```bash
+rg "OrderService|PaymentTimeout" src/
+ast-grep --pattern "throw new $ERR($MSG)" src/
+tree -L 2 src/main/java
+jq '.errors[] | {code, message, service}' logs.json
 ```
-Autocomplétion et next edit suggestions → non facturées en AI Credits
-Chat/Agent/CLI/Spaces/Spark             → consommation selon modèle et tokens
-Modèles inclus                          → coût plus faible ou nul selon plan
-Modèles premium                         → coût plus élevé (multiplicateur / tarification token)
-```
-
-L'idée directrice de ce chapitre : **utiliser les bons outils pour les bonnes tâches**, de façon à réserver votre quota premium aux moments où la puissance des grands modèles fait vraiment la différence.
 
 ---
 
-## Vue d'ensemble rapide
+## Famille 2 — Outils IntelliJ à utiliser avant l'IA
 
-| Outil | Type | Gratuit | Local | Installation | Meilleur pour |
-|-------|------|---------|-------|-------------|---------------|
-| [RTK](rtk.md) | CLI proxy (Rust, open source) | Oui (gratuit) | Non | Binaire / brew / curl | Comprimer les sorties terminal de l'agent |
-| [TOON](toon.md) | Format de données compact | Oui (gratuit) | Non | `npx @toon-format/cli` | Réduire les tokens des données tabulaires (-40 %) |
-| [OpenSkills](openskills.md) | CLI skills universel | Oui (gratuit) | Non | `npx openskills` | Standardiser les skills entre agents IA |
-| [Continue.dev](outils-complementaires.md#continue-dev) | Assistant open source | Oui | Oui | Extension VS Code / JetBrains | Remplacer le Chat Copilot |
-| [Ollama](outils-complementaires.md#ollama) | Runner de modèles locaux | Oui | Oui | CLI | Inférence locale illimitée |
-| [LM Studio](outils-complementaires.md#lm-studio) | Interface modèles locaux | Oui | Oui | App desktop | Tester des modèles facilement |
-| [Codeium / Windsurf](outils-complementaires.md#codeium) | Complétion IA gratuite | Oui | Non | Extension | Autocomplétion alternative |
-| [Tabnine](outils-complementaires.md#tabnine) | Complétion IA privée | Tier gratuit | Oui | Extension | Complétion offline/enterprise |
-| [Amazon Q Developer](outils-complementaires.md#amazon-q) | Assistant AWS | Tier gratuit | Non | Extension | Projets cloud AWS |
-| [Supermaven](outils-complementaires.md#supermaven) | Complétion ultra-rapide | Tier gratuit | Non | Extension | Complétions longues, rapides |
+Pour IntelliJ, ce sont les gains les plus immédiats **et ces actions ne consomment pas de crédits Copilot**.
+
+- **Inspections** + quick-fixes.
+- **Refactorings** : rename, extract method, inline, safe delete, change signature.
+- **Structural Search and Replace (SSR)**.
+- **Find in Files / Replace in Files**.
+- **Find Usages / Call Hierarchy / Type Hierarchy**.
+- **Navigate to Class / File / Symbol**.
+- **Maven / Gradle tool window** (build, dépendances, tasks).
+- **Run tests / Debugger / Coverage**.
+- **Git tools IntelliJ** (diff, annotate, historique local).
+- **Diagrammes UML** (édition Ultimate).
+
+=== "IntelliJ IDEA"
+    Utilise d'abord : `Analyze > Inspect Code`, `Refactor`, SSR, navigation, puis tests/debug. Ces opérations sont locales à l'IDE et n'appellent pas Copilot.
+
+=== "Visual Studio Code"
+    L'équivalent existe en partie via extensions/CLI, mais IntelliJ est généralement plus robuste pour l'analyse structurelle Java/Kotlin et les refactorings sûrs.
+
+!!! warning "Erreur fréquente"
+    Ouvrir Copilot Chat pour un warning d'inspection que l'IDE peut corriger en 1 clic.
+
+---
+
+## Famille 3 — Automatiser sans IA
+
+Quand la dette technique est répétitive, automatise hors LLM.
+
+- **Qodana** (JetBrains)
+- **OpenRewrite**
+- **Semgrep**
+- **PMD**
+- **Checkstyle**
+- **SpotBugs**
+- **Error Prone**
+- **ArchUnit**
+
+### Différence entre les types d'outils
+
+- **Outil déterministe** : même entrée, même sortie (ex. `rg`, `jq`, inspections).
+- **Analyse statique** : détecte des problèmes sans exécuter le code (ex. SpotBugs, Semgrep, Qodana).
+- **Transformation automatique** : modifie du code via règles explicites (ex. OpenRewrite, SSR).
+- **Assistant IA** : propose des solutions probabilistes selon le contexte (Copilot).
+
+!!! info "Lecture rapide"
+    Plus un outil est déterministe, plus son coût est prévisible et nul côté crédits Copilot.
+
+!!! success "Approche équipe"
+    Mets ces outils en CI pour traiter les problèmes à la source, puis utilise Copilot sur les cas réellement ambigus.
+
+---
+
+## Famille 4 — IA locales et alternatives
+
+Conserver les outils existants du chapitre permet de décharger Copilot sur les tâches simples.
+
+- **[Ollama](ollama.md)**
+- **[LM Studio](lm-studio.md)**
+- **[Continue.dev](continue-dev.md)**
+- **[Codeium / Windsurf](codeium-windsurf.md)**
+- **[Tabnine](tabnine.md)**
+- **[Amazon Q Developer](amazon-q-developer.md)**
+- **[Supermaven](supermaven.md)**
+
+### Positionnement par outil
+
+| Outil | Rôle | Avantage économique | Limite | Usage recommandé avec IntelliJ |
+|:---:|:---:|:---:|:---:|:---:|
+| Ollama | LLM local | Pas de crédit Copilot | Qualité variable selon modèle/machine | Brainstorm local, explication de code non critique |
+| LM Studio | Exécution locale de modèles | Coût API nul | Setup et perf machine | Tests de prompts hors production |
+| Continue.dev | Pont IDE ↔ modèles locaux/distants | Contrôle fin du routage | Configuration initiale | Complétion/chat local sur fichiers ciblés |
+| Codeium / Windsurf | Assistant alternatif | Réduit usage Copilot | Pertinence variable selon langage | Tâches simples de complétion/correction |
+| Tabnine | Complétion IA | Bon pour saisie répétitive | Moins fort en raisonnement complexe | Boilerplate, snippets, suggestions rapides |
+| Amazon Q Developer | Assistant cloud orienté dev AWS | Peut absorber une partie des usages Copilot | Dépend de l'écosystème AWS | Questions infra/cloud ciblées depuis IntelliJ |
+| Supermaven | Complétion rapide | Réduit les interactions chat | Contexte long parfois moins précis | Flux d'écriture continu dans l'éditeur |
+
+!!! note "Positionnement"
+    Garde Copilot pour les tâches de raisonnement profond multi-fichiers. Pour le reste, une IA locale ou une alternative gratuite suffit souvent.
+
+---
+
+## Famille 5 — MCP et agents spécialisés
+
+MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
+
+- Utilise **MCP** pour brancher des outils dynamiques (API, DB, observabilité).
+- Utilise **[OpenSkills](openskills.md)** pour normaliser les skills portables entre agents.
+- N'envoie jamais l'intégralité d'un workspace si seule une sous-zone est utile.
+
+### Exemples de MCP utiles (filtrage local)
+
+- **Recherche locale ciblée** : ne remonter que les fichiers pertinents.
+- **Erreurs Maven/Gradle seulement** : exclure le bruit non build.
+- **Fichiers Git modifiés** : limiter l'analyse au diff courant.
+- **Documentation projet** : extraire uniquement les pages liées au sujet.
+- **Base de connaissance locale** : injecter des réponses validées internes.
+- **Résumé compact de module** : architecture, dépendances, points chauds.
+
+!!! tip "Rappel important"
+    MCP sert d'abord à **filtrer** et **réduire** le contexte avant IA, pas à envoyer plus de données.
+
+!!! danger "Coût caché"
+    Un agent spécialisé mal cadré peut consommer plus qu'un chat classique si tu envoies trop de contexte brut.
+
+---
+
+## Tableau de synthèse
+
+| Besoin | Outil recommandé | Consommation IA | À utiliser avant Copilot ? | Gain attendu |
+|:---:|:---:|:---:|:---:|:---:|
+| Retrouver une classe | `rg`, Navigate to Class, Find Usages | Nulle | Oui | Rapide, zéro chat |
+| Comprendre un bug localisé | Debugger IntelliJ, tests ciblés, logs filtrés RTK/jq | Nulle à faible | Oui | Réduction forte des allers-retours IA |
+| Corriger un warning | Inspections + quick-fix IntelliJ | Nulle | Oui | Correction immédiate |
+| Refactorer un pattern répétitif | SSR + OpenRewrite + ast-grep | Nulle | Oui | Traitement en masse fiable |
+| Migrer une API | OpenRewrite + compil/tests + inspections | Faible | Oui | Migration semi-automatique contrôlée |
+| Analyser tout le repo | Qodana + Semgrep + ArchUnit | Nulle | Oui | Vue globale sans prompt géant |
+| Faire une revue sécurité | Semgrep + SpotBugs + dépendances outillées | Nulle | Oui | Détection systématique initiale |
+| Générer une architecture | Copilot Chat/Agent avec contexte filtré | Élevée | Non (après filtres) | Valeur sur décisions complexes |
+| Écrire une documentation | Structure locale + Copilot pour reformulation finale | Moyenne | Oui (préparer plan d'abord) | Texte plus rapide et plus propre |
+
+---
+
+## Workflow recommandé en 6 étapes
+
+1. **Isoler le besoin** (fichiers, erreurs, périmètre exact).
+2. **Réduire le contexte** (`rg`, `ast-grep`, RTK, `jq`/`yq`, TOON).
+3. **Essayer IntelliJ natif** (inspection, refactor, usages, tests, debug).
+4. **Passer par l'automatisation** (Qodana, Semgrep, OpenRewrite, règles qualité).
+5. **Préparer une requête IA minimale** :
+    - Problème
+    - Fichiers concernés
+    - Erreurs exactes
+    - Résultat attendu
+6. **Utiliser Copilot Chat, puis Copilot Agent seulement pour des tâches multi-modifications coordonnées**.
+
+```mermaid
+flowchart LR
+    A[Isoler le besoin] --> B[Réduire le contexte]
+    B --> C[Essayer IntelliJ natif]
+    C --> D[Automatisation sans IA]
+    D --> E[Préparer une requête IA minimale]
+    E --> F[Copilot Chat puis Agent si multi-modifications]
+```
+
+---
+
+## Points clés à retenir
+
+- L'économie de crédits IA se joue d'abord **avant** le prompt.
+- Les outils IntelliJ locaux ne consomment pas de crédits Copilot.
+- MCP est un filtre d'entrée : moins de bruit, moins de coût, meilleures réponses.
 
 ---
 
 ## Prochaine étape
 
-Commencez par **[RTK AI](rtk.md)** : l'outil le plus directement orienté vers la réduction de consommation de requêtes, avec une installation simple dans VS Code ou IntelliJ.
+**[RTK — Rust Token Killer](rtk.md)** : mettre en place la compression des sorties terminal pour réduire immédiatement les tokens envoyés aux agents.
+
+Concepts clés couverts :
+
+- **Compression terminal** — réduire massivement le bruit des commandes
+- **Hook global** — automatiser l'usage sans friction
+- **Mesure des gains** — suivre les économies via `rtk gain`
+- **Usage IntelliJ** — bonnes pratiques spécifiques au terminal intégré
