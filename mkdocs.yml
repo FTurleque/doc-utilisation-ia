@@ -74,7 +74,7 @@ markdown_extensions:
 
 nav:
   - Accueil: index.md
-  
+
   - Copilot:
     - Installation:
       - Accueil: chapitre-1-installation/index.md
@@ -108,14 +108,14 @@ nav:
     - VS Code — Contexte: chapitre-4-contexte/vscode-contexte.md
     - IntelliJ IDEA — Contexte: chapitre-4-contexte/intellij-contexte.md
     - Comparaison Contexte: chapitre-4-contexte/comparaison-contexte.md
-  
+
   - Prompt Engineering:
     - Accueil: chapitre-5-prompt-engineering/index.md
     - Fondamentaux: chapitre-5-prompt-engineering/fondamentaux.md
     - Techniques Intermédiaires: chapitre-5-prompt-engineering/techniques-intermediaires.md
     - Techniques Avancées: chapitre-5-prompt-engineering/techniques-avancees.md
     - Prompting avec Copilot: chapitre-5-prompt-engineering/avec-copilot.md
-  
+
   - Machine Learning:
     - Accueil: chapitre-6-machine-learning/index.md
     - Concepts Fondamentaux: chapitre-6-machine-learning/concepts-fondamentaux.md
@@ -189,8 +189,18 @@ nav:
     - RTK AI: chapitre-13-outils-economies/rtk.md
     - TOON: chapitre-13-outils-economies/toon.md
     - OpenSkills: chapitre-13-outils-economies/openskills.md
-    - Outils Complémentaires: chapitre-13-outils-economies/outils-complementaires.md
+    - Continue.dev: chapitre-13-outils-economies/continue-dev.md
+    - Ollama: chapitre-13-outils-economies/ollama.md
+    - LM Studio: chapitre-13-outils-economies/lm-studio.md
+    - Codeium / Windsurf: chapitre-13-outils-economies/codeium-windsurf.md
+    - Tabnine: chapitre-13-outils-economies/tabnine.md
+    - Amazon Q Developer: chapitre-13-outils-economies/amazon-q-developer.md
+    - Supermaven: chapitre-13-outils-economies/supermaven.md
     - Comparaison des Outils: chapitre-13-outils-economies/comparaison.md
+    - Outils Complémentaires: chapitre-13-outils-economies/outils-complementaires.md
+    - Stack prete en 15 min — VS Code: chapitre-13-outils-economies/stack-prete-15-min-vscode.md
+    - Stack prete en 15 min — IntelliJ: chapitre-13-outils-economies/stack-prete-15-min-intellij.md
+    - Recommandations par application: chapitre-13-outils-economies/recommandations-taille-type-application.md
 
   - Veille IA:
     - Accueil: chapitre-14-veille-ia/index.md

@@ -9,7 +9,7 @@
 
 ---
 
-## Pourquoi RTK réduit les premium requests
+## Pourquoi RTK réduit les crédits IA
 
 Quand Copilot Agent ou Claude Code exécute une commande dans le terminal (ex. `npm test`, `git log`), la sortie brute est injectée dans la fenêtre de contexte du modèle. Ces sorties peuvent être **très volumineuses** :
 
@@ -21,7 +21,7 @@ Avec RTK :
   rtk npm test  →  2 500 tokens filtrés  →  -90% de tokens consommés
 ```
 
-Moins de tokens dans le contexte = **moins de premium requests consommées** par session d'agent, et des sessions qui durent **3× plus longtemps** avant d'atteindre la limite.
+Moins de tokens dans le contexte = **moins de crédits IA consommés** par session d'agent, et des sessions qui durent **3× plus longtemps** avant d'atteindre la limite.
 
 ### Économies mesurées (exemples réels)
 
@@ -110,7 +110,7 @@ rtk gain
 
 ```bash
 # Via le script d'installation (recommandé)
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/v0.34.3/install.sh | sh
 
 # Via Homebrew (macOS et Linux)
 brew install rtk
@@ -254,7 +254,7 @@ La liste complète avec les détails de filtrage par commande est disponible dan
 
 ## Prochaine étape
 
-**[Outils Complémentaires](outils-complementaires.md)** : Continue.dev, Ollama, LM Studio, Codeium, Tabnine, Amazon Q et Supermaven — des alternatives gratuites ou locales pour couvrir les usages que RTK ne prend pas en charge.
+**[TOON](toon.md)** : un autre outil spécialisé pour automatiser et compiler les configurations IA complexes.
 
 Outils couverts :
 

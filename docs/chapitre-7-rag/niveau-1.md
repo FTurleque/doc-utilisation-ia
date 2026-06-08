@@ -27,7 +27,7 @@
 Si vous n'avez pas de budget (ou voulez tester en local), remplacez OpenAI par **Ollama** :
 
 ```bash
-# Installer Ollama sur https://ollama.ai
+# Installer Ollama sur https://ollama.com
 # Puis télécharger un modèle léger
 ollama pull mistral:7b-instruct
 # Lancez le serveur local

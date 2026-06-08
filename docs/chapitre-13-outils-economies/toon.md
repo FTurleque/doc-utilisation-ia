@@ -219,6 +219,18 @@ Données :
 !!! example "Règle simple"
     **TOON pour compresser l'entrée LLM**, **JSON pour l'interopérabilité applicative**. Si tu hésites, commence en JSON puis mesure le gain token/coût avec une conversion TOON sur un échantillon réel.
 
+## Quand l'utiliser
+
+- Quand tes données sont tabulaires et uniformes.
+- Quand tu prépares un gros prompt avec des listes de lignes ou d'objets répétitifs
+- Quand tu veux réduire le bruit avant de demander une analyse à Copilot
+
+## Quand l'éviter
+
+- Quand les structures sont très hétérogènes.
+- Quand tes lecteurs ne connaissent pas TOON et doivent comprendre rapidement, même si le texte est plus long.
+- Quand tu n'as pas vérifié le gain sur un échantillon réel
+
 ---
 
 ## Options CLI
@@ -262,6 +274,12 @@ npx @toon-format/cli input.json [options]
 
 !!! success "Recommandation"
     Utilise TOON quand tu passes des **tableaux de données uniformes** à Copilot (Chat ou Agent), surtout sur des volumes importants. Le gain de tokens est souvent net, mais varie selon modèle, tokenizer et nature des données.
+
+## Résumé
+
+TOON sert a compresser les donnees tabulaires avant envoi a un LLM.
+Il est tres utile pour reduire les tokens, mais il doit rester un format de
+frontiere, pas un remplacement universel de JSON.
 
 ---
 
