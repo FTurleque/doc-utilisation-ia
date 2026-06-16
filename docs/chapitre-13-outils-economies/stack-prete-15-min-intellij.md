@@ -184,7 +184,7 @@ Garde Copilot pour:
 
 ## Prochaine étape
 
-**[Recommandations par application](recommandations-taille-type-application.md)** : adapter la stack aux tailles de codebase et aux types d'applications les plus courants.
+**[Codeium / Windsurf](codeium-windsurf.md)** : ajouter une alternative de complétion/chat dans l'IDE pour les tâches quotidiennes à faible complexité.
 
 Concepts clés couverts :
 

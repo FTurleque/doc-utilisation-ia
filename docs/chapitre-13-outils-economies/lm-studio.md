@@ -123,7 +123,7 @@ un usage direct dans l'IDE.
 
 ## Prochaine étape
 
-**[Codeium / Windsurf](codeium-windsurf.md)** : ajouter une alternative de complétion/chat dans l'IDE pour les tâches quotidiennes à faible complexité.
+**[Stack prête en 15 min — VS Code](stack-prete-15-min-vscode.md)** : appliquer immédiatement une configuration locale-first complète et actionnable en quelques étapes.
 
 Concepts clés couverts :
 
