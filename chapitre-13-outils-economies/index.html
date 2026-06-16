@@ -3529,6 +3529,8 @@
       
         
       
+        
+      
     
     
     
@@ -3601,6 +3603,153 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_3" id="__nav_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SonarQube
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SonarQube
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sonarqube/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sonarqube-vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="rtk-sonar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK + SonarQube
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -4958,6 +5107,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sonarqube-analyse-statique-gouvernance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SonarQube (analyse statique + gouvernance)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5158,7 +5318,7 @@
 <p>Avant toute interaction IA, prépare un contexte minimal et exploitable.</p>
 <h3 id="rtk">RTK<a class="headerlink" href="#rtk" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong>Rôle</strong> : compresser et nettoyer les sorties terminal.</li>
+<li><strong>Rôle</strong> : compresser et nettoyer les sorties terminales.</li>
 <li><strong>Cas d'usage</strong> : logs d'erreur volumineux Maven/Gradle/tests.</li>
 <li><strong>Évite de demander à Copilot</strong> : "résume ces 500 lignes de logs".</li>
 <li><strong>Impact crédits</strong> : <strong>fort</strong> (moins de tokens envoyés).</li>
@@ -5244,6 +5404,9 @@
 <p>Quand la dette technique est répétitive, automatise hors LLM.</p>
 <ul>
 <li><strong>Qodana</strong> (JetBrains)</li>
+<li><strong><a href="sonarqube/">SonarQube for IDE + Connected Mode</a></strong></li>
+<li><strong><a href="sonarqube-vscode/">SonarQube pour VS Code</a></strong></li>
+<li><strong><a href="rtk-sonar/">RTK + SonarQube</a></strong></li>
 <li><strong>OpenRewrite</strong></li>
 <li><strong>Semgrep</strong></li>
 <li><strong>PMD</strong></li>
@@ -5267,6 +5430,15 @@
 <p class="admonition-title">Approche équipe</p>
 <p>Mets ces outils en CI pour traiter les problèmes à la source, puis utilise Copilot sur les cas réellement ambigus.</p>
 </div>
+<h3 id="sonarqube-analyse-statique-gouvernance">SonarQube (analyse statique + gouvernance)<a class="headerlink" href="#sonarqube-analyse-statique-gouvernance" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Rôle</strong> : détecter les bugs, vulnérabilités et code smells avant IA.</li>
+<li><strong>Coût Copilot</strong> : nul en détection locale et corrections déterministes.</li>
+<li><strong>Escalade</strong> : Quick Fix Sonar/IntelliJ, puis AI CodeFix Sonar, puis Copilot ciblé.</li>
+<li><strong>Guide complet IntelliJ</strong> : <strong><a href="sonarqube/">SonarQube — Détecter et corriger sans gaspiller de crédits IA</a></strong>.</li>
+<li><strong>Guide VS Code</strong> : <strong><a href="sonarqube-vscode/">SonarQube — Détecter et corriger sans gaspiller de crédits IA (VS Code)</a></strong>.</li>
+<li><strong>Guide combiné RTK + SonarQube</strong> : <strong><a href="rtk-sonar/">Construire un filtre anti-bruit avant Copilot</a></strong>.</li>
+</ul>
 <hr />
 <h2 id="famille-4-ia-locales-et-alternatives">Famille 4 — IA locales et alternatives<a class="headerlink" href="#famille-4-ia-locales-et-alternatives" title="Permanent link">&para;</a></h2>
 <p>Conserver les outils existants du chapitre permet de décharger Copilot sur les tâches simples.</p>
@@ -5351,6 +5523,7 @@
 <p>MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.</p>
 <ul>
 <li>Utilise <strong>MCP</strong> pour brancher des outils dynamiques (API, DB, observabilité).</li>
+<li>Utilise le <strong>MCP SonarQube</strong> pour filtrer/triager les issues par règle avant correction.</li>
 <li>Utilise <strong><a href="openskills/">OpenSkills</a></strong> pour normaliser les skills portables entre agents.</li>
 <li>N'envoie jamais l'intégralité d'un workspace si seule une sous-zone est utile.</li>
 </ul>
@@ -5406,6 +5579,13 @@
 <td style="text-align: center;">Correction immédiate</td>
 </tr>
 <tr>
+<td style="text-align: center;">Corriger une issue Sonar</td>
+<td style="text-align: center;">SonarQube for IDE + Quick Fix Sonar/IntelliJ</td>
+<td style="text-align: center;">Nulle à faible</td>
+<td style="text-align: center;">Oui</td>
+<td style="text-align: center;">Très fort sur Java/IntelliJ</td>
+</tr>
+<tr>
 <td style="text-align: center;">Refactorer un pattern répétitif</td>
 <td style="text-align: center;">SSR + OpenRewrite + ast-grep</td>
 <td style="text-align: center;">Nulle</td>
@@ -5455,7 +5635,7 @@
 <li><strong>Isoler le besoin</strong> (fichiers, erreurs, périmètre exact).</li>
 <li><strong>Réduire le contexte</strong> (<code>rg</code>, <code>ast-grep</code>, RTK, <code>jq</code>/<code>yq</code>, TOON).</li>
 <li><strong>Essayer IntelliJ natif</strong> (inspection, refactor, usages, tests, debug).</li>
-<li><strong>Passer par l'automatisation</strong> (Qodana, Semgrep, OpenRewrite, règles qualité).</li>
+<li><strong>Passer par l'automatisation</strong> (SonarQube, Qodana, Semgrep, OpenRewrite, règles qualité).</li>
 <li><strong>Préparer une requête IA minimale</strong> :<ul>
 <li>Problème</li>
 <li>Fichiers concernés</li>
@@ -5476,6 +5656,7 @@
 <ul>
 <li>L'économie de crédits IA se joue d'abord <strong>avant</strong> le prompt.</li>
 <li>Les outils IntelliJ locaux ne consomment pas de crédits Copilot.</li>
+<li>SonarQube est complémentaire de RTK : Sonar détecte, RTK réduit le contexte transmis.</li>
 <li>MCP est un filtre d'entrée : moins de bruit, moins de coût, meilleures réponses.</li>
 </ul>
 <hr />

@@ -3529,6 +3529,8 @@
       
         
       
+        
+      
     
     
     
@@ -3601,6 +3603,153 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_3" id="__nav_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SonarQube
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SonarQube
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarqube/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarqube-vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk-sonar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK + SonarQube
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -3929,6 +4078,17 @@
     <span class="md-ellipsis">
       
         Comparaison générale
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#focus-sonarqube-java-intellij" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Focus SonarQube (Java + IntelliJ)
       
     </span>
   </a>
@@ -5066,6 +5226,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#focus-sonarqube-java-intellij" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Focus SonarQube (Java + IntelliJ)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#matrice-decisionnelle-unique" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5340,6 +5511,15 @@
 </thead>
 <tbody>
 <tr>
+<td><strong>SonarQube for IDE</strong></td>
+<td>Oui (détection locale)</td>
+<td>Oui (mode autonome)</td>
+<td>Oui</td>
+<td>Oui</td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></span></td>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></span></td>
+</tr>
+<tr>
 <td><strong>RTK</strong></td>
 <td>Oui</td>
 <td>Non (cloud)</td>
@@ -5422,6 +5602,78 @@
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="focus-sonarqube-java-intellij">Focus SonarQube (Java + IntelliJ)<a class="headerlink" href="#focus-sonarqube-java-intellij" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>SonarQube</th>
+<th>Notes opérationnelles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Analyse statique</td>
+<td>Oui (IDE + serveur/cloud)</td>
+<td>Détection sans crédit Copilot en local</td>
+</tr>
+<tr>
+<td>Quick Fix</td>
+<td>Oui (selon règle/langage/version)</td>
+<td>Ne couvre pas toutes les règles</td>
+</tr>
+<tr>
+<td>Connected Mode</td>
+<td>Oui</td>
+<td>Aligne IDE et profil qualité entreprise</td>
+</tr>
+<tr>
+<td>AI CodeFix</td>
+<td>Oui (selon édition/activation)</td>
+<td>Service Sonar, pas un crédit Copilot direct</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>Oui (serveur MCP SonarQube)</td>
+<td>Utile pour triage/correction bornée</td>
+</tr>
+<tr>
+<td>Remediation Agent</td>
+<td>Oui (beta selon documentation Sonar)</td>
+<td>Disponibilité et limites contractuelles</td>
+</tr>
+<tr>
+<td>Coût en crédits Copilot</td>
+<td>Nul en détection locale; possible en usage Copilot Agent/Chat</td>
+<td>Distinguer coûts Sonar vs coûts Copilot</td>
+</tr>
+<tr>
+<td>Niveau d'automatisation</td>
+<td>De déterministe (Quick Fix) à agentique</td>
+<td>Commencer par déterministe</td>
+</tr>
+<tr>
+<td>Intérêt Java/IntelliJ</td>
+<td>Très élevé</td>
+<td>Intégré au flux IDE + CI</td>
+</tr>
+<tr>
+<td>Limites</td>
+<td>Couverture partielle selon règle/langage/édition</td>
+<td>Vérifier matrice officielle</td>
+</tr>
+<tr>
+<td>Prérequis entreprise</td>
+<td>Token utilisateur, serveur/cloud, gouvernance règles</td>
+<td>Qualité profils + sécurité tokens</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">SonarQube et RTK ne font pas la même chose</p>
+<p>RTK réduit la taille des sorties terminal et le contexte transmis. SonarQube détecte/cadre des problèmes de qualité par analyse statique. Les deux outils sont complémentaires.</p>
+</div>
 <hr />
 <h2 id="matrice-decisionnelle-unique">Matrice décisionnelle unique<a class="headerlink" href="#matrice-decisionnelle-unique" title="Permanent link">&para;</a></h2>
 <p>Cette matrice sert de point d'entrée rapide. Identifie d'abord la contrainte
@@ -5776,7 +6028,7 @@ avant de passer à la mise en œuvre. Pour le détail, utilise les pages outils
 et les playbooks rapides du chapitre.</p>
 <hr />
 <h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>
-<p><strong><a href="../stack-prete-15-min-vscode/">Stack prête en 15 min — VS Code</a></strong> : appliquer directement la matrice de décision à un environnement de travail concret.</p>
+<p><strong><a href="../outils-complementaires/">Outils Complémentaires</a></strong> : consolider la sélection avec une vue d'ensemble opérationnelle avant de passer aux stacks prêtes en 15 minutes.</p>
 <p>Concepts clés couverts :</p>
 <ul>
 <li><strong>Choix par taille de codebase</strong> — adapter le niveau d'outillage au volume réel</li>

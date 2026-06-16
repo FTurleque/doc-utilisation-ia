@@ -3529,6 +3529,8 @@
       
         
       
+        
+      
     
     
     
@@ -3601,6 +3603,153 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_3" id="__nav_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SonarQube
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SonarQube
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarqube/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarqube-vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk-sonar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK + SonarQube
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -4020,6 +4169,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parallele-avec-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parallèle avec VS Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#etape-1-installer-les-plugins" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4068,6 +4228,28 @@
     <span class="md-ellipsis">
       
         Étape 5 — Vérifier les inspections et refactorings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etape-6-optionnelle-connected-mode-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 6 (optionnelle) — Connected Mode Sonar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etape-7-avancee-mcp-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 7 (avancée) — MCP Sonar
       
     </span>
   </a>
@@ -4977,6 +5159,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#parallele-avec-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parallèle avec VS Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#etape-1-installer-les-plugins" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -5025,6 +5218,28 @@
     <span class="md-ellipsis">
       
         Étape 5 — Vérifier les inspections et refactorings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etape-6-optionnelle-connected-mode-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 6 (optionnelle) — Connected Mode Sonar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#etape-7-avancee-mcp-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Étape 7 (avancée) — MCP Sonar
       
     </span>
   </a>
@@ -5145,14 +5360,17 @@
 
 <h1 id="stack-prete-en-15-min-intellij">Stack prête en 15 min — IntelliJ<a class="headerlink" href="#stack-prete-en-15-min-intellij" title="Permanent link">&para;</a></h1>
 <p><span class="badge-beginner">Débutant</span> <span class="badge-intellij">IntelliJ</span></p>
-<p>Cette stack donne à IntelliJ une base locale et pratique pour le chat,
-le diagnostic et le filtrage de contexte. L'objectif est de rester autonome
-pour le quotidien, tout en gardant Copilot pour les cas les plus complexes.</p>
+<p>Cette stack reprend le même socle local-first que la version
+<a href="../stack-prete-15-min-vscode/">VS Code</a>, mais en profitant des forces
+natives d'IntelliJ pour le diagnostic et le refactoring. L'objectif est de
+rester autonome pour le quotidien, tout en gardant Copilot pour les cas les
+plus complexes.</p>
 <hr />
 <h2 id="prerequis">Prérequis<a class="headerlink" href="#prerequis" title="Permanent link">&para;</a></h2>
 <ul>
 <li>IntelliJ IDEA installée</li>
 <li>Accès internet pour l'installation initiale</li>
+<li>Plugin SonarQube for IDE (recommandé)</li>
 <li>Ollama disponible en local</li>
 <li>Plugin Continue.dev installé</li>
 <li>RTK disponible pour le terminal</li>
@@ -5162,13 +5380,44 @@ pour le quotidien, tout en gardant Copilot pour les cas les plus complexes.</p>
 <p>Commence par les outils natifs IntelliJ, puis ajoute <strong><a href="../continue-dev/">Continue.dev</a></strong> et <strong><a href="../ollama/">Ollama</a></strong> pour le chat local.</p>
 </div>
 <hr />
+<h2 id="parallele-avec-vs-code">Parallèle avec VS Code<a class="headerlink" href="#parallele-avec-vs-code" title="Permanent link">&para;</a></h2>
+<p>Cette page suit la même logique que la version VS Code : Ollama pour le
+modèle local, Continue.dev pour le chat, puis RTK pour réduire le bruit du
+terminal. La différence principale est qu'IntelliJ ajoute ses inspections,
+ses refactorings natifs et, si besoin, SonarQube for IDE.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">IntelliJ IDEA</label><label for="__tabbed_1_2">Visual Studio Code</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>Corriger et refactorer avec les outils natifs avant toute IA distante.</li>
+<li>Utiliser SonarQube for IDE pour détecter les issues locales et proposer
+  des quick fixes sur les règles compatibles.</li>
+<li>Activer Connected Mode ou MCP Sonar seulement si l'équipe en a besoin.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>Conserver la même base locale : Ollama + Continue.dev + RTK.</li>
+<li>S'appuyer davantage sur les extensions pour l'analyse et les refactorings.</li>
+<li>Suivre le playbook dédié dans <a href="../stack-prete-15-min-vscode/">Stack prête en 15 min — VS Code</a>.</li>
+</ul>
+</div>
+</div>
+</div>
+<hr />
 <h2 id="etape-1-installer-les-plugins">Étape 1 — Installer les plugins<a class="headerlink" href="#etape-1-installer-les-plugins" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Ouvrir <strong>Settings -&gt; Plugins -&gt; Marketplace</strong>.</li>
 <li>Installer <strong>Continue</strong>.</li>
+<li>Installer <strong>SonarQube for IDE</strong> (éditeur SonarSource).</li>
 <li>Redémarrer l'IDE.</li>
 <li>Vérifier que la barre latérale Continue est disponible.</li>
+<li>Vérifier que la fenêtre SonarQube est visible et qu'une issue locale remonte sur un fichier Java.</li>
 </ol>
+<div class="admonition tip">
+<p class="admonition-title">Validation rapide Sonar</p>
+<p>Place le curseur sur une issue Sonar compatible puis utilise <code>Alt+Enter</code> pour vérifier si un Quick Fix est proposé.</p>
+</div>
 <hr />
 <h2 id="etape-2-installer-ollama">Étape 2 — Installer Ollama<a class="headerlink" href="#etape-2-installer-ollama" title="Permanent link">&para;</a></h2>
 <ol>
@@ -5221,6 +5470,25 @@ pour le quotidien, tout en gardant Copilot pour les cas les plus complexes.</p>
 prompt IA pour les cas locaux les plus simples.</p>
 </div>
 <hr />
+<h2 id="etape-6-optionnelle-connected-mode-sonar">Étape 6 (optionnelle) — Connected Mode Sonar<a class="headerlink" href="#etape-6-optionnelle-connected-mode-sonar" title="Permanent link">&para;</a></h2>
+<p>Active ce mode seulement si ton équipe dispose d'un serveur SonarQube Cloud/Server.</p>
+<ol>
+<li>Ouvre les paramètres SonarQube for IDE.</li>
+<li>Configure la connexion avec un token utilisateur.</li>
+<li>Lie le projet (bind) et vérifie la synchro des règles.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Promesse réaliste</p>
+<p>L'installation plugin + analyse locale entre souvent dans 15 minutes. La configuration Connected Mode complète dépend de l'infrastructure entreprise.</p>
+</div>
+<h2 id="etape-7-avancee-mcp-sonar">Étape 7 (avancée) — MCP Sonar<a class="headerlink" href="#etape-7-avancee-mcp-sonar" title="Permanent link">&para;</a></h2>
+<p>Ne configure MCP Sonar qu'en niveau avancé, après validation du workflow local.</p>
+<ul>
+<li>Priorité : détection + correction déterministe.</li>
+<li>MCP : utile pour triage/correction multi-issues à périmètre borné.</li>
+<li>Vérifier la compatibilité réelle de ton plugin Copilot JetBrains avant configuration.</li>
+</ul>
+<hr />
 <h2 id="ce-que-cette-stack-couvre">Ce que cette stack couvre<a class="headerlink" href="#ce-que-cette-stack-couvre" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Correction de warnings simples</li>
@@ -5258,7 +5526,7 @@ prompt IA pour les cas locaux les plus simples.</p>
 <hr />
 <h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>
 <p><strong><a href="../recommandations-taille-type-application/">Recommandations par application</a></strong> : adapter la stack aux tailles de codebase et aux types d'applications les plus courants.</p>
-<p>Concepts clés couverts:</p>
+<p>Concepts clés couverts :</p>
 <ul>
 <li><strong>Natif avant IA</strong> - exploiter les inspections et refactorings</li>
 <li><strong>Chat local</strong> - conserver les questions simples hors quota</li>

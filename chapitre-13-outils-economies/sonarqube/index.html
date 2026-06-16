@@ -1,0 +1,7529 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation collectée sur l'utilisation de l'IA">
+      
+      
+        <meta name="author" content="FTurleque">
+      
+      
+      
+        <link rel="prev" href="../rtk/">
+      
+      
+        <link rel="next" href="../sonarqube-vscode/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>IntelliJ - Documentation IA</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sonarqube-detecter-et-corriger-sans-gaspiller-de-credits-ia" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Documentation IA" class="md-header__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentation IA
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              IntelliJ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer en mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer en mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Documentation IA" class="md-nav__button md-logo" aria-label="Documentation IA" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentation IA
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FTurleque/doc-utilisation-ia" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    FTurleque/doc-utilisation-ia
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Copilot
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-1-installation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Installation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_2" id="__nav_2_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    IntelliJ IDEA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/intellij/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1_3" id="__nav_2_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visual Studio Code
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/tutoriel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutoriel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/vscode/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Référence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-1-installation/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-2-parametrage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramétrage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Paramétrage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/intellij-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/vscode-parametrage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visual Studio Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-2-parametrage/comparaison-parametres/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-3-cli-modes/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modes CLI
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/page-principale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modes CLI Détail
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-3-cli-modes/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-4-contexte/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contexte & Personnalisation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Contexte & Personnalisation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Clés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-instructions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instructions (.instructions.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/applyto-avance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    applyTo Avancé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/prompt-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Files (.prompt.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents (.agent.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-skills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills (SKILL.md)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/guide-hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hooks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/parametres-depot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paramètres du Dépôt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/vscode-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/intellij-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ IDEA — Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-4-contexte/comparaison-contexte/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Contexte
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-5-prompt-engineering/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompt Engineering
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Prompt Engineering
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-intermediaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Intermédiaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/techniques-avancees/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Techniques Avancées
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-5-prompt-engineering/avec-copilot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prompting avec Copilot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-6-machine-learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Machine Learning
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Machine Learning
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/concepts-fondamentaux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/algorithmes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/copilot-workflow-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copilot pour le ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/python-data-science/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & Data Science
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/notebooks-jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Notebooks Jupyter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/mlops-deploiement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLOps & Déploiement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-ecosystemes-ml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-6-machine-learning/comparaison-outils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-8-deep-learning/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deep Learning & Réseaux de Neurones
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Deep Learning & Réseaux de Neurones
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-deep-learning/fondations-mathematiques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fondations Mathématiques
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-deep-learning/reseaux-neurones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réseaux de Neurones — Fondamentaux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-deep-learning/architectures-deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architectures de Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-deep-learning/concevoir-entrainer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concevoir et Entraîner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-deep-learning/optimisation-performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimisation et Performance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-8-deep-learning/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Frameworks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-7-rag/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RAG
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RAG
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts & Architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implémentation (Basic→Expert)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Implémentation (Basic→Expert)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Présentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 1 (Débutant)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 2 (Intermédiaire)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/niveau-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Niveau 3 (Expert)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/cas-usage-secteurs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage par Secteur
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-7-rag/optimisation-avancee/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Optimisation Avancée
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-9-bonnes-pratiques/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bonnes Pratiques
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bonnes Pratiques
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/utilisation-effective/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utilisation Effective
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/organisation-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Organisation du Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/productivite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Productivité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/securite-qualite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité & Qualité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/performance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance & Ressources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-9-bonnes-pratiques/workflows-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflows IA Complets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-10-cas-usage/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas d'Usage
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cas d'Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/comparaison-ecosystemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison Écosystèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/java-spring-boot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java & Spring Boot
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-react/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & React
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/nodejs-express/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Node.js & Express
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/react-typescript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    React 19 & TypeScript
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-10-cas-usage/python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python & FastAPI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-11-troubleshooting/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/problemes-courants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problèmes Courants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/logs-diagnostic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logs & Diagnostic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/comparaison-problemes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Problèmes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/procedures-reparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procédures de Réparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-12-couts-gouvernance/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coûts & Gouvernance
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Coûts & Gouvernance
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/patterns-allers-retours/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Réduire les allers-retours
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/premium-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Credits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/historique-modifications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Historique restrictions & évolutions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/abonnements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Les abonnements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/leviers-economie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leviers d'économie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/modes-quand-utiliser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quand utiliser quel mode ?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-12-couts-gouvernance/workflow-recommande/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow recommandé
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outils
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Outils
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12_3" id="__nav_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SonarQube
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SonarQube
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objectif
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-du-systeme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture du système
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparaison-des-composants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparaison des composants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-de-sonarqube-for-ide-intellij" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation de SonarQube for IDE (IntelliJ)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation de SonarQube for IDE (IntelliJ)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagnostic-si-aucune-alerte-napparait" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagnostic si aucune alerte n'apparaît
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mode-autonome-et-connected-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mode autonome et Connected Mode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mode autonome et Connected Mode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mode-autonome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mode autonome
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connected-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connected Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connexion-cloud-vs-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connexion cloud vs server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-creation-test-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token : création, test, rotation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regles-dentreprise-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règles d'entreprise Sonar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection-sans-credit-ia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Détection sans crédit IA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sonar-quick-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sonar Quick Fix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sonar Quick Fix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ne-pas-confondre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ne pas confondre
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-codefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI CodeFix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AI CodeFix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ce-quest-ai-codefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce qu'est AI CodeFix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ou-le-trouver-dans-intellij" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Où le trouver dans IntelliJ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#si-loption-napparait-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Si l'option n'apparaît pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sonarqube-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SonarQube MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SonarQube MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-a-mcp-local-avec-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scénario A - MCP local avec Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-b-mcp-distant-dentreprise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scénario B - MCP distant d'entreprise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-de-disponibilite-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test de disponibilité MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibilite-copilot-distinction-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibilité Copilot (distinction obligatoire)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remediation-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediation Agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distinction-obligatoire-sur-la-consommation-de-credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distinction obligatoire sur la consommation de crédits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distinction obligatoire sur la consommation de crédits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zero-credit-github-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zéro crédit GitHub Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pas-de-credit-copilot-mais-service-sonar-soumis-a-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pas de crédit Copilot, mais service Sonar soumis à conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consommation-possible-de-creditsrequetes-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consommation possible de crédits/requêtes Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-economique-recommande" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow économique recommandé
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow économique recommandé">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#niveau-0-detection-locale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 0 - Détection locale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-1-correction-deterministe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 1 - Correction déterministe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-2-correction-ia-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 2 - Correction IA Sonar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-3-copilot-cible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 3 - Copilot cible
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-4-agent-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 4 - Agent MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-5-remediation-agent-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 5 - Remediation Agent + CI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure-de-correction-manuelle-optimisee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procédure de correction manuelle optimisée
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure-semi-automatique-avec-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procédure semi-automatique avec Copilot
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Procédure semi-automatique avec Copilot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-eviter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        À éviter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure-automatisee-par-lots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procédure automatisée par lots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matrice-de-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrice de décision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mesure-des-economies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesure des économies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sécurité
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depannage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dépannage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kit-sonar-reutilisable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kit Sonar réutilisable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kit Sonar réutilisable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ou-copier-dans-un-projet-cible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Où copier dans un projet cible
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-contextecredits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact contexte/crédits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompts-operationnels-a-copier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompts opérationnels à copier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompts opérationnels à copier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt-1-corriger-une-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 1 - Corriger une issue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-2-triage-sans-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 2 - Triage sans modification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-3-correction-par-regle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 3 - Correction par regle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-4-exploitation-du-mcp-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 4 - Exploitation du MCP Sonar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sections-pedagogiques-essentielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sections pédagogiques essentielles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#captures-decran-a-produire-section-interne-equipe-doc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Captures d'écran à produire (section interne équipe doc)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaine-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaine étape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources-officielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources officielles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sources officielles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sonarqube-for-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SonarQube for IDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ai-codefix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI CodeFix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remediation-agent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediation Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intellij-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IntelliJ IDEA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sonarqube-vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rtk-sonar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK + SonarQube
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../toon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TOON
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openskills/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenSkills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../continue-dev/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Continue.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ollama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ollama
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lm-studio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LM Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../codeium-windsurf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Codeium / Windsurf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tabnine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tabnine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../amazon-q-developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Amazon Q Developer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supermaven/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supermaven
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison des Outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../outils-complementaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vue d'ensemble des outils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stack-prete-15-min-vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stack prete en 15 min — VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stack-prete-15-min-intellij/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Stack prete en 15 min — IntelliJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recommandations-taille-type-application/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Recommandations par application
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-14-veille-ia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Veille IA
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Veille IA
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/sources-officielles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sources Officielles & Changelogs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/videos-podcasts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vidéos, Podcasts & Conférences
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/securite-risques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sécurité, Risques & Failles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-14-veille-ia/newsletters-communautes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Newsletters & Communautés
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../chapitre-15-hacker-ia/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacker
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hacker
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/page-principale/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IA et hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/etudes-de-cas-2024-2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Études de cas 2024-2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/playbook-incident-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Playbook incident IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/kpi-soc-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    KPI & SOC pour menaces IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/exercices-tabletop-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exercices tabletop IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/cas-sectoriels-ia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cas sectoriels IA et cybersécurité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/matrice-controles-menaces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrice menaces IA -> contrôles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/checklist-audit-interne/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Checklist audit interne IA
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/modeles-fiches-incident/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modèles fiches incident & post-mortem
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/plan-90-jours/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plan 90 jours — Passer à l'action
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-15-hacker-ia/comparaison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparaison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../appendices/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendices
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_15" id="__nav_15_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendices
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/raccourcis-clavier/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raccourcis Clavier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/ressources-externes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ressources Externes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendices/templates-configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#objectif" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Objectif
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-du-systeme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture du système
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparaison-des-composants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparaison des composants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-de-sonarqube-for-ide-intellij" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation de SonarQube for IDE (IntelliJ)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation de SonarQube for IDE (IntelliJ)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagnostic-si-aucune-alerte-napparait" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagnostic si aucune alerte n'apparaît
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mode-autonome-et-connected-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mode autonome et Connected Mode
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mode autonome et Connected Mode">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mode-autonome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mode autonome
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connected-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connected Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connexion-cloud-vs-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connexion cloud vs server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token-creation-test-rotation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Token : création, test, rotation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regles-dentreprise-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Règles d'entreprise Sonar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#detection-sans-credit-ia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Détection sans crédit IA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sonar-quick-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sonar Quick Fix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sonar Quick Fix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ne-pas-confondre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ne pas confondre
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-codefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI CodeFix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AI CodeFix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ce-quest-ai-codefix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ce qu'est AI CodeFix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ou-le-trouver-dans-intellij" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Où le trouver dans IntelliJ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#si-loption-napparait-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Si l'option n'apparaît pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sonarqube-mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SonarQube MCP Server
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SonarQube MCP Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-a-mcp-local-avec-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scénario A - MCP local avec Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-b-mcp-distant-dentreprise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scénario B - MCP distant d'entreprise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-de-disponibilite-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test de disponibilité MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compatibilite-copilot-distinction-obligatoire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compatibilité Copilot (distinction obligatoire)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remediation-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediation Agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distinction-obligatoire-sur-la-consommation-de-credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distinction obligatoire sur la consommation de crédits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Distinction obligatoire sur la consommation de crédits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zero-credit-github-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zéro crédit GitHub Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pas-de-credit-copilot-mais-service-sonar-soumis-a-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pas de crédit Copilot, mais service Sonar soumis à conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consommation-possible-de-creditsrequetes-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consommation possible de crédits/requêtes Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflow-economique-recommande" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow économique recommandé
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Workflow économique recommandé">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#niveau-0-detection-locale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 0 - Détection locale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-1-correction-deterministe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 1 - Correction déterministe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-2-correction-ia-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 2 - Correction IA Sonar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-3-copilot-cible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 3 - Copilot cible
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-4-agent-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 4 - Agent MCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#niveau-5-remediation-agent-ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Niveau 5 - Remediation Agent + CI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure-de-correction-manuelle-optimisee" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procédure de correction manuelle optimisée
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure-semi-automatique-avec-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procédure semi-automatique avec Copilot
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Procédure semi-automatique avec Copilot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-eviter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        À éviter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#procedure-automatisee-par-lots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procédure automatisée par lots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#matrice-de-decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrice de décision
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mesure-des-economies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesure des économies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#securite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sécurité
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depannage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dépannage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kit-sonar-reutilisable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kit Sonar réutilisable
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kit Sonar réutilisable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ou-copier-dans-un-projet-cible" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Où copier dans un projet cible
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-contextecredits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impact contexte/crédits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompts-operationnels-a-copier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompts opérationnels à copier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prompts opérationnels à copier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt-1-corriger-une-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 1 - Corriger une issue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-2-triage-sans-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 2 - Triage sans modification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-3-correction-par-regle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 3 - Correction par regle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompt-4-exploitation-du-mcp-sonar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt 4 - Exploitation du MCP Sonar
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sections-pedagogiques-essentielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sections pédagogiques essentielles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#captures-decran-a-produire-section-interne-equipe-doc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Captures d'écran à produire (section interne équipe doc)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prochaine-etape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prochaine étape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources-officielles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources officielles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sources officielles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sonarqube-for-ide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SonarQube for IDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ai-codefix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI CodeFix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remediation-agent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remediation Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intellij-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IntelliJ IDEA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-copilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub Copilot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Accueil
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Outils
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="./" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    SonarQube
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="sonarqube-detecter-et-corriger-sans-gaspiller-de-credits-ia">SonarQube — Détecter et corriger sans gaspiller de crédits IA<a class="headerlink" href="#sonarqube-detecter-et-corriger-sans-gaspiller-de-credits-ia" title="Permanent link">&para;</a></h1>
+<p><span class="badge-expert">Expert</span> <span class="badge-intellij">IntelliJ</span></p>
+<p>Ce guide te montre comment utiliser SonarQube dans IntelliJ IDEA avec GitHub Copilot en limitant les coûts de contexte et de crédits. Le principe est simple : traiter d'abord tout ce qui est déterministe, puis n'escalader vers l'IA que pour le reliquat complexe.</p>
+<div class="admonition info">
+<p class="admonition-title">Fiabilité et date de vérification</p>
+<p>Informations vérifiées le : 2026-06-15. Les conditions commerciales et les fonctionnalités en preview peuvent évoluer.</p>
+</div>
+<hr />
+<h2 id="objectif">Objectif<a class="headerlink" href="#objectif" title="Permanent link">&para;</a></h2>
+<p>Sonar devient le moteur de détection prioritaire. Copilot intervient ensuite, au cas par cas.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Détecter sans IA
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>-&gt; corriger sans IA
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>-&gt; corriger avec l&#39;IA Sonar
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>-&gt; utiliser Copilot sur le reliquat complexe
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>-&gt; compiler, tester et réanalyser
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Pourquoi ce workflow économise</p>
+<p>Une règle Sonar ciblée (ex : <code>java:S3776</code>) est un contexte compact. C'est plus fiable et moins coûteux qu'un prompt large du type "analyse tout le dépôt".</p>
+</div>
+<hr />
+<h2 id="architecture-du-systeme">Architecture du système<a class="headerlink" href="#architecture-du-systeme" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A[Code source] --&gt; B[SonarQube for IDE]
+    B --&gt; C[Problème détecté]
+    C --&gt; D{Quick Fix Sonar disponible ?}
+    D -- Oui --&gt; E[Appliquer]
+    E --&gt; F[Compiler]
+    F --&gt; G[Tester]
+    G --&gt; H[Réanalyser Sonar]
+
+    D -- Non --&gt; I{Correction IntelliJ déterministe possible ?}
+    I -- Oui --&gt; J[Quick Fix / intention / refactoring]
+    J --&gt; F
+
+    I -- Non --&gt; K{AI CodeFix disponible ?}
+    K -- Oui --&gt; L[Générer]
+    L --&gt; M[Examiner le diff]
+    M --&gt; N[Appliquer]
+    N --&gt; G
+
+    K -- Non --&gt; O[Correction manuelle ou Copilot cible]
+    O --&gt; P[MCP/Agent seulement si multi-actions nécessaires]
+    P --&gt; F</code></pre>
+<hr />
+<h2 id="comparaison-des-composants">Comparaison des composants<a class="headerlink" href="#comparaison-des-composants" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Composant</th>
+<th>Usage prioritaire</th>
+<th>Crédits Copilot</th>
+<th>Vigilance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SonarQube for IDE</td>
+<td>Détecter localement en continu</td>
+<td>Non</td>
+<td>Couverture variable selon langage/règle</td>
+</tr>
+<tr>
+<td>Sonar Quick Fix</td>
+<td>Corriger une issue unitaire déterministe</td>
+<td>Non</td>
+<td>Pas disponible sur toutes les règles</td>
+</tr>
+<tr>
+<td>Inspections/Code Cleanup IntelliJ</td>
+<td>Nettoyage local avant IA</td>
+<td>Non</td>
+<td>Ne remplace pas les règles Sonar d'entreprise</td>
+</tr>
+<tr>
+<td>AI CodeFix (Sonar)</td>
+<td>Escalade IA côté Sonar si pas de quick fix</td>
+<td>Non direct</td>
+<td>Disponibilité selon édition/version/langage</td>
+</tr>
+<tr>
+<td>SonarQube MCP Server</td>
+<td>Triage assisté et collecte bornée d'issues</td>
+<td>Possible (si mode Agent de GitHub Copilot)</td>
+<td>Cadrage strict pour limiter le contexte</td>
+</tr>
+<tr>
+<td>GitHub Copilot (chat ou mode Agent)</td>
+<td>Reliquat complexe ou multi-fichiers</td>
+<td>Oui, possible</td>
+<td>Borner périmètre, itérations et fichiers</td>
+</tr>
+<tr>
+<td>Remediation Agent (Sonar)</td>
+<td>Traitement backlog/PR à grande échelle</td>
+<td>Non direct</td>
+<td>Capacité beta/contractuelle selon offre</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Version et édition</p>
+<p>Les disponibilités exactes (features, quotas, clients compatibles) varient selon ta version Sonar, ton édition et le plan Copilot. Vérifie toujours la matrice officielle avant de généraliser.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Copilot et MCP</p>
+<p>Le serveur MCP Sonar fournit des outils et des résultats d'analyse. Toutefois, lorsqu'un modèle GitHub Copilot raisonne sur ces résultats, appelle les outils et génère une correction, l'activité du modèle peut consommer des AI Credits. Une terminologie legacy peut encore apparaître dans certains contextes.</p>
+</div>
+<hr />
+<h2 id="installation-de-sonarqube-for-ide-intellij">Installation de SonarQube for IDE (IntelliJ)<a class="headerlink" href="#installation-de-sonarqube-for-ide-intellij" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Ouvre <code>Settings</code>.</li>
+<li>Va dans <code>Plugins</code>.</li>
+<li>Recherche le plugin officiel SonarQube for IDE.</li>
+<li>Vérifie l'éditeur (<code>SonarSource</code>) sur la fiche du plugin.</li>
+<li>Installe.</li>
+<li>Redémarre IntelliJ si demandé.</li>
+<li>Ouvre la fenêtre SonarQube dans l'IDE.</li>
+<li>Vérifie qu'une analyse locale remonte des issues.</li>
+</ol>
+<h3 id="diagnostic-si-aucune-alerte-napparait">Diagnostic si aucune alerte n'apparaît<a class="headerlink" href="#diagnostic-si-aucune-alerte-napparait" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Vérifie que le fichier/langage est pris en charge.</li>
+<li>Vérifie les exclusions du projet.</li>
+<li>Vérifie les logs IntelliJ et plugin.</li>
+<li>Vérifie le niveau d'analyse actif.</li>
+<li>Vérifie le JDK du projet.</li>
+<li>Vérifie les règles actives/profil qualité.</li>
+<li>Vérifie le Connected Mode s'il est activé.</li>
+<li>Vérifie les notifications/erreurs du plugin.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Référence JetBrains</p>
+<p>L'installation de plugins IntelliJ passe par <code>Settings -&gt; Plugins</code> selon la documentation officielle JetBrains.</p>
+</div>
+<hr />
+<h2 id="mode-autonome-et-connected-mode">Mode autonome et Connected Mode<a class="headerlink" href="#mode-autonome-et-connected-mode" title="Permanent link">&para;</a></h2>
+<h3 id="mode-autonome">Mode autonome<a class="headerlink" href="#mode-autonome" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Analyse locale dans l'IDE.</li>
+<li>Regles embarquees.</li>
+<li>Pas de synchro automatique avec le profil qualite entreprise.</li>
+<li>Zero credit Copilot.</li>
+</ul>
+<h3 id="connected-mode">Connected Mode<a class="headerlink" href="#connected-mode" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Connexion a SonarQube Server ou SonarQube Cloud.</li>
+<li>Synchronisation des regles et Quality Profiles.</li>
+<li>Liaison du projet (bind).</li>
+<li>Notifications et contexte serveur selon fonctionnalites actives.</li>
+<li>Authentification par token utilisateur.</li>
+</ul>
+<h3 id="connexion-cloud-vs-server">Connexion cloud vs server<a class="headerlink" href="#connexion-cloud-vs-server" title="Permanent link">&para;</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">SonarQube Cloud</label><label for="__tabbed_1_2">SonarQube Server</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<ul>
+<li>Connecte l'IDE à ton organisation SonarQube Cloud.</li>
+<li>Crée un token utilisateur adapté.</li>
+<li>Lie le projet et vérifie la synchro des règles.</li>
+</ul>
+</div>
+<div class="tabbed-block">
+<ul>
+<li>Connecte l'IDE à l'URL de ton SonarQube Server.</li>
+<li>Crée un token utilisateur.</li>
+<li>Lie le projet pour aligner les règles IDE/CI.</li>
+</ul>
+</div>
+</div>
+</div>
+<h3 id="token-creation-test-rotation">Token : création, test, rotation<a class="headerlink" href="#token-creation-test-rotation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Crée un token utilisateur selon la doc officielle de ta plateforme Sonar.</li>
+<li>Teste la connexion depuis l'IDE.</li>
+<li>Renouvelle/rotation selon la politique sécurité.</li>
+<li>Révoque immédiatement un token exposé.</li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">Secrets</p>
+<ul>
+<li>Ne mets jamais le token dans Git.</li>
+<li>Ne mets jamais un vrai token dans une capture.</li>
+<li>N'utilise jamais un exemple ressemblant à un vrai secret.</li>
+<li>Privilégie les variables d'environnement et le gestionnaire de secrets entreprise.</li>
+</ul>
+</div>
+<hr />
+<h2 id="regles-dentreprise-sonar">Règles d'entreprise Sonar<a class="headerlink" href="#regles-dentreprise-sonar" title="Permanent link">&para;</a></h2>
+<p>Les règles d'entreprise (Quality Profiles personnalisés, sévérités adaptées, règles custom) permettent de réduire le bruit et de concentrer l'effort sur ce qui compte vraiment pour ton contexte métier.</p>
+<ul>
+<li>Définis un profil par stack (Java, JS/TS, etc.).</li>
+<li>Distingue règles bloquantes vs non bloquantes.</li>
+<li>Versionne et gouverne les exceptions.</li>
+<li>Aligne IDE, CI et Quality Gate sur le même référentiel.</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Effet direct sur les crédits</p>
+<p>Moins de faux positifs et moins de bruit = moins de prompts inutiles vers Copilot.</p>
+</div>
+<hr />
+<h2 id="detection-sans-credit-ia">Détection sans crédit IA<a class="headerlink" href="#detection-sans-credit-ia" title="Permanent link">&para;</a></h2>
+<p>SonarQube for IDE permet d'exploiter en local :</p>
+<ul>
+<li>surlignage dans l'éditeur.</li>
+<li>fenêtre des problèmes Sonar.</li>
+<li>identifiant de règle (ex: <code>java:S3776</code>).</li>
+<li>catégorie et sévérité.</li>
+<li>description et emplacement.</li>
+<li>flux de données quand disponible.</li>
+<li>distinction nouveau code vs dette historique, si le serveur le permet.</li>
+</ul>
+<p>Cette étape ne nécessite pas de LLM : elle repose sur analyse statique et règles déterministes.</p>
+<hr />
+<h2 id="sonar-quick-fix">Sonar Quick Fix<a class="headerlink" href="#sonar-quick-fix" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Repère l'indication de Quick Fix sur l'issue.</li>
+<li>Ouvre la proposition depuis l'IDE.</li>
+<li>Examine l'aperçu.</li>
+<li>Applique la correction.</li>
+<li>Annule si la correction n'est pas conforme.</li>
+<li>Vérifie disparition de l'issue après réanalyse.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">À ne pas surpromettre</p>
+<p>Toutes les règles n'ont pas de Quick Fix. Et la couverture dépend du langage, de la règle et de la version plugin.</p>
+</div>
+<h3 id="ne-pas-confondre">Ne pas confondre<a class="headerlink" href="#ne-pas-confondre" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Quick Fix Sonar</strong> : correction proposée par règle Sonar.</li>
+<li><strong>Intention IntelliJ</strong> : action contextuelle native IDE.</li>
+<li><strong>Refactoring IntelliJ</strong> : transformation structurelle de code.</li>
+<li><strong>Code Cleanup IntelliJ</strong> : application en lot de nettoyages IntelliJ.</li>
+</ul>
+<hr />
+<h2 id="ai-codefix">AI CodeFix<a class="headerlink" href="#ai-codefix" title="Permanent link">&para;</a></h2>
+<p>AI CodeFix doit rester un niveau d'escalade, pas le point d'entrée.</p>
+<ul>
+<li>Principe : suggestion de correctif IA pour certaines issues Sonar compatibles.</li>
+<li>Point d'entrée : l'action apparaît sur une <strong>issue Sonar</strong> dans <strong>SonarQube for IDE</strong>.</li>
+<li>Emplacement pratique : depuis le code surligné dans l'éditeur ou depuis la fenêtre SonarQube d'IntelliJ, pas dans un menu global séparé.</li>
+<li>Prérequis : projet lié en Connected Mode à un SonarQube Server/Cloud compatible, fonctionnalité activée côté administration, et issue éligible.</li>
+<li>Produits/éditions/langages : vérifier la matrice officielle Sonar de ta version.</li>
+<li>Processus : générer -&gt; relire le diff -&gt; appliquer -&gt; compiler/tester -&gt; réanalyser.</li>
+</ul>
+<h3 id="ce-quest-ai-codefix">Ce qu'est AI CodeFix<a class="headerlink" href="#ce-quest-ai-codefix" title="Permanent link">&para;</a></h3>
+<p>AI CodeFix est une fonctionnalité Sonar qui propose un correctif généré par IA à partir d'une issue précise. Elle sert quand il n'existe pas de correction déterministe suffisante, ou quand tu veux un point de départ rapide sur une règle compatible.</p>
+<p>À distinguer de <strong>Sonar Quick Fix</strong> :</p>
+<ul>
+<li><strong>Sonar Quick Fix</strong> : correction déterministe fournie par la règle quand elle existe.</li>
+<li><strong>AI CodeFix</strong> : proposition générée par IA, à relire et valider avant application.</li>
+</ul>
+<h3 id="ou-le-trouver-dans-intellij">Où le trouver dans IntelliJ<a class="headerlink" href="#ou-le-trouver-dans-intellij" title="Permanent link">&para;</a></h3>
+<p>Ne cherche pas un bouton <code>AI CodeFix</code> dans les menus globaux d'IntelliJ ou dans GitHub Copilot.</p>
+<p>Cherche-le à l'endroit où l'issue Sonar est affichée :</p>
+<ol>
+<li>Ouvre un fichier contenant une issue détectée par SonarQube for IDE.</li>
+<li>Clique sur le code surligné ou ouvre le détail de l'issue dans la fenêtre SonarQube.</li>
+<li>Vérifie si l'action de correction IA est proposée pour cette issue.</li>
+<li>Ouvre l'aperçu du diff, puis applique seulement après relecture.</li>
+</ol>
+<h3 id="si-loption-napparait-pas">Si l'option n'apparaît pas<a class="headerlink" href="#si-loption-napparait-pas" title="Permanent link">&para;</a></h3>
+<p>Les causes fréquentes sont :</p>
+<ul>
+<li>l'issue n'est pas éligible à AI CodeFix ;</li>
+<li>le projet n'est pas en Connected Mode ;</li>
+<li>la fonctionnalité n'est pas activée côté Sonar ;</li>
+<li>l'édition, la version, le langage ou la règle ne sont pas pris en charge.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Position coût</p>
+<p>AI CodeFix ne consomme pas les crédits GitHub Copilot à lui seul, mais peut dépendre d'une licence Sonar, d'un quota ou de limitations produit.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Validation obligatoire</p>
+<p>AI CodeFix ne remplace jamais les tests ni la revue humaine.</p>
+</div>
+<hr />
+<h2 id="sonarqube-mcp-server">SonarQube MCP Server<a class="headerlink" href="#sonarqube-mcp-server" title="Permanent link">&para;</a></h2>
+<p>Le MCP est un pont outillage, pas un LLM.</p>
+<ul>
+<li>Il expose des outils Sonar à un client MCP.</li>
+<li>Les transports documentés peuvent inclure <code>stdio</code> et des modes distants HTTP/HTTPS selon la version cible.</li>
+<li>Les variables d'environnement de référence peuvent inclure <code>SONARQUBE_TOKEN</code>, <code>SONARQUBE_URL</code>, <code>SONARQUBE_ORG</code> selon le contexte (Server/Cloud).</li>
+<li>Utilise le générateur officiel de configuration quand possible.</li>
+</ul>
+<h3 id="scenario-a-mcp-local-avec-docker">Scénario A - MCP local avec Docker<a class="headerlink" href="#scenario-a-mcp-local-avec-docker" title="Permanent link">&para;</a></h3>
+<p>Exemple générique (placeholders uniquement):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># SonarQube Server (placeholder)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">SONARQUBE_TOKEN</span><span class="o">=</span>&lt;SONARQUBE_USER_TOKEN&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">SONARQUBE_URL</span><span class="o">=</span>&lt;SONARQUBE_URL&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>sonarsource/sonarqube-mcp-server:latest
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># SonarQube Cloud (placeholder)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">SONARQUBE_TOKEN</span><span class="o">=</span>&lt;SONARQUBE_USER_TOKEN&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>-e<span class="w"> </span><span class="nv">SONARQUBE_ORG</span><span class="o">=</span>&lt;SONARQUBE_ORG&gt;<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span>sonarsource/sonarqube-mcp-server:latest
+</code></pre></div>
+<h3 id="scenario-b-mcp-distant-dentreprise">Scénario B - MCP distant d'entreprise<a class="headerlink" href="#scenario-b-mcp-distant-dentreprise" title="Permanent link">&para;</a></h3>
+<ul>
+<li>HTTPS obligatoire.</li>
+<li>Authentification Bearer/tokens selon politique interne.</li>
+<li>Certificats valides et rotation.</li>
+<li>Filtrage réseau et moindre privilège.</li>
+<li>Journalisation et traçabilité.</li>
+<li>Gouvernance admin explicite (responsabilités, audits).</li>
+</ul>
+<h3 id="test-de-disponibilite-mcp">Test de disponibilité MCP<a class="headerlink" href="#test-de-disponibilite-mcp" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Utilise l'outil de diagnostic officiel documenté par ta version.</li>
+<li><code>ping_system</code> doit être utilisé uniquement s'il est listé officiellement dans la référence des tools de la version cible.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Compatibilité Copilot JetBrains</p>
+<p>La prise en charge directe dans GitHub Copilot pour les IDE JetBrains doit être vérifiée selon la version du plugin. Le guide officiel Sonar documente principalement les clients explicitement listés.</p>
+</div>
+<h3 id="compatibilite-copilot-distinction-obligatoire">Compatibilité Copilot (distinction obligatoire)<a class="headerlink" href="#compatibilite-copilot-distinction-obligatoire" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>État pratique (à valider selon version)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Copilot CLI</td>
+<td>Souvent le cas le mieux documenté dans les quickstarts Sonar MCP</td>
+</tr>
+<tr>
+<td>GitHub Copilot dans VS Code</td>
+<td>Généralement documenté côté GitHub et Sonar</td>
+</tr>
+<tr>
+<td>Agent de codage GitHub Copilot (cloud)</td>
+<td>Peut être disponible selon rollout et documentation du moment</td>
+</tr>
+<tr>
+<td>GitHub Copilot dans IntelliJ</td>
+<td>À vérifier explicitement sur la version du plugin JetBrains/Copilot</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="remediation-agent">Remediation Agent<a class="headerlink" href="#remediation-agent" title="Permanent link">&para;</a></h2>
+<p>Le Remediation Agent Sonar est documenté comme fonctionnalité beta sur les pages Sonar dédiées à date (vérifiées le 2026-06-15).</p>
+<p>À couvrir dans une équipe:</p>
+<ul>
+<li>objectif (traitement du backlog/PR),</li>
+<li>disponibilité selon offre,</li>
+<li>intégration GitHub,</li>
+<li>corrections proposées et création de PR,</li>
+<li>réanalyse Sonar avant validation,</li>
+<li>validation humaine obligatoire avant merge,</li>
+<li>langages officiellement supportés,</li>
+<li>limites et conditions commerciales.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Positionnement</p>
+<p>Ce n'est pas un plugin local IntelliJ autonome. C'est une capacité côté plateforme Sonar.</p>
+</div>
+<hr />
+<h2 id="distinction-obligatoire-sur-la-consommation-de-credits">Distinction obligatoire sur la consommation de crédits<a class="headerlink" href="#distinction-obligatoire-sur-la-consommation-de-credits" title="Permanent link">&para;</a></h2>
+<h3 id="zero-credit-github-copilot">Zéro crédit GitHub Copilot<a class="headerlink" href="#zero-credit-github-copilot" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Analyse statique locale SonarQube for IDE.</li>
+<li>Détection en temps réel dans l'éditeur.</li>
+<li>Consultation description de règle.</li>
+<li>Sonar Quick Fix déterministe.</li>
+<li>Quick-fixes/intention/refactoring IntelliJ.</li>
+<li>Compilation locale.</li>
+<li>Tests locaux.</li>
+<li>Nouvelle analyse Sonar locale.</li>
+<li>Consultation Sonar Server/Cloud sans mode Agent de GitHub Copilot.</li>
+</ul>
+<h3 id="pas-de-credit-copilot-mais-service-sonar-soumis-a-conditions">Pas de crédit Copilot, mais service Sonar soumis à conditions<a class="headerlink" href="#pas-de-credit-copilot-mais-service-sonar-soumis-a-conditions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AI CodeFix.</li>
+<li>Remediation Agent.</li>
+<li>Fonctions Sonar selon édition/licence/quota.</li>
+</ul>
+<h3 id="consommation-possible-de-creditsrequetes-copilot">Consommation possible de crédits/requêtes Copilot<a class="headerlink" href="#consommation-possible-de-creditsrequetes-copilot" title="Permanent link">&para;</a></h3>
+<ul>
+<li>GitHub Copilot (chat).</li>
+<li>Édition assistée par GitHub Copilot (selon l'IDE).</li>
+<li>GitHub Copilot (mode Agent).</li>
+<li>Appel d'un outil MCP via le mode Agent de GitHub Copilot.</li>
+<li>Analyse multi-fichiers par GitHub Copilot.</li>
+<li>Boucles automatiques corriger/compiler/tester/reessayer.</li>
+</ul>
+<hr />
+<h2 id="workflow-economique-recommande">Workflow économique recommandé<a class="headerlink" href="#workflow-economique-recommande" title="Permanent link">&para;</a></h2>
+<h3 id="niveau-0-detection-locale">Niveau 0 - Détection locale<a class="headerlink" href="#niveau-0-detection-locale" title="Permanent link">&para;</a></h3>
+<ul>
+<li>SonarQube for IDE.</li>
+<li>Aucune IA.</li>
+<li>Aucun contexte envoyé.</li>
+</ul>
+<h3 id="niveau-1-correction-deterministe">Niveau 1 - Correction déterministe<a class="headerlink" href="#niveau-1-correction-deterministe" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Sonar Quick Fix.</li>
+<li>IntelliJ quick fix/intention/refactoring.</li>
+<li>Compilation + tests.</li>
+</ul>
+<h3 id="niveau-2-correction-ia-sonar">Niveau 2 - Correction IA Sonar<a class="headerlink" href="#niveau-2-correction-ia-sonar" title="Permanent link">&para;</a></h3>
+<ul>
+<li>AI CodeFix.</li>
+<li>Relecture du diff.</li>
+<li>Tests et réanalyse.</li>
+</ul>
+<h3 id="niveau-3-copilot-cible">Niveau 3 - Copilot cible<a class="headerlink" href="#niveau-3-copilot-cible" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Une issue.</li>
+<li>Une règle.</li>
+<li>Une méthode/classe.</li>
+<li>Contexte minimal.</li>
+</ul>
+<h3 id="niveau-4-agent-mcp">Niveau 4 - Agent MCP<a class="headerlink" href="#niveau-4-agent-mcp" title="Permanent link">&para;</a></h3>
+<p>Seulement si nécessaire pour :</p>
+<ul>
+<li>récupérer plusieurs issues,</li>
+<li>grouper par règle,</li>
+<li>corriger plusieurs fichiers cohérents,</li>
+<li>compiler, tester, réanalyser,</li>
+<li>produire un rapport.</li>
+</ul>
+<h3 id="niveau-5-remediation-agent-ci">Niveau 5 - Remediation Agent + CI<a class="headerlink" href="#niveau-5-remediation-agent-ci" title="Permanent link">&para;</a></h3>
+<p>Pour équipes disposant de l'offre Sonar compatible.</p>
+<hr />
+<h2 id="procedure-de-correction-manuelle-optimisee">Procédure de correction manuelle optimisée<a class="headerlink" href="#procedure-de-correction-manuelle-optimisee" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Sélectionne une issue.</li>
+<li>Relève la clé de règle.</li>
+<li>Lis la description Sonar.</li>
+<li>Recherche les occurrences de la même règle.</li>
+<li>Vérifie un Quick Fix Sonar.</li>
+<li>Vérifie une intention IntelliJ.</li>
+<li>Applique sur une occurrence.</li>
+<li>Compile.</li>
+<li>Exécute le test cible.</li>
+<li>Réanalyse.</li>
+<li>Puis traite les autres occurrences.</li>
+<li>Utilise Copilot uniquement si nécessaire.</li>
+</ol>
+<hr />
+<h2 id="procedure-semi-automatique-avec-copilot">Procédure semi-automatique avec Copilot<a class="headerlink" href="#procedure-semi-automatique-avec-copilot" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Sélectionne uniquement le fichier concerné.</li>
+<li>Donne la clé de règle.</li>
+<li>Donne le message exact.</li>
+<li>Donne la méthode ciblée.</li>
+<li>Donne les contraintes projet.</li>
+<li>Analyse sans modif d'abord uniquement si nécessaire.</li>
+<li>Demande une correction minimale.</li>
+<li>Interdis les modifications hors périmètre.</li>
+<li>Compile + tests localement.</li>
+<li>Demande un second passage seulement en cas d'échec réel.</li>
+</ol>
+<h3 id="a-eviter">À éviter<a class="headerlink" href="#a-eviter" title="Permanent link">&para;</a></h3>
+<ul>
+<li>"Corrige tous les problèmes Sonar du projet".</li>
+<li>"Analyse tout le dépôt".</li>
+<li>"Refactore toute l'application".</li>
+<li>Boucles agent non bornées.</li>
+<li>Envoi du rapport Sonar complet si une issue suffit.</li>
+</ul>
+<hr />
+<h2 id="procedure-automatisee-par-lots">Procédure automatisée par lots<a class="headerlink" href="#procedure-automatisee-par-lots" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Branche dédiée obligatoire.</li>
+<li>Un seul type de règle/catégorie par lot.</li>
+<li>Nombre de fichiers borné.</li>
+<li>Priorité aux corrections déterministes.</li>
+<li>Sauvegarde du diff.</li>
+<li>Compilation après chaque petit lot.</li>
+<li>Tests cibles.</li>
+<li>Réanalyse Sonar.</li>
+<li>Rollback à la première régression.</li>
+<li>Ne pas mélanger correction Sonar et refactoring fonctionnel.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Taille de lot recommandée</p>
+<p>Recommandation pratique (pas exigence Sonar): 5 à 15 fichiers par lot selon criticité, couverture de tests et maturité de l'équipe.</p>
+</div>
+<hr />
+<h2 id="matrice-de-decision">Matrice de décision<a class="headerlink" href="#matrice-de-decision" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Premier réflexe</th>
+<th>IA nécessaire ?</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Règle avec Quick Fix</td>
+<td>Sonar Quick Fix</td>
+<td>Non</td>
+<td>Corriger localement puis compiler/tester</td>
+</tr>
+<tr>
+<td>Règle sans Quick Fix mais refactoring IntelliJ possible</td>
+<td>Refactoring IntelliJ</td>
+<td>Non</td>
+<td>Corriger déterministe puis réanalyse Sonar</td>
+</tr>
+<tr>
+<td>Règle compatible AI CodeFix</td>
+<td>AI CodeFix Sonar</td>
+<td>Selon Sonar</td>
+<td>Appliquer après revue du diff et tests</td>
+</tr>
+<tr>
+<td>Problème localisé dans une méthode</td>
+<td>Copilot ciblé</td>
+<td>Souvent oui</td>
+<td>Prompt compact + vérification Sonar</td>
+</tr>
+<tr>
+<td>Problème multi-fichiers cohérents</td>
+<td>Agent MCP borné</td>
+<td>Oui</td>
+<td>Plan en lots et validations intermédiaires</td>
+</tr>
+<tr>
+<td>Dette historique importante</td>
+<td>Triage par règle</td>
+<td>Éventuelle</td>
+<td>Prioriser l'impact et traiter par lots</td>
+</tr>
+<tr>
+<td>Quality Gate en échec</td>
+<td>Sonar serveur/cloud</td>
+<td>Éventuelle</td>
+<td>Corriger les bloquants d'abord</td>
+</tr>
+<tr>
+<td>Vulnérabilité de sécurité</td>
+<td>Revue humaine + Sonar</td>
+<td>Éventuelle</td>
+<td>Ne jamais appliquer aveuglément</td>
+</tr>
+<tr>
+<td>Faux positif supposé</td>
+<td>Revue règle/profil</td>
+<td>Non</td>
+<td>Documenter la justification</td>
+</tr>
+<tr>
+<td>Décision métier requise</td>
+<td>Équipe/PO</td>
+<td>Optionnelle</td>
+<td>Ne pas déléguer la décision métier</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="mesure-des-economies">Mesure des économies<a class="headerlink" href="#mesure-des-economies" title="Permanent link">&para;</a></h2>
+<p>Mesures simples à suivre :</p>
+<ul>
+<li>nombre d'issues détectées sans IA.</li>
+<li>nombre corrigé par Quick Fix.</li>
+<li>nombre corrigé par IntelliJ.</li>
+<li>nombre corrigé par AI CodeFix.</li>
+<li>nombre nécessitant Copilot.</li>
+<li>nombre de requêtes/crédits Copilot.</li>
+<li>nombre moyen de fichiers transmis à Copilot.</li>
+<li>taux de corrections validées au premier passage.</li>
+<li>taux de régression.</li>
+<li>temps moyen par catégorie.</li>
+</ul>
+<p>Exemple de tableau de suivi équipe :</p>
+<table>
+<thead>
+<tr>
+<th>Sprint</th>
+<th style="text-align: right;">Issues détectées</th>
+<th style="text-align: right;">Quick Fix Sonar</th>
+<th style="text-align: right;">IntelliJ déterministe</th>
+<th style="text-align: right;">AI CodeFix</th>
+<th style="text-align: right;">Copilot ciblé</th>
+<th style="text-align: right;">Régressions</th>
+<th style="text-align: right;">Durée moyenne/issue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">18 min</td>
+</tr>
+<tr>
+<td>S2</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">15 min</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="securite">Sécurité<a class="headerlink" href="#securite" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Tokens : moindre privilège et rotation.</li>
+<li>Aucun secret dans les prompts.</li>
+<li>Protection du code propriétaire.</li>
+<li>Respect des politiques entreprise (conformité, rétention, audit).</li>
+<li>Vigilance sur les données envoyées à un service cloud.</li>
+<li>Différence claire entre analyse locale et traitement distant.</li>
+<li>Revue humaine obligatoire pour les vulnérabilités.</li>
+<li>Interdit de désactiver une règle uniquement pour faire passer la Quality Gate sans justification.</li>
+</ul>
+<hr />
+<h2 id="depannage">Dépannage<a class="headerlink" href="#depannage" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Causes fréquentes</p>
+<p>Les causes les plus courantes sont : token invalide/expiré, bind projet manquant, proxy/certificat d'entreprise, version/toolset MCP non alignés.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Problème</th>
+<th>Vérification rapide</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plugin introuvable</td>
+<td>Recherche marketplace + éditeur SonarSource</td>
+<td>Installer le plugin officiel</td>
+</tr>
+<tr>
+<td>Analyse non déclenchée</td>
+<td>Vérifier exclusions et analyse active</td>
+<td>Réactiver l'analyse et corriger les exclusions</td>
+</tr>
+<tr>
+<td>Projet non lié</td>
+<td>Vérifier le bind Connected Mode</td>
+<td>Relier le projet au serveur/cloud</td>
+</tr>
+<tr>
+<td>Règles IDE/CI différentes</td>
+<td>Comparer profils et versions</td>
+<td>Uniformiser profil et synchroniser</td>
+</tr>
+<tr>
+<td>Token refusé / type incorrect</td>
+<td>Tester la connexion IDE/MCP</td>
+<td>Régénérer un token utilisateur adapté</td>
+</tr>
+<tr>
+<td>Certificat / proxy entreprise</td>
+<td>Contrôler accès URL Sonar + logs TLS</td>
+<td>Configurer proxy et importer la CA</td>
+</tr>
+<tr>
+<td>Docker/MCP indisponible</td>
+<td>Tester <code>docker info</code> + logs MCP</td>
+<td>Démarrer Docker et corriger la config MCP</td>
+</tr>
+<tr>
+<td><code>ping_system</code> en échec</td>
+<td>Vérifier doc tools + authentification</td>
+<td>Ajuster auth ou utiliser un outil supporté</td>
+</tr>
+<tr>
+<td>AI CodeFix absent</td>
+<td>Vérifier paramètres admin et édition</td>
+<td>Activer la feature si éligible</td>
+</tr>
+<tr>
+<td>Remediation Agent absent</td>
+<td>Vérifier offre, beta et activation</td>
+<td>Confirmer éligibilité et activer côté admin</td>
+</tr>
+<tr>
+<td>Corrigé localement mais présent serveur</td>
+<td>Vérifier relance analyse CI</td>
+<td>Relancer CI sur la bonne branche</td>
+</tr>
+<tr>
+<td>Analyse locale vs CI divergente</td>
+<td>Comparer versions/règles/toolchain</td>
+<td>Aligner pipeline et IDE</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="kit-sonar-reutilisable">Kit Sonar réutilisable<a class="headerlink" href="#kit-sonar-reutilisable" title="Permanent link">&para;</a></h2>
+<p>Les templates suivants sont fournis pour copier-coller dans d'autres projets:</p>
+<ul>
+<li>Agent: <a href="../../assets/templates/sonar/sonar-remediation.agent/"><code>docs/assets/templates/sonar/sonar-remediation.agent.md</code></a></li>
+<li>Prompt unitaire: <a href="../../assets/templates/sonar/sonar-fix.prompt/"><code>docs/assets/templates/sonar/sonar-fix.prompt.md</code></a></li>
+<li>Prompt triage: <a href="../../assets/templates/sonar/sonar-triage.prompt/"><code>docs/assets/templates/sonar/sonar-triage.prompt.md</code></a></li>
+<li>Prompt lot: <a href="../../assets/templates/sonar/sonar-batch-fix.prompt/"><code>docs/assets/templates/sonar/sonar-batch-fix.prompt.md</code></a></li>
+<li>Instructions permanentes: <a href="../../assets/templates/sonar/sonar.instructions/"><code>docs/assets/templates/sonar/sonar.instructions.md</code></a></li>
+<li>Exemple config MCP: <a href="../../assets/templates/sonar/mcp-config.example.json"><code>docs/assets/templates/sonar/mcp-config.example.json</code></a></li>
+<li>Variables d'env exemple: <a href="../../assets/templates/sonar/sonar-mcp.env.example"><code>docs/assets/templates/sonar/sonar-mcp.env.example</code></a></li>
+</ul>
+<h3 id="ou-copier-dans-un-projet-cible">Où copier dans un projet cible<a class="headerlink" href="#ou-copier-dans-un-projet-cible" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Agent: <code>.github/agents/</code></li>
+<li>Prompts: <code>.github/prompts/</code></li>
+<li>Instructions permanentes: <code>.github/instructions/</code></li>
+<li>MCP config: selon client MCP officiel choisi</li>
+<li><code>.env</code> réel : hors Git, ignoré via <code>.gitignore</code></li>
+</ul>
+<h3 id="impact-contextecredits">Impact contexte/crédits<a class="headerlink" href="#impact-contextecredits" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Agent/prompt : charge ponctuelle, utile pour tâches ciblées.</li>
+<li>Instructions permanentes : charge récurrente, à garder très courtes.</li>
+<li>MCP config : pas de coût direct, mais peut augmenter les appels IA si mal cadrée.</li>
+</ul>
+<hr />
+<h2 id="prompts-operationnels-a-copier">Prompts opérationnels à copier<a class="headerlink" href="#prompts-operationnels-a-copier" title="Permanent link">&para;</a></h2>
+<h3 id="prompt-1-corriger-une-issue">Prompt 1 - Corriger une issue<a class="headerlink" href="#prompt-1-corriger-une-issue" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Traite uniquement l&#39;issue Sonar suivante :
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>- Regle : &lt;RULE_KEY&gt;
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>- Message : &lt;MESSAGE&gt;
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>- Fichier : &lt;FILE&gt;
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>- Ligne : &lt;LINE&gt;
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>- Element concerne : &lt;METHOD_OR_CLASS&gt;
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Contraintes :
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>- conserve strictement le comportement metier.
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>- effectue la correction minimale.
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>- n&#39;ajoute aucune dependance.
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>- n&#39;utilise ni NOSONAR ni desactivation de regle.
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>- ne modifie aucun fichier hors du perimetre necessaire.
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>- compile le module concerne.
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>- execute les tests cibles.
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>- verifie que l&#39;issue est reellement supprimee.
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Avant toute modification, verifie s&#39;il existe un Quick Fix Sonar ou une intention IntelliJ deterministe.
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>A la fin, indique les fichiers modifies, les tests executes et le resultat de la verification Sonar.
+</code></pre></div>
+<h3 id="prompt-2-triage-sans-modification">Prompt 2 - Triage sans modification<a class="headerlink" href="#prompt-2-triage-sans-modification" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Analyse les issues Sonar fournies sans modifier le code.
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Regroupe-les par :
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>- cle de regle.
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>- severite.
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>- type.
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>- module.
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>- caractere deterministe ou ambigu.
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>- disponibilite probable d&#39;un Quick Fix.
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>- besoin eventuel d&#39;une decision metier.
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>Propose un ordre de traitement qui minimise :
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>- le nombre d&#39;appels IA.
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>- le nombre de fichiers transmis.
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>- les risques de regression.
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>- les changements simultanes.
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>Ne genere aucun correctif a cette etape.
+</code></pre></div>
+<h3 id="prompt-3-correction-par-regle">Prompt 3 - Correction par regle<a class="headerlink" href="#prompt-3-correction-par-regle" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Corrige uniquement les occurrences de la regle Sonar &lt;RULE_KEY&gt; dans le perimetre &lt;SCOPE&gt;.
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Methode :
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>1. selectionne une premiere occurrence representative.
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>2. applique une correction minimale.
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>3. compile.
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>4. execute les tests cibles.
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>5. verifie la disparition de l&#39;issue.
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>6. demande validation avant de propager le pattern.
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>7. traite ensuite au maximum &lt;MAX_FILES&gt; fichiers.
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>8. arrete immediatement en cas de regression.
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>Interdictions :
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>- aucune modification fonctionnelle.
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>- aucune nouvelle dependance.
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>- aucun NOSONAR.
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>- aucune desactivation de regle.
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>- aucun commit ou push automatique.
+</code></pre></div>
+<h3 id="prompt-4-exploitation-du-mcp-sonar">Prompt 4 - Exploitation du MCP Sonar<a class="headerlink" href="#prompt-4-exploitation-du-mcp-sonar" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Utilise uniquement les outils officiels exposes par le serveur MCP SonarQube.
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Commence par :
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>1. verifier la connexion avec l&#39;outil de diagnostic officiel.
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>2. identifier le projet Sonar lie.
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>3. recuperer uniquement les issues correspondant a &lt;RULE_KEY_OR_SCOPE&gt;.
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>4. limiter les resultats a &lt;MAX_RESULTS&gt;.
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>5. produire un triage sans modification.
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>Ne demande pas l&#39;ensemble du backlog si un filtre plus precis est possible.
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>Ne corrige le code qu&#39;apres validation du plan.
+</code></pre></div>
+<hr />
+<h2 id="sections-pedagogiques-essentielles">Sections pédagogiques essentielles<a class="headerlink" href="#sections-pedagogiques-essentielles" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Une seule règle (<code>java:S3776</code>) est un contexte compact, moins coûteux et plus explicite qu'un rapport complet.</li>
+<li>Une correction déterministe est souvent plus fiable qu'une suggestion probabiliste pour les cas mécaniques.</li>
+<li>Un agent en boucle peut vite augmenter la consommation si le périmètre n'est pas borné.</li>
+<li>Le MCP peut réduire la consommation (triage ciblé) ou l'augmenter (collecte trop large) selon l'usage.</li>
+<li>Compilation et tests doivent rester locaux pour valider rapidement sans envoyer de code inutile.</li>
+<li>Les problèmes de sécurité exigent une revue humaine, même avec proposition IA.</li>
+<li>Séparer dette historique et nouveau code évite de lancer des campagnes massives non prioritaires.</li>
+</ul>
+<hr />
+<h2 id="captures-decran-a-produire-section-interne-equipe-doc">Captures d'écran à produire (section interne équipe doc)<a class="headerlink" href="#captures-decran-a-produire-section-interne-equipe-doc" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Section interne documentation</p>
+<p>Cette section sert uniquement à l'équipe doc pour préparer les illustrations. Elle n'est pas destinée à décrire une procédure pour les lecteurs finaux.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Placeholders de captures</p>
+<p>Aucune fausse capture n'est ajoutée. Les chemins ci-dessous servent de cibles internes pour l'équipe.</p>
+</div>
+<ul>
+<li><code>docs/assets/images/sonarqube/installation-plugin-intellij.png</code></li>
+<li><code>docs/assets/images/sonarqube/fenetre-sonarqube-ide.png</code></li>
+<li><code>docs/assets/images/sonarqube/connected-mode.png</code></li>
+<li><code>docs/assets/images/sonarqube/bind-project.png</code></li>
+<li><code>docs/assets/images/sonarqube/issue-editeur.png</code></li>
+<li><code>docs/assets/images/sonarqube/quick-fix.png</code></li>
+<li><code>docs/assets/images/sonarqube/ai-codefix.png</code></li>
+<li><code>docs/assets/images/sonarqube/mcp-configuration.png</code></li>
+<li><code>docs/assets/images/sonarqube/remediation-agent.png</code></li>
+</ul>
+<hr />
+<h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>
+<p><strong><a href="../sonarqube-vscode/">SonarQube — VS Code</a></strong> : adapter le même workflow de détection/correction à l'écosystème Visual Studio Code.</p>
+<p>Concepts clés couverts :</p>
+<ul>
+<li><strong>Complémentarité Sonar/RTK</strong> — qualité statique vs réduction de contexte</li>
+<li><strong>Choix du bon levier</strong> — déterministe d'abord, IA ensuite</li>
+<li><strong>Contraintes entreprise</strong> — édition, sécurité, gouvernance</li>
+<li><strong>Escalade maîtrisée</strong> — de l'issue unitaire à l'automatisation</li>
+</ul>
+<hr />
+<h2 id="sources-officielles">Sources officielles<a class="headerlink" href="#sources-officielles" title="Permanent link">&para;</a></h2>
+<h3 id="sonarqube-for-ide">SonarQube for IDE<a class="headerlink" href="#sonarqube-for-ide" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://docs.sonarsource.com/sonarqube-for-ide/">Portail SonarQube for IDE</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-for-intellij/readme.md">SonarQube for IntelliJ - Documentation</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-for-intellij/connect-your-ide/setup.md">Setup du connected mode SonarQube for IntelliJ</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://plugins.jetbrains.com/plugin/7973-sonarqube-for-ide">Plugin JetBrains Marketplace - SonarQube for IDE</a> (vérifié le 2026-06-15)</li>
+</ul>
+<h3 id="ai-codefix_1">AI CodeFix<a class="headerlink" href="#ai-codefix_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://docs.sonarsource.com/sonarqube-cloud/">Portail SonarQube Cloud documentation</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-server/2026.1/project-administration/ai-features/enable-ai-codefix.md">Enable AI CodeFix - SonarQube Server 2026.1</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-cloud/administering-sonarcloud/ai-features/enable-ai-codefix.md">Enable AI CodeFix - SonarQube Cloud</a> (vérifié le 2026-06-15)</li>
+</ul>
+<h3 id="mcp-server">MCP Server<a class="headerlink" href="#mcp-server" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://docs.sonarsource.com/sonarqube-mcp-server/">SonarQube MCP Server - Documentation</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-mcp-server/setup/prerequisites">MCP prerequisites</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-mcp-server/setup/quickstart-guides">MCP quickstart guides</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-mcp-server/reference/environment-variables">MCP environment variables</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/sonarqube-mcp-server/reference/tools">MCP tools reference</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://mcp.sonarqube.com/config-generator.html">MCP config generator</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://github.com/SonarSource/sonarqube-mcp-server">GitHub - sonarqube-mcp-server</a> (vérifié le 2026-06-15)</li>
+</ul>
+<h3 id="remediation-agent_1">Remediation Agent<a class="headerlink" href="#remediation-agent_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://docs.sonarsource.com/agent-centric-development-cycle/">Portail Agent-Centric Development Cycle</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/agent-centric-development-cycle/features/remediation-agent.md">Remediation Agent - Sonar docs</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.sonarsource.com/agent-centric-development-cycle/how-to-guides/administer-ac-dc-features/remediation-agent.md">Administer Remediation Agent</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://www.sonarsource.com/blog/join-the-sonarqube-remediation-agent-beta/">Article beta SonarSource</a> (vérifié le 2026-06-15)</li>
+</ul>
+<h3 id="intellij-idea">IntelliJ IDEA<a class="headerlink" href="#intellij-idea" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://www.jetbrains.com/help/idea/managing-plugins.html">JetBrains - Managing plugins</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://www.jetbrains.com/help/idea/resolving-problems.html">JetBrains - Resolving problems</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://www.jetbrains.com/help/idea/code-inspection.html">JetBrains Help (Inspections)</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html">JetBrains Help (Code Cleanup)</a> (vérifié le 2026-06-15)</li>
+</ul>
+<h3 id="github-copilot">GitHub Copilot<a class="headerlink" href="#github-copilot" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://docs.github.com/copilot">GitHub Copilot - documentation</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-github-copilot-in-a-jetbrains-ide">Copilot in JetBrains IDE</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp">Use MCP in your IDE</a> (vérifié le 2026-06-15)</li>
+<li><a href="https://docs.github.com/en/copilot/get-started/plans">Plans GitHub Copilot</a> (vérifié le 2026-06-15)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.indexes", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/sidebar-toggle.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

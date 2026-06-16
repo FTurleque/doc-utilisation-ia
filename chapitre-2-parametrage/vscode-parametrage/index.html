@@ -4127,6 +4127,8 @@
       
         
       
+        
+      
     
     
     
@@ -4199,6 +4201,153 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_12_3" id="__nav_12_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SonarQube
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_12_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    SonarQube
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/sonarqube/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IntelliJ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/sonarqube-vscode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-13-outils-economies/rtk-sonar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RTK + SonarQube
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6362,7 +6511,7 @@
 <h3 id="impact-sur-la-consommation-de-tokens-et-de-couts">Impact sur la consommation de tokens et de coûts<a class="headerlink" href="#impact-sur-la-consommation-de-tokens-et-de-couts" title="Permanent link">&para;</a></h3>
 <p>L'utilisation d'un serveur MCP augmente la consommation Copilot via deux mécanismes principaux.</p>
 <p><strong>1. Les interactions utilisateur restent l'unité de facturation principale</strong></p>
-<p>En mode agentique, les prompts que vous envoyez sont facturés selon le modèle sélectionné (et la logique de billing active: premium requests ou AI Credits). Les appels d'outils MCP peuvent augmenter le travail effectué, mais ne doivent pas être interprétés systématiquement comme une facturation "1 appel = 1 requête".</p>
+<p>En mode agentique, les prompts que vous envoyez sont facturés selon le modèle sélectionné et la logique de billing active (AI Credits, avec possible terminologie legacy liée à l'ancien mode de facturation selon la source). Les appels d'outils MCP peuvent augmenter le travail effectué, mais ne doivent pas être interprétés systématiquement comme une facturation "1 appel = 1 requête".</p>
 <p><strong>2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés</strong></p>
 <p>Le résultat retourné par le serveur MCP (liste de tickets Jira, rapport SonarQube, résultat de requête SQL, page de documentation) est transmis directement au modèle IA dans la <strong>fenêtre de contexte</strong>. Plus la réponse est volumineuse, plus elle consomme de tokens — réduisant d'autant l'espace disponible pour votre code et vos instructions.</p>
 <p><strong>Exemple d'escalade en mode Agent</strong></p>
@@ -6481,7 +6630,7 @@
 </tr>
 <tr>
 <td><strong>Pro</strong></td>
-<td>Modèles inclus + accès premium selon allocation</td>
+<td>Modèles inclus + accès aux modèles avancés selon allocation AI Credits</td>
 </tr>
 <tr>
 <td><strong>Pro+</strong></td>
