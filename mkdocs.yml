@@ -187,6 +187,10 @@ nav:
   - Outils:
     - Accueil: chapitre-13-outils-economies/index.md
     - RTK AI: chapitre-13-outils-economies/rtk.md
+    - SonarQube:
+      - IntelliJ: chapitre-13-outils-economies/sonarqube.md
+      - VS Code: chapitre-13-outils-economies/sonarqube-vscode.md
+      - RTK + SonarQube: chapitre-13-outils-economies/rtk-sonar.md
     - TOON: chapitre-13-outils-economies/toon.md
     - OpenSkills: chapitre-13-outils-economies/openskills.md
     - Continue.dev: chapitre-13-outils-economies/continue-dev.md

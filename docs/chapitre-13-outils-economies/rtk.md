@@ -254,11 +254,11 @@ La liste complète avec les détails de filtrage par commande est disponible dan
 
 ## Prochaine étape
 
-**[TOON](toon.md)** : un autre outil spécialisé pour automatiser et compiler les configurations IA complexes.
+**[SonarQube — Détecter et corriger sans gaspiller de crédits IA](sonarqube.md)** : appliquer une détection qualité déterministe avant d'escalader vers l'IA.
 
-Outils couverts :
+Concepts clés couverts :
 
-- **Continue.dev** — assistant Chat open source, remplace Copilot Chat avec n'importe quel modèle
-- **Ollama** — runner de modèles locaux, zéro coût, zéro connexion externe
-- **Codeium / Supermaven** — autocomplétion gratuite sans limite de quota
-- **Tabnine** — option enterprise avec modèle local et garantie de confidentialité
+- **Détection déterministe** — corriger d'abord sans consommer de crédits IA
+- **Connected Mode** — aligner les règles locales et serveur d'équipe
+- **Escalade maîtrisée** — passer à l'IA uniquement sur les cas résiduels
+- **Validation locale** — compiler/tester avant relance d'analyse

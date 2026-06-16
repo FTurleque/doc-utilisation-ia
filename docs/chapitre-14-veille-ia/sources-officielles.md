@@ -45,7 +45,7 @@ Les modèles derrière Copilot Chat et Agent mode.
 
 ## Anthropic (Claude 3.5 Sonnet, Claude 4…)
 
-Le modèle premium dans Copilot et l'éditeur de Claude Code.
+Un des modèles avancés dans Copilot, ainsi que l'éditeur Claude Code.
 
 | Ressource | URL | Contenu |
 |-----------|-----|---------|
@@ -155,7 +155,7 @@ Si tu ne devais en suivre que 5 :
 |---|--------|----------|
 | 1 | [GitHub Changelog (Copilot)](https://github.blog/changelog/?query=copilot) | Chaque mise à jour Copilot |
 | 2 | [OpenAI Blog](https://openai.com/blog) | Nouveaux modèles derrière Copilot |
-| 3 | [Anthropic News](https://www.anthropic.com/news) | Modèle premium Copilot + Claude Code |
+| 3 | [Anthropic News](https://www.anthropic.com/news) | Modèles avancés Copilot + Claude Code |
 | 4 | [VS Code Release Notes](https://code.visualstudio.com/updates) | Intégrations IDE mensuelles |
 | 5 | [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) | Sécurité IA à jour |
 

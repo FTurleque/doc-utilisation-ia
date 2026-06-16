@@ -116,7 +116,7 @@
 
 ### 1er Juin 2026 — Transition Majeure
 
-🔴 **ACTION REQUISE:** Ce jour-là, la facturation passe de "premium requests" à "AI Credits"
+🔴 **ACTION REQUISE:** Ce jour-là, la facturation passe de l'ancien mode de quotas à "AI Credits"
 
 **À faire d'urgence:**
 
@@ -131,7 +131,7 @@
 3. Mettre à jour [historique-modifications.md](docs/chapitre-12-couts-gouvernance/historique-modifications.md):
    ```markdown
    ### 2026-06-01 — TRANSITION APPLIQUÉE: Request-based → Usage-based
-   - **Changement:** Basculement facturation de premium requests à AI Credits
+   - **Changement:** Basculement facturation de l'ancien mode de quotas à AI Credits
    - **Avant:** Free 50/mois, Pro 300/mois, Pro+ 1500/mois, Business 300/user, Enterprise 1000/user
    - **Après:** [À documenter avec les vrais chiffres le 1er juin]
    - **Impact:** Chapitre 12 entièrement, chapitre 2, chapitre 13

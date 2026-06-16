@@ -1,0 +1,65 @@
+{
+  "total": 4,
+  "p": 1,
+  "ps": 100,
+  "issues": [
+    {
+      "key": "AXsample001",
+      "rule": "typescript:S1481",
+      "severity": "MAJOR",
+      "type": "CODE_SMELL",
+      "status": "OPEN",
+      "message": "Remove this unused local variable.",
+      "component": "doc-utilisation-ia:docs/chapter-3.md",
+      "line": 42,
+      "creationDate": "2026-06-01T10:00:00+0000",
+      "updateDate": "2026-06-01T10:00:00+0000",
+      "isNew": true,
+      "tags": ["unused"]
+    },
+    {
+      "key": "AXsample002",
+      "rule": "javascript:S3498",
+      "severity": "CRITICAL",
+      "type": "BUG",
+      "status": "OPEN",
+      "message": "Refactor this code to not nest functions more than 4 levels deep.",
+      "component": "doc-utilisation-ia:scripts/push-and-deploy.ps1",
+      "line": 17,
+      "creationDate": "2026-06-01T10:05:00+0000",
+      "updateDate": "2026-06-01T10:05:00+0000",
+      "isNew": false,
+      "tags": ["brain-overload"]
+    },
+    {
+      "key": "AXsample003",
+      "rule": "typescript:S1481",
+      "severity": "MAJOR",
+      "type": "CODE_SMELL",
+      "status": "OPEN",
+      "message": "Remove this unused local variable.",
+      "component": "doc-utilisation-ia:docs/chapter-3.md",
+      "line": 42,
+      "creationDate": "2026-06-01T10:07:00+0000",
+      "updateDate": "2026-06-01T10:07:00+0000",
+      "isNew": true,
+      "tags": ["unused"]
+    },
+    {
+      "key": "AXsample004",
+      "rule": "python:S4792",
+      "severity": "BLOCKER",
+      "type": "VULNERABILITY",
+      "status": "OPEN",
+      "message": "Make sure this logger's configuration is safe.",
+      "component": "doc-utilisation-ia:scripts/validate-links.py",
+      "line": 12,
+      "creationDate": "2026-06-01T10:10:00+0000",
+      "updateDate": "2026-06-01T10:10:00+0000",
+      "isNew": true,
+      "tags": ["security"]
+    }
+  ]
+}
+
+

@@ -10,6 +10,7 @@ Tableau de référence rapide pour choisir le bon outil selon la tâche, l'IDE e
 
 | Outil | Tier gratuit | Local / Offline | VS Code | IntelliJ | Chat | Complétion |
 |-------|-------------|-----------------|---------|----------|------|------------|
+| **SonarQube for IDE** | Oui (détection locale) | Oui (mode autonome) | Oui | Oui | :material-close: | :material-close: |
 | **RTK** | Oui | Non (cloud) | Oui | Oui | :material-check: | :material-close: |
 | **Continue.dev** | Oui | Oui (avec Ollama) | Oui | Oui | :material-check: | :material-check: |
 | **Ollama** | Oui (gratuit total) | Oui | Via plugin | Via plugin | :material-check: | :material-check: |
@@ -19,6 +20,27 @@ Tableau de référence rapide pour choisir le bon outil selon la tâche, l'IDE e
 | **Amazon Q** | Oui | Non | Oui | Oui | :material-check: | :material-check: |
 | **Supermaven** | Tier de base | Non | Oui | Oui | :material-close: | :material-check: |
 | **GitHub Copilot** | Non | Non | Oui | Oui | :material-check: | :material-check: |
+
+---
+
+## Focus SonarQube (Java + IntelliJ)
+
+| Dimension | SonarQube | Notes opérationnelles |
+|---|---|---|
+| Analyse statique | Oui (IDE + serveur/cloud) | Détection sans crédit Copilot en local |
+| Quick Fix | Oui (selon règle/langage/version) | Ne couvre pas toutes les règles |
+| Connected Mode | Oui | Aligne IDE et profil qualité entreprise |
+| AI CodeFix | Oui (selon édition/activation) | Service Sonar, pas un crédit Copilot direct |
+| MCP | Oui (serveur MCP SonarQube) | Utile pour triage/correction bornée |
+| Remediation Agent | Oui (beta selon documentation Sonar) | Disponibilité et limites contractuelles |
+| Coût en crédits Copilot | Nul en détection locale; possible en usage Copilot Agent/Chat | Distinguer coûts Sonar vs coûts Copilot |
+| Niveau d'automatisation | De déterministe (Quick Fix) à agentique | Commencer par déterministe |
+| Intérêt Java/IntelliJ | Très élevé | Intégré au flux IDE + CI |
+| Limites | Couverture partielle selon règle/langage/édition | Vérifier matrice officielle |
+| Prérequis entreprise | Token utilisateur, serveur/cloud, gouvernance règles | Qualité profils + sécurité tokens |
+
+!!! info "SonarQube et RTK ne font pas la même chose"
+    RTK réduit la taille des sorties terminal et le contexte transmis. SonarQube détecte/cadre des problèmes de qualité par analyse statique. Les deux outils sont complémentaires.
 
 ---
 
@@ -211,7 +233,7 @@ et les playbooks rapides du chapitre.
 
 ## Prochaine étape
 
-**[Stack prête en 15 min — VS Code](stack-prete-15-min-vscode.md)** : appliquer directement la matrice de décision à un environnement de travail concret.
+**[Outils Complémentaires](outils-complementaires.md)** : consolider la sélection avec une vue d'ensemble opérationnelle avant de passer aux stacks prêtes en 15 minutes.
 
 Concepts clés couverts :
 

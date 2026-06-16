@@ -79,7 +79,7 @@ Cas moins adaptés:
 3. **Stack hybride recommandée**
    - Complétion: Supermaven
    - Chat local: **[Ollama](ollama.md)** + **[Continue.dev](continue-dev.md)**
-   - Cas complexe: outil premium avec contexte filtré
+   - Cas complexe: Copilot (AI Credits) avec contexte filtré
 
 ---
 
@@ -118,7 +118,7 @@ seule source principale de suggestions inline.
 
 **[Comparaison des Outils](comparaison.md)** : choisir la meilleure combinaison selon ton IDE, ton budget, ton niveau de confidentialité et la complexité de tes tâches.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Tableau comparatif** - vue transversale des solutions
 - **Choix par contrainte** - offline, AWS, entreprise, budget

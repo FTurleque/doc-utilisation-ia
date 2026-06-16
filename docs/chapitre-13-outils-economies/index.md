@@ -32,7 +32,7 @@ Objectif opérationnel : **diminuer les appels IA coûteux** en appliquant une s
 Avant toute interaction IA, prépare un contexte minimal et exploitable.
 
 ### RTK
-- **Rôle** : compresser et nettoyer les sorties terminal.
+- **Rôle** : compresser et nettoyer les sorties terminales.
 - **Cas d'usage** : logs d'erreur volumineux Maven/Gradle/tests.
 - **Évite de demander à Copilot** : "résume ces 500 lignes de logs".
 - **Impact crédits** : **fort** (moins de tokens envoyés).
@@ -113,6 +113,9 @@ Pour IntelliJ, ce sont les gains les plus immédiats **et ces actions ne consomm
 Quand la dette technique est répétitive, automatise hors LLM.
 
 - **Qodana** (JetBrains)
+- **[SonarQube for IDE + Connected Mode](sonarqube.md)**
+- **[SonarQube pour VS Code](sonarqube-vscode.md)**
+- **[RTK + SonarQube](rtk-sonar.md)**
 - **OpenRewrite**
 - **Semgrep**
 - **PMD**
@@ -133,6 +136,15 @@ Quand la dette technique est répétitive, automatise hors LLM.
 
 !!! success "Approche équipe"
     Mets ces outils en CI pour traiter les problèmes à la source, puis utilise Copilot sur les cas réellement ambigus.
+
+### SonarQube (analyse statique + gouvernance)
+
+- **Rôle** : détecter les bugs, vulnérabilités et code smells avant IA.
+- **Coût Copilot** : nul en détection locale et corrections déterministes.
+- **Escalade** : Quick Fix Sonar/IntelliJ, puis AI CodeFix Sonar, puis Copilot ciblé.
+- **Guide complet IntelliJ** : **[SonarQube — Détecter et corriger sans gaspiller de crédits IA](sonarqube.md)**.
+- **Guide VS Code** : **[SonarQube — Détecter et corriger sans gaspiller de crédits IA (VS Code)](sonarqube-vscode.md)**.
+- **Guide combiné RTK + SonarQube** : **[Construire un filtre anti-bruit avant Copilot](rtk-sonar.md)**.
 
 ---
 
@@ -170,6 +182,7 @@ Conserver les outils existants du chapitre permet de décharger Copilot sur les 
 MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
 
 - Utilise **MCP** pour brancher des outils dynamiques (API, DB, observabilité).
+- Utilise le **MCP SonarQube** pour filtrer/triager les issues par règle avant correction.
 - Utilise **[OpenSkills](openskills.md)** pour normaliser les skills portables entre agents.
 - N'envoie jamais l'intégralité d'un workspace si seule une sous-zone est utile.
 
@@ -197,6 +210,7 @@ MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
 | Retrouver une classe | `rg`, Navigate to Class, Find Usages | Nulle | Oui | Rapide, zéro chat |
 | Comprendre un bug localisé | Debugger IntelliJ, tests ciblés, logs filtrés RTK/jq | Nulle à faible | Oui | Réduction forte des allers-retours IA |
 | Corriger un warning | Inspections + quick-fix IntelliJ | Nulle | Oui | Correction immédiate |
+| Corriger une issue Sonar | SonarQube for IDE + Quick Fix Sonar/IntelliJ | Nulle à faible | Oui | Très fort sur Java/IntelliJ |
 | Refactorer un pattern répétitif | SSR + OpenRewrite + ast-grep | Nulle | Oui | Traitement en masse fiable |
 | Migrer une API | OpenRewrite + compil/tests + inspections | Faible | Oui | Migration semi-automatique contrôlée |
 | Analyser tout le repo | Qodana + Semgrep + ArchUnit | Nulle | Oui | Vue globale sans prompt géant |
@@ -211,7 +225,7 @@ MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
 1. **Isoler le besoin** (fichiers, erreurs, périmètre exact).
 2. **Réduire le contexte** (`rg`, `ast-grep`, RTK, `jq`/`yq`, TOON).
 3. **Essayer IntelliJ natif** (inspection, refactor, usages, tests, debug).
-4. **Passer par l'automatisation** (Qodana, Semgrep, OpenRewrite, règles qualité).
+4. **Passer par l'automatisation** (SonarQube, Qodana, Semgrep, OpenRewrite, règles qualité).
 5. **Préparer une requête IA minimale** :
     - Problème
     - Fichiers concernés
@@ -234,6 +248,7 @@ flowchart LR
 
 - L'économie de crédits IA se joue d'abord **avant** le prompt.
 - Les outils IntelliJ locaux ne consomment pas de crédits Copilot.
+- SonarQube est complémentaire de RTK : Sonar détecte, RTK réduit le contexte transmis.
 - MCP est un filtre d'entrée : moins de bruit, moins de coût, meilleures réponses.
 
 ---

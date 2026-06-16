@@ -550,4 +550,12 @@ deplacant les procedures longues dans des fichiers specialises.
 
 ## Prochaine étape
 
-**[Outils Complémentaires](outils-complementaires.md)** : Continue.dev, Ollama, LM Studio, Codeium, Tabnine, Amazon Q et Supermaven — des alternatives gratuites ou locales pour couvrir les usages que les outils spécialisés ne prennent pas en charge.
+**[Continue.dev](continue-dev.md)** : connecter l'IDE à un flux local/cloud pour orchestrer chat et complétion sans consommer inutilement des AI Credits sur les tâches simples.
+
+Concepts clés couverts :
+
+- **Panorama outillage** — identifier les alternatives selon le besoin
+- **Stack locale-first** — privilégier local/gratuit avant cloud payant
+- **Complémentarité** — combiner chat, modèles locaux et complétion
+- **Passage à l'action** — enchaîner vers les guides d'implémentation
+

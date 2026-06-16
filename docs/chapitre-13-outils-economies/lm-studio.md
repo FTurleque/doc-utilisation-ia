@@ -125,7 +125,7 @@ un usage direct dans l'IDE.
 
 **[Codeium / Windsurf](codeium-windsurf.md)** : ajouter une alternative de complétion/chat dans l'IDE pour les tâches quotidiennes à faible complexité.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Complétion inline** - accélérer l'écriture de code répétitif
 - **Cohabitation outils** - éviter les conflits avec Copilot

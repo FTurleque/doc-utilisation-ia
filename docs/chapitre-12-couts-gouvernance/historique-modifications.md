@@ -14,7 +14,7 @@
 
 ## Pourquoi ce registre existe
 
-L'offre GitHub Copilot évolue rapidement. Des modèles autrefois inclus dans un abonnement standard deviennent premium. Des fonctionnalités réservées aux équipes payantes disparaissent de l'accès individuel. Des quotas autrefois souples sont maintenant strictement appliqués.
+L'offre GitHub Copilot évolue rapidement. Des modèles autrefois inclus dans un abonnement standard deviennent des modèles avancés à coût plus élevé. Des fonctionnalités réservées aux équipes payantes disparaissent de l'accès individuel. Des quotas autrefois souples sont maintenant strictement appliqués.
 
 Ce registre documente ces changements **avec des preuves**, pour permettre à une équipe ou une direction de mesurer concrètement le coût de l'attente.
 
@@ -44,13 +44,13 @@ Ce registre documente ces changements **avec des preuves**, pour permettre à un
 
 ---
 
-### 2026-04-24 — GPT-5.5 disponible en GA — modèle premium à multiplicateur élevé
+### 2026-04-24 — GPT-5.5 disponible en GA — modèle avancé à multiplicateur élevé
 
 - **Catégorie** : Modèles IA / Tarification
 - **Plan impacté** : Business, Enterprise (uniquement)
 - **Avant** : GPT-5.4 comme modèle OpenAI le plus récent
 - **Après** : GPT-5.5 GA — réservé aux plans Business et Enterprise, avec un **multiplicateur de consommation de 7,5× par rapport au modèle de base**
-- **Ce que ça signifie** : chaque interaction avec GPT-5.5 consomme 7,5 fois plus de quota premium que les modèles standard. Un modèle de pointe est maintenant doublement réservé : par plan ET par coût de consommation.
+- **Ce que ça signifie** : chaque interaction avec GPT-5.5 consomme 7,5 fois plus d'AI Credits que les modèles standard. Un modèle de pointe est maintenant doublement réservé : par plan ET par coût de consommation.
 - **Source** : [Changelog GitHub — 2026-04-24](https://github.blog/changelog/2026-04-24-gpt-5-5-is-generally-available-for-github-copilot)
 
 ---
@@ -206,7 +206,7 @@ Ce registre documente ces changements **avec des preuves**, pour permettre à un
 
 - [ ] Consulter le [Changelog GitHub Copilot](https://github.blog/changelog/?label=copilot) pour les nouvelles entrées
 - [ ] Revalider plans, prix et quotas depuis la [page officielle des plans](https://docs.github.com/fr/copilot/get-started/plans)
-- [ ] Revalider les modèles inclus/premium et leurs multiplicateurs
+- [ ] Revalider les modèles inclus/avancés et leurs multiplicateurs
 - [ ] Revalider les règles de dépassement (budget, blocage, fallback)
 - [ ] Ajouter les nouvelles entrées à la timeline ci-dessus avec date précise et source
 - [ ] Mettre à jour le tableau "Synthèse" si un plan ou un accès évolue
@@ -218,7 +218,7 @@ Ce registre documente ces changements **avec des preuves**, pour permettre à un
 
 - Changelog Copilot (source primaire pour les mises à jour) : [github.blog/changelog/?label=copilot](https://github.blog/changelog/?label=copilot)
 - Plans et prix : [docs.github.com/fr/copilot/get-started/plans](https://docs.github.com/fr/copilot/get-started/plans)
-- Premium requests et multiplicateurs : [docs.github.com/fr/copilot/concepts/billing/copilot-requests](https://docs.github.com/fr/copilot/concepts/billing/copilot-requests)
+- Premium requests (legacy) et multiplicateurs : [docs.github.com/fr/copilot/concepts/billing/copilot-requests](https://docs.github.com/fr/copilot/concepts/billing/copilot-requests)
 - Facturation usage-based (individuels) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals)
 - Facturation usage-based (organisations) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises)
 - Modèles et tarification : [docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing](https://docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing)
@@ -228,6 +228,6 @@ Ce registre documente ces changements **avec des preuves**, pour permettre à un
 ## Lecture complémentaire
 
 - **[Les abonnements](abonnements.md)** — comparatif détaillé des plans actuels (Free, Pro, Pro+, Business, Enterprise)
-- **[Premium Requests](premium-requests.md)** — mécanique des quotas et multiplicateurs par modèle
+- **[Premium Requests (legacy)](premium-requests.md)** — mécanique historique des quotas et multiplicateurs par modèle
 - **[Leviers d'économie](leviers-economie.md)** — comment réduire la consommation quel que soit le plan
 - **[Quand utiliser quel mode ?](modes-quand-utiliser.md)** — impact des modes Inline, Chat, Plan, Agent sur la consommation

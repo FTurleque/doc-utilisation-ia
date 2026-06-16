@@ -2,9 +2,11 @@
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intellij">IntelliJ</span>
 
-Cette stack donne à IntelliJ une base locale et pratique pour le chat,
-le diagnostic et le filtrage de contexte. L'objectif est de rester autonome
-pour le quotidien, tout en gardant Copilot pour les cas les plus complexes.
+Cette stack reprend le même socle local-first que la version
+[VS Code](stack-prete-15-min-vscode.md), mais en profitant des forces
+natives d'IntelliJ pour le diagnostic et le refactoring. L'objectif est de
+rester autonome pour le quotidien, tout en gardant Copilot pour les cas les
+plus complexes.
 
 ---
 
@@ -12,6 +14,7 @@ pour le quotidien, tout en gardant Copilot pour les cas les plus complexes.
 
 - IntelliJ IDEA installée
 - Accès internet pour l'installation initiale
+- Plugin SonarQube for IDE (recommandé)
 - Ollama disponible en local
 - Plugin Continue.dev installé
 - RTK disponible pour le terminal
@@ -21,12 +24,37 @@ pour le quotidien, tout en gardant Copilot pour les cas les plus complexes.
 
 ---
 
+## Parallèle avec VS Code
+
+Cette page suit la même logique que la version VS Code : Ollama pour le
+modèle local, Continue.dev pour le chat, puis RTK pour réduire le bruit du
+terminal. La différence principale est qu'IntelliJ ajoute ses inspections,
+ses refactorings natifs et, si besoin, SonarQube for IDE.
+
+=== "IntelliJ IDEA"
+    - Corriger et refactorer avec les outils natifs avant toute IA distante.
+    - Utiliser SonarQube for IDE pour détecter les issues locales et proposer
+      des quick fixes sur les règles compatibles.
+    - Activer Connected Mode ou MCP Sonar seulement si l'équipe en a besoin.
+
+=== "Visual Studio Code"
+    - Conserver la même base locale : Ollama + Continue.dev + RTK.
+    - S'appuyer davantage sur les extensions pour l'analyse et les refactorings.
+    - Suivre le playbook dédié dans [Stack prête en 15 min — VS Code](stack-prete-15-min-vscode.md).
+
+---
+
 ## Étape 1 — Installer les plugins
 
 1. Ouvrir **Settings -> Plugins -> Marketplace**.
 2. Installer **Continue**.
-3. Redémarrer l'IDE.
-4. Vérifier que la barre latérale Continue est disponible.
+3. Installer **SonarQube for IDE** (éditeur SonarSource).
+4. Redémarrer l'IDE.
+5. Vérifier que la barre latérale Continue est disponible.
+6. Vérifier que la fenêtre SonarQube est visible et qu'une issue locale remonte sur un fichier Java.
+
+!!! tip "Validation rapide Sonar"
+    Place le curseur sur une issue Sonar compatible puis utilise `Alt+Enter` pour vérifier si un Quick Fix est proposé.
 
 ---
 
@@ -95,6 +123,27 @@ Avant toute IA distante, valide les gains natifs IntelliJ:
 
 ---
 
+## Étape 6 (optionnelle) — Connected Mode Sonar
+
+Active ce mode seulement si ton équipe dispose d'un serveur SonarQube Cloud/Server.
+
+1. Ouvre les paramètres SonarQube for IDE.
+2. Configure la connexion avec un token utilisateur.
+3. Lie le projet (bind) et vérifie la synchro des règles.
+
+!!! warning "Promesse réaliste"
+    L'installation plugin + analyse locale entre souvent dans 15 minutes. La configuration Connected Mode complète dépend de l'infrastructure entreprise.
+
+## Étape 7 (avancée) — MCP Sonar
+
+Ne configure MCP Sonar qu'en niveau avancé, après validation du workflow local.
+
+- Priorité : détection + correction déterministe.
+- MCP : utile pour triage/correction multi-issues à périmètre borné.
+- Vérifier la compatibilité réelle de ton plugin Copilot JetBrains avant configuration.
+
+---
+
 ## Ce que cette stack couvre
 
 - Correction de warnings simples
@@ -137,7 +186,7 @@ Garde Copilot pour:
 
 **[Recommandations par application](recommandations-taille-type-application.md)** : adapter la stack aux tailles de codebase et aux types d'applications les plus courants.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Natif avant IA** - exploiter les inspections et refactorings
 - **Chat local** - conserver les questions simples hors quota

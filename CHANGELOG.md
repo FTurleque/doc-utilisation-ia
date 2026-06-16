@@ -6,6 +6,42 @@
 
 ---
 
+## Mise à jour 2026-06-15 — Intégration SonarQube (chapitre 13)
+
+### Ajouts
+
+- ✅ Nouvelle page: `docs/chapitre-13-outils-economies/sonarqube.md`
+  - workflow économique complet (détection déterministe -> IA Sonar -> Copilot ciblé -> validation)
+  - distinction explicite des coûts Sonar vs consommation Copilot
+  - sections MCP Sonar, AI CodeFix, Remediation Agent (avec statut/limites à vérifier selon version)
+  - prompts opérationnels prêts à copier
+  - intégration de la notion de règles d'entreprise Sonar
+
+- ✅ Nouveau kit réutilisable Sonar: `docs/assets/templates/sonar/`
+  - `sonar-remediation.agent.md`
+  - `sonar-fix.prompt.md`
+  - `sonar-triage.prompt.md`
+  - `sonar-batch-fix.prompt.md`
+  - `sonar.instructions.md`
+  - `mcp-config.example.json`
+  - `sonar-mcp.env.example`
+
+### Mises à jour de pages existantes
+
+- `docs/chapitre-13-outils-economies/index.md` (ajout SonarQube dans familles, synthèse, workflow, points clés)
+- `docs/chapitre-13-outils-economies/comparaison.md` (focus SonarQube + complémentarité Sonar/RTK)
+- `docs/chapitre-13-outils-economies/outils-complementaires.md` (ajout SonarQube en vue d'ensemble)
+- `docs/chapitre-13-outils-economies/stack-prete-15-min-intellij.md` (étape SonarQube for IDE)
+- `docs/chapitre-13-outils-economies/recommandations-taille-type-application.md` (recommandations Sonar par contexte)
+- `mkdocs.yml` (navigation: ajout `SonarQube` sous `Outils`)
+
+### Fiabilité
+
+- Informations officielles croisées sur SonarSource, JetBrains et GitHub Docs.
+- Mention explicite des fonctionnalités dépendantes de version, édition, preview/beta et politique d'organisation.
+
+---
+
 ## Vue d'Ensemble des Changements
 
 - **Fichiers modifiés:** 21 fichiers dans 6 chapitres
@@ -47,11 +83,11 @@
 
 1. **Ajout du plan Pro+**
    - **Avant:** Plans listés: Free, Pro, Business, Enterprise (4 tiers)
-   - **Après:** Plans: Free, Pro, Pro+ ($39/mo, 1500 premium requests), Business, Enterprise (5 tiers)
+   - **Après:** Plans: Free, Pro, Pro+ ($39/mo, 1500 AI Credits), Business, Enterprise (5 tiers)
 
-2. **Correction quotas premium requests Enterprise**
-   - **Avant:** "Enterprise: 300 premium requests par utilisateur"
-   - **Après:** "Enterprise: 1000 premium requests par utilisateur"
+2. **Correction quotas AI Credits Enterprise**
+   - **Avant:** "Enterprise: 300 AI Credits par utilisateur"
+   - **Après:** "Enterprise: 1000 AI Credits par utilisateur"
 
 3. **Suppression d'affirmations stales**
    - ❌ Supprimé: "Copilot Chat disponible uniquement en Enterprise"
@@ -165,14 +201,14 @@
 
 ### 2026-05-04 — Baseline de référence (pré-transition 1er juin)
 - **Changement:** Normalisation documentation coûts/modèles; ajout structure comparaison mensuelle
-- **Avant:** Documentation centrée uniquement sur premium requests, sans suivi historique
+- **Avant:** Documentation centrée uniquement sur l'ancien mode de quotas, sans suivi historique
 - **Après:** Ajout date-stamps, langage catégorisé (vs hardcoding modèles), page historique
 - **Impact:** Chapitre 12 entièrement (index, abonnements, premium-requests, leviers, modes, workflow)
 - **Source:** https://docs.github.com/fr/copilot/get-started/plans
 - **Vérifié le:** 2026-05-04
 
 ### 2026-06-01 — TRANSITION PRÉVUE: Request-based → Usage-based (AI Credits)
-- **Changement:** Basculement facturation de "premium requests" à "AI Credits" ($0.01/credit)
+- **Changement:** Basculement facturation de l'ancien mode de quotas à "AI Credits" ($0.01/credit)
 - **Avant:** Free 50/mois, Pro 300/mois, Pro+ 1500/mois, Business 300/user, Enterprise 1000/user
 - **Après:** Tous les plans accèdent AI Credits; quota initial libre (à confirmer)
 - **Impact:** Tous les fichiers chapitre 12, chapitre 13 (outils économies)
@@ -230,7 +266,7 @@
 
 2. **MCP consommation**
    - **Avant:** "Chaque appel d'outil MCP = 1 requête"
-   - **Après:** "La facturation dépend du mode et du modèle (premium requests en transition, puis AI Credits post-juin 2026)"
+   - **Après:** "La facturation dépend du mode et du modèle (ancien mode de quotas en transition, puis AI Credits post-juin 2026)"
 
 3. **Thinking budget impact**
    - Ajout: "Augmenter le thinking budget augmente la consommation de tokens. Avec la transition vers facturation usage-based, ce réglage peut avoir un impact financier direct."
@@ -259,11 +295,11 @@
 **Changements:**
 
 1. **Contexte chapitre mis à jour**
-   - **Avant:** "Copilot Pro inclut 300 premium requests/mois — suffisant... mais vite épuisé si vous utilisez systématiquement Claude 3.5 Sonnet"
-   - **Après:** "La consommation Copilot évolue en 2026: logique premium requests en transition vers usage-based avec AI Credits. Les outils restent utiles pour tâches légères."
+   - **Avant:** "Copilot Pro inclut 300 AI Credits/mois — suffisant... mais vite épuisé si vous utilisez systématiquement Claude 3.5 Sonnet"
+   - **Après:** "La consommation Copilot évolue en 2026: logique de quotas en transition vers usage-based avec AI Credits. Les outils restent utiles pour tâches légères."
 
 2. **Légende consommation**
-   - **Avant:** "Chat Claude 3.5 → 1 premium request"
+   - **Avant:** "Chat Claude 3.5 → 1 unité de consommation IA"
    - **Après:** "Chat/Agent/CLI/Spaces/Spark → consommation selon modèle et tokens"
 
 ---
@@ -310,8 +346,8 @@
 **Changements:**
 
 - **Coûts qui évoluent**
-  - Avant: "Quotas premium requests, nouveaux tiers d'abonnement…"
-  - Après: "Quotas premium requests, nouveaux tiers d'abonnement… (Voir [Historique des modifications](../chapitre-12-couts-gouvernance/historique-modifications.md))"
+  - Avant: "Quotas de consommation IA, nouveaux tiers d'abonnement…"
+  - Après: "AI Credits, nouveaux tiers d'abonnement et évolutions de facturation… (Voir [Historique des modifications](../chapitre-12-couts-gouvernance/historique-modifications.md))"
   - Raison: Direct link to tracking mechanism
 
 ---
@@ -335,7 +371,7 @@
 | **Remplacement hardcoding par références dynamiques** | 8 | Modèles, participants @, variables / |
 | **Ajout date-stamps "Vérifié le 4 mai 2026"** | 12 | Index ch12, abonnements, premium-requests, etc. |
 | **Clarifications de plan/availability** | 4 | Agents, Copilot Chat, Business/Enterprise guarantees |
-| **Liens versarchives officielles** | 6 | https://docs.github.com/fr/copilot/* |
+| **Liens vers archives officielles** | 6 | https://docs.github.com/fr/copilot/* |
 | **Nouvelle page + navigation** | 1 | historique-modifications.md + mkdocs.yml |
 | **Suppression affirmations stales** | 2 | "Chat Enterprise-only", "300 requests Enterprise" |
 
@@ -352,7 +388,7 @@
    - Documenter l'impact réel vs. prévu
    - Mettre à jour les seuils AI Credits par plan
 
-2. Harmoniser les références "premium requests" → "AI Credits"
+2. Harmoniser les références "ancien mode de quotas" → "AI Credits"
    - Chapitre 12, 13, 11, 2
 
 3. Mettre à jour les modèles disponibles par plan
@@ -394,13 +430,13 @@ Tout changement a été validé contre:
 
 ## Questions / Clarifications
 
-**Q: Pourquoi supprimer les noms de modèles hardcodés?**  
+**Q : Pourquoi supprimer les noms de modèles hardcodés ?**  
 A: Les modèles et leurs multiplicateurs changent fréquemment (o1/o3 lancés, Claude 4 annoncé, etc.). Le hardcoding crée une dette technique rapide. Utiliser des catégories ("premium 'powerful'") + lien officiel est plus durable.
 
-**Q: Pourquoi créer historique-modifications.md?**  
+**Q : Pourquoi créer historique-modifications.md ?**  
 A: Single source of truth pour tracker avant/après, et permettre des comparaisons mensuelles (utilisateurs peuvent revenir en arrière et voir "comment c'était en mai vs. juin vs. juillet").
 
-**Q: Les changements affectent-ils la structure de navigation?**  
+**Q : Les changements affectent-ils la structure de navigation ?**  
 A: Non, sauf ajout de 1 page (historique). Tous les liens relatifs sont validés et fonctionnels.
 
 ---

@@ -116,7 +116,7 @@ généraliste pour les questions cloud ciblées.
 
 **[Supermaven](supermaven.md)** : accélérer la complétion inline sur de gros contextes de code pour les phases d'écriture intensive.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Complétion très rapide** - diminuer la latence perçue
 - **Contexte long** - exploiter des fichiers plus larges

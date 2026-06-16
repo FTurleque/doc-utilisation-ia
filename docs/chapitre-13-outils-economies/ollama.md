@@ -128,7 +128,7 @@ quand il alimente Continue.dev ou un autre client IDE.
 
 **[LM Studio](lm-studio.md)** : utiliser une interface graphique locale pour télécharger, tester et servir des modèles sans passer par la CLI.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Interface graphique** - démarrage rapide pour débuter
 - **Serveur local** - endpoint compatible outils IDE
