@@ -90,7 +90,7 @@ de la lecture à l'action.
 
 ## Prochaine étape
 
-**[Stack prête en 15 min — VS Code](stack-prete-15-min-vscode.md)** : appliquer immédiatement une configuration locale-first complète et actionnable en quelques étapes.
+**[Recommandations par application](recommandations-taille-type-application.md)** : adapter la stack aux tailles de codebase et aux types d'applications les plus courants.
 
 Concepts clés couverts :
 

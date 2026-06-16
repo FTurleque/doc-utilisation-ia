@@ -356,5 +356,33 @@ figure .reduced-screenshot {
   display: none !important;
 }
 
+/* Logo pleine hauteur dans la barre de navigation */
+.md-header__button.md-logo {
+  padding: 0;
+  margin: 0;
+}
+
+.md-header__button.md-logo img {
+  height: var(--md-header-height, 2.4rem);
+  width: auto;
+  max-height: none;
+  display: block;
+}
+
+/* Couleurs personnalisées pour correspondre à l'image IA */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #001a3d;
+  --md-primary-fg-color--light: #003d7a;
+  --md-primary-fg-color--dark: #000d1a;
+  --md-accent-fg-color: #00d9ff;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #001a3d;
+  --md-primary-fg-color--light: #003d7a;
+  --md-primary-fg-color--dark: #000d1a;
+  --md-accent-fg-color: #00d9ff;
+}
+
 
 

@@ -7,16 +7,17 @@ repo_name: FTurleque/doc-utilisation-ia
 theme:
   name: material
   language: fr
+  logo: assets/images/logo-documentation-ia.jpg
   palette:
     - scheme: default
-      primary: indigo
-      accent: indigo
+      primary: blue
+      accent: cyan
       toggle:
         icon: material/brightness-7
         name: Passer en mode sombre
     - scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: blue
+      accent: cyan
       toggle:
         icon: material/brightness-4
         name: Passer en mode clair
@@ -193,17 +194,19 @@ nav:
       - RTK + SonarQube: chapitre-13-outils-economies/rtk-sonar.md
     - TOON: chapitre-13-outils-economies/toon.md
     - OpenSkills: chapitre-13-outils-economies/openskills.md
-    - Continue.dev: chapitre-13-outils-economies/continue-dev.md
-    - Ollama: chapitre-13-outils-economies/ollama.md
-    - LM Studio: chapitre-13-outils-economies/lm-studio.md
-    - Codeium / Windsurf: chapitre-13-outils-economies/codeium-windsurf.md
-    - Tabnine: chapitre-13-outils-economies/tabnine.md
-    - Amazon Q Developer: chapitre-13-outils-economies/amazon-q-developer.md
-    - Supermaven: chapitre-13-outils-economies/supermaven.md
+    - LLM en Local:
+      - Continue.dev: chapitre-13-outils-economies/continue-dev.md
+      - Ollama: chapitre-13-outils-economies/ollama.md
+      - LM Studio: chapitre-13-outils-economies/lm-studio.md
+      - Stack prete en 15 min — VS Code: chapitre-13-outils-economies/stack-prete-15-min-vscode.md
+      - Stack prete en 15 min — IntelliJ: chapitre-13-outils-economies/stack-prete-15-min-intellij.md
+    - Alternatives à Copilot:
+      - Codeium / Windsurf: chapitre-13-outils-economies/codeium-windsurf.md
+      - Tabnine: chapitre-13-outils-economies/tabnine.md
+      - Amazon Q Developer: chapitre-13-outils-economies/amazon-q-developer.md
+      - Supermaven: chapitre-13-outils-economies/supermaven.md
     - Comparaison des Outils: chapitre-13-outils-economies/comparaison.md
     - "Vue d'ensemble des outils": chapitre-13-outils-economies/outils-complementaires.md
-    - Stack prete en 15 min — VS Code: chapitre-13-outils-economies/stack-prete-15-min-vscode.md
-    - Stack prete en 15 min — IntelliJ: chapitre-13-outils-economies/stack-prete-15-min-intellij.md
     - Recommandations par application: chapitre-13-outils-economies/recommandations-taille-type-application.md
 
   - Veille IA:
