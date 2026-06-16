@@ -1,0 +1,388 @@
+/* ============================================================
+   GitHub Copilot Documentation — Custom Styles
+   Theme: Material for MkDocs
+   ============================================================ */
+
+/* Zone de contenu principale élargie */
+.md-grid {
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.md-content {
+  max-width: 100%;
+}
+
+/* Sidebars */
+.md-sidebar {
+  width: 280px;
+}
+
+.md-sidebar__scrollwrap {
+  width: 280px;
+  overflow-y: auto; /* Permet le défilement vertical uniquement */
+  scrollbar-color: transparent transparent; /* Couleur transparente pour la barre et le fond */
+  scrollbar-width: thin; /* Réduction de la largeur de la scrollbar */
+  padding-left: 0.5rem; /* Espace pour éviter que le contenu soit caché derrière la scrollbar */
+}
+
+/* Marges de la zone principale réduites */
+.md-main__inner {
+  margin-top: 0.4rem;
+  max-width: 100%;
+  padding-left: 0;
+}
+
+/* Centrage des tableaux Markdown */
+.md-content table {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Centrage des diagrammes Mermaid */
+.mermaid {
+  display: flex;
+  justify-content: center;
+}
+
+/* Hero banner sur la page d'accueil */
+.hero-banner {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  color: #e8e8e8;
+  border-left: 4px solid #58a6ff;
+}
+
+.hero-banner h2 {
+  color: #ffffff;
+  font-size: 1.6rem;
+  margin-top: 0;
+}
+
+/* Badges de niveau */
+.badge-beginner {
+  background-color: #238636;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.badge-intermediate {
+  background-color: #9a6700;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.badge-expert {
+  background-color: #b62324;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Badge IDE */
+.badge-intellij {
+  background-color: #fe315d;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-vscode {
+  background-color: #007acc;
+  color: white;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Touchs clavier (kbd) */
+kbd {
+  background-color: var(--md-default-fg-color--lightest);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.85em;
+  font-family: var(--md-code-font-family);
+  color: var(--md-code-fg-color);
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Mise en évidence des blocs de paramètres */
+.param-block {
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.param-block code {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Tableaux de comparaison */
+.comparison-table th:first-child {
+  width: 30%;
+}
+
+/* Étapes numérotées (tutoriels) */
+.tutorial-step {
+  counter-increment: step-counter;
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.tutorial-step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #58a6ff;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Boutons CTA sur la page d'accueil */
+.md-button--primary {
+  background-color: #58a6ff !important;
+  border-color: #58a6ff !important;
+  color: #0d1117 !important;
+  font-weight: 600;
+}
+
+.md-button--primary:hover {
+  background-color: #79c0ff !important;
+  border-color: #79c0ff !important;
+}
+
+/* Grille de cartes améliorée */
+.grid.cards > ul > li {
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grid.cards > ul > li:hover {
+  border-color: #58a6ff;
+  box-shadow: 0 2px 8px rgba(88, 166, 255, 0.15);
+}
+
+/* Vignettes / cartes : agrandies pour meilleure lisibilité */
+.grid.cards > ul > li {
+  min-height: 140px; /* plus d'espace vertical */
+  padding: 1.25rem 1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.grid.cards > ul > li .md-content {
+  flex: 1 1 auto;
+}
+
+.grid.cards > ul > li .md-icon,
+.grid.cards > ul > li .material-icons,
+.grid.cards > ul > li .icon {
+  font-size: 2rem; /* icônes plus grandes */
+  margin-right: 0.75rem;
+}
+
+.grid.cards > ul > li h3 {
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.grid.cards > ul > li p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Bloc "placeholder image" */
+.img-placeholder {
+  background: var(--md-default-fg-color--lightest);
+  border: 2px dashed var(--md-default-fg-color--lighter);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+  font-style: italic;
+  margin: 1rem 0;
+}
+
+.doc-screenshot {
+  display: block;
+  max-width: 100%;
+  width: min(100%, 960px);
+  margin: 1rem auto 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Images réduites de moitié */
+.reduced-screenshot {
+  display: block;
+  max-width: 100%;
+  width: min(100%, 480px);
+  margin: 1rem auto 0.5rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.doc-screenshot + em,
+.reduced-screenshot + em {
+  display: block;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 1rem;
+}
+
+/* Centre le <p> qui contient l'image réduite */
+p:has(> .reduced-screenshot) {
+  text-align: center !important;
+}
+
+/* Centre le <p> qui suit (la caption) */
+p:has(> .reduced-screenshot) + p {
+  text-align: center !important;
+}
+
+[data-md-color-scheme="slate"] .doc-screenshot {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Icône Copilot dans les titres de section */
+.copilot-section-icon {
+  vertical-align: middle;
+  margin-right: 0.4em;
+  color: #58a6ff;
+}
+
+/* Amélioration des tableaux en général */
+table th {
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+[data-md-color-scheme="slate"] table th {
+  background-color: var(--md-default-fg-color--lightest);
+}
+
+/* Highlight des raccourcis clavier */
+kbd {
+  background: var(--md-default-fg-color--lightest);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  font-size: 0.8em;
+  font-family: var(--md-code-font-family);
+}
+
+/* Légendes d'images (<figure> / <figcaption>) */
+figure {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+figcaption {
+  display: block;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.85em;
+  font-style: italic;
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+figure .doc-screenshot,
+figure .reduced-screenshot {
+  margin: 0 auto 0.5rem;
+}
+
+/* Conteneur pour agrandir certains diagrammes Mermaid */
+.mermaid-large {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  margin: 1rem 0 1.5rem;
+}
+
+.mermaid-large .mermaid {
+  display: block;
+  width: auto !important;
+  max-width: 100%;
+}
+
+.mermaid-large .mermaid svg {
+  width: 80% !important;
+  height: auto !important;
+  max-height: 70vh;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Masquer le burger button */
+#sidebar-toggle-btn {
+  display: none !important;
+}
+
+/* Logo pleine hauteur dans la barre de navigation */
+.md-header__button.md-logo {
+  padding: 0;
+  margin: 0;
+}
+
+.md-header__button.md-logo img {
+  height: var(--md-header-height, 2.4rem);
+  width: auto;
+  max-height: none;
+  display: block;
+}
+
+/* Couleurs personnalisées pour correspondre à l'image IA */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #001a3d;
+  --md-primary-fg-color--light: #003d7a;
+  --md-primary-fg-color--dark: #000d1a;
+  --md-accent-fg-color: #00d9ff;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #001a3d;
+  --md-primary-fg-color--light: #003d7a;
+  --md-primary-fg-color--dark: #000d1a;
+  --md-accent-fg-color: #00d9ff;
+}
+
+
+

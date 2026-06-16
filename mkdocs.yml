@@ -1,6 +1,8 @@
 site_name: Documentation IA
 site_description: Documentation collectée sur l'utilisation de l'IA
 site_author: FTurleque
+site_url: https://fturleque.github.io/doc-utilisation-ia/
+use_directory_urls: true
 repo_url: https://github.com/FTurleque/doc-utilisation-ia
 repo_name: FTurleque/doc-utilisation-ia
 
@@ -8,6 +10,7 @@ theme:
   name: material
   language: fr
   logo: assets/images/logo-documentation-ia.jpg
+  favicon: assets/images/logo-documentation-ia.jpg
   palette:
     - scheme: default
       primary: blue
@@ -31,7 +34,7 @@ theme:
     - content.code.annotate
 
 extra_css:
-  - stylesheets/extra.css
+  - stylesheets/extra.v2.css
 
 extra_javascript:
   - javascripts/sidebar-toggle.js
