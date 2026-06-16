@@ -49,7 +49,7 @@ Utiliser GitHub Copilot efficacement, c'est aussi savoir gérer ce qu'il consomm
 | Sujet | Résumé |
 |-------|--------|
 | [Allers-retours](patterns-allers-retours.md) | Chaque itération coûte des requêtes — le contexte complet dès le départ réduit les cycles |
-| [AI Credits](premium-requests.md) | Calcul de consommation, dépassement de budget, et cas legacy premium requests |
+| [AI Credits](premium-requests.md) | Calcul de consommation, dépassement de budget, et cas legacy de l'ancien mode de quotas |
 | [Historique](historique-modifications.md) | Traçabilité mensuelle des évolutions coûts/modèles avec diff Avant/Après |
 | [Abonnements](abonnements.md) | Free · Pro · Pro+ · Business · Enterprise — comparaison datée et périmètres |
 | [Économies](leviers-economie.md) | Choisir le modèle le plus léger adapté à la tâche |

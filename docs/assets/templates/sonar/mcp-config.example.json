@@ -1,0 +1,34 @@
+{
+  "note": "Exemple pédagogique. Le JSON de production n'accepte pas ce champ de commentaire.",
+  "variants": {
+    "sonarqube-server": {
+      "transport": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "-e",
+        "SONARQUBE_TOKEN=${SONARQUBE_TOKEN}",
+        "-e",
+        "SONARQUBE_URL=${SONARQUBE_URL}",
+        "sonarsource/sonarqube-mcp-server:latest"
+      ]
+    },
+    "sonarqube-cloud": {
+      "transport": "stdio",
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "-e",
+        "SONARQUBE_TOKEN=${SONARQUBE_TOKEN}",
+        "-e",
+        "SONARQUBE_ORG=${SONARQUBE_ORG}",
+        "sonarsource/sonarqube-mcp-server:latest"
+      ]
+    }
+  }
+}
+

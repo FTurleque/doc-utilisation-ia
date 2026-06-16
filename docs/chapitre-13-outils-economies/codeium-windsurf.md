@@ -124,7 +124,7 @@ il est combiné avec un chat local et une bonne discipline de validation.
 
 **[Tabnine](tabnine.md)** : choisir une alternative orientée gouvernance et confidentialité pour les environnements entreprise.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Confidentialité** - cadre de protection des données
 - **Mode entreprise** - contrôles et politiques d'usage

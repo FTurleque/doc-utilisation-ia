@@ -363,7 +363,7 @@ L'utilisation d'un serveur MCP augmente la consommation Copilot via deux mécani
 
 **1. Les interactions utilisateur restent l'unité de facturation principale**
 
-En mode agentique, les prompts que vous envoyez sont facturés selon le modèle sélectionné (et la logique de billing active: premium requests ou AI Credits). Les appels d'outils MCP peuvent augmenter le travail effectué, mais ne doivent pas être interprétés systématiquement comme une facturation "1 appel = 1 requête".
+En mode agentique, les prompts que vous envoyez sont facturés selon le modèle sélectionné et la logique de billing active (AI Credits, avec possible terminologie legacy liée à l'ancien mode de facturation selon la source). Les appels d'outils MCP peuvent augmenter le travail effectué, mais ne doivent pas être interprétés systématiquement comme une facturation "1 appel = 1 requête".
 
 **2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés**
 
@@ -431,7 +431,7 @@ La disponibilité des modèles évolue fréquemment. Utilisez la page officielle
 | Plan | Positionnement |
 |------|----------------|
 | **Free** | Accès limité à un sous-ensemble de modèles |
-| **Pro** | Modèles inclus + accès premium selon allocation |
+| **Pro** | Modèles inclus + accès aux modèles avancés selon allocation AI Credits |
 | **Pro+** | Accès élargi aux modèles avancés |
 | **Business / Enterprise** | Accès piloté par l'organisation et ses politiques |
 

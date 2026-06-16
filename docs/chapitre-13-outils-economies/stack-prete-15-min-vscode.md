@@ -134,7 +134,7 @@ Passe à Copilot Chat ou Agent quand:
 
 **[Stack prête en 15 min — IntelliJ](stack-prete-15-min-intellij.md)** : adapter le même principe local-first à IntelliJ IDEA.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Installation rapide** - démarrer sans reconfigurer tout le projet
 - **Chat local** - garder les prompts simples hors quota

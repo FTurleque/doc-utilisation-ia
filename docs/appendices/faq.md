@@ -7,7 +7,7 @@
 
     - **Copilot Free** : limité (complétions et interactions mensuelles plafonnées)
     - **Copilot Pro** : plan individuel payant
-    - **Copilot Pro+** : plan individuel payant avec capacité premium plus élevée
+    - **Copilot Pro+** : plan individuel payant avec allocation AI Credits plus élevée
     - **Copilot Business** : plan organisation avec gestion centralisée
     - **Copilot Enterprise** : plan entreprise avec gouvernance avancée
 

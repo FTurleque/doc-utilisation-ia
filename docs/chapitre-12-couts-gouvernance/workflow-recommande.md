@@ -34,13 +34,13 @@ graph LR
 
 1. **Ouvrir uniquement les fichiers pertinents** pour la tâche du jour
 2. **Vérifier les instructions actives** (`.github/copilot-instructions.md` à jour ?)
-3. **Choisir le modèle** : standard pour les tâches légères, premium si une implémentation complexe est prévue
+3. **Choisir le modèle** : standard pour les tâches légères, modèle avancé si une implémentation complexe est prévue
 
 ```markdown
 # Checklist début de session
 □ Fichiers de contexte ouverts (types, interfaces, services voisins)
 □ copilot-instructions.md reflète les conventions actuelles
-□ Quota premium vérifié si grosse tâche planifiée
+□ Budget AI Credits vérifié si grosse tâche planifiée
 ```
 
 ---
@@ -132,7 +132,7 @@ La gestion dépend de votre plan, de vos allocations AI Credits, et de vos polit
 
 | Profil d'usage | Plan conseillé | Règle de pilotage |
 |---------------|----------------|-------------------|
-| Usage modéré solo | Pro | Réserver les modèles premium aux tâches complexes |
+| Usage modéré solo | Pro | Réserver les modèles avancés aux tâches complexes |
 | Usage intensif solo | Pro+ | Allouer un budget hebdomadaire et surveiller les pics |
 | Équipe | Business | Définir budgets et garde-fous au niveau organisation |
 | Grande organisation | Enterprise | Piloter par budgets, observabilité et politiques |
@@ -148,7 +148,7 @@ La gestion dépend de votre plan, de vos allocations AI Credits, et de vos polit
 |-------------|--------|----------|
 | Relancer Agent Mode pour corriger une erreur de l'agent | ×2 à ×3 le coût | Corriger manuellement si l'erreur est mineure |
 | Laisser une conversation ouverte toute la journée | Tokens croissants, réponses lentes | Nouvelles conversations par sujet |
-| Utiliser modèle premium pour des questions de syntaxe | Gaspillage pur | Standard ou documentation |
+| Utiliser un modèle avancé pour des questions de syntaxe | Gaspillage pur | Standard ou documentation |
 | Demander un scaffold complet avec Agent dès le début | Risque de direction incorrecte | Plan → validation → exécution |
 | Ne jamais utiliser l'autocomplétion | Sous-exploitation du mode le plus efficace | 70%+ du code via autocomplétion |
 

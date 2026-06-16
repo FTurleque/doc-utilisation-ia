@@ -14,12 +14,12 @@ Le levier le plus impactant. Les modèles puissants ne sont pas toujours meilleu
 |---------------|-------------------|---------------|
 | Autocomplétion, snippets courts | Modèle inclus (GPT-5 mini / GPT-4.1) | Vitesse > profondeur, coût minimal |
 | Refactoring simple, renommage | Modèle inclus | Tâche mécanique, faible raisonnement |
-| Génération de tests unitaires | Modèle inclus ou premium léger | Standard suffisant sur des patterns connus |
+| Génération de tests unitaires | Modèle inclus ou modèle avancé léger | Standard suffisant sur des patterns connus |
 | Implémentation d'algo complexe | Sonnet 4.x ou GPT-5.x Codex | Raisonnement + qualité du code |
 | Debug multi-fichiers | Sonnet 4.x | Compréhension du contexte large |
-| Architecture / design système | Modèle premium "powerful" | Chaîne de raisonnement longue |
-| Revue de sécurité approfondie | Modèle premium "powerful" | Analyse critique plus robuste |
-| Question de syntaxe | Modèle inclus, voire documentation | Premium inutile |
+| Architecture / design système | Modèle avancé "powerful" | Chaîne de raisonnement longue |
+| Revue de sécurité approfondie | Modèle avancé "powerful" | Analyse critique plus robuste |
+| Question de syntaxe | Modèle inclus, voire documentation | Modèle avancé inutile |
 
 !!! tip "Règle heuristique"
     Si la tâche peut être résolue en 2 minutes via doc ou autocomplétion, évite un modèle coûteux.
@@ -98,9 +98,9 @@ Ces instructions sont incluses automatiquement dans chaque échange — sans ré
 
 ---
 
-## Levier 6 — Éviter les requêtes exploratoires avec des modèles premium
+## Levier 6 — Éviter les requêtes exploratoires avec des modèles avancés
 
-La recherche d'idées, la brainstorming d'architecture, l'exploration de solutions alternatives : ces activités génèrent beaucoup d'échanges courts. Utiliser le modèle standard pour ces phases d'exploration, puis basculer en premium uniquement pour l'implémentation finale.
+La recherche d'idées, le brainstorming d'architecture, l'exploration de solutions alternatives : ces activités génèrent beaucoup d'échanges courts. Utiliser le modèle standard pour ces phases d'exploration, puis basculer vers un modèle avancé uniquement pour l'implémentation finale.
 
 ```
 Phase exploration  → modèle léger (rapide, faible coût)

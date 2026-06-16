@@ -286,3 +286,11 @@ frontiere, pas un remplacement universel de JSON.
 ## Prochaine étape
 
 **[OpenSkills](openskills.md)** : un installateur universel de skills pour agents IA — standardise et partage des capacités entre Copilot, Claude Code, Cursor et d'autres agents.
+
+Concepts clés couverts :
+
+- **Portabilité des skills** — mutualiser des procédures entre plusieurs agents
+- **Installation centralisée** — industrialiser l'ajout de capacités IA
+- **Réduction de contexte** — charger uniquement la skill utile
+- **Gouvernance** — auditer les skills tierces avant usage
+

@@ -18,7 +18,7 @@ Continue.dev sert à orchestrer plusieurs usages dans l'IDE:
 - **Routage de modèles** (ex: local pour simple, cloud pour complexe)
 
 !!! info "Positionnement"
-    Continue.dev ne remplace pas forcément Copilot partout. Il est excellent pour découpler les usages : modèle local pour le quotidien, modèle premium uniquement pour les cas difficiles.
+    Continue.dev ne remplace pas forcément Copilot partout. Il est excellent pour découpler les usages : modèle local pour le quotidien, puis Copilot sur les cas difficiles (coût AI Credits plus élevé selon le modèle choisi).
 
 ---
 
@@ -165,7 +165,7 @@ et un filtrage du contexte avant toute analyse IA.
 
 **[Ollama](ollama.md)** : lancer des modèles localement pour alimenter Continue.dev sans consommer de crédits IA.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Exécution locale** - faire tourner un LLM sur ta machine
 - **Choix de modèle** - adapter qualité, vitesse et RAM

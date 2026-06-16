@@ -117,7 +117,7 @@ la recherche du maximum de puissance. Il devient intéressant dans les
 
 **[Amazon Q Developer](amazon-q-developer.md)** : tirer parti d'un assistant spécialisé AWS pour les projets cloud basés sur les services Amazon.
 
-Concepts clés couverts:
+Concepts clés couverts :
 
 - **Contexte AWS** - quand Amazon Q apporte plus de valeur
 - **Intégration Toolkit** - installation dans VS Code et IntelliJ

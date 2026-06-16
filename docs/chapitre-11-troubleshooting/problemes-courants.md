@@ -253,7 +253,7 @@ VS Code : les modes Ask, Plan ou Agent ne sont pas disponibles dans Copilot Chat
 | Copilot Chat | ✅ (limité) | ✅ | ✅ |
 | Mode Agent (Ask/Plan/Agent) | ✅ | ✅ | ✅ |
 | Exécution multi-fichiers via Agent | ✅ (périmètre variable) | ✅ | ✅ |
-| Accès modèles premium | Limité | ✅ | ✅ |
+| Accès modèles avancés | Limité | ✅ | ✅ |
 
 ### Solution
 
