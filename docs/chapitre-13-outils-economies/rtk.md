@@ -128,14 +128,14 @@ rtk init --global
 
 !!! note "Traçabilité — option `--copilot`"
     Des retours communautaires indiquent qu'une variante dédiée Copilot peut
-    fonctionner, et elle a été testée avec succès dans ce contexte :
+    fonctionner, et elle a été testée avec succès dans ce contexte (jouer les 2 commandes, celle de dessus puis la verssion copilot) :
     ```powershell
     rtk init -g --copilot
     ```
     Cette option n'est pas documentée officiellement à date dans la
     documentation RTK. Utilisez-la de manière prudente (selon version), et
     conservez `rtk init --global` comme commande de référence si l'option est
-    refusée.
+    refusée. Attetion, il se peux qu'un fichier copilote instruction soit créé, dans ce cas là faite en un fichier .instruction et reméttez votre propre copilot-instruction.md !
 
 !!! info "Copilot : commande à utiliser"
     La commande officiellement documentée pour activer RTK reste
