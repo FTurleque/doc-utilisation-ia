@@ -128,14 +128,15 @@ rtk init --global
 
 !!! note "Traçabilité — option `--copilot`"
     Des retours communautaires indiquent qu'une variante dédiée Copilot peut
-    fonctionner, et elle a été testée avec succès dans ce contexte (jouer les 2 commandes, celle de dessus puis la verssion copilot) :
+    fonctionner, et elle a été testée avec succès dans ce contexte (jouer les 2 commandes, celle de dessus puis la version copilot) :
     ```powershell
     rtk init -g --copilot
     ```
     Cette option n'est pas documentée officiellement à date dans la
     documentation RTK. Utilisez-la de manière prudente (selon version), et
     conservez `rtk init --global` comme commande de référence si l'option est
-    refusée. Attetion, il se peux qu'un fichier copilote instruction soit créé, dans ce cas là faite en un fichier .instruction et reméttez votre propre copilot-instruction.md !
+    refusée. Attention, il se peut qu'un fichier copilote-instruction soit créé ou remplace le votre, 
+    dans ce cas là faite en un fichier `.instruction` et reméttez votre propre copilot-instruction.md !
 
 !!! info "Copilot : commande à utiliser"
     La commande officiellement documentée pour activer RTK reste
@@ -154,7 +155,7 @@ rtk init --global
     Cette commande installe un **hook shell** (dans votre profil PowerShell, bash ou zsh). À partir de là, chaque commande `git status`, `npm test`, etc. que vous tapez dans un terminal passe automatiquement par RTK.
 
     !!! note "Hook shell vs hook agent"
-        Le hook shell fonctionne dans **tout terminal interactif** (VS Code, IntelliJ, Windows Terminal…) car le shell charge votre profil au démarrage. En revanche, certains agents IA comme Claude Code ont leur propre mécanisme (`PreToolUse`) qui garantit l'interception même hors terminal interactif — ce n'est pas le cas de Copilot Agent dans IntelliJ.
+        Le hook shell fonctionne dans **tout terminal interactif** (VS Code, IntelliJ, Windows Terminal…) car le shell charge votre profil au démarrage. En revanche, certains agents IA comme Claude Code ont leur propre mécanisme (`PreToolUse`) qui garantit l'interception même hors terminal interactif.
 
 ### Utilisation explicite (sans hook)
 
@@ -222,16 +223,145 @@ La liste complète avec les détails de filtrage par commande est disponible dan
 |-------|--------------|-------|
 | **Claude Code** | ✅ Natif | Hook `PreToolUse` intégré — compression automatique garantie |
 | **GitHub Copilot Agent** (VS Code) | ✅ Via hook shell | Le terminal intégré charge le profil shell → RTK actif |
-| **GitHub Copilot Agent** (IntelliJ) | ⚠️ Partiel | Voir note ci-dessous |
+| **GitHub Copilot Agent** (IntelliJ) | ✅ Via hook shell | Le terminal intégré charge le profil shell → RTK actif |
 | **Cursor** | ✅ Via hook shell | Terminal intégré charge le profil shell |
 | **Aider** | ✅ Via hook shell | Réduit la facture API de ~70% |
 | **Gemini CLI** | ✅ Via hook shell | Libère du headroom sur le quota gratuit |
 
-!!! warning "GitHub Copilot Agent dans IntelliJ"
-    IntelliJ ne dispose pas d'un mécanisme de hook équivalent au `PreToolUse` de Claude Code.
-    RTK fonctionne **quand vous tapez vous-même** des commandes dans le terminal intégré d'IntelliJ (car le shell charge votre profil au démarrage).
-    En revanche, si Copilot Agent exécute des commandes via son propre moteur interne (sans passer par le shell interactif), le hook shell peut ne pas être déclenché.
-    **Solution** : préfixez manuellement vos commandes avec `rtk` dans le terminal IntelliJ, ou utilisez RTK depuis un terminal externe en parallèle.
+
+---
+
+## Intérêts concrets
+
+RTK cible un problème précis : les sorties de commandes CLI sont la source de bruit la plus **volumineuse et la plus répétitive** dans la fenêtre de contexte d'un agent IA. Un `npm test` peut générer 25 000 tokens de sortie brute ; RTK le ramène à 2 500 tokens — sans perte d'information utile pour l'agent.
+
+### Ce que RTK apporte réellement
+
+| Intérêt | Détail |
+|---------|--------|
+| **Réduction mesurable** | 60–90 % de tokens en moins sur les sorties CLI (données issues de la documentation officielle RTK) |
+| **Sessions plus longues** | Moins de tokens consommés = sessions agent 3× plus longues avant d'atteindre la limite de contexte |
+| **Zéro reconfiguration** | 50+ commandes optimisées dès l'installation, sans ajustement par commande |
+| **Hook transparent** | Après `rtk init --global`, les commandes habituelles passent automatiquement par RTK — aucun changement de workflow |
+| **Traçabilité objective** | `rtk gain` affiche précisément les tokens économisés par commande et par session |
+| **Gratuit et open source** | Licence MIT, aucun abonnement, code auditable sur [github.com/rtk-ai/rtk](https://github.com/rtk-ai/rtk) |
+| **Multi-agents** | Fonctionne avec Claude Code (natif), Copilot Agent VS Code, Cursor, Aider, Gemini CLI |
+| **Passthrough sécurisé** | Pour les commandes non reconnues, RTK laisse passer la sortie sans modification — aucun risque de casser un workflow existant |
+
+### Ce que ça change concrètement
+
+Sur une session de développement de 30 minutes typique avec un agent IA :
+
+- **Sans RTK** : ~150 000 tokens de sorties CLI injectées dans le contexte
+- **Avec RTK** : ~45 000 tokens — soit **70 % d'économie** avant même d'optimiser les prompts
+
+Cette réduction s'accumule sur chaque cycle. Chaque `git status`, chaque `npm test`, chaque `ls` répété dix fois dans une session devient une opportunité d'économie automatique.
+
+!!! tip "Rentabilité immédiate"
+    RTK est particulièrement rentable pour les sessions Copilot Agent ou Claude Code qui enchaînent des cycles build/test/debug. Ces sessions appellent des dizaines de commandes CLI dont les sorties remplissent rapidement la fenêtre de contexte — souvent bien avant la fin d'une tâche complexe.
+
+---
+
+## Limites et points de vigilance
+
+RTK est efficace dans son périmètre, mais il ne fait **pas tout**. Comprendre ses limites évite les malentendus et les mauvaises surprises.
+
+### Ce que RTK ne fait pas
+
+| Besoin | RTK ? | Outil adapté |
+|--------|:-----:|-------------|
+| Détecter des bugs ou vulnérabilités dans le code | ❌ | SonarQube, ESLint, mypy, Semgrep |
+| Réduire les tokens des **fichiers de code** envoyés à l'IA | ❌ | Sélectionner manuellement les fichiers pertinents |
+| Compresser les **prompts ou messages** de chat | ❌ | Rédiger des prompts plus concis |
+| Analyser la qualité ou l'architecture du code | ❌ | SonarQube, Qodana, ArchUnit |
+| Fournir des suggestions ou complétions de code | ❌ | GitHub Copilot, Codeium, Tabnine |
+| Réduire le contexte entre deux sessions distinctes | ❌ | Gérer manuellement l'historique de chat |
+
+!!! info "RTK et SonarQube ne font pas la même chose"
+    RTK réduit la taille des sorties **terminal**. SonarQube détecte des problèmes de **qualité de code** par analyse statique. Ces deux outils sont complémentaires — l'un agit sur le bruit CLI, l'autre sur la qualité du code source.
+
+### Limites du hook shell
+
+!!! warning "Hook shell ≠ hook agent"
+    Le hook installé par `rtk init --global` modifie votre **profil shell** (PowerShell, bash ou zsh). Il fonctionne dans tout terminal **interactif** qui charge ce profil au démarrage — y compris le terminal intégré de VS Code et d'IntelliJ.
+
+    En revanche, si un agent IA exécute des commandes via son **propre moteur interne** sans passer par un shell interactif, le hook shell peut ne pas être déclenché. Les commandes passent alors sans compression. C'est notamment le cas de **Claude Code** qui dispose d'un hook `PreToolUse` dédié pour garantir la compression indépendamment du shell.
+
+### Garantie de compression par agent
+
+| Agent | Garantie de compression | Mécanisme utilisé |
+|-------|:----------------------:|------------------|
+| **Claude Code** | ✅ Garantie | Hook `PreToolUse` natif — indépendant du shell |
+| **Copilot Agent (VS Code)** | ✅ Via hook shell | Le terminal intégré charge votre profil shell |
+| **Copilot Agent (IntelliJ)** | ✅ Via hook shell | Le terminal intégré charge votre profil shell |
+| **Cursor, Aider, Gemini CLI** | ✅ Via hook shell | Terminal intégré charge le profil shell |
+
+### Risque de filtrage excessif
+
+RTK applique des règles de filtrage par commande. Dans de rares cas, une information utile pourrait être supprimée si elle ressemble à du bruit (warning répétitif, ligne de progression, etc.). Si vous avez besoin de **l'output complet** pour un diagnostic avancé, utilisez `rtk proxy` :
+
+```bash
+# Exécuter la commande sans filtrage RTK (sortie brute complète)
+rtk proxy npm test
+```
+
+Cette commande laisse passer l'output sans modification tout en continuant à enregistrer les statistiques.
+
+### Conflit de nom sur crates.io
+
+!!! danger "Ne pas installer via `cargo install rtk`"
+    Il existe **deux projets différents** nommés `rtk` sur crates.io. Le paquet installé via `cargo install rtk` n'est **pas** RTK AI et ne dispose pas de la commande `rtk gain`.
+
+    **Vérification** : après installation, `rtk gain` doit fonctionner. Si la commande n'existe pas, vous avez installé le mauvais paquet.
+
+    Utilisez toujours le **binaire officiel** depuis [github.com/rtk-ai/rtk/releases](https://github.com/rtk-ai/rtk/releases) ou `brew install rtk`.
+
+---
+
+## Quand utiliser RTK — guide décisionnel
+
+### ✅ Cas d'usage idéaux
+
+RTK est particulièrement utile dans ces situations :
+
+- **Sessions agent longues** (Copilot Agent, Claude Code) : les agents exécutent des dizaines de commandes CLI dont les sorties s'accumulent dans la fenêtre de contexte.
+- **Cycles build/test répétitifs** : `npm test`, `cargo test`, `pytest` — chaque exécution peut générer des milliers de lignes de sortie.
+- **Exploration de codebase** : `ls`, `find`, `grep` répétés produisent un volume important, surtout sur de gros dépôts.
+- **Logs de conteneurs et pods** : `docker logs`, `kubectl logs` — la déduplication RTK est particulièrement efficace sur les logs répétitifs.
+- **Usage avec Aider ou Gemini CLI** : ces outils n'ont pas de mécanisme natif d'économie de tokens sur les sorties CLI.
+- **Développement avec de nombreux allers-retours terminal** : plus une session est intensive en CLI, plus le gain est élevé.
+
+### ❌ Quand ne pas s'en remettre uniquement à RTK
+
+RTK n'est **pas** la bonne réponse à ces situations :
+
+- **Besoin d'analyser la qualité du code** → utilisez SonarQube, Qodana ou ESLint en amont.
+- **Besoin de réduire les tokens d'un prompt de chat** → affinez votre prompt, ne copiez que ce qui est nécessaire.
+- **Besoin de l'output complet pour un diagnostic précis** → utilisez `rtk proxy <commande>` pour passer sans filtre.
+- **Sessions IA centrées sur des fichiers de code** → RTK n'agit pas sur le contenu des fichiers, seulement sur les sorties CLI.
+- **Problème de performance ou de rendu d'une interface** → RTK ne comprime pas les sorties graphiques.
+
+### Diagramme de décision
+
+```mermaid
+flowchart TD
+    A[Vous exécutez une commande CLI dans un terminal] --> B{La commande génère\nbeaucoup de sortie ?}
+    B -- Oui --> C{RTK supporte\ncette commande ?}
+    C -- Oui --> D[✅ Préfixez avec rtk\nou activez le hook]
+    C -- Non --> E[Passthrough transparent\nRTK ne modifie rien]
+    B -- Non --> F[Gain RTK limité\nsur cette commande]
+    A --> G{Besoin de\nl'output brut complet ?}
+    G -- Oui --> H[Utilisez rtk proxy\nou la commande directement]
+    G -- Non --> D
+```
+
+### À retenir
+
+!!! success "Bonne pratique"
+    Activez RTK avec `rtk init --global` **une seule fois** puis oubliez-le. Il réduit automatiquement le bruit sur toutes les commandes supportées. Pour le reste — qualité code, prompts, fichiers — continuez à appliquer les autres leviers du chapitre.
+
+!!! failure "Mauvaise pratique"
+    Considérer que RTK seul suffira si vos sessions IA portent principalement sur des **analyses de fichiers de code** ou des **discussions en chat**. RTK n'agit que sur les sorties des **commandes CLI** — pas sur le reste du contexte envoyé au modèle.
 
 ---
 
@@ -246,9 +376,21 @@ La liste complète avec les détails de filtrage par commande est disponible dan
 | Gratuit | Oui, entièrement |
 | Économies mesurées | 60–90% de tokens par commande CLI |
 | Plugin IDE | ❌ Aucun — fonctionne au niveau du terminal |
+| Ce que RTK fait | Compresse les sorties CLI avant injection dans le contexte LLM |
+| Ce que RTK ne fait pas | Qualité code, analyse statique, réduction des fichiers ou prompts |
 
 !!! success "Recommandation"
     Lancez `rtk init --global` une seule fois. Ensuite, chaque session Copilot Agent ou Claude Code consommera automatiquement 60 à 90 % de tokens en moins sur les sorties de commandes, sans rien changer à votre workflow.
+
+---
+
+## Sources officielles
+
+- [RTK — Introduction](https://www.mintlify.com/rtk-ai/rtk/introduction) (vérifié le 2026-06-17)
+- [RTK — Commands overview](https://www.mintlify.com/rtk-ai/rtk/commands/overview) (vérifié le 2026-06-17)
+- [RTK — GitHub Releases (binaires officiels)](https://github.com/rtk-ai/rtk/releases) (vérifié le 2026-06-17)
+- [RTK — Site officiel](https://www.rtk-ai.app/) (vérifié le 2026-06-17)
+- [RTK — Dépôt GitHub rtk-ai/rtk](https://github.com/rtk-ai/rtk) (vérifié le 2026-06-17)
 
 ---
 
