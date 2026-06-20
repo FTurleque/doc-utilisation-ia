@@ -113,6 +113,16 @@
   font-weight: 600;
 }
 
+.badge-cli {
+  background-color: #2d2d2d;
+  color: #ffffff;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
 /* Touchs clavier (kbd) */
 kbd {
   background-color: var(--md-default-fg-color--lightest);

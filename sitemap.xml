@@ -2,526 +2,594 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/appendices/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/appendices/faq/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/appendices/raccourcis-clavier/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/appendices/ressources-externes/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/appendices/templates-configuration/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/assets/templates/sonar/README-rtk-sonar.example/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/assets/templates/sonar/sonar-batch-fix.prompt/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/assets/templates/sonar/sonar-fix.prompt/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/assets/templates/sonar/sonar-remediation.agent/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/assets/templates/sonar/sonar-triage.prompt/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/assets/templates/sonar/sonar.instructions/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-1-installation/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-1-installation/comparaison/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-1-installation/intellij/reference/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-1-installation/intellij/tutoriel/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-1-installation/vscode/reference/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-1-installation/vscode/tutoriel/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/comparaison-ecosystemes/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/java-spring-boot/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/java/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/nodejs-express/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/nodejs-react/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/python/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-10-cas-usage/react-typescript/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-11-troubleshooting/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-11-troubleshooting/comparaison-problemes/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-11-troubleshooting/logs-diagnostic/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-11-troubleshooting/problemes-courants/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-11-troubleshooting/procedures-reparation/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/abonnements/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/historique-modifications/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/leviers-economie/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/modes-quand-utiliser/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/patterns-allers-retours/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/premium-requests/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-12-couts-gouvernance/workflow-recommande/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/amazon-q-developer/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/codeium-windsurf/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/comparaison/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/continue-dev/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/lm-studio/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/ollama/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/openskills/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/outils-complementaires/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/recommandations-taille-type-application/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/rtk-sonar/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/rtk/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/sonarqube-vscode/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/sonarqube/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/stack-prete-15-min-intellij/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/stack-prete-15-min-vscode/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/supermaven/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/tabnine/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-13-outils-economies/toon/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-14-veille-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-14-veille-ia/newsletters-communautes/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-14-veille-ia/securite-risques/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-14-veille-ia/sources-officielles/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-14-veille-ia/videos-podcasts/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/cas-sectoriels-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/checklist-audit-interne/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/comparaison/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/etudes-de-cas-2024-2026/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/exercices-tabletop-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/kpi-soc-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/matrice-controles-menaces/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/modeles-fiches-incident/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/page-principale/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/plan-90-jours/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-15-hacker-ia/playbook-incident-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-2-parametrage/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-2-parametrage/comparaison-parametres/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-2-parametrage/intellij-parametrage/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-2-parametrage/vscode-parametrage/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3-cli-modes/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3-cli-modes/comparaison/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3-cli-modes/page-principale/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/architecture-claude/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/cookbook/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/couts-quotas/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/hooks-avances/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/installation/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/mcp-sources-externes/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/migration-30-60-90/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/modeles-claude/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/plugins-equipe/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/securite-gouvernance/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/subagents-orchestration/</loc>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-3b-claude-code-migration-copilot/workflows-ci/</loc>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/applyto-avance/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/comparaison-contexte/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/concepts/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/guide-agents/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/guide-hooks/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/guide-instructions/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/guide-skills/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/intellij-contexte/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
+    </url>
+    <url>
+         <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/orchestration-multi-agents/</loc>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/parametres-depot/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/prompt-files/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-4-contexte/vscode-contexte/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-5-prompt-engineering/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-5-prompt-engineering/avec-copilot/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-5-prompt-engineering/fondamentaux/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-5-prompt-engineering/techniques-avancees/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-5-prompt-engineering/techniques-intermediaires/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/algorithmes-courants/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/comparaison-ecosystemes-ml/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/comparaison-outils/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/concepts-fondamentaux/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/copilot-workflow-ml/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/deep-learning/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/mlops-deploiement/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/notebooks-jupyter/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-6-machine-learning/python-data-science/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/cas-usage-secteurs/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/concepts/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/implementation/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/niveau-1/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/niveau-2/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/niveau-3/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-7-rag/optimisation-avancee/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-8-deep-learning/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-8-deep-learning/architectures-deep-learning/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-8-deep-learning/comparaison/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-8-deep-learning/concevoir-entrainer/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-8-deep-learning/fondations-mathematiques/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-8-deep-learning/optimisation-performance/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-8-deep-learning/reseaux-neurones/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-9-bonnes-pratiques/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-9-bonnes-pratiques/organisation-code/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-9-bonnes-pratiques/performance/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-9-bonnes-pratiques/productivite/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-9-bonnes-pratiques/securite-qualite/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-9-bonnes-pratiques/utilisation-effective/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
     <url>
          <loc>https://fturleque.github.io/doc-utilisation-ia/chapitre-9-bonnes-pratiques/workflows-ia/</loc>
-         <lastmod>2026-06-17</lastmod>
+         <lastmod>2026-06-20</lastmod>
     </url>
 </urlset>
