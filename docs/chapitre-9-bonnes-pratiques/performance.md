@@ -36,7 +36,6 @@ Copilot envoie le contenu des fichiers ouverts comme contexte. Un fichier de 500
 2. **Désactiver pour les types de fichiers peu utiles** :
 
 ```json
-// .vscode/settings.json
 {
     "github.copilot.enable": {
         "*": true,
@@ -56,7 +55,6 @@ Un délai très court (< 200 ms) déclenche beaucoup de requêtes fréquentes, s
 
 === ":material-microsoft-visual-studio-code: VS Code"
     ```json
-    // .vscode/settings.json
     {
         "editor.quickSuggestionsDelay": 300,
         "github.copilot.editor.enableAutoCompletions": true
@@ -76,7 +74,6 @@ Un délai très court (< 200 ms) déclenche beaucoup de requêtes fréquentes, s
 Copilot peut s'activer dans des fichiers de configuration (JSON, YAML, XML) ou de documentation (Markdown). Ces suggestions sont souvent de faible valeur et consomment des ressources.
 
 ```json
-// .vscode/settings.json — Désactiver pour les types non essentiels
 {
     "github.copilot.enable": {
         "*": true,
@@ -182,38 +179,25 @@ Dans `idea.log`, cherchez les lignes contenant `Copilot` pour identifier les err
 
 ## Maîtriser la consommation MCP
 
-Activer des MCPs multiplie mécaniquement le nombre de requêtes et les tokens consommés. Il est important de comprendre ces deux impacts avant de configurer plusieurs serveurs.
+Activer des MCPs peut multiplier les appels et, surtout, le volume de contexte injecté dans Copilot. Le bon réflexe n’est pas de supposer qu’un appel MCP coûte toujours la même chose, mais de contrôler **combien d’informations utiles** chaque réponse renvoie au modèle.
 
-**1. Chaque appel d'outil MCP = 1 requête**
+### Les deux effets à surveiller
 
-Chaque invocation d'outil MCP (interroger Jira, rechercher dans la doc, exécuter une requête SQL) est comptabilisée comme une requête individuelle dans le compteur GitHub Copilot, au même titre qu'une question dans le Chat.
-
-**2. La réponse MCP est injectée dans la fenêtre de contexte → tokens consommés**
-
-Le résultat retourné par le serveur (liste de tickets, rapport SonarQube, page de documentation) est transmis directement au modèle dans la **fenêtre de contexte**. Plus la réponse est volumineuse, plus elle consomme de tokens — réduisant l'espace disponible pour votre code.
-
-**Exemple d'escalade en mode Agent**
-
-| Étape | Déclencheur | Requêtes | Tokens estimés |
-|-------|-------------|----------|----------------|
-| 1 | Question : « Analyse ce composant et ouvre un ticket Jira » | +1 | ~500 |
-| 2 | Appel MCP SonarQube → rapport d'analyse | +1 | +800 |
-| 3 | Appel MCP Jira → liste des projets | +1 | +300 |
-| 4 | Appel MCP Jira → création du ticket | +1 | +200 |
-| **Total** | | **4 requêtes** | **~1 800 tokens** |
-
-Sans MCP, la même demande : **1 requête**, ~500 tokens.
+| Effet | Ce qui se passe | Comment le limiter |
+|---|---|---|
+| Appels d’outils | L’agent peut enchaîner recherche, lecture et triage | N’expose que les outils nécessaires et borne les résultats |
+| Contexte injecté | La réponse MCP est copiée dans la fenêtre de contexte | Réduire les sections, les domaines et la taille des réponses |
 
 !!! warning "Effet multiplicateur en mode Agent"
-    En mode Agent, Copilot peut enchaîner plusieurs appels MCP automatiquement sans confirmation. Un agent face à une tâche ambiguë peut multiplier les appels silencieusement. Gardez `Auto-approve` désactivé pendant la prise en main et activez uniquement les MCPs réellement utiles.
+    En mode Agent, Copilot peut enchaîner plusieurs appels MCP automatiquement sans confirmation. Un agent face à une tâche ambiguë peut multiplier les appels silencieusement. Garde `Auto-approve` désactivé pendant la prise en main et active uniquement les MCPs réellement utiles.
 
 ### Bonnes pratiques
 
-- **Activez uniquement les MCPs dont vous avez besoin** — chaque serveur enregistré est potentiellement invoqué par l'agent dès qu'il juge cela pertinent.
-- **Formulez des requêtes ciblées** — précisez « Analyse uniquement `OrderService.java` » plutôt que « Analyse tout ».
-- **Préférez les MCPs avec réponses compactes** — 50 lignes JSON coûtent moins qu'une page HTML entière.
-- **Vérifiez le compteur d'utilisation** via [github.com/settings/copilot](https://github.com/settings/copilot) si vous êtes sur un plan avec quota.
-- **N'utilisez pas un MCP pour parcourir votre propre code** (voir section suivante).
+- **Active uniquement les MCPs dont tu as besoin** — chaque serveur enregistré est potentiellement invoqué par l’agent dès qu’il le juge pertinent.
+- **Formule des requêtes ciblées** — précise « Analyse uniquement `OrderService.java` » plutôt que « Analyse tout ».
+- **Préférez les réponses compactes** — quelques lignes de texte utiles coûtent moins qu’une page complète injectée dans le contexte.
+- **Vérifie le compteur d’utilisation** via [github.com/settings/copilot](https://github.com/settings/copilot) si tu es sur un plan avec quota.
+- **N’utilise pas un MCP pour parcourir ton propre code** (voir section suivante).
 
 ### MCP et code browsing — votre code local n'a pas besoin de MCP
 
@@ -228,10 +212,10 @@ En mode Agent, Copilot dispose déjà d'**outils intégrés** pour faire exactem
 | Votre code, vos fichiers locaux | Accès natif de l'agent (0 MCP) |
 | Base de données distante | MCP DB (ex. DBHub) |
 | Tickets Jira / Confluence | MCP Atlassian |
-| Documentation externe volumineuse | MCP Context7, Microsoft Docs |
+| Documentation officielle | MCP web borné dédié aux sources validées |
 | Rapport qualité SonarQube | MCP SonarQube |
 
-Context7 apporte une vraie valeur en **sélectionnant les extraits pertinents** dans une documentation de 10 000 pages — ce qu'un agent ne peut pas faire nativement. Un MCP qui lit vos fichiers locaux, lui, est inutile et coûteux.
+Un MCP utile pour la documentation doit sélectionner les extraits pertinents dans des sources officielles et compactes. Un MCP qui lit vos fichiers locaux, lui, est inutile et coûteux.
 
 ### Accéder à des fichiers hors du projet courant
 

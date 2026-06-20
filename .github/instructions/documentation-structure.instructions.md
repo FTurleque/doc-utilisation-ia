@@ -223,6 +223,8 @@ Concepts clés couverts :
 - **`.github/copilot-instructions.md`** — configurer les conventions du projet une fois, Copilot les applique toujours
 ```
 
+---
+
 ### Convention obligatoire : section Sources
 
 Si une page contient des références externes, la section de traçabilité doit respecter strictement ce format :
@@ -239,7 +241,45 @@ Règles associées :
 - Ne pas mettre d'URL nue en prose dans cette section
 - Conserver exactement la mention `consulté le AAAA-MM-JJ`
 
----
+## Format obligatoire : Dates de consultation des sources
+
+**Toute page AVEC une section `## Sources` ou `## Sources et provenance` DOIT inclure la date de consultation entre parenthèses** pour chaque lien. Cela garantit la traçabilité et permet de vérifier l'obsolescence des sources officielles.
+
+### Formats acceptés
+
+#### Format 1 : Liste de liens (chapitres 2, 4, etc.)
+
+```markdown
+## Sources
+
+- GitHub Docs — *[Using GitHub Copilot](https://docs.github.com/...)* (consulté le 2026-06-20)
+- JetBrains Help — *[GitHub Copilot](https://www.jetbrains.com/...)* (consulté le 2026-06-20)
+```
+
+#### Format 2 : Tableau de sources (chapitre 15, etc.)
+
+```markdown
+## Sources et provenance
+
+| Domaine | Source |
+|---|---|
+| Risques LLM | [OWASP Top 10 for LLM Applications](https://owasp.org/...) (consulté le 2026-06-20) |
+| Techniques adverses | [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20) |
+```
+
+### Règles obligatoires
+
+- **Format de date** : `(consulté le YYYY-MM-DD)` — toujours en minuscules, après le lien
+- **Une date par lien** — même si deux sources ont été consultées le même jour
+- **Date actuelle minimale** : la date de la dernière consultation ou vérification de la source
+- **Régularité** : Mettre à jour systématiquement les dates lors d'une révision complète de la page
+
+### Pourquoi cette règle ?
+
+- **Traçabilité** : Savoir précisément quand une source a été vérifiée permet de détecter l'obsolescence
+- **Maintenance collaborative** : Les agents IA (comme `official-doc-sync`) utilisent ces dates pour cibler les mises à jour
+- **Conformité** : Aligne la documentation sur les meilleures pratiques de source officielle tracking
+
 
 ## Checklist pour une nouvelle page
 
@@ -250,6 +290,6 @@ Règles associées :
 - [ ] Admonitions utilisées pour les conseils et avertissements
 - [ ] Onglets utilisés pour les différences IntelliJ / VS Code
 - [ ] **Section `## Prochaine étape` présente en fin de page** (voir format ci-dessus)
-- [ ] Si sources externes: section `## Sources` avec items au format `[Titre](URL) - consulté le AAAA-MM-JJ` (sans URL nue, sans titre alternatif)
+- [ ] **Si `## Sources` ou `## Sources et provenance` présent : dates `(consulté le YYYY-MM-DD)` sur chaque lien**
 - [ ] `mkdocs.yml` mis à jour avec l'entrée de navigation
 - [ ] `py -m mkdocs build` exécuté sans erreur

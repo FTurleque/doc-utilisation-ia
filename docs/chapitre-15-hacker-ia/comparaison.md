@@ -78,11 +78,11 @@ Cette page compare les réflexes de sécurité à appliquer dans les deux IDE qu
 
 ## Sources
 
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [MITRE ATLAS](https://atlas.mitre.org/)
-- [CISA AI](https://www.cisa.gov/ai)
-- [ANSSI](https://www.ssi.gouv.fr/)
+- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20)
+- [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20)
+- [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20)
+- [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20)
 
 !!! tip "Lecture rapide"
     Utilise OWASP pour les risques applicatifs, NIST pour la gouvernance, MITRE ATLAS pour la modélisation de menace et CISA/ANSSI pour les pratiques opérationnelles.

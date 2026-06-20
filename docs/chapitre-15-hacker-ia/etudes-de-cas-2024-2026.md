@@ -155,14 +155,14 @@ L'IA facilite le tri, la synthèse et la priorisation d'informations publiques p
 
 | Domaine | Source |
 |---|---|
-| Risques LLM applicatifs | [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) |
-| Techniques adverses IA | [MITRE ATLAS](https://atlas.mitre.org/) |
-| Tendances de menaces en Europe | [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) |
-| Recommandations cyber et IA | [CISA AI](https://www.cisa.gov/ai) |
-| Gouvernance risque IA | [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) |
-| Cybercriminalité organisée | [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports) |
-| Sécurité code et agents | [GitHub Security Blog - Secure Code Game](https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/) |
-| Vulgarisation sectorielle complémentaire | [Google Cloud Q&A CISO](https://cloud.google.com/transform/truths-about-ai-hacking-every-ciso-needs-to-know-qa?hl=en), [OPSWAT](https://french.opswat.com/blog/ai-hacking-how-hackers-use-artificial-intelligence-in-cyberattacks) |
+| Risques LLM applicatifs | [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20) |
+| Techniques adverses IA | [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20) |
+| Tendances de menaces en Europe | [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) (consulté le 2026-06-20) |
+| Recommandations cyber et IA | [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20) |
+| Gouvernance risque IA | [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20) |
+| Cybercriminalité organisée | [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports) (consulté le 2026-06-20) |
+| Sécurité code et agents | [GitHub Security Blog - Secure Code Game](https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/) (consulté le 2026-06-20) |
+| Vulgarisation sectorielle complémentaire | [Google Cloud Q&A CISO](https://cloud.google.com/transform/truths-about-ai-hacking-every-ciso-needs-to-know-qa?hl=en) (consulté le 2026-06-20), [OPSWAT](https://french.opswat.com/blog/ai-hacking-how-hackers-use-artificial-intelligence-in-cyberattacks) (consulté le 2026-06-20) |
 
 !!! tip "Comment exploiter ces sources"
     Utilise les référentiels (OWASP, NIST, MITRE, CISA, ENISA) pour définir tes contrôles, puis utilise les articles sectoriels pour sensibiliser les équipes non techniques.

@@ -130,13 +130,13 @@ Campagne de désinformation ciblée combinant contenus générés et usurpation 
 
 ## Sources
 
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [CISA AI](https://www.cisa.gov/ai)
-- [ANSSI](https://www.ssi.gouv.fr/)
-- [MITRE ATLAS](https://atlas.mitre.org/)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports)
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) (consulté le 2026-06-20)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20)
+- [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20)
+- [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20)
+- [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20)
+- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20)
+- [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports) (consulté le 2026-06-20)
 
 ---
 

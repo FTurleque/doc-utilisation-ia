@@ -124,10 +124,10 @@ Detecter sans IA
 
 ## Sources
 
-- SonarQube for IDE: [Portail documentation](https://docs.sonarsource.com/sonarqube-for-ide/) (vérifié le 2026-06-15)
-- SonarQube for IDE pour VS Code: [Documentation dédiée](https://docs.sonarsource.com/sonarqube-for-vs-code/) (vérifié le 2026-06-15)
-- SonarQube MCP Server: [Documentation officielle](https://docs.sonarsource.com/sonarqube-mcp-server/) (vérifié le 2026-06-15)
-- GitHub Copilot: [Use MCP in your IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp) (vérifié le 2026-06-15)
+- SonarQube for IDE: [Portail documentation](https://docs.sonarsource.com/sonarqube-for-ide/) (consulté le 2026-06-15)
+- SonarQube for IDE pour VS Code: [Documentation dédiée](https://docs.sonarsource.com/sonarqube-for-vs-code/) (consulté le 2026-06-15)
+- SonarQube MCP Server: [Documentation officielle](https://docs.sonarsource.com/sonarqube-mcp-server/) (consulté le 2026-06-15)
+- GitHub Copilot: [Use MCP in your IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp) (consulté le 2026-06-15)
 
 ---
 

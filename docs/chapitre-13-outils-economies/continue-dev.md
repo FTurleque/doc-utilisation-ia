@@ -154,10 +154,10 @@ et un filtrage du contexte avant toute analyse IA.
 
 ## Sources
 
-- Documentation officielle: [Continue Docs](https://docs.continue.dev/) (consultée le 2026-06-07)
-- Site officiel: [continue.dev](https://www.continue.dev/) (consultée le 2026-06-07)
-- Dépôt officiel: [continuedev/continue](https://github.com/continuedev/continue) (consultée le 2026-06-07)
-- Extension VS Code: [Continue sur Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue) (consultée le 2026-06-07)
+- Documentation officielle: [Continue Docs](https://docs.continue.dev/) (consulté le 2026-06-07)
+- Site officiel: [continue.dev](https://www.continue.dev/) (consulté le 2026-06-07)
+- Dépôt officiel: [continuedev/continue](https://github.com/continuedev/continue) (consulté le 2026-06-07)
+- Extension VS Code: [Continue sur Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue) (consulté le 2026-06-07)
 
 ---
 

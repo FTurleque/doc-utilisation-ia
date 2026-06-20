@@ -386,11 +386,11 @@ flowchart TD
 
 ## Sources
 
-- [RTK — Introduction](https://www.mintlify.com/rtk-ai/rtk/introduction) (vérifié le 2026-06-17)
-- [RTK — Commands overview](https://www.mintlify.com/rtk-ai/rtk/commands/overview) (vérifié le 2026-06-17)
-- [RTK — GitHub Releases (binaires officiels)](https://github.com/rtk-ai/rtk/releases) (vérifié le 2026-06-17)
-- [RTK — Site officiel](https://www.rtk-ai.app/) (vérifié le 2026-06-17)
-- [RTK — Dépôt GitHub rtk-ai/rtk](https://github.com/rtk-ai/rtk) (vérifié le 2026-06-17)
+- [RTK — Introduction](https://www.mintlify.com/rtk-ai/rtk/introduction) (consulté le 2026-06-17)
+- [RTK — Commands overview](https://www.mintlify.com/rtk-ai/rtk/commands/overview) (consulté le 2026-06-17)
+- [RTK — GitHub Releases (binaires officiels)](https://github.com/rtk-ai/rtk/releases) (consulté le 2026-06-17)
+- [RTK — Site officiel](https://www.rtk-ai.app/) (consulté le 2026-06-17)
+- [RTK — Dépôt GitHub rtk-ai/rtk](https://github.com/rtk-ai/rtk) (consulté le 2026-06-17)
 
 ---
 

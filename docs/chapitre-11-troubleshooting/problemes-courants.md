@@ -440,10 +440,10 @@ La suggestion apparaît mais s'arrête au milieu d'une ligne, d'une fonction, ou
 
 ## Sources
 
-- [Troubleshoot GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot) - consulté le 2026-06-03
-- [Troubleshoot common issues](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues) - consulté le 2026-06-03
-- [View logs for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/view-logs) - consulté le 2026-06-03
-- [Get code suggestions in your IDE](https://docs.github.com/en/copilot/how-tos/get-code-suggestions/get-ide-code-suggestions) - consulté le 2026-06-03
+- [Troubleshoot GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot) (consulté le 2026-06-03)
+- [Troubleshoot common issues](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues) (consulté le 2026-06-03)
+- [View logs for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/view-logs) (consulté le 2026-06-03)
+- [Get code suggestions in your IDE](https://docs.github.com/en/copilot/how-tos/get-code-suggestions/get-ide-code-suggestions) (consulté le 2026-06-03)
 
 ---
 
