@@ -67,6 +67,20 @@ Introduction courte du chapitre.
 | [Page 2](page2.md) | Ce que couvre cette page |
 ```
 
+## Règle éditoriale : gestion des badges
+
+Les badges sont placés **sur une ligne dédiée immédiatement après le H1**.
+
+Règles d'usage :
+
+- Utiliser `<span class="badge-intellij">IntelliJ</span>` si la page contient des instructions spécifiques IntelliJ IDEA.
+- Utiliser `<span class="badge-vscode">VS Code</span>` si la page contient des instructions spécifiques Visual Studio Code.
+- Utiliser `<span class="badge-cli">CLI</span>` si la page couvre principalement des commandes terminal, scripts, workflows CI/CD ou outillage en ligne de commande.
+- Combiner plusieurs badges IDE (`badge-intellij` + `badge-vscode`) quand la page traite les deux environnements.
+- Combiner les badges IDE avec `badge-cli` quand la page mêle manipulations IDE et étapes terminal.
+- Sur une page strictement CLI, ne pas ajouter de badge IDE.
+- Ne pas modifier les badges déjà en place d'un chapitre stable sans demande explicite.
+
 ## Structure d'une page de comparaison
 
 Les pages `comparaison-*.md` suivent ce schéma :
@@ -231,7 +245,7 @@ Règles associées :
 
 - [ ] Fichier créé dans le bon chapitre avec nommage `kebab-case.md`
 - [ ] Page commence par un `# Titre H1`
-- [ ] Badges de niveau et/ou IDE présents après le H1
+- [ ] Badges de niveau et/ou contexte (IDE/CLI) présents après le H1
 - [ ] Contenu structuré avec `## H2` et `### H3`
 - [ ] Admonitions utilisées pour les conseils et avertissements
 - [ ] Onglets utilisés pour les différences IntelliJ / VS Code

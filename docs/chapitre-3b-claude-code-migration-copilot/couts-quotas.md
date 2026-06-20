@@ -131,10 +131,11 @@ graph TD
 
 | Aspect | GitHub Copilot | Claude Code |
 |--------|----------------|-------------|
-| Modèle de base | Abonnement par siège | Abonnement Pro/Max **ou** API à l'usage |
-| Coût des agents | Premium requests au-delà du quota | Tokens consommés par l'agent |
+| Modèle de base | Abonnement par siège (Pro/Business/Enterprise) | Abonnement Pro/Max **ou** API à l'usage |
+| Quotas d'usage | Limites mensuelles intégrées au forfait | Limites selon le plan, excédent payable (API) |
+| Agents/Extensions | Abonnement séparé (ex: Copilot Pro pour agents) | Tokens consommés par l'agent (inclus dans l'API) |
 | Prévisibilité | Élevée (forfait) | Élevée en abonnement, variable en API |
-| Pic d'usage | Quotas premium | Coût proportionnel (API) |
+| Pic d'usage | Atteinte du quota = blocage temporaire | Coût proportionnel (API) |
 | Cloud privé | — | Bedrock / Vertex (facturation cloud) |
 
 !!! warning "Comparez à usage réel équivalent"
