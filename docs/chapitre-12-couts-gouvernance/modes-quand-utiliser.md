@@ -162,6 +162,11 @@ graph TD
 
 ---
 
+## Sources
+
+- [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-20
+- [GitHub Copilot usage-based billing](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Workflow recommandé](workflow-recommande.md)** : séquence optimale au quotidien combinant décisions sur les modes, modèles et contexte pour maximiser la productivité et minimiser le gaspillage.

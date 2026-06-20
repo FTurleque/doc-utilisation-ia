@@ -290,6 +290,11 @@ print(f"Confiance : {probabilite[0].max():.1%}")
 
 ---
 
+## Sources
+
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Python & Data Science avec GitHub Copilot](python-data-science.md)** : maîtriser le stack pandas, numpy et scikit-learn pour mettre en œuvre ce workflow en pratique.

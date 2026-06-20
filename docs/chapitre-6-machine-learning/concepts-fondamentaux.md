@@ -209,6 +209,11 @@ print(df["PV"].describe())  # Résumé complet
 
 ---
 
+## Sources
+
+- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Algorithmes Courants du Machine Learning](algorithmes-courants.md)** : découvrir les principaux algorithmes et savoir lequel choisir selon votre problème.

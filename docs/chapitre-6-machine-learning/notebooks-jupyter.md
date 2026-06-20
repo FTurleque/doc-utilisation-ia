@@ -266,6 +266,11 @@ Outputs:
 
 ---
 
+## Sources
+
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[MLOps & Déploiement de Modèles avec Copilot](mlops-deploiement.md)** : passer du prototype en notebook à un modèle déployé et monitoré en production.

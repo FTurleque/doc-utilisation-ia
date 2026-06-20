@@ -264,6 +264,10 @@ public UserResponse create(CreateUserRequest request) {
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Java & Spring Boot](java-spring-boot.md)** : maîtriser les patterns Spring Boot pour les backends enterprise et comment Copilot génère des services, controllers et tests de haute qualité.

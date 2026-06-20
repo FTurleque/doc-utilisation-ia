@@ -66,7 +66,7 @@ Cette matrice relie les menaces IA les plus fréquentes à des contrôles concre
 
 ---
 
-## Sources et provenance
+## Sources
 
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

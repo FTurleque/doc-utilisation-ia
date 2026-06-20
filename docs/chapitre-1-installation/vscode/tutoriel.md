@@ -276,6 +276,11 @@ A : C'est normal — **vous êtes responsable** de vérifier chaque suggestion. 
 
 ---
 
+## Sources
+
+- [Installing GitHub Copilot in your environment](https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-your-environment) - consulté le 2026-06-20
+- [GitHub Copilot in VS Code](https://docs.github.com/en/copilot/getting-started-with-github-copilot?tool=vscode) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Guide Référence — GitHub Copilot sur VS Code](reference.md)** : documentation complète avec tous les raccourcis, paramétrages avancés, MCP, et fonctionnalités de Copilot sur VS Code.

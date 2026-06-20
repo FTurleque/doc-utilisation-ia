@@ -553,6 +553,12 @@ plt.show()
 
 ---
 
+## Sources
+
+- [Deep Learning book (Goodfellow)](https://www.deeplearningbook.org/) - consulté le 2026-06-20
+- [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
+- [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 Ton modèle fonctionne, mais tu veux le rendre **plus rapide et plus performant** ? Passe à **[Optimisation et performance](optimisation-performance.md)** pour les techniques avancées de régularisation, accélération GPU, et optimisation de modèle.

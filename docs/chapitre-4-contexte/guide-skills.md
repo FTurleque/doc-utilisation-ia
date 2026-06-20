@@ -259,6 +259,11 @@ Si un workflow revient régulièrement (ex: audit sécurité, génération de te
 
 ---
 
+## Sources
+
+- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
+- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Guide Hooks](guide-hooks.md)** : configurer des automatisations déclenchées par les événements de développement (sauvegarde, commit, erreur).

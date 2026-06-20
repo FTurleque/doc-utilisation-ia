@@ -364,6 +364,12 @@ print(f"Probabilité de victoire : {proba[0][0]:.1%}")
 
 ---
 
+## Sources
+
+- [TensorFlow documentation](https://www.tensorflow.org/guide) - consulté le 2026-06-20
+- [PyTorch documentation](https://pytorch.org/docs/stable/index.html) - consulté le 2026-06-20
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Copilot dans les Notebooks Jupyter](notebooks-jupyter.md)** : pratiquer le Deep Learning et le ML directement dans un environnement interactif cellule par cellule.

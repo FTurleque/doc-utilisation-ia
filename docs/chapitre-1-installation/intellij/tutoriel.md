@@ -298,6 +298,11 @@ A : C'est normal — **vous êtes responsable** de vérifier. Lisez la section [
 
 ---
 
+## Sources
+
+- [Installing GitHub Copilot in your environment](https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-your-environment) - consulté le 2026-06-20
+- [GitHub Copilot in JetBrains IDEs](https://docs.github.com/en/copilot/getting-started-with-github-copilot?tool=jetbrains) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Guide Référence — GitHub Copilot sur IntelliJ IDEA](reference.md)** : documentation complète avec tous les raccourcis, paramètres techniques, et fonctionnalités de Copilot sur IntelliJ IDEA.

@@ -289,6 +289,11 @@ graph TD
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+- [Spring Boot documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Node.js & React](nodejs-react.md)** : construire des applications full-stack avec Node.js backend et React frontend, en maximisant la productivité avec Copilot.

@@ -275,6 +275,11 @@ L'agent peut lire et modifier des fichiers **uniquement dans les dossiers du wor
 
 ---
 
+## Sources
+
+- [GitHub Copilot best practices for using GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot) - consulté le 2026-06-20
+- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Workflows IA Complets](workflows-ia.md)** : assembler toutes les pratiques en cycles de développement complets et reproductibles avec Copilot.

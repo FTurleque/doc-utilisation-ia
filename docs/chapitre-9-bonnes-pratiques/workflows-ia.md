@@ -473,6 +473,11 @@ qui aurait détecté ce problème avant qu'il arrive en production.
 
 ---
 
+## Sources
+
+- [GitHub Copilot best practices for using GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot) - consulté le 2026-06-20
+- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/) - consulté le 2026-06-20
+
 ## Chapitres suivants
 
 **[Cas d'Usage par Technologie](../chapitre-10-cas-usage/index.md)** : appliquer toutes ces pratiques sur des exemples concrets par écosystème technologique — Java & Spring Boot, Python & FastAPI, Node.js & TypeScript.

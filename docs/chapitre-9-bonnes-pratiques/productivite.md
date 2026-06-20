@@ -368,6 +368,11 @@ Scénario : Migrer tous les callbacks async vers async/await dans un module
 
 ---
 
+## Sources
+
+- [GitHub Copilot best practices for using GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot) - consulté le 2026-06-20
+- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Sécurité & Qualité](securite-qualite.md)** : valider et sécuriser le code généré pour éviter les pièges courants de la génération IA.

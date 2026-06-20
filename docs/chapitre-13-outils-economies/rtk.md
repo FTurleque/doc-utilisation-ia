@@ -384,7 +384,7 @@ flowchart TD
 
 ---
 
-## Sources officielles
+## Sources
 
 - [RTK — Introduction](https://www.mintlify.com/rtk-ai/rtk/introduction) (vérifié le 2026-06-17)
 - [RTK — Commands overview](https://www.mintlify.com/rtk-ai/rtk/commands/overview) (vérifié le 2026-06-17)

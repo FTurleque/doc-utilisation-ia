@@ -154,6 +154,41 @@ Centrer `:---:` pour les valeurs booléennes/comparatifs. Aligner à gauche par 
 [Bouton secondaire](chemin/vers/page.md){ .md-button }
 ```
 
+## Style des liens — visibilité et accessibilité
+
+Les **liens de contenu** sont stylisés pour être **clairement visibles** sans agresser la vue. Le style est défini dans `docs/stylesheets/extra.v2.css` :
+
+### Aparence des liens
+
+- **Couleur** : bleu soutenu (thème clair) ou bleu prononcé (thème sombre)
+- **Pas de soulignement permanent** pour rester sobre
+- **Soulignement au survol et au focus clavier** pour clarifier l'interaction
+- **Focus ring visible** pour l'accessibilité clavier
+
+### Raison du style
+
+Les liens doivent être :
+1. **Distincts du texte normal** — couleur plus foncée et saturée
+2. **Discrets en repos** — pas de surcharge visuelle
+3. **Clairs à l'interaction** — soulignement et retours visuels
+4. **Accessibles** — focus clavier évident, contraste WCAG AA
+
+### Ne pas modifier
+
+🚫 **Ne pas changer les couleurs ou le style des liens** à la main dans le Markdown. Le style global est centralisé dans la feuille CSS pour garantir la cohérence sur tout le site.
+
+Si tu remarques que les liens ne sont **pas assez visibles** ou trop visuellement intrusifs, **modifie seulement** les variables CSS dans `docs/stylesheets/extra.v2.css` :
+
+```css
+[data-md-color-scheme="default"] {
+  --doc-link-color: #0052cc;        /* couleur du lien */
+  --doc-link-hover-color: #003fa8;  /* couleur au survol */
+  --doc-link-visited-color: #5a3a7d; /* couleur visitée */
+}
+```
+
+C'est à jour maintenant pour toutes les pages ! 🎨
+
 ## Ancres et liens internes
 
 ```markdown

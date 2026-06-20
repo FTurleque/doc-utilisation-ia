@@ -459,4 +459,10 @@ Avant de déployer en production, vérifiez :
 - ✅ Rate limiting sur les appels API
 - ✅ PII redaction (si données sensibles)
 - ✅ Mécanisme de feedback utilisateur (pour amélioration continue)
+---
 
+## Sources
+
+- [LangChain documentation](https://python.langchain.com/docs/introduction/) - consulté le 2026-06-20
+- [LlamaIndex documentation](https://docs.llamaindex.ai/en/stable/) - consulté le 2026-06-20
+- [OpenAI Embeddings guide](https://platform.openai.com/docs/guides/embeddings) - consulté le 2026-06-20

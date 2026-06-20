@@ -366,6 +366,11 @@ graph TD
 
 ---
 
+## Sources
+
+- [Prompt engineering for GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/prompt-engineering-for-github-copilot) - consulté le 2026-06-20
+- [Best practices for using GitHub Copilot in VS Code](https://code.visualstudio.com/docs/copilot/prompt-crafting) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Prompting avec GitHub Copilot](avec-copilot.md)** : appliquer toutes ces techniques directement dans Copilot Chat et l'Agent Mode.

@@ -209,6 +209,22 @@ Concepts clés couverts :
 - **`.github/copilot-instructions.md`** — configurer les conventions du projet une fois, Copilot les applique toujours
 ```
 
+### Convention obligatoire : section Sources
+
+Si une page contient des références externes, la section de traçabilité doit respecter strictement ce format :
+
+```markdown
+## Sources
+
+- [Titre de la source](https://url) - consulté le AAAA-MM-JJ
+```
+
+Règles associées :
+
+- Utiliser uniquement le titre `## Sources` (pas de variante : `## Sources officielles`, `## Références`, etc.)
+- Ne pas mettre d'URL nue en prose dans cette section
+- Conserver exactement la mention `consulté le AAAA-MM-JJ`
+
 ---
 
 ## Checklist pour une nouvelle page
@@ -220,5 +236,6 @@ Concepts clés couverts :
 - [ ] Admonitions utilisées pour les conseils et avertissements
 - [ ] Onglets utilisés pour les différences IntelliJ / VS Code
 - [ ] **Section `## Prochaine étape` présente en fin de page** (voir format ci-dessus)
+- [ ] Si sources externes: section `## Sources` avec items au format `[Titre](URL) - consulté le AAAA-MM-JJ` (sans URL nue, sans titre alternatif)
 - [ ] `mkdocs.yml` mis à jour avec l'entrée de navigation
 - [ ] `py -m mkdocs build` exécuté sans erreur

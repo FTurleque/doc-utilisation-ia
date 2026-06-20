@@ -133,6 +133,12 @@ Le format vidéo et audio est idéal pour la veille : démos pratiques, intervie
 
 ---
 
+## Sources
+
+- [GitHub Blog — AI](https://github.blog/ai-and-ml/) - consulté le 2026-06-20
+- [Anthropic research](https://www.anthropic.com/research) - consulté le 2026-06-20
+- [OpenAI research](https://openai.com/research/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Sécurité, Risques & Failles](securite-risques.md)** : la partie la plus critique de la veille — failles de sécurité des LLMs, prompt injection, exfiltration de données, et les ressources pour s'en protéger.

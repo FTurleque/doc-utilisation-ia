@@ -755,6 +755,11 @@ Les settings du workspace **ont la priorité** sur les settings utilisateur. Uti
 
 ---
 
+## Sources
+
+- [Configuring GitHub Copilot in your environment](https://docs.github.com/en/copilot/configuring-github-copilot) - consulté le 2026-06-20
+- [GitHub Copilot in VS Code — Settings reference](https://code.visualstudio.com/docs/copilot/copilot-settings) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 - [Comparaison des paramètres](comparaison-parametres.md) — IntelliJ vs VS Code côte à côte

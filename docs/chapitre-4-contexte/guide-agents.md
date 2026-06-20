@@ -326,13 +326,18 @@ Dans Copilot Chat :
 
 ---
 
+## Sources
+
+- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
+- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+
 ## Prochaine étape
 
-**[Guide Skills (SKILL.md)](guide-skills.md)** : packager de l'expertise domaine réutilisable que les agents peuvent invoquer à la demande.
+**[Orchestration multi-agents (Copilot & Claude)](orchestration-multi-agents.md)** : faire collaborer plusieurs agents spécialisés et comparer les mécanismes de délégation de Copilot et Claude.
 
 Concepts clés couverts :
 
-- **Qu'est-ce qu'un SKILL.md** — Package de connaissance stable et réutilisable
-- **Emplacement et URI** — `.github/skills/*/SKILL.md` et référençage via `copilot-skill://`
-- **Différence Skills vs Instructions vs Agents** — Tableau comparatif clair
-- **Exemples de skills** — API standards, modèle de domaine, patterns d'architecture
+- **Patterns d'orchestration** — orchestrateur/workers, pipeline, exploration parallèle, critique
+- **Côté Copilot** — champ `agents`, handoffs et contrôle d'invocation
+- **Côté Claude** — subagents isolés et délégation automatique
+- **Bonnes pratiques** — un agent par rôle, outils minimaux, descriptions précises

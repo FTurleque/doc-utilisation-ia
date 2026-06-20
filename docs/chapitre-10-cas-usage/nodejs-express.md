@@ -338,6 +338,11 @@ graph TD
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+- [Express.js documentation](https://expressjs.com/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[React 19 & TypeScript](react-typescript.md)** : maîtriser React 19 avec les Server Components, hooks optimisés et patterns TypeScript que Copilot génère avec excellence.

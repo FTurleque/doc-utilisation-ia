@@ -806,6 +806,11 @@ Sans MCP, la même question aurait coûté **1 requête** et ~500 tokens.
 
 ---
 
+## Sources
+
+- [Installing GitHub Copilot in your environment](https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-your-environment) - consulté le 2026-06-20
+- [GitHub Copilot in VS Code](https://docs.github.com/en/copilot/getting-started-with-github-copilot?tool=vscode) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Paramétrage Avancé — GitHub Copilot sur VS Code](../../chapitre-2-parametrage/vscode-parametrage.md)** : configuration détaillée de tous les paramètres de GitHub Copilot sur VS Code pour adapter Copilot à votre workflow.

@@ -435,6 +435,12 @@ graph LR
 
 ---
 
+## Sources
+
+- [Deep Learning book (Goodfellow)](https://www.deeplearningbook.org/) - consulté le 2026-06-20
+- [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
+- [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 Pour choisir le bon framework et comparer leurs forces respectives, consulte la **[Comparaison des frameworks](comparaison.md)** : TensorFlow vs PyTorch vs Keras vs JAX.

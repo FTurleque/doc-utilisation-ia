@@ -288,6 +288,11 @@ Ici, vous pouvez :
 
 ---
 
+## Sources
+
+- [Installing GitHub Copilot in your environment](https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-your-environment) - consulté le 2026-06-20
+- [GitHub Copilot in JetBrains IDEs](https://docs.github.com/en/copilot/getting-started-with-github-copilot?tool=jetbrains) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Paramétrage IntelliJ IDEA](../../chapitre-2-parametrage/intellij-parametrage.md)** : configuration détaillée de tous les paramètres de GitHub Copilot sur IntelliJ IDEA pour adapter Copilot à votre workflow.

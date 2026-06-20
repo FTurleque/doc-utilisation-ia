@@ -521,6 +521,11 @@ Copilot utilise vos onglets ouverts comme contexte supplémentaire. Organisez vo
 
 ---
 
+## Sources
+
+- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
+- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Comparaison — Contexte & Personnalisation entre Éditeurs](comparaison-contexte.md)** : tableau comparatif complet des fonctionnalités Copilot entre IntelliJ IDEA et VS Code, avec recommandations par contexte et écosystème.

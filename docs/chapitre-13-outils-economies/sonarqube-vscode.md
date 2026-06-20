@@ -122,7 +122,7 @@ Detecter sans IA
 
 ---
 
-## Sources officielles
+## Sources
 
 - SonarQube for IDE: [Portail documentation](https://docs.sonarsource.com/sonarqube-for-ide/) (vérifié le 2026-06-15)
 - SonarQube for IDE pour VS Code: [Documentation dédiée](https://docs.sonarsource.com/sonarqube-for-vs-code/) (vérifié le 2026-06-15)
@@ -141,4 +141,3 @@ Concepts clés couverts :
 - **Connected Mode** - aligner IDE et règles d'équipe
 - **Escalade progressive** - VS Code natif puis Copilot ciblé
 - **Coût maîtrisé** - contexte borné et validation locale
-

@@ -145,7 +145,7 @@ Livrables: décisions, timeline, actions correctives priorisées.
 
 ---
 
-## Sources et provenance
+## Sources
 
 - [CISA AI](https://www.cisa.gov/ai)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

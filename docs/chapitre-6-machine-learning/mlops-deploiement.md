@@ -349,6 +349,12 @@ async def predict(pokemon: PokemonFeatures):
 
 ---
 
+## Sources
+
+- [TensorFlow documentation](https://www.tensorflow.org/guide) - consulté le 2026-06-20
+- [PyTorch documentation](https://pytorch.org/docs/stable/index.html) - consulté le 2026-06-20
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Comparaison des Écosystèmes ML](comparaison-ecosystemes-ml.md)** : Python, R ou Julia — comparer les langages selon votre contexte et l'intégration avec Copilot.

@@ -153,6 +153,12 @@ Si tu préfères les emails aux flux RSS :
 
 ---
 
+## Sources
+
+- [GitHub Blog — AI](https://github.blog/ai-and-ml/) - consulté le 2026-06-20
+- [Anthropic research](https://www.anthropic.com/research) - consulté le 2026-06-20
+- [OpenAI research](https://openai.com/research/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 Retour à l'**[index du chapitre](index.md)** ou consulte les **[Appendices — Ressources Externes](../appendices/ressources-externes.md)** pour des liens complémentaires.

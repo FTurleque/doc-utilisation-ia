@@ -264,6 +264,10 @@ Aucune suggestion, pas d'icône dans la status bar
 
 ---
 
+## Sources
+
+- [Troubleshooting GitHub Copilot](https://docs.github.com/en/copilot/troubleshooting-github-copilot) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Comparaison des Problèmes](comparaison-problemes.md)** : tableau comparatif détaillé des problèmes spécifiques à chaque IDE et leurs solutions différentes dans IntelliJ vs VS Code.

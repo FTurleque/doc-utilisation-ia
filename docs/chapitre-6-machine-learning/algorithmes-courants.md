@@ -220,6 +220,11 @@ probas = gmm.predict_proba(X)  # Probabilité d'appartenir à chaque cluster
 
 ---
 
+## Sources
+
+- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Copilot pour le Workflow ML](copilot-workflow-ml.md)** : maintenant que vous connaissez les algorithmes, découvrez comment Copilot vous assiste à chaque phase du projet ML.

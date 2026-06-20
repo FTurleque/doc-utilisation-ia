@@ -283,6 +283,10 @@ frontiere, pas un remplacement universel de JSON.
 
 ---
 
+## Sources
+
+- [Toon documentation](https://toon.dev) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[OpenSkills](openskills.md)** : un installateur universel de skills pour agents IA — standardise et partage des capacités entre Copilot, Claude Code, Cursor et d'autres agents.

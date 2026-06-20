@@ -135,7 +135,7 @@ A retenir:
 
 ---
 
-## Sources officielles
+## Sources
 
 - [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulte le 2026-06-01
 - [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) - consulte le 2026-06-01

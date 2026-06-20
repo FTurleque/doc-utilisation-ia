@@ -151,7 +151,7 @@ L'IA facilite le tri, la synthèse et la priorisation d'informations publiques p
 
 ---
 
-## Sources et provenance
+## Sources
 
 | Domaine | Source |
 |---|---|

@@ -281,6 +281,11 @@ plt.show()
 
 ---
 
+## Sources
+
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Deep Learning avec GitHub Copilot](deep-learning.md)** : aller au-delà de scikit-learn avec les réseaux de neurones et les frameworks TensorFlow/PyTorch.

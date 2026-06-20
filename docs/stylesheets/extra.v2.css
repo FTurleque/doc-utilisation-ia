@@ -14,6 +14,47 @@
   max-width: 100%;
 }
 
+/* Liens de contenu : visibles mais plus doux */
+[data-md-color-scheme="default"] {
+  --doc-link-color: #0f5fa8;
+  --doc-link-hover-color: #0b4f8f;
+  --doc-link-visited-color: #6b4ca5;
+  --doc-link-focus-ring: rgba(15, 95, 168, 0.28);
+}
+
+[data-md-color-scheme="slate"] {
+  --doc-link-color: #8bc5ff;
+  --doc-link-hover-color: #b3ddff;
+  --doc-link-visited-color: #c2a3ff;
+  --doc-link-focus-ring: rgba(179, 221, 255, 0.28);
+}
+
+.md-content .md-typeset a:not(.md-button):not(.md-logo) {
+  color: var(--doc-link-color);
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+  font-weight: 500;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease, outline-color 0.15s ease;
+}
+
+.md-content .md-typeset a:not(.md-button):not(.md-logo):hover,
+.md-content .md-typeset a:not(.md-button):not(.md-logo):focus-visible {
+  color: var(--doc-link-hover-color);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+.md-content .md-typeset a:not(.md-button):not(.md-logo):focus-visible {
+  outline: 2px solid var(--doc-link-focus-ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.md-content .md-typeset a:not(.md-button):not(.md-logo):visited {
+  color: var(--doc-link-visited-color);
+}
+
 /* Sidebars */
 .md-sidebar {
   width: 280px;
@@ -111,6 +152,16 @@
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+.badge-cli {
+  background-color: #2d2d2d;
+  color: #ffffff;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 /* Touchs clavier (kbd) */
@@ -382,6 +433,40 @@ figure .reduced-screenshot {
   --md-primary-fg-color--light: #003d7a;
   --md-primary-fg-color--dark: #000d1a;
   --md-accent-fg-color: #00d9ff;
+}
+
+/* ============================================================
+   Navigation gauche — mise en évidence de la page active
+   ============================================================ */
+
+/* Page active : style fort pour thème clair */
+[data-md-color-scheme="default"] .md-nav__link--active {
+  color: #0052cc !important;
+  font-weight: 700;
+  border-left: 3px solid #0052cc;
+  padding-left: 0.45rem;
+  background-color: rgba(0, 82, 204, 0.08);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Page active : style fort pour thème sombre */
+[data-md-color-scheme="slate"] .md-nav__link--active {
+  color: #7ec8ff !important;
+  font-weight: 700;
+  border-left: 3px solid #7ec8ff;
+  padding-left: 0.45rem;
+  background-color: rgba(126, 200, 255, 0.12);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Hover sur les liens de nav (thème clair) */
+[data-md-color-scheme="default"] .md-nav__link:hover {
+  color: #0052cc;
+}
+
+/* Hover sur les liens de nav (thème sombre) */
+[data-md-color-scheme="slate"] .md-nav__link:hover {
+  color: #7ec8ff;
 }
 
 

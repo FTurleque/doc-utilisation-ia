@@ -322,6 +322,10 @@ Cette méthode est systématique et garantit d'identifier la bonne extension san
 
 ---
 
+## Sources
+
+- [Troubleshooting GitHub Copilot](https://docs.github.com/en/copilot/troubleshooting-github-copilot) - consulté le 2026-06-20
+
 ## Chapitres suivants
 
 **[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : comprendre les modes d'abonnement, les AI Credits et les leviers pour maîtriser vos dépenses GitHub Copilot.

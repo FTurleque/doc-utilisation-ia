@@ -117,7 +117,7 @@ Les incidents “assistés IA” se distinguent par leur vitesse, leur volume et
 
 ---
 
-## Sources et provenance
+## Sources
 
 - [CISA AI](https://www.cisa.gov/ai)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

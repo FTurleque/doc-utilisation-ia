@@ -30,6 +30,15 @@ Follow these guidelines for formatting and structuring your markdown content:
 - **Line Length**: Break lines at 80 characters to improve readability. Use soft line breaks for long paragraphs.
 - **Whitespace**: Use blank lines to separate sections and improve readability. Avoid excessive whitespace.
 
+## Sources et traçabilité
+
+Pour toute section de références, appliquer **une convention unique et obligatoire** :
+
+- Le titre de section doit être exactement `## Sources`
+- Chaque source doit suivre exactement le format `- [Titre](URL) - consulté le AAAA-MM-JJ`
+- Les URL nues en prose sont interdites dans cette section
+- Les variantes de titre sont interdites (exemples : `## Sources officielles`, `## Références`)
+
 ## Validation Requirements
 
 Ensure compliance with the following validation requirements:
