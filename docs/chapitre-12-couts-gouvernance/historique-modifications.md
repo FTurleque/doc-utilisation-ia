@@ -214,7 +214,7 @@ Ce registre documente ces changements **avec des preuves**, pour permettre à un
 
 ---
 
-## Sources officielles de contrôle
+## Sources
 
 - Changelog Copilot (source primaire pour les mises à jour) : [github.blog/changelog/?label=copilot](https://github.blog/changelog/?label=copilot)
 - Plans et prix : [docs.github.com/fr/copilot/get-started/plans](https://docs.github.com/fr/copilot/get-started/plans)

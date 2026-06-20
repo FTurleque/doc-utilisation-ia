@@ -204,7 +204,7 @@ On voit apparaître des offres de type "AI Hacker", "auto-pentest", "one-click e
 - [ANSSI: Publications et recommandations](https://www.ssi.gouv.fr/)
 - [CISA: AI Security Resources](https://www.cisa.gov/ai)
 
-## Sources et provenance des affirmations de cette page
+## Sources
 
 | Sujet | Source principale |
 |---|---|

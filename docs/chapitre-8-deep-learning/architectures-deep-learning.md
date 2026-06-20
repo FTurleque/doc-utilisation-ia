@@ -469,6 +469,12 @@ graph TD
 
 ---
 
+## Sources
+
+- [Deep Learning book (Goodfellow)](https://www.deeplearningbook.org/) - consulté le 2026-06-20
+- [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
+- [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 Tu connais maintenant les architectures. Passe à l'étape pratique : **[Concevoir et entraîner un réseau de neurones](concevoir-entrainer.md)** — le guide pas à pas pour construire, entraîner et évaluer ton propre modèle.

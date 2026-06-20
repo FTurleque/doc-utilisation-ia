@@ -249,6 +249,13 @@ pip install keras
 
 ---
 
+## Sources
+
+- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+- [TensorFlow documentation](https://www.tensorflow.org/guide) - consulté le 2026-06-20
+- [PyTorch documentation](https://pytorch.org/docs/stable/index.html) - consulté le 2026-06-20
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
 ## Chapitres suivants
 
 **[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** — Implémenter le RAG pas à pas avec code fonctionnel

@@ -105,4 +105,10 @@ Le plugin GitHub Copilot fonctionne sur **tous les IDEs de la suite JetBrains** 
 | **Personnalisation avancée (agents, instructions)** | VS Code obligatoire pour les features `.github/` |
 | **Utilisation en entreprise avec proxy strict** | IntelliJ (auth plus robuste sur proxy) |
 | **Ressources machine limitées (RAM < 8 Go)** | VS Code (plus léger qu'IntelliJ) |
+---
 
+## Sources
+
+- [Installing GitHub Copilot in your environment](https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-your-environment) - consulté le 2026-06-20
+- [GitHub Copilot in JetBrains IDEs](https://docs.github.com/en/copilot/getting-started-with-github-copilot?tool=jetbrains) - consulté le 2026-06-20
+- [GitHub Copilot in VS Code](https://docs.github.com/en/copilot/getting-started-with-github-copilot?tool=vscode) - consulté le 2026-06-20

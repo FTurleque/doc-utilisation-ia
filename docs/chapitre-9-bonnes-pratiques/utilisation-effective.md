@@ -179,6 +179,7 @@ Les **slash commands** sont des raccourcis de prompt intégrés à Copilot Chat 
 | `/newNotebook` | Crée un nouveau Jupyter Notebook | `/newNotebook Analyse exploratoire d'un CSV pandas` |
 | `/terminal` | Explique ou suggère une commande terminal | `/terminal Comment lister les ports ouverts sur Windows ?` |
 | `/search` | Recherche dans la documentation ou le workspace | `/search Où est configuré le middleware Express ?` |
+| `/compact` | Résume l'historique de la conversation pour réduire le contexte | `/compact avant de continuer une session longue` |
 | `/clear` | Efface la conversation Chat en cours | — |
 
 !!! tip "Combiner slash command + contexte"
@@ -486,6 +487,11 @@ et les risques potentiels.
 - **Explorez les alternatives** avec ++alt+bracket-right++ avant de rejeter une suggestion
 
 ---
+
+## Sources
+
+- [GitHub Copilot best practices for using GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot) - consulté le 2026-06-20
+- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/) - consulté le 2026-06-20
 
 ## Prochaine étape
 

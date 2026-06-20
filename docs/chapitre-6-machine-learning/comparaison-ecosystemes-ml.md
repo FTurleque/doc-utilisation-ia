@@ -217,6 +217,13 @@ model = jl.seval("Chain(Dense(10 => 5, relu), Dense(5 => 1))")
 
 ---
 
+## Sources
+
+- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+- [TensorFlow documentation](https://www.tensorflow.org/guide) - consulté le 2026-06-20
+- [PyTorch documentation](https://pytorch.org/docs/stable/index.html) - consulté le 2026-06-20
+- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Comparaison des Outils ML](comparaison-outils.md)** : maintenant que vous avez choisi votre langage, comparez les frameworks ML au sein de l'écosystème Python.

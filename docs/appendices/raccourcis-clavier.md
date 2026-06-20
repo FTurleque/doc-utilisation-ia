@@ -92,6 +92,64 @@ Cherchez "Copilot" dans la boîte de recherche des actions pour trouver toutes l
 
 ---
 
+## Claude Code — raccourcis et commandes
+
+Claude Code étant centré sur la **CLI**, l'essentiel du pilotage passe par des **commandes slash** dans le REPL plutôt que par des raccourcis clavier. Cette section récapitule les deux.
+
+!!! info "Vérifier selon votre version"
+    Les raccourcis des extensions Claude (VS Code, JetBrains) évoluent et peuvent être personnalisés. En cas de doute, consultez la palette de commandes (VS Code) ou **Settings → Keymap** (JetBrains).
+
+### Commandes slash du REPL (toutes plateformes)
+
+| Commande | Description |
+|----------|-------------|
+| `/help` | Liste les commandes disponibles |
+| `/init` | Génère un `CLAUDE.md` de départ |
+| `/status` | Compte, plan, modèle et version |
+| `/login` · `/logout` | Gérer l'authentification |
+| `/model` | Changer de modèle (Haiku / Sonnet / Opus) |
+| `/clear` | Vider le contexte de la conversation |
+| `/compact` | Résumer/compacter le contexte |
+| `/config` | Ouvrir la configuration |
+| `/memory` | Éditer les fichiers mémoire (`CLAUDE.md`) |
+| `/agents` | Gérer les subagents |
+| `/mcp` | Gérer les serveurs MCP |
+| `/plugin` | Gérer les plugins |
+| `/cost` | Afficher le coût en tokens de la session |
+
+### Raccourcis dans le REPL
+
+| Action | Raccourci |
+|--------|-----------|
+| Interrompre la génération | ++escape++ |
+| Nouvelle ligne dans le prompt | ++shift+enter++ |
+| Envoyer le message | ++enter++ |
+| Quitter la session | ++ctrl+c++ (deux fois) ou `/exit` |
+| Référencer un fichier | `@chemin/fichier` |
+| Référencer un dossier | `@chemin/dossier/` |
+
+### Références de contexte (équivalent des variables Copilot)
+
+| Claude Code | Équivalent Copilot |
+|-------------|--------------------|
+| `@fichier:chemin` | `#file` |
+| `@dossier/` | `#codebase` (recherche) |
+| Sélection IDE | `#selection` |
+| `` !`commande` `` (dans une command) | — (injection dynamique) |
+
+### VS Code & JetBrains — points d'entrée
+
+| Action | VS Code | JetBrains |
+|--------|---------|-----------|
+| Ouvrir le panneau Claude | Icône barre latérale / palette `Claude` | Fenêtre d'outils Claude Code |
+| Terminal Claude intégré | Terminal intégré → `claude` | Terminal intégré → `claude` |
+| Personnaliser les raccourcis | ++ctrl+k++ ++ctrl+s++ → « Claude » | Settings → Keymap → « Claude » |
+
+!!! tip "Le terminal reste le point d'entrée universel"
+    Quel que soit l'IDE, ouvrir un terminal intégré et lancer `claude` donne accès à **toutes** les commandes slash, identiques sur Windows, macOS et Linux.
+
+---
+
 ## Comparaison côte-à-côte
 
 | Action | VS Code Windows | IntelliJ Windows |

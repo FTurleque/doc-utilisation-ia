@@ -161,6 +161,12 @@ Si tu ne devais en suivre que 5 :
 
 ---
 
+## Sources
+
+- [GitHub Blog — AI](https://github.blog/ai-and-ml/) - consulté le 2026-06-20
+- [Anthropic research](https://www.anthropic.com/research) - consulté le 2026-06-20
+- [OpenAI research](https://openai.com/research/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Vidéos, Podcasts & Conférences](videos-podcasts.md)** : les meilleures chaînes YouTube, podcasts et conférences pour apprendre et rester informé en format vidéo et audio.

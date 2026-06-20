@@ -438,7 +438,7 @@ La suggestion apparaît mais s'arrête au milieu d'une ligne, d'une fonction, ou
 
 ---
 
-## Sources officielles
+## Sources
 
 - [Troubleshoot GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot) - consulté le 2026-06-03
 - [Troubleshoot common issues](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues) - consulté le 2026-06-03

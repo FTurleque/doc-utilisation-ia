@@ -88,6 +88,10 @@ de la lecture à l'action.
 
 ---
 
+## Sources
+
+- [GitHub Copilot extensions marketplace](https://github.com/marketplace?type=apps&copilot_app=true) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Recommandations par application](recommandations-taille-type-application.md)** : adapter la stack aux tailles de codebase et aux types d'applications les plus courants.

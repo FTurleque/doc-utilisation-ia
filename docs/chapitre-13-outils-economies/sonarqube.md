@@ -692,7 +692,7 @@ Concepts clés couverts :
 
 ---
 
-## Sources officielles
+## Sources
 
 ### SonarQube for IDE
 

@@ -249,3 +249,10 @@ torch.onnx.export(
     - **JAX** pour la performance brute et la recherche avancée — le plus rapide
     - L'interopérabilité (ONNX, Keras 3, Hugging Face) rend le choix moins définitif qu'avant
     - En cas de doute, commence avec **PyTorch** ou **Keras** — tu pourras toujours changer de framework grâce à ONNX
+---
+
+## Sources
+
+- [Deep Learning book (Goodfellow)](https://www.deeplearningbook.org/) - consulté le 2026-06-20
+- [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
+- [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20

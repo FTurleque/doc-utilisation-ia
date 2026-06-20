@@ -243,6 +243,11 @@ La séquence optimale pour du code Node.js/TypeScript de qualité :
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+- [React documentation](https://react.dev/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Node.js & Express](nodejs-express.md)** : explorer les patterns Express spécifiquement optimisés pour Copilot avec TypeScript, Prisma et tests d'intégration.

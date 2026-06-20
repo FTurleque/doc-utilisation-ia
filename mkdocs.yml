@@ -99,6 +99,24 @@ nav:
       - Modes CLI Détail: chapitre-3-cli-modes/page-principale.md
       - Comparaison Modes: chapitre-3-cli-modes/comparaison.md
 
+  - Claude Code & Migration:
+    - Introduction: chapitre-3b-claude-code-migration-copilot/index.md
+    - "Installation (CLI, VS Code, JetBrains)": chapitre-3b-claude-code-migration-copilot/installation.md
+    - "Architecture .claude/": chapitre-3b-claude-code-migration-copilot/architecture-claude.md
+    - "Choisir le bon modèle": chapitre-3b-claude-code-migration-copilot/modeles-claude.md
+    - "Prompt Engineering avec Claude": chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md
+    - "Cookbook — recettes prêtes": chapitre-3b-claude-code-migration-copilot/cookbook.md
+    - "Hooks avancés": chapitre-3b-claude-code-migration-copilot/hooks-avances.md
+    - "Workflows CI & automatisation": chapitre-3b-claude-code-migration-copilot/workflows-ci.md
+    - "Orchestration multi-agents": chapitre-3b-claude-code-migration-copilot/subagents-orchestration.md
+    - "MCP — sources externes": chapitre-3b-claude-code-migration-copilot/mcp-sources-externes.md
+    - "Sécurité & gouvernance": chapitre-3b-claude-code-migration-copilot/securite-gouvernance.md
+    - "Plugins d'équipe": chapitre-3b-claude-code-migration-copilot/plugins-equipe.md
+    - "Comparaison Copilot vs Claude": chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md
+    - "Coûts & quotas": chapitre-3b-claude-code-migration-copilot/couts-quotas.md
+    - "Migration pas à pas": chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md
+    - "Checklist 30/60/90 jours": chapitre-3b-claude-code-migration-copilot/migration-30-60-90.md
+
   - Contexte & Personnalisation:
     - Accueil: chapitre-4-contexte/index.md
     - Concepts Clés: chapitre-4-contexte/concepts.md
@@ -106,6 +124,7 @@ nav:
     - applyTo Avancé: chapitre-4-contexte/applyto-avance.md
     - Prompt Files (.prompt.md): chapitre-4-contexte/prompt-files.md
     - Agents (.agent.md): chapitre-4-contexte/guide-agents.md
+    - "Orchestration multi-agents": chapitre-4-contexte/orchestration-multi-agents.md
     - Skills (SKILL.md): chapitre-4-contexte/guide-skills.md
     - Hooks: chapitre-4-contexte/guide-hooks.md
     - Paramètres du Dépôt: chapitre-4-contexte/parametres-depot.md

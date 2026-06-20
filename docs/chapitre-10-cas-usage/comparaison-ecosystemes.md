@@ -196,6 +196,10 @@ Voir détails complets :
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Java — Cas d'Usage](java.md)** : explorer les patterns Spring Boot optimisés pour GitHub Copilot et les pièges les plus courants en production.

@@ -117,6 +117,10 @@ Ces comportements ne sont pas des bugs, mais des différences d'implémentation 
 
 ---
 
+## Sources
+
+- [Troubleshooting GitHub Copilot](https://docs.github.com/en/copilot/troubleshooting-github-copilot) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Procédures de Réparation](procedures-reparation.md)** : procédures graduées et pas à pas pour résoudre les problèmes persistants : reset complet, nettoyage du cache, réinstallation complète, configuration proxy/SSL.

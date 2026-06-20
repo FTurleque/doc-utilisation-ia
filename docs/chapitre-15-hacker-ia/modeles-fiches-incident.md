@@ -163,7 +163,7 @@ Cette page fournit des modèles prêts à l'emploi pour documenter un incident l
 
 ---
 
-## Sources et provenance
+## Sources
 
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
 - [CISA AI](https://www.cisa.gov/ai)

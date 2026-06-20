@@ -398,6 +398,12 @@ Testé sur **100 questions de référence** (golden dataset) appliquées à une 
 
 ---
 
+## Sources
+
+- [LangChain documentation](https://python.langchain.com/docs/introduction/) - consulté le 2026-06-20
+- [LlamaIndex documentation](https://docs.llamaindex.ai/en/stable/) - consulté le 2026-06-20
+- [OpenAI Embeddings guide](https://platform.openai.com/docs/guides/embeddings) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Mise en Œuvre pas à pas](implementation.md)** : construire un RAG fonctionnel en local, sans serveur externe, en 4 étapes.

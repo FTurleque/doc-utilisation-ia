@@ -128,7 +128,7 @@ Campagne de désinformation ciblée combinant contenus générés et usurpation 
 
 ---
 
-## Sources et provenance
+## Sources
 
 - [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

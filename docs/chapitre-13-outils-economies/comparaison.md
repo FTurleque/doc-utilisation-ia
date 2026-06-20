@@ -231,6 +231,10 @@ et les playbooks rapides du chapitre.
 
 ---
 
+## Sources
+
+- [GitHub Copilot features](https://github.com/features/copilot) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Outils Complémentaires](outils-complementaires.md)** : consolider la sélection avec une vue d'ensemble opérationnelle avant de passer aux stacks prêtes en 15 minutes.

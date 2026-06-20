@@ -2,8 +2,8 @@
 
 ## Sources
 
-- [Titre de la source 1](https://example.com) - consulte le AAAA-MM-JJ
-- [Titre de la source 2](https://example.com) - consulte le AAAA-MM-JJ
+- [Titre de la source 1](https://example.com) - consulté le AAAA-MM-JJ
+- [Titre de la source 2](https://example.com) - consulté le AAAA-MM-JJ
 
 ## Notes de verification
 

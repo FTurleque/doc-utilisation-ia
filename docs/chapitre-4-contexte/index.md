@@ -48,6 +48,10 @@ Ce chapitre documente tous les mécanismes disponibles pour personnaliser Copilo
 
     Agents IA custom avec comportements et outils spécialisés
 
+- :material-account-group: **[Orchestration multi-agents (Copilot & Claude)](orchestration-multi-agents.md)**
+
+    Faire collaborer plusieurs agents : patterns, délégation Copilot vs Claude
+
 - :material-lightbulb: **[Skills (SKILL.md)](guide-skills.md)**
 
     Packages de connaissance domaine pour des expertise métier

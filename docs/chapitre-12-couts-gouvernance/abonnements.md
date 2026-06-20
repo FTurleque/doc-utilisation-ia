@@ -123,7 +123,7 @@ graph TD
 
 ---
 
-## Sources officielles
+## Sources
 
 - [Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-03
 - [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-01

@@ -514,6 +514,10 @@ def upgrade() -> None:
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+
 ## Chapitres suivants
 
 **[Troubleshooting](../chapitre-11-troubleshooting/index.md)** : diagnostiquer et résoudre les problèmes courants avec GitHub Copilot dans tous les écosystèmes, avec procédures de réparation.

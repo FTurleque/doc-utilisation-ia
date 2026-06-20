@@ -180,6 +180,11 @@ Copier ce template dans le chat en début de tâche complexe cadre l'interaction
 
 ---
 
+## Sources
+
+- [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-20
+- [GitHub Copilot usage-based billing](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-20
+
 ## Chapitres suivants
 
 **[Outils & Économies](../chapitre-13-outils-economies/index.md)** : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères et préserver vos AI Credits.

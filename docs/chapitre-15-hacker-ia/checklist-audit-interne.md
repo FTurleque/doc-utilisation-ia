@@ -95,7 +95,7 @@ Cette checklist aide à auditer de manière régulière la posture de sécurité
 
 ---
 
-## Sources et provenance
+## Sources
 
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
 - [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)

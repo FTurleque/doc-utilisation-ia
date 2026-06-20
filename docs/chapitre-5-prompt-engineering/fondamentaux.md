@@ -265,6 +265,11 @@ flowchart LR
 
 ---
 
+## Sources
+
+- [Prompt engineering for GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/prompt-engineering-for-github-copilot) - consulté le 2026-06-20
+- [Best practices for using GitHub Copilot in VS Code](https://code.visualstudio.com/docs/copilot/prompt-crafting) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Techniques Intermédiaires de Prompt Engineering](techniques-intermediaires.md)** : passer du bon prompt à l'excellent prompt avec des méthodes structurées et mesurables.

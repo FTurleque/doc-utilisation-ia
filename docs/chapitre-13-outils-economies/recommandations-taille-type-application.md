@@ -177,6 +177,10 @@ Actions immédiates :
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+
 ## Chapitres suivants
 
 **[Veille IA](../chapitre-14-veille-ia/index.md)** : organiser une veille fiable sur les évolutions produits, modèles, sécurité et annonces officielles.

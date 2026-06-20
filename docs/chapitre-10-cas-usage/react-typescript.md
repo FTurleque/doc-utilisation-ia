@@ -391,6 +391,12 @@ graph TD
 
 ---
 
+## Sources
+
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+- [React documentation](https://react.dev/) - consulté le 2026-06-20
+- [TypeScript documentation](https://www.typescriptlang.org/docs/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Python & FastAPI](python.md)** : découvrir comment Copilot génère des APIs Python asynchrones hautement productives avec validation Pydantic et SQLAlchemy type-safe.

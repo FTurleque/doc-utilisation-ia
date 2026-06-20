@@ -444,6 +444,12 @@ officielle (framework ou référence mathématique standard).
 
 ---
 
+## Sources
+
+- [Deep Learning book (Goodfellow)](https://www.deeplearningbook.org/) - consulté le 2026-06-20
+- [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
+- [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Architectures spécialisées du Deep Learning](architectures-deep-learning.md)** : comparer CNN, RNN et Transformers, comprendre leurs cas d'usage, leurs forces et leurs limites.

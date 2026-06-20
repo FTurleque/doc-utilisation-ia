@@ -426,6 +426,11 @@ function MyComponent() {
 
 ---
 
+## Sources
+
+- [GitHub Copilot best practices for using GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot) - consulté le 2026-06-20
+- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Performance & Ressources](performance.md)** : comprendre et maîtriser l'impact de Copilot sur les performances de votre IDE.

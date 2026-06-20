@@ -231,6 +231,12 @@ En vigueur depuis août 2024, l'AI Act classe les systèmes IA par niveaux de ri
 
 ---
 
+## Sources
+
+- [GitHub Blog — AI](https://github.blog/ai-and-ml/) - consulté le 2026-06-20
+- [Anthropic research](https://www.anthropic.com/research) - consulté le 2026-06-20
+- [OpenAI research](https://openai.com/research/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Newsletters & Communautés](newsletters-communautes.md)** : pour recevoir l'info directement dans ta boîte mail et rejoindre les communautés actives de développeurs IA.

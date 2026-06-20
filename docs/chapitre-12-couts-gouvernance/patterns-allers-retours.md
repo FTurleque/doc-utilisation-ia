@@ -154,6 +154,11 @@ Pour les tâches longues, découper en étapes avec validation intermédiaire :
 
 ---
 
+## Sources
+
+- [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-20
+- [GitHub Copilot usage-based billing](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[AI Credits : consommation détaillée](premium-requests.md)** : comprendre ce qui consomme des crédits, comment lire la facturation, et comment éviter les dérives.

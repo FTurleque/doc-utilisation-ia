@@ -423,6 +423,11 @@ La **fenêtre de contexte** (context window) est la quantité maximale de texte 
 
 ---
 
+## Sources
+
+- [GitHub Copilot best practices for using GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot) - consulté le 2026-06-20
+- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Productivité](productivite.md)** : optimiser votre flux de travail pour tirer le meilleur de Copilot au quotidien.

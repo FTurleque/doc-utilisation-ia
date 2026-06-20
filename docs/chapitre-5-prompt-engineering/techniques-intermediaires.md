@@ -389,6 +389,11 @@ Analyse maintenant cette classe :
 
 ---
 
+## Sources
+
+- [Prompt engineering for GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/prompt-engineering-for-github-copilot) - consulté le 2026-06-20
+- [Best practices for using GitHub Copilot in VS Code](https://code.visualstudio.com/docs/copilot/prompt-crafting) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Techniques Avancées de Prompt Engineering](techniques-avancees.md)** : maîtriser les architectures sophistiquées utilisées en production pour des workflows IA fiables.

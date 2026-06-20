@@ -67,6 +67,20 @@ Introduction courte du chapitre.
 | [Page 2](page2.md) | Ce que couvre cette page |
 ```
 
+## Règle éditoriale : gestion des badges
+
+Les badges sont placés **sur une ligne dédiée immédiatement après le H1**.
+
+Règles d'usage :
+
+- Utiliser `<span class="badge-intellij">IntelliJ</span>` si la page contient des instructions spécifiques IntelliJ IDEA.
+- Utiliser `<span class="badge-vscode">VS Code</span>` si la page contient des instructions spécifiques Visual Studio Code.
+- Utiliser `<span class="badge-cli">CLI</span>` si la page couvre principalement des commandes terminal, scripts, workflows CI/CD ou outillage en ligne de commande.
+- Combiner plusieurs badges IDE (`badge-intellij` + `badge-vscode`) quand la page traite les deux environnements.
+- Combiner les badges IDE avec `badge-cli` quand la page mêle manipulations IDE et étapes terminal.
+- Sur une page strictement CLI, ne pas ajouter de badge IDE.
+- Ne pas modifier les badges déjà en place d'un chapitre stable sans demande explicite.
+
 ## Structure d'une page de comparaison
 
 Les pages `comparaison-*.md` suivent ce schéma :
@@ -209,16 +223,33 @@ Concepts clés couverts :
 - **`.github/copilot-instructions.md`** — configurer les conventions du projet une fois, Copilot les applique toujours
 ```
 
+### Convention obligatoire : section Sources
+
+Si une page contient des références externes, la section de traçabilité doit respecter strictement ce format :
+
+```markdown
+## Sources
+
+- [Titre de la source](https://url) - consulté le AAAA-MM-JJ
+```
+
+Règles associées :
+
+- Utiliser uniquement le titre `## Sources` (pas de variante : `## Sources officielles`, `## Références`, etc.)
+- Ne pas mettre d'URL nue en prose dans cette section
+- Conserver exactement la mention `consulté le AAAA-MM-JJ`
+
 ---
 
 ## Checklist pour une nouvelle page
 
 - [ ] Fichier créé dans le bon chapitre avec nommage `kebab-case.md`
 - [ ] Page commence par un `# Titre H1`
-- [ ] Badges de niveau et/ou IDE présents après le H1
+- [ ] Badges de niveau et/ou contexte (IDE/CLI) présents après le H1
 - [ ] Contenu structuré avec `## H2` et `### H3`
 - [ ] Admonitions utilisées pour les conseils et avertissements
 - [ ] Onglets utilisés pour les différences IntelliJ / VS Code
 - [ ] **Section `## Prochaine étape` présente en fin de page** (voir format ci-dessus)
+- [ ] Si sources externes: section `## Sources` avec items au format `[Titre](URL) - consulté le AAAA-MM-JJ` (sans URL nue, sans titre alternatif)
 - [ ] `mkdocs.yml` mis à jour avec l'entrée de navigation
 - [ ] `py -m mkdocs build` exécuté sans erreur

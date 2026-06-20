@@ -124,6 +124,11 @@ copilot --yolo -p "prompt"
 
 ---
 
+## Sources
+
+- [GitHub Copilot in the CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli/about-github-copilot-in-the-cli) - consulté le 2026-06-20
+- [Using GitHub Copilot in the CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli/using-github-copilot-in-the-cli) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 **[Comparaison des modes CLI VS Code / IntelliJ](comparaison.md)** : voir les différences de support et d'intégration selon l'IDE.

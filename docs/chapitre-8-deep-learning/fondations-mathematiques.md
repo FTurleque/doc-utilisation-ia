@@ -849,7 +849,7 @@ La perte est passée de $0.151$ à $0.070$ : **divisée par 2 en un seul pas de 
 
 ---
 
-## Sources officielles pour approfondir
+## Sources
 
 - [MIT OpenCourseWare — 18.06 Linear Algebra (Gilbert Strang)](https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/) — Le cours d'algèbre linéaire de référence mondiale
 - [MIT OpenCourseWare — 6.041SC Probabilistic Systems Analysis](https://ocw.mit.edu/courses/6-041sc-probabilistic-systems-analysis-and-applied-probability-fall-2013/) — Probabilités appliquées

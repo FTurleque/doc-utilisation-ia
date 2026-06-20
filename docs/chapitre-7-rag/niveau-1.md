@@ -203,6 +203,12 @@ print(answer)
 
 ---
 
+## Sources
+
+- [LangChain documentation](https://python.langchain.com/docs/introduction/) - consulté le 2026-06-20
+- [LlamaIndex documentation](https://docs.llamaindex.ai/en/stable/) - consulté le 2026-06-20
+- [OpenAI Embeddings guide](https://platform.openai.com/docs/guides/embeddings) - consulté le 2026-06-20
+
 ## Prochaine étape
 
 📖 Lire **[Niveau 2 — Avancé](niveau-2.md)** pour ajouter des techniques comme Hybrid Search et Query Expansion.
