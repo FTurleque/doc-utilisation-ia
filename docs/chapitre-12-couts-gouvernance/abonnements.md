@@ -125,10 +125,10 @@ graph TD
 
 ## Sources
 
-- [Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-03
-- [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-01
-- [About billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/organizations-and-enterprises) - consulté le 2026-06-01
-- [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) - consulté le 2026-06-01
+- [Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) (consulté le 2026-06-03)
+- [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) (consulté le 2026-06-01)
+- [About billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/organizations-and-enterprises) (consulté le 2026-06-01)
+- [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) (consulté le 2026-06-01)
 
 ---
 

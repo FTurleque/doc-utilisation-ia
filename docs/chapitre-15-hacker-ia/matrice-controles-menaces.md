@@ -68,12 +68,12 @@ Cette matrice relie les menaces IA les plus fréquentes à des contrôles concre
 
 ## Sources
 
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [ANSSI](https://www.ssi.gouv.fr/)
-- [CISA AI](https://www.cisa.gov/ai)
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
-- [MITRE ATLAS](https://atlas.mitre.org/)
+- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20)
+- [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20)
+- [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20)
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) (consulté le 2026-06-20)
+- [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20)
 
 ---
 

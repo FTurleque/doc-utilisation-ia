@@ -245,12 +245,12 @@ pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 prompt --input .\tmp\so
 
 ## Sources officielles
 
-- [SonarQube for IDE](https://docs.sonarsource.com/sonarqube-for-ide/) (vérifié le 2026-06-15)
-- [SonarQube Server Web API](https://docs.sonarsource.com/sonarqube-server/extension-guide/web-api/) (vérifié le 2026-06-15)
-- [SonarQube Cloud](https://docs.sonarsource.com/sonarqube-cloud/) (vérifié le 2026-06-15)
-- [SonarQube MCP Server](https://docs.sonarsource.com/sonarqube-mcp-server/) (vérifié le 2026-06-15)
-- [GitHub Copilot documentation](https://docs.github.com/copilot) (vérifié le 2026-06-15)
-- [PowerShell documentation](https://learn.microsoft.com/powershell/) (vérifié le 2026-06-15)
+- [SonarQube for IDE](https://docs.sonarsource.com/sonarqube-for-ide/) (consulté le 2026-06-15)
+- [SonarQube Server Web API](https://docs.sonarsource.com/sonarqube-server/extension-guide/web-api/) (consulté le 2026-06-15)
+- [SonarQube Cloud](https://docs.sonarsource.com/sonarqube-cloud/) (consulté le 2026-06-15)
+- [SonarQube MCP Server](https://docs.sonarsource.com/sonarqube-mcp-server/) (consulté le 2026-06-15)
+- [GitHub Copilot documentation](https://docs.github.com/copilot) (consulté le 2026-06-15)
+- [PowerShell documentation](https://learn.microsoft.com/powershell/) (consulté le 2026-06-15)
 
 ---
 

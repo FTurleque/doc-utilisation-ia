@@ -216,12 +216,12 @@ Ce registre documente ces changements **avec des preuves**, pour permettre à un
 
 ## Sources
 
-- Changelog Copilot (source primaire pour les mises à jour) : [github.blog/changelog/?label=copilot](https://github.blog/changelog/?label=copilot)
-- Plans et prix : [docs.github.com/fr/copilot/get-started/plans](https://docs.github.com/fr/copilot/get-started/plans)
-- Premium requests (legacy) et multiplicateurs : [docs.github.com/fr/copilot/concepts/billing/copilot-requests](https://docs.github.com/fr/copilot/concepts/billing/copilot-requests)
-- Facturation usage-based (individuels) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals)
-- Facturation usage-based (organisations) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises)
-- Modèles et tarification : [docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing](https://docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing)
+- Changelog Copilot (source primaire pour les mises à jour) : [github.blog/changelog/?label=copilot](https://github.blog/changelog/?label=copilot) (consulté le 2026-06-20)
+- Plans et prix : [docs.github.com/fr/copilot/get-started/plans](https://docs.github.com/fr/copilot/get-started/plans) (consulté le 2026-06-20)
+- Premium requests (legacy) et multiplicateurs : [docs.github.com/fr/copilot/concepts/billing/copilot-requests](https://docs.github.com/fr/copilot/concepts/billing/copilot-requests) (consulté le 2026-06-20)
+- Facturation usage-based (individuels) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals) (consulté le 2026-06-20)
+- Facturation usage-based (organisations) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) (consulté le 2026-06-20)
+- Modèles et tarification : [docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing](https://docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing) (consulté le 2026-06-20)
 
 ---
 

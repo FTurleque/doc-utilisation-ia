@@ -202,13 +202,13 @@ Mesures temporaires de sécurité
 
 ## Sources
 
-- [CISA AI](https://www.cisa.gov/ai)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [MITRE ATLAS](https://atlas.mitre.org/)
-- [ANSSI](https://www.ssi.gouv.fr/)
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
-- [GitHub Security Blog - Secure Code Game](https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/)
+- [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20)
+- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20)
+- [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20)
+- [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20)
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) (consulté le 2026-06-20)
+- [GitHub Security Blog - Secure Code Game](https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/) (consulté le 2026-06-20)
 
 !!! info "Positionnement"
     Ce playbook est un gabarit de réponse défensive. Adapte-le à tes obligations légales, à ton secteur et à ton organisation interne (astreinte, RSSI, DPO, communication de crise).

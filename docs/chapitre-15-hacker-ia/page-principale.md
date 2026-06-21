@@ -208,13 +208,13 @@ On voit apparaître des offres de type "AI Hacker", "auto-pentest", "one-click e
 
 | Sujet | Source principale |
 |---|---|
-| Risques applicatifs LLM (injection, exfiltration, agency) | [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) |
-| Taxonomie de techniques adverses IA | [MITRE ATLAS](https://atlas.mitre.org/) |
-| Tendances de menace en Europe | [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) |
-| Recommandations opérationnelles cyber US | [CISA AI Security](https://www.cisa.gov/ai) |
-| Cadre de gouvernance du risque IA | [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) |
-| Référentiel français de cybersécurité | [ANSSI](https://www.ssi.gouv.fr/) |
-| Veille cybercriminalité organisée | [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports) |
+| Risques applicatifs LLM (injection, exfiltration, agency) | [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20) |
+| Taxonomie de techniques adverses IA | [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20) |
+| Tendances de menace en Europe | [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) (consulté le 2026-06-20) |
+| Recommandations opérationnelles cyber US | [CISA AI Security](https://www.cisa.gov/ai) (consulté le 2026-06-20) |
+| Cadre de gouvernance du risque IA | [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20) |
+| Référentiel français de cybersécurité | [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20) |
+| Veille cybercriminalité organisée | [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports) (consulté le 2026-06-20) |
 
 !!! info "Transparence"
     Les scénarios de cette page sont des cas pédagogiques défensifs construits à partir de tendances documentées par les sources ci-dessus et par tes liens fournis. Ils ne constituent pas des preuves forensiques d'un incident unique.

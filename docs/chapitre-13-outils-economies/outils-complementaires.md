@@ -29,6 +29,7 @@ Chaque page outil couvre:
 | SonarQube (VS Code) | Analyse statique et triage d'issues en workflow VS Code | Nul en détection locale | Qualité continue, correction bornée, gouvernance | [SonarQube — VS Code](sonarqube-vscode.md) |
 | TOON | Automatiser et compiler des configurations IA complexes | Faible à nul | Automatisation de workflows IA | [TOON](toon.md) |
 | OpenSkills | Installer et partager des skills universels entre agents IA | Nul | Standardisation d'instructions et skills | [OpenSkills](openskills.md) |
+| MCPs | Rechercher une documentation officielle, extraire une URL connue, filtrer le contexte | Variable selon le serveur | Choisir la bonne source sans saturer Copilot | [MCPs](mcps/index.md) |
 | Continue.dev | Orchestrer chat + complétion avec modèles locaux/cloud | Nul à variable | Routage local/cloud dans l'IDE | [Continue.dev](continue-dev.md) |
 | Ollama | Exécuter des LLM en local via CLI/API | Nul | Chat/génération locale | [Ollama](ollama.md) |
 | LM Studio | Exécuter des LLM locaux via interface graphique | Nul | Expérimentation locale de modèles | [LM Studio](lm-studio.md) |
@@ -48,8 +49,9 @@ Chaque page outil couvre:
    - [Codeium / Windsurf](codeium-windsurf.md)
    - [Tabnine](tabnine.md)
    - [Supermaven](supermaven.md)
-5. **Utiliser [Amazon Q Developer](amazon-q-developer.md)** sur les projets AWS
-6. **Garder Copilot (AI Credits)** pour les cas de raisonnement réellement complexes
+5. **Utiliser [MCPs](mcps/index.md)** pour la documentation officielle, les pages connues et les extractions bornées
+6. **Utiliser [Amazon Q Developer](amazon-q-developer.md)** sur les projets AWS
+7. **Garder Copilot (AI Credits)** pour les cas de raisonnement réellement complexes
 
 !!! tip "Rappel important"
     N'active qu'un moteur principal de complétion inline pour éviter les conflits de suggestions.
@@ -73,6 +75,7 @@ Chaque page outil couvre:
 ## Pour aller plus loin
 
 - **[Comparaison des Outils](comparaison.md)** : utiliser la matrice de décision pour choisir la bonne stack.
+- **[MCPs](mcps/index.md)** : rechercher la documentation officielle ou récupérer une URL connue sans envoyer trop de contexte.
 - **[SonarQube — IntelliJ](sonarqube.md)** : workflow économique détaillé pour IntelliJ + Java.
 - **[SonarQube — VS Code](sonarqube-vscode.md)** : version VS Code du workflow SonarQube orienté coûts.
 - **[Stack prête en 15 min — VS Code](stack-prete-15-min-vscode.md)** : démarrer rapidement sur VS Code.

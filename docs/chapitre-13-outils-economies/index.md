@@ -182,9 +182,19 @@ Conserver les outils existants du chapitre permet de décharger Copilot sur les 
 MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
 
 - Utilise **MCP** pour brancher des outils dynamiques (API, DB, observabilité).
+- Utilise **[MCPs](mcps/index.md)** pour choisir entre la solution locale, les options gratuites et la V2 documentaire.
 - Utilise le **MCP SonarQube** pour filtrer/triager les issues par règle avant correction.
 - Utilise **[OpenSkills](openskills.md)** pour normaliser les skills portables entre agents.
 - N'envoie jamais l'intégralité d'un workspace si seule une sous-zone est utile.
+
+### Parcours MCP
+
+| Page | Rôle |
+|---|---|
+| [Présentation et choix](mcps/index.md) | Vue d'ensemble, familles et critères de décision |
+| [MCP Web local](mcps/configuration.md) | Architecture V1, contrat des outils et sécurité |
+| [MCP Web gratuit](mcps/serveurs.md) | Tavily, Firecrawl et usages de secours |
+| [Comparaison](mcps/securite.md) | Arbitrage local / gratuit / V1 / V2 |
 
 ### Exemples de MCP utiles (filtrage local)
 
@@ -194,6 +204,7 @@ MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
 - **Documentation projet** : extraire uniquement les pages liées au sujet.
 - **Base de connaissance locale** : injecter des réponses validées internes.
 - **Résumé compact de module** : architecture, dépendances, points chauds.
+- **Recherche d'une documentation officielle** : renvoyer seulement les sources validées et leurs URL canonique.
 
 !!! tip "Rappel important"
     MCP sert d'abord à **filtrer** et **réduire** le contexte avant IA, pas à envoyer plus de données.
@@ -217,6 +228,7 @@ MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
 | Faire une revue sécurité | Semgrep + SpotBugs + dépendances outillées | Nulle | Oui | Détection systématique initiale |
 | Générer une architecture | Copilot Chat/Agent avec contexte filtré | Élevée | Non (après filtres) | Valeur sur décisions complexes |
 | Écrire une documentation | Structure locale + Copilot pour reformulation finale | Moyenne | Oui (préparer plan d'abord) | Texte plus rapide et plus propre |
+| Rechercher une documentation officielle | MCP Web local, puis Tavily ou Firecrawl si nécessaire | Variable | Oui, après filtrage des sources | Réponses bornées, sources fiables, contexte réduit |
 
 ---
 
