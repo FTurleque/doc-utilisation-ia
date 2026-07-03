@@ -103,6 +103,9 @@ rtk gain
 # Doit afficher les statistiques de tokens économisés
 ```
 
+!!! tip "Mettre à jour régulièrement le binaire RTK"
+    Vérifiez périodiquement la dernière version Windows (`.exe`) dans les [GitHub Releases](https://github.com/rtk-ai/rtk/releases), puis remplacez votre `rtk.exe` local quand une nouvelle release stable est publiée.
+
 !!! warning "Résoudre un conflit de nom"
     Il existe deux projets nommés `rtk` sur crates.io. Vérifiez avec `rtk gain` : si la commande n'existe pas, vous avez le mauvais paquet. Utilisez toujours le binaire issu de [`rtk-ai/rtk`](https://github.com/rtk-ai/rtk/releases).
 
@@ -126,24 +129,48 @@ Sans configuration supplémentaire, vous devez préfixer chaque commande avec `r
 rtk init --global
 ```
 
-!!! note "Traçabilité — option `--copilot`"
-    Des retours communautaires indiquent qu'une variante dédiée Copilot peut
-    fonctionner, et elle a été testée avec succès dans ce contexte (jouer les 2 commandes, celle de dessus puis la version copilot) :
+!!! info "Commande de référence (officielle)"
+    `rtk init --global` est la commande documentée côté RTK pour installer le hook shell au niveau utilisateur.
+    `-g` est l'alias court de `--global` : `rtk init -g` et `rtk init --global` sont équivalents.
+
+!!! warning "Portée de `--copilot` : comportement observé, non contractuel"
+    Les sorties ci-dessous ont été observées en pratique sur Windows, mais la doc
+    officielle RTK ne formalise pas encore ces garanties comme un contrat de
+    compatibilité stable selon les versions.
+
+| Commande | Portée observée | Sortie observée | Niveau de confiance |
+|---|---|---|---|
+| `rtk init --copilot` | **Local dépôt courant** | Écrit dans `./.github/copilot-instructions.md` et `./.github/hooks/rtk-rewrite.json` | **Observé en pratique (communauté + test local)** |
+| `rtk init -g --copilot` | **Global utilisateur** | Écrit dans `~/.copilot/copilot-instructions.md` et `~/.copilot/hooks/rtk-rewrite.json` | **Observé en pratique (communauté + test local)** |
+| `rtk init -g` (`--global`) | **Global utilisateur** | Installe le hook RTK global (`rtk hook claude`), migration `CLAUDE.md` -> `@RTK.md`, MAJ `settings.json` | **Officiel + observé en pratique** |
+
+!!! danger "`--copilot` n'installe pas le hook shell global"
+    Les commandes `rtk init --copilot` et `rtk init -g --copilot` configurent
+    l'intégration Copilot, mais affichent aussi :
+    `[rtk] /!\ No hook installed — run rtk init -g`.
+
+    Donc, pour activer le hook shell RTK global, exécutez **explicitement** :
     ```powershell
-    rtk init -g --copilot
+    rtk init -g
     ```
-    Cette option n'est pas documentée officiellement à date dans la
-    documentation RTK. Utilisez-la de manière prudente (selon version), et
-    conservez `rtk init --global` comme commande de référence si l'option est
-    refusée. Attention, il se peut qu'un fichier copilote-instruction soit créé ou remplace le votre, 
-    dans ce cas là faite en un fichier `.instruction` et reméttez votre propre copilot-instruction.md !
+
+!!! danger "Risque d'écrasement des instructions Copilot"
+    Les variantes avec `--copilot` créent/modifient des fichiers
+    d'instructions Copilot (`./.github/*` en local, `~/.copilot/*` en global).
+    Sur un repo déjà configuré, il existe un risque d'écrasement partiel ou total.
+
+    Avant exécution :
+    1. Commitez ou sauvegardez vos fichiers d'instructions existants.
+    2. Exécutez la commande dans le bon périmètre (repo vs utilisateur).
+    3. Vérifiez immédiatement les changements (`git diff`) puis restaurez/mergez vos instructions si nécessaire.
 
 !!! info "Copilot : commande à utiliser"
-    La commande officiellement documentée pour activer RTK reste
-    `rtk init --global` dans un terminal (PowerShell, bash ou zsh), pas dans le
-    chat Copilot.
-    Une fois exécutée, le hook shell s'applique automatiquement aux commandes
-    suivantes.
+    Dans la plupart des cas d'usage Copilot, préférez `rtk init -g --copilot`
+    plutôt que `rtk init --copilot` pour configurer le périmètre utilisateur
+    global plutôt que dépôt par dépôt.
+
+    `--copilot` reste un comportement observé (non contractuel) selon les
+    versions RTK : vérifiez toujours les fichiers générés après exécution.
 
 !!! info "Où lancer cette commande ?"
     - **VS Code** : terminal intégré (++ctrl+grave++) → PowerShell
@@ -347,7 +374,7 @@ RTK n'est **pas** la bonne réponse à ces situations :
 flowchart TD
     A[Vous exécutez une commande CLI dans un terminal] --> B{La commande génère\nbeaucoup de sortie ?}
     B -- Oui --> C{RTK supporte\ncette commande ?}
-    C -- Oui --> D[✅ Préfixez avec rtk\nou activez le hook]
+    C -- Oui --> D[Prefixez avec rtk\nou activez le hook]
     C -- Non --> E[Passthrough transparent\nRTK ne modifie rien]
     B -- Non --> F[Gain RTK limité\nsur cette commande]
     A --> G{Besoin de\nl'output brut complet ?}
@@ -386,11 +413,12 @@ flowchart TD
 
 ## Sources
 
-- [RTK — Introduction](https://www.mintlify.com/rtk-ai/rtk/introduction) (vérifié le 2026-06-17)
-- [RTK — Commands overview](https://www.mintlify.com/rtk-ai/rtk/commands/overview) (vérifié le 2026-06-17)
-- [RTK — GitHub Releases (binaires officiels)](https://github.com/rtk-ai/rtk/releases) (vérifié le 2026-06-17)
-- [RTK — Site officiel](https://www.rtk-ai.app/) (vérifié le 2026-06-17)
-- [RTK — Dépôt GitHub rtk-ai/rtk](https://github.com/rtk-ai/rtk) (vérifié le 2026-06-17)
+- [RTK — Introduction](https://www.mintlify.com/rtk-ai/rtk/introduction) - consulté le 2026-07-03
+- [RTK — Commands overview](https://www.mintlify.com/rtk-ai/rtk/commands/overview) - consulté le 2026-07-03
+- [RTK — GitHub Releases (binaires officiels)](https://github.com/rtk-ai/rtk/releases) - consulté le 2026-07-03
+- [RTK — Dépôt GitHub rtk-ai/rtk](https://github.com/rtk-ai/rtk) - consulté le 2026-07-03
+- [RTK — Issues (recherche "copilot")](https://github.com/rtk-ai/rtk/issues?q=copilot) - consulté le 2026-07-03
+- [RTK — Discussions (recherche "copilot")](https://github.com/rtk-ai/rtk/discussions?discussions_q=copilot) - consulté le 2026-07-03
 
 ---
 
