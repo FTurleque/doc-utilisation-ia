@@ -6583,6 +6583,10 @@
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">rtk</span> <span class="n">gain</span>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c"># Doit afficher les statistiques de tokens économisés</span>
 </code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Mettre à jour régulièrement le binaire RTK</p>
+<p>Vérifiez périodiquement la dernière version Windows (<code>.exe</code>) dans les <a href="https://github.com/rtk-ai/rtk/releases">GitHub Releases</a>, puis remplacez votre <code>rtk.exe</code> local quand une nouvelle release stable est publiée.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Résoudre un conflit de nom</p>
 <p>Il existe deux projets nommés <code>rtk</code> sur crates.io. Vérifiez avec <code>rtk gain</code> : si la commande n'existe pas, vous avez le mauvais paquet. Utilisez toujours le binaire issu de <a href="https://github.com/rtk-ai/rtk/releases"><code>rtk-ai/rtk</code></a>.</p>
@@ -6599,25 +6603,73 @@
 <p>Sans configuration supplémentaire, vous devez préfixer chaque commande avec <code>rtk</code>. Pour que <strong>toutes les commandes soient automatiquement compressées</strong> sans effort, lancez cette commande <strong>dans votre terminal système</strong> (PowerShell sous Windows, ou bash/zsh sur macOS/Linux) — <strong>pas dans le chat IA</strong> :</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">rtk</span> <span class="n">init</span> <span class="p">-</span><span class="n">-global</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Traçabilité — option <code>--copilot</code></p>
-<p>Des retours communautaires indiquent qu'une variante dédiée Copilot peut
-fonctionner, et elle a été testée avec succès dans ce contexte (jouer les 2 commandes, celle de dessus puis la version copilot) :
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">rtk</span> <span class="n">init</span> <span class="n">-g</span> <span class="p">-</span><span class="n">-copilot</span>
-</code></pre></div>
-Cette option n'est pas documentée officiellement à date dans la
-documentation RTK. Utilisez-la de manière prudente (selon version), et
-conservez <code>rtk init --global</code> comme commande de référence si l'option est
-refusée. Attention, il se peut qu'un fichier copilote-instruction soit créé ou remplace le votre, 
-dans ce cas là faite en un fichier <code>.instruction</code> et reméttez votre propre copilot-instruction.md !</p>
+<div class="admonition info">
+<p class="admonition-title">Commande de référence (officielle)</p>
+<p><code>rtk init --global</code> est la commande documentée côté RTK pour installer le hook shell au niveau utilisateur.
+<code>-g</code> est l'alias court de <code>--global</code> : <code>rtk init -g</code> et <code>rtk init --global</code> sont équivalents.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Portée de <code>--copilot</code> : comportement observé, non contractuel</p>
+<p>Les sorties ci-dessous ont été observées en pratique sur Windows, mais la doc
+officielle RTK ne formalise pas encore ces garanties comme un contrat de
+compatibilité stable selon les versions.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Commande</th>
+<th>Portée observée</th>
+<th>Sortie observée</th>
+<th>Niveau de confiance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rtk init --copilot</code></td>
+<td><strong>Local dépôt courant</strong></td>
+<td>Écrit dans <code>./.github/copilot-instructions.md</code> et <code>./.github/hooks/rtk-rewrite.json</code></td>
+<td><strong>Observé en pratique (communauté + test local)</strong></td>
+</tr>
+<tr>
+<td><code>rtk init -g --copilot</code></td>
+<td><strong>Global utilisateur</strong></td>
+<td>Écrit dans <code>~/.copilot/copilot-instructions.md</code> et <code>~/.copilot/hooks/rtk-rewrite.json</code></td>
+<td><strong>Observé en pratique (communauté + test local)</strong></td>
+</tr>
+<tr>
+<td><code>rtk init -g</code> (<code>--global</code>)</td>
+<td><strong>Global utilisateur</strong></td>
+<td>Installe le hook RTK global (<code>rtk hook claude</code>), migration <code>CLAUDE.md</code> -&gt; <code>@RTK.md</code>, MAJ <code>settings.json</code></td>
+<td><strong>Officiel + observé en pratique</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p class="admonition-title"><code>--copilot</code> n'installe pas le hook shell global</p>
+<p>Les commandes <code>rtk init --copilot</code> et <code>rtk init -g --copilot</code> configurent
+l'intégration Copilot, mais affichent aussi :
+<code>[rtk] /!\ No hook installed — run rtk init -g</code>.</p>
+<p>Donc, pour activer le hook shell RTK global, exécutez <strong>explicitement</strong> :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">rtk</span> <span class="n">init</span> <span class="n">-g</span>
+</code></pre></div></p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Risque d'écrasement des instructions Copilot</p>
+<p>Les variantes avec <code>--copilot</code> créent/modifient des fichiers
+d'instructions Copilot (<code>./.github/*</code> en local, <code>~/.copilot/*</code> en global).
+Sur un repo déjà configuré, il existe un risque d'écrasement partiel ou total.</p>
+<p>Avant exécution :
+1. Commitez ou sauvegardez vos fichiers d'instructions existants.
+2. Exécutez la commande dans le bon périmètre (repo vs utilisateur).
+3. Vérifiez immédiatement les changements (<code>git diff</code>) puis restaurez/mergez vos instructions si nécessaire.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">Copilot : commande à utiliser</p>
-<p>La commande officiellement documentée pour activer RTK reste
-<code>rtk init --global</code> dans un terminal (PowerShell, bash ou zsh), pas dans le
-chat Copilot.
-Une fois exécutée, le hook shell s'applique automatiquement aux commandes
-suivantes.</p>
+<p>Dans la plupart des cas d'usage Copilot, préférez <code>rtk init -g --copilot</code>
+plutôt que <code>rtk init --copilot</code> pour configurer le périmètre utilisateur
+global plutôt que dépôt par dépôt.</p>
+<p><code>--copilot</code> reste un comportement observé (non contractuel) selon les
+versions RTK : vérifiez toujours les fichiers générés après exécution.</p>
 </div>
 <div class="admonition info">
 <p class="admonition-title">Où lancer cette commande ?</p>
@@ -6929,7 +6981,7 @@ suivantes.</p>
 <pre class="mermaid"><code>flowchart TD
     A[Vous exécutez une commande CLI dans un terminal] --&gt; B{La commande génère\nbeaucoup de sortie ?}
     B -- Oui --&gt; C{RTK supporte\ncette commande ?}
-    C -- Oui --&gt; D[✅ Préfixez avec rtk\nou activez le hook]
+    C -- Oui --&gt; D[Prefixez avec rtk\nou activez le hook]
     C -- Non --&gt; E[Passthrough transparent\nRTK ne modifie rien]
     B -- Non --&gt; F[Gain RTK limité\nsur cette commande]
     A --&gt; G{Besoin de\nl'output brut complet ?}
@@ -6999,11 +7051,12 @@ suivantes.</p>
 <hr />
 <h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://www.mintlify.com/rtk-ai/rtk/introduction">RTK — Introduction</a> (vérifié le 2026-06-17)</li>
-<li><a href="https://www.mintlify.com/rtk-ai/rtk/commands/overview">RTK — Commands overview</a> (vérifié le 2026-06-17)</li>
-<li><a href="https://github.com/rtk-ai/rtk/releases">RTK — GitHub Releases (binaires officiels)</a> (vérifié le 2026-06-17)</li>
-<li><a href="https://www.rtk-ai.app/">RTK — Site officiel</a> (vérifié le 2026-06-17)</li>
-<li><a href="https://github.com/rtk-ai/rtk">RTK — Dépôt GitHub rtk-ai/rtk</a> (vérifié le 2026-06-17)</li>
+<li><a href="https://www.mintlify.com/rtk-ai/rtk/introduction">RTK — Introduction</a> - consulté le 2026-07-03</li>
+<li><a href="https://www.mintlify.com/rtk-ai/rtk/commands/overview">RTK — Commands overview</a> - consulté le 2026-07-03</li>
+<li><a href="https://github.com/rtk-ai/rtk/releases">RTK — GitHub Releases (binaires officiels)</a> - consulté le 2026-07-03</li>
+<li><a href="https://github.com/rtk-ai/rtk">RTK — Dépôt GitHub rtk-ai/rtk</a> - consulté le 2026-07-03</li>
+<li><a href="https://github.com/rtk-ai/rtk/issues?q=copilot">RTK — Issues (recherche "copilot")</a> - consulté le 2026-07-03</li>
+<li><a href="https://github.com/rtk-ai/rtk/discussions?discussions_q=copilot">RTK — Discussions (recherche "copilot")</a> - consulté le 2026-07-03</li>
 </ul>
 <hr />
 <h2 id="prochaine-etape">Prochaine étape<a class="headerlink" href="#prochaine-etape" title="Permanent link">&para;</a></h2>
