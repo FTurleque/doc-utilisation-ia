@@ -97,7 +97,7 @@ nav:
     - "Migration pas à pas": chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md
     - "Checklist 30/60/90 jours": chapitre-3b-claude-code-migration-copilot/migration-30-60-90.md
 
-  - GitHub Copilot (référence):
+  - "GitHub Copilot (référence)":
     - Installation:
       - Accueil: chapitre-1-installation/index.md
       - IntelliJ IDEA:
@@ -121,8 +121,8 @@ nav:
     - Accueil: chapitre-4-contexte/index.md
     - Concepts Clés: chapitre-4-contexte/concepts.md
     - Instructions Claude & Rules: chapitre-4-contexte/guide-instructions.md
-    - applyTo Copilot (référence): chapitre-4-contexte/applyto-avance.md
-    - Prompt Files Copilot (référence): chapitre-4-contexte/prompt-files.md
+    - "applyTo Copilot (référence)": chapitre-4-contexte/applyto-avance.md
+    - "Prompt Files Copilot (référence)": chapitre-4-contexte/prompt-files.md
     - Agents Claude: chapitre-4-contexte/guide-agents.md
     - "Orchestration multi-agents": chapitre-4-contexte/orchestration-multi-agents.md
     - Skills Claude (SKILL.md): chapitre-4-contexte/guide-skills.md
@@ -137,7 +137,7 @@ nav:
     - Fondamentaux: chapitre-5-prompt-engineering/fondamentaux.md
     - Techniques Intermédiaires: chapitre-5-prompt-engineering/techniques-intermediaires.md
     - Techniques Avancées: chapitre-5-prompt-engineering/techniques-avancees.md
-    - Copilot (référence): chapitre-5-prompt-engineering/avec-copilot.md
+    - "Copilot (référence)": chapitre-5-prompt-engineering/avec-copilot.md
 
   - Machine Learning:
     - Accueil: chapitre-6-machine-learning/index.md
