@@ -1,364 +1,159 @@
-﻿# Prompt Engineering avec GitHub Copilot
+# Prompt Engineering avec GitHub Copilot — référence conservée
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Toutes les techniques vues dans ce chapitre s'appliquent directement à GitHub Copilot. Ce guide pratique fait la synthèse : comment Copilot assemble votre contexte comme un prompt, et comment appliquer consciemment le prompt engineering à chaque mode d'interaction — complétion inline, Chat, instructions permanentes et prompt files.
+!!! info "Copilot reste documenté"
+    Ce dépôt est désormais **Claude-first**, mais cette page reste la référence pratique pour GitHub Copilot. Les principes généraux du prompt engineering restent les mêmes ; seuls les mécanismes de contexte et de personnalisation changent.
+
+Pour l'usage principal du dépôt, voir **[Prompt Engineering avec Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**.
 
 ---
 
-## 1. Comment Copilot Assemble Votre Contexte en Prompt
+## 1. Le contexte Copilot
 
-Copilot ne "voit" pas simplement votre fichier ouvert — il assemble en coulisses un **prompt structuré** à partir de multiples sources, le tout dans une fenêtre de tokens limitée.
+Copilot construit ses réponses à partir des éléments disponibles dans la surface utilisée : code, sélection, fichiers référencés, instructions du dépôt, historique et outils.
 
-```mermaid
-graph TD
-    subgraph "📥 Sources de contexte assemblées automatiquement"
-        SI["📋 System Instructions\n(.github/copilot-instructions.md\n+ .instructions.md)"]
-        FO["📂 Fichiers ouverts\n(onglets actifs dans l'IDE)"]
-        CU["📍 Code autour du curseur\n(avant + après, fenêtre glissante)"]
-        CH["💬 Historique Chat\n(tour de conversation actif)"]
-        RF["#️⃣ Références explicites\n(#fichier #sélection #dossier)"]
-    end
+Évitez de documenter des tailles fixes de fenêtre de contexte ou une liste figée de modèles : ces valeurs dépendent du modèle, du plan, de l'IDE et évoluent régulièrement.
 
-    SI --> ASSEMBLE["⚙️ Assemblage du Prompt\n(Copilot — priorise selon pertinence)"]
-    FO --> ASSEMBLE
-    CU --> ASSEMBLE
-    CH --> ASSEMBLE
-    RF --> ASSEMBLE
+Le principe durable est le même que pour Claude :
 
-    ASSEMBLE --> TOKENS["📊 Fenêtre de contexte\n(limitée en tokens selon le mode)"]
-    TOKENS --> LLM["🧠 Modèle Copilot\n(Claude 3.5 Sonnet / GPT-4o)"]
-    LLM -->|suggestion / réponse| OUTPUT["✨ Complétion ou Réponse Chat"]
-
-```
-
-!!! info "La fenêtre de tokens est une limite physique"
-    Copilot ne peut pas ingérer tout votre projet. Il priorise : le fichier courant, les fichiers récemment ouverts, puis les références explicites. Ouvrir les bons fichiers dans des onglets = meilleur contexte = meilleures suggestions.
-
-    | Mode | Fenêtre approximative |
-    |------|-----------------------|
-    | Suggestions inline | ~2 000 tokens |
-    | Copilot Chat | ~8 000 à 128 000 tokens selon le modèle |
-    | Édition multi-fichiers assistée (Chat/Agent) | ~32 000 tokens |
-    | Mode Agent | ~128 000 tokens |
+> fournir le minimum de contexte pertinent, puis demander une validation observable.
 
 ---
 
-## 2. Prompt Engineering en Complétion Inline
+## 2. Complétion inline
 
-La complétion inline (suggestion automatique au curseur) est pilotée par le code et les commentaires qui entourent le curseur. Votre code **est** le prompt.
+Pour les suggestions inline, le **code lui-même** reste une source de contexte majeure.
 
-### Technique 1 : Le Commentaire comme Instruction
-
-=== "❌ Sans prompt engineering"
-    ```python
-    # fonction
-    def process():
-    ```
-    → Copilot génère quelque chose de générique, sans garantie d'utilité.
-
-=== "✅ Zero-Shot explicite"
-    ```python
-    # Valide qu'un email est au format correct (RFC 5322 simplifié).
-    # Paramètre : email (str)
-    # Retourne : True si valide, False sinon
-    # Lève ValueError si email n'est pas une string
-    def validate_email(email: str) -> bool:
-    ```
-    → Copilot génère exactement ce qui est décrit dans le commentaire.
-
-=== "⭐ Few-Shot par l'exemple"
-    ```python
-    # Exemples de comportement attendu :
-    # validate_email("user@example.com")  → True
-    # validate_email("invalid-email")     → False
-    # validate_email(123)                 → ValueError
-    # validate_email("user@")             → False
-    def validate_email(email: str) -> bool:
-    ```
-    → Copilot génère une implémentation qui couvre tous les cas d'exemple montrés.
-
-### Technique 2 : Le Nom comme Contexte
+Préférez :
 
 ```typescript
-// ❌ Trop vague — Copilot peut générer n'importe quoi
-function process(data) {}
-
-// ✅ Le nom seul guide déjà la complétion
-function validateAndSanitizeUserInput(rawInput: string): SanitizedInput {}
-
-// ⭐ Nom + types + JSDoc = prompt complet pour Copilot
 /**
- * Validates user-provided search query and sanitizes it against XSS.
- * @throws {ValidationError} if query exceeds MAX_QUERY_LENGTH characters
+ * Valide une requête de recherche utilisateur.
+ * Retourne une valeur nettoyée sans modifier l'entrée.
+ * Lève ValidationError si la taille maximale est dépassée.
  */
-function validateAndSanitizeSearchQuery(
-  rawQuery: string,
-  options: SearchOptions = {}
-): SanitizedQuery {}
+function sanitizeSearchQuery(rawQuery: string): SanitizedQuery {
 ```
 
-### Technique 3 : Chain-of-Thought en Commentaires
+à :
 
-```python
-# Algorithme de Dijkstra pour le chemin le plus court.
-# Étapes :
-# 1. Initialiser les distances à l'infini sauf pour le nœud source (0)
-# 2. Utiliser une min-heap pour extraire le nœud de distance minimale
-# 3. Pour chaque voisin non visité, mettre à jour la distance si meilleure
-# 4. Répéter jusqu'à atteindre le nœud cible ou vider la heap
-# Complexité : O((V + E) log V)
-def dijkstra(graph: Graph, source: str, target: str) -> PathResult:
+```typescript
+function process(data) {
 ```
+
+Des noms explicites, types précis et commentaires utiles donnent de meilleurs signaux que des commentaires verbeux décrivant chaque ligne.
 
 ---
 
-## 3. Prompt Engineering en Mode Chat
+## 3. Copilot Chat
 
-Le Chat Copilot supporte toutes les techniques de prompt engineering. Voici comment les appliquer concrètement.
+Une demande robuste suit le même schéma que dans les fondamentaux :
 
-### Appliquer le Role Prompting
-
-```
-Tu es un architecte Java senior spécialisé en microservices Spring Boot 3.
-Tu connais notre contexte : API REST, PostgreSQL, Redis comme cache L2,
-déploiement Kubernetes.
-
-Examine ce service et identifie :
-1. Les problèmes de design selon les principes DDD
-2. Les risques de performance sous charge élevée
-3. Les améliorations recommandées, classées par priorité (High / Medium / Low)
-
-#fichier:UserService.java
+```text
+Objectif   : corriger la régression d'authentification
+Périmètre  : src/auth/ uniquement
+Contexte   : suivre le pattern de UserSession.ts
+Contraintes: ne pas changer l'API publique
+Validation : exécuter les tests auth
 ```
 
-### Appliquer le Chain-of-Thought
+### Référencer des fichiers
 
-```
-Ce bug est difficile à localiser. Raisonne étape par étape :
-
-1. Trace l'exécution pour l'entrée qui échoue : userId = null
-2. Identifie chaque appel de méthode et sa valeur de retour attendue
-3. Repère à quelle étape le comportement diverge de l'attendu
-4. Explique la cause racine en une phrase précise
-5. Propose le correctif minimal qui ne casse pas les autres cas
-
-#fichier:OrderService.java
-
-Erreur observée : NullPointerException ligne 47
-```
-
-### Appliquer le Few-Shot pour respecter un style existant
-
-```
-Génère les tests unitaires JUnit 5 pour ma méthode.
-
-Style à suivre (exemples déjà dans le projet) :
-#fichier:UserServiceTest.java
-
-Méthode à tester :
-#sélection
-
-Crée les tests en suivant EXACTEMENT les conventions de UserServiceTest.java :
-même structure d'annotation, même nommage des méthodes de test,
-même utilisation de Mockito.
-```
-
-### Prompt Chaining en session Chat
-
-```mermaid
-sequenceDiagram
-    participant D as 👤 Développeur
-    participant C as 🤖 Copilot Chat
-
-    D->>C: Tour 1 — Role Prompting<br/>"Tu es architecte DDD.<br/>Analyse #fichier:Service.java"
-    C-->>D: Analyse des responsabilités + problèmes identifiés
-
-    D->>C: Tour 2 — Prompt Chaining<br/>"Sur la base de cette analyse,<br/>propose le découpage en sous-services"
-    C-->>D: Architecture proposée avec interfaces
-
-    D->>C: Tour 3 — CoT<br/>"Génère le code de NotificationService.<br/>Raisonne étape par étape pour<br/>respecter les interfaces proposées."
-    C-->>D: Code généré, cohérent avec les tours précédents
-
-    D->>C: Tour 4 — Validation<br/>"Vérifie que ce code respecte bien<br/>les contraintes DDD identifiées au tour 1"
-    C-->>D: Rapport de conformité + corrections
-```
+Utilisez les mécanismes de référence proposés par votre IDE et votre version de Copilot pour pointer les fichiers, sélections et dossiers réellement utiles.
 
 ---
 
-## 4. Prompt Engineering dans les Instructions Permanentes
+## 4. Instructions persistantes
 
-Les fichiers `.instructions.md` sont des **system prompts permanents** injectés automatiquement dans chaque interaction Copilot correspondant au filtre `applyTo`.
+Copilot peut utiliser :
 
-```mermaid
-graph TD
-    INS["📋 .instructions.md\n(system prompt permanent)"] -->|injecté automatiquement| COPILOT["🤖 Copilot\n(chaque requête correspondante)"]
-
-    subgraph "Techniques PE applicables dans les instructions"
-        RP["🎭 Role Prompting\n'Tu es expert de...'"]
-        CON["📐 Contraintes permanentes\n'Toujours utiliser...'\n'Ne jamais ...'"]
-        FOR["📄 Format de réponse\n'Répondre en...'\n'Utiliser les conventions...'"]
-        CTX["🗂️ Contexte du projet\n'Ce projet est...'\n'L'équipe utilise...'"]
-    end
-
-    RP --> INS
-    CON --> INS
-    FOR --> INS
-    CTX --> INS
-
+```text
+.github/copilot-instructions.md
+.github/instructions/*.instructions.md
 ```
 
-### Exemple d'instruction combinant plusieurs techniques PE
+Exemple ciblé :
 
 ```markdown
 ---
-applyTo: "**/*.java"
+applyTo: "src/api/**/*.ts"
 ---
 
-## Rôle (Role Prompting)
-Tu es un développeur Java senior de l'équipe backend.
-Tu connais notre architecture : microservices Spring Boot 3,
-PostgreSQL avec JPA/Hibernate, Redis comme cache L2, déploiement Kubernetes.
-
-## Contexte Permanent (Context Injection)
-- Style : Google Java Style (Checkstyle configuré)
-- Tests : JUnit 5 + Mockito, couverture minimale 80%
-- Logs : SLF4J uniquement — jamais System.out.println
-- Transactions : @Transactional sur les méthodes de service uniquement
-
-## Contraintes (Constraining)
-- Jamais @Autowired par champ : injection constructeur obligatoire
-- Jamais exposer les entités JPA directement : utiliser des DTOs
-- Toujours valider les entrées avec Jakarta Validation (@Valid, @NotNull...)
-- Secrets : jamais en dur dans le code — utiliser @Value ou Spring Vault
-
-## Format de Réponse
-- Code : toujours avec les imports nécessaires inclus
-- Explication : concise, maximum 3 points clés
-- Si plusieurs approches possibles : tableau comparatif avant de choisir
+- Valider toutes les entrées.
+- Utiliser le format d'erreur standard du projet.
+- Ajouter ou mettre à jour les tests concernés.
 ```
 
+Pour Claude, l'équivalent est `.claude/rules/*.md` avec `paths` et non `applyTo`.
+
 ---
 
-## 5. Prompt Engineering dans les Prompt Files
+## 5. Prompt files
 
-Les prompt files (`.prompt.md`) sont des **templates de prompts réutilisables** pour des tâches récurrentes. Ils bénéficient pleinement de toutes les techniques avancées.
+Les `.github/prompts/*.prompt.md` permettent de sauvegarder des tâches récurrentes. Ils restent en preview selon les surfaces Copilot.
 
-### Anatomie d'un Prompt File Expert
+Exemples :
 
-```mermaid
-graph TD
-    PF["📄 .prompt.md"]
-    PF --> FM["🔧 Front Matter YAML\n(mode, description, modèle)"]
-    PF --> ROLE["🎭 Rôle (Role Prompting)\n'Tu es expert en...'"]
-    PF --> COT["🔗 Étapes (Chain-of-Thought)\n'Procède en N étapes'"]
-    PF --> FMT["📐 Format de sortie\n(JSON, Markdown structuré)"]
-    PF --> INP["📥 Entrée dynamique\n(${selection}, ${file})"]
+- revue de code ;
+- génération de tests ;
+- audit de sécurité ;
+- création de documentation.
 
+Voir [Prompt Files](../chapitre-4-contexte/prompt-files.md).
+
+---
+
+## 6. Agents et skills
+
+Copilot prend en charge des custom agents et des agent skills selon la surface et la version.
+
+```text
+.github/agents/*.agent.md
+.github/skills/*/SKILL.md
+.claude/skills/*/SKILL.md
+.agents/skills/*/SKILL.md
 ```
 
-### Exemple : Audit de Sécurité (Expert)
-
-```markdown
----
-mode: agent
-description: "Audit de sécurité complet d'un endpoint REST"
----
-
-## Rôle
-Tu es un expert en sécurité applicative certifié OWASP.
-Tu utilises la méthodologie OWASP Top 10 et le référentiel CWE.
-
-## Tâche (Chain-of-Thought explicite)
-Audite l'endpoint sélectionné en suivant ces étapes dans l'ordre :
-
-**Étape 1 — Analyse des entrées**
-- Identifie tous les paramètres (path, query, body, headers)
-- Compare le type attendu avec ce qui est effectivement validé
-- Score de risque : 0 (aucun risque) → 3 (critique)
-
-**Étape 2 — Authentification et autorisation**
-- Quelles vérifications sont faites, à quel niveau du code ?
-- Y a-t-il des risques IDOR (Insecure Direct Object Reference) ou BOLA ?
-
-**Étape 3 — Dépendances et appels externes**
-- Requêtes SQL/NoSQL : risque d'injection ?
-- Appels HTTP sortants : risque SSRF ?
-- Secrets : codés en dur ou gérés via un vault ?
-
-**Étape 4 — Rapport de sortie**
-Retourne uniquement ce JSON valide :
-```json
-{
-  "globalRisk": "LOW|MEDIUM|HIGH|CRITICAL",
-  "findings": [
-    {
-      "category": "Catégorie OWASP",
-      "severity": "LOW|MEDIUM|HIGH|CRITICAL",
-      "description": "Description précise du problème",
-      "remediation": "Correction recommandée"
-    }
-  ]
-}
-```
-
-## Entrée à analyser
-${selection}
-```
+La prise en charge exacte varie : utilisez la **Copilot feature matrix** plutôt que de supposer une parité complète entre VS Code, Visual Studio, JetBrains, GitHub.com et la CLI.
 
 ---
 
-## 6. Anti-Patterns Copilot à Éviter
+## 7. Techniques utiles dans Copilot
 
-```mermaid
-graph TD
-    AP["⚠️ Anti-patterns\nfréquents avec Copilot"]
+- **Few-shot** : pointer vers un exemple existant.
+- **Contraintes explicites** : préciser ce qui ne doit pas changer.
+- **Décomposition** : séparer analyse, modification et validation.
+- **Sortie structurée** : tableau ou JSON si le résultat doit être consommé.
+- **Vérification** : tests, lint, build ou revue humaine.
 
-    AP --> A1["❌ Contexte dispersé\n(tous les fichiers fermés)"]
-    AP --> A2["❌ Prompts vagues\n('améliore ça')"]
-    AP --> A3["❌ Instructions\nnon maintenues"]
-    AP --> A4["❌ Accepter sans\nrelire le code"]
-    AP --> A5["❌ Tout dans un seul\nprompt géant"]
-
-    A1 --> FIX1["✅ Ouvrir les fichiers\npertinents en onglets"]
-    A2 --> FIX2["✅ Spécifier l'objectif\net les critères de succès"]
-    A3 --> FIX3["✅ Réviser les instructions\nquand le projet évolue"]
-    A4 --> FIX4["✅ Toujours reviewer le code\ngénéré avant de committer"]
-    A5 --> FIX5["✅ Décomposer en prompts\nenchaînés (Prompt Chaining)"]
-
-```
+Évitez de demander une longue chaîne de raisonnement visible. Demandez plutôt les **preuves vérifiables** : fichiers concernés, commandes exécutées, résultats et hypothèses restantes.
 
 ---
 
-## 7. Matrice des Techniques par Mode d'Interaction
+## 8. Claude + Copilot dans le même dépôt
 
-| Technique | Inline | Chat | Instructions | Prompt File |
-|-----------|:------:|:----:|:------------:|:-----------:|
-| Zero-Shot | ✅ Commentaire | ✅ Question directe | — | ✅ Par défaut |
-| Few-Shot | ✅ Exemples commentés | ✅ Exemples dans le chat | ⚠️ Alourdit | ✅ Templates |
-| Chain-of-Thought | ⚠️ Limité | ✅ Excellent | — | ✅ Étapes numérotées |
-| Role Prompting | — | ✅ Début de session | ✅ Permanent | ✅ Par tâche |
-| Contraintes | ✅ Via types / noms | ✅ Liste explicite | ✅ Permanentes | ✅ Par tâche |
-| Format de sortie | ⚠️ Via commentaires | ✅ Format expliqué | ✅ Convention globale | ✅ Template exact |
-| Prompt Chaining | — | ✅ Tours successifs | — | ✅ Étapes enchaînées |
-| RAG | ✅ Fichiers ouverts | ✅ `#fichier` explicites | ✅ `applyTo` ciblé | ✅ `${file}` |
-| Tree of Thoughts | — | ✅ "Explore 3 approches" | — | ✅ Structure guidée |
+Si vous conservez les deux outils :
 
----
+| Besoin | Claude Code | GitHub Copilot |
+|---|---|---|
+| Instructions globales | `CLAUDE.md` | `.github/copilot-instructions.md` |
+| Règles ciblées | `.claude/rules/` + `paths` | `.github/instructions/` + `applyTo` |
+| Skills | `.claude/skills/` | Emplacements agent skills supportés |
+| Agents | `.claude/agents/` | `.github/agents/` |
+| Prompts réutilisables | Skills / commandes / prompt direct | `.github/prompts/*.prompt.md` |
 
-!!! success "Synthèse Finale"
-    Le prompt engineering avec Copilot n'est pas différent du prompt engineering général. La particularité est que votre **code existant et vos fichiers ouverts constituent déjà un contexte implicite** — les techniques permettent simplement d'en tirer la valeur maximale.
-
-    La règle d'or : **contexte explicite + instruction précise + format attendu = résultat optimal dès le premier essai**.
+Conservez une seule source métier de vérité autant que possible et évitez les consignes contradictoires entre les deux configurations.
 
 ---
 
 ## Sources
 
-- [Prompt engineering for GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/prompt-engineering-for-github-copilot) - consulté le 2026-06-20
-- [Best practices for using GitHub Copilot in VS Code](https://code.visualstudio.com/docs/copilot/prompt-crafting) - consulté le 2026-06-20
+- [GitHub Docs — Copilot feature matrix](https://docs.github.com/en/copilot/reference/copilot-feature-matrix) — consulté le 2026-09-28
+- [GitHub Docs — Prompt files](https://docs.github.com/en/copilot/tutorials/customization-library/prompt-files) — consulté le 2026-09-28
+- [GitHub Docs — Repository custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide) — consulté le 2026-09-28
+- [VS Code — Custom instructions](https://code.visualstudio.com/docs/agent-customization/custom-instructions) — consulté le 2026-09-28
 
-## Chapitres suivants
+## Prochaine étape
 
-**[Machine Learning](../chapitre-6-machine-learning/index.md)** — Utiliser Copilot pour vos workflows ML et Data Science
-**[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** — Comprendre la mécanique de contexte qui sous-tend les suggestions Copilot
+Pour le parcours principal, revenez à **[Prompt Engineering avec Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**.
