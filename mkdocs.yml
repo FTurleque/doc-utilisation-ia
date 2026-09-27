@@ -1,5 +1,5 @@
 site_name: Documentation IA
-site_description: Documentation collectée sur l'utilisation de l'IA
+site_description: Documentation Claude Code, GitHub Copilot et usages IA pour le développement
 site_author: FTurleque
 site_url: https://fturleque.github.io/doc-utilisation-ia/
 use_directory_urls: true
@@ -79,7 +79,25 @@ markdown_extensions:
 nav:
   - Accueil: index.md
 
-  - Copilot:
+  - Claude Code:
+    - Introduction: chapitre-3b-claude-code-migration-copilot/index.md
+    - "Installation (CLI, VS Code, JetBrains)": chapitre-3b-claude-code-migration-copilot/installation.md
+    - "Architecture .claude/": chapitre-3b-claude-code-migration-copilot/architecture-claude.md
+    - "Choisir le bon modèle": chapitre-3b-claude-code-migration-copilot/modeles-claude.md
+    - "Prompt Engineering avec Claude": chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md
+    - "Cookbook — recettes prêtes": chapitre-3b-claude-code-migration-copilot/cookbook.md
+    - "Hooks avancés": chapitre-3b-claude-code-migration-copilot/hooks-avances.md
+    - "Workflows CI & automatisation": chapitre-3b-claude-code-migration-copilot/workflows-ci.md
+    - "Orchestration multi-agents": chapitre-3b-claude-code-migration-copilot/subagents-orchestration.md
+    - "MCP — sources externes": chapitre-3b-claude-code-migration-copilot/mcp-sources-externes.md
+    - "Sécurité & gouvernance": chapitre-3b-claude-code-migration-copilot/securite-gouvernance.md
+    - "Plugins d'équipe": chapitre-3b-claude-code-migration-copilot/plugins-equipe.md
+    - "Comparaison Copilot vs Claude": chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md
+    - "Coûts & quotas": chapitre-3b-claude-code-migration-copilot/couts-quotas.md
+    - "Migration pas à pas": chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md
+    - "Checklist 30/60/90 jours": chapitre-3b-claude-code-migration-copilot/migration-30-60-90.md
+
+  - GitHub Copilot (référence):
     - Installation:
       - Accueil: chapitre-1-installation/index.md
       - IntelliJ IDEA:
@@ -98,24 +116,6 @@ nav:
       - Accueil: chapitre-3-cli-modes/index.md
       - Modes CLI Détail: chapitre-3-cli-modes/page-principale.md
       - Comparaison Modes: chapitre-3-cli-modes/comparaison.md
-
-  - Claude Code & Migration:
-    - Introduction: chapitre-3b-claude-code-migration-copilot/index.md
-    - "Installation (CLI, VS Code, JetBrains)": chapitre-3b-claude-code-migration-copilot/installation.md
-    - "Architecture .claude/": chapitre-3b-claude-code-migration-copilot/architecture-claude.md
-    - "Choisir le bon modèle": chapitre-3b-claude-code-migration-copilot/modeles-claude.md
-    - "Prompt Engineering avec Claude": chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md
-    - "Cookbook — recettes prêtes": chapitre-3b-claude-code-migration-copilot/cookbook.md
-    - "Hooks avancés": chapitre-3b-claude-code-migration-copilot/hooks-avances.md
-    - "Workflows CI & automatisation": chapitre-3b-claude-code-migration-copilot/workflows-ci.md
-    - "Orchestration multi-agents": chapitre-3b-claude-code-migration-copilot/subagents-orchestration.md
-    - "MCP — sources externes": chapitre-3b-claude-code-migration-copilot/mcp-sources-externes.md
-    - "Sécurité & gouvernance": chapitre-3b-claude-code-migration-copilot/securite-gouvernance.md
-    - "Plugins d'équipe": chapitre-3b-claude-code-migration-copilot/plugins-equipe.md
-    - "Comparaison Copilot vs Claude": chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md
-    - "Coûts & quotas": chapitre-3b-claude-code-migration-copilot/couts-quotas.md
-    - "Migration pas à pas": chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md
-    - "Checklist 30/60/90 jours": chapitre-3b-claude-code-migration-copilot/migration-30-60-90.md
 
   - Contexte & Personnalisation:
     - Accueil: chapitre-4-contexte/index.md
