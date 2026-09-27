@@ -1,195 +1,188 @@
-# Orchestration multi-agents (Copilot & Claude)
+# Orchestration multi-agents — Claude Code en référence, Copilot conservé
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
 ## Présentation
 
-Un agent unique suffit pour la plupart des tâches. Mais dès qu'un travail devient **multi-étapes** ou **volumineux** (explorer un gros code, planifier, implémenter, tester, auditer), faire collaborer **plusieurs agents spécialisés** donne de meilleurs résultats. Cette page compare l'orchestration multi-agents côté **GitHub Copilot** (`.agent.md`, handoffs, sous-agents) et côté **Claude Code** (subagents), pour que vous sachiez quoi utiliser dans chaque écosystème.
+Un seul agent suffit pour beaucoup de tâches. L'orchestration devient utile lorsque le travail comporte des recherches volumineuses, plusieurs spécialisations ou des vérifications indépendantes.
 
-!!! info "Deux écosystèmes, un même principe"
-    Copilot et Claude permettent tous deux qu'un agent en **délègue** à d'autres. Les mécanismes diffèrent, mais les **patterns** (orchestrateur/workers, pipeline, exploration parallèle, critique) sont identiques.
+Dans ce dépôt, **Claude Code est la référence principale** pour ces workflows. GitHub Copilot reste documenté comme alternative compatible.
 
----
-
-## Qu'est-ce que l'orchestration multi-agents ?
-
-```mermaid
-graph TD
-    O["🎯 Agent orchestrateur"] -->|délègue| A["🔍 Agent explorateur"]
-    O -->|délègue| B["🧪 Agent testeur"]
-    O -->|délègue| C["🔒 Agent sécurité"]
-    A --> O
-    B --> O
-    C --> O
-    O --> R["Synthèse finale"]
-```
-
-L'idée : un **orchestrateur** découpe la tâche et confie chaque morceau à un **agent spécialisé**, doté de son propre contexte, de ses outils et parfois de son modèle. Chaque spécialiste travaille **sans polluer** le contexte des autres, puis l'orchestrateur agrège les résultats.
-
-| Sans orchestration | Avec orchestration |
-|--------------------|--------------------|
-| Un contexte qui se sature | Un contexte isolé par agent |
-| Responsabilités mélangées | Spécialisation claire |
-| Séquentiel | Exploration possible en parallèle |
-| Un seul modèle | Le bon modèle par sous-tâche |
+!!! info "Le but n'est pas de multiplier les agents"
+    Un subagent consomme lui aussi des requêtes et du contexte. Utilisez-le lorsque l'isolation ou la spécialisation apporte un gain réel : exploration lourde, audit indépendant, recherche parallèle ou rôle fortement restreint.
 
 ---
 
-## Les patterns communs
+## Claude Code : les trois niveaux à distinguer
 
-| Pattern | Description | Exemple |
-|---------|-------------|---------|
-| **Orchestrateur / workers** | L'agent principal délègue et synthétise | Explorer → coder → tester |
-| **Pipeline séquentiel** | Chaque agent transforme la sortie du précédent | Plan → implémentation → revue → doc |
-| **Exploration parallèle** | Plusieurs agents analysent en parallèle, puis agrégation | Audit d'un monorepo |
-| **Critique / débat** | Un agent produit, un autre critique, l'orchestrateur arbitre | Décision d'architecture |
+### 1. Subagents intégrés
+
+Claude Code fournit notamment des agents intégrés pour l'exploration et la planification. Ils travaillent dans leur propre contexte afin d'éviter de remplir inutilement la conversation principale avec des recherches de fichiers et de logs.
 
 ```mermaid
 graph LR
-    subgraph "Pipeline"
-        P1["Plan"] --> P2["Code"] --> P3["Revue"] --> P4["Doc"]
-    end
+    M[Conversation principale] --> E[Explore\nlecture/recherche]
+    M --> P[Plan\nrecherche en mode plan]
+    E --> M
+    P --> M
 ```
 
-!!! tip "Choisir le pattern selon la tâche"
-    - Multi-étapes dépendantes → **pipeline**.
-    - Gros volume à analyser → **exploration parallèle**.
-    - Décision sensible → **critique/débat**.
-    - Cas général → **orchestrateur/workers**.
+Cas d'usage :
 
----
+- rechercher où une fonctionnalité est implémentée ;
+- cartographier un module avant modification ;
+- analyser un gros ensemble de fichiers sans polluer le contexte principal.
 
-## Côté GitHub Copilot
+### 2. Subagents personnalisés
 
-Copilot orchestre via les fichiers `.agent.md` (voir [Agents Copilot](guide-agents.md)) et trois mécanismes complémentaires.
-
-### Sous-agents via le champ `agents`
-
-Un agent peut être autorisé à **invoquer d'autres agents** comme sous-agents :
-
-```yaml
----
-name: Orchestrateur
-description: Coordonne l'analyse, l'implémentation et la revue
-tools:
-  - codebase
-  - editFiles
-agents:
-  - security-auditor        # sous-agents autorisés
-  - test-generator
----
-
-# Orchestrateur
-Pour chaque feature : délègue l'audit à security-auditor,
-puis la génération de tests à test-generator, et synthétise.
-```
-
-| Valeur de `agents` | Effet |
-|--------------------|-------|
-| `[agent-a, agent-b]` | Seuls ces sous-agents sont invocables |
-| `*` | Tous les agents disponibles |
-| `[]` | Aucun sous-agent (agent terminal) |
-
-### Handoffs — transitions guidées
-
-Les **handoffs** créent des workflows séquentiels avec des boutons de transition entre agents :
-
-```yaml
----
-name: Planning Agent
-description: Génère un plan d'implémentation
-handoffs:
-  - label: Démarrer l'implémentation
-    agent: implementation
-    prompt: Implémente le plan ci-dessus.
-  - label: Revue de sécurité
-    agent: security-auditor
----
-```
-
-C'est un **pipeline semi-manuel** : l'utilisateur valide chaque transition (idéal pour garder le contrôle).
-
-### Contrôle d'invocation
-
-| Champ | Rôle |
-|-------|------|
-| `disable-model-invocation` | Empêche un agent d'être appelé comme sous-agent |
-| `user-invocable` | Masque l'agent du sélecteur (agent purement délégué) |
-| `target` | Cible d'exécution : `vscode` ou `github-copilot` |
-
-!!! info "Copilot Coding Agent"
-    Au-delà du chat, le **Copilot coding agent** (sur GitHub) exécute des tâches de bout en bout sur une issue/PR, en orchestrant ses propres étapes. C'est une forme d'orchestration côté plateforme, complémentaire aux `.agent.md` locaux.
-
----
-
-## Côté Claude Code
-
-Claude orchestre via les **subagents** (`.claude/agents/<nom>.md`), chacun isolé dans son propre contexte, avec son modèle et ses outils.
+Un agent projet se place dans `.claude/agents/` :
 
 ```markdown
 ---
-name: security-critic
-description: "Critique sécurité d'une implémentation. À invoquer après tout code sensible."
-tools: [read, grep]
-model: claude-opus-4
+name: security-reviewer
+description: Audite les changements sensibles pour détecter vulnérabilités et régressions de sécurité.
+tools: Read, Grep, Glob
+model: sonnet
 ---
-Tu critiques le code sous l'angle OWASP. Sois exigeant et concret.
+
+Tu es un reviewer sécurité en lecture seule.
+Cherche des preuves concrètes et retourne les constats classés par sévérité.
 ```
 
-L'orchestrateur invoque les subagents **automatiquement** (selon leur `description`) ou sur demande explicite. L'isolation du contexte permet une **exploration parallèle** sans saturer la conversation principale.
+Claude peut déléguer automatiquement lorsqu'une tâche correspond à la `description`, ou vous pouvez demander explicitement l'agent.
 
-!!! tip "Pour aller plus loin côté Claude"
-    Les patterns détaillés (map/reduce, pipeline, critique), le choix du modèle par agent et les anti-patterns sont approfondis dans **[Orchestration multi-agents avec Claude Code](../chapitre-3b-claude-code-migration-copilot/subagents-orchestration.md)**.
+Les subagents peuvent avoir leurs propres :
 
----
+- outils et outils interdits ;
+- modèle ;
+- mode de permissions ;
+- serveurs MCP ;
+- hooks ;
+- skills préchargés ;
+- mémoire persistante selon le besoin.
 
-## Comparaison Copilot ↔ Claude
+### 3. Sessions/équipes d'agents
 
-| Aspect | GitHub Copilot | Claude Code |
-|--------|----------------|-------------|
-| Définition d'agent | `.agent.md` dans `.github/agents/` | `.claude/agents/<nom>.md` |
-| Délégation | Champ `agents` + handoffs | Invocation auto/explicite des subagents |
-| Isolation du contexte | Par agent (session chat) | Par subagent (contexte dédié) |
-| Exécution parallèle | Limitée | ✅ Native (exploration parallèle) |
-| Modèle par agent | `model` (selon plan) | `model` (famille Claude) |
-| Transitions guidées | ✅ Handoffs (boutons) | Via instructions de l'orchestrateur |
-| Contrôle d'outils | `tools` (liste) | `tools` (liste blanche) |
-| Pilotage | Sélecteur de mode, `@agent` | REPL `/agents`, délégation |
-
-!!! warning "Ne sur-orchestrez pas"
-    Des deux côtés, l'orchestration ajoute de la latence, du coût et de la complexité. Pour une tâche simple, **un seul agent** reste le bon choix. Réservez le multi-agents aux travaux réellement multi-étapes ou volumineux.
+Pour des travaux réellement parallèles et plus indépendants, Claude Code distingue également les **background agents** et les **agent teams** des simples subagents. Ces mécanismes correspondent à des sessions plus autonomes et ne doivent pas être confondus avec une délégation ponctuelle dans le contexte courant.
 
 ---
 
-## Bonnes pratiques (valables des deux côtés)
+## Patterns recommandés
 
-1. **Un agent = un rôle** — pas d'agent « fait tout ».
-2. **Outils minimaux** — un explorateur ne doit pas pouvoir écrire ni exécuter.
-3. **Descriptions précises** — elles servent de règles de routage pour la délégation.
-4. **Sorties synthétiques** — le résultat d'un agent ne doit pas saturer l'orchestrateur.
-5. **Modèle adapté** — raisonnement coûteux seulement là où il le faut.
-6. **Versionner les agents** — reproductibilité et partage d'équipe.
-7. **Garder l'orchestration plate** — éviter les chaînes d'agents trop profondes.
+### Explore → Plan → Implement → Verify
+
+C'est le workflow par défaut recommandé pour les changements non triviaux.
+
+```mermaid
+graph LR
+    E[Explore] --> P[Plan]
+    P --> I[Implement]
+    I --> V[Verify]
+    V --> D{Validation OK ?}
+    D -- Non --> I
+    D -- Oui --> F[Terminé]
+```
+
+- **Explore** : comprendre avant d'écrire.
+- **Plan** : expliciter les fichiers et validations.
+- **Implement** : modifier en petites étapes.
+- **Verify** : tests, build, lint, capture ou revue indépendante.
+
+### Orchestrateur / spécialistes
+
+```mermaid
+graph TD
+    O[Agent principal] --> S[Security reviewer]
+    O --> T[Test reviewer]
+    O --> A[Architecture explorer]
+    S --> O
+    T --> O
+    A --> O
+```
+
+Utilisez ce pattern quand chaque branche nécessite une expertise différente.
+
+### Investigation isolée
+
+La documentation Claude recommande explicitement les subagents pour les recherches qui liraient beaucoup de fichiers : la synthèse revient au contexte principal, pas tout le bruit intermédiaire.
+
+### Vérification indépendante
+
+Un second agent peut relire une implémentation avec un contexte neuf. Cette approche est particulièrement utile pour :
+
+- sécurité ;
+- migrations ;
+- logique métier critique ;
+- détection de régressions.
 
 ---
 
-## Prochaine étape
+## Coût et contexte
 
-**[Guide Skills (SKILL.md)](guide-skills.md)** : packager l'expertise domaine réutilisable que vos agents — orchestrateurs comme spécialisés — peuvent invoquer à la demande.
+Les subagents **ne rendent pas le travail gratuit** : leurs requêtes comptent dans les mêmes limites d'usage. Leur avantage principal est l'isolation du contexte et la spécialisation.
 
-Concepts clés couverts :
+Bon réflexe :
 
-- **Qu'est-ce qu'un SKILL.md** — package de connaissance stable et réutilisable
-- **Emplacement et URI** — `.github/skills/*/SKILL.md` et référençage
-- **Différence Skills vs Instructions vs Agents** — tableau comparatif clair
-- **Exemples de skills** — API standards, modèle de domaine, patterns d'architecture
+1. garder la conversation principale pour les décisions et l'implémentation ;
+2. déléguer les recherches volumineuses ;
+3. demander aux agents de retourner une synthèse courte avec preuves ;
+4. réserver les modèles coûteux aux tâches qui le justifient.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Copilot propose lui aussi des agents personnalisés dans `.github/agents/*.agent.md`, avec outils, modèle et mécanismes d'orchestration selon l'environnement.
+
+```text
+.github/agents/
+├── security-reviewer.agent.md
+└── test-reviewer.agent.md
+```
+
+Selon les versions et surfaces Copilot, on trouve notamment :
+
+- custom agents ;
+- sous-agents / délégation ;
+- handoffs ;
+- Copilot coding agent côté GitHub ;
+- MCP et skills.
+
+!!! warning "Ne supposez pas une parité parfaite entre IDE"
+    GitHub publie une matrice de fonctionnalités par version. Les fonctions avancées peuvent être en preview et leur disponibilité varie entre VS Code, Visual Studio, JetBrains et GitHub.com.
+
+---
+
+## Comparaison pratique
+
+| Besoin | Claude Code | GitHub Copilot |
+|---|---|---|
+| Agent projet versionné | `.claude/agents/*.md` | `.github/agents/*.agent.md` |
+| Recherche isolée | Subagents intégrés/personnalisés | Agents selon surface |
+| Permissions par agent | Oui | Oui selon agent/surface |
+| Skills | `.claude/skills/` | `.github/skills/`, `.claude/skills/` ou `.agents/skills/` selon surface |
+| Exécution réellement multi-session | Background agents / agent teams | Coding agent / workflows plateforme |
+| Outil principal du dépôt | **Oui** | Référence conservée |
+
+---
+
+## Anti-patterns
+
+- Créer un agent différent pour chaque petite tâche.
+- Donner `Bash`, écriture ou MCP à un agent qui n'en a pas besoin.
+- Demander à cinq agents la même analyse sans critère d'agrégation.
+- Réinjecter les sorties brutes de tous les agents dans la conversation principale.
+- Utiliser un agent comme simple stockage de règles : préférez `CLAUDE.md`, `.claude/rules/` ou un skill selon la portée.
 
 ---
 
 ## Sources
 
-- [GitHub Docs — Custom agents](https://docs.github.com/en/copilot/customizing-copilot) - consulté le 2026-06-20
-- [GitHub Docs — Copilot coding agent](https://docs.github.com/en/copilot/using-github-copilot/coding-agent) - consulté le 2026-06-20
-- [Anthropic — Subagents](https://docs.anthropic.com/en/docs/claude-code/sub-agents) - consulté le 2026-06-20
-- [Anthropic — Building effective agents](https://www.anthropic.com/research/building-effective-agents) - consulté le 2026-06-20
+- [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents) — consulté le 2026-09-28
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices) — consulté le 2026-09-28
+- [GitHub Docs — Copilot feature matrix](https://docs.github.com/en/copilot/reference/copilot-feature-matrix) — consulté le 2026-09-28
+- [GitHub Docs — Custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/create-custom-agents-in-your-ide) — consulté le 2026-09-28
 
+## Prochaine étape
+
+**[Skills](guide-skills.md)** : factoriser l'expertise réutilisable sans la charger en permanence dans le contexte principal.
