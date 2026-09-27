@@ -1,343 +1,268 @@
-# Agents Copilot (.agent.md)
+# Agents spécialisés — Claude Code et référence Copilot
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
-## Présentation
-Les fichiers `.agent.md` permettent de créer des **agents Copilot personnalisés** avec des comportements, des outils et des instructions spécialisés. Un agent est une version de Copilot configurée pour un rôle spécifique : documentaliste, auditeur de sécurité, expert en refactoring, etc.
+Claude Code peut déléguer une tâche à un **subagent** qui possède son propre contexte, son prompt et ses outils. C'est particulièrement utile pour la recherche, la revue, l'exploration d'un gros dépôt ou une expertise que vous ne voulez pas laisser envahir la conversation principale.
+
+Les custom agents GitHub Copilot restent documentés plus bas comme référence distincte.
 
 ---
 
-## Qu'est-ce qu'un agent custom ?
+## Où placer un subagent Claude ?
 
-Un agent custom est défini par un fichier `.agent.md` dans `.github/agents/`. Il apparaît dans le sélecteur de mode de Copilot Chat et peut être invoqué à la demande. Chaque agent peut :
+### Projet
 
-- Avoir un **nom et une description** propres
-- **Restreindre les outils** disponibles (pour des raisons de sécurité ou de focus)
-- Disposer d'**instructions permanentes** intégrées (différentes des `.instructions.md` globales)
-- Cibler un **modèle IA spécifique**
-
+```text
+.claude/agents/
+├─ doc-reviewer.md
+├─ security-reviewer.md
+└─ repo-explorer.md
 ```
-mon-projet/
-└── .github/
-    └── agents/
-        ├── documentation-writer.agent.md    ← Agent auteur de docs
-        ├── security-auditor.agent.md         ← Agent auditeur sécurité
-        ├── code-reviewer.agent.md            ← Agent revieweur de code
-        ├── test-generator.agent.md           ← Agent générateur de tests
-        └── refactor-expert.agent.md          ← Agent expert refactoring
+
+Ces agents peuvent être versionnés avec le dépôt.
+
+### Utilisateur
+
+```text
+~/.claude/agents/<nom>.md
 ```
+
+Ils sont disponibles dans vos projets locaux.
 
 ---
 
-## Structure d'un fichier .agent.md
+## Structure minimale
+
+Seuls `name` et `description` sont obligatoires dans le frontmatter d'un subagent Claude.
 
 ```markdown
 ---
-name: Nom de l'Agent
-description: Description courte (affichée dans le sélecteur)
-model: claude-sonnet        # Modèle IA à utiliser (optionnel — vérifiez la disponibilité actuelle)
-tools:                       # Liste des outils autorisés
-  - codebase
-  - editFiles
+name: doc-reviewer
+description: Audite une page de documentation après modification. Vérifie cohérence, liens, sources et navigation.
+tools: Read, Grep, Glob
+model: inherit
 ---
 
-# Instructions de l'Agent
+Tu es un relecteur de documentation technique.
 
-Décrivez ici le rôle, le comportement et les règles de l'agent.
-Ces instructions sont toujours injectées dans le contexte de cet agent.
-
-## Identité
-Tu es [rôle], spécialisé dans [domaine].
-
-## Comportement
-- Règle 1
-- Règle 2
-
-## Ce que tu ne dois PAS faire
-- Restriction 1
+Pour chaque page :
+1. repère les incohérences factuelles ;
+2. vérifie les liens et renvois ;
+3. contrôle la cohérence avec la navigation ;
+4. retourne uniquement les problèmes actionnables, avec fichier et justification.
 ```
 
+Claude utilise la `description` pour décider quand déléguer une tâche. Gardez-la courte et distinctive ; placez le détail dans le corps du fichier, chargé seulement lorsque l'agent s'exécute.
+
 ---
 
-## Frontmatter d'un agent
-
-```yaml
----
-name: Documentation Writer          # Nom affiché dans le sélecteur
-description: Génère documentation technique, diagrammes et maintient la parité code/docs
-model: gpt-4o-mini                  # Modèle optionnel (défaut : modèle configuré par l'utilisateur — consultez les modèles disponibles)
-tools:                              # Outils disponibles pour cet agent
-  - codebase                        # Accès au workspace
-  - editFiles                       # Modification de fichiers
-  - githubRepo                      # Infos GitHub
----
-```
-
-!!! warning "Modèles disponibles"
-    Les modèles et leurs disponibilités évoluent régulièrement. Consultez [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans) pour vérifier quels modèles sont inclus dans votre plan (Vérifié le 4 mai 2026).
-
-### Champs avancés souvent utiles
-
-!!! warning "Le champ `prompt` n'existe pas"
-    Le prompt de l'agent est le **corps du fichier `.agent.md`** (après le frontmatter), pas un champ frontmatter. N'utilisez pas `prompt:` dans le frontmatter — il sera ignoré.
+## Frontmatter utile
 
 | Champ | Usage |
-|-------|-------|
-| `argument-hint` | Texte d'aide affiché dans le champ de saisie lors de l'invocation |
-| `agents` | Liste des sous-agents autorisés (`*` pour tous, `[]` pour aucun) |
-| `mcp-servers` | Serveurs MCP autorisés pour cet agent |
-| `disable-model-invocation` | Empêche l'agent d'être invoqué comme sous-agent par d'autres agents |
-| `user-invocable` | Masque l'agent dans le sélecteur (utile pour les agents purement en sous-agent) |
-| `handoffs` | Transitions guidées vers d'autres agents (voir ci-dessous) |
-| `target` | Environnement cible : `vscode` ou `github-copilot` |
+|---|---|
+| `name` | identifiant unique — obligatoire |
+| `description` | quand utiliser cet agent — obligatoire |
+| `tools` | allowlist d'outils |
+| `disallowedTools` | outils à retirer de l'ensemble hérité |
+| `model` | alias, ID de modèle ou `inherit` |
+| `permissionMode` | mode de permissions propre à l'agent |
+| `mcpServers` | serveurs MCP accessibles |
+| `skills` | skills préchargés |
+| `hooks` | hooks propres au subagent |
+| `maxTurns` | nombre maximal de tours |
+| `memory` | mémoire persistante du subagent |
+| `effort` | niveau d'effort pris en charge |
+| `background` | comportement d'exécution en arrière-plan |
+| `isolation` | isolation, notamment worktree lorsque prise en charge |
 
-!!! info "Le champ `infer` est déprécié"
-    Remplacé par `user-invocable` + `disable-model-invocation` qui offrent un contrôle indépendant.
+Les capacités disponibles évoluent rapidement : pour une configuration avancée, vérifiez la référence officielle avant de figer un champ dans un standard d'équipe.
 
-### Handoffs — transitions guidées entre agents
+---
 
-Les handoffs permettent de créer des **workflows séquentiels guidés**. Après qu'un agent termine sa réponse, des boutons de transition apparaissent pour passer à l'agent suivant.
+## Restreindre les outils
+
+Pour un agent de recherche en lecture seule :
+
+```markdown
+---
+name: safe-researcher
+description: Explore le code pour répondre à une question sans modifier le dépôt.
+tools: Read, Grep, Glob
+---
+
+Retourne une synthèse courte avec les chemins de fichiers pertinents.
+```
+
+Pour hériter des outils disponibles mais interdire les écritures :
+
+```markdown
+---
+name: no-writes
+description: Analyse une modification sans toucher aux fichiers.
+disallowedTools: Write, Edit
+---
+```
+
+!!! important "Permissions de commandes spécifiques"
+    `disallowedTools: Bash(git push *)` ne constitue pas une règle fine de commande : pour conserver Bash tout en bloquant certaines commandes, utilisez les règles `permissions.deny` appropriées dans les settings.
+
+---
+
+## Choisir le modèle
+
+Évitez de figer un ID complet si ce n'est pas nécessaire.
 
 ```yaml
----
-name: Planning Agent
-description: Génère un plan d'implémentation détaillé
-tools:
-  - codebase
-handoffs:
-  - label: Démarrer l'implémentation
-    agent: implementation
-    prompt: Implémente maintenant le plan décrit ci-dessus.
-    send: false
-  - label: Revue de sécurité
-    agent: security-auditor
----
+model: inherit
 ```
 
-| Champ handoff | Description |
-|---------------|-------------|
-| `label` | Texte du bouton de transition |
-| `agent` | Identifiant de l'agent cible |
-| `prompt` | Prompt pré-rempli envoyé à l'agent cible |
-| `send` | `true` = envoie automatiquement ; `false` = pré-remplit seulement (défaut) |
-| `model` | Modèle à utiliser lors de la transition (optionnel) |
+réutilise le modèle de la conversation principale.
 
-### Outils disponibles
-
-| Tool | Description | Cas d'usage |
-|------|-------------|-------------|
-| `codebase` | Recherche et lecture dans le workspace | Analyser le code existant |
-| `editFiles` | Créer et modifier des fichiers | Agents qui écrivent du code |
-| `terminalLastCommand` | Sortie de la dernière commande terminal | Corriger des erreurs de build |
-| `githubRepo` | Infos sur le repo GitHub (issues, PRs) | Agents d'intégration GitHub |
-| `search` | Recherche web | Documentation externe |
-| `runCommands` | Exécuter des commandes terminal | Agents DevOps *(attention : dangereux)* |
-
-!!! warning "Tool restrictions pour la sécurité"
-    Limitez toujours les outils au strict nécessaire. Un agent documentaliste n'a pas besoin de `runCommands`. Moins d'outils = moins de risques d'actions non souhaitées.
+Les alias documentés peuvent évoluer ; Claude Code prend actuellement en charge plusieurs familles via des alias et des IDs complets. Pour la plupart des agents projet génériques, `inherit` réduit la maintenance.
 
 ---
 
-## Exemples d'agents concrets
+## Mémoire persistante du subagent
 
-### Agent Documentaliste
+Un subagent peut conserver ses apprentissages :
 
 ```markdown
 ---
-name: gem-documentation-writer
-description: Génère documentation technique, diagrammes et maintient la parité code/docs
-tools:
-  - codebase
-  - editFiles
+name: code-reviewer
+description: Revoit les changements et mémorise les problèmes récurrents du projet.
+memory: project
 ---
 
-# Documentation Writer
-
-## Identité
-Tu es un expert en documentation technique pour développeurs. Tu génères des docs précises, accessibles et toujours en parité avec le code.
-
-## Ce que tu fais
-- Générer des README, guides d'utilisation, références API
-- Créer des diagrammes Mermaid (architecture, flux, séquence)
-- Mettre à jour la documentation existante quand le code change
-- Vérifier que la documentation reflète exactement le comportement du code
-
-## Ce que tu NE fais PAS
-- Implémenter du code (tu es documentaliste, pas développeur)
-- Modifier du code existant
-- Laisser des TODO ou TBD dans les documents finaux
-
-## Format de sortie
-- Markdown avec headers hiérarchiques
-- Diagrammes Mermaid pour les architectures
-- Exemples de code avec syntax highlighting approprié
-- Tables pour les références de paramètres/options
-
-## Processus
-1. Analyser le code source (avec `codebase`)
-2. Identifier les fonctions/classes publiques à documenter
-3. Générer la documentation en vérifiant la cohérence avec le code
-4. Proposer les fichiers à créer/modifier
+Avant une revue, consulte ta mémoire pour les patterns déjà observés.
+Après la revue, ajoute uniquement les apprentissages durables et vérifiés.
 ```
 
-### Agent Auditeur de Sécurité
+Scopes principaux :
+
+| Scope | Emplacement | Usage |
+|---|---|---|
+| `user` | `~/.claude/agent-memory/<agent>/` | apprentissages personnels multi-projets |
+| `project` | `.claude/agent-memory/<agent>/` | connaissance partageable du projet |
+| `local` | `.claude/agent-memory-local/<agent>/` | connaissance locale non versionnée |
+
+!!! warning "Mémoire ≠ vérité"
+    Une mémoire agentique peut devenir obsolète. N'y stockez que des faits durables et vérifiables, et prévoyez de la relire comme n'importe quelle documentation.
+
+---
+
+## Quand déléguer ?
+
+Les subagents sont particulièrement utiles lorsque la tâche :
+
+- demande de lire beaucoup de fichiers ;
+- peut être isolée du fil principal ;
+- nécessite une expertise spécialisée ;
+- produit surtout une **synthèse** utilisée ensuite par l'agent principal ;
+- sert de revue contradictoire après une implémentation.
+
+Exemple :
+
+```text
+Utilise un subagent pour cartographier le système d'authentification.
+Retourne uniquement :
+- le flux principal ;
+- les fichiers clés ;
+- les dépendances ;
+- les risques d'une migration OAuth.
+```
+
+Le bénéfice principal est la **protection du contexte** : les dizaines de lectures intermédiaires ne polluent pas la conversation d'implémentation.
+
+---
+
+## Agents coordinateurs
+
+Un agent exécuté comme thread principal peut être autorisé à lancer seulement certains subagents :
 
 ```markdown
 ---
-name: security-auditor
-description: Analyse le code pour les vulnérabilités OWASP Top 10 et génère des rapports
-tools:
-  - codebase
+name: coordinator
+description: Coordonne une modification après recherche et revue spécialisée.
+tools: Agent(researcher, reviewer), Read, Bash
 ---
 
-# Security Auditor
-
-## Identité
-Tu es un expert en sécurité applicative spécialisé dans l'OWASP Top 10 et les bonnes pratiques de développement sécurisé.
-
-## Ton rôle
-- Analyser le code pour identifier les vulnerabilités de sécurité
-- Générer des rapports de sécurité structurés
-- Proposer des corrections concrètes pour chaque problème trouvé
-- Ne jamais modifier le code directement (rôle consultatif uniquement)
-
-## Framework d'analyse
-Pour chaque analyse, couvrir systématiquement :
-- A01 Broken Access Control
-- A02 Cryptographic Failures
-- A03 Injection (SQL, XSS, command)
-- A04 Insecure Design
-- A05 Security Misconfiguration
-- A06 Vulnerable Components
-- A07 Identification & Auth Failures
-- A08 Software and Data Integrity Failures
-- A09 Security Logging Failures
-- A10 SSRF
-
-## Format de rapport
-```
-## Rapport de Sécurité — [NomFichier]
-Date : [date]
-Niveau de risque global : ⚫ Critique | 🔴 Élevé | 🟠 Moyen | 🟡 Faible | 🟢 OK
-
-### Vulnérabilités identifiées
-| ID | Catégorie | Niveau | Description | Ligne |
-|----|-----------|--------|-------------|-------|
-
-### Corrections recommandées
-[Code corrigé pour chaque vulnérabilité]
-
-### Points positifs
-[Ce qui est bien fait]
+Délègue l'exploration à `researcher` et la revue finale à `reviewer`.
+Ne délègue pas l'écriture du correctif si le thread principal peut la faire directement.
 ```
 
-## Ce que tu NE fais PAS
-- Générer du code malveillant
-- Exploiter des vulnérabilités
-- Accéder à des ressources externes
-```
+Utilisez cette orchestration seulement lorsqu'elle simplifie réellement la séparation des responsabilités. Multiplier les agents sans besoin clair ajoute du coût et de la complexité.
 
-### Agent Modernization Expert
+---
+
+## Exemple adapté à ce dépôt
 
 ```markdown
 ---
-name: Modernization Agent
-description: Assistant de modernisation pour analyser, documenter et planifier la modernisation complète d'un projet
-tools:
-  - codebase
-  - editFiles
-  - githubRepo
+name: official-doc-auditor
+description: Audite une page IA contre les sources officielles actuelles, sans modifier le dépôt.
+tools: Read, Grep, Glob, WebSearch, WebFetch
+model: inherit
 ---
 
-# Modernization Agent
-
-## Identité
-Tu es un expert en modernisation d'applications, spécialisé dans l'analyse de code legacy et la planification de migrations vers des architectures modernes.
-
-## Workflow (9 étapes)
-1. Identification du stack technologique
-2. Analyse architecturale détaillée
-3. Analyse de la logique métier (lire TOUS les fichiers)
-4. Identification du but de l'application
-5. Documentation par feature
-6. Identifications des dettes techniques
-7. Recommandations d'architecture cible
-8. Plan de migration par phases
-9. Génération du rapport final
-
-## Contrainte critique
-Tu DOIS lire chaque fichier service/repository/controller — l'exhaustivité est obligatoire.
-
-## Output
-- Analyse d'architecture dans `/modernization/architecture.md`
-- Documentation par feature dans `/modernization/features/`
-- Plan de migration dans `/modernization/migration-plan.md`
-- README actualisé reflétant l'état actuel et l'état cible
+Pour la page demandée :
+1. distingue les faits stables des faits évolutifs ;
+2. vérifie les faits évolutifs contre les sources officielles ;
+3. liste les écarts avec la source et la date ;
+4. ne modifie aucun fichier ;
+5. signale clairement les points non vérifiables.
 ```
 
 ---
 
-## Agentes présents dans ce workspace
+## GitHub Copilot — custom agents conservés
 
-Ce workspace (`documentation-ia`) contient déjà plusieurs agents de référence dans `.github/agents/` :
+Le dépôt contient déjà des agents Copilot dans :
 
-| Agent | Fichier | Rôle |
-|-------|---------|------|
-| **Context7 Expert** | `context7.agent.md` | Documentation libraries via Context7 MCP |
-| **gem-documentation-writer** | `gem-documentation-writer.agent.md` | Écriture de documentation technique |
-| **Modernization Agent** | `modernization.agent.md` | Analyse et modernisation de projets |
-| **Create PRD** | `prd.agent.md` | Génération de Product Requirements Documents |
-| **Software Engineer** | `software-engineer-agent-v1.agent.md` | Implémentation de code production |
+```text
+.github/agents/*.agent.md
+```
 
-Ces agents servent de références excellentes pour créer vos propres agents.
+Ils sont **conservés** comme référence et pour une éventuelle utilisation Copilot future.
 
----
+Les custom agents Copilot disposent de leur propre schéma, de leurs outils et de leur support par surface. Plusieurs fonctionnalités sont encore en preview dans JetBrains : n'utilisez pas un exemple Claude `.claude/agents/*.md` comme s'il était interchangeable avec un `.github/agents/*.agent.md`.
 
-## Invoquer un agent
+### Stratégie de migration
 
-Dans Copilot Chat :
+| Besoin | Claude Code | Copilot conservé |
+|---|---|---|
+| agent spécialisé projet | `.claude/agents/<nom>.md` | `.github/agents/<nom>.agent.md` |
+| description de délégation | `description` | champ équivalent selon schéma Copilot |
+| outils | outils Claude (`Read`, `Grep`, etc.) | outils Copilot de la surface concernée |
+| mémoire persistante agent | `memory` Claude | ne pas supposer un équivalent identique |
+| orchestration | `Agent(...)`, subagents, skills | agents/subagents/handoffs selon surface |
 
-1. Cliquez sur le **sélecteur de mode** (en haut du panneau Chat)
-2. Choisissez votre agent dans la liste
-3. Ou tapez `@nom-agent` directement dans le chat
-
-!!! info "Nommage des agents"
-    Les agents sont invocables via `@` suivi de leur `name` défini dans le frontmatter. Ex: `@security-auditor analyse ce fichier`.
-
----
-
-## Différence entre Agent, Instruction et Prompt File
-
-| Mécanisme | Persistance | Invocation | Rôle |
-|-----------|:-----------:|:----------:|------|
-| `.instructions.md` | Passif (toujours actif) | Automatique | Règles permanentes de contexte |
-| `.prompt.md` | Passif (stocké) | Manuelle (`/`) | Tâche ponctuelle à exécuter |
-| `.agent.md` | Actif (mode chat) | Manuelle (`@`) | Persona spécialisé persistant pour une session |
+!!! tip "Ne convertissez pas automatiquement les noms d'outils"
+    `Read`, `Grep`, `Glob`, `Bash` côté Claude ne correspondent pas mécaniquement à `codebase`, `editFiles`, `runCommands` ou autres outils Copilot. Migrez le **rôle et l'intention**, puis adaptez les capacités au client cible.
 
 ---
 
 ## Bonnes pratiques
 
-1. **Un agent par rôle** — Ne pas créer un agent "fait tout" ; créez des agents spécialisés
-2. **Restreindre les outils** — Donnez à chaque agent uniquement les outils dont il a besoin
-3. **Instructions claires** — Définissez explicitement ce que l'agent FAIT et ne FAIT PAS
-4. **Tester avant de partager** — Testez l'agent avec des cas réels avant de le committer
-5. **Versionner dans Git** — Les fichiers `.agent.md` doivent être versionnés pour toute l'équipe
+1. **Un rôle clair par agent** : évitez l'agent universel.
+2. **Description courte et discriminante** : Claude s'en sert pour router les tâches.
+3. **Outils minimaux** : ne donnez pas Write/Edit à un auditeur qui doit seulement lire.
+4. **Contexte isolé pour la recherche** : gardez le thread principal propre.
+5. **Versionner les agents projet** : relisez leurs instructions comme du code.
+6. **Vérifier les résultats** : un subagent synthétise, il ne rend pas ses conclusions automatiquement vraies.
+
+---
+
+## Prochaine étape
+
+Voir **[Orchestration multi-agents](orchestration-multi-agents.md)** puis **[Hooks](guide-hooks.md)** pour encadrer les actions des agents.
 
 ---
 
 ## Sources
 
-- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
-- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+Sources officielles consultées le **28 septembre 2026** :
 
-## Prochaine étape
-
-**[Orchestration multi-agents (Copilot & Claude)](orchestration-multi-agents.md)** : faire collaborer plusieurs agents spécialisés et comparer les mécanismes de délégation de Copilot et Claude.
-
-Concepts clés couverts :
-
-- **Patterns d'orchestration** — orchestrateur/workers, pipeline, exploration parallèle, critique
-- **Côté Copilot** — champ `agents`, handoffs et contrôle d'invocation
-- **Côté Claude** — subagents isolés et délégation automatique
-- **Bonnes pratiques** — un agent par rôle, outils minimaux, descriptions précises
+- [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
+- [GitHub Docs — Custom agents configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
