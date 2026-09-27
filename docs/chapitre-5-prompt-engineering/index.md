@@ -1,34 +1,38 @@
-﻿# Prompt Engineering
+# Prompt Engineering
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Le **Prompt Engineering** est la discipline qui consiste à concevoir, formuler et optimiser les instructions transmises aux modèles de langage (LLMs) pour obtenir des réponses précises, utiles et reproductibles. C'est une compétence fondamentale pour tout développeur qui souhaite travailler efficacement avec des IA comme GitHub Copilot, Claude, GPT-4 ou Gemini.
+Le **prompt engineering** consiste à formuler une tâche, fournir le bon contexte et définir des critères de réussite pour obtenir un résultat utile d'un modèle ou d'un agent IA.
 
-Ce chapitre vous guide depuis les concepts les plus simples jusqu'aux architectures avancées utilisées en production, avec des diagrammes illustrant les mécanismes internes et des exemples concrets à chaque étape.
+Les principes restent génériques aux LLM, mais ce dépôt les applique désormais en priorité à **Claude Code** : travail agentique sur un dépôt, contexte explicite, planification, vérification, skills et subagents. La page GitHub Copilot reste conservée comme référence spécifique.
 
 ---
 
-## Vue d'ensemble : Le Cycle du Prompt Engineering
+## Le cycle moderne : objectif → contexte → action → vérification
 
 ```mermaid
-graph TD
-    U["👤 Utilisateur"] -->|rédige| P["📝 Prompt"]
-    P --> PE["⚙️ Prompt Engineering\n(structuration, techniques)"]
-    PE -->|optimise| OP["✨ Prompt Optimisé"]
-
-    CTX["📚 Contexte\n(fichiers, historique,\ninstructions)"] --> LLM
-    KB["📖 Base de connaissances\n(RAG optionnel)"] --> LLM
-
-    OP --> LLM["🧠 LLM\n(GPT, Claude, Gemini,\nCodex, Copilot...)"]
-    LLM -->|génère| R["💬 Réponse"]
-    R -->|évalue| U
-    U -->|itère si besoin| P
-
+graph LR
+    O["Objectif précis"] --> C["Contexte utile"]
+    C --> P["Plan si nécessaire"]
+    P --> A["Action / édition"]
+    A --> V["Vérification\ntests, build, lint"]
+    V -->|échec| A
+    V -->|succès| R["Revue / résultat"]
 ```
+
+Avec un agent de code, le prompt ne doit pas seulement dire **quoi produire**. Il doit aussi, lorsque c'est pertinent :
+
+- préciser la cible et les contraintes ;
+- pointer vers les fichiers ou exemples utiles ;
+- indiquer ce qui ne doit pas changer ;
+- donner une méthode de vérification ;
+- séparer exploration, plan et implémentation pour les changements complexes.
+
+Claude Code recommande explicitement de **donner à l'agent un moyen de vérifier son travail** : tests, build, lint, script de comparaison ou validation visuelle.
 
 ---
 
-## Contenu du Chapitre
+## Contenu du chapitre
 
 <div class="grid cards" markdown>
 
@@ -36,67 +40,131 @@ graph TD
 
     <span class="badge-beginner">Débutant</span>
 
-    Qu'est-ce qu'un LLM, anatomie d'un prompt, composants essentiels, checklist du débutant et exemples guidés pas à pas.
+    Anatomie d'un bon prompt, objectif, contexte, contraintes, exemples et format de sortie.
 
-- :material-trending-up: **[Techniques Intermédiaires](techniques-intermediaires.md)**
+- :material-trending-up: **[Techniques intermédiaires](techniques-intermediaires.md)**
 
     <span class="badge-intermediate">Intermédiaire</span>
 
-    Zero-shot, few-shot, chain-of-thought, role prompting, structuration des sorties, itération et raffinement.
+    Few-shot, rôle, structuration, itération et amélioration des requêtes.
 
-- :material-atom: **[Techniques Avancées](techniques-avancees.md)**
+- :material-atom: **[Techniques avancées](techniques-avancees.md)**
 
     <span class="badge-expert">Expert</span>
 
-    Prompt chaining, RAG, Tree of Thoughts, self-consistency, meta-prompting, défense contre les injections et évaluation systématique.
+    Chaining, RAG, orchestration, sécurité des entrées et évaluation systématique.
 
-- :material-github: **[Prompting avec Copilot](avec-copilot.md)**
+- :material-robot: **[Prompt Engineering avec Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**
 
-    <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
+    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-    Appliquer le prompt engineering à GitHub Copilot : complétion inline, Chat, instructions permanentes et prompt files.
+    Contexte de dépôt, plan mode, références ciblées, vérification, skills, subagents et gestion de contexte.
+
+- :material-github: **[Prompting avec GitHub Copilot — référence](avec-copilot.md)**
+
+    <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span>
+
+    Page conservée pour les complétions, Chat, instructions et workflows Copilot.
 
 </div>
 
 ---
 
-## Pourquoi Apprendre le Prompt Engineering ?
+## Prompt efficace pour Claude Code
 
-| Bénéfice | Sans PE | Avec PE |
-|----------|---------|---------|
-| Qualité des réponses | Générique, parfois hors sujet | Précise, adaptée au contexte |
-| Nombre d'itérations | 5 à 10 aller-retours | 1 à 2 suffisent |
-| Cohérence | Variable d'un essai à l'autre | Reproductible |
-| Complexité des tâches gérées | Tâches simples | Tâches multi-étapes complexes |
-| Contrôle du format de sortie | Difficile à imposer | Maîtrisé (JSON, Markdown, code…) |
-| Fiabilité | Hallucinations fréquentes | Réponses ancrées dans les faits |
+Un bon prompt de développement ressemble davantage à un ticket exploitable qu'à une phrase vague :
+
+```text
+Corrige la validation des emails dans src/users/validate.ts.
+
+Contraintes :
+- ne change pas l'API publique ;
+- conserve le style des tests existants ;
+- couvre les cas user@example.com, invalid et user@.com.
+
+Avant de modifier, lis les tests existants.
+Après la modification, exécute les tests ciblés et indique leur résultat.
+```
+
+Cette forme donne :
+
+1. une **cible** ;
+2. des **contraintes** ;
+3. des **exemples** ;
+4. une **preuve de réussite**.
 
 ---
 
-## Parcours d'Apprentissage Recommandé
+## Quand utiliser le plan mode ?
+
+Pour une typo ou un changement local évident, demander un plan ajoute du coût sans bénéfice.
+
+Pour une modification multi-fichiers, une architecture inconnue ou une migration risquée, Claude recommande un workflow :
+
+1. **Explore** — lire et comprendre sans modifier ;
+2. **Plan** — établir les fichiers et étapes ;
+3. **Implement** — sortir du plan mode et exécuter ;
+4. **Verify / Commit** — tester, revoir, puis versionner.
+
+Le plan mode peut être activé dans le terminal avec ++shift+tab++ jusqu'à l'indication correspondante, ou au lancement avec :
+
+```bash
+claude --permission-mode plan
+```
+
+---
+
+## Gérer le contexte comme une ressource
+
+Le contexte inutile dégrade les réponses. Quelques réflexes Claude Code :
+
+| Situation | Action |
+|---|---|
+| nouvelle tâche sans rapport | `/clear` |
+| longue session proche de la limite | laisser l'auto-compaction agir ou utiliser `/compact` |
+| question annexe qui ne doit pas polluer la session | `/btw` lorsque disponible dans votre version |
+| grosse exploration de code | déléguer à un subagent |
+| règle permanente | `CLAUDE.md` / `.claude/rules/` |
+| procédure occasionnelle | skill |
+
+---
+
+## À éviter
+
+- Un prompt géant qui mélange plusieurs objectifs indépendants.
+- Un `CLAUDE.md` qui contient des tutoriels entiers.
+- Répéter des corrections pendant dix tours au lieu de repartir avec `/clear` et une consigne améliorée.
+- Demander « améliore ce code » sans indiquer le critère de réussite.
+- Accepter une modification sans test, build, lint ou autre signal vérifiable lorsqu'un tel contrôle existe.
+- Considérer les anciennes recettes « chain-of-thought » comme une obligation : demandez surtout un résultat structuré, une analyse utile, un plan ou des critères explicites selon le besoin.
+
+---
+
+## Parcours recommandé
 
 ```mermaid
 graph LR
-    A["🟢 Débutant\nFondamentaux"] --> B["🟡 Intermédiaire\nTechniques"]
-    B --> C["🔴 Expert\nAvancé"]
-    A --> D["🔵 Application\nCopilot"]
+    A["Fondamentaux"] --> B["Techniques intermédiaires"]
+    B --> C["Techniques avancées"]
+    A --> D["Claude Code"]
     B --> D
     C --> D
-
+    D --> E["Skills / subagents / hooks"]
+    A --> F["Copilot — référence"]
 ```
-
-!!! tip "Conseil de progression"
-    Même si vous êtes développeur expérimenté, parcourez les fondamentaux. La plupart des erreurs fréquentes en prompt engineering viennent d'une incompréhension des mécanismes de base des LLMs.
 
 ---
 
 ## Prochaine étape
 
-**[Fondamentaux du Prompt Engineering](fondamentaux.md)** : comprendre les bases avant d'appliquer les techniques avancées.
+Commencez par **[Fondamentaux](fondamentaux.md)**, puis appliquez les principes à **[Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**.
 
-Concepts clés couverts :
+---
 
-- **Qu'est-ce qu'un LLM** — Analogie du collaborateur cultivé, modèles courants (GPT-4o, Claude, Gemini, Copilot...)
-- **Anatomie d'un prompt** — Les 4 composants : instruction, contexte, entrée, format de sortie
-- **La règle fondamentale** — Plus vous êtes spécifique, meilleurs sont les résultats
-- **Prompt vague vs prompt structuré** — Exemples concrets de l'impact de la précision
+## Sources
+
+Sources officielles consultées le **28 septembre 2026** :
+
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
+- [Claude Code — Memory and project instructions](https://code.claude.com/docs/en/memory)
+- [Claude Code — Skills](https://code.claude.com/docs/en/skills)
