@@ -120,24 +120,24 @@ nav:
   - Contexte & Personnalisation:
     - Accueil: chapitre-4-contexte/index.md
     - Concepts Clés: chapitre-4-contexte/concepts.md
-    - Instructions (.instructions.md): chapitre-4-contexte/guide-instructions.md
-    - applyTo Avancé: chapitre-4-contexte/applyto-avance.md
-    - Prompt Files (.prompt.md): chapitre-4-contexte/prompt-files.md
-    - Agents (.agent.md): chapitre-4-contexte/guide-agents.md
+    - Instructions Claude & Rules: chapitre-4-contexte/guide-instructions.md
+    - applyTo Copilot (référence): chapitre-4-contexte/applyto-avance.md
+    - Prompt Files Copilot (référence): chapitre-4-contexte/prompt-files.md
+    - Agents Claude: chapitre-4-contexte/guide-agents.md
     - "Orchestration multi-agents": chapitre-4-contexte/orchestration-multi-agents.md
-    - Skills (SKILL.md): chapitre-4-contexte/guide-skills.md
-    - Hooks: chapitre-4-contexte/guide-hooks.md
+    - Skills Claude (SKILL.md): chapitre-4-contexte/guide-skills.md
+    - Hooks Claude: chapitre-4-contexte/guide-hooks.md
     - Paramètres du Dépôt: chapitre-4-contexte/parametres-depot.md
-    - VS Code — Contexte: chapitre-4-contexte/vscode-contexte.md
-    - IntelliJ IDEA — Contexte: chapitre-4-contexte/intellij-contexte.md
-    - Comparaison Contexte: chapitre-4-contexte/comparaison-contexte.md
+    - VS Code — Claude: chapitre-4-contexte/vscode-contexte.md
+    - IntelliJ IDEA — Claude: chapitre-4-contexte/intellij-contexte.md
+    - Comparaison des IDE: chapitre-4-contexte/comparaison-contexte.md
 
   - Prompt Engineering:
     - Accueil: chapitre-5-prompt-engineering/index.md
     - Fondamentaux: chapitre-5-prompt-engineering/fondamentaux.md
     - Techniques Intermédiaires: chapitre-5-prompt-engineering/techniques-intermediaires.md
     - Techniques Avancées: chapitre-5-prompt-engineering/techniques-avancees.md
-    - Prompting avec Copilot: chapitre-5-prompt-engineering/avec-copilot.md
+    - Copilot (référence): chapitre-5-prompt-engineering/avec-copilot.md
 
   - Machine Learning:
     - Accueil: chapitre-6-machine-learning/index.md
