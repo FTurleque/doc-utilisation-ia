@@ -1,116 +1,151 @@
-# Contexte & Personnalisation
+# Contexte & Personnalisation — Claude-first
 
-GitHub Copilot n'est pas un simple outil d'autocomplétion — c'est un système dont la qualité des suggestions dépend directement de la **qualité du contexte** que vous lui fournissez. Ce chapitre couvre tous les mécanismes disponibles pour enrichir ce contexte et personnaliser le comportement de Copilot.
+La qualité d'un agent de développement dépend moins d'un « prompt magique » que de la qualité du **contexte utile** qu'il reçoit : instructions du projet, fichiers réellement pertinents, outils disponibles, historique de session et règles spécialisées.
 
----
-
-## Qu'est-ce que le "contexte" pour Copilot ?
-
-Quand vous tapez du code, Copilot ne lit pas seulement la ligne courante — il analyse l'ensemble du contexte disponible pour générer des suggestions pertinentes :
-
-```
-┌─────────────────────────────────────────────────┐
-│              CONTEXTE DE COPILOT                │
-├─────────────────────────────────────────────────┤
-│  1. Fichier actuel (position du curseur)        │  ← Priorité max
-│  2. Fichiers ouverts dans les onglets           │  ← Haute priorité
-│  3. Fichiers récemment édités                   │  ← Priorité moyenne
-│  4. Instructions (.instructions.md)             │  ← Globales/ciblées
-│  5. Structure du workspace/projet               │  ← Contexte projet
-└─────────────────────────────────────────────────┘
-```
+Dans ce dépôt, ce chapitre est désormais organisé autour de **Claude Code**. Les mécanismes GitHub Copilot restent documentés dans les pages historiques et dans des encadrés de compatibilité.
 
 ---
 
-## Les mécanismes de personnalisation
+## Les couches de contexte Claude Code
 
-Ce chapitre documente tous les mécanismes disponibles pour personnaliser Copilot :
+```mermaid
+graph TD
+    U["Instructions utilisateur / organisation"] --> C["Contexte Claude Code"]
+    P["CLAUDE.md / AGENTS.md"] --> C
+    R[".claude/rules/"] --> C
+    H["Historique de session"] --> C
+    F["Fichiers lus / référencés"] --> C
+    S["Skills pertinents"] --> C
+    A["Résultats de subagents"] --> C
+    M["Outils MCP"] --> C
+    C --> L["Agent Claude"]
+```
+
+### Règle directrice
+
+Le contexte est une **ressource limitée**. Claude Code recommande de :
+
+- garder `CLAUDE.md` spécifique et concis ;
+- déplacer les règles ciblées dans `.claude/rules/` ;
+- utiliser des skills pour les procédures ou connaissances qui n'ont pas besoin d'être chargées à chaque session ;
+- déléguer les explorations volumineuses à des subagents ;
+- lancer `/clear` entre tâches sans rapport et laisser l'auto-compaction gérer les longues sessions, avec `/compact` lorsque vous voulez la piloter explicitement.
+
+---
+
+## Quel mécanisme utiliser ?
+
+| Besoin | Claude Code — recommandé | Copilot — conservé comme référence |
+|---|---|---|
+| Conventions globales projet | `CLAUDE.md` ou `AGENTS.md` | `.github/copilot-instructions.md` |
+| Règles ciblées par chemins | `.claude/rules/*.md` avec `paths` | `.github/instructions/*.instructions.md` avec `applyTo` |
+| Procédure / expertise réutilisable | `.claude/skills/<nom>/SKILL.md` | skills Copilot, y compris `.claude/skills` sur certaines surfaces |
+| Agent spécialisé | `.claude/agents/*.md` | `.github/agents/*.agent.md` |
+| Automatisation d'événements | hooks Claude configurés dans settings | hooks Copilot sur les surfaces compatibles |
+| Outils et données externes | MCP | MCP |
+| Réglages d'équipe | `.claude/settings.json` | réglages/politiques Copilot + fichiers `.github/` |
+| Préférences locales | `.claude/settings.local.json`, `CLAUDE.local.md` | réglages IDE locaux |
+
+---
+
+## Contenu du chapitre
 
 <div class="grid cards" markdown>
 
 - :material-file-cog: **[Concepts fondamentaux](concepts.md)**
 
-    Fenêtre de contexte, tokens, priorités, strategies pour améliorer les suggestions
+    Fenêtre de contexte, tokens, bruit, sélection du contexte et stratégies de réduction.
 
-- :material-file-code: **[Guide Instructions (.instructions.md)](guide-instructions.md)**
+- :material-file-code: **[Instructions projet et règles](guide-instructions.md)**
 
-    Règles persistantes pour guider Copilot sur les conventions du projet
-
-- :material-tune-variant: **[applyTo avancé](applyto-avance.md)**
-
-    Écrire des patterns glob robustes pour cibler précisément les fichiers
-
-- :material-file-document: **[Prompt Files (.prompt.md)](prompt-files.md)**
-
-    Prompts réutilisables pour des tâches récurrentes
-
-- :material-robot: **[Guide Agents (.agent.md)](guide-agents.md)**
-
-    Agents IA custom avec comportements et outils spécialisés
-
-- :material-account-group: **[Orchestration multi-agents (Copilot & Claude)](orchestration-multi-agents.md)**
-
-    Faire collaborer plusieurs agents : patterns, délégation Copilot vs Claude
+    `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, imports et équivalents Copilot conservés.
 
 - :material-lightbulb: **[Skills (SKILL.md)](guide-skills.md)**
 
-    Packages de connaissance domaine pour des expertise métier
+    Capacités réutilisables Claude Code et interopérabilité possible avec GitHub Copilot.
 
-- :material-folder-cog: **[Paramètres du dépôt](parametres-depot.md)**
+- :material-robot: **[Agents](guide-agents.md)**
 
-    Structurer `.github/`, `AGENT.md`, et la gouvernance de personnalisation
+    Agents spécialisés et différences entre Claude subagents et custom agents Copilot.
 
-- :material-console: **[Références fichiers & CLI](../chapitre-3-cli-modes/page-principale.md)**
+- :material-account-group: **[Orchestration multi-agents](orchestration-multi-agents.md)**
 
-    Utiliser `#fichier` et `@fichier`, plus les points d'attention CLI
+    Isolation du contexte, délégation, synthèse et vérification.
 
 - :material-hook: **[Hooks](guide-hooks.md)**
 
-    Automatisations déclenchées par les actions Copilot
+    Automatisations et garde-fous ; distinguer hooks Claude, hooks Copilot et hooks Git classiques.
 
-- :material-microsoft-visual-studio-code: **[VS Code — Contexte projet](vscode-contexte.md)**
+- :material-folder-cog: **[Paramètres du dépôt](parametres-depot.md)**
 
-    `.code-workspace`, `.copilotignore`, structuration pour VS Code
+    Organiser `CLAUDE.md`, `.claude/`, `.mcp.json` et les fichiers `.github/` conservés.
 
-- :simple-intellijidea: **[IntelliJ — Contexte projet](intellij-contexte.md)**
+- :material-file-document: **[Prompt files Copilot — référence](prompt-files.md)**
 
-    Modules, indexation, bonnes pratiques pour IntelliJ
+    Ancien mécanisme Copilot conservé ; pour un nouveau workflow Claude, privilégier un skill ou une commande compatible.
+
+- :material-tune-variant: **[applyTo Copilot — référence](applyto-avance.md)**
+
+    Ciblage des instructions Copilot. L'équivalent Claude est `paths` dans `.claude/rules/`.
+
+- :material-microsoft-visual-studio-code: **[VS Code — contexte](vscode-contexte.md)**
+
+    Particularités de l'éditeur et coexistence des intégrations.
+
+- :simple-intellijidea: **[IntelliJ — contexte](intellij-contexte.md)**
+
+    Particularités JetBrains et coexistence des intégrations.
 
 - :material-compare: **[Comparaison](comparaison-contexte.md)**
 
-    Ce qui est natif VS Code vs ce qui s'applique aussi à IntelliJ
+    Comparer les mécanismes sans supposer qu'une fonctionnalité existe sur toutes les surfaces.
 
 </div>
 
 ---
 
-## En un coup d'œil
+## `CLAUDE.md`, `AGENTS.md`, rules ou skill ?
 
-| Mécanisme | Emplacement | Qui l'utilise | VS Code | IntelliJ |
-|-----------|-------------|--------------|:-------:|:--------:|
-| `copilot-instructions.md` | `.github/` | Tous | ✅ | ✅ |
-| `.instructions.md` | `.github/instructions/` | Développeurs, équipes | ✅ | ✅ |
-| `AGENT.md` | Racine du repo | Équipes avancées | ✅ | ✅ |
-| `.prompt.md` | `.github/prompts/` | Développeurs | ✅ | ✅ |
-| `.agent.md` | `.github/agents/` | Équipes avancées | ✅ | ✅ |
-| `SKILL.md` | Workspace | Experts | ✅ | ⚠️ lecture seule |
-| Hooks | `.github/` | Équipes DevOps | ✅ | ❌ |
-| `.copilotignore` | Racine du projet | Tous | ✅ | ⚠️ via `.gitignore` |
-| Structure projet | Partout | Tous | ✅ | ✅ |
+| Si l'information… | Utilisez… |
+|---|---|
+| doit être connue dans presque toutes les sessions | `CLAUDE.md` |
+| est déjà partagée entre plusieurs agents/outils | `AGENTS.md` éventuellement importé depuis `CLAUDE.md` |
+| ne concerne que certains fichiers | `.claude/rules/` avec `paths` |
+| est une procédure multi-étapes ou une expertise occasionnelle | un skill |
+| implique une exploration lourde et isolable | un subagent |
+| doit **interdire techniquement** une action | permissions/settings ou hook, pas une simple phrase dans `CLAUDE.md` |
 
-!!! info "Support IntelliJ"
-    `copilot-instructions.md`, `.instructions.md`, `.prompt.md`, `.agent.md` et `SKILL.md` sont supportés dans IntelliJ IDEA via le plugin GitHub Copilot. La création de `SKILL.md` via l'interface reste réservée à VS Code, mais les fichiers créés manuellement ou via VS Code sont bien pris en compte par IntelliJ. Seuls les hooks restent spécifiques à VS Code.
+!!! tip "Taille de CLAUDE.md"
+    La documentation Claude Code recommande de viser **moins de 200 lignes** par `CLAUDE.md`. Une règle qui grossit ou ne s'applique qu'à une partie du dépôt doit généralement être déplacée vers une rule ou un skill.
+
+---
+
+## Copilot reste documenté
+
+Les fichiers `.github/copilot-instructions.md`, `.github/instructions/`, `.github/prompts/`, `.github/agents/`, `.github/skills/` et `.github/hooks/` ne sont pas supprimés de ce dépôt.
+
+Cette conservation sert à :
+
+- maintenir une référence pour les utilisateurs Copilot ;
+- comparer les deux écosystèmes ;
+- conserver les migrations réversibles ;
+- profiter des zones d'interopérabilité, notamment certains `SKILL.md`.
 
 ---
 
 ## Prochaine étape
 
-**[Concepts fondamentaux du contexte Copilot](concepts.md)** : comprendre comment Copilot construit son prompt et comment l'influencer.
+Commencez par **[Instructions projet et règles](guide-instructions.md)**, puis déplacez les procédures répétitives vers **[Skills](guide-skills.md)**.
 
-Concepts clés couverts :
+---
 
-- **Fenêtre de contexte** — Taille selon le mode (inline ~2 000 tokens, Chat jusqu'à 128 000 tokens)
-- **Priorités du contexte** — Fichier actuel → onglets ouverts → fichiers de config → instructions
-- **Tokens** — Ce qu'est un token et pourquoi la limite de taille impacte la qualité des suggestions
-- **Stratégies d'amélioration** — Quels fichiers garder ouverts, comment structurer son code pour Copilot
+## Sources
 
+Sources officielles consultées le **28 septembre 2026** :
+
+- [Claude Code — Memory, CLAUDE.md, AGENTS.md et rules](https://code.claude.com/docs/en/memory)
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
+- [Claude Code — Skills](https://code.claude.com/docs/en/skills)
+- [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)
+- [Claude Code — Hooks](https://code.claude.com/docs/en/hooks)
+- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
