@@ -1,112 +1,104 @@
-# applyTo Avancé
+# `applyTo` avancé — référence GitHub Copilot
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
-Guide pratique pour écrire des motifs `applyTo` robustes dans les fichiers `.instructions.md`.
+!!! info "Page Copilot conservée"
+    `applyTo` appartient aux fichiers `*.instructions.md` de **GitHub Copilot**. La documentation principale du dépôt est désormais Claude-first, mais cette page reste utile pour les équipes qui conservent Copilot.
+
+    **Équivalent Claude Code :** utilisez `paths` dans les fichiers `.claude/rules/*.md`. Voir [Instructions & règles Claude](guide-instructions.md).
 
 ---
 
-## Rappels rapides
+## `applyTo` côté Copilot
 
-- `*` : correspond à des caractères dans un seul niveau
-- `**` : récursif sur plusieurs niveaux
-- `**/*.ext` : tous les fichiers d'une extension partout
-
----
-
-## Exemples réels de front matter
+Dans `.github/instructions/*.instructions.md`, `applyTo` permet de charger automatiquement une règle lorsque Copilot travaille sur un fichier correspondant au glob.
 
 ```yaml
 ---
-applyTo: ['*']
-description: "Comprehensive best practices for adopting new Java 25 features since the release of Java 21."
+description: Conventions TypeScript du frontend
+applyTo: "src/**/*.{ts,tsx}"
 ---
+
+- TypeScript strict.
+- Aucun `any` sans justification.
+- Exécuter les tests ciblés après modification.
 ```
+
+### Motifs utiles
+
+| Objectif | `applyTo` Copilot |
+|---|---|
+| Tout le dépôt | `**` |
+| Tous les fichiers Java | `**/*.java` |
+| TypeScript + TSX | `**/*.{ts,tsx}` |
+| API | `src/api/**` |
+| Tests TypeScript | `**/*.test.ts,**/*.spec.ts` |
+| Skills | `**/.github/skills/**/SKILL.md,**/.claude/skills/**/SKILL.md` |
+
+!!! tip "N'utilisez `**` que pour une règle réellement globale"
+    Plus la règle est spécifique, plus son glob doit être étroit. Une règle React appliquée à tout le dépôt ajoute du bruit et peut produire des instructions contradictoires.
+
+---
+
+## Équivalent Claude Code : `paths`
+
+Claude Code utilise le champ `paths` dans `.claude/rules/*.md`.
 
 ```yaml
 ---
-description: 'Guidance for CentOS administration, RHEL-compatible tooling, and SELinux-aware operations.'
-applyTo: '**'
+paths:
+  - "src/**/*.{ts,tsx}"
+  - "tests/**/*.test.ts"
 ---
+
+# Règles TypeScript
+
+- TypeScript strict.
+- Ne pas utiliser `any` sans justification.
+- Lancer les tests ciblés après modification.
 ```
 
-```yaml
+Différence importante : **Claude ne lit que `paths` dans le frontmatter d'une rule**. Les autres champs éventuels du frontmatter sont ignorés.
+
+| Besoin | Copilot | Claude Code |
+|---|---|---|
+| Règle globale | `.github/copilot-instructions.md` ou `applyTo: "**"` | `CLAUDE.md` ou rule sans `paths` |
+| Règle ciblée | `*.instructions.md` + `applyTo` | `.claude/rules/*.md` + `paths` |
+| Règle chargée à la demande | Prompt file / skill | Skill Claude |
+
 ---
-description: 'Guidelines for creating high-quality Agent Skills for GitHub Copilot'
-applyTo: '**/.github/skills/**/SKILL.md, **/.claude/skills/**/SKILL.md'
+
+## Pièges fréquents
+
+1. **Glob trop large** : `**` pour une règle qui ne concerne qu'un module.
+2. **Extensions oubliées** : `.ts` sans `.tsx`, ou tests `*.spec.*` oubliés.
+3. **Règles contradictoires** entre instructions globales et ciblées.
+4. **Copier `applyTo` dans une rule Claude** : Claude attend `paths`, pas `applyTo`.
+5. **Copier `paths` dans une instruction Copilot** : Copilot attend `applyTo`.
+
 ---
+
+## Stratégie multi-outils recommandée
+
+Si le dépôt doit rester compatible Claude + Copilot :
+
+```text
+CLAUDE.md                         <- règles globales Claude
+.claude/rules/                    <- règles ciblées Claude
+.github/copilot-instructions.md   <- règles globales Copilot
+.github/instructions/             <- règles ciblées Copilot
 ```
 
-```yaml
----
-description: 'Step-by-step guide for converting Spring Boot JPA applications to use Azure Cosmos DB with Spring Data Cosmos'
-applyTo: '**/*.java,**/pom.xml,**/build.gradle,**/application*.properties'
----
-```
-
-```yaml
----
-applyTo: '**.cs, **.csproj'
-description: 'This file provides guidance on building C# applications using GitHub Copilot SDK.'
-name: 'GitHub Copilot SDK C# Instructions'
----
-```
-
----
-
-## Motifs utiles par cas
-
-| Objectif | Pattern |
-|----------|---------|
-| Tout le repo | `**` |
-| Tous les YAML | `**/*.yaml` |
-| Tous les Java | `**/*.java` |
-| Tous les tests TS | `**/*.test.ts,**/*.spec.ts` |
-| Modules API | `src/api/**` |
-| Skills uniquement | `**/.github/skills/**/SKILL.md` |
-
----
-
-## Points d'attention
-
-- Combinez plusieurs motifs avec des virgules.
-- Les dotfiles peuvent nécessiter des motifs explicites.
-- La casse peut varier selon l'OS/outillage.
-- Préférez toujours `/` comme séparateur.
-- Vérifiez le comportement sur un petit lot de fichiers avant généralisation.
-
----
-
-## Erreurs fréquentes
-
-1. Pattern trop large (`**`) pour une règle spécifique
-2. Oubli d'une extension (`.tsx` oubliée dans un projet React)
-3. Espaces mal placés dans la liste des motifs
-4. Règles contradictoires entre global et ciblé
-
----
-
-## Stratégie recommandée
-
-1. Commencer avec une règle ciblée
-2. Tester sur 2-3 fichiers représentatifs
-3. Élargir progressivement si le résultat est stable
-4. Documenter le but de chaque pattern dans `description`
+Gardez les règles métier communes cohérentes entre les deux formats. N'essayez pas de créer un seul fichier hybride avec `applyTo` et `paths` : les moteurs n'interprètent pas les mêmes métadonnées.
 
 ---
 
 ## Sources
 
-- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
-- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+- [Claude Code — mémoire et `.claude/rules/`](https://code.claude.com/docs/en/memory) — consulté le 2026-09-28
+- [VS Code — Custom instructions](https://code.visualstudio.com/docs/agent-customization/custom-instructions) — consulté le 2026-09-28
+- [GitHub Docs — Custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Prompt Files (.prompt.md)](prompt-files.md)** : sauvegarder et partager des prompts Copilot réutilisables pour vos tâches récurrentes.
-
-Concepts clés couverts :
-
-- **Structure d'un .prompt.md** — Frontmatter YAML + contenu Markdown
-- **Modes d'exécution** — `ask`, `edit`, `agent`
-- **Outils disponibles** — `codebase`, `editFiles`, `terminalLastCommand`
-- **Exemples pratiques** — Revue de code, génération de tests, audit de sécurité
+**[Prompt files Copilot](prompt-files.md)** : conserver des prompts Copilot réutilisables, et comprendre quand préférer un skill Claude.
