@@ -1,276 +1,250 @@
-# Skills Copilot (SKILL.md)
+# Skills — Claude Code et interopérabilité Copilot
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
-!!! info "Support IntelliJ"
-    Les fichiers `SKILL.md` créés manuellement ou via VS Code sont pris en compte par IntelliJ en lecture. La création via l'interface (commande `copilot-skill://`) reste réservée à VS Code.
+Un **skill** est une capacité réutilisable stockée dans un dossier contenant `SKILL.md`. Dans Claude Code, il sert à fournir une procédure, une expertise domaine ou un workflow qui ne mérite pas d'être chargé en permanence dans `CLAUDE.md`.
 
-## Présentation
-Les **Skills** sont des packages de connaissance domaine que les agents Copilot peuvent référencer via l'URI `copilot-skill://`. Ils permettent de packager de l'expertise métier ou technique complexe et de la rendre disponible à la demande, séparément des instructions toujours actives.
+Les skills sont aussi une zone d'interopérabilité intéressante : certaines surfaces GitHub Copilot savent lire des skills placés sous `.claude/skills/`. Cela permet de conserver une seule source lorsque le contenu est réellement compatible.
 
 ---
 
-## Qu'est-ce qu'un SKILL.md ?
+## Emplacement Claude Code
 
-Un `SKILL.md` est un fichier de documentation structurée qui:
+### Projet
 
-- **Encode une expertise spécifique** dans un domaine précis.
-- **Est référençable** par les agents via une URI dédiée.
-- **Fournit du contexte profond** sur un domaine sans alourdir le contexte global.
-
-Contrairement aux `.instructions.md` (toujours actives), les skills sont **chargés à la demande** — uniquement quand un agent ou un prompt en a besoin.
-
----
-
-## Emplacement et URI
-
-Les fichiers `SKILL.md` sont placés dans des dossiers dédiés et référencés via l'URI `copilot-skill://` :
-
-```
+```text
 mon-projet/
-└── .github/
-    └── skills/
-        ├── agent-customization/
-        │   └── SKILL.md    → copilot-skill://agent-customization/SKILL.md
-        ├── api-standards/
-        │   └── SKILL.md    → copilot-skill://api-standards/SKILL.md
-        ├── security/
-        │   └── SKILL.md    → copilot-skill://security/SKILL.md
-        └── domain-model/
-            └── SKILL.md    → copilot-skill://domain-model/SKILL.md
+└─ .claude/
+   └─ skills/
+      └─ review-docs/
+         ├─ SKILL.md
+         ├─ references/
+         └─ scripts/
 ```
+
+Un skill projet est disponible dans les sessions de ce dépôt et peut être versionné avec Git.
+
+### Utilisateur
+
+```text
+~/.claude/skills/<nom>/SKILL.md
+```
+
+Il devient disponible dans vos projets locaux.
+
+Des skills peuvent aussi être fournis par des plugins, une politique d'organisation ou des répertoires additionnels.
 
 ---
 
-## Structure d'un SKILL.md
-
-!!! warning "Frontmatter obligatoire"
-    Les champs `name` et `description` dans le frontmatter YAML sont **obligatoires**. Sans eux, le skill n'est pas chargé. De plus, la valeur de `name` doit correspondre exactement au **nom du dossier parent** du `SKILL.md`.
+## Structure minimale
 
 ```markdown
 ---
-name: nom-du-skill           # Obligatoire — doit correspondre au nom du dossier parent
-description: |               # Obligatoire — décrit ce que fait le skill ET quand l'utiliser
-  Description détaillée du skill. Soyez précis sur les capacités ET les cas d'usage
-  pour que Copilot sache quand charger ce skill automatiquement.
-argument-hint: "[fichier] [options]"   # Optionnel — affiché lors de l'invocation /
-user-invocable: true         # Optionnel — false = masque du menu /
-disable-model-invocation: false  # Optionnel — true = invocation manuelle seulement
+name: review-docs
+description: Audite une page MkDocs pour vérifier structure, liens, sources et cohérence avec le reste du dépôt.
 ---
 
-# Nom du Skill
+# Review documentation
 
-Contenu de connaissance ici. Décrivez :
-- Ce que le skill aide à accomplir
-- Quand utiliser ce skill
-- Les procédures étape par étape
-- Des exemples d'entrée/sortie attendus
-- Des références aux scripts inclus dans le dossier
+1. Lire la page ciblée et les pages directement liées.
+2. Identifier les faits susceptibles d'être obsolètes.
+3. Vérifier les liens internes.
+4. Proposer ou appliquer des corrections minimales.
+5. Exécuter le build MkDocs si l'environnement le permet.
 ```
 
-### Champs du frontmatter SKILL.md
+### Frontmatter Claude Code
 
-| Champ | Obligatoire | Description |
-|-------|:-----------:|-------------|
-| `name` | **Oui** | Identifiant unique (minuscules, tirets). Doit = nom du dossier parent |
-| `description` | **Oui** | Description des capacités ET cas d'usage (max 1024 caractères) |
-| `argument-hint` | Non | Texte d'aide affiché dans le champ de saisie (`/skill-name`) |
-| `user-invocable` | Non | `false` = masqué du menu `/` mais chargeable automatiquement |
-| `disable-model-invocation` | Non | `true` = uniquement via `/` manuel, jamais automatique |
+Tous les champs sont optionnels côté Claude Code, mais **`description` est fortement recommandé** : Claude s'en sert pour déterminer quand charger le skill.
 
----
+| Champ | Usage |
+|---|---|
+| `name` | nom de commande affiché ; sinon le nom du dossier est utilisé |
+| `description` | ce que fait le skill et quand l'utiliser |
+| `when_to_use` | précisions supplémentaires de déclenchement |
+| `argument-hint` | aide d'autocomplétion |
+| `disable-model-invocation` | `true` : seul l'utilisateur peut déclencher le skill |
+| `user-invocable` | `false` : skill utilisable par Claude mais masqué comme commande utilisateur |
+| `allowed-tools` | pré-approuve certains outils pendant le tour d'invocation |
+| `disallowed-tools` | retire temporairement certains outils pendant le tour |
+| `context` | peut exécuter le skill dans un contexte isolé, par exemple `fork` |
+| `agent` | type de subagent à utiliser avec un contexte forké |
 
-## Exemple : Skill Agent Customization
-
-Ce skill existe dans le workspace actuel (`documentation-ia`) :
-
-```markdown
-# Agent Customization Skill
-
-## Description
-**WORKFLOW SKILL** — Créer, mettre à jour, réviser, corriger ou déboguer des fichiers de 
-personnalisation VS Code (`.instructions.md`, `.prompt.md`, `.agent.md`, `SKILL.md`, 
-`copilot-instructions.md`, `AGENTS.md`).
-
-## Cas d'usage
-À utiliser pour :
-- Sauvegarder des préférences de code
-- Diagnostiquer pourquoi des instructions/skills/agents sont ignorés
-- Configurer des patterns `applyTo`
-- Définir des restrictions d'outils
-- Créer des modes d'agent custom ou des workflows spécialisés
-- Packager de la connaissance domaine
-- Corriger la syntaxe YAML du frontmatter
-
-Ne PAS utiliser pour :
-- Questions générales de code (utiliser l'agent par défaut)
-- Débogage runtime ou diagnostic d'erreurs
-- Configuration de serveur MCP (utiliser les docs MCP directement)
-- Développement d'extension VS Code
-
-## Workflow recommandé
-1. Lire les fichiers existants dans `.github/`
-2. Identifier les gaps ou problèmes
-3. Intervenir avec les outils appropriés (lire/écrire des fichiers de customisation)
-4. Valider via les questions posées à l'utilisateur si besoin
-```
+!!! warning "`allowed-tools` n'est pas une sandbox"
+    Ce champ pré-approuve les outils listés pendant le tour où le skill est invoqué. Il ne supprime pas automatiquement tous les autres outils et ne remplace pas les règles de permissions globales. Relisez les skills versionnés dans un dépôt avant de leur accorder des commandes larges.
 
 ---
 
-## Référencer un skill depuis un agent
+## Invocation manuelle ou automatique
 
-Dans un fichier `.agent.md`, vous pouvez indiquer quel skill utiliser :
+Par défaut :
+
+- vous pouvez lancer un skill avec `/<nom>` ;
+- Claude peut aussi l'invoquer lorsqu'il juge sa `description` pertinente ;
+- seule la description est gardée dans la liste des capacités ; le contenu complet du skill est chargé lorsqu'il est invoqué.
+
+### Workflow à effet de bord : invocation manuelle
 
 ```markdown
 ---
-name: Agent Customization Expert
-description: Expert en personnalisation VS Code et agents Copilot
-tools:
-  - codebase
-  - editFiles
+name: publish-docs
+description: Publie le site de documentation après validation complète.
+disable-model-invocation: true
 ---
 
-# Agent Customization Expert
-
-Pour réaliser cette tâche, applique les connaissances du skill :
-`copilot-skill://agent-customization/SKILL.md`
-
-## Rôle
-Tu es expert en configuration d'agents VS Code Copilot...
+Exécuter uniquement à la demande explicite de l'utilisateur.
 ```
 
----
-
-## Différence Skills vs Instructions vs Agents
-
-| Aspect | SKILL.md | .instructions.md | .agent.md |
-|--------|:--------:|:----------------:|:---------:|
-| **Activé automatiquement** | Non | Oui (si applyTo matche) | Non (manuel) |
-| **Invocation** | Via URI depuis un agent | Automatique | Via @ ou sélecteur |
-| **Contenu** | Expertise domaine | Règles de code | Comportement + outils |
-| **Persistance** | Passif (disponible) | Actif (toujours injecté) | Actif pendant session |
-| **Taille typique** | Longue (connaissance riche) | Courte (règles précises) | Moyenne (instructions comportement) |
+Utilisez `disable-model-invocation: true` pour les actions que Claude ne doit jamais décider seul de lancer : déploiement, publication, envoi de message, changement externe, etc.
 
 ---
 
-## Exemples de skills utiles pour une équipe de développement
-
-### Skill API Standards
+## Arguments
 
 ```markdown
-# API Standards Skill
+---
+name: audit-page
+description: Audite une page précise de la documentation.
+disable-model-invocation: true
+---
 
-## REST API Design Guidelines
-
-### Nommage des endpoints
-- Utiliser des noms de ressources au pluriel : `/users`, `/products`
-- Snake_case pour les paramètres de query string : `?sort_by=created_at`
-- Versionnement URL : `/api/v1/`
-
-### Codes HTTP attendus
-| Opération | Success | Error |
-|-----------|---------|-------|
-| GET | 200 | 404, 400 |
-| POST | 201 | 400, 409 |
-| PUT/PATCH | 200 | 400, 404 |
-| DELETE | 204 | 404 |
-
-### Format de réponse standard
-```json
-{
-  "data": {},
-  "meta": { "pagination": {} },
-  "errors": []
-}
+Audite `$ARGUMENTS` et vérifie :
+1. les faits techniques ;
+2. les liens ;
+3. la cohérence du niveau pédagogique ;
+4. les sources officielles.
 ```
 
-### Gestion des erreurs
-- Toujours retourner un corps JSON en cas d'erreur
-- Inclure un `error_code` machine-readable
-- Inclure un `message` lisible par l'humain
+Invocation :
+
+```text
+/audit-page docs/chapitre-4-contexte/index.md
 ```
 
-### Skill Modèle de Domaine
-
-```markdown
-# Domain Model Skill — MonApp E-commerce
-
-## Entités principales
-
-### User
-- `id` : UUID v4
-- `email` : unique, lowercase
-- `role` : enum(ADMIN, SELLER, BUYER)
-- `status` : enum(ACTIVE, SUSPENDED, DELETED)
-
-### Product
-- `id` : UUID v4
-- `sellerId` : FK → User.id (role=SELLER)
-- `status` : enum(DRAFT, PUBLISHED, ARCHIVED)
-- `price` : en centimes (integer, jamais float pour les montants monétaires)
-
-## Règles métier importantes
-1. Un produit ARCHIVED ne peut pas être commandé
-2. Un User SUSPENDED ne peut pas créer de commandes
-3. Le prix est toujours en centimes — diviser par 100 pour l'affichage
-4. Les IDs sont toujours des UUID — jamais d'auto-increment SQL
-
-## Invariants
-- `Order.total` doit toujours égaler `sum(OrderItem.quantity * OrderItem.unitPrice)`
-- Un `User.email` ne peut jamais être modifié une fois confirmé
-```
+Claude Code accepte aussi les arguments indexés (`$ARGUMENTS[0]`, `$0`, etc.).
 
 ---
 
-## Bonnes pratiques
+## Commandes injectées
 
-### Organisation des skills
+Un skill peut injecter le résultat d'une commande shell avec la syntaxe dédiée :
 
-```
-.github/skills/
-├── technical/
-│   ├── api-standards/SKILL.md       ← Standards techniques
-│   ├── security/SKILL.md             ← Sécurité
-│   └── testing/SKILL.md              ← Tests
-├── domain/
-│   ├── domain-model/SKILL.md         ← Modèle métier
-│   └── business-rules/SKILL.md       ← Règles métier
-└── tooling/
-    ├── ci-cd/SKILL.md                ← CI/CD
-    └── agent-customization/SKILL.md  ← Customisation agents
+```markdown
+## État du dépôt
+
+!`git status --short`
 ```
 
-### Quand utiliser un skill vs une instruction
+Ces commandes passent par les contrôles de permissions. Une commande refusée peut faire échouer l'invocation du skill.
 
-| Critère | Utiliser SKILL.md | Utiliser .instructions.md |
-|---------|:-----------------:|:-------------------------:|
-| Connaissance très détaillée | ✅ | ❌ (trop lourd pour instructions) |
-| Applicable à tous les fichiers | ❌ | ✅ |
-| Applicable uniquement à certains agents | ✅ | ❌ |
-| Règle de code simple | ❌ | ✅ |
-| Documentation de domaine métier | ✅ | ❌ |
+!!! danger "Ne traitez pas l'injection shell comme du texte inoffensif"
+    Un skill versionné peut contenir des commandes exécutées sur votre machine. Auditez son contenu, son `allowed-tools` et ses scripts comme du code.
 
-### Skill vs prompt jetable
+---
 
-Si un workflow revient régulièrement (ex: audit sécurité, génération de tests, migration), privilégiez un `SKILL.md` plutôt qu'un prompt ad-hoc recopié à la main.
+## Isoler un skill dans un subagent
 
-- Prompt jetable: rapide, mais peu maintenable
-- Skill: versionnable, partageable, améliorable dans le temps
+Pour une exploration lourde :
+
+```markdown
+---
+name: pr-summary
+description: Analyse un gros diff et retourne une synthèse courte.
+context: fork
+agent: Explore
+allowed-tools: Bash(gh *)
+---
+
+## Contexte
+- Diff : !`gh pr diff`
+- Fichiers : !`gh pr diff --name-only`
+
+## Tâche
+Retourne uniquement une synthèse structurée des risques et changements.
+```
+
+Le contexte principal reçoit le résultat utile plutôt que tout le bruit de l'exploration.
+
+---
+
+## Skill ou autre mécanisme ?
+
+| Besoin | Mécanisme |
+|---|---|
+| règle que Claude doit connaître dans presque toutes les sessions | `CLAUDE.md` |
+| règle limitée à certains chemins | `.claude/rules/` |
+| expertise / procédure réutilisable | **skill** |
+| recherche lourde avec contexte séparé | subagent ou skill `context: fork` |
+| contrôle avant/après un outil | hook |
+| accès à un système externe | MCP |
+
+---
+
+## Compatibilité avec `.claude/commands/`
+
+Les fichiers `.claude/commands/*.md` restent pris en charge. Les commandes mono-fichier reposent désormais sur le même mécanisme général que les skills et acceptent presque le même frontmatter.
+
+Pour un nouveau workflow :
+
+- un prompt très court et mono-fichier peut rester dans `commands/` ;
+- une capacité avec références, scripts ou ressources associées est généralement mieux structurée comme **skill**.
+
+---
+
+## GitHub Copilot — référence et interopérabilité
+
+GitHub Copilot documente aujourd'hui les skills dans plusieurs emplacements projet, dont :
+
+```text
+.github/skills/<skill>/SKILL.md
+.claude/skills/<skill>/SKILL.md
+.agents/skills/<skill>/SKILL.md
+```
+
+Cela ne signifie pas que tous les champs Claude Code ont exactement le même comportement dans Copilot. Pour un skill partagé :
+
+1. gardez le frontmatter au sous-ensemble réellement compatible ;
+2. évitez les commandes ou outils spécifiques à un seul agent si le skill doit rester portable ;
+3. testez sur les surfaces Copilot réellement utilisées ;
+4. créez une variante spécifique seulement si les comportements divergent réellement.
+
+!!! info "Fin de `copilot-skill://` comme modèle principal de ce guide"
+    L'ancien contenu de cette page présentait les skills essentiellement comme des URI `copilot-skill://`. Le guide est désormais centré sur le format `SKILL.md` et les emplacements documentés actuellement par Claude Code et GitHub Copilot.
+
+---
+
+## Exemple pour ce dépôt
+
+```text
+.claude/skills/
+└─ doc-review/
+   ├─ SKILL.md
+   └─ references/
+      ├─ mkdocs.md
+      └─ sourcing.md
+```
+
+Le skill peut expliquer comment :
+
+- respecter le français et le ton pédagogique ;
+- mettre à jour `mkdocs.yml` si nécessaire ;
+- distinguer Claude-first et référence Copilot ;
+- vérifier les informations évolutives contre la documentation officielle ;
+- lancer `py -m mkdocs build` lorsqu'un environnement local est disponible.
+
+---
+
+## Prochaine étape
+
+Passez à **[Agents](guide-agents.md)** pour isoler les tâches de recherche, revue et vérification qui produisent beaucoup de contexte.
 
 ---
 
 ## Sources
 
-- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
-- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+Sources officielles consultées le **28 septembre 2026** :
 
-## Prochaine étape
-
-**[Guide Hooks](guide-hooks.md)** : configurer des automatisations déclenchées par les événements de développement (sauvegarde, commit, erreur).
-
-Concepts clés couverts :
-
-- **Types de hooks** — `onSave`, `onOpen`, `pre-commit`, `on-build-error`
-- **Hooks d'éditeur** — Actions code, fichiers ouverts, sauvegardes
-- **Hooks de workflow** — Intégration Git, gestion d'erreurs
-- **Exemples pratiques** — Génération de messages de commit, validation pre-commit
+- [Claude Code — Skills](https://code.claude.com/docs/en/skills)
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
+- [GitHub Docs — Adding agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
+- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
