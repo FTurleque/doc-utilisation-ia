@@ -1,117 +1,111 @@
-﻿# Comparaison des Paramètres — IntelliJ vs VS Code
+# GitHub Copilot — Paramétrage IntelliJ vs VS Code (référence)
 
 <span class="badge-intellij">IntelliJ</span> <span class="badge-vscode">VS Code</span>
 
-## Présentation
-
-Cette page compare les options de configuration disponibles entre IntelliJ IDEA et Visual Studio Code pour GitHub Copilot. Les deux IDEs offrent aujourd'hui un socle fonctionnel proche, mais la **documentation officielle** n'est pas aussi détaillée sur tous les mécanismes dans les deux environnements.
-
-!!! info "Règle de lecture"
-    Quand un mécanisme est **documenté explicitement** côté GitHub pour VS Code mais pas détaillé de la même façon pour JetBrains, nous l'indiquons comme **mieux documenté** plutôt que comme automatiquement identique.
+Cette page conserve une comparaison des surfaces **GitHub Copilot**. Pour la configuration principale de ce dépôt, utilisez désormais [Architecture et paramétrage Claude Code](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md).
 
 ---
 
-## Tableau comparatif général
+## Matrice actuelle des personnalisations
 
-| Paramètre / Fonctionnalité | IntelliJ IDEA | VS Code |
-|---------------------------|:-------------:|:-------:|
-| **Activer/Désactiver Copilot** | ✅ Interface Settings | ✅ `settings.json` / UI |
-| **Configurer le chat et les complétions** | ✅ UI | ✅ UI + JSON |
-| **Choisir un modèle** | ✅ Selon plan / build | ✅ Selon plan / build |
-| **Instructions de dépôt `.github/copilot-instructions.md`** | ✅ Oui | ✅ Oui |
-| **Instructions ciblées** | ⚠️ Oui, mais UX/documentation moins explicites | ✅ Très bien documenté |
-| **Prompt files / artefacts avancés** | ⚠️ Selon version et workflow | ✅ Très bien documenté |
-| **Hooks Copilot** | ❌ Non documenté pour JetBrains | ✅ Documenté |
-| **MCP / contexte externe** | ✅ Présent dans l'écosystème Copilot, disponibilité selon environnement | ✅ Très bien documenté |
-| **Partage d'équipe par Git** | ✅ Via fichiers du dépôt | ✅ Via fichiers du dépôt |
-| **Partage de réglages IDE** | ⚠️ Possible mais moins portable | ✅ Très naturel avec `.vscode/` |
-| **Pilotage fin du contexte** | ✅ Bon niveau avec instructions + structure projet | ✅ Excellent niveau avec doc plus riche |
-| **Contexte sémantique JVM** | ✅ Excellente force d'IntelliJ | ⚠️ Bon, mais moins natif |
+La documentation GitHub distingue clairement les capacités selon la surface. Au 28 septembre 2026 :
 
-**Légende :** ✅ Bien supporté · ⚠️ Disponible mais moins explicite / dépendant de la version · ❌ Non documenté comme mécanisme de référence dans cet IDE
+| Fonction Copilot | VS Code | JetBrains |
+|---|:---:|:---:|
+| Custom instructions | ✓ | Preview |
+| Prompt files | ✓ | Preview |
+| Custom agents | ✓ | Preview |
+| Subagents | ✓ | Preview |
+| Agent skills | ✓ | Preview |
+| Hooks | Preview | ✗ |
+| MCP servers | ✓ | ✓ |
 
----
+**Légende :** ✓ supporté · Preview fonctionnalité en préversion · ✗ non pris en charge dans la matrice officielle actuelle.
 
-## Ce qui a réellement progressé côté IntelliJ
-
-L'écosystème GitHub Copilot a désormais une documentation officielle plus large sur :
-
-- les **instructions de dépôt**
-- la **configuration du contexte**
-- le **choix des modèles**
-- MCP comme mécanisme d'extension du contexte
-- les fonctions avancées liées aux usages agentiques
-
-Conséquence pratique : **IntelliJ n'est plus seulement un IDE de complétion**. Pour beaucoup d'équipes, il permet maintenant un niveau de personnalisation utile et rentable à condition de partir d'un socle simple et portable :
-
-1. `README.md` à jour
-2. `.github/copilot-instructions.md` propre
-3. règles ciblées seulement si elles corrigent un vrai bruit
-4. exclusions des dossiers générés / sensibles
+!!! warning "Cette matrice est volatile"
+    Vérifiez toujours la [Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet) avant d'écrire une procédure ou une politique multi-IDE.
 
 ---
 
-## Fonctionnalités où VS Code reste mieux documenté
+## Instructions et skills
 
-| Sujet | IntelliJ IDEA | VS Code |
-|---|---|---|
-| **Prompt files** | ⚠️ À vérifier selon votre version / workflow | ✅ Documentation explicite |
-| **Custom agents** | ⚠️ Disponibilité à valider dans votre environnement | ✅ Documentation explicite |
-| **Hooks** | ❌ | ✅ |
-| **Instruction files avancés** | ⚠️ Moins lisible côté doc JetBrains | ✅ Très bien expliqué |
-| **Références de personnalisation** | ⚠️ Plus dispersées | ✅ Plus centralisées |
+### Instructions
 
-!!! warning "Ne pas confondre produit et interface"
-    GitHub Copilot propose aujourd'hui plus de mécanismes avancés au niveau produit. Cela ne signifie pas que **chaque écran IntelliJ** expose toutes les options avec la même granularité que VS Code.
+Les instructions de dépôt restent pertinentes pour Copilot, mais leur support détaillé varie selon la surface. Les fichiers `.github/` historiques du dépôt sont donc conservés.
 
----
+### Skills
 
-## Équivalences utiles pour une équipe
+GitHub Copilot accepte aujourd'hui des skills projet dans plusieurs emplacements :
 
-| Objectif | IntelliJ | VS Code |
-|----------|----------|---------|
-| Réduire le bruit des suggestions | Désactiver certains langages / ajuster les complétions | `settings.json` ciblé |
-| Stabiliser le style des réponses | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` |
-| Réduire le coût des sessions longues | Fonctions avancées à la demande, peu d'auto-approve | Idem, avec réglages plus visibles |
-| Partager la gouvernance IA | Fichiers du dépôt versionnés | Fichiers du dépôt versionnés |
-| Travailler sur Java / Kotlin | Avantage fort IntelliJ | Bon support, moins natif |
-| Travailler sur workflows de personnalisation très poussés | Possible, mais à valider version par version | Plus simple et mieux documenté |
+```text
+.github/skills/<skill>/SKILL.md
+.claude/skills/<skill>/SKILL.md
+.agents/skills/<skill>/SKILL.md
+```
+
+Cette compatibilité ouvre une stratégie intéressante pendant la migration : un skill réellement générique peut vivre sous `.claude/skills/` et être utilisé par Claude Code tout en restant exploitable par certaines surfaces Copilot.
+
+!!! note "Ne présumez pas d'une compatibilité universelle"
+    Toutes les surfaces Copilot n'exposent pas les skills au même niveau. La documentation GitHub actuelle les prend notamment en charge dans le cloud agent, code review, Copilot CLI, l'app Copilot et agent mode dans VS Code.
 
 ---
 
-## Recommandation
+## Agents et subagents
 
-**Pour un usage standard** (complétions + chat + instructions de dépôt) : les deux IDEs sont aujourd'hui **beaucoup plus proches** qu'avant.
+Les custom agents Copilot sont pleinement documentés sur plusieurs surfaces, mais restent en **public preview dans JetBrains**. Les fichiers d'agents de ce dépôt restent donc conservés sous `.github/agents/` comme référence Copilot.
 
-**Pour une personnalisation avancée et très documentée** : **VS Code** garde un avantage grâce à la richesse de sa documentation officielle sur les artefacts de personnalisation.
-
-**Pour des projets Java / JVM** : **IntelliJ IDEA** reste souvent le meilleur choix grâce à son contexte sémantique natif et à sa compréhension du projet.
-
-**Pour optimiser précision + coût dans IntelliJ** : commencez par le trio suivant avant tout raffinement avancé :
-
-- `README.md` clair
-- `.github/copilot-instructions.md` maintenu
-- périmètre de fichiers et de dossiers réduit au strict utile
+Pour le parcours Claude-first, les agents spécialisés sont documentés sous `.claude/agents/*.md` dans [Architecture et paramétrage Claude Code](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md).
 
 ---
 
-## Sources
+## Hooks
 
-- GitHub Docs — *[Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support)* (consulté le 2026-06-03)
-- GitHub Docs — *[Adding repository custom instructions for GitHub Copilot in your IDE](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide)* (consulté le 2026-06-03)
-- GitHub Docs — *[Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing)* (consulté le 2026-06-03)
-- GitHub Docs — *[Improving agent quality to optimize AI usage](https://docs.github.com/en/copilot/tutorials/optimize-ai-usage)* (consulté le 2026-06-03)
-- Visual Studio Code Docs — *[Prompt files](https://code.visualstudio.com/docs/copilot/customization/prompt-files)* (consulté le 2026-06-03)
+Les hooks Copilot ne sont pas un mécanisme homogène dans tous les IDE.
+
+GitHub documente les hooks pour :
+
+- Copilot CLI ;
+- Copilot cloud agent ;
+- certaines autres surfaces signalées en preview dans la matrice de personnalisation.
+
+Les hooks de dépôt Copilot sont stockés sous `.github/hooks/*.json` pour les surfaces concernées. Ils sont **conservés** dans ce dépôt, mais ils ne doivent pas être présentés comme une fonction JetBrains équivalente aux hooks Claude Code.
+
+---
+
+## MCP
+
+MCP est supporté dans VS Code et JetBrains côté Copilot. Le protocole est aussi central dans Claude Code.
+
+Lorsqu'un serveur MCP n'est pas lié à une fonctionnalité propre à Copilot, documentez d'abord le serveur et ses risques de façon générique, puis ajoutez les différences de configuration par client.
+
+---
+
+## Stratégie du dépôt
+
+| Situation | Emplacement privilégié |
+|---|---|
+| Configuration Claude Code principale | `CLAUDE.md`, `.claude/`, `.mcp.json` |
+| Référence Copilot historique | `.github/copilot-instructions.md`, `.github/instructions/`, `.github/agents/`, `.github/prompts/`, `.github/hooks/` |
+| Skill réellement partagé | `.claude/skills/` lorsque la compatibilité des surfaces utilisées est confirmée |
+| Procédure spécifique VS Code Copilot | Pages Copilot VS Code |
+| Procédure spécifique JetBrains Copilot | Pages Copilot JetBrains |
 
 ---
 
 ## Prochaine étape
 
-**[CLI Modes et Workflows](../chapitre-3-cli-modes/index.md)** : découvrir les différents modes de fonctionnement de Copilot et savoir quand passer d'une interaction simple à un workflow plus agentique.
+- Claude-first : [Architecture et paramétrage Claude Code](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md)
+- Migration : [Migration pas à pas](../chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md)
+- Copilot conservé : pages IntelliJ et VS Code de ce chapitre
 
-Concepts clés couverts :
+---
 
-- **Mode inline** — complétion automatique et suggestions de code
-- **Mode Chat** — conversation interactive avec Copilot
-- **Mode CLI** — usage orienté tâches et automatisation
-- **Choix du bon mode** — comment limiter coût, bruit et rework selon le besoin
+## Sources
+
+Sources officielles consultées le **28 septembre 2026** :
+
+- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
+- [GitHub Docs — Adding agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
+- [GitHub Docs — Custom agents configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+- [GitHub Docs — About hooks for GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/hooks)
+- [Claude Code — `.claude` directory](https://code.claude.com/docs/en/claude-directory)
