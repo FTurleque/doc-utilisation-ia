@@ -26,7 +26,8 @@ Le dépôt versionne désormais :
 │   ├── doc-reviewer.md
 │   ├── nav-maintainer.md
 │   ├── official-doc-audit.md
-│   └── official-doc-sync.md
+│   ├── official-doc-sync.md
+│   └── sonar-remediation.md
 └── skills/
     └── doc-writer/
         └── SKILL.md
