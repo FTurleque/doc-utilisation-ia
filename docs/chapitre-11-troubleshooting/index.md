@@ -1,8 +1,35 @@
-﻿# Troubleshooting — Résolution de Problèmes
+# Troubleshooting Claude Code
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Même bien configuré, GitHub Copilot peut rencontrer des dysfonctionnements. Ce chapitre couvre les problèmes les plus fréquents, leur diagnostic, et leurs solutions concrètes.
+Ce chapitre couvre le diagnostic de **Claude Code** : installation, authentification, erreurs API, configuration, MCP, IDE, recherche, contexte et performance. Les procédures GitHub Copilot ne sont pas supprimées ; elles restent une référence secondaire lorsqu'elles sont encore utiles.
+
+---
+
+## Commencer par le diagnostic intégré
+
+Si Claude Code démarre :
+
+```text
+/doctor
+```
+
+`/doctor` vérifie l'installation, les settings, extensions et l'usage du contexte, puis peut proposer des corrections à confirmer.
+
+Si `claude` ne démarre pas :
+
+```bash
+claude --version
+claude doctor
+```
+
+Pour MCP :
+
+```text
+/mcp
+```
+
+La documentation officielle recommande ces points d'entrée avant les opérations plus invasives.
 
 ---
 
@@ -10,143 +37,126 @@ Même bien configuré, GitHub Copilot peut rencontrer des dysfonctionnements. Ce
 
 <div class="grid cards" markdown>
 
--   :material-bug: **Problèmes courants**
-    
-    ---
-    
-    Les 13 problèmes les plus fréquents avec leur symptôme, cause et solution pas à pas.
-    
-    [Voir les problèmes →](problemes-courants.md)
+- :material-bug: **[Problèmes courants](problemes-courants.md)**
 
--   :material-file-search: **Logs & Diagnostic**
-    
-    ---
-    
-    Comment activer et lire les logs Copilot dans VS Code et IntelliJ pour identifier la source d'un problème.
-    
-    [Accéder aux logs →](logs-diagnostic.md)
+    Installation, login, limites d'usage, contexte, MCP, recherche, IDE, hooks et performances.
 
--   :material-compare: **Comparaison des problèmes**
-    
-    ---
-    
-    Tableau comparatif des problèmes spécifiques à chaque IDE et les différences de comportement.
-    
-    [Voir la comparaison →](comparaison-problemes.md)
+- :material-file-search: **[Logs & diagnostic](logs-diagnostic.md)**
 
--   :material-wrench: **Procédures de réparation**
-    
-    ---
-    
-    Procédures graduées pour les cas persistants : reset complet, nettoyage du cache, réinstallation, proxy/SSL.
-    
-    [Réparer Copilot →](procedures-reparation.md)
+    `/doctor`, `claude doctor`, safe mode, debug de configuration, heap dump et rapport reproductible.
+
+- :material-compare: **[Comparaison des problèmes](comparaison-problemes.md)**
+
+    Différences CLI, VS Code, JetBrains, Windows/WSL et fournisseurs cloud.
+
+- :material-wrench: **[Procédures de réparation](procedures-reparation.md)**
+
+    Réparer progressivement : configuration minimale, mise à jour, auth, réseau, customisations et réinstallation.
 
 </div>
 
 ---
 
-## Avant de commencer
+## Arbre de décision rapide
 
-Avant de diagnostiquer l'IDE, validez ces 4 points en 30 secondes :
-
-!!! info "Checklist pré-diagnostic"
-    - [ ] **IDE et extension/plugin à jour** — VS Code : `Extensions → vérifier les mises à jour` | IntelliJ : `Settings → Plugins → Updates`
-    - [ ] **Authentification valide** — L'icône Copilot dans la barre de statut n'est pas barrée/rouge
-    - [ ] **Redémarrage effectué** — Si Copilot vient d'être installé ou mis à jour, redémarrez l'IDE
-    - [ ] **Services GitHub opérationnels** — Vérifiez [githubstatus.com](https://www.githubstatus.com) avant tout diagnostic avancé
-
----
-
-## Diagnostic rapide — arbre de décision
-
-```
-Copilot ne fonctionne pas
-    │
-    ├── Icône Copilot absente ou rouge → Problème d'authentification
-    │       └── Se reconnecter : menu Copilot → Sign out → Sign in (flux OAuth)
-    │
-    ├── Suggestions absentes dans TOUS les fichiers
-    │       ├── Extension/plugin activé ? → Vérifier dans les paramètres
-    │       ├── Langage désactivé dans la liste d'exclusions ?
-    │       │       └── Retirer le langage de la liste (Settings → Copilot)
-    │       └── Conflit avec une autre extension d'autocomplétion ?
-    │               └── Désactiver temporairement (Tabnine, Kite, IntelliCode…)
-    │
-    ├── Suggestions absentes uniquement sur UN fichier
-    │       ├── Fichier dans .copilotignore ? → Vérifier .copilotignore à la racine
-    │       └── Extension du fichier non reconnue ? → Vérifier les paramètres de langue
-    │
-    ├── Suggestions présentes dans certains langages mais pas d'autres
-    │       └── Vérifier "github.copilot.enable" dans settings.json pour ce langage
-    │
-    ├── Chat IA répond mais suggestions inline absentes
-    │       ├── editor.inlineSuggest.enabled = true ? → Vérifier les settings
-    │       └── IntelliJ : Completions désactivées via status bar ?
-    │               └── Cliquer icône Copilot → "Enable completions"
-    │
-    ├── Suggestions présentes mais lentes (> 3 secondes)
-    │       ├── Problème réseau / proxy ? → Tester curl https://api.github.com
-    │       └── IntelliJ en indexation ? → Attendre la fin (barre en bas)
-    │
-    ├── Suggestions de mauvaise qualité
-    │       ├── Fichiers de contexte ouverts ? → Ouvrir les fichiers liés
-    │       └── Instructions configurées ? → Voir Contexte & Personnalisation
-    │
-    ├── Problème intermittent / aléatoire
-    │       ├── Rate limit ? → Vérifier les logs pour "429" ou "rate limit exceeded"
-    │       └── Réseau instable ? → Tester sans VPN d'abord
-    │
-    └── Erreur réseau / serveur persistante
-            └── Vérifier githubstatus.com → si OK, lire les logs (Logs & Diagnostic)
+```text
+Claude Code ne fonctionne pas
+│
+├─ `claude` introuvable / ne démarre pas
+│  └─ `claude --version` puis `claude doctor`
+│
+├─ Claude démarre mais login/auth échoue
+│  └─ `/login` + vérifier compte/organisation/provider
+│
+├─ Erreur API 5xx / 529 / 429
+│  └─ consulter Error reference + status Anthropic + limites d'usage
+│
+├─ Settings / hooks / skills / MCP non chargés
+│  ├─ `/doctor`
+│  ├─ `/mcp`
+│  └─ tester `claude --safe-mode`
+│
+├─ Recherche ne trouve pas les fichiers
+│  └─ vérifier ripgrep, ignore files et WSL/filesystem
+│
+├─ Contexte saturé
+│  ├─ `/compact`
+│  ├─ lire les gros fichiers par portions
+│  ├─ déplacer l'exploration dans un subagent
+│  └─ `/clear` si la tâche précédente n'est plus utile
+│
+└─ IDE ne détecte pas Claude
+   └─ suivre le diagnostic VS Code / JetBrains correspondant
 ```
 
 ---
 
-## Statut des services GitHub
+## Avant un diagnostic avancé
 
-Avant tout diagnostic, vérifiez l'état des services GitHub :
-
-- **Status GitHub** : [https://www.githubstatus.com](https://www.githubstatus.com)
-
-Si GitHub Copilot est signalé comme dégradé ou en interruption, attendez la résolution. Aucun diagnostic IDE n'est utile dans ce cas.
-
----
-
-## Escalade — Quand contacter le support
-
-Si les procédures de ce chapitre n'ont pas résolu le problème, voici les ressources d'escalade :
-
-| Ressource | Lien | Cas d'usage |
-|-----------|------|------------|
-| Support GitHub | [support.github.com](https://support.github.com) | Problèmes de licence, d'authentification persistante, de quota |
-| GitHub Community | [github.community](https://github.community) | Questions générales, partage d'expériences |
-| Dépôt extension VS Code | [github.com/microsoft/vscode-copilot-release](https://github.com/microsoft/vscode-copilot-release) | Bugs reproductibles, suivi des issues connues |
-| Plugin IntelliJ | [youtrack.jetbrains.com](https://youtrack.jetbrains.com/newissue?project=IDEA) | Bugs ProprioDB IntelliJ |
-
-!!! tip "Préparer un rapport efficace"
-    Avant de contacter le support, collectez : version IDE, version extension, OS, logs filtrés et étapes de reproduction. Voir [Logs & Diagnostic](logs-diagnostic.md#rapport-de-bug) pour le template.
+- vérifiez la version avec `claude --version` ;
+- lancez `/doctor` ou `claude doctor` ;
+- vérifiez [status.anthropic.com](https://status.anthropic.com/) pour une panne de service ;
+- reproduisez le problème dans un projet minimal si possible ;
+- testez `claude --safe-mode` pour isoler plugins, MCP et hooks ;
+- ne supprimez pas des fichiers de configuration ou credentials « au hasard » avant d'avoir identifié la couche fautive.
 
 ---
 
-## Références croisées
+## Catégories d'erreurs actuelles
 
-| Problème | Chapitre |
-|----------|----------|
-| Installation échouée | [Installation](../chapitre-1-installation/index.md) |
-| Paramètre introuvable | [Paramétrage](../chapitre-2-parametrage/index.md) |
-| Contexte insatisfaisant | [Contexte & Personnalisation](../chapitre-4-contexte/index.md) |
-| Code généré de mauvaise qualité | [Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md) |
+La référence officielle Claude Code distingue notamment :
+
+| Catégorie | Exemples |
+|---|---|
+| Installation | `command not found`, PATH, TLS, téléchargement/update |
+| Authentification | login expiré, API key invalide, organisation/policy |
+| Usage | session/weekly limit, spend limit, 429 |
+| Réseau | proxy, SSL, connexion API, stream interrompu |
+| Requête | prompt trop long, contexte saturé, image/PDF trop volumineux |
+| Configuration | settings invalides, workspace non trusted, MCP bloqué |
+| IDE | CLI non trouvé, extension/plugin non connecté |
+| Performance | CPU/mémoire, hang, recherche lente, compaction thrashing |
 
 ---
+
+## Performance et contexte
+
+La documentation Claude actuelle recommande notamment :
+
+- `/compact` pour réduire le contexte ;
+- redémarrer entre grosses tâches ;
+- exclure les gros dossiers générés ;
+- `claude --safe-mode` pour identifier une customisation coûteuse ;
+- `/heapdump` uniquement pour un diagnostic mémoire avancé.
+
+!!! danger "Heap dump sensible"
+    Un `.heapsnapshot` peut contenir la conversation complète et des credentials. Ne l'attachez jamais à une issue publique. La documentation recommande de partager uniquement le fichier diagnostics JSON lorsque nécessaire.
+
+---
+
+## Support
+
+Pour un problème non résolu :
+
+1. `/doctor` et `/mcp` ;
+2. `/feedback` dans Claude Code ;
+3. vérifier les issues du dépôt Claude Code ;
+4. pour compte/facturation, passer par le support Anthropic depuis Claude/Console.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Les anciens diagnostics Copilot (extension, suggestions inline, logs GitHub, `.copilotignore`, etc.) restent pertinents uniquement pour les utilisateurs Copilot. Ils seront conservés dans les pages de référence Copilot et l'audit global ; ils ne servent plus de parcours principal de ce chapitre.
+
+---
+
+## Sources
+
+- [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
+- [Claude Code — Error reference](https://code.claude.com/docs/en/errors) — consulté le 2026-09-28
+- [Claude Code — Advanced setup](https://code.claude.com/docs/en/setup) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Problèmes Courants](problemes-courants.md)** : les 13 problèmes les plus fréquents rencontrés avec GitHub Copilot, avec symptômes, causes et solutions pratiques.
-
-Concepts clés couverts :
-
-- **Diagnostic rapide** — Arbre de décision pour identifier rapidement la cause
-- **Problèmes vs solutions** — 13 cas courants avec démarches pas à pas
-- **Rate limiting et authentification** — Gestion des erreurs d'accès
-- **Performance et contexte** — Optimisation des suggestions
+**[Problèmes courants](problemes-courants.md)** pour diagnostiquer le symptôme précis avant d'appliquer une réparation plus invasive.
