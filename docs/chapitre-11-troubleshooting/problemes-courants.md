@@ -1,459 +1,252 @@
-﻿# Problèmes Courants
+# Problèmes courants — Claude Code
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-!!! info "Référence de cette page"
-    Procédures revérifiées le **3 juin 2026** à partir des guides officiels GitHub Copilot.
+Cette page couvre les symptômes les plus fréquents avec **Claude Code**. Les anciennes procédures GitHub Copilot restent utiles uniquement comme référence Copilot et ne constituent plus le parcours principal.
 
-## 1. Copilot ne génère aucune suggestion
-
-### Symptôme
-Le curseur est dans un fichier de code, vous tapez, mais aucune suggestion "ghost text" n'apparaît.
-
-### Causes possibles et solutions
-
-=== ":material-microsoft-visual-studio-code: VS Code"
-    **1. Extension désactivée**
-    
-    Vérifiez la barre de statut en bas : l'icône Copilot doit être présente et non barrée.
-    
-    Si l'icône est absente : ++ctrl+shift+x++ → cherchez "GitHub Copilot" → **Enable**.
-    
-    **2. Completion désactivée pour ce langage**
-    ```json
-    // Vérifiez .vscode/settings.json
-    {
-        "github.copilot.enable": {
-            "javascript": false  // <- Remettre true ou supprimer la ligne
-        }
-    }
-    ```
-    
-    **3. Conflit avec autre extension d'autocomplétion**
-    
-    Désactivez temporairement Tabnine, Kite, IntelliCode, etc. pour tester.
-    
-    **4. `editor.inlineSuggest.enabled` désactivé**
-    ```json
-    {
-        "editor.inlineSuggest.enabled": true  // Doit être true
-    }
-    ```
-
-=== ":simple-intellijidea: IntelliJ"
-    **1. Plugin désactivé**
-    
-    **Settings → Plugins** → vérifiez que "GitHub Copilot" est coché et actif.
-    
-    **2. Completions désactivées via status bar**
-    
-    Cliquez sur l'icône Copilot en bas à droite → **"Enable GitHub Copilot completions"**.
-    
-    **3. Langage dans la liste des exclusions**
-    
-    **Settings → GitHub Copilot → Disabled Languages** → vérifiez que le langage courant ne figure pas dans la liste.
-    
-    **4. IDE en mode Power Save**
-    
-    En mode Power Save (**File → Power Save Mode**), Copilot est automatiquement suspendu. Désactivez ce mode.
+!!! info "Premier réflexe"
+    Si Claude Code démarre, lancez `/doctor`. Si la commande `claude` elle-même pose problème, commencez par `claude --version` puis `claude doctor`.
 
 ---
 
-## 2. Authentification échouée
+## 1. `claude` est introuvable ou ne démarre pas
 
-### Symptôme
-Message d'erreur : "You are not signed in", "Authentication failed", ou l'icône Copilot affiche une croix rouge.
+Vérifiez :
 
-### Solution
-
-=== ":material-microsoft-visual-studio-code: VS Code"
-    1. ++ctrl+shift+p++ → **"GitHub Copilot: Sign Out"**
-    2. ++ctrl+shift+p++ → **"GitHub Copilot: Sign In"**
-    3. Suivez le flux OAuth dans le navigateur
-    4. Si le navigateur ne s'ouvre pas : copiez le code affiché et allez manuellement sur [github.com/login/device](https://github.com/login/device)
-
-=== ":simple-intellijidea: IntelliJ"
-    1. **Tools → GitHub Copilot → Log Out**
-    2. **Tools → GitHub Copilot → Login to GitHub**
-    3. Alternativement : ++ctrl+shift+a++ → cherchez **"GitHub Copilot"**
-
-### Vérifier le statut d'abonnement
-
-Si la re-authentification ne fonctionne pas : connectez-vous sur [github.com/settings/copilot](https://github.com/settings/copilot) et vérifiez que votre plan Copilot est actif.
-
----
-
-## 3. Suggestions lentes ou intermittentes
-
-### Symptôme
-Les suggestions apparaissent parfois, avec 2-5 secondes de délai, ou s'interrompent fréquemment.
-
-### Repères de performance
-
-| Latence | Interprétation | Action |
-|---------|---------------|--------|
-| < 2 secondes | ✅ Normal | Rien à faire |
-| 2 à 5 secondes | ⚠️ Dégradé | Surveiller, tester le réseau |
-| > 5 secondes ou timeout | ❌ Anormal | Diagnostiquer le réseau ou le proxy |
-
-### Diagnostic réseau
-
-=== "Windows (PowerShell)"
-    ```powershell
-    # Tester la connectivité
-    Test-NetConnection -ComputerName "api.github.com" -Port 443
-    # Résultat attendu : TcpTestSucceeded : True
-    
-    Test-NetConnection -ComputerName "copilot-proxy.githubusercontent.com" -Port 443
-    # Résultat attendu : TcpTestSucceeded : True
-    ```
-
-=== "macOS / Linux"
-    ```bash
-    # Tester la connectivité
-    curl -I https://api.github.com
-    # Résultat attendu : HTTP/2 200 en < 500ms
-    
-    curl -I https://copilot-proxy.githubusercontent.com
-    # Résultat attendu : HTTP/2 200 ou 204
-    ```
-
-!!! tip "VPN et réseau d'entreprise"
-    Si vous êtes connecté à un VPN, testez en le déconnectant temporairement. Certains VPN d'entreprise interceptent le trafic HTTPS vers `githubusercontent.com` et causent des erreurs SSL silencieuses.
-
-### Solutions
-
-**Proxy d'entreprise :**
-
-=== ":material-microsoft-visual-studio-code: VS Code"
-    ```json
-    // .vscode/settings.json ou settings utilisateur
-    {
-        "http.proxy": "http://proxy.company.com:8080",
-        "http.proxyStrictSSL": false,
-        "github.copilot.advanced": {
-            "debug.useNodeFetcher": true
-        }
-    }
-    ```
-
-=== ":simple-intellijidea: IntelliJ"
-    **Settings → Appearance & Behavior → System Settings → HTTP Proxy**
-    
-    Configurez le proxy manuellement et testez la connexion.
-
-**Réseau lent — augmenter la tolérance :**
-```json
-{
-    "github.copilot.advanced": {
-        "requestTimeout": 10000
-    }
-}
+```bash
+claude --version
+claude doctor
 ```
 
----
+Causes fréquentes :
 
-## 4. Suggestions incorrectes ou hors sujet
+- installation incomplète ;
+- PATH non actualisé ;
+- shell non redémarré après installation ;
+- installation ancienne ou multiple ;
+- environnement Windows/WSL différent de celui où Claude a été installé.
 
-### Symptôme
-Copilot génère du code qui ne correspond pas au contexte du projet : mauvais framework, mauvaise langue, suggestions génériques.
-
-### Solutions
-
-1. **Ouvrir les fichiers pertinents** dans des onglets actifs — Copilot utilise les fichiers ouverts comme contexte
-2. **Créer un fichier `.github/copilot-instructions.md`** avec des directives du projet
-3. **Positionner le curseur après du code existant** plutôt qu'en début de fichier vide
-4. **Décrire le contexte dans un commentaire** juste avant le code à générer :
-
-    === ":material-check: Commentaire contextualisé (bon)"
-        ```typescript
-        // Projet: API REST Express TypeScript
-        // Pattern: Repository, pas d'ORM, PostgreSQL via pg
-        // Fonction: récupération d'un utilisateur par email avec gestion d'erreur
-        function getUserByEmail(email: string): Promise<User | null> {
-        ```
-
-    === ":material-close: Commentaire vague (mauvais)"
-        ```typescript
-        // get user
-        function get(e) {
-        ```
-
-5. **Vérifier `.copilotignore`** — si le fichier en cours est listé dans `.copilotignore`, Copilot l'ignore entièrement (voir la section **11. Fichier ignoré par Copilot**)
+Évitez de supprimer immédiatement `~/.claude` ou `~/.claude.json` : ces emplacements contiennent configuration, authentification et données de session.
 
 ---
 
-## 5. Copilot Chat ne répond pas
+## 2. Authentification ou compte incorrect
 
-### Symptôme
-Le panneau Chat s'ouvre mais reste vide, tourne indéfiniment, ou affiche une erreur.
+Dans Claude Code :
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    1. Vérifiez que l'extension **GitHub Copilot Chat** est installée séparément de GitHub Copilot
-    2. ++ctrl+shift+p++ → **"Developer: Reload Window"**
-    3. Vérifiez les logs : **Output** → sélectionnez **"GitHub Copilot Chat"**
-    4. Si "rate limit exceeded" : attendez quelques minutes
-
-=== ":simple-intellijidea: IntelliJ"
-    1. Le Chat est intégré au plugin principal — vérifiez la version du plugin (doit être ≥ 1.3)
-    2. Fermez et rouvrez le panneau Copilot Chat
-    3. Vérifiez dans **Help → Show Log** pour les erreurs Copilot
-
----
-
-## 6. `.instructions.md` ignoré
-
-### Symptôme
-Les instructions dans `.github/copilot-instructions.md` ou `.github/instructions/*.instructions.md` ne semblent pas être prises en compte.
-
-### Causes fréquentes
-
-| Cause | Vérification |
-|-------|-------------|
-| Fichier mal nommé | Le fichier doit finir exactement en `.instructions.md` |
-| `applyTo` incorrect | Vérifier le glob pattern : `applyTo: '**/*.ts'` pour TypeScript |
-| Feature flag désactivé | VS Code : `"github.copilot.chat.codeGeneration.useInstructionFiles": true` |
-| IntelliJ | Fonctionnalité absente — voir [comparaison contexte](../chapitre-4-contexte/comparaison-contexte.md) |
-
-```json
-{
-    "github.copilot.chat.codeGeneration.useInstructionFiles": true
-}
+```text
+/status
+/login
 ```
 
----
+`/status` permet notamment de vérifier le compte, le modèle et l'état de connexion.
 
-## 7. Code généré avec des imports manquants
-
-### Symptôme
-Copilot génère du code valide syntaxiquement, mais des imports sont absents et le code ne compile pas.
-
-### Explications
-
-Copilot génère les imports selon le contexte visible. Si les dépendances ne sont pas installées ou si `package.json`/`pom.xml` n'est pas ouvert, il peut générer des imports incorrects.
-
-### Solutions
-
-- **IntelliJ** : L'IDE propose automatiquement d'ajouter les imports manquants via Alt+Entrée — acceptez les suggestions
-- **VS Code** : Activez les imports automatiques dans les paramètres du langage (TypeScript, Java via JDT, etc.)
-- **Tous IDEs** : Ouvrez `package.json` dans un onglet pour que Copilot connaisse les dépendances disponibles
+!!! warning "API key prioritaire"
+    Si `ANTHROPIC_API_KEY` est définie, Claude Code peut utiliser cette clé et facturer l'usage via l'API au lieu de l'allocation de votre abonnement Claude. Vérifiez vos variables d'environnement si le comportement de facturation semble inattendu.
 
 ---
 
-## 8. Modes Ask/Plan/Agent indisponibles
+## 3. Limite d'usage atteinte
 
-### Symptôme
-VS Code : les modes Ask, Plan ou Agent ne sont pas disponibles dans Copilot Chat.
+Les limites d'usage Claude sont partagées entre plusieurs surfaces Claude selon le plan. La consommation dépend notamment de la longueur et de la complexité des conversations, du modèle, du niveau d'effort et des fonctionnalités utilisées.
 
-### Prérequis par offre
+Vérifiez :
 
-| Fonctionnalité | Copilot Free | Copilot Pro / Pro+ | Copilot Business / Enterprise |
-|---------------|:------------:|:------------------:|:-----------------------------:|
-| Suggestions inline | ✅ | ✅ | ✅ |
-| Copilot Chat | ✅ (limité) | ✅ | ✅ |
-| Mode Agent (Ask/Plan/Agent) | ✅ | ✅ | ✅ |
-| Exécution multi-fichiers via Agent | ✅ (périmètre variable) | ✅ | ✅ |
-| Accès modèles avancés | Limité | ✅ | ✅ |
-
-### Solution
-
-```
-Extensions → GitHub Copilot Chat → Vérifier la version (doit être ≥ 0.13)
-Si version ancienne : clic sur Update
+```text
+/status
+/usage
 ```
 
-!!! warning "Vérifier votre plan et vos politiques"
-    Si une fonctionnalité est absente, vérifiez votre plan, la version de l'extension et les politiques d'organisation (le mode agent peut être désactivé côté admin). Consultez [github.com/settings/copilot](https://github.com/settings/copilot) pour confirmer l'état de votre accès.
+Selon votre plan, vous pouvez :
+
+- attendre la remise à zéro de la limite ;
+- utiliser des usage credits si vous les avez activés ;
+- changer de plan ;
+- utiliser un compte Console/API distinct pour un besoin ponctuel intensif.
 
 ---
 
-## 9. Performances dégradées de l'IDE après installation
+## 4. Contexte saturé ou réponses qui dérivent
 
-### Symptôme
-IntelliJ ou VS Code devient globalement plus lent après l'activation de Copilot.
+Symptômes :
 
-### Solutions rapides
+- Claude oublie le but initial ;
+- les réponses deviennent moins ciblées ;
+- la session compacte fréquemment ;
+- des fichiers ou sorties anciennes occupent encore le contexte.
 
-1. **Augmenter la mémoire IntelliJ** :
-   - **Help → Edit Custom VM Options**
-   - Modifier ou ajouter : `-Xmx4096m` (4 Go, recommandé avec Copilot actif)
-   - Redémarrer IntelliJ pour appliquer
+Actions :
 
-2. **Réduire la fréquence des requêtes dans VS Code** :
-    ```json
-    {
-        "editor.quickSuggestionsDelay": 500,
-        "github.copilot.advanced": {
-            "inlineSuggestCount": 1
-        }
-    }
-    ```
+```text
+/context
+/compact
+```
 
-3. **Désactiver pour les langages non essentiels** :
-    ```json
-    {
-        "github.copilot.enable": {
-            "markdown": false,
-            "plaintext": false,
-            "xml": false
-        }
-    }
-    ```
+Puis, si la tâche a changé :
 
-4. **Fermer les onglets inutilisés** — Copilot indexe tous les fichiers ouverts comme contexte
+```text
+/clear
+```
 
-Voir aussi [Performance & Ressources](../chapitre-9-bonnes-pratiques/performance.md) pour les réglages avancés.
+Pour une exploration lourde indépendante, préférez un **subagent** afin de garder son contexte isolé de la conversation principale.
 
 ---
 
-## 10. Perte des préférences après mise à jour
+## 5. `CLAUDE.md`, rules, skills ou agents non pris en compte
 
-### Symptôme
-Après une mise à jour de l'extension/plugin ou de l'IDE, certains paramètres semblent réinitialisés.
+Commencez par :
 
-### Bonnes pratiques de sauvegarde
+```text
+/doctor
+```
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    Utilisez **Settings Sync** (++ctrl+shift+p++ → **"Settings Sync: Enable"**) pour synchroniser vos paramètres sur GitHub.
+Puis vérifiez les emplacements :
 
-=== ":simple-intellijidea: IntelliJ"
-    Utilisez **File → Manage IDE Settings → Sync Settings to JetBrains Account** pour sauvegarder en cloud.
-    
-    Ou exportez manuellement : **File → Manage IDE Settings → Export Settings** (génère un `.zip` réimportable).
+```text
+CLAUDE.md
+.claude/settings.json
+.claude/settings.local.json
+.claude/rules/*.md
+.claude/skills/<skill>/SKILL.md
+.claude/agents/*.md
+```
 
-!!! tip "Sauvegarder settings.json localement"
-    Dans les deux IDEs, versionner le fichier de settings dans git est la méthode la plus fiable :
-    - VS Code : `.vscode/settings.json` dans le dépôt
-    - IntelliJ : `.idea/` dans le dépôt (activer le partage des settings de projet)
+Points fréquents :
 
----
-
-## 11. Fichier ignoré par Copilot
-
-### Symptôme
-Copilot génère des suggestions normalement dans d'autres fichiers, mais reste silencieux sur un fichier spécifique. Aucun message d'erreur.
-
-### Cause
-Le fichier correspond à un pattern dans `.copilotignore` (VS Code uniquement) ou son extension est désactivée dans les settings.
-
-### Vérification
-
-=== ":material-microsoft-visual-studio-code: VS Code"
-    **1. Vérifier `.copilotignore`**
-    
-    Si un fichier `.copilotignore` existe à la racine du projet ou dans un dossier parent, ouvrez-le et vérifiez qu'il ne correspond pas au fichier concerné.
-    
-    Syntaxe identique à `.gitignore` :
-    ```
-    # Ignorer tous les fichiers de config
-    *.config.js
-    
-    # Ignorer un dossier spécifique
-    secrets/
-    
-    # Ignorer un fichier précis
-    src/config/env.ts
-    ```
-    
-    **2. Vérifier les settings par langage**
-    ```json
-    // Si la valeur est false, Copilot est désactivé pour ce langage
-    {
-        "github.copilot.enable": {
-            "typescript": false  // <- voilà le problème
-        }
-    }
-    ```
-
-=== ":simple-intellijidea: IntelliJ"
-    IntelliJ ne supporte pas `.copilotignore`. Vérifiez :
-    
-    **Settings → GitHub Copilot → Disabled Languages** — le langage du fichier y figure-t-il ?
-    
-    Si oui, décochez-le pour réactiver Copilot sur ce langage.
+- mauvais scope projet/global ;
+- YAML/frontmatter invalide ;
+- règle `paths` ne correspondant pas au fichier courant ;
+- permission ou setting géré par l'organisation qui prend le dessus ;
+- skill masqué ou description trop vague pour l'auto-invocation.
 
 ---
 
-## 12. Chat : contexte de conversation saturé
+## 6. Un serveur MCP ne fonctionne plus
 
-### Symptôme
-Après plusieurs échanges dans la même conversation, Copilot Chat donne des réponses hors sujet, oublie des informations données plus tôt, ou répond « Je n'ai pas accès à cette information ».
+Dans la session :
 
-### Cause
-Chaque modèle de langage a une fenêtre de contexte maximale. Quand l'historique de conversation la dépasse, les messages anciens sont tronqués.
+```text
+/mcp
+```
 
-### Solutions
+Vérifiez :
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    1. **Démarrer une nouvelle conversation** — cliquez sur l'icône « + » dans le panneau Chat
-    2. **Résumer le contexte au début** de la nouvelle conversation :
-        ```
-        Contexte : je travaille sur une API Express TypeScript avec PostgreSQL.
-        Objectif : implémenter le service d'authentification JWT.
-        Fichiers clés: src/auth/auth.service.ts, src/middleware/auth.middleware.ts
-        ```
-    3. **En mode Agent** : utilisez `#codebase` ou `@workspace` pour recharger le contexte
+- que le serveur est connecté ;
+- que sa commande ou URL est toujours valide ;
+- que les credentials nécessaires sont disponibles ;
+- que le scope de configuration est correct (`.mcp.json`, configuration utilisateur, etc.) ;
+- qu'une politique d'entreprise ne bloque pas le serveur.
 
-=== ":simple-intellijidea: IntelliJ"
-    Fermez le panneau Chat et rouvrez-le pour démarrer une nouvelle session. Résumez votre contexte dans le premier message.
-
-!!! tip "Bonne pratique"
-    Pour les sessions longues, démarrez une nouvelle conversation toutes les 10-15 questions. Résumez les décisions prises pour ne pas perdre le fil.
+Désactivez les serveurs MCP inutiles pendant le diagnostic pour réduire les variables en jeu.
 
 ---
 
-## 13. Suggestions tronquées
+## 7. Hook qui bloque ou modifie le comportement
 
-### Symptôme
-La suggestion apparaît mais s'arrête au milieu d'une ligne, d'une fonction, ou même au milieu d'un mot.
+Un hook peut :
 
-### Causes fréquentes
+- bloquer un outil avant exécution ;
+- ajouter du contexte ;
+- lancer une commande après modification ;
+- produire une erreur qui ressemble à un problème Claude.
 
-| Cause | Indice | Solution |
-|-------|--------|----------|
-| Timeout réseau | Suggestion rapide puis coupée | Augmenter `requestTimeout` |
-| Rate limit | Se produit après une activité intense | Attendre 1-2 min |
-| Contexte trop large | Fichier très long (> 1000 lignes) | Fermer des onglets, découper le fichier |
-| Bug extension/plugin | Reproductible sur tout fichier | Mettre à jour l'extension |
+Testez le comportement avec les customisations désactivées :
 
-### Solutions
+```bash
+claude --safe-mode
+```
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    ```json
-    {
-        "github.copilot.advanced": {
-            "requestTimeout": 15000
-        }
-    }
-    ```
-    
-    Si le problème persiste : ++ctrl+shift+p++ → **"Developer: Reload Window"**
+Si le problème disparaît, réactivez hooks, MCP et plugins progressivement afin d'isoler la cause.
 
-=== ":simple-intellijidea: IntelliJ"
-    Vérifiez `idea.log` pour des messages `PSI timeout` ou `Request timeout`.
-    
-    Si le fichier est très long, essayez de diviser le fichier ou de fermer des onglets inutilisés.
-    
-    Si le problème est reproductible : **Help → Submit a Bug Report** avec le log filtré.
+---
+
+## 8. Recherche de fichiers incomplète ou lente
+
+Vérifiez :
+
+- les fichiers/dossiers ignorés par Git ;
+- les gros répertoires générés (`node_modules`, `dist`, `target`, datasets, logs) ;
+- la présence et le fonctionnement de `ripgrep` lorsque pertinent ;
+- les différences de chemin entre Windows et WSL ;
+- les permissions de lecture.
+
+Un dépôt contenant de gros artefacts générés doit les exclure des recherches et du versioning quand ils ne sont pas nécessaires.
+
+---
+
+## 9. VS Code ne détecte pas Claude
+
+Distinguez deux cas :
+
+- **panneau Claude Code VS Code** : l'extension fournit son expérience intégrée ;
+- **terminal intégré** : pour taper `claude`, la CLI standalone doit être disponible dans le PATH du terminal.
+
+Vérifiez également que VS Code et l'extension sont à jour puis relancez la fenêtre si nécessaire.
+
+---
+
+## 10. JetBrains ne détecte pas Claude
+
+Le plugin JetBrains s'appuie sur Claude Code installé localement. Vérifiez d'abord dans un terminal du même environnement :
+
+```bash
+claude --version
+```
+
+Puis contrôlez :
+
+- version du plugin ;
+- version de l'IDE ;
+- PATH visible depuis l'IDE ;
+- proxy/SSL de l'environnement ;
+- redémarrage de l'IDE après installation ou mise à jour.
+
+---
+
+## 11. Erreurs réseau / API
+
+Pour des erreurs `429`, `5xx`, `529`, timeouts ou streams interrompus :
+
+1. consultez [status.anthropic.com](https://status.anthropic.com/) ;
+2. vérifiez proxy, VPN et inspection TLS ;
+3. utilisez `/status` et `/doctor` ;
+4. reproduisez sur un réseau différent si votre politique le permet ;
+5. vérifiez la référence d'erreurs Claude avant de modifier votre installation.
+
+Un `429` peut correspondre à une limite d'usage ou de débit ; un `5xx/529` peut être côté service. Ne traitez pas automatiquement ces erreurs comme une corruption locale.
+
+---
+
+## 12. Claude Code consomme beaucoup de CPU ou de mémoire
+
+Commencez par :
+
+- nouvelle session pour une nouvelle tâche ;
+- `/compact` si la continuité est nécessaire ;
+- `claude --safe-mode` pour tester sans customisations ;
+- réduction des gros outputs et répertoires explorés ;
+- désactivation temporaire des MCP inutiles.
+
+`/heapdump` est réservé au diagnostic avancé.
+
+!!! danger "Données sensibles"
+    Un heap dump ou une transcription locale peut contenir du contenu de conversation, des données lues par les outils et potentiellement des credentials. Ne partagez jamais ces fichiers bruts publiquement.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Si vous utilisez encore Copilot, ses problèmes spécifiques — complétions inline, plugin GitHub, `.instructions.md`, AI Credits ou logs d'extension — restent couverts par la documentation GitHub officielle et les pages Copilot de ce dépôt. Ne mélangez pas leurs procédures d'authentification ou de cache avec celles de Claude Code.
 
 ---
 
 ## Sources
 
-- [Troubleshoot GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot) (consulté le 2026-06-03)
-- [Troubleshoot common issues](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/troubleshoot-common-issues) (consulté le 2026-06-03)
-- [View logs for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot/view-logs) (consulté le 2026-06-03)
-- [Get code suggestions in your IDE](https://docs.github.com/en/copilot/how-tos/get-code-suggestions/get-ide-code-suggestions) (consulté le 2026-06-03)
-
----
+- [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
+- [Claude Code — Commands](https://code.claude.com/docs/en/commands) — consulté le 2026-09-28
+- [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
+- [Claude Help Center — Claude Code with Pro or Max](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Logs & Diagnostic](logs-diagnostic.md)** : comment activer, lire et interpréter les logs Copilot dans VS Code et IntelliJ pour diagnostiquer les problèmes persistants.
-
-Concepts clés couverts :
-
-- **Accès aux logs** — Panneau Output VS Code, fichier idea.log IntelliJ
-- **Interprétation des messages** — Types de logs courants et codes d'erreur HTTP
-- **Diagnostic réseau** — Vérifier la connectivité aux endpoints Copilot
-- **Rapport de bug** — Capturer et partager les informations essentielles
+**[Logs & diagnostic](logs-diagnostic.md)** : produire un diagnostic reproductible avant toute réinstallation.
