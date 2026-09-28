@@ -1,160 +1,88 @@
-# Guide Capture Screenshots — GitHub Copilot Documentation
+# Guide des captures d'écran
 
-> **Pour les contributeurs** : Guide complet pour capturer et organiser les screenshots dans cette documentation.
+Ce dossier contient des captures **Claude Code** lorsqu'elles sont disponibles et des captures **GitHub Copilot** conservées comme références. Les fichiers existants ne sont pas renommés automatiquement afin de préserver les liens déjà utilisés dans la documentation.
 
----
+## Organisation réelle
 
-## Conventions de Capture
-
-### Résolution & Format
-- **Résolution** : 1920×1080 (Full HD) — scale 100%
-- **Format** : PNG (compression lossless)
-- **Fond** : Thème par défaut IDE (pas de modifications UI)
-- **Éléments visibles** : Toute toolbar, statusbar, panels relevant
-
-### Nommage des Fichiers
-```
-{ide}-{feature}-{number}.png
-
-Exemples:
-- intellij-settings-01.png (Paramètres généraux)
-- vscode-chat-panel-01.png (Chat panel Copilot)
-- intellij-inline-completion-02.png (Suggestion inline)
-- vscode-keybindings-01.png (Raccourcis configurés)
-```
-
-### Organisation Répertoires
-
-```
+```text
 docs/assets/images/
+├── logo-documentation-ia.jpg
 ├── intellij/
-│   ├── 01-installation/
-│   ├── 02-parametrage/
-│   ├── 03-features/
-│   ├── 04-troubleshooting/
-│   └── README.md (checklist)
+│   ├── README.md
+│   ├── CAPTURE-TEMPLATE.md
+│   └── images existantes
 └── vscode/
-    ├── 01-installation/
-    ├── 02-parametrage/
-    ├── 03-features/
-    ├── 04-troubleshooting/
-    └── README.md (checklist)
+    ├── README.md
+    ├── CAPTURE-TEMPLATE.md
+    └── images existantes
 ```
 
----
+Les anciennes consignes mentionnaient des sous-dossiers `01-installation/`, `02-parametrage/`, etc. Ils ne font pas partie de l'arborescence actuelle et ne doivent pas être supposés dans les nouveaux liens.
 
-## IntelliJ IDEA — Screenshots Prioritaires
+## Convention pour les nouvelles images
 
-### Installation (01-installation/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 01 | intellij-marketplace-01.png | Recherche "GitHub Copilot" dans Marketplace | ![status-todo] |
-| 02 | intellij-install-dialog-01.png | Dialog installation + bouton Install | ![status-todo] |
-| 03 | intellij-restart-prompt-01.png | Prompt redémarrage IDE après install | ![status-todo] |
-
-### Paramétrage (02-parametrage/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 04 | intellij-settings-copilot-01.png | Settings → Tools → GitHub Copilot | ![status-todo] |
-| 05 | intellij-auth-login-01.png | Dialog authentification GitHub | ![status-todo] |
-| 06 | intellij-inline-settings-01.png | Inline suggestions ON/OFF toggle | ![status-todo] |
-
-### Features (03-features/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 07 | intellij-inline-completion-01.png | Suggestion inline grisée (hover) | ![status-todo] |
-| 08 | intellij-inline-accept-01.png | Appui Tab pour accepter suggestion | ![status-todo] |
-| 09 | intellij-chat-panel-01.png | Chat Copilot panel (sidebar droit) | ![status-todo] |
-| 10 | intellij-chat-context-01.png | Contexte fichier transmis au chat | ![status-todo] |
-| 11 | intellij-action-menu-01.png | Menu actions Copilot (Cmd+Shift+A) | ![status-todo] |
-
-### Troubleshooting (04-troubleshooting/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 12 | intellij-logs-location-01.png | Help → Show Log in Explorer | ![status-todo] |
-| 13 | intellij-plugin-disabled-01.png | Extension désactivée (Settings) | ![status-todo] |
-
----
-
-## Visual Studio Code — Screenshots Prioritaires
-
-### Installation (01-installation/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 01 | vscode-marketplace-01.png | Extension "GitHub Copilot" dans Marketplace | ![status-todo] |
-| 02 | vscode-install-button-01.png | Bouton Install dans panel extension | ![status-todo] |
-| 03 | vscode-auth-github-01.png | Authentification GitHub (Device Flow) | ![status-todo] |
-
-### Paramétrage (02-parametrage/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 04 | vscode-settings-search-01.png | Settings search "copilot" | ![status-todo] |
-| 05 | vscode-copilot-settings-01.png | Copilot settings panel (Inline enable/disable) | ![status-todo] |
-| 06 | vscode-keybindings-01.png | Keybindings pour Copilot (Ctrl+I, etc) | ![status-todo] |
-
-### Features (03-features/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 07 | vscode-inline-suggestion-01.png | Suggestion inline grisée (hover) | ![status-todo] |
-| 08 | vscode-inline-accept-01.png | Appui Tab pour accepter suggestion | ![status-todo] |
-| 09 | vscode-chat-sidebar-01.png | Chat Copilot sidebar panel | ![status-todo] |
-| 10 | vscode-chat-input-01.png | Input chat avec /commands visibles | ![status-todo] |
-| 11 | vscode-quick-fix-01.png | Lightbulb menu avec Copilot suggestions | ![status-todo] |
-
-### Troubleshooting (04-troubleshooting/)
-| # | Screenshot | Description | État |
-|----|-----------|-------------|------|
-| 12 | vscode-output-logs-01.png | Output → GitHub Copilot logs | ![status-todo] |
-| 13 | vscode-extension-disabled-01.png | Extension disabled state | ![status-todo] |
-
----
-
-## Procédure Capture
-
-### Avant de capturer
-1. Redémarrer IDE avec **profil défaut** (pas de custom themes)
-2. **Maximiser** la fenêtre IDE (1920×1080 native si possible)
-3. **Désactiver** les notifications persistantes
-4. **Nettoyer** l'écran (fermer dialogs inutiles)
-
-### Capture
-- Utiliser **Capture de Windows** (Win+Shift+S) ou **Screenshot tool** IDE
-- Recadrer si nécessaire (laisser context utile visible)
-- **Exporter PNG** dans répertoire approprié
-
-### Après capture
-1. Renommer fichier selon convention `{ide}-{feature}-{number}.png`
-2. Réduire taille PNG avec **ImageOptim** (Mac) ou **PNGCrush** (Windows)
-3. Vérifier fichier dans le bon répertoire `/docs/assets/images/{ide}/`
-
----
-
-## Intégration dans Documentation
-
-### Syntaxe Markdown
-```markdown
-![Description courte](../../assets/images/intellij/intellij-settings-01.png)
-
-Avec caption:
-::: code-block markdown
-![IntelliJ Settings Panel](../../assets/images/intellij/intellij-settings-01.png "Accès Settings → Tools → GitHub Copilot")
-:::
+```text
+{ide}-{produit}-{fonction}-{numero}.png
 ```
 
-### Validation Après Ajout
+Exemples :
+
+```text
+intellij-claude-settings-01.png
+intellij-copilot-chat-01.png
+vscode-claude-chat-01.png
+vscode-copilot-marketplace-01.png
+```
+
+Utiliser `claude` ou `copilot` dans le nom lorsqu'une capture est spécifique à un produit.
+
+## Captures existantes
+
+Les répertoires `intellij/` et `vscode/` contiennent déjà plusieurs captures Copilot. Elles constituent un inventaire réel, pas une checklist de captures à produire. Consulter leur `README.md` respectif avant d'ajouter un fichier.
+
+Une capture ancienne peut rester dans le dépôt si :
+
+- elle est encore référencée par une page ;
+- elle illustre explicitement un parcours Copilot de référence ;
+- elle ne contient aucune donnée sensible.
+
+Lorsqu'elle devient trompeuse, remplacer la référence dans la page ou capturer l'interface actuelle plutôt que de retoucher artificiellement l'image.
+
+## Capturer Claude Code
+
+Claude Code étant le parcours principal, les nouvelles captures génériques doivent le privilégier lorsque l'interface visuelle apporte une vraie valeur. Exemples : intégration VS Code, plugin JetBrains, écran de permissions ou diagnostic IDE.
+
+Pour les commandes terminal, settings JSON, `CLAUDE.md`, rules, skills, subagents et hooks, préférer généralement des exemples texte versionnables aux captures d'écran.
+
+## Qualité
+
+- texte lisible ;
+- contexte UI suffisant ;
+- aucune donnée privée ;
+- alt text descriptif dans la page qui référence l'image ;
+- interface réellement observée sur une version stable compatible ;
+- format PNG privilégié pour les interfaces.
+
+La résolution `1920×1080` est une cible pratique mais pas une exigence d'accessibilité. Éviter les règles rigides de zoom ou d'échelle système.
+
+## Ajouter une capture
+
+1. vérifier qu'une image équivalente n'existe pas déjà ;
+2. capturer l'interface réelle ;
+3. enregistrer dans `intellij/` ou `vscode/` ;
+4. ajouter la référence Markdown avec un texte alternatif utile ;
+5. mettre à jour le README d'inventaire concerné ;
+6. valider :
+
 ```bash
-# Vérifier liens images
-grep -r "!\[" docs/ | grep assets
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
----
+## Ne pas faire
 
-## Checklist Complétude
-
-- [ ] Tous fichiers répertoire `/intellij/` remplis
-- [ ] Tous fichiers répertoire `/vscode/` remplis
-- [ ] Nommage consistent `{ide}-{feature}-{number}.png`
-- [ ] README.md dans chaque répertoire maintenu
-- [ ] Tailles fichiers PNG optimisées (<500KB total)
-- [ ] `mkdocs build` passe sans erreur
-
+- inventer un device code, un écran ou un bouton pour « compléter » une capture ;
+- publier un token ou identifiant de compte ;
+- supposer qu'un raccourci clavier est stable entre versions ;
+- créer une arborescence de dossiers non utilisée sans migration coordonnée des liens ;
+- supprimer les captures Copilot uniquement parce que Claude Code est désormais prioritaire.
