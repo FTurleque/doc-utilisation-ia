@@ -2,299 +2,139 @@
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-**TOON** ([GitHub](https://github.com/toon-format/toon) · [Spécification](https://github.com/toon-format/spec/blob/main/SPEC.md) · [Playground](https://toon-format.github.io/playground)) est un **format de données compact**, lisible par l'humain, qui peut réduire fortement la consommation de tokens (jusqu'à ~40 % dans les benchmarks publics) par rapport à JSON. Il combine la structure indentée de YAML avec un format tabulaire style CSV pour les arrays uniformes.
+**TOON** (*Token-Oriented Object Notation*) est un format texte orienté LLM qui encode le modèle de données JSON avec une syntaxe compacte : indentation pour les objets et représentation tabulaire pour les collections uniformes.
 
-TOON est *lossless* : toute donnée JSON peut être convertie en TOON et reconvertie sans perte.
-
----
-
-## Pourquoi TOON reste pertinent avec la facturation token-based
-
-Quand tu fournis des données à Copilot — configuration, logs, inventaire, données métier — chaque token compte dans la fenêtre de contexte. TOON compacte ces données **sans perte d'information** :
-
-```
-JSON (4 587 tokens)  →  TOON (2 759 tokens)  =  -40 % de tokens
-```
-
-Moins de tokens dans le contexte = plus de place pour le code, les instructions et les réponses du modèle. Sur des sessions longues avec beaucoup de données, l'économie peut être significative.
-
-!!! info "Nuance importante sur les coûts"
-    Le **gain exact** dépend du fournisseur, du tokenizer du modèle, du type de données (uniformes ou non) et du mode de facturation (input/output/cache). TOON reste pertinent, mais il faut mesurer sur tes cas réels.
+La spécification officielle est actuellement en **version 4.1**, datée du **26 juillet 2026**, avec le statut **Working Draft**. TOON doit donc être traité comme un format utile mais encore évolutif, pas comme un standard figé.
 
 ---
 
-## Le format en 2 minutes
+## Positionnement dans ce dépôt
 
-### Avant — JSON
+TOON est intéressant surtout lorsque Claude Code ou un autre agent doit lire des **données structurées volumineuses et répétitives** : inventaires, séries tabulaires, résultats d'analyse, exports JSON uniformes.
+
+Il ne remplace pas JSON comme format d'échange applicatif général. Une stratégie sûre consiste à garder JSON comme format canonique et à convertir vers TOON uniquement à la frontière LLM lorsque la mesure montre un bénéfice.
+
+---
+
+## Exemple
+
+### JSON
 
 ```json
 {
-  "context": {
-    "task": "Nos randonnées préférées",
-    "location": "Grenoble"
-  },
-  "hikes": [
-    {"id": 1, "name": "Lac Bleu", "distance": 7.5, "companion": "ana"},
-    {"id": 2, "name": "Crête du Vercors", "distance": 9.2, "companion": "luis"}
+  "employees": [
+    {"id": 1, "name": "Alice", "team": "Platform"},
+    {"id": 2, "name": "Bob", "team": "Security"}
   ]
 }
 ```
 
-### Après — TOON (-40 % de tokens)
+### TOON
 
-```
-context:
-  task: Nos randonnées préférées
-  location: Grenoble
-hikes[2]{id,name,distance,companion}:
-  1,Lac Bleu,7.5,ana
-  2,Crête du Vercors,9.2,luis
+```text
+employees[2]{id,name,team}:
+  1,Alice,Platform
+  2,Bob,Security
 ```
 
-### Règles de base
-
-| Élément | Syntaxe |
-|---------|---------|
-| Objets | Indentation (style YAML) |
-| Arrays uniformes | `champ[N]{col1,col2,...}:` puis une ligne par item |
-| Strings | Sans guillemets (sauf si elles contiennent une `,`) |
-| Nombres / booléens | Valeurs directes |
-
-!!! info "Quand `[N]` et `{fields}` brillent"
-    La notation `[N]{fields}` permet au LLM de **valider la structure** : il sait qu'il y a exactement N lignes avec ces colonnes. Cela améliore la fiabilité du parsing par rapport à du JSON brut.
+Le tableau déclare sa longueur et ses champs une seule fois, ce qui peut réduire le nombre de tokens lorsque de nombreux objets partagent exactement la même structure.
 
 ---
 
-## Benchmarks
+## Ce que disent réellement les benchmarks actuels
 
-### Tokens et précision LLM
+Les benchmarks officiels comparent TOON, JSON, JSON compact, YAML, XML et CSV sur plusieurs jeux de données et plusieurs modèles. Les résultats ne permettent pas de dire que TOON est « toujours 40 % plus compact » ou « toujours plus précis ».
 
-Mesuré sur 209 questions, 4 modèles :
+Les constats utiles sont plus nuancés :
 
-| Format | Tokens | Précision LLM | Gain tokens |
-|--------|--------|:--------------:|:-----------:|
-| **TOON** | 2 759 | 76,4 % | **-40 %** |
-| JSON compact | 3 104 | 73,7 % | -32 % |
-| YAML | 3 749 | 74,5 % | -18 % |
-| JSON | 4 587 | 75,0 % | — |
+- TOON est souvent très compact sur les collections d'objets uniformes ;
+- CSV peut être encore plus petit sur des données purement tabulaires ;
+- JSON compact peut être compétitif ou meilleur sur certaines structures imbriquées ;
+- la précision varie selon le modèle, le dataset et le type de question ;
+- les nombres de tokens dépendent du tokenizer utilisé ;
+- la latence doit être mesurée séparément sur votre environnement.
 
-!!! success "TOON bat JSON sur les deux axes"
-    Moins de tokens **et** meilleure précision LLM. La structure explicite `[N]{fields}` aide les modèles à mieux comprendre les données tabulaires.
+!!! tip "Règle de décision"
+    Convertissez un échantillon représentatif, mesurez les tokens et la qualité de restitution sur votre modèle réel, puis choisissez. Ne reprenez pas un pourcentage marketing comme invariant.
 
-### Datasets testés
+---
 
-- Enregistrements employés uniformes (100 items)
-- Commandes e-commerce imbriquées (50 items)
-- Séries temporelles analytics (60 jours)
-- Repositories GitHub (100 repos)
-- Logs d'événements semi-uniformes (75 items)
-- Configurations profondément imbriquées
+## Cas où TOON est pertinent
+
+| Données | Positionnement |
+|---|---|
+| Grande liste d'objets aux mêmes champs | Très bon candidat |
+| Données tabulaires plates | Comparer TOON à CSV |
+| JSON semi-uniforme | Tester sur un échantillon |
+| Arbre très imbriqué ou hétérogène | JSON peut rester préférable |
+| Contrat API public / stockage | Garder JSON ou le format métier canonique |
+
+---
+
+## Utilisation avec Claude Code
+
+La conversion peut rester explicite :
+
+```bash
+npx @toon-format/cli input.json -o input.toon
+```
+
+Puis demandez à Claude de lire le fichier `.toon` uniquement si le format apporte réellement un gain sur le volume transmis.
+
+Pour un workflow récurrent, vous pouvez encapsuler la conversion dans un script ou un skill :
+
+```text
+1. générer les données JSON canoniques ;
+2. convertir en TOON ;
+3. vérifier que l'encodage/décodage est lossless ;
+4. fournir uniquement le fichier TOON pertinent à l'agent ;
+5. conserver JSON pour les interfaces et artefacts applicatifs.
+```
 
 ---
 
 ## Installation
 
-### CLI (sans installation permanente)
+### CLI
 
 ```bash
-# Convertir un fichier JSON en TOON
 npx @toon-format/cli input.json -o output.toon
-
-# Depuis stdin
-echo '{"name": "Ada", "role": "dev"}' | npx @toon-format/cli
 ```
 
-### SDK TypeScript / JavaScript
+### TypeScript / JavaScript
 
 ```bash
 npm install @toon-format/toon
-# ou
-pnpm add @toon-format/toon
 ```
 
-### Autres langages
-
-| Langage | Package |
-|---------|---------|
-| TypeScript / JavaScript | `@toon-format/toon` (officiel) |
-| Python | `toon-format` |
-| Go | `go-toon` |
-| Rust | `toon-rs` |
-| .NET | `Toon.CSharp` |
-| Java | Utilisable via CLI (`npx @toon-format/cli`) ou wrapper |
-| C | Utilisable surtout via conversion en frontière (outil externe/CLI) |
-
-!!! tip "Architecture recommandée (Java/C et systèmes mixtes)"
-    Garde **JSON comme format interne** (stockage, échanges inter-services), puis convertis en **TOON juste avant le prompt**. Tu limites le risque technique tout en profitant de la réduction de tokens côté LLM.
+L'organisation TOON référence également des implémentations dans plusieurs autres langages. Vérifiez leur statut et leur conformité à la spécification avant de les adopter en production.
 
 ---
 
-## Utilisation avec GitHub Copilot
+## Sécurité et robustesse
 
-### Stratégie : convertir tes données avant de les passer à Copilot
+TOON réduit la syntaxe, pas les risques liés aux données :
 
-Quand tu travailles avec Copilot Chat ou Copilot Agent et que tu dois fournir des **données tabulaires** (utilisateurs, logs, configurations, inventaire…), convertis-les en TOON avant de les coller dans le prompt.
-
-#### Étape 1 — Convertir
-
-```bash
-# Depuis un fichier JSON
-npx @toon-format/cli data.json -o data.toon
-
-# Depuis le clipboard (PowerShell)
-Get-Clipboard | npx @toon-format/cli
-```
-
-#### Étape 2 — Utiliser dans le prompt Copilot
-
-Au lieu de coller du JSON brut dans le chat Copilot, colle le TOON :
-
-```
-Analyse ces données et identifie les employés Engineering avec un salaire > 80000 :
-
-employees[100]{id,name,department,salary,yearsExp,active}:
-  1,Alice,Engineering,95000,5,true
-  2,Bob,Sales,75000,3,true
-  3,Carol,Engineering,105000,8,true
-  ...
-```
-
-!!! tip "Astuce Copilot Chat"
-    Tu peux créer un fichier `.toon` dans ton projet et le référencer avec `#file` dans Copilot Chat. Copilot lira le contenu et bénéficiera de la compacité du format.
-
-### Utilisation programmatique avec Copilot
-
-Dans un projet TypeScript, tu peux utiliser le SDK pour convertir des données avant de les injecter dans un prompt :
-
-```typescript
-import { stringify } from '@toon-format/toon';
-
-// Tes données métier
-const employees = [
-  { id: 1, name: "Alice", department: "Engineering", salary: 95000 },
-  { id: 2, name: "Bob", department: "Sales", salary: 75000 },
-  // ...
-];
-
-// Conversion en TOON pour injection dans un prompt
-const toonData = stringify({ employees });
-console.log(toonData);
-// employees[2]{id,name,department,salary}:
-//   1,Alice,Engineering,95000
-//   2,Bob,Sales,75000
-```
-
-!!! info "Copilot comprend le TOON"
-    Les LLMs sous-jacents de Copilot (GPT-4o, Claude 3.5 Sonnet, o3…) n'ont pas besoin d'instructions spéciales pour lire du TOON. Le format est suffisamment explicite pour être compris naturellement.
-
-### Créer un prompt file dédié
-
-Tu peux créer un prompt file `.github/prompts/analyze-toon.prompt.md` pour standardiser l'utilisation :
-
-```markdown
----
-description: "Analyser des données au format TOON"
----
-
-Analyse les données TOON suivantes.
-Le format TOON utilise `[N]{fields}:` pour déclarer N lignes avec les colonnes indiquées.
-Chaque ligne contient les valeurs séparées par des virgules.
-
-Données :
-```
+- un contenu externe reste non fiable même s'il est compact ;
+- vérifiez la longueur déclarée et la structure avant consommation automatique ;
+- ne laissez pas une conversion masquer des champs critiques ;
+- validez le round-trip JSON → TOON → JSON si la fidélité est importante ;
+- ne substituez pas TOON à un schéma ou à une validation métier.
 
 ---
 
-## Quand utiliser TOON
+## Copilot — référence conservée
 
-### Cadre décisionnel TOON vs JSON
-
-| Question | Si oui | Si non |
-|----------|--------|--------|
-| Tes données sont-elles tabulaires et uniformes ? | **TOON** | JSON |
-| Tu envoies souvent de gros volumes au modèle (logs, catalogues, inventaires) ? | **TOON** | JSON |
-| Tes objets sont très imbriqués ou hétérogènes ? | JSON | **TOON possible** |
-| Tu as besoin d'un format interne universel pour toute l'app ? | JSON interne + TOON à la frontière prompt | **TOON direct** possible |
-
-!!! example "Règle simple"
-    **TOON pour compresser l'entrée LLM**, **JSON pour l'interopérabilité applicative**. Si tu hésites, commence en JSON puis mesure le gain token/coût avec une conversion TOON sur un échantillon réel.
-
-## Quand l'utiliser
-
-- Quand tes données sont tabulaires et uniformes.
-- Quand tu prépares un gros prompt avec des listes de lignes ou d'objets répétitifs
-- Quand tu veux réduire le bruit avant de demander une analyse à Copilot
-
-## Quand l'éviter
-
-- Quand les structures sont très hétérogènes.
-- Quand tes lecteurs ne connaissent pas TOON et doivent comprendre rapidement, même si le texte est plus long.
-- Quand tu n'as pas vérifié le gain sur un échantillon réel
-
----
-
-## Options CLI
-
-```bash
-npx @toon-format/cli input.json [options]
-
---format [json|toon|yaml]   # Format cible
---output FILE               # Fichier de sortie
---pretty                    # Indentation lisible
---minify                    # Format compact
-```
-
----
-
-## Pièges à éviter
-
-!!! warning "Attention aux virgules dans les valeurs"
-    Les valeurs contenant une `,` doivent être entourées de guillemets dans le format TOON. Vérifie tes données avant conversion.
-
-!!! warning "Ne pas forcer TOON sur des données non uniformes"
-    Sur des structures hétérogènes, TOON peut être **pire** que JSON en termes de lisibilité et de tokens. Utilise-le uniquement sur des arrays où chaque élément a la même structure.
-
-!!! danger "Vérifier le count `[N]`"
-    Si le nombre réel de lignes ne correspond pas à `[N]`, le LLM peut faire des erreurs d'interprétation. Assure-toi que le count est exact.
-
----
-
-## Résumé
-
-| Aspect | Détail |
-|--------|--------|
-| Type | Format de données (open source, MIT) |
-| GitHub | [toon-format/toon](https://github.com/toon-format/toon) |
-| Spécification | [SPEC.md v3.0](https://github.com/toon-format/spec/blob/main/SPEC.md) |
-| Installation | `npx @toon-format/cli` (aucune install permanente) |
-| Gratuit | Oui, entièrement |
-| Économie mesurée | Jusqu'à ~-40 % de tokens vs JSON (selon jeux de données) |
-| Précision LLM | +1,4 % vs JSON (76,4 % contre 75,0 %) |
-| Meilleur pour | Arrays uniformes de 10+ items dans les prompts |
-
-!!! success "Recommandation"
-    Utilise TOON quand tu passes des **tableaux de données uniformes** à Copilot (Chat ou Agent), surtout sur des volumes importants. Le gain de tokens est souvent net, mais varie selon modèle, tokenizer et nature des données.
-
-## Résumé
-
-TOON sert a compresser les donnees tabulaires avant envoi a un LLM.
-Il est tres utile pour reduire les tokens, mais il doit rester un format de
-frontiere, pas un remplacement universel de JSON.
+TOON peut naturellement être utilisé avec GitHub Copilot ou d'autres agents. La logique est identique : compacter des données structurées **avant** de les injecter dans le contexte. La documentation principale utilise désormais Claude Code comme exemple, mais le format reste indépendant de l'agent.
 
 ---
 
 ## Sources
 
-- [Toon documentation](https://toon.dev) - consulté le 2026-06-20
+- [TOON — implémentation de référence](https://github.com/toon-format/toon) — consulté le 2026-09-28
+- [TOON — spécification 4.1](https://github.com/toon-format/spec) — consulté le 2026-09-28
+- [TOON — benchmarks](https://github.com/toon-format/toon/blob/main/benchmarks/README.md) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[OpenSkills](openskills.md)** : un installateur universel de skills pour agents IA — standardise et partage des capacités entre Copilot, Claude Code, Cursor et d'autres agents.
-
-Concepts clés couverts :
-
-- **Portabilité des skills** — mutualiser des procédures entre plusieurs agents
-- **Installation centralisée** — industrialiser l'ajout de capacités IA
-- **Réduction de contexte** — charger uniquement la skill utile
-- **Gouvernance** — auditer les skills tierces avant usage
-
+**[OpenSkills](openskills.md)** : gérer des skills `SKILL.md` portables tout en gardant Claude Code comme consommateur natif principal.
