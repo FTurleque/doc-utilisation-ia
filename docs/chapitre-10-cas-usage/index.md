@@ -1,111 +1,140 @@
-﻿# Cas d'Usage par Technologie
+# Cas d'usage Claude Code par technologie
 
-GitHub Copilot s'adapte à chaque écosystème technologique. Ce chapitre présente des configurations et workflows optimisés pour les stacks les plus courants, avec des exemples concrets pour IntelliJ et VS Code.
+Claude Code peut travailler sur des projets Java, Node.js, React, Python et d'autres stacks dès lors que le dépôt expose clairement sa structure, ses commandes et ses critères de validation. Ce chapitre montre comment adapter le workflow **Explore → Plan → Implement → Verify** aux principaux écosystèmes du dépôt.
+
+GitHub Copilot reste documenté comme référence dans ses chapitres dédiés ; les exemples génériques ci-dessous utilisent désormais Claude Code.
 
 ---
 
-## 🎯 Choisir ton Écosystème
-
-Commencez par cette **comparaison d'efficacité** pour sélectionner la meilleure stack avec Copilot :
+## Choisir son guide
 
 <div class="grid cards" markdown>
 
--   **Comparaison Détaillée**
-    
-    ---
-    
-    Tableau comparatif : type safety, accuracy, tests, IDE, productivité par stack.
-    
-    [Consulter la comparaison →](comparaison-ecosystemes.md)
+- **[Comparaison des écosystèmes](comparaison-ecosystemes.md)**
+
+    Comparer stacks et IDE selon build, tests, exploitation et compétences — sans score IA arbitraire.
+
+- :simple-java: **[Java](java.md)**
+
+    Maven/Gradle, tests, refactoring, APIs et conventions JVM.
+
+- :simple-java: **[Java & Spring Boot](java-spring-boot.md)**
+
+    Controllers, services, repositories, JPA, configuration et tests d'intégration.
+
+- :simple-nodedotjs: **[Node.js & Express](nodejs-express.md)**
+
+    TypeScript, validation, middlewares, tests et dépendances npm.
+
+- :simple-react: **[React & TypeScript](react-typescript.md)**
+
+    Composants, hooks, rendering, tests et contrats frontend.
+
+- :simple-python: **[Python & FastAPI](python.md)**
+
+    Pydantic, async, pytest, packaging et APIs Python.
+
+- **[Node.js & React](nodejs-react.md)**
+
+    Workflow full-stack et séparation du contexte frontend/backend.
 
 </div>
 
 ---
 
-## Cas d'Usage Spécialisés
+## Principes communs
 
-<div class="grid cards" markdown>
+Quel que soit le langage :
 
--   :simple-java: **Java & Spring Boot**
-    
-    ---
-    
-    Enterprise backend, microservices, IntelliJ IDEA. Entities JPA, Services, Controllers, Tests.
-    
-    [Expert guide →](java-spring-boot.md)
-
--   :simple-nodedotjs: **Node.js & Express**
-    
-    ---
-    
-    API rapide, TypeScript, Prisma ORM, middleware patterns, intégration tests avec Supertest.
-    
-    [Guide complet →](nodejs-express.md)
-
--   :simple-react: **React 19 & TypeScript**
-    
-    ---
-    
-    Frontend, composants, hooks, Server Components (Next.js), Tailwind CSS, RTL testing.
-    
-    [Guide complet →](react-typescript.md)
-
--   :simple-python: **Python & FastAPI**
-    
-    ---
-    
-    API Python-first, Pydantic validation, async native, deployment lightweight.
-    
-    [Voir le guide →](python.md)
-
-</div>
+1. **lire la configuration réelle du projet** avant de proposer une API ou une version ;
+2. **réutiliser un pattern voisin** plutôt que générer une architecture théorique ;
+3. **faire un plan** pour les changements multi-fichiers ;
+4. **tester au niveau le plus ciblé possible**, puis élargir ;
+5. **vérifier la documentation officielle actuelle** pour toute API externe ou migration de version ;
+6. **relire le diff** avant commit.
 
 ---
 
-## Principes Communs à Tous les Projets
+## Instructions projet
 
-Quel que soit le langage/framework, ces principes optimisent la qualité des suggestions Copilot :
+Exemple racine :
 
-| Principe | Impact | Implémentation |
-|----------|--------|-----------------|
-| **Types explicites** | ⭐⭐⭐⭐⭐ | TypeScript, `type User = {}`, `def func() -> User:` |
-| **Noms descriptifs** | ⭐⭐⭐⭐⭐ | `activeUserList` > `data`; `getUserById()` > `getUser()` |
-| **Custom Instructions** | ⭐⭐⭐⭐⭐ | `.github/copilot-instructions.md` avec conventions du projet |
-| **Commentaires de fonction** | ⭐⭐⭐⭐ | Docstrings/JSDoc AVANT implémentation — guide génération |
-| **Fichiers ouverts en tab** | ⭐⭐⭐ | Copilot scanne les tabs ouverts pour enrichir contexte |
-| **Conventions cohérentes** | ⭐⭐⭐ | Copilot apprend et réplique le style du projet |
+```markdown
+# CLAUDE.md
+
+## Repository
+- `backend/`: API
+- `frontend/`: UI
+
+## Commands
+- Backend tests: `...`
+- Frontend tests: `...`
+- Full build: `...`
+
+## Rules
+- Preserve public APIs unless requested.
+- Run relevant tests before finishing.
+- Never add dependencies without explaining why.
+```
+
+Dans un monorepo, ajoutez des `CLAUDE.md` locaux ou des rules ciblées lorsque les commandes et conventions diffèrent réellement.
+
+---
+
+## Choisir l'IDE
+
+Claude Code s'intègre à VS Code et JetBrains. Le choix d'IDE doit rester guidé par la stack, les outils de navigation/refactoring et les habitudes de l'équipe.
+
+| Contexte | Choix souvent naturel |
+|---|---|
+| Java / Kotlin / Spring | IntelliJ IDEA / IDE JetBrains |
+| TypeScript / React / Node | VS Code ou IDE JetBrains adapté |
+| Python | VS Code ou PyCharm |
+| Polyglotte | IDE principal + CLI Claude à la racine du repo |
+
+Ce tableau décrit des affinités, pas des obligations.
 
 ---
 
-## Ressources du Chapitre
+## Validation par stack
 
-- [Diagrammes Architecture](comparaison-ecosystemes.md#matrice-decision-choisir-ton-ecosysteme) — Matrice décision pour choisir stack
-- [Best Practices Universelles](../chapitre-9-bonnes-pratiques/index.md) — Patterns applicables à tous
-- [Installation IDE](../chapitre-1-installation/index.md) — Setup initial par technologie
+| Stack | Contrôles typiques |
+|---|---|
+| Java | tests Maven/Gradle, compilation, analyse statique |
+| Node/TypeScript | tests, typecheck, lint, build |
+| React | tests composants, typecheck, build, éventuellement E2E |
+| Python/FastAPI | pytest, lint/typecheck, tests HTTP, packaging |
+
+La commande exacte vient du dépôt, pas de cette documentation.
+
+---
+
+## Dépendances et versions
+
+Ne demandez pas à Claude d'utiliser « la dernière version » sans vérification. Le workflow correct :
+
+```text
+1. Lis la version installée dans le projet.
+2. Vérifie la documentation/changelog officiel actuel si une migration est demandée.
+3. Identifie les breaking changes pertinents.
+4. Modifie code + lockfile.
+5. Exécute tests et build.
+```
 
 ---
 
-## Choisir son IDE par technologie
+## Copilot
 
-| Technologie | IDE recommandé | Raison |
-|-------------|---------------|--------|
-| Java / Kotlin | **IntelliJ IDEA** | PSI natif, refactoring avancé, Maven/Gradle intégré |
-| JavaScript / TypeScript | **VS Code** | TS Language Service natif, écosystème extensions |
-| Python | **VS Code** (Pylance) ou **PyCharm** | Pylance = meilleure inférence type que PyCharm |
-| React / Vue / Angular (SPA) | **VS Code** | Extensions JSX/TSX, CSS modules, React DevTools |
-| Spring Boot | **IntelliJ IDEA** | Bean navigation, auto-configuration, run configs |
-| FastAPI / Django | **VS Code** ou **PyCharm** | Les deux sont excellents |
-| Fullstack (Java + React) | **IntelliJ ou VS Code** | IntelliJ Ultimate gère les deux ; VS Code également |
+Les contenus Copilot ne sont pas supprimés. Ils restent utiles pour les équipes qui utilisent encore les complétions inline ou les artefacts `.github/`, et comme option de retour si l'offre évolue.
 
 ---
+
+## Sources
+
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
+- [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Comparaison Écosystèmes](comparaison-ecosystemes.md)** : tableau comparatif détaillé des stacks (Java/Spring, Node.js, React, Python) avec critères de sélection et recommandations par cas d'usage.
-
-Concepts clés couverts :
-
-- **Tableau comparatif complet** — Type Safety, accuracy Copilot, IDE, testing, productivité
-- **Recommandations par cas d'usage** — Startup, API rapide, Frontend, Full-stack, Data
-- **Critères avancés** — Meilleur duo IDE + Copilot + Stack
-- **Benchmark temps de génération** — Comparaison réaliste entre stacks
+Commencez par **[Comparaison des écosystèmes](comparaison-ecosystemes.md)**, puis ouvrez le guide correspondant à la stack réellement utilisée par votre projet.
