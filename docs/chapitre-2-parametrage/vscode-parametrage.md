@@ -1,442 +1,206 @@
-﻿# :material-microsoft-visual-studio-code: Paramétrage Avancé — GitHub Copilot sur VS Code
+# GitHub Copilot sur VS Code — paramétrage
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intermediate">Intermédiaire</span>
 
-## Présentation
+!!! info "Référence Copilot conservée"
+    Cette page documente GitHub Copilot dans VS Code. Le parcours principal du dépôt est Claude Code ; les fichiers `.github/` Copilot restent toutefois conservés et maintenus.
 
-Ce guide couvre **tous les paramètres Copilot** pour VS Code : activation par langage, modes d'autocomplétion, actions de code, et configuration avancée.
-
----
-
-## Accès aux Paramètres
-
-### Méthode 1 : Interface Graphique (Recommandée pour débuter)
-
-1. Ouvrez les préférences :
-
-=== "Windows/Linux"
-
-    ++ctrl+comma++
-
-**Effet** :
-- Copilot **lit automatiquement** ce fichier
-- Toutes ses suggestions respectent ces contraintes
-- S'applique à toute équipe qui clone le repo
-
-### Personal-Level Instructions
-
-1. Allez sur [github.com/settings/copilot](https://github.com/settings/copilot)
-2. Scroll jusqu'à **"Copilot personalization"**
-3. Ajoutez vos instructions personnelles (400 caractères max)
-
-**Exemple** :
-```
-Je suis expert Python/Django. Préfère les class-based views. 
-Utilise PostgreSQL + SQLAlchemy. Format PEP 8 strict.
-```
-
-**Effet** : Vos instructions s'appliquent à **tous vos repos** (Global).
-
-### Organization-Level Instructions (Enterprise+)
-
-Disponible pour administrateurs GitHub Enterprise :
-- Settings → Code security → Copilot configuration
-- Configure instructions pour **toute l'org**
+Copilot et VS Code évoluent rapidement. Préférez les réglages documentés, la feature matrix et la palette Settings de votre version à des clés historiques recopiées d'une ancienne release.
 
 ---
 
-## 🔗 Model Context Protocol (MCP)
+## Accéder aux réglages
 
-### Qu'est-ce que MCP ?
+Dans VS Code :
 
-Model Context Protocol est un **protocole standard** qui permet à Copilot d’utiliser des **outils et données externes** dans le Chat. Pour ce chapitre, retiens surtout ceci : un MCP doit **filtrer le contexte**, pas le gonfler.
+- ouvrez **Settings** ;
+- recherchez `Copilot`, `Chat`, `Agent`, `MCP` ou `inlineSuggest` ;
+- utilisez **Open Settings (JSON)** uniquement lorsque vous connaissez la clé exacte et qu'elle est encore documentée.
 
-### À retenir
-
-- Le client IA appelle un serveur MCP.
-- Le serveur expose des tools et des resources.
-- Les transports courants sont `stdio` et HTTP.
-- Un serveur bien borné renvoie peu de données, mais les bonnes données.
-
-### Lecture recommandée
-
-- [Présentation et choix](../chapitre-13-outils-economies/mcps/index.md)
-- [MCP Web local](../chapitre-13-outils-economies/mcps/configuration.md)
-- [MCP Web gratuit](../chapitre-13-outils-economies/mcps/serveurs.md)
-- [Comparaison](../chapitre-13-outils-economies/mcps/securite.md)
-
-!!! warning "Contexte et coût"
-    Un MCP mal borné peut augmenter le contexte injecté dans Copilot et donc le coût d’usage. Garde les résultats courts, les domaines filtrés et les outils strictement nécessaires.
+!!! warning "Éviter les clés historiques"
+    Ne conservez pas une clé `settings.json` uniquement parce qu'elle apparaît dans une ancienne documentation. Les options Copilot changent fréquemment et certaines sont renommées ou supprimées.
 
 ---
 
-## Configuration des Raccourcis Clavier
+## Repository-wide custom instructions
 
-### Modifier les Raccourcis
+Le fichier Copilot de dépôt principal est :
 
-1. ++ctrl+shift+p++ → `"Preferences: Open Keyboard Shortcuts"`
-2. Cherchez le raccourci (ex: `"copilot"`, `"inlineSuggest"`)
-3. Double-cliquez pour éditer, tapez le nouveau raccourci
-
-### Exemple : Changer "Accepter" de Tab à Entrée
-
-Cherchez `editor.action.inlineSuggest.commit` et modifiez la bind :
-
-```json
-{
-    "key": "enter",
-    "command": "editor.action.inlineSuggest.commit",
-    "when": "inlineSuggestVisible && !editorTextFocus"
-}
+```text
+.github/copilot-instructions.md
 ```
 
-### Commandes Copilot Disponibles
+Il contient des instructions générales applicables dans le contexte du dépôt.
 
-| Commande | Raccourci Défaut |
-|----------|--|
-| `editor.action.inlineSuggest.commit` | ++tab++ |
-| `editor.action.inlineSuggest.hide` | ++escape++ |
-| `editor.action.inlineSuggest.trigger` | ++alt+backslash++ |
-| `github.copilot.openSymbolFromEditor` | `?` (dans Chat) |
-| `workbench.action.chat.open` | ++ctrl+alt+i++ |
+Bon contenu :
+
+- commandes de build/test ;
+- conventions d'architecture ;
+- contraintes techniques importantes ;
+- règles de validation.
+
+Évitez les longues explications ou les informations qui devraient vivre dans la documentation métier.
 
 ---
 
-## Modèles IA par plan
+## Instructions ciblées par chemin
 
-La disponibilité des modèles évolue fréquemment. Utilisez la page officielle comme source de vérité: [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans).
+VS Code prend en charge les instructions path-specific :
 
-| Plan | Positionnement |
-|------|----------------|
-| **Free** | Accès limité à un sous-ensemble de modèles |
-| **Pro** | Modèles inclus + accès aux modèles avancés selon allocation AI Credits |
-| **Pro+** | Accès élargi aux modèles avancés |
-| **Business / Enterprise** | Accès piloté par l'organisation et ses politiques |
+```text
+.github/instructions/*.instructions.md
+```
 
-Sélection du modèle:
-- Dans Chat: choix via le sélecteur de modèle
-- En suggestions inline: sélection automatique par Copilot selon le contexte
+avec un frontmatter `applyTo`.
+
+Exemple :
+
+```markdown
+---
+applyTo: "**/*.ts,**/*.tsx"
+---
+
+Utiliser TypeScript strict.
+Exécuter le typecheck et les tests concernés avant de conclure.
+```
+
+Ces fichiers complètent `.github/copilot-instructions.md` ; ils ne le remplacent pas.
 
 ---
 
-## Configuration Privacy & Telemetry
+## `AGENTS.md`
 
-### `telemetry.level`
+Copilot prend également en charge des **agent instructions** via `AGENTS.md` dans plusieurs surfaces. Le support exact dépend de la fonction Copilot concernée.
 
-**Description** : Envoyer usage anonyme à GitHub pour améliorer Copilot.
+Dans ce dépôt, `AGENTS.md` est volontairement utilisable comme source commune de conventions agentiques lorsque cela évite de dupliquer les mêmes règles entre Claude et Copilot.
 
-```json
-{
-    "telemetry.level": "all"
-}
-```
-
-| Valeur | Comportement |
-|--------|---|
-| `"all"` | Toutes données anonymes (défaut) |
-| `"error"` | Erreurs seulement |
-| `"off"` | Aucun telemetry |
-
-### `github.copilot.enable` pour Sécurité
-
-Documentation sensible = settings restrictifs :
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "dotenv": false,
-        "env": false,
-        "sql": false,
-        "dockerfile": false
-    }
-}
-```
+GitHub documente aussi l'usage de `CLAUDE.md` ou `GEMINI.md` pour certaines surfaces cloud/CLI. Cela ne signifie pas que toutes les surfaces VS Code traitent ces fichiers de façon identique : vérifiez la table officielle de support.
 
 ---
 
-## Exemples de Configurations Complètes
+## Prompt files
 
-### Configurat Backend Python (Strict)
+Les prompt files sont stockés sous :
 
-```json
-{
-    "github.copilot.enable": {
-        "*": false,
-        "python": true,
-        "yaml": true,
-        "json": true
-    },
-    "github.copilot.editor.enableAutoCompletions": true,
-    "github.copilot.editor.enableCodeActions": true,
-    "github.copilot.editor.inlineSuggestCount": 3,
-    "telemetry.level": "off"
-}
+```text
+.github/prompts/*.prompt.md
 ```
 
-### Configuration Frontend TypeScript (Production)
+Ils servent de prompts réutilisables pour une tâche précise. Leur prise en charge dans VS Code est actuellement indiquée comme supportée dans les versions récentes, mais gardez la documentation GitHub comme source de vérité.
 
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": false,
-        "dotenv": false,
-        "env": false
-    },
-    "github.copilot.editor.enableAutoCompletions": true,
-    "github.copilot.editor.enableCodeActions": true,
-    "github.copilot.editor.inlineSuggestCount": 5,
-    "github.copilot.advanced": {
-        "listCount": 10
-    }
-}
-```
-
-### Configuration Workspace (Désactiver pour le Projet)
-
-Fichier `.vscode/settings.json` :
-
-```json
-{
-    "github.copilot.enable": {
-        "*": false
-    }
-}
-```
-
-Effet : Copilot désactivé **dans ce projet uniquement**, actif ailleurs.
+Voir **[Prompt Files Copilot](../chapitre-4-contexte/prompt-files.md)**.
 
 ---
 
-## Dépannage
+## Custom agents et agent skills
 
-| Problème | Solution |
-|----------|----------|
-| **Copilot n'émet aucune suggestion** | Vérifiez `enableAutoCompletions: true` et `enable: {"*": true}` |
-| **Performance VS Code ralentie** | Réduisez `inlineSuggestCount`, désactivez pour gros fichiers |
-| **Suggestions ignoran votre style** | Créez `.github/copilot-instructions.md` with contraintes |
-| **Raccourcis ne fonctionnent pas** | Allez dans *Preferences: Open Keyboard Shortcuts*, cherchez `copilot` |
+Les versions VS Code récentes prennent en charge les custom agents et les agent skills. Les formats et capacités évoluent encore.
 
----
+Utilisez le **Copilot customization cheat sheet** officiel pour vérifier :
 
-## Ressources & Prochaines Étapes
+- emplacement du fichier ;
+- portée ;
+- outils autorisés ;
+- support par la surface Copilot utilisée.
 
-- [Guide Installation](../chapitre-1-installation/vscode/tutoriel.md)
-- [Guide Référence Complet](../chapitre-1-installation/vscode/reference.md)
-- [Contexte & Personnalisation](../chapitre-4-contexte/vscode-contexte.md)
-- [Docs Officielles](https://docs.github.com/en/copilot)
-```
+Ne confondez pas :
 
-| Sous-paramètre | Description |
-|----------------|-------------|
-| `listCount` | Nombre de suggestions dans le panneau "Copilot: Open Completions Panel" (défaut: 10) |
-| `inlineSuggestCount` | Nombre de suggestions inline à précharger (défaut: 1) |
+- `.github/agents/` et mécanismes Copilot ;
+- `.claude/agents/` pour Claude Code ;
+- `.claude/skills/` pour les skills Claude.
 
 ---
 
-### `github.copilot.chat.localeOverride`
+## Personal instructions
 
-**Quoi :** Force la langue d'interface de Copilot Chat, indépendamment de la langue de VS Code.
+Les **personal instructions** documentées par GitHub s'appliquent notamment au Copilot Chat sur GitHub.com et à certaines surfaces précises. Ne présentez pas un champ GitHub.com comme un réglage VS Code universel.
 
-**Pourquoi :** Si VS Code est en anglais mais que vous voulez interagir avec Chat en français (ou vice versa).
-
-```json
-{
-    "github.copilot.chat.localeOverride": "fr"
-}
-```
-
-**Valeurs courantes :** `"auto"` (défaut), `"fr"`, `"en"`, `"de"`, `"ja"`, `"zh-CN"`
+Pour VS Code, utilisez en priorité les instructions de dépôt et les mécanismes explicitement listés dans la page **Support for different types of custom instructions**.
 
 ---
 
-### `github.copilot.chat.useProjectTemplates`
+## MCP
 
-**Quoi :** Autorise Copilot Chat à utiliser les templates de projet GitHub pour les suggestions de structure de projet.
+Copilot dans VS Code prend en charge MCP.
 
-```json
-{
-    "github.copilot.chat.useProjectTemplates": true
-}
-```
+Un serveur MCP n'est pas un simple fichier de contexte : il peut exposer des outils et des données externes.
 
----
+Checklist minimale :
 
-### `github.copilot.renameSuggestions.triggerAutomatically`
+- serveur provenant d'une source vérifiée ;
+- permissions minimales ;
+- secrets hors dépôt ;
+- outils limités au besoin ;
+- sorties non fiables traitées comme données externes ;
+- désactivation possible rapidement.
 
-**Quoi :** Active les suggestions de renommage automatiques de Copilot lorsque vous renommez un symbole.
-
-**Pourquoi :** Copilot peut suggérer des noms cohérents avec le style du projet quand vous renommez une variable ou une fonction.
-
-```json
-{
-    "github.copilot.renameSuggestions.triggerAutomatically": true
-}
-```
+Voir **[MCP — chapitre outils](../chapitre-13-outils-economies/mcps/index.md)**.
 
 ---
 
-### `editor.inlineSuggest.enabled`
+## Modèles et plans
 
-**Quoi :** Paramètre VS Code natif (pas Copilot-spécifique) qui active les suggestions inline en général. **Doit être `true`** pour que Copilot fonctionne.
+La disponibilité des modèles dépend du plan Copilot, des politiques organisationnelles et des changements de GitHub.
 
-**Pourquoi :** Si vous avez désactivé l'inlineSuggest globalement dans VS Code pour d'autres raisons, Copilot ne pourra pas afficher ses suggestions.
+Ne figez pas une liste de modèles dans cette page. Consultez :
 
-```json
-{
-    "editor.inlineSuggest.enabled": true
-}
-```
-
-!!! danger "Paramètre critique"
-    Si `editor.inlineSuggest.enabled` est `false`, Copilot ne fonctionnera pas même s'il est activé. C'est l'une des causes les plus fréquentes de "Copilot ne donne aucune suggestion".
+- les plans GitHub Copilot ;
+- la page de modèles et tarification ;
+- la feature matrix ;
+- le sélecteur de modèle disponible dans votre version.
 
 ---
 
-### `editor.suggest.preview`
+## Raccourcis
 
-**Quoi :** Affiche un aperçu de la complétion sélectionnée directement dans l'éditeur avant acceptation.
+Les raccourcis dépendent de votre keymap.
 
-```json
-{
-    "editor.suggest.preview": false
-}
+Ouvrez **Keyboard Shortcuts** et recherchez :
+
+```text
+Copilot
+Chat
+inlineSuggest
 ```
 
-!!! info "Conflit potentiel"
-    Si `editor.suggest.preview` et les suggestions Copilot sont activés simultanément, vous pouvez voir deux types de suggestions en même temps. Certains développeurs préfèrent désactiver `preview` pour ne voir que les suggestions Copilot.
+C'est plus fiable qu'une table statique copiée d'une version ancienne.
 
 ---
 
-## Profils de configuration
+## Validation d'équipe
 
-### 🟢 Profil Débutant
+Avant de standardiser un réglage Copilot :
 
-```json
-{
-    "github.copilot.enable": {
-        "*": true
-    },
-    "github.copilot.editor.enableAutoCompletions": true,
-    "github.copilot.editor.enableCodeActions": true,
-    "github.copilot.chat.localeOverride": "fr",
-    "github.copilot.renameSuggestions.triggerAutomatically": true,
-    "editor.inlineSuggest.enabled": true
-}
-```
-
-### 🔴 Profil Expert
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "plaintext": false,
-        "markdown": false,
-        "dotenv": false,
-        "sql": false,
-        "yaml": false
-    },
-    "github.copilot.editor.enableAutoCompletions": false,
-    "github.copilot.editor.enableCodeActions": true,
-    "github.copilot.chat.localeOverride": "auto",
-    "github.copilot.advanced": {
-        "inlineSuggestCount": 1
-    },
-    "editor.inlineSuggest.enabled": true
-}
-```
-
-### 👥 Profil Équipe
-
-À placer dans `.vscode/settings.json` à la racine du projet (versionné avec Git) :
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "dotenv": false,
-        "plaintext": false
-    },
-    "github.copilot.editor.enableAutoCompletions": true,
-    "github.copilot.chat.localeOverride": "fr",
-    "editor.inlineSuggest.enabled": true,
-    "github.copilot.editor.enableCodeActions": true
-}
-```
-
-!!! warning "Ne jamais versionner des secrets"
-    Le fichier `.vscode/settings.json` peut être versionné — mais assurez-vous qu'il ne contient **aucun token, clé API ou mot de passe**. Les paramètres Copilot sont sûrs à versionner.
-
-### ⚡ Profil Minimaliste
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "markdown": false,
-        "plaintext": false,
-        "yaml": false,
-        "json": false,
-        "xml": false,
-        "dotenv": false,
-        "sql": false,
-        "shellscript": false
-    },
-    "github.copilot.editor.enableAutoCompletions": false,
-    "github.copilot.editor.enableCodeActions": false,
-    "github.copilot.renameSuggestions.triggerAutomatically": false,
-    "editor.inlineSuggest.enabled": true
-}
-```
+1. vérifier qu'il est documenté pour la version stable ;
+2. identifier s'il est GA ou Preview ;
+3. vérifier les politiques GitHub de l'organisation ;
+4. tester sur un dépôt pilote ;
+5. documenter la procédure de retour arrière ;
+6. ne jamais considérer Copilot comme substitut aux tests/CI/revue.
 
 ---
 
-## Paramètres workspace spécifiques (.vscode/settings.json)
+## Relation avec Claude Code
 
-Pour surcharger les paramètres utilisateur uniquement pour un projet :
+La stratégie de ce dépôt est :
 
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "sql": false
-    }
-}
+```text
+Claude Code = parcours principal
+GitHub Copilot = référence conservée / environnement optionnel
+Documentation métier = source commune autant que possible
 ```
 
-Les settings du workspace **ont la priorité** sur les settings utilisateur. Utile pour désactiver Copilot sur un projet contenant des données sensibles.
-
----
-
-## Pièges à éviter
-
-!!! danger "Erreurs de configuration courantes"
-
-    **1. `editor.inlineSuggest.enabled` à `false`**
-    Copilot ne peut pas afficher de suggestions.
-    ✅ Vérifiez ce paramètre en premier si vous n'avez aucune suggestion.
-
-    **2. Copilot désactivé pour un langage sans s'en souvenir**
-    Vous ouvrez un fichier Python, aucune suggestion → Copilot est désactivé pour `"python"` dans `github.copilot.enable`.
-    ✅ Vérifiez les langages dans `github.copilot.enable`.
-
-    **3. `settings.json` avec erreur de syntaxe JSON**
-    VS Code cesse de charger les settings si le JSON est invalide.
-    ✅ VS Code affiche une erreur en bas → corrigez la syntaxe JSON (accolades, virgules).
-
-    **4. Settings workspace qui écrasent les settings utilisateur**
-    Un fichier `.vscode/settings.json` dans un projet peut désactiver Copilot uniquement dans ce projet.
-    ✅ Vérifiez s'il existe un `.vscode/settings.json` avec des paramètres Copilot.
+Les formats spécifiques restent séparés afin d'éviter de faire croire qu'ils sont interchangeables.
 
 ---
 
 ## Sources
 
-- [Configuring GitHub Copilot in your environment](https://docs.github.com/en/copilot/configuring-github-copilot) - consulté le 2026-06-20
-- [GitHub Copilot in VS Code — Settings reference](https://code.visualstudio.com/docs/copilot/copilot-settings) - consulté le 2026-06-20
+- [GitHub Docs — Copilot feature matrix](https://docs.github.com/en/copilot/reference/copilot-feature-matrix) — consulté le 2026-09-28
+- [GitHub Docs — Adding repository custom instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide) — consulté le 2026-09-28
+- [GitHub Docs — Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support) — consulté le 2026-09-28
+- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-- [Comparaison des paramètres](comparaison-parametres.md) — IntelliJ vs VS Code côte à côte
+**[Comparaison des paramètres](comparaison-parametres.md)** pour rapprocher VS Code, JetBrains et les mécanismes Claude sans les confondre.
