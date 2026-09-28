@@ -61,7 +61,7 @@ Avant adoption ou migration, vérifiez :
 
 PyTorch fournit une API impérative et un écosystème très large.
 
-Point important pour la documentation actuelle : **TorchScript est déprécié** dans les versions PyTorch récentes ; les nouveaux workflows d'export doivent examiner `torch.export` et les options recommandées pour leur runtime. citeturn921034search0turn921034search4
+Point important pour la documentation actuelle : **TorchScript est déprécié** dans les versions PyTorch récentes ; les nouveaux workflows d'export doivent examiner `torch.export` et les options recommandées pour leur runtime.
 
 Ne remplacez toutefois pas un pipeline legacy TorchScript fonctionnel sans évaluer la compatibilité et le coût de migration.
 
@@ -69,7 +69,7 @@ Ne remplacez toutefois pas un pipeline legacy TorchScript fonctionnel sans éval
 
 ## Keras 3
 
-Keras 3 adopte une approche multi-backend : il peut cibler JAX, TensorFlow et PyTorch. citeturn921034search3
+Keras 3 adopte une approche multi-backend : il peut cibler JAX, TensorFlow et PyTorch.
 
 Cette portabilité est surtout valable lorsque le code s'appuie sur les APIs Keras compatibles multi-backend. Un modèle utilisant directement beaucoup d'opérations spécifiques au backend réduit cette portabilité.
 
@@ -127,7 +127,7 @@ Ne choisissez pas le format d'export avant d'avoir défini la cible :
 - edge accelerator ;
 - service managé.
 
-Dans PyTorch, les documents officiels actuels orientent les nouveaux workflows vers `torch.export`, et l'export ONNX moderne s'appuie également sur les mécanismes Dynamo/export. citeturn921034search6turn921034search7
+Dans PyTorch, les documents officiels actuels orientent les nouveaux workflows vers `torch.export`, et l'export ONNX moderne s'appuie également sur les mécanismes Dynamo/export.
 
 ---
 
@@ -142,6 +142,8 @@ Le fait qu'un outil possède beaucoup d'exemples publics ne permet pas de conclu
 - [scikit-learn — User Guide](https://scikit-learn.org/stable/user_guide.html)
 - [TensorFlow — Guide](https://www.tensorflow.org/guide)
 - [PyTorch — Documentation](https://pytorch.org/docs/stable/)
+- [PyTorch — TorchScript deprecated](https://docs.pytorch.org/docs/stable/notes/cpu_threading_torchscript_inference.html)
+- [PyTorch — Compilers / torch.export](https://docs.pytorch.org/tutorials/compilers_index.html)
 - [Keras — Keras 3](https://keras.io/keras_3/)
 
 ## Prochaine étape
