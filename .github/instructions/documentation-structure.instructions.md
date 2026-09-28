@@ -1,295 +1,99 @@
 ---
-description: "Conventions de structure et d'organisation de ce projet de documentation MkDocs. Utiliser pour créer une nouvelle page, un nouveau chapitre, ou mettre à jour la navigation dans mkdocs.yml."
+description: "Conventions de structure de la documentation MkDocs actuelle. Utiliser pour créer ou déplacer une page et maintenir mkdocs.yml."
 applyTo: "docs/**"
 ---
 
-# Structure et Organisation du Projet de Documentation
+# Structure de la documentation
 
-## Arborescence des chapitres
+Ce dépôt est **Claude Code-first** et conserve GitHub Copilot comme référence. Ne déduis jamais l'arborescence à partir d'anciens numéros de chapitres : lis `mkdocs.yml` et les dossiers présents avant toute modification.
 
-```
+## Arborescence actuelle
+
+```text
 docs/
-├── index.md                              ← Page d'accueil (hero banner)
-├── chapitre-1-installation/
-│   ├── index.md                          ← Intro du chapitre
-│   ├── comparaison.md                    ← Comparaison IntelliJ vs VS Code
-│   ├── intellij/
-│   │   ├── tutoriel.md                   ← Guide pas à pas
-│   │   └── reference.md                  ← Référence rapide
-│   └── vscode/
-│       ├── tutoriel.md
-│       └── reference.md
-├── chapitre-2-parametrage/
-├── chapitre-3-contexte/
-├── chapitre-4-prompt-engineering/
-├── chapitre-5-machine-learning/
-├── chapitre-6-rag/
-├── chapitre-7-cli-modes/
-├── chapitre-8-bonnes-pratiques/
-├── chapitre-9-cas-usage/
-├── chapitre-10-troubleshooting/
-└── appendices/
+├── index.md
+├── chapitre-1-installation/                 # Copilot — référence
+├── chapitre-2-parametrage/                  # Copilot — référence
+├── chapitre-3-cli-modes/                    # Copilot — référence
+├── chapitre-3b-claude-code-migration-copilot/
+├── chapitre-4-contexte/
+├── chapitre-5-prompt-engineering/
+├── chapitre-6-machine-learning/
+├── chapitre-7-rag/
+├── chapitre-8-deep-learning/
+├── chapitre-9-bonnes-pratiques/
+├── chapitre-10-cas-usage/
+├── chapitre-11-troubleshooting/
+├── chapitre-12-couts-gouvernance/
+├── chapitre-13-outils-economies/
+├── chapitre-14-veille-ia/
+├── chapitre-15-hacker-ia/
+├── appendices/
+└── assets/
 ```
 
-## Conventions de nommage des fichiers
+`docs/assets/templates/` contient des ressources copiables et peut volontairement rester hors navigation.
 
-| Type de page | Convention de nommage | Exemple |
-|---|---|---|
-| Index de chapitre | `index.md` | `chapitre-3-contexte/index.md` |
-| Page de contenu | `kebab-case.md` | `securite-qualite.md` |
-| Page de comparaison | `comparaison-*.md` | `comparaison-parametres.md` |
-| Page spécifique IDE | `intellij-*.md` ou `vscode-*.md` | `intellij-parametrage.md` |
-| Page dans sous-dossier IDE | `tutoriel.md`, `reference.md` | `intellij/tutoriel.md` |
+## Nommage
 
-**Interdictions :**
-- Pas de majuscules dans les noms de fichiers
-- Pas d'espaces (utiliser des tirets)
-- Pas de caractères accentués dans les noms de fichiers
+- `index.md` pour l'entrée d'un chapitre ;
+- kebab-case pour les pages de contenu ;
+- noms conventionnels existants (`README.md`, `CAPTURE-TEMPLATE.md`) conservés ;
+- pas d'espace ou de caractère accentué dans un nouveau nom de fichier destiné à une URL.
 
-## Structure d'une page index de chapitre
-
-Chaque `chapitre-N-*/index.md` présente :
-1. Un titre H1 décrivant le chapitre
-2. Un court paragraphe d'introduction (2-3 phrases)
-3. Un tableau ou liste des pages du chapitre avec descriptions
-4. Des liens de navigation vers les pages clés
+## Structure d'une page publiée
 
 ```markdown
-# Titre du Chapitre
+# Titre de la page
 
-Introduction courte du chapitre.
+<span class="badge-intermediate">Intermédiaire</span>
 
-## Contenu de ce chapitre
-
-| Page | Description |
-|------|-------------|
-| [Page 1](page1.md) | Ce que couvre cette page |
-| [Page 2](page2.md) | Ce que couvre cette page |
-```
-
-## Règle éditoriale : gestion des badges
-
-Les badges sont placés **sur une ligne dédiée immédiatement après le H1**.
-
-Règles d'usage :
-
-- Utiliser `<span class="badge-intellij">IntelliJ</span>` si la page contient des instructions spécifiques IntelliJ IDEA.
-- Utiliser `<span class="badge-vscode">VS Code</span>` si la page contient des instructions spécifiques Visual Studio Code.
-- Utiliser `<span class="badge-cli">CLI</span>` si la page couvre principalement des commandes terminal, scripts, workflows CI/CD ou outillage en ligne de commande.
-- Combiner plusieurs badges IDE (`badge-intellij` + `badge-vscode`) quand la page traite les deux environnements.
-- Combiner les badges IDE avec `badge-cli` quand la page mêle manipulations IDE et étapes terminal.
-- Sur une page strictement CLI, ne pas ajouter de badge IDE.
-- Ne pas modifier les badges déjà en place d'un chapitre stable sans demande explicite.
-
-## Structure d'une page de comparaison
-
-Les pages `comparaison-*.md` suivent ce schéma :
-
-```markdown
-# Comparaison — [Sujet] IntelliJ vs VS Code
-
-## Présentation
-Contexte de la comparaison.
+Introduction courte.
 
 ---
 
-## Tableau comparatif complet
+## Première section
 
-| Critère | IntelliJ IDEA | Visual Studio Code |
-|---------|:-------------:|:-----------------:|
-| ... | ... | ... |
+Contenu.
 
----
+### Sous-section
 
-## Différences détaillées
-
-### [Critère 1]
-
-=== "IntelliJ IDEA"
-    Détails IntelliJ...
-
-=== "Visual Studio Code"
-    Détails VS Code...
-
----
-
-## Recommandation
-
-Conclusion et recommandation basée sur le contexte.
+Détail.
 ```
 
-## Mise à jour de la navigation (mkdocs.yml)
+Règles :
 
-**Règle absolue** : toute nouvelle page DOIT être ajoutée dans `mkdocs.yml` sous `nav:`.
+- un H1 unique ;
+- ne pas sauter de niveau de titre ;
+- blocs de code avec langage ;
+- alt text descriptif pour les images ;
+- admonitions/onglets seulement lorsqu'ils améliorent la compréhension ;
+- sources officielles pour les faits susceptibles d'évoluer.
 
-Structure de la nav dans `mkdocs.yml` :
+## Claude et Copilot
 
-```yaml
-nav:
-  - Accueil: index.md
-  - "Nom du Chapitre":
-    - Introduction: chapitre-N-nom/index.md
-    - "Nom de la page": chapitre-N-nom/fichier.md
-    - "Sous-section":
-      - "Page": chapitre-N-nom/sous-dossier/fichier.md
+Une page générique doit être Claude-first lorsqu'elle traite des assistants de développement. Si elle couvre Copilot, conserver une section explicite de référence/comparaison plutôt que supprimer l'information.
+
+Une page strictement Copilot peut rester Copilot-first si son rôle est clairement identifié dans la navigation ou dans l'introduction.
+
+## Navigation
+
+Pour toute nouvelle page publiée, ajouter une entrée à `nav:` dans `mkdocs.yml`, sauf ressource volontairement hors navigation.
+
+Principes :
+
+- ordre de lecture logique plutôt que règle mécanique par type de fichier ;
+- Claude Code reste présenté avant le bloc `GitHub Copilot (référence)` dans le parcours principal ;
+- ne pas renommer/déplacer une page sans corriger ses liens internes ;
+- ne pas inventer un numéro de chapitre : vérifier la structure courante.
+
+## Validation obligatoire
+
+Après modification structurelle :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
-**Règles de la nav :**
-- Les labels utilisent des guillemets doubles si ils contiennent des accents ou caractères spéciaux
-- L'ordre dans la nav reflète l'ordre de lecture recommandé
-- Les pages de comparaison vont en fin de chapitre
-- Les `index.md` de chapitre ont le label "Introduction"
-
-## Numérotation et ordre des chapitres
-
-| N° | Slug | Thème |
-|----|------|-------|
-| 1 | `installation` | Installation par IDE |
-| 2 | `parametrage` | Paramétrage et réglages |
-| 3 | `contexte` | Contexte et personnalisation |
-| 4 | `bonnes-pratiques` | Bonnes pratiques |
-| 5 | `troubleshooting` | Résolution de problèmes |
-| 6 | `cas-usage` | Cas d'usage par langage |
-
-Pour ajouter un nouveau chapitre, continuer la numérotation à partir de 7.
-
-## Pages spéciales
-
-| Page | Rôle | Notes |
-|------|------|-------|
-| `docs/index.md` | Page d'accueil | Contient le hero banner HTML, ne pas modifier la structure |
-| `appendices/faq.md` | Questions fréquentes | Format Q&A avec `???` details |
-| `appendices/raccourcis-clavier.md` | Référence raccourcis | Tableaux par IDE |
-| `appendices/ressources-externes.md` | Liens externes | Liens vers docs officielles |
-| `appendices/templates-configuration.md` | Templates copiables | Blocs de code à copier-coller |
-
-## Section de fin de page : "Prochaine étape"
-
-**Toute page de contenu DOIT se terminer par une section `## Prochaine étape`** (singulier). Cette section assure la navigation séquentielle et indique au lecteur ce qui vient ensuite.
-
-### Format obligatoire
-
-```markdown
----
-
-## Prochaine étape
-
-**[Titre de la page suivante](lien-page-suivante.md)** : une phrase décrivant ce que le lecteur va apprendre.
-
-Concepts clés couverts :
-
-- **Concept 1** — description courte
-- **Concept 2** — description courte
-- **Concept 3** — description courte
-- **Concept 4** — description courte
-```
-
-### Règles
-
-- Le lien est en **gras** et pointe vers la **page suivante dans l'ordre logique de lecture**
-- La phrase d'accroche est sur la même ligne que le lien, séparée par ` : `
-- Les bullets "Concepts clés" sont 4 à 5 points maximum, en gras + tiret + description
-- L'`index.md` d'un chapitre pointe vers la première page de contenu du chapitre
-- Ne jamais mettre une liste de plusieurs liens — **une seule** prochaine étape
-
-### Exception : dernière page d'un chapitre
-
-La **dernière page de contenu d'un chapitre** (pas l'`index.md`) utilise `## Chapitres suivants` au lieu de `## Prochaine étape`. Elle liste les **2 chapitres suivants** sous forme de deux liens en gras, chacun sur sa propre ligne avec une courte description.
-
-```markdown
----
-
-## Chapitres suivants
-
-**[Titre du chapitre N+1](../chapitre-N+1/index.md)** : une phrase décrivant ce chapitre et ce que le lecteur va y trouver.
-
-**[Titre du chapitre N+2](../chapitre-N+2/index.md)** : une phrase décrivant ce chapitre et ce que le lecteur va y trouver.
-```
-
-### Exemple issu du projet
-
-```markdown
----
-
-## Prochaine étape
-
-**[Organisation du Code](organisation-code.md)** : structurer votre code pour que Copilot comprenne votre domaine et génère des suggestions précises.
-
-Concepts clés couverts :
-
-- **Nommage expressif** — `activeAdultUsers` > `x`, les noms parlants génèrent de meilleures suggestions
-- **Typage explicite** — interfaces TypeScript, annotations Python, Javadoc : le typage est du contexte
-- **Séparation des responsabilités** — un fichier, une responsabilité pour guider Copilot
-- **`.github/copilot-instructions.md`** — configurer les conventions du projet une fois, Copilot les applique toujours
-```
-
----
-
-### Convention obligatoire : section Sources
-
-Si une page contient des références externes, la section de traçabilité doit respecter strictement ce format :
-
-```markdown
-## Sources
-
-- [Titre de la source](https://url) - consulté le AAAA-MM-JJ
-```
-
-Règles associées :
-
-- Utiliser uniquement le titre `## Sources` (pas de variante : `## Sources officielles`, `## Références`, etc.)
-- Ne pas mettre d'URL nue en prose dans cette section
-- Conserver exactement la mention `consulté le AAAA-MM-JJ`
-
-## Format obligatoire : Dates de consultation des sources
-
-**Toute page AVEC une section `## Sources` ou `## Sources et provenance` DOIT inclure la date de consultation entre parenthèses** pour chaque lien. Cela garantit la traçabilité et permet de vérifier l'obsolescence des sources officielles.
-
-### Formats acceptés
-
-#### Format 1 : Liste de liens (chapitres 2, 4, etc.)
-
-```markdown
-## Sources
-
-- GitHub Docs — *[Using GitHub Copilot](https://docs.github.com/...)* (consulté le 2026-06-20)
-- JetBrains Help — *[GitHub Copilot](https://www.jetbrains.com/...)* (consulté le 2026-06-20)
-```
-
-#### Format 2 : Tableau de sources (chapitre 15, etc.)
-
-```markdown
-## Sources et provenance
-
-| Domaine | Source |
-|---|---|
-| Risques LLM | [OWASP Top 10 for LLM Applications](https://owasp.org/...) (consulté le 2026-06-20) |
-| Techniques adverses | [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20) |
-```
-
-### Règles obligatoires
-
-- **Format de date** : `(consulté le YYYY-MM-DD)` — toujours en minuscules, après le lien
-- **Une date par lien** — même si deux sources ont été consultées le même jour
-- **Date actuelle minimale** : la date de la dernière consultation ou vérification de la source
-- **Régularité** : Mettre à jour systématiquement les dates lors d'une révision complète de la page
-
-### Pourquoi cette règle ?
-
-- **Traçabilité** : Savoir précisément quand une source a été vérifiée permet de détecter l'obsolescence
-- **Maintenance collaborative** : Les agents IA (comme `official-doc-sync`) utilisent ces dates pour cibler les mises à jour
-- **Conformité** : Aligne la documentation sur les meilleures pratiques de source officielle tracking
-
-
-## Checklist pour une nouvelle page
-
-- [ ] Fichier créé dans le bon chapitre avec nommage `kebab-case.md`
-- [ ] Page commence par un `# Titre H1`
-- [ ] Badges de niveau et/ou contexte (IDE/CLI) présents après le H1
-- [ ] Contenu structuré avec `## H2` et `### H3`
-- [ ] Admonitions utilisées pour les conseils et avertissements
-- [ ] Onglets utilisés pour les différences IntelliJ / VS Code
-- [ ] **Section `## Prochaine étape` présente en fin de page** (voir format ci-dessus)
-- [ ] **Si `## Sources` ou `## Sources et provenance` présent : dates `(consulté le YYYY-MM-DD)` sur chaque lien**
-- [ ] `mkdocs.yml` mis à jour avec l'entrée de navigation
-- [ ] `py -m mkdocs build` exécuté sans erreur
+Le build et le validateur de liens/ancres sont la vérification technique ; une inspection du contenu reste nécessaire pour la cohérence éditoriale.
