@@ -15,7 +15,7 @@ Ce fichier suit les changements structurants du dépôt. Les détails très fins
 - Accueil et navigation réorientés vers Claude Code.
 - Installation, architecture, modèles, prompting, coûts/quotas et migration Claude actualisés.
 - **Claude Desktop** ajouté comme surface officielle distincte : Chat, Claude Code, extensions de bureau, deep links `claude://`, commande `/desktop` et articulation avec CLI/IDE.
-- La page Installation et le parcours de lecture Claude référencent désormais explicitement Desktop.
+- La page Installation, la navigation MkDocs et le parcours de lecture Claude référencent désormais explicitement Desktop.
 - Contexte, rules, skills, agents, hooks, MCP et IDE réécrits Claude-first.
 - ML, RAG, Deep Learning, bonnes pratiques et cas d'usage réorientés vers des workflows Claude avec validation.
 - Troubleshooting, coûts/gouvernance, outils et alternatives réaudités.
