@@ -2,35 +2,70 @@
 
 # Claude Code — instructions du projet
 
-Ce dépôt contient une documentation MkDocs en français sur l'utilisation de l'IA pour le développement. Le parcours principal doit désormais être **Claude Code**, tout en conservant la documentation GitHub Copilot existante comme référence, comparaison et solution de repli éventuelle.
+Ce dépôt contient une documentation MkDocs en français sur l'utilisation de l'IA pour le développement. **Claude Code est le parcours principal** ; GitHub Copilot reste conservé comme référence, comparaison, compatibilité et option future.
 
-## Priorités éditoriales
+## Priorités
 
-1. Présenter **Claude Code** comme outil principal dans les pages génériques et les parcours recommandés.
-2. **Ne pas supprimer** les contenus GitHub Copilot, `.github/copilot-instructions.md`, `.github/agents/`, `.github/instructions/` ou `.github/prompts/` uniquement parce qu'ils concernent Copilot.
-3. Quand une page générique est historiquement centrée sur Copilot, la réorienter vers Claude et conserver une section Copilot explicite, ou un lien vers la page Copilot dédiée.
-4. Distinguer clairement les fonctionnalités propres à Claude, celles propres à Copilot et celles communes aux deux outils.
-5. Traiter la migration **par lots cohérents** : installation, paramétrage, contexte, prompting, workflows, coûts, troubleshooting, outils, puis audit final.
+1. Présenter Claude Code en premier dans les pages génériques liées aux assistants/agents de développement.
+2. Ne pas supprimer un contenu ou artefact GitHub Copilot uniquement parce qu'il est secondaire.
+3. Distinguer explicitement Claude-only, Copilot-only et mécanismes communs.
+4. Vérifier les faits évolutifs auprès de sources officielles avant publication.
+5. Maintenir le **repo entier**, pas seulement `docs/`, lorsque des instructions, templates, scripts, agents ou workflows influencent la documentation.
 
-## Sources et vérification
+## Artefacts Claude natifs
 
-Pour toute information susceptible d'évoluer, vérifier les sources officielles avant de modifier la documentation.
+Le dépôt versionne désormais :
 
-Priorité des sources :
+```text
+.claude/
+├── settings.json
+├── rules/
+│   └── documentation.md
+├── agents/
+│   ├── doc-writer.md
+│   ├── doc-reviewer.md
+│   ├── nav-maintainer.md
+│   ├── official-doc-audit.md
+│   └── official-doc-sync.md
+└── skills/
+    └── doc-writer/
+        └── SKILL.md
+```
+
+Utilise ces artefacts pour les workflows Claude. Les fichiers `.github/agents`, `.github/instructions`, `.github/prompts`, `.github/skills` et `.github/hooks` restent les intégrations Copilot et ne sont pas interchangeables avec `.claude/`.
+
+## Sources
+
+Priorité :
 
 - Claude Code : `https://code.claude.com/docs/`
-- Claude Platform / API : `https://docs.anthropic.com/` et `https://platform.claude.com/docs/`
-- Anthropic : `https://www.anthropic.com/`
-- GitHub Copilot : documentation officielle GitHub
-- Outils tiers : documentation et dépôts officiels des éditeurs
+- Claude Platform : `https://platform.claude.com/docs/`
+- Anthropic : `https://www.anthropic.com/` et `https://claude.com/pricing`
+- GitHub Copilot : documentation et changelog officiels GitHub
+- outils tiers : documentation/dépôt officiels de l'éditeur
 
-Éviter de figer inutilement des numéros de version, noms de modèles ou tarifs dans les pages générales. Quand une valeur datée est utile, indiquer sa date de vérification et une source officielle.
+Évite les versions, prix, quotas, noms de modèles et raccourcis figés lorsqu'ils ne sont pas nécessaires. Lorsqu'une valeur exacte est importante, source-la et date sa vérification.
 
-## Conventions du dépôt
+## Validation
 
-- Langue : français.
-- Ton : pédagogique, concret, progressif.
-- Site : MkDocs Material.
-- Documentation publique : `docs/`.
-- Navigation : `mkdocs.yml`.
-- Les lots 0 à 3 de la migration Claude-first sont maintenant traités ; poursuivre avec les chapitres ML/RAG/Deep Learning/cas d'usage avant l'audit final.
+Après modification du site :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
+```
+
+Corrige les erreurs plutôt que d'assouplir les validateurs.
+
+## Git
+
+- Ne jamais pousser directement sur `main`.
+- Ne jamais merger automatiquement une Pull Request.
+- Travailler sur une branche et passer par une PR.
+- Le déploiement GitHub Pages intervient après intégration manuelle dans `main`.
+
+## Sécurité
+
+- Ne pas lire/committer `.env`, secrets, tokens ou credentials inutilement.
+- `.claude/settings.local.json` est local et ne doit pas être versionné.
+- Les hooks, skills et agents versionnés sont du code/configuration de confiance : les relire comme toute autre modification sensible.
