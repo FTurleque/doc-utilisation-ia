@@ -1,326 +1,232 @@
-# Templates de Configuration
+# Templates de configuration
 
-Collection de templates prêts à l'emploi pour démarrer rapidement. Copiez-collez et adaptez selon votre projet.
-
----
-
-## Profils VS Code `settings.json`
-
-### Profil Débutant
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true
-    },
-    "editor.inlineSuggest.enabled": true,
-    "github.copilot.editor.enableAutoCompletions": true
-}
-```
-
-### Profil Expert (toutes les fonctionnalités)
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "markdown": true,
-        "yaml": false,
-        "dotenv": false
-    },
-    "editor.inlineSuggest.enabled": true,
-    "github.copilot.editor.enableAutoCompletions": true,
-    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
-    "github.copilot.chat.localeOverride": "fr",
-    "github.copilot.renameSuggestions.triggerAutomatically": true
-}
-```
-
-### Profil Équipe (conventions partagées)
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true,
-        "markdown": false,
-        "plaintext": false
-    },
-    "editor.inlineSuggest.enabled": true,
-    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
-    "github.copilot.chat.codeGeneration.instructions": [
-        {
-            "file": ".github/copilot-instructions.md"
-        }
-    ]
-}
-```
-
-### Profil Minimaliste (suggestions à la demande)
-
-```json
-{
-    "github.copilot.enable": {
-        "*": true
-    },
-    "editor.inlineSuggest.enabled": false,
-    "github.copilot.editor.enableAutoCompletions": false
-}
-```
-
-> Avec ce profil, déclenchez manuellement avec ++alt+backslash++
+Collection de templates **Claude Code d'abord**, avec quelques exemples Copilot conservés pour compatibilité. Adaptez toujours les commandes, versions et conventions au dépôt réel.
 
 ---
 
-## Templates `.github/copilot-instructions.md`
+## `CLAUDE.md` minimal
 
-### Template TypeScript/React
+```markdown
+# Projet
+
+## Structure
+- `src/`: code applicatif
+- `tests/`: tests
+
+## Commandes
+- Tests: `...`
+- Lint: `...`
+- Build: `...`
+
+## Règles
+- Préserver les API publiques sauf demande explicite.
+- Exécuter les validations pertinentes avant de terminer.
+- Ne pas ajouter de dépendance sans expliquer pourquoi.
+- Ne jamais écrire de secret dans le dépôt.
+```
+
+Gardez ce fichier court. Déplacez les procédures longues vers rules/skills.
+
+---
+
+## Rule ciblée `.claude/rules/tests.md`
 
 ```markdown
 ---
-applyTo: '**'
+paths:
+  - "tests/**"
+  - "src/**/*.test.*"
+  - "src/**/*.spec.*"
 ---
 
-# GitHub Copilot — Instructions projet
+# Tests
 
-## Stack technique
-- TypeScript strict (noImplicitAny, strictNullChecks)
-- React 18 avec hooks fonctionnels uniquement
-- State: Zustand
-- API: TanStack Query v5
-- Styling: Tailwind CSS
-- Tests: Jest + React Testing Library
-
-## Conventions de code
-- Composants: functional components, named exports
-- Props: interface Props (jamais type Props)
-- Fichier: un composant = un fichier du même nom
-- Hooks custom: préfixe `use` obligatoire
-
-## À éviter
-- class components
-- default exports pour les composants
-- any sans justification dans un commentaire
-- mutations directes du state
+- Réutiliser le framework et les conventions existantes.
+- Couvrir d'abord le comportement modifié.
+- Éviter les assertions qui ne testent pas réellement le résultat.
+- Exécuter le test ciblé avant une suite plus large.
 ```
 
-### Template Java/Spring Boot
+---
+
+## Skill `.claude/skills/review-change/SKILL.md`
 
 ```markdown
 ---
-applyTo: 'src/**/*.java'
+name: review-change
+description: Revoit un changement local et vérifie les validations du dépôt avant de conclure.
 ---
 
-# Conventions Java
-
-## Stack
-- Java 21, Spring Boot 3.2
-- Spring Data JPA, MapStruct
-- Jakarta Validation
-- JUnit 5 + Mockito + AssertJ
-
-## Conventions
-- Injection par constructeur (jamais @Autowired sur champ)
-- DTOs sont des records Java
-- Une interface + une implémentation par service
-- Exceptions métier spécifiques (ex: UserNotFoundException)
-- Jamais d'entité JPA retournée directement dans les controllers
-
-## Nommage
-- Controllers: UserController (suffixe Controller)
-- Services: UserServiceImpl (suffixe Impl pour l'implémentation)
-- Repositories: UserRepository (suffixe Repository)
-- DTOs: CreateUserRequest, UserResponse, UpdateUserRequest
+1. Lire le diff.
+2. Identifier les fichiers et comportements modifiés.
+3. Rechercher bugs, régressions, sécurité et dépendances inattendues.
+4. Exécuter les tests/lint/build pertinents.
+5. Retourner les constats avec fichiers/lignes et résultats des commandes.
 ```
 
-### Template Python/FastAPI
+Une skill peut contenir `references/`, `scripts/` et `assets/` si nécessaire.
+
+---
+
+## Subagent `.claude/agents/security-review.md`
 
 ```markdown
 ---
-applyTo: '**/*.py'
+name: security-review
+description: Recherche des risques de sécurité dans un changement sans modifier le code.
+tools: Read, Grep, Glob
 ---
 
-# Conventions Python
-
-## Stack
-- Python 3.11+, FastAPI, Pydantic v2
-- SQLAlchemy 2.0 (style Mapped[])
-- pytest avec pytest-asyncio
-- mypy strict, Ruff, Black
-
-## Conventions
-- Annotations de type obligatoires sur toutes les fonctions publiques
-- Pydantic v2 : utiliser model_validator et field_validator (pas v1 @validator)
-- SQLAlchemy : Mapped[type] et mapped_column() (style 2.0)
-- Routes FastAPI : toutes async
-- HTTPException pour les erreurs HTTP
-
-## Interdits
-- import *
-- except Exception sans re-raise ou log
-- variables sans type hint (data, result, obj...)
+Analyse uniquement le périmètre demandé.
+Recherche notamment : secrets, validation d'entrée, autorisation, injections,
+dépendances et changements de configuration sensibles.
+Retourne constat, preuve et fichier/ligne. Ne modifie rien.
 ```
 
----
-
-## Template `.copilotignore`
-
-```gitignore
-# Secrets et configuration sensible
-.env
-.env.*
-*.env
-*secret*
-*credential*
-*password*
-
-# Clés et certificats
-*.pem
-*.key
-*.p12
-*.pfx
-*.crt
-
-# Configuration de production
-config/production.*
-config/staging.*
-infrastructure/
-
-# Terraform tfstate
-*.tfstate
-*.tfstate.*
-.terraform/
-
-# Données sensibles
-data/personal/
-data/private/
-exports/
-dumps/
-
-# Build outputs (optionnel)
-# dist/
-# build/
-# target/
-```
+Les outils réellement acceptés dépendent de la version Claude Code ; vérifiez la documentation avant de standardiser un front matter avancé.
 
 ---
 
-## Template `.code-workspace` multi-root
+## `.mcp.json` — squelette projet
 
 ```json
 {
-    "folders": [
-        {
-            "name": "Frontend",
-            "path": "./frontend"
-        },
-        {
-            "name": "Backend",
-            "path": "./backend"
-        },
-        {
-            "name": "Infrastructure",
-            "path": "./infrastructure"
-        }
-    ],
-    "settings": {
-        "github.copilot.enable": {
-            "*": true,
-            "terraform": false
-        },
-        "github.copilot.chat.codeGeneration.useInstructionFiles": true
-    },
-    "extensions": {
-        "recommendations": [
-            "GitHub.copilot",
-            "GitHub.copilot-chat"
-        ]
+  "mcpServers": {
+    "example": {
+      "command": "example-mcp",
+      "args": []
     }
+  }
 }
 ```
 
+!!! warning "Secrets"
+    Ne placez pas de token réel dans un fichier MCP versionné. Utilisez les mécanismes de secrets/variables supportés par le serveur et votre environnement.
+
+Avant de partager un MCP dans le dépôt : documentez son owner, ses outils, ses permissions et ses destinations réseau.
+
 ---
 
-## Template `SKILL.md` (agent customization)
+## Hook : principe de sécurité
+
+N'ajoutez pas un hook seulement parce qu'il est possible de le faire. Un hook exécute du code autour du workflow agentique.
+
+Checklist :
+
+```text
+[ ] script versionné
+[ ] comportement documenté
+[ ] aucun secret en dur
+[ ] timeout raisonnable
+[ ] sortie bornée
+[ ] échec testé
+[ ] revue sécurité si action sensible
+```
+
+Consultez le [guide Hooks](../chapitre-4-contexte/guide-hooks.md) pour le schéma courant.
+
+---
+
+## `AGENTS.md` portable
 
 ```markdown
-# [Nom du Skill] SKILL
+# Instructions agents
 
-## Rôle et domaine
+## Repository
+- Lire les conventions existantes avant modification.
+- Ne pas changer l'architecture sans justification.
 
-Description concise de ce que ce skill active comme comportement.
+## Validation
+- Tests: `...`
+- Lint: `...`
+- Build: `...`
 
-## Quand invoquer ce skill
+## Sécurité
+- Aucun secret dans les prompts ou commits.
+- Toute nouvelle dépendance doit être justifiée.
+```
 
-- Cas d'usage 1 : description précise
-- Cas d'usage 2 : description précise
-- Ne pas utiliser pour : cas exclus
+Utilisez `AGENTS.md` pour les règles réellement portables. Gardez les capacités propres à Claude dans `.claude/`.
 
-## Comportements activés
+---
 
-1. **Comportement 1** : description
-2. **Comportement 2** : description
+## Projet Machine Learning
 
-## Exemples d'invocation
+```markdown
+# CLAUDE.md
 
-"Utilise le skill [nom] pour..."
-"En tant que [rôle du skill], analyse..."
+## Commands
+- Tests: `pytest -q`
+- Lint: `ruff check .`
+- Train baseline: `python -m src.train`
+- Evaluate: `python -m src.evaluate`
 
-## Contraintes
-
-- Contrainte 1
-- Contrainte 2
+## ML invariants
+- Ne jamais ajuster le preprocessing sur le test final.
+- Toute métrique doit préciser dataset/split.
+- Conserver seed, config et artefacts nécessaires à la reproduction.
 ```
 
 ---
 
-## Template `.agent.md`
+## GitHub Copilot — templates conservés
+
+### `.github/copilot-instructions.md`
 
 ```markdown
-# Nom de l'Agent
+# GitHub Copilot — instructions projet
 
-Description courte du rôle de cet agent.
-
-## Comportement
-
-Description détaillée de comment l'agent doit se comporter, quelles décisions il prend, quelle approche il suit.
-
-## Outils autorisés
-
-Listez les outils MCP ou VS Code que cet agent peut utiliser.
-
-## Outils interdits
-
-Listez les outils que cet agent ne doit pas utiliser.
-
-## Exemples de tâches
-
-- Tâche type 1
-- Tâche type 2
+- Réutiliser les patterns existants.
+- Exécuter les tests pertinents.
+- Ne pas ajouter de dépendance sans justification.
+- Ne jamais exposer de secret.
 ```
 
----
-
-## Template `.instructions.md` pour tests
+### `.github/instructions/java.instructions.md`
 
 ```markdown
 ---
-applyTo: '**/*.test.ts,**/*.spec.ts,**/__tests__/**'
+applyTo: "**/*.java"
 ---
 
-# Conventions de tests
-
-## Frameworks
-- Jest + React Testing Library pour les composants
-- MSW pour les mocks de requêtes HTTP
-- user-event v14 (pas fireEvent pour les interactions utilisateur)
-
-## Structure des tests
-- describe: "ComponentName" ou "functionName"
-- it/test: description en français, forme "devrait..."
-- Pas de test qui dépend d'un autre test
-
-## Assertions
-- Préférer les matchers sémantiques : toBeInTheDocument(), toHaveValue()
-- Éviter toMatchSnapshot() pour le markup (trop fragile)
-- Chaque test a une seule assertion principale + assertions secondaires si nécessaire
+- Respecter les conventions Java du dépôt.
+- Réutiliser le framework de test existant.
+- Préférer les refactorings sûrs de l'IDE pour les opérations mécaniques.
 ```
+
+Les fichiers `.prompt.md` et `.agent.md` Copilot restent documentés dans le chapitre Contexte comme **références Copilot**. Ne les utilisez pas comme équivalents directs de `.claude/skills/` ou `.claude/agents/`.
+
+---
+
+## Éviter les versions figées dans un template générique
+
+N'écrivez pas par défaut :
+
+```text
+React 18
+Spring Boot 3.2
+Python 3.11
+scikit-learn 1.4
+```
+
+sauf si ce sont réellement les versions du projet. Claude doit lire `package.json`, `pom.xml`, `pyproject.toml`, lockfiles et autres manifests avant de proposer une API dépendante d'une version.
+
+---
+
+## Checklist avant de copier un template
+
+- [ ] commandes adaptées au dépôt ;
+- [ ] versions lues depuis les manifests ;
+- [ ] règles non contradictoires avec les docs existantes ;
+- [ ] secrets absents ;
+- [ ] outils tiers audités ;
+- [ ] validation exécutable définie ;
+- [ ] Copilot conservé séparément si nécessaire.
+
+## Voir aussi
+
+- [Architecture Claude](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md)
+- [Instructions & Rules](../chapitre-4-contexte/guide-instructions.md)
+- [Skills](../chapitre-4-contexte/guide-skills.md)
+- [Agents](../chapitre-4-contexte/guide-agents.md)
+- [MCP](../chapitre-13-outils-economies/mcps/index.md)
