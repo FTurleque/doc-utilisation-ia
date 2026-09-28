@@ -1,133 +1,144 @@
-﻿# Comparaison des Problèmes par IDE
+# Comparaison des problèmes — CLI, VS Code et JetBrains
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Certains problèmes sont communs aux deux IDEs, d'autres sont spécifiques à l'architecture de chaque environnement. Ce tableau vous aide à orienter votre diagnostic.
-
----
-
-## Problèmes communs aux deux IDEs
-
-| Problème | Cause | Solution commune |
-|----------|-------|-----------------|
-| Aucune suggestion | Token expiré | Se reconnecter |
-| Latence élevée | Réseau lent / proxy | Configurer proxy |
-| Rate limit | Trop de requêtes | Attendre 1-2 min |
-| Suggestions hors sujet | Contexte insuffisant | Ouvrir fichiers liés |
-| Code généré non fonctionnel | Prompts imprécis | Reformuler + contexte |
-| Chat sans réponse | Serveur GitHub dégradé | Vérifier githubstatus.com |
+Le diagnostic Claude Code doit distinguer les problèmes **partagés** — compte, réseau, settings, MCP, contexte — des problèmes propres à la surface utilisée.
 
 ---
 
-## Problèmes spécifiques à IntelliJ
+## Problèmes communs
 
-| Problème | Cause | Solution |
-|----------|-------|----------|
-| Plugin non visible après installation | IDE redémarrage requis | Redémarrer IntelliJ |
-| Suggestions bloquées en Power Save Mode | Mode économie énergie actif | File → Power Save Mode (désactiver) |
-| IDE très lent après activation | JVM undersized | Augmenter `-Xmx` dans VM Options |
-| `OutOfMemoryError` dans les logs | Heap insuffisant pour PSI + Copilot | Help → Edit Custom VM Options → `-Xmx4096m` |
-| Autocomplétion IntelliJ et Copilot en conflit | Double suggestion | Ajuster la priorité dans les paramètres Keymap |
-| Solutions coupées à mi-chemin | PSI timeout | Simplifier le fichier ouvert, fermer onglets |
-| Plugin Copilot incompatible avec la version IDE | Version plugin obsolète | Mettre à jour le plugin |
-| Erreur SSL sur réseau d'entreprise | Certificat proxy non reconnu | Importer le certificat dans le keystore JVM |
-| `.instructions.md` ignoré | Format `applyTo` glob non supporté nativement | Utiliser `.idea/ai/copilot-instructions.md` ou les paramètres IDE |
-| Indexation PSI bloque les suggestions | Background indexing en cours | Attendre la fin de l'indexation (barre de progression en bas) |
+| Symptôme | Cause possible | Premier contrôle |
+|---|---|---|
+| Authentification inattendue | mauvais compte ou API key active | `/status`, variables d'environnement |
+| Limite atteinte | usage partagé du plan | `/usage`, `/status` |
+| Réponses qui dérivent | contexte devenu trop chargé | `/context`, `/compact` |
+| Skill/rule ignoré | scope, frontmatter, précédence | `/doctor` |
+| MCP indisponible | serveur/auth/config | `/mcp` |
+| Comportement étrange après ajout de plugins/hooks | customisation | `claude --safe-mode` |
+| Timeout / erreur réseau | proxy, TLS, service | status Anthropic + réseau |
 
 ---
 
-## Problèmes spécifiques à VS Code
+## CLI
 
-| Problème | Cause | Solution |
-|----------|-------|----------|
-| Extension désactivée automatiquement | Conflits avec autre extension | Identifier et désactiver les conflits |
-| Copilot Chat absent du panneau | Extension Chat non installée | Installer "GitHub Copilot Chat" séparément |
-| Inline Chat (Ctrl+I) inactif | VS Code version < 1.83 | Mettre à jour VS Code |
-| `.instructions.md` ignoré | Feature flag désactivé | Activer `github.copilot.chat.codeGeneration.useInstructionFiles` |
-| `.agent.md` non reconnu | VS Code version ou Copilot Chat obsolète | Mettre à jour les deux |
-| Vue d'édition multi-fichiers indisponible | Bug d'interface | Réouvrir Copilot Chat puis relancer la tâche |
-| Suggestions désactivées pour un fichier | Fichier dans `.copilotignore` | Vérifier `.copilotignore` |
-| Paramétrage `.vscode/settings.json` ignoré | Syntaxe JSON incorrecte | Valider avec un linter JSON |
-| Extension ne se met pas à jour | Cache VS Code corrompu | `code --uninstall-extension GitHub.copilot` puis réinstaller |
-| Crashs du Language Server | Conflit avec extension LSP tierce | Désactiver extensions LSP concurrentes |
-| Suggestions absentes dans les fichiers volumineux | Fichier > ~1000 lignes (contexte saturé) | Diviser le fichier ou fermer des onglets |
-| Suggestions absentes en Remote / WSL | Chemin de settings différent dans le contexte distant | Configurer les settings dans le profil Remote, pas le profil local |
+La CLI est le meilleur point de comparaison pour savoir si le problème vient réellement de Claude Code ou de l'intégration IDE.
+
+Vérifications :
+
+```bash
+claude --version
+claude doctor
+claude --safe-mode
+```
+
+Si la CLI fonctionne mais pas l'IDE, concentrez le diagnostic sur l'intégration VS Code/JetBrains plutôt que de réinstaller Claude Code immédiatement.
 
 ---
 
-## Comportements différents entre les IDEs
+## VS Code
 
-Ces comportements ne sont pas des bugs, mais des différences d'implémentation à connaître :
+### Particularités
 
-| Comportement | IntelliJ | VS Code | Notes |
-|-------------|----------|---------|-------|
-| Analyse du code | PSI sémantique | Token-based | IntelliJ comprend mieux la structure |
-| Vitesse de suggestion | Légèrement plus lent | Plus rapide | PSI = plus de latence mais meilleure qualité |
-| Contexte des imports | Analysé via PSI | Via fichiers ouverts | IntelliJ détecte mieux les dépendances |
-| Support `.instructions.md` | ⭐ Partiel (via settings UI) | ✅ Supporté (applyTo glob) | IntelliJ ne supporte pas les globs `applyTo` |
-| Support `.agent.md` | ✅ Supporté | ✅ Supporté | Supporté dans les deux IDEs |
-| Support `.prompt.md` | ✅ Supporté | ✅ Supporté | Supporté dans les deux IDEs |
-| Support `SKILL.md` | ⭐ Lecture seule | ✅ Création + usage | VS Code : création via interface |
-| Mode Agent (Chat) | ✅ Disponible | ✅ Disponible | Supporté dans les deux IDEs |
-| Édition multi-fichiers assistée | ✅ Disponible | ✅ Disponible | Supporté dans les deux IDEs |
-| Hooks Copilot | ❌ Non disponible | ✅ Disponible | VS Code exclusif (onSave, pre-commit…) |
-| `.copilotignore` | ❌ Non supporté | ✅ Supporté | Exclusion de fichiers du contexte Copilot |
-| Génération auto message de commit | ❌ Non disponible | ✅ Icône ✨ Source Control | VS Code exclusif |
-| Connaissance fichiers non ouverts | ✅ Complète (PSI) | ⭐ Partielle (LSP) | IntelliJ analyse tout le projet sans ouvrir les fichiers |
-| Délai de suggestion configurable | ✅ En ms (UI paramètres) | ⚠️ Non exposé directement | IntelliJ offre plus de précision |
-| Inline Chat | ✅ Alt+Entrée | ✅ Ctrl+I | Noms différents |
-| Raccourci accepter | ++tab++ | ++tab++ | Identique |
-| Raccourci voir alternatives | ++alt+bracket-right++ | ++alt+bracket-right++ | Identique |
-| Configuration proxy | JVM/IDE level | OS/settings.json | Approches différentes |
-| Gestion multi-repo | Via modules IntelliJ | Via multi-root workspace | Philosophies différentes |
-| Visibilité du rate limiting | Silencieux (masqué dans logs) | Visible en barre de statut et notification | Surveiller `idea.log` sous IntelliJ |
+Le panneau Claude Code VS Code fournit une expérience intégrée. La CLI standalone est séparée et n'est nécessaire que si vous souhaitez exécuter `claude` dans le terminal intégré.
+
+| Symptôme | Vérification |
+|---|---|
+| panneau Claude absent | extension installée/activée, VS Code à jour |
+| panneau fonctionne mais `claude` est introuvable dans le terminal | CLI standalone/PATH du terminal |
+| extension bloquée après mise à jour | reload window, mise à jour extension |
+| comportement différent du terminal externe | shell, PATH, variables d'environnement |
+| auth différente | compte utilisé par l'extension vs variables/API key |
+
+!!! tip "Test de séparation"
+    Comparez le panneau Claude et `claude --version` dans le terminal intégré. Cela permet de savoir quelle couche est réellement en panne.
 
 ---
 
-## Matrice de compatibilité des fonctionnalités
+## JetBrains
 
-| Fonctionnalité | IntelliJ ≥ 2023.1 | VS Code ≥ 1.90 |
-|---------------|-------------------|----------------|
-| Inline completions | ✅ | ✅ |
-| Copilot Chat | ✅ (intégré au plugin) | ✅ (extension séparée) |
-| Inline Chat | ✅ | ✅ |
-| `.instructions.md` | ✅ | ✅ (≥ 1.90) |
-| Prompt files | ✅ | ✅ (≥ 1.91) |
-| `.agent.md` | ✅ | ✅ (Preview) |
-| `SKILL.md` | ⭐ (lecture seule) | ✅ (Preview) |
-| Modes Chat (Ask/Plan/Agent) | ✅ | ✅ (≥ 1.90) |
-| Édition multi-fichiers assistée | ✅ | ✅ (≥ 1.91) |
-| Désactiver par langage | ✅ | ✅ |
-| `.copilotignore` | ❌ | ✅ |
-| Hooks Copilot | ❌ | ✅ |
-| Génération auto commit | ❌ | ✅ |
+### Particularités
+
+Le plugin JetBrains utilise Claude Code installé localement. Une installation CLI fonctionnelle est donc un prérequis important du diagnostic.
+
+| Symptôme | Vérification |
+|---|---|
+| plugin ne trouve pas Claude | `claude --version`, PATH visible par l'IDE |
+| auth échoue uniquement dans l'IDE | proxy/TLS de l'IDE, compte |
+| comportement après upgrade IDE | compatibilité/version du plugin |
+| terminal externe fonctionne mais plugin non | environnement lancé par JetBrains |
+| connexion lente | proxy, réseau, indexation IDE à distinguer de Claude |
+
+Évitez d'attribuer automatiquement une lenteur IntelliJ à Claude : l'indexation, le build, les plugins et la JVM peuvent être des causes indépendantes.
 
 ---
 
-## Recommandations selon la situation
+## Windows et WSL
 
-| Situation | Recommandation |
-|-----------|---------------|
-| Projet Java/Kotlin complexe | Préférez IntelliJ — le PSI offre un meilleur contexte |
-| Personnalisation avancée (instructions, agents) | Utilisez VS Code — toutes les features sont disponibles |
-| Performance machine limitée | VS Code consomme moins de RAM |
-| Gestion de proxy d'entreprise | IntelliJ a une meilleure gestion du keystore JVM |
-| Ateliers d'équipe sur les conventions | VS Code + `.instructions.md` partagées dans git |
-| Développement multi-technologies | VS Code avec un workspace multi-root |
+Un problème fréquent est d'installer Claude dans un environnement et de l'exécuter dans l'autre.
+
+Vérifiez séparément :
+
+```text
+Windows PowerShell → `claude --version`
+WSL              → `claude --version`
+```
+
+Les PATH, home directories, credentials et fichiers `~/.claude` ne sont pas nécessairement partagés.
+
+!!! info "Choisir une frontière claire"
+    Pour un projet Linux sous WSL, gardez de préférence outils, Git, dépendances et Claude Code dans le même environnement afin d'éviter les chemins hybrides.
+
+---
+
+## Providers cloud / Console
+
+Claude Code peut être utilisé via différents modes d'authentification ou fournisseurs. Une erreur peut venir de :
+
+- clé API ;
+- permissions Console ;
+- configuration Amazon Bedrock ;
+- configuration Google Vertex AI ;
+- configuration d'entreprise/gateway.
+
+Quand un provider tiers est utilisé, séparez le diagnostic Claude Code du diagnostic IAM/région/quota du provider.
+
+---
+
+## Tableau de décision
+
+| Test | Résultat | Conclusion probable |
+|---|---|---|
+| `claude --version` échoue partout | échec | installation/PATH |
+| CLI fonctionne, IDE échoue | divergence | intégration IDE |
+| normal échoue, `--safe-mode` fonctionne | divergence | customisation |
+| `/mcp` montre un serveur en erreur | ciblé | MCP |
+| plusieurs machines échouent simultanément | commun | service/réseau/politique |
+| uniquement réseau d'entreprise | ciblé | proxy/TLS/firewall |
+| `/context` montre saturation | ciblé | hygiène de contexte |
+
+---
+
+## Ce qui n'est plus présenté comme vérité générale
+
+Les anciennes versions de cette page affirmaient par exemple qu'IntelliJ était systématiquement plus précis, que VS Code était toujours plus rapide, ou donnaient des seuils de taille de fichier et de mémoire prétendument universels. Ces affirmations dépendent trop du projet, de l'IDE, des extensions et des versions pour servir de diagnostic fiable.
+
+Mesurez le symptôme réel et isolez la couche fautive.
+
+---
+
+## GitHub Copilot — référence
+
+Copilot dispose de ses propres extensions, logs, politiques et mécanismes de facturation. Les matrices Copilot VS Code/JetBrains restent dans les pages de référence Copilot ; elles ne doivent pas servir à diagnostiquer Claude Code.
 
 ---
 
 ## Sources
 
-- [Troubleshooting GitHub Copilot](https://docs.github.com/en/copilot/troubleshooting-github-copilot) - consulté le 2026-06-20
+- [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
+- [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Procédures de Réparation](procedures-reparation.md)** : procédures graduées et pas à pas pour résoudre les problèmes persistants : reset complet, nettoyage du cache, réinstallation complète, configuration proxy/SSL.
-
-Concepts clés couverts :
-
-- **Nettoyage du cache** — Extensions VS Code, plugins IntelliJ
-- **Réinstallation complète** — Supprimer et réinstaller depuis zéro
-- **Configuration proxy/SSL** — Résoudre les problèmes réseau d'entreprise
-- **Diagnostic avancé** — Vérifier les logs système et les conflicts
+**[Procédures de réparation](procedures-reparation.md)** : réparer de façon graduée après avoir identifié la couche en cause.
