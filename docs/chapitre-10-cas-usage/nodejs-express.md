@@ -1,355 +1,182 @@
-﻿# :simple-nodedotjs: Cas d'Usage — Node.js & Express avec GitHub Copilot
+# Node.js & Express avec Claude Code
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-## Stack Recommandé
-
-Configuration optimale pour Copilot sur Node.js/Express :
-
-| Composant | Version | Raison |
-|-----------|---------|--------|
-| **Runtime** | Node.js 20 LTS+ | Stability, V8 récent, modules ESM |
-| **Framework** | Express 4.18+ | Middleware patterns stables |
-| **Language** | TypeScript 5.x | Inférence type excellente, Copilot-friendly |
-| **ORM** | Prisma 5 ou Drizzle | Type-safe query builders |
-| **HTTP Client** | Axios ou Fetch API | Bien documenté, pattern standard |
-| **Async** | async/await + Express | Étouffer les erreurs avec try-catch |
-| **Testing** | Vitest + Supertest | ESM compatible, assertions fluent |
+Sur Node.js, Claude Code doit se fier au `package.json`, au lockfile et à la configuration TypeScript du dépôt. Les anciennes recommandations figées sur une version Node, Express, Prisma ou un test runner ont été retirées.
 
 ---
 
-## Configurer Copilot pour Express
+## 1. Lire le projet avant de coder
 
-### Custom Instructions (`.github/copilot-instructions.md`)
+```text
+Lis package.json, lockfile et tsconfig.
+Identifie :
+- version/runtime Node ;
+- package manager ;
+- ESM ou CommonJS ;
+- framework HTTP et sa version ;
+- validation runtime ;
+- accès DB ;
+- tests, lint, typecheck et build.
+```
+
+Utilisez les scripts existants :
+
+```json
+{
+  "scripts": {
+    "test": "...",
+    "lint": "...",
+    "typecheck": "...",
+    "build": "..."
+  }
+}
+```
+
+---
+
+## 2. `CLAUDE.md` Node minimal
 
 ```markdown
-# GitHub Copilot — Node.js/Express Project
-
-Stack: Node.js 20, Express 4.18, TypeScript 5.x, Prisma 5, PostgreSQL 15
-
-Architecture (Layered):
-- Routes: Express routers, max 10 lines per route handler
-- Controllers: Request/response handling
-- Services: Business logic + validation
-- Models/Entities: Prisma @models (auto-generated)
-- Middleware: Error handling, auth, logging
-
-Conventions:
-- Naming: routes/ folder for Express Router instances
-- Controllers: named UserController, handling req/res/next
-- Services: named UserService, pure functions where possible
-- Error handling: Always use try-catch in async route handlers
-- Logging: console.log for development, pino/winston for production
-
-Async patterns:
-- Express middleware: async (req, res, next) => { ... } with error boundary
-- Never forget .catch() or try-catch
-- Use async/await, not .then() chains
-
-TypeScript:
-- Strict mode enabled in tsconfig.json
-- All function parameters typed (no any)
-- Use interfaces for request/response DTOs
-- Export types from domain models
-
-Database (Prisma):
-- Models in prisma/schema.prisma
-- Queries: await prisma.user.findUnique(), prisma.user.create()
-- Transactions: await prisma.$transaction([...])
-- Always return typed objects (Prisma auto-infers)
-
-API standards:
-- RESTful: /api/v1 prefix
-- Status codes: 200/201/400/401/404/500
-- JSON responses: { data, error, meta }
-- Validation: Use Zod or Joi for input schemas
-
-Testing:
-- Unit: Vitest + mock services
-- Integration: Supertest to test routes + real DB (Testcontainers)
-- Coverage: Minimum 80%
-```
-
-### Activation VS Code
-
-1. Créez `.github/copilot-instructions.md` à la racine
-2. **Redémarrez VS Code** (Cmd+K Cmd+I pour forcer relecture)
-3. Les suggestions respecteront ces patterns
-
----
-
-## Patterns Express Optimisés pour Copilot
-
-### 1. Route + Controller Pattern
-
-**Approche** : Séparation claire des couches
-
-```typescript
-// routes/users.router.ts
-import { Router, Request, Response, NextFunction } from 'express';
-import { UserController } from '../controllers/user.controller';
-import { validateUserInput } from '../middleware/validation.middleware';
-
-const router = Router();
-const userController = new UserController();
-
-// Route définit la transition HTTP → logique métier
-router.post(
-  '/users',
-  validateUserInput,
-  (req: Request, res: Response, next: NextFunction) => 
-    userController.createUser(req, res, next)
-);
-
-router.get(
-  '/users/:id',
-  (req: Request, res: Response, next: NextFunction) => 
-    userController.getUserById(req, res, next)
-);
-
-export default router;
-```
-
-**Conseil Copilot** : Chaque route une ligne — contrôleur gère la logique
-
-### 2. Controller + Service Separation
-
-```typescript
-// controllers/user.controller.ts
-import { Request, Response, NextFunction } from 'express';
-import { UserService } from '../services/user.service';
-
-export class UserController {
-  private userService = new UserService();
-  
-  async createUser(req: Request, res: Response, next: NextFunction) {
-    try {
-      // Controller : Parse input + déléguer service
-      const { email, name } = req.body;
-      const user = await this.userService.createUser({ email, name });
-      res.status(201).json({ data: user });
-    } catch (error) {
-      // Error boundary : middleware global capture
-      next(error);
-    }
-  }
-}
-```
-
-```typescript
-// services/user.service.ts
-import { User } from '@prisma/client';
-import { prisma } from '../lib/prisma';
-
-export class UserService {
-  async createUser(dto: { email: string; name: string }): Promise<User> {
-    // Validation applicative
-    if (await prisma.user.findUnique({ where: { email: dto.email } })) {
-      throw new Error('Email already in use');
-    }
-    
-    // Persister + retourner objet typé
-    return prisma.user.create({
-      data: { email: dto.email, name: dto.name },
-    });
-  }
-}
-```
-
-### 3. Middleware d'Erreur Global
-
-```typescript
-// middleware/error.middleware.ts
-import { Request, Response, NextFunction } from 'express';
-
-export interface CustomError extends Error {
-  statusCode?: number;
-}
-
-export const errorHandler = (
-  err: CustomError,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
-  
-  console.error(`[${statusCode}] ${message}`, err);
-  
-  res.status(statusCode).json({
-    error: {
-      message,
-      statusCode,
-      timestamp: new Date().toISOString(),
-    },
-  });
-};
-
-// app.ts — Enregistrer APRÈS toutes les routes
-app.use(errorHandler);
+## Node / TypeScript
+- Use the package manager and lockfile already present.
+- Run `typecheck` after TypeScript changes.
+- Validate all external input at the boundary.
+- Follow the existing error middleware pattern.
+- Do not add dependencies if the platform/project already provides the capability.
 ```
 
 ---
 
-## TypeScript + Copilot
+## 3. Route → validation → service
 
-### DTOs Typés
+Exemple de séparation simple :
 
 ```typescript
-// types/user.interface.ts
-export interface CreateUserDto {
-  email: string;
-  name: string;
-  password: string;
-}
-
-export interface UserResponseDto {
-  id: string;
-  email: string;
-  name: string;
-  createdAt: Date;
-}
-
-// Validation avec Zod
-import { z } from 'zod';
-
-export const createUserSchema = z.object({
-  email: z.string().email('Invalid email format'),
-  name: z.string().min(2, 'Name must be at least 2 chars'),
-  password: z.string().min(8, 'Password must be at least 8 chars'),
+router.post("/users", validate(createUserSchema), async (req, res, next) => {
+  try {
+    const user = await userService.create(req.body);
+    res.status(201).json({ data: user });
+  } catch (error) {
+    next(error);
+  }
 });
 ```
 
-### Prisma Models
-
-```prisma
-// prisma/schema.prisma
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  posts     Post[]   // 1-to-many relation
-}
-
-model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-```
-
-**Migration Prisma** :
-```bash
-npx prisma migrate dev --name add_users_table
-npx prisma generate  # Génère types TypeScript
-```
+Ce n'est pas un template universel : Express, son écosystème et les versions récentes peuvent offrir d'autres patterns de gestion async. Claude doit lire la version installée et le style existant avant de recopier une recette historique.
 
 ---
 
-## Tests Supertest + Vitest
+## 4. Validation runtime
 
-### Prompt Copilot complet
+TypeScript ne valide pas les données réseau au runtime.
 
-```
-Génère un test d'intégration complet pour la route POST /api/v1/users
-
-Utilise Supertest + Vitest
-Stack : Express, Prisma, PostgreSQL
-Test happy path (201) et email unique constraint (400)
-Mock Prisma avec vi.mock()
+```text
+Trouve la bibliothèque de validation déjà utilisée.
+Ajoute le schéma au même endroit que les autres endpoints.
+Teste payload valide, champ absent, mauvais type et valeur interdite.
 ```
 
-**Copilot génère** :
+N'introduisez pas Zod/Joi/Valibot simplement parce qu'un exemple de documentation l'utilise si le projet possède déjà une solution.
+
+---
+
+## 5. Gestion des erreurs
+
+Centralisez le mapping vers HTTP selon le pattern du projet :
 
 ```typescript
-// tests/routes/users.test.ts
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import request from 'supertest';
-import app from '../../app';
-import { prisma } from '../../lib/prisma';
-
-vi.mock('../../lib/prisma');
-
-describe('POST /api/v1/users', () => {
-  it('should create user successfully', async () => {
-    const mockUser = {
-      id: '123',
-      email: 'john@example.com',
-      name: 'John',
-      createdAt: new Date(),
-    };
-    
-    vi.mocked(prisma.user.findUnique).mockResolvedValue(null);
-    vi.mocked(prisma.user.create).mockResolvedValue(mockUser);
-    
-    const res = await request(app)
-      .post('/api/v1/users')
-      .send({ email: 'john@example.com', name: 'John' });
-    
-    expect(res.status).toBe(201);
-    expect(res.body.data.email).toBe('john@example.com');
-  });
+app.use((error: unknown, req, res, next) => {
+  const response = toHttpError(error);
+  res.status(response.status).json(response.body);
 });
 ```
 
+Ne retournez pas automatiquement `error.message`, stack traces ou erreurs DB au client.
+
 ---
 
-## Architecture : Express + Copilot
+## 6. Dépendances npm
 
-```mermaid
-graph TD
-    A["HTTP Request"] --> B["Express Router"]
-    B --> C["Middleware Chain<br/>(Auth, Validation)"]
-    C --> D["Controller<br/>(Parse req/res)"]
-    D --> E["Service<br/>(Logique métier)"]
-    E --> F["Prisma ORM<br/>(Type-safe queries)"]
-    F --> G["PostgreSQL<br/>(DB)"]
-    
-    H --> D
-    H["Copilot Custom Instr."]
-    
-    I["Error Handler"] -.-> D
-    D -.-> J["JSON Response<br/>(typed)"]
-    
-    style H fill:#fff3e0
-    style B fill:#e3f2fd
-    style D fill:#bbdefb
-    style E fill:#e8f5e9
+Avant d'ajouter un package :
+
+```text
+1. vérifie si Node ou une dépendance existante couvre le besoin ;
+2. vérifie le package officiel et sa compatibilité ;
+3. installe avec le package manager du repo ;
+4. laisse le lockfile être mis à jour par l'outil ;
+5. exécute typecheck/tests/build.
 ```
 
+Méfiez-vous des noms de packages plausibles mais inexistants ou non maintenus.
+
 ---
 
-## Pièges Courants Node.js/Express
+## 7. Base de données
 
-| Piège | Symptôme | Solution |
-|-------|----------|----------|
-| **Oublier await** | Promises non résolues | Toujours `await` dans services async |
-| **Pas de try-catch** | Exception crash le serveur | Envelopper routes dans try-catch |
-| **Middleware ordre** | Routes ne pas authentifiées | Enregistrer auth AVANT les routes |
-| **Type any** | Copilot suggestions faibles | Activer `strict` dans tsconfig.json |
-| **N+1 queries Prisma** | Requêtes exponentielles | Utiliser `.include()` pour charger relations |
-| **Secrets hardcodés** | Keys en suggestions | JAMAIS hardcoder — .env uniquement |
+Que le projet utilise Prisma, Drizzle, TypeORM, un driver SQL ou autre :
+
+- respectez la transaction existante ;
+- gardez les contraintes d'unicité en base lorsque nécessaire ;
+- testez migrations ;
+- évitez N+1 et requêtes non bornées ;
+- utilisez requêtes paramétrées si SQL direct.
+
+Claude ne doit pas migrer d'ORM pour simplifier une petite feature.
+
+---
+
+## 8. Tests HTTP
+
+```text
+Ajoute un test d'intégration pour POST /users.
+Réutilise le client HTTP, les fixtures et le setup DB existants.
+Couvre 201, payload invalide, conflit et erreur d'autorisation si applicable.
+Exécute ce test avant la suite complète.
+```
+
+Le framework de test doit venir du dépôt : Vitest, Jest, Node test runner ou autre.
+
+---
+
+## 9. ESM / CommonJS
+
+Ne « corrigez » pas les imports sans vérifier :
+
+- `type` dans `package.json` ;
+- `module` / `moduleResolution` TypeScript ;
+- runtime cible ;
+- bundler éventuel.
+
+Les erreurs de modules sont souvent des incompatibilités de configuration, pas des imports à modifier au hasard.
+
+---
+
+## 10. Sécurité
+
+Pour une API Node :
+
+- validation des inputs ;
+- auth/authz testées ;
+- cookies/headers/CORS selon politique ;
+- secrets hors logs et code ;
+- timeouts et taille de payload bornés ;
+- dépendances auditées selon l'outillage du projet.
+
+---
+
+## Copilot — référence
+
+Les instructions `.github/copilot-instructions.md` et exemples Copilot Node restent dans le dépôt lorsque nécessaires. Claude utilise en priorité `CLAUDE.md`, rules et skills.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
-- [Express.js documentation](https://expressjs.com/) - consulté le 2026-06-20
+- [Node.js — documentation](https://nodejs.org/docs/latest/api/) — vérifier la version réellement installée
+- [Express — documentation](https://expressjs.com/) — vérifier la version du projet
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[React 19 & TypeScript](react-typescript.md)** : maîtriser React 19 avec les Server Components, hooks optimisés et patterns TypeScript que Copilot génère avec excellence.
-
-Concepts clés couverts :
-
-- **Typed Functional Components** — Interfaces Props pour meilleur contexte Copilot
-- **Custom Hooks patterns** — Extraction de logique complexe
-- **Server Components + Client Components** — Architecture Next.js 15
-- **React Hook Form + Zod** — Validation et type-safety complète
+**[React & TypeScript](react-typescript.md)** pour le frontend, ou **[Node.js & React](nodejs-react.md)** pour un workflow full-stack.
