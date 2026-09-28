@@ -1,280 +1,275 @@
-# Logs & Diagnostic
+# Logs & diagnostic — Claude Code
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Lire les logs est la technique la plus fiable pour diagnostiquer un problème Copilot persistant. Ce guide explique comment accéder aux logs, ce qu'ils contiennent, et comment les interpréter.
-
----
-
-## VS Code — Accès aux logs
-
-### Méthode 1 : Panneau Output
-
-1. **Menu Affichage → Sortie** (ou ++ctrl+shift+u++)
-2. Dans le dropdown à droite, sélectionnez **"GitHub Copilot"** ou **"GitHub Copilot Chat"**
-
-```
-[2024-01-15T10:23:45.123Z] INFO  Copilot initialized, version 1.165.0
-[2024-01-15T10:23:46.456Z] INFO  Authentication token refreshed
-[2024-01-15T10:23:47.789Z] DEBUG Sending completion request for language: typescript
-[2024-01-15T10:23:48.012Z] INFO  Received 3 completions (450ms)
-```
-
-### Méthode 2 : Developer Tools (logs détaillés)
-
-1. **Aide → Activer/Désactiver les outils de développement** (++f12++ ou `Ctrl+Shift+I`)
-2. Onglet **Console** — filtrez par "copilot" pour isoler les logs Copilot
-
-### Méthode 3 : Log niveau DEBUG
-
-Pour activer les logs de débogage complets :
-
-```json
-// .vscode/settings.json
-{
-    "github.copilot.advanced": {
-        "debug.overrideLogLevels": {
-            "*": "DEBUG"
-        }
-    }
-}
-```
-
-!!! warning "Logs DEBUG volumineux"
-    Les logs DEBUG peuvent dépasser 100 Mo en quelques heures. **Désactivez cette option immédiatement après votre diagnostic** en supprimant la clé `debug.overrideLogLevels` de vos settings.
-
-### Fichiers de logs VS Code
-
-Les logs persistent dans :
-
-=== "Windows"
-    ```
-    %APPDATA%\Code\logs\
-    ```
-    
-    *(Passe automatiquement par ton appdata utilisateur : `C:\Users\[touNom]\AppData\Roaming\Code\logs`)*
-
-=== "macOS"
-    ```
-    ~/Library/Application Support/Code/logs/
-    ```
-
-=== "Linux"
-    ```
-    ~/.config/Code/logs/
-    ```
-
-Chaque extension a son propre dossier de logs. Cherchez `exthost/GitHub.cpilot/` ou similaire.
-
-### Commande pour ouvrir le dossier des logs
-
-++ctrl+shift+p++ → **"Developer: Open Extension Logs Folder"**
+Un bon diagnostic commence par les **outils intégrés de Claude Code**, puis isole progressivement configuration, réseau, MCP, hooks et IDE. Évitez de supprimer des caches ou des credentials avant d'avoir identifié la couche fautive.
 
 ---
 
-## IntelliJ — Accès aux logs
+## 1. Diagnostic intégré
 
-### Fichier idea.log
+Dans une session Claude Code :
 
-Le log principal d'IntelliJ est `idea.log` :
-
-**Accès depuis l'IDE :**
-```
-Help → Show Log in Explorer (Windows)
-Help → Show Log in Finder (macOS)
-Help → Show Log in Files (Linux)
+```text
+/doctor
+/status
+/context
+/mcp
 ```
 
-**Emplacements par OS :**
+Utilité :
 
-=== "Windows"
-    ```
-    %APPDATA%\JetBrains\<IDE><version>\log\idea.log
-    ```
-    
-    *(Passe automatiquement par ton appdata utilisateur : `C:\Users\[touNom]\AppData\Roaming\JetBrains\...`)*
+| Commande | Diagnostic principal |
+|---|---|
+| `/doctor` | installation, configuration, extensions, contexte |
+| `/status` | version, modèle, compte, connectivité |
+| `/context` | répartition de l'usage de contexte |
+| `/mcp` | connexions MCP et outils associés |
 
-=== "macOS"
-    ```
-    ~/Library/Logs/JetBrains/<IDE><version>/idea.log
-    Exemple: ~/Library/Logs/JetBrains/IntelliJIdea2023.3/idea.log
-    ```
+`/doctor` peut proposer des corrections. Relisez ce qui sera modifié avant de les accepter.
 
-=== "Linux"
-    ```
-    ~/.cache/JetBrains/<IDE><version>/log/idea.log
-    ```
+---
 
-### Filtrer les logs Copilot dans idea.log
+## 2. Diagnostic hors session
 
-Le fichier `idea.log` contient tous les logs de l'IDE. Filtrez avec :
+Si l'interface interactive ne démarre pas :
 
 ```bash
-# Sous PowerShell (Windows)
-Select-String -Path idea.log -Pattern "copilot|Copilot|github.copilot"
-
-# Sous Bash (macOS/Linux)
-grep -i "copilot" idea.log | tail -100
+claude --version
+claude doctor
 ```
 
-### Activer les logs DEBUG dans IntelliJ
+Pour isoler les customisations :
 
-1. **Help → Diagnostic Tools → Debug Log Settings**
-2. Ajoutez les catégories :
-   ```
-   com.github.copilot
-   com.github.tools
-   ```
-3. Reproduisez le problème
-4. Récupérez le log via **Help → Show Log**
+```bash
+claude --safe-mode
+```
 
-!!! tip "Retour aux logs normaux"
-    Après le diagnostic, repassez dans **Debug Log Settings** et supprimez les catégories ajoutées. Sinon `idea.log` grossit rapidement.
+Si le problème disparaît en safe mode, la cause se situe probablement dans une customisation : settings, hooks, plugins ou MCP.
 
 ---
 
-## Interprétation des messages de log
+## 3. Activer le debug
 
-### Messages courants VS Code
+Claude Code permet d'activer le debug depuis une session :
 
-| Message | Signification | Action |
-|---------|---------------|--------|
-| `Authentication token refreshed` | Auth réussie | ✅ Normal |
-| `Received 0 completions` | Pas de suggestion retournée | Vérifier network/contexte |
-| `Request timeout` | Délai dépassé | Problème réseau ou serveur |
-| `Rate limit exceeded` | Trop de requêtes | Attendre quelques minutes |
-| `Unauthorized` | Token invalide/expiré | Se reconnecter |
-| `Network error` | Problème de connectivité | Vérifier proxy/firewall |
-| `ExtensionEnablementError` | Extension en conflit | Désactiver autres extensions |
+```text
+/debug
+```
 
-### Messages courants IntelliJ
+Ou au lancement :
 
-| Message dans idea.log | Signification | Action |
-|-----------------------|---------------|--------|
-| `GitHub Copilot connected` | Connexion établie | ✅ Normal |
-| `Failed to get completions` | Erreur API | Vérifier auth et réseau |
-| `Token expired, refreshing` | Renouvellement auto | ✅ Normal, transitoire |
-| `SSL handshake failure` | Problème certif proxy | Configurer proxy SSL |
-| `OutOfMemoryError` | Mémoire insuffisante | Augmenter -Xmx |
+```bash
+claude --debug
+```
 
-### Codes d'erreur HTTP dans les logs
-
-| Code | Signification |
-|------|---------------|
-| `401` | Non authentifié — se reconnecter |
-| `403` | Autorisations insuffisantes — vérifier l'abonnement |
-| `422` | Requête invalide — bug potentiel, vérifier la version |
-| `429` | Rate limit — attendre et réessayer |
-| `408` | Timeout — problème réseau ou serveur lent, augmenter `requestTimeout` |
-| `413` | Payload trop grand — contexte excessif, fermer des onglets |
-| `500/503` | Erreur serveur GitHub — vérifier githubstatus.com |
+Utilisez le debug uniquement le temps de reproduire le problème. Conservez un extrait minimal et redacté pour un rapport de bug.
 
 ---
 
-## Diagnostic réseau avancé
+## 4. Données locales importantes
 
-### Vérifier les endpoints Copilot
+Claude Code conserve différentes données sous `~/.claude` et dans `~/.claude.json`.
 
-Copilot communique avec ces domaines — vérifiez qu'ils sont accessibles depuis votre réseau :
+Exemples :
 
-=== "Windows (PowerShell)"
-    ```powershell
-    Test-NetConnection -ComputerName "api.github.com" -Port 443
-    # Sortie attendue :
-    #   ComputerName     : api.github.com
-    #   RemoteAddress    : 140.82.121.6
-    #   RemotePort       : 443
-    #   TcpTestSucceeded : True   <- Doit être True
-    
-    Test-NetConnection -ComputerName "copilot-proxy.githubusercontent.com" -Port 443
-    # Sortie attendue : TcpTestSucceeded : True
-    ```
+```text
+~/.claude/
+├── settings.json
+├── history.jsonl
+├── projects/
+│   └── <project>/
+│       └── <session>.jsonl
+└── debug/
+```
 
-=== "macOS / Linux"
-    ```bash
-    curl -I https://api.github.com
-    # Sortie attendue :
-    #   HTTP/2 200
-    #   server: GitHub.com
-    #   < en moins de 500ms >
-    
-    curl -I https://copilot-proxy.githubusercontent.com
-    # Sortie attendue : HTTP/2 200 ou 204
-    ```
+Sur Windows, `~/.claude` correspond par défaut à `%USERPROFILE%\.claude`.
 
-!!! tip "Interpréter les résultats"
-    Si `TcpTestSucceeded : False` ou si `curl` retourne un timeout, le problème est réseau (proxy, firewall, VPN). Voir [Procédures de réparation — Configuration proxy/SSL](procedures-reparation.md#procedure-4-configuration-proxy-ssl).
+!!! danger "Les transcriptions sont sensibles"
+    Les transcriptions de session peuvent contenir le texte des conversations, les résultats d'outils, des extraits de fichiers et toute valeur affichée par une commande. Les permissions du système de fichiers constituent la protection principale de ces données locales.
 
-### Capture HAR (pour support GitHub)
+Évitez de publier :
 
-!!! danger "Sécurité — Fichiers HAR"
-    Les fichiers HAR contiennent l'**intégralité des requêtes et réponses HTTP**, y compris les **tokens d'authentification**, cookies et données de session. **Ne partagez jamais un fichier HAR brut** sans avoir redácté les champs sensibles. Ouvrez le HAR dans un éditeur texte et remplacez les valeurs des champs `Authorization`, `Cookie` et `access_token` par `REDACTED` avant tout partage.
-
-Si vous devez contacter le support GitHub avec un problème de réseau :
-
-**VS Code :**
-
-1. Ouvrez Developer Tools (F12)
-2. Onglet **Network**
-3. Cochez "Preserve log"
-4. Reproduisez le problème
-5. Clic droit dans la liste network → **"Save all as HAR with content"**
+- `~/.claude.json` ;
+- transcriptions `.jsonl` complètes ;
+- dumps mémoire ;
+- fichiers contenant OAuth, API keys ou credentials MCP.
 
 ---
 
-## Rapport de bug
+## 5. Diagnostic du contexte
 
-Si vous avez identifié un bug reproductible :
+Utilisez :
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    ++ctrl+shift+p++ → **"GitHub Copilot: Report Issue"**
-    
-    Cela ouvre GitHub avec un template pré-rempli incluant les informations système.
+```text
+/context
+```
 
-=== ":simple-intellijidea: IntelliJ"
-    **Help → Submit a Bug Report**
-    
-    Ou directement : [youtrack.jetbrains.com/newissue?project=IDEA](https://youtrack.jetbrains.com/newissue?project=IDEA)
+Cherchez notamment :
 
-### Informations à inclure dans un rapport
+- `CLAUDE.md` trop volumineux ;
+- sortie d'outil massive ;
+- gros fichiers lus intégralement ;
+- MCP apportant beaucoup d'outils ;
+- historique devenu peu pertinent.
+
+Actions possibles :
+
+```text
+/compact
+/clear
+```
+
+Les subagents sont utiles pour garder les recherches volumineuses hors du contexte principal.
+
+---
+
+## 6. Diagnostic MCP
+
+```text
+/mcp
+```
+
+Pour chaque serveur, vérifiez :
+
+- état de connexion ;
+- scope ;
+- authentification ;
+- commande/URL ;
+- outils exposés ;
+- utilité réelle dans la tâche actuelle.
+
+Un serveur MCP qui fonctionnait auparavant mais n'est plus accessible doit d'abord être vérifié ici avant de modifier `.mcp.json` au hasard.
+
+---
+
+## 7. Diagnostic de configuration
+
+Emplacements à contrôler :
+
+```text
+CLAUDE.md
+.claude/settings.json
+.claude/settings.local.json
+.claude/rules/
+.claude/skills/
+.claude/agents/
+.mcp.json
+~/.claude/settings.json
+~/.claude.json
+```
+
+La précédence compte : des settings gérés par l'organisation ou des flags CLI peuvent prendre le dessus sur les settings projet.
+
+!!! tip "Méthode d'isolation"
+    Si le comportement est inexplicable, comparez une session normale et `claude --safe-mode`. Réactivez ensuite les couches une à une.
+
+---
+
+## 8. Réseau et service Anthropic
+
+Avant une réinstallation :
+
+1. consultez [status.anthropic.com](https://status.anthropic.com/) ;
+2. vérifiez le proxy/VPN ;
+3. vérifiez les certificats d'entreprise ;
+4. testez depuis le même environnement que l'IDE ou le terminal concerné ;
+5. notez le code d'erreur exact.
+
+Les erreurs HTTP n'ont pas toutes la même cause :
+
+| Famille | Interprétation probable |
+|---|---|
+| `401/403` | authentification, autorisation ou politique |
+| `429` | limite d'usage/de débit |
+| `5xx/529` | service ou capacité côté fournisseur possible |
+| timeout / TLS | réseau, proxy, certificat ou service |
+
+Consultez la référence d'erreurs actuelle avant de conclure.
+
+---
+
+## 9. VS Code
+
+Si le problème n'apparaît que dans VS Code :
+
+- mettez à jour VS Code et l'extension Claude ;
+- rechargez la fenêtre ;
+- vérifiez l'environnement du terminal intégré ;
+- testez `claude --version` dans ce terminal si vous utilisez la CLI standalone ;
+- comparez le comportement panneau Claude vs terminal.
+
+Le panneau VS Code et la CLI standalone ne doivent pas être confondus pendant le diagnostic.
+
+---
+
+## 10. JetBrains
+
+Si le problème n'apparaît que dans IntelliJ/PyCharm/etc. :
+
+- vérifiez que `claude --version` fonctionne dans l'environnement local ;
+- vérifiez la version du plugin ;
+- redémarrez l'IDE après mise à jour ;
+- contrôlez proxy et certificats de l'IDE ;
+- vérifiez le PATH visible depuis JetBrains.
+
+Le plugin JetBrains dépend de l'installation locale Claude Code.
+
+---
+
+## 11. Heap dump et diagnostic mémoire
+
+Pour un cas mémoire avancé, Claude Code propose `/heapdump`.
+
+!!! danger "Ne partagez pas un heap dump brut"
+    Un `.heapsnapshot` peut contenir de la conversation et des credentials en mémoire. Traitez-le comme un artefact sensible. Préférez un diagnostic synthétique ou les données minimales demandées par le support.
+
+---
+
+## 12. Rapport reproductible
+
+Avant d'ouvrir une issue, rassemblez :
 
 ```markdown
 ## Environnement
-- IDE: VS Code 1.85 / IntelliJ IDEA 2023.3
-- Extension/Plugin version: GitHub Copilot 1.165.0
-- OS: Windows 11 / macOS 14 / Ubuntu 22.04
+- OS :
+- Claude Code : sortie de `claude --version`
+- Surface : CLI / VS Code / JetBrains
+- Auth : abonnement Claude / Console / Bedrock / Vertex / autre
 
-## Problème
-Description claire et concise
+## Symptôme
+Description concise.
 
-## Étapes de reproduction
-1. Ouvrir un fichier .ts
-2. Taper "function get..."
-3. Attendre 3 secondes
+## Reproduction
+1. ...
+2. ...
 
-## Comportement attendu
-Suggestion de code apparaît
+## Diagnostic
+- `/doctor` :
+- `/status` :
+- `claude --safe-mode` : même problème ?
+- MCP impliqué : oui/non
 
-## Comportement observé
-Aucune suggestion, pas d'icône dans la status bar
-
-## Logs pertinents
-[Coller les lignes de log ici]
+## Erreur exacte
+Message ou extrait de log redacté.
 ```
+
+Ne joignez jamais de token, cookie, clé API ou transcription complète.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Les logs GitHub Copilot dans VS Code/JetBrains restent pertinents pour les utilisateurs Copilot, mais ils appartiennent à un autre produit et à une autre chaîne d'authentification. Utilisez la documentation GitHub pour ce diagnostic spécifique.
 
 ---
 
 ## Sources
 
-- [Troubleshooting GitHub Copilot](https://docs.github.com/en/copilot/troubleshooting-github-copilot) - consulté le 2026-06-20
+- [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
+- [Claude Code — Commands](https://code.claude.com/docs/en/commands) — consulté le 2026-09-28
+- [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Comparaison des Problèmes](comparaison-problemes.md)** : tableau comparatif détaillé des problèmes spécifiques à chaque IDE et leurs solutions différentes dans IntelliJ vs VS Code.
-
-Concepts clés couverts :
-
-- **Problèmes communs** — Rate limit, authentification, contexte insuffisant
-- **Problèmes IntelliJ** — PSI timeout, Power Save Mode, heap insuffisant
-- **Problèmes VS Code** — Conflits d'extensions, Inline Chat, .instructions.md
-- **Matrice de compatibilité** — Support des features par IDE et version
+**[Comparaison des problèmes](comparaison-problemes.md)** : identifier si le problème vient de la CLI, de VS Code, de JetBrains ou d'une couche partagée.
