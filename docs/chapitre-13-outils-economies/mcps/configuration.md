@@ -1,270 +1,264 @@
-# MCP Web local
+# MCP Web local — design `mcp-search-net`
 
-<span class="badge-expert">Expert</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-expert">Expert</span>
 
-Cette page décrit la **cible documentaire** `mcp-search-net`. Elle expose une architecture et un cahier des charges, pas nécessairement un logiciel déjà livré dans ce dépôt.
+Cette page décrit la **cible documentaire** `mcp-search-net` : un serveur MCP local de recherche et récupération Web bornée. Il s'agit d'un design et d'un contrat d'outils, pas d'une promesse qu'un serveur complet est déjà livré dans ce dépôt.
 
----
-
-## Positionnement
-
-L’objectif de la V1 est de proposer un pont MCP local, lisible et borné, pour rechercher une documentation officielle et récupérer des pages connues sans exposer plus de contexte que nécessaire.
-
-La V1 ne repose sur **aucune API commerciale obligatoire** : elle doit rester exploitable localement avec les composants documentés ici.
-
-!!! info "Périmètre"
-    Rien dans cette page ne doit être interprété comme une promesse de livraison du futur dépôt `mcp-search-net`. Ici, on documente seulement la cible, le contrat et les garde-fous.
+Le client principal documenté est désormais **Claude Code**.
 
 ---
 
-## Architecture V1
+## Objectif
+
+Le serveur doit permettre à Claude de :
+
+- rechercher des sources candidates ;
+- récupérer une URL déjà identifiée ;
+- extraire uniquement le contenu utile ;
+- conserver la provenance ;
+- appliquer des garde-fous réseau ;
+- éviter les sorties inutilement volumineuses.
+
+Il ne doit pas devenir un navigateur autonome généraliste ni un crawler sans borne.
+
+---
+
+## Architecture cible
 
 ```mermaid
-flowchart LR
-    I[IntelliJ IDEA + GitHub Copilot] --> C[Client MCP]
-    C --> T[Transport STDIO]
-    T --> F[Façade TypeScript]
-    F --> S[SearXNG]
-    F --> A[Crawl4AI]
-    F --> D[(SQLite cache)]
-    F --> R[Registre YAML de sources officielles]
-    S --> O[Sources externes]
-    A --> O
-    D --> F
-    R --> F
-    F --> E[stderr: logs]
+graph LR
+    C["Claude Code"] -->|MCP| S["mcp-search-net"]
+    S --> Q["Search backend\nex. SearXNG"]
+    S --> F["Fetcher / extractor"]
+    F --> W["Web"]
+    S --> K["Cache / provenance"]
 ```
 
-| Composant | Rôle | Remarque |
-|---|---|---|
-| Façade TypeScript | Orchestration et filtrage | Pas de logique métier lourde |
-| STDIO | Transport principal | Sorties du protocole sur `stdout` |
-| SearXNG | Recherche web | Découverte bornée de sources |
-| Crawl4AI | Récupération / extraction | Lecture ciblée de pages connues |
-| SQLite | Cache local | Accélère les répétitions |
-| Registre YAML | Gouvernance des sources | Liste validée, sans secret |
+Composants possibles :
 
-!!! warning "Aucun LLM interne en V1"
-    La V1 ne doit pas embarquer de modèle local pour raisonner à la place du client. Le serveur prépare, filtre et compacte le contexte ; il ne remplace pas l’agent principal.
+- façade MCP en TypeScript/Node ;
+- moteur de recherche local ou distant ;
+- récupérateur HTTP avec validation stricte des URL ;
+- extracteur HTML → texte/Markdown ;
+- cache léger ;
+- journal d'audit sans secrets.
+
+Le choix exact des bibliothèques est secondaire par rapport au contrat de sécurité et de sortie.
 
 ---
 
-## Outils V1
+## Contrat minimal d'outils
+
+Une V1 raisonnable peut rester très petite.
 
 ### `search_web`
 
-`search_web` sert à **découvrir** des sources à partir de mots-clés. Il doit renvoyer des résultats courts, comparables et faciles à relire.
+Entrées :
 
-| Paramètre | Valeur attendue |
-|---|---|
-| Politique par défaut | `prefer` |
-| Politique de source | `strict`, `prefer`, `any` |
-| Domaines autorisés | Liste bornée |
-| Domaines exclus | Liste bornée |
-| Langue | Selon la requête, sinon valeur explicite |
-| Filtre temporel | Optionnel et borné |
-| Résultats par défaut | 5 |
-| Résultats maximum | 10 |
-| Champs conservés | Titre, URL, domaine, statut, score |
+```json
+{
+  "query": "Claude Code MCP security",
+  "domains": ["code.claude.com"],
+  "max_results": 5
+}
+```
 
-!!! tip "Bon usage"
-    Utilise `search_web` pour trouver la bonne page, puis passe à `fetch_url` seulement si l’URL est déjà identifiée.
+Sortie attendue :
+
+```json
+{
+  "results": [
+    {
+      "title": "...",
+      "url": "https://...",
+      "snippet": "..."
+    }
+  ]
+}
+```
 
 ### `fetch_url`
 
-`fetch_url` sert à **lire** une URL connue. Il doit extraire uniquement les sections utiles et ne jamais devenir un mini-crawler.
+Entrées :
 
-| Paramètre | Valeur attendue |
-|---|---|
-| Sections par défaut | 5 |
-| Sections maximum | 10 |
-| Taille par défaut | 12 000 caractères |
-| Taille maximum | 30 000 caractères |
-| Mode | `static` ou `auto` |
-| JavaScript arbitraire | Interdit |
-| Suivi automatique des liens | Interdit |
-| `followLinks` public | Inexistant en V1 |
-| Crawl | Interdit |
+```json
+{
+  "url": "https://code.claude.com/docs/en/mcp",
+  "max_chars": 20000
+}
+```
 
-!!! note "Pourquoi séparer les deux outils"
-    `search_web` découvre. `fetch_url` lit. Cette séparation évite d’exposer trop de contenu, limite le contexte envoyé à Copilot et réduit les appels inutiles. Crawl4AI reste interne à la façade ; Copilot ne voit que les deux outils V1.
+Sortie : contenu nettoyé + URL canonique + métadonnées minimales.
+
+!!! tip "Deux outils valent mieux qu'un crawler opaque"
+    Séparer découverte et récupération rend les permissions, logs et limites plus lisibles.
 
 ---
 
-## Statut des sources
+## Intégration Claude Code
 
-| Statut | Signification |
-|---|---|
-| `VERIFIED_OFFICIAL` | Domaine officiel confirmé et pertinent pour la page |
-| `LIKELY_OFFICIAL` | Domaine très probable, mais à revalider si le contenu est critique |
-| `THIRD_PARTY` | Source utile, mais non officielle |
-| `UNKNOWN` | Source non classée ou insuffisamment fiable |
+Pour un serveur projet partagé, utilisez `.mcp.json` à la racine du dépôt.
 
-!!! warning "Positionnement du classement"
-    Un résultat en première position n’est pas automatiquement officiel. Le classement dépend de la requête, du moteur et des signaux de pertinence.
+Exemple conceptuel pour un serveur `stdio` :
+
+```json
+{
+  "mcpServers": {
+    "search-net": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["./tools/mcp-search-net/dist/index.js"]
+    }
+  }
+}
+```
+
+!!! warning "Exemple à adapter"
+    Vérifiez toujours le format courant de la documentation Claude MCP avant copie dans un environnement de production. Ne stockez pas de secret directement dans `.mcp.json` versionné.
+
+Dans Claude Code :
+
+```text
+/mcp
+```
+
+permet de vérifier la connexion et l'authentification.
 
 ---
 
-## Registre YAML
+## Sorties et coût de contexte
 
-Exemple documentaire sans secret :
+Le serveur doit renvoyer **le minimum suffisant** :
 
-```yaml
-sources:
-  github:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - docs.github.com
-  jetbrains:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - www.jetbrains.com
-      - plugins.jetbrains.com
-  mcp:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - modelcontextprotocol.io
-      - spec.modelcontextprotocol.io
-  java_openjdk:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - openjdk.org
-      - jdk.java.net
-      - docs.oracle.com
-  quarkus:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - quarkus.io
-      - docs.quarkus.io
-  sonar:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - docs.sonarsource.com
-      - sonarsource.com
-  maven:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - maven.apache.org
-  javafx:
-    status: VERIFIED_OFFICIAL
-    domains:
-      - openjfx.io
+- quelques résultats de recherche ;
+- extraits courts ;
+- contenu nettoyé ;
+- limites de taille explicites ;
+- possibilité de demander la suite plutôt que tout renvoyer.
+
+Claude Code avertit lorsque des réponses MCP deviennent très volumineuses et expose des mécanismes de contrôle de taille côté client. Le serveur doit malgré tout borner ses propres sorties : la sécurité et la qualité ne doivent pas dépendre uniquement du client.
+
+---
+
+## Garde-fous SSRF
+
+Pour `fetch_url`, bloquez par défaut :
+
+- `localhost` ;
+- loopback IPv4/IPv6 ;
+- réseaux privés RFC1918 ;
+- link-local ;
+- metadata endpoints cloud ;
+- schémas autres que HTTP(S) sauf besoin explicite ;
+- redirections vers une destination interdite.
+
+Validez **chaque redirection**, pas seulement l'URL initiale.
+
+---
+
+## Prompt injection Web
+
+Le contenu récupéré est **non fiable**. Une page peut contenir des instructions destinées à détourner un agent.
+
+Le serveur peut aider en :
+
+- séparant métadonnées et contenu ;
+- supprimant scripts/styles inutiles ;
+- conservant la provenance ;
+- n'exécutant jamais le contenu de la page ;
+- évitant de transformer une page en instruction système.
+
+Claude doit traiter le texte récupéré comme **donnée**, pas comme autorité sur les instructions de la session.
+
+---
+
+## Secrets et environnement des subprocess
+
+Un serveur `stdio` local est un subprocess. Évitez qu'il hérite de credentials dont il n'a pas besoin.
+
+Claude Code fournit notamment des options de durcissement de l'environnement des subprocess/MCP. Dans un contexte sensible, utilisez une allowlist d'environnement ou le mécanisme de scrubbing recommandé par la documentation actuelle.
+
+Principe :
+
+```text
+MCP search Web
+→ pas besoin d'ANTHROPIC_API_KEY
+→ ne pas lui transmettre cette variable
 ```
 
 ---
 
-## Cache
+## Cache et provenance
 
-- Recherche : environ **1 heure** par défaut.
-- Documentation : environ **24 heures** par défaut.
-- Les validations HTTP doivent exploiter `ETag` et `Last-Modified` quand ils existent.
-- Un hash de contenu permet de détecter les changements réels.
-- Le cache doit être désactivable.
-- Le cache V1 reste un cache d’accès et d’extraction ; le cache V2 devient un cache d’index et de fraîcheur documentaire.
+Si un cache est utilisé, conservez au minimum :
 
-!!! tip "Bon compromis"
-    Un bon cache réduit les appels, mais il ne doit pas masquer les mises à jour officielles. Pour les sources critiques, un délai court et une revalidation restent préférables.
+```text
+URL canonique
+horodatage de récupération
+status HTTP
+content-type
+hash du contenu
+```
 
----
-
-## Sécurité
-
-- Autoriser uniquement `http` et `https`.
-- Bloquer `localhost`.
-- Bloquer les réseaux privés.
-- Bloquer les adresses link-local.
-- Vérifier le DNS avant et pendant la récupération.
-- Revalider chaque redirection.
-- Limiter la taille de la réponse.
-- Appliquer un timeout court.
-- Nettoyer le HTML avant l’extraction.
-- Considérer tout contenu externe comme non fiable.
-- Réserver `stdout` au protocole STDIO.
-- Envoyer les logs sur `stderr`.
-
-!!! danger "SSRF"
-    Un serveur MCP web qui ne borne pas ses destinations peut devenir une surface SSRF. Les filtres réseau et DNS font partie du contrat, pas d’un détail d’implémentation.
+Ne présentez pas un document mis en cache comme « actuel » sans afficher sa date de récupération.
 
 ---
 
-## Formats pris en charge
+## Tests minimaux
 
-| V1 | Hors V1 |
-|---|---|
-| HTML | OCR |
-| Markdown | Connexion authentifiée à des formulaires |
-| Texte | CAPTCHA |
-| JSON | Crawl complet sans borne |
-| XML | Base vectorielle |
-| YAML | Embeddings |
-| README GitHub | Automatisation générale de navigateur |
-| PDF textuel |  |
-| Sitemap |  |
-| `robots.txt` |  |
-| `llms.txt` |  |
+### Fonctionnels
 
----
+- recherche bornée ;
+- récupération HTML ;
+- redirection valide ;
+- page vide ;
+- timeout ;
+- contenu trop volumineux.
 
-## Environnement
+### Sécurité
 
-| Élément | Statut / remarque |
-|---|---|
-| IntelliJ IDEA | IDE principal de référence |
-| GitHub Copilot | Client IA principal |
-| Node.js LTS | Version à vérifier au moment de l’implémentation |
-| npm | Gestionnaire de paquets de référence |
-| Docker Desktop | Environnement local de travail |
-| Docker Compose | Orchestration locale de V1 |
-| Windows | Poste de référence du dépôt |
-| Linux | Portabilité attendue |
-| IDE obligatoire pour construire et tester | Non |
+- localhost bloqué ;
+- `127.0.0.1` bloqué ;
+- `::1` bloqué ;
+- IP privée après résolution DNS bloquée ;
+- redirection vers IP privée bloquée ;
+- credentials absents des logs ;
+- schémas non autorisés refusés.
 
-!!! note "Portabilité"
-    Le cahier des charges doit rester testable depuis la ligne de commande, même si IntelliJ IDEA reste l’environnement principal du dépôt.
+### Contrat MCP
+
+- schémas d'entrée stricts ;
+- erreurs structurées ;
+- timeouts ;
+- sortie bornée ;
+- arrêt propre du serveur.
 
 ---
 
-## V2 documentaire
+## Ce que la V1 ne doit pas faire
 
-La V2 vise un index documentaire local plus riche.
+- crawl récursif sans limite ;
+- contourner CAPTCHA/paywall ;
+- exécuter JavaScript arbitraire par défaut ;
+- écrire sur des sites distants ;
+- recevoir tous les secrets du shell ;
+- résumer avec un second LLM interne sans besoin explicite ;
+- masquer l'URL source.
 
-- Indexation.
-- Catalogue.
-- Recherche multi-document.
-- Synchronisation du corpus.
-- Gestion des versions.
-- Statut de fraîcheur.
-- Priorité à SQLite FTS5 ou BM25 avant les embeddings.
-- Réduction du risque d’obsolescence documentaire.
+---
 
-!!! warning "Risque principal"
-    Le risque de V2 n’est pas seulement technique. C’est surtout l’obsolescence du corpus si les sources ne sont pas revalidées régulièrement.
+## GitHub Copilot — compatibilité
+
+La même architecture MCP peut être réutilisable avec Copilot si son client MCP supporte le transport et le contrat concernés. Ne supposez pas toutefois que scopes, permissions, auth ou UI sont identiques à Claude Code.
 
 ---
 
 ## Sources
 
-- [Model Context Protocol](https://modelcontextprotocol.io/)
-- [MCP Specification](https://spec.modelcontextprotocol.io/)
-- [GitHub Copilot documentation](https://docs.github.com/copilot)
-- [GitHub Copilot et MCP dans l’IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp)
-- [Documentation SearXNG](https://docs.searxng.org/)
-- [Documentation Crawl4AI](https://docs.crawl4ai.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
-- [Node.js releases](https://nodejs.org/en/about/releases/)
-- [TypeScript documentation](https://www.typescriptlang.org/docs/)
-
----
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+- [Claude Code — Environment variables](https://code.claude.com/docs/en/env-vars) — consulté le 2026-09-28
+- [Model Context Protocol](https://modelcontextprotocol.io/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[MCP Web gratuit et à quota](./serveurs.md)** : comparer Tavily et Firecrawl pour les besoins simples, les cas de secours et les extractions plus complexes.
-
-Concepts clés couverts :
-
-- **V1 locale** — façade TypeScript, STDIO et cache SQLite
-- **Outillage borné** — peu d’outils, résultats compacts
-- **Sécurité réseau** — bloquer les cibles risquées et contrôler les redirections
-- **V2 documentaire** — indexer et suivre la fraîcheur du corpus
-
-
+**[Serveurs externes](serveurs.md)** : utiliser un service managé lorsque construire et maintenir `mcp-search-net` n'est pas justifié.
