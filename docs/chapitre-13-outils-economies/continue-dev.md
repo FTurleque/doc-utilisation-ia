@@ -1,173 +1,104 @@
-# Continue.dev
+# Continue — référence legacy
 
-<span class="badge-beginner">Débutant</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-beginner">Débutant</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Continue.dev est un assistant IA open source pour VS Code et JetBrains.
-Son point fort: tu choisis le modèle (local ou cloud) selon la tâche,
-sans être enfermé dans un seul fournisseur.
+Continue a été un assistant IA open source important pour VS Code, JetBrains et la CLI. **En 2026, il ne doit plus être présenté comme une solution activement développée à adopter par défaut.**
 
----
+Le dépôt officiel `continuedev/continue` indique qu'il n'est plus activement maintenu et que la **version 2.0.0 est la release finale**. L'organisation Continue indique également avoir été **acquise par Cursor**.
 
-## À quoi sert Continue.dev
-
-Continue.dev sert à orchestrer plusieurs usages dans l'IDE:
-
-- **Chat contextualisé** sur un fichier, un dossier ou une base de code
-- **Édition guidée** (refactoring, tests, documentation)
-- **Autocomplétion** avec un modèle dédié
-- **Routage de modèles** (ex: local pour simple, cloud pour complexe)
-
-!!! info "Positionnement"
-    Continue.dev ne remplace pas forcément Copilot partout. Il est excellent pour découpler les usages : modèle local pour le quotidien, puis Copilot sur les cas difficiles (coût AI Credits plus élevé selon le modèle choisi).
+Cette page est donc conservée comme **référence legacy** pour les installations existantes et pour comprendre les anciennes stacks locales Ollama/Continue.
 
 ---
 
-## Quand l'utiliser
+## Que faire si vous utilisez déjà Continue ?
 
-- Quand tu veux un chat local ou hybride dans l'IDE
-- Quand tu veux choisir le modèle selon la tâche
-- Quand tu veux réduire les crédits IA consommés par les questions simples
+Vous pouvez continuer à exploiter une installation existante tant qu'elle répond à vos besoins, mais traitez-la comme une dépendance à durée de vie limitée :
 
-## Quand l'éviter
+- épinglez la version utilisée ;
+- archivez votre configuration ;
+- testez vos workflows après chaque mise à jour IDE ;
+- n'attendez pas de nouvelles fonctions ou corrections régulières ;
+- préparez une stratégie de remplacement.
 
-- Quand tu n'as pas encore d'endpoint local ou de provider configuré
-- Quand la tâche demande une orchestration très simple sans chat
-- Quand tu veux uniquement de la complétion inline et rien d'autre
+Le README officiel recommande désormais plutôt le **Continue CLI** que le plugin JetBrains pour les utilisateurs qui restent sur la version finale.
 
 ---
 
-## Mise en œuvre
+## Ancien positionnement
 
-### Installation
+Continue permettait notamment de choisir différents fournisseurs/modèles pour :
 
-=== "Visual Studio Code"
-    1. Ouvrir les extensions (++ctrl+shift+x++).
-    2. Installer **Continue**.
-    3. Ouvrir le panneau Continue dans la barre latérale.
+- chat ;
+- édition ;
+- autocomplétion ;
+- workflows CLI ;
+- modèles locaux via Ollama.
 
-=== "IntelliJ IDEA"
-    1. Ouvrir **Settings -> Plugins -> Marketplace**.
-    2. Rechercher **Continue** puis installer le plugin.
-    3. Redémarrer l'IDE.
+Cette architecture reste instructive : séparer le client IDE du moteur d'inférence permet de choisir un modèle local ou cloud par usage.
 
-### Configuration minimale
+Mais ne construisez pas une nouvelle stratégie d'équipe 2026 autour de Continue sans accepter explicitement son statut de maintenance.
 
-Continue lit une configuration qui permet de séparer chat et autocomplétion.
-Exemple type (à adapter selon ta version de config) :
+---
 
-```json
-{
-  "models": [
-    {
-      "title": "Chat local Mistral",
-      "provider": "ollama",
-      "model": "mistral",
-      "apiBase": "http://localhost:11434"
-    }
-  ],
-  "tabAutocompleteModel": {
-    "title": "Complétion locale rapide",
-    "provider": "ollama",
-    "model": "starcoder2:3b"
-  }
-}
+## Continue + Ollama — installation existante
+
+Pour une installation déjà en place, la configuration moderne utilise `config.yaml`. Le fournisseur Ollama pointe typiquement vers :
+
+```yaml
+models:
+  - name: local-model
+    provider: ollama
+    model: <modele-installe>
+    apiBase: http://localhost:11434
 ```
 
-!!! tip "Avec quels outils le combiner"
-    - **[Ollama](ollama.md)** pour un usage 100% local
-    - **[LM Studio](lm-studio.md)** si tu préfères une interface graphique
-    - **[RTK](rtk.md)** pour réduire le bruit des sorties terminal avant de les coller dans le chat
-
-### Continue.dev et GitHub Copilot en parallèle
-
-Oui, tu peux utiliser Continue.dev et GitHub Copilot en parallèle dans le
-même IDE.
-
-- **Configuration recommandée**: Copilot pour la complétion inline,
-  Continue.dev pour le chat
-- **Alternative**: Continue.dev pour le local-first, Copilot pour les cas
-  complexes
-
-!!! warning "Éviter les conflits de suggestions"
-    Si plusieurs outils de complétion inline sont actifs en même temps, les
-    suggestions peuvent se chevaucher. Garde un seul moteur principal de
-    complétion inline et réserve les autres outils au chat.
+Vérifiez la configuration réellement acceptée par votre release finale : les formats de configuration ont changé au cours de la vie du projet.
 
 ---
 
-## Cas d'usage pertinents
+## Migration vers le parcours principal du dépôt
 
-- **Explication de code**: "explique cette classe et ses dépendances"
-- **Génération de tests**: produire un squelette de tests unitaires
-- **Refactoring localisé**: renommer, simplifier, documenter une zone précise
-- **Préparation de PR**: brouillon de description et checklist de vérification
-
-Cas moins adaptés :
-
-- Raisonnement architecture critique sans validation humaine
-- Modifications massives multi-modules sans revue CI/tests
-
----
-
-## Exploiter son plein potentiel
-
-1. **Modèle par type de tâche**
-   - Local (Ollama/LM Studio) pour Q/R simples et reformulation
-   - Cloud pour debug complexe ou raisonnement long
-2. **Contexte strictement utile**
-   - Sélectionner seulement les fichiers concernés
-   - Éviter d'envoyer des logs bruts non filtrés
-3. **Workflow équipe**
-   - Versionner une config commune
-   - Définir un standard de prompts (objectif, contraintes, résultat attendu)
-4. **Boucle de vérification**
-   - Toujours valider avec tests, linter, build
-
----
-
-## Exemple concret
+Pour les nouveaux projets de cette documentation :
 
 ```text
-Contexte:
-- Fichier: src/payment/checkout.ts
-- Erreur: timeout sur provider externe
-
-Demande à Continue:
-"Propose un refactoring minimal pour isoler la gestion de timeout,
-ajoute 3 tests unitaires, et garde le comportement actuel."
+Claude Code
+├── CLAUDE.md / rules / skills
+├── MCP pour les services externes
+├── RTK si les sorties terminal sont trop volumineuses
+└── outils locaux séparés si une tâche justifie une inférence hors cloud
 ```
 
-```bash
-# Avant d'envoyer les logs à Continue, réduire le bruit
-rtk npm test
-```
+Ollama ou LM Studio peuvent toujours être utilisés comme **outils locaux complémentaires**, sans faire de Continue une dépendance centrale.
 
 ---
 
-## Résumé
+## Alternatives pour une installation legacy
 
-Continue.dev sert de couche d'orchestration entre l'IDE et les modèles.
-Il devient très puissant combiné avec un modèle local, des prompts courts,
-et un filtrage du contexte avant toute analyse IA.
+Lors d'une migration, distinguez le besoin :
+
+| Besoin historique Continue | Remplacement à évaluer |
+|---|---|
+| Agent principal sur le dépôt | Claude Code |
+| Modèle local ponctuel | Ollama ou LM Studio + client adapté |
+| Procédure spécialisée | Claude Skills / OpenSkills |
+| Accès outil/API | MCP |
+| Qualité statique | SonarQube / linters / IDE |
+
+Le choix d'un autre assistant complet (Cursor, Windsurf, etc.) doit faire l'objet d'une évaluation distincte plutôt que d'être présenté comme équivalent automatique.
+
+---
+
+## Copilot — référence conservée
+
+Certaines anciennes configurations associaient Continue au chat et Copilot à la complétion inline. Elles restent documentables pour les environnements existants, mais ne constituent plus le workflow recommandé du dépôt.
 
 ---
 
 ## Sources
 
-- Documentation officielle: [Continue Docs](https://docs.continue.dev/) (consulté le 2026-06-07)
-- Site officiel: [continue.dev](https://www.continue.dev/) (consulté le 2026-06-07)
-- Dépôt officiel: [continuedev/continue](https://github.com/continuedev/continue) (consulté le 2026-06-07)
-- Extension VS Code: [Continue sur Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue) (consulté le 2026-06-07)
-
----
+- [Continue — dépôt officiel](https://github.com/continuedev/continue) — consulté le 2026-09-28
+- [Organisation Continue sur GitHub](https://github.com/continuedev) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Ollama](ollama.md)** : lancer des modèles localement pour alimenter Continue.dev sans consommer de crédits IA.
-
-Concepts clés couverts :
-
-- **Exécution locale** - faire tourner un LLM sur ta machine
-- **Choix de modèle** - adapter qualité, vitesse et RAM
-- **API locale** - connecter l'IDE via `http://localhost:11434`
-- **Confidentialité** - limiter la sortie de données vers le cloud
+**[Ollama](ollama.md)** pour une brique d'inférence locale toujours active, ou **[LM Studio](lm-studio.md)** pour une approche locale avec interface graphique et serveur API.
