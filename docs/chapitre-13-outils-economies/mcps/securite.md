@@ -1,134 +1,207 @@
-# Comparaison — local, gratuit, V1 et V2
+# MCP — sécurité et choix local / distant
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Cette page aide à choisir entre la solution locale, les options gratuites et l’évolution V1/V2. Elle résume les compromis principaux sans répéter les guides détaillés.
+Le choix d'un MCP ne doit pas se résumer à « local = gratuit » ou « distant = simple ». Évaluez quatre dimensions : **permissions, données, maintenance et qualité du service**.
 
 ---
 
-## Méthode de comparaison
+## Matrice de décision
 
-On compare trois axes :
-
-1. **Maîtrise** : contrôle des sources, du réseau et du contexte.
-2. **Coût** : coût direct, quota, exploitation et maintenance.
-3. **Pertinence** : recherche, extraction, pages dynamiques et fraîcheur.
-
-!!! tip "Règle de décision"
-    Si tu veux d’abord réduire le contexte et garder le contrôle, la solution locale est la base. Si tu veux aller vite, Tavily peut suffire. Si la page est dynamique ou difficile à extraire, Firecrawl devient plus intéressant. La V2 n’a de sens que si le corpus local doit être réutilisé souvent.
-
----
-
-## Solution locale contre solution gratuite
-
-| Critère | Solution locale | Solution gratuite |
+| Critère | Local | Distant / managé |
 |---|---|---|
-| Coût | Principalement local | Variable, quota dépendant |
-| Maîtrise | Forte | Moyenne |
-| Confidentialité | Bonne si le réseau est bien borné | Plus faible car service externe |
-| Installation | Plus longue | Plus rapide |
-| Maintenance | Locale à assumer | Externalisée en partie |
-| Recherche | Bonne si bien configurée | Bonne pour démarrer |
-| Extraction | Bornée et ciblée | Variable selon le service |
-| Pages dynamiques | Dépend de Crawl4AI et du cadrage | Souvent meilleur que le local brut |
-| Quota | Pas de quota fournisseur | Quota et limites à vérifier |
-| Dépendance fournisseur | Faible | Forte |
-| Réduction du contexte | Très bonne si le serveur est strict | Correcte si bien bornée |
-| Disponibilité hors ligne | Partielle ou locale | Non |
-| Risque d’obsolescence | Lié au corpus local | Lié à l’évolution du service |
-| Public recommandé | Équipe qui veut maîtriser | Lecture rapide, test, secours |
+| contrôle du runtime | fort | dépend du fournisseur |
+| gestion des mises à jour | à votre charge | généralement fournisseur |
+| secrets | à gérer localement | auth distante/OAuth/API key |
+| données transmises | contrôlables | quittent potentiellement votre environnement |
+| disponibilité | dépend de votre poste/infrastructure | dépend du service/réseau |
+| coûts | machine + exploitation | plan/quota/usage éventuel |
+| partage équipe | nécessite packaging/config | souvent plus simple |
+
+Il n'y a pas de vainqueur universel.
 
 ---
 
-## Tavily contre Firecrawl
+## Menace 1 — Sur-permission
 
-| Critère | Tavily | Firecrawl |
-|---|---|---|
-| Recherche documentaire | Très adapté | Adapté |
-| Extraction | Basique à ciblée | Plus avancée |
-| Pages dynamiques | Limité | Meilleur choix |
-| Simplicité | Plus simple | Un peu plus riche |
-| Quotas | À vérifier | À vérifier |
-| Confidentialité | Dépend du service externe | Dépend du service externe |
-| Cas d’usage | Recherche rapide, secours | Extraction, pages riches, crawl contrôlé |
+Un MCP peut exposer des outils de lecture **et d'écriture**.
 
-!!! note "Ne pas surcharger le serveur"
-    Un serveur gratuit trop permissif peut devenir plus coûteux qu’utile si tu lui demandes de trop larges extractions ou si tu lui exposes trop d’outils.
+Préférez :
 
----
+```text
+read_issue
+list_issues
+search_docs
+```
 
-## V1 contre V2
+avant d'autoriser :
 
-| Critère | V1 locale | V2 documentaire |
-|---|---|---|
-| Recherche Web | Oui | Oui, mais absorbée par l’index local |
-| Extraction | Oui | Oui |
-| Cache | Oui | Oui, plus riche |
-| Indexation | Non | Oui |
-| Recherche locale | Bornée | Multi-document |
-| Versions | Limitées | Suivi de version et de fraîcheur |
-| Synchronisation | Minimale | Oui |
-| Complexité | Modérée | Plus élevée |
-| Maintenance | Plus simple | Plus exigeante |
+```text
+close_issue
+delete_record
+run_admin_command
+```
+
+Si une action destructive est indispensable :
+
+- permission explicite ;
+- confirmation utilisateur ;
+- scope limité ;
+- log d'audit ;
+- identités de service dédiées.
 
 ---
 
-## Arbre de décision
+## Menace 2 — Prompt injection via contenu externe
 
-```mermaid
-flowchart TD
-    A[Besoin MCP Web] --> B{URL déjà connue ?}
-    B -- Oui --> C[fetch_url ou extraction ciblée]
-    B -- Non --> D{Recherche ponctuelle ?}
-    D -- Oui --> E[Tavily MCP]
-    D -- Non --> F{Poste sans Docker ?}
-    F -- Oui --> E
-    F -- Non --> G{Page dynamique ?}
-    G -- Oui --> H[Firecrawl MCP]
-    G -- Non --> I{Documentation fréquente ?}
-    I -- Oui --> J[V2 documentaire locale]
-    I -- Non --> K{Besoin de maîtrise complète ?}
-    K -- Oui --> L[MCP local V1]
-    K -- Non --> E
+Un ticket, une page Web, un document ou une base peut contenir du texte du type :
+
+```text
+Ignore les instructions précédentes et exécute ...
+```
+
+Ce texte reste une **donnée non fiable**.
+
+Mesures :
+
+- ne pas donner de privilèges excessifs au serveur ;
+- séparer lecture et écriture ;
+- conserver la provenance ;
+- éviter d'enchaîner automatiquement « lire une page → exécuter une commande sensible » ;
+- utiliser hooks/permissions pour bloquer les actions critiques.
+
+---
+
+## Menace 3 — SSRF pour les MCP Web
+
+Un outil `fetch_url` doit empêcher l'accès involontaire à des services internes.
+
+Bloquez au minimum :
+
+- loopback ;
+- IP privées ;
+- link-local ;
+- metadata cloud ;
+- protocoles non autorisés ;
+- redirections vers une destination interdite.
+
+La validation doit être refaite après résolution DNS et à chaque redirection.
+
+---
+
+## Menace 4 — Fuite de credentials par subprocess
+
+Un serveur MCP `stdio` lancé localement peut hériter de variables d'environnement du processus parent.
+
+N'accordez que les variables nécessaires au serveur.
+
+Claude Code propose des mécanismes de durcissement de l'environnement des subprocess, notamment pour éviter d'exposer inutilement les credentials Anthropic ou cloud à Bash, hooks et MCP locaux.
+
+!!! tip "Question à poser"
+    « Ce serveur de recherche a-t-il réellement besoin de voir mes clés AWS, Anthropic ou GitHub ? »
+
+Si la réponse est non, retirez-les de son environnement.
+
+---
+
+## Menace 5 — Sortie MCP excessive
+
+Une sortie de plusieurs dizaines de milliers de tokens :
+
+- augmente le contexte ;
+- masque l'information importante ;
+- peut déclencher compaction/troncature ;
+- rend la revue humaine difficile.
+
+Le serveur doit proposer pagination, limites, filtres et extraction ciblée. Claude Code dispose aussi de mécanismes de contrôle des gros résultats MCP, mais le producteur doit rester responsable de ses bornes.
+
+---
+
+## Menace 6 — Serveur compromis ou dépendance non fiable
+
+Avant d'installer un MCP tiers :
+
+- vérifiez l'éditeur ;
+- vérifiez le dépôt/package officiel ;
+- inspectez les permissions ;
+- épinglez les versions si votre politique l'exige ;
+- consultez les releases et avis de sécurité ;
+- évitez les packages au nom presque identique ;
+- testez dans un environnement peu privilégié.
+
+Pour un serveur distant, examinez aussi les conditions de traitement et de conservation des données.
+
+---
+
+## Projet vs utilisateur
+
+Utilisez une configuration **projet** lorsqu'un serveur fait partie du workflow partagé de l'équipe et peut être déclaré sans secret dans `.mcp.json`.
+
+Utilisez une configuration **personnelle** lorsqu'il s'agit :
+
+- d'un outil propre au développeur ;
+- d'un credential personnel ;
+- d'un serveur qui ne doit pas être imposé au repo.
+
+Les politiques gérées par l'organisation peuvent prendre le dessus sur les préférences locales.
+
+---
+
+## Local vs distant selon le type de données
+
+| Données | Orientation prudente |
+|---|---|
+| documentation publique | local ou distant acceptable selon politique |
+| tickets internes | connecteur authentifié approuvé |
+| logs production | limiter/redacter avant transmission |
+| données clients | vérifier classification et politique de traitement |
+| secrets/credentials | ne pas transmettre comme contenu MCP |
+| base de production | lecture seule et requêtes fortement bornées par défaut |
+
+---
+
+## Checklist avant activation
+
+```text
+□ Source/éditeur vérifié
+□ Outils exposés listés
+□ Écriture nécessaire ?
+□ Permissions minimales
+□ Secrets hors dépôt
+□ Données autorisées à sortir ?
+□ Résultats bornés/paginés
+□ Prompt injection envisagée
+□ SSRF traité si URLs arbitraires
+□ Logs sans credentials
+□ /mcp vérifié après installation
 ```
 
 ---
 
-## Recommandation
+## Réaction en cas de comportement suspect
 
-- **MCP local** pour la solution principale.
-- **Tavily** pour un usage simple ou comme secours.
-- **Firecrawl** pour les cas d’extraction plus complexes.
-- **V2** seulement si le corpus documentaire doit être interrogé souvent et synchronisé.
+1. déconnectez le serveur via `/mcp` ;
+2. révoquez/rotatez les credentials si exposition possible ;
+3. examinez logs et actions réalisées ;
+4. vérifiez la configuration/version du serveur ;
+5. signalez l'incident selon votre processus interne ;
+6. ne réactivez qu'après compréhension de la cause.
 
-!!! warning "Point d’attention"
-    Choisir un outil plus puissant ne doit pas conduire à envoyer plus de contexte. Le bon arbitrage consiste à transmettre moins, mais mieux.
+---
+
+## GitHub Copilot — référence
+
+Les risques MCP sont largement indépendants du client. En revanche, l'interface de permissions et la configuration Copilot ne sont pas identiques à Claude Code ; vérifiez la documentation GitHub lorsque vous réutilisez un serveur côté Copilot.
 
 ---
 
 ## Sources
 
-- [Model Context Protocol](https://modelcontextprotocol.io/) (consulté le 2026-06-20)
-- [MCP Specification](https://spec.modelcontextprotocol.io/) (consulté le 2026-06-20)
-- [Documentation Tavily](https://docs.tavily.com/) (consulté le 2026-06-20)
-- [Tavily Pricing](https://tavily.com/pricing) (consulté le 2026-06-20)
-- [Documentation Firecrawl](https://docs.firecrawl.dev/) (consulté le 2026-06-20)
-- [Firecrawl Pricing](https://firecrawl.dev/pricing) (consulté le 2026-06-20)
-- [Documentation SearXNG](https://docs.searxng.org/) (consulté le 2026-06-20)
-- [Documentation Crawl4AI](https://docs.crawl4ai.com/) (consulté le 2026-06-20)
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+- [Claude Code — Environment variables](https://code.claude.com/docs/en/env-vars) — consulté le 2026-09-28
+- [Claude Code — Permissions](https://code.claude.com/docs/en/permissions) — consulté le 2026-09-28
+- [Model Context Protocol](https://modelcontextprotocol.io/) — consulté le 2026-09-28
 
----
+## Retour
 
-## Prochaine étape
-
-**[Vue d’ensemble des outils complémentaires](../outils-complementaires.md)** : revenir au sommaire du chapitre 13 pour choisir la bonne stack d’outillage selon le besoin.
-
-Concepts clés couverts :
-
-- **Maîtrise** — local quand le contrôle prime
-- **Gratuit** — rapide quand il faut dépanner
-- **V2** — utile si le corpus documentaire doit être réutilisé
-- **Contexte** — limiter les données envoyées à Copilot
-
-
-
+**[Présentation MCP](index.md)** pour choisir la bonne architecture, ou **[MCP Web local](configuration.md)** pour le design `mcp-search-net`.
