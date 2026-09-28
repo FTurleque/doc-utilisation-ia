@@ -1,233 +1,132 @@
-# Historique des restrictions & évolutions GitHub Copilot
+# Historique GitHub Copilot — plans, limites et facturation
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-!!! info "Objet de cette page"
-    Cette page trace les **changements décidés par GitHub dans son produit**, avec une date précise et une source officielle vérifiable.
-    Elle ne documente pas les modifications de cette documentation, mais l'évolution réelle de l'offre Copilot.
-    Utilisez-la pour **comparer ce qui était accessible hier et ce qui est restreint aujourd'hui**.
+Cette page est un **registre historique Copilot**. Elle conserve les changements de produit utiles pour comprendre pourquoi certaines anciennes captures, procédures ou comparaisons ne correspondent plus à l'offre actuelle.
 
-!!! tip "Cadence de maintenance"
-    Mise à jour à chaque annonce majeure. Source de surveillance : [GitHub Copilot Changelog](https://github.blog/changelog/?label=copilot).
+!!! info "Comment lire cette page"
+    Une entrée décrit l'état annoncé à une date donnée. Elle ne doit pas être interprétée comme l'état actuel sans vérifier la documentation GitHub récente.
 
 ---
 
-## Pourquoi ce registre existe
+## État actuel à retenir
 
-L'offre GitHub Copilot évolue rapidement. Des modèles autrefois inclus dans un abonnement standard deviennent des modèles avancés à coût plus élevé. Des fonctionnalités réservées aux équipes payantes disparaissent de l'accès individuel. Des quotas autrefois souples sont maintenant strictement appliqués.
+Depuis le **1er juin 2026**, le modèle principal de facturation Copilot est basé sur les **GitHub AI Credits**. Les plans disposent d'une allocation mensuelle et l'usage additionnel peut être contrôlé par des budgets. Les anciens **premium requests** ne subsistent que pour certains abonnements annuels legacy.
 
-Ce registre documente ces changements **avec des preuves**, pour permettre à une équipe ou une direction de mesurer concrètement le coût de l'attente.
-
----
-
-## Timeline des changements GitHub Copilot (2026 → 2024)
-
-### 2026-06-01 — Bascule vers la facturation AI Credits (planifié)
-
-- **Catégorie** : Tarification — changement de modèle
-- **Plan impacté** : Tous les plans
-- **Avant** : facturation basée sur des **premium requests** (quota mensuel fixe par plan)
-- **Après** : facturation basée sur les **AI Credits** — 1 AI Credit = $0,01 USD, consommation proportionnelle aux tokens utilisés et au modèle choisi
-- **Ce que ça signifie** : la prévisibilité du budget disparaît partiellement. Un même usage peut coûter différemment selon le modèle sélectionné. Les équipes sans culture de pilotage de la consommation IA seront les plus exposées.
-- **Source** : [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans), [Usage-based billing (individuels)](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals)
+Voir [AI Credits — référence Copilot](premium-requests.md) pour le fonctionnement actuel.
 
 ---
 
-### 2026-05-01 — Dépréciation annoncée de GPT-5.2 et GPT-5.2-Codex
+## Timeline vérifiée
 
-- **Catégorie** : Modèles IA — obsolescence accélérée
-- **Plan impacté** : Pro, Business, Enterprise
-- **Avant** : GPT-5.2 et GPT-5.2-Codex disponibles et utilisables
-- **Après** : annonce de leur suppression à venir — les utilisateurs qui ont intégré ces modèles dans leurs workflows doivent migrer
-- **Ce que ça signifie** : le cycle de vie des modèles dans Copilot s'accélère. Un modèle peut devenir obsolète en quelques mois, forçant des adaptations régulières.
-- **Source** : [Changelog GitHub — 2026-05-01](https://github.blog/changelog/2026-05-01-upcoming-deprecation-of-gpt-5-2-and-gpt-5-2-codex)
+### 2026-06-01 — AI Credits généralisés
 
----
+GitHub a activé la facturation basée sur l'usage pour tous les plans Copilot :
 
-### 2026-04-24 — GPT-5.5 disponible en GA — modèle avancé à multiplicateur élevé
+- consommation mesurée en GitHub AI Credits ;
+- allocation mensuelle incluse selon le plan ;
+- budget additionnel configurable ;
+- contrôles budgétaires plus fins ;
+- Copilot code review consomme aussi des minutes GitHub Actions sur les dépôts privés, en plus des AI Credits.
 
-- **Catégorie** : Modèles IA / Tarification
-- **Plan impacté** : Business, Enterprise (uniquement)
-- **Avant** : GPT-5.4 comme modèle OpenAI le plus récent
-- **Après** : GPT-5.5 GA — réservé aux plans Business et Enterprise, avec un **multiplicateur de consommation de 7,5× par rapport au modèle de base**
-- **Ce que ça signifie** : chaque interaction avec GPT-5.5 consomme 7,5 fois plus d'AI Credits que les modèles standard. Un modèle de pointe est maintenant doublement réservé : par plan ET par coût de consommation.
-- **Source** : [Changelog GitHub — 2026-04-24](https://github.blog/changelog/2026-04-24-gpt-5-5-is-generally-available-for-github-copilot)
+**Source :** [GitHub Changelog — Updates to GitHub Copilot billing and plans](https://github.blog/changelog/2026-06-01-updates-to-github-copilot-billing-and-plans/)
 
 ---
 
-### 2026-04-22 — Nouvelles inscriptions Business self-serve suspendues
+### 2026-04-20 — modifications temporaires des plans individuels
 
-- **Catégorie** : Politique d'accès
-- **Plan impacté** : Business (organisations sur GitHub Free et GitHub Team)
-- **Avant** : possibilité de souscrire à Copilot Business en self-serve
-- **Après** : inscriptions self-serve suspendues — les nouvelles organisations doivent contacter GitHub Sales
-- **Ce que ça signifie** : une équipe qui décide aujourd'hui d'adopter Copilot Business ne peut plus le faire de manière autonome. Le passage par une étape commerciale ajoute du délai et de la friction.
-- **Source** : [Changelog GitHub — 2026-04-22](https://github.blog/changelog/2026-04-22-pausing-new-self-serve-signups-for-github-copilot-business)
+GitHub a annoncé :
 
----
+- une pause temporaire des nouvelles inscriptions Student, Pro et Pro+ ;
+- des limites d'usage plus strictes pour les plans individuels ;
+- le retrait des modèles Opus du plan Pro ;
+- Opus 4.7 maintenu sur Pro+ à cette date.
 
-### 2026-04-20 — Opus retiré du plan Pro — Pro+ obligatoire
+Cette entrée est historique : ne déduisez pas l'état actuel des inscriptions ou du catalogue de modèles à partir de cette annonce d'avril.
 
-- **Catégorie** : Modèles IA — restriction majeure
-- **Plan impacté** : **Pro** (impact direct), Pro+ (devient le nouveau minimum pour Opus)
-- **Avant** : Claude Opus 4.5 et versions antérieures accessibles sur Pro ($10/mois)
-- **Après** : **tous les modèles Opus retirés du plan Pro**. Opus 4.7 reste disponible uniquement sur Pro+ ($39/mois). Nouvelles inscriptions Pro, Pro+ et Student **suspendues** le même jour.
-- **Ce que ça signifie** : un utilisateur Pro qui accédait à Opus pour $10/mois doit passer à Pro+ à $39/mois pour le même niveau de modèle — **soit +290% de coût**.
-- **Source** : [Changelog GitHub — 2026-04-20](https://github.blog/changelog/2026-04-20-changes-to-github-copilot-plans-for-individuals)
-
-!!! danger "C'est l'événement clé de ce registre"
-    En moins de 5 mois (de décembre 2025 à avril 2026), l'accès à Claude Opus est passé de **inclus dans Pro à $10/mois** à **réservé à Pro+ à $39/mois**. Aucune fonctionnalité équivalente n'a été ajoutée au plan Pro pour compenser.
+**Source :** [GitHub Changelog — Changes to GitHub Copilot plans for individuals](https://github.blog/changelog/2026-04-20-changes-to-github-copilot-plans-for-individuals/)
 
 ---
 
-### 2026-04-16 — Claude Opus 4.7 disponible en GA
+### 2026-04-16 — Claude Opus 4.7 dans Copilot
 
-- **Catégorie** : Modèles IA
-- **Plan impacté** : Business, Enterprise (uniquement — voir note ci-dessous)
-- **Avant** : Opus 4.5 et 4.6 disponibles
-- **Après** : Opus 4.7 GA — **mais déjà uniquement sur Business et Enterprise** au moment de sa sortie
-- **Ce que ça signifie** : la génération suivante d'Opus arrive directement dans les tiers supérieurs, sans passer par Pro.
-- **Source** : [Changelog GitHub — 2026-04-16](https://github.blog/changelog/2026-04-16-claude-opus-4-7-is-generally-available)
+GitHub a lancé Claude Opus 4.7 pour Copilot Pro+, Business et Enterprise. L'annonce utilisait encore le système de multiplicateurs **premium requests**, avant la migration générale vers AI Credits du 1er juin.
+
+**Source :** [GitHub Changelog — Claude Opus 4.7 is generally available](https://github.blog/changelog/2026-04-16-claude-opus-4-7-is-generally-available/)
 
 ---
 
-### 2026-04-10 — Essais gratuits de Copilot Pro suspendus
+### 2026-04-10 — limites de capacité renforcées
 
-- **Catégorie** : Politique d'accès
-- **Plan impacté** : Pro
-- **Avant** : possibilité de tester Copilot Pro gratuitement avant souscription
-- **Après** : essais gratuits suspendus — impossibilité d'évaluer le plan sans payer
-- **Ce que ça signifie** : la pression sur l'infrastructure pousse GitHub à limiter l'onboarding. Les équipes qui n'ont pas encore évalué Copilot Pro ne peuvent plus le faire sans engagement financier.
-- **Source** : [Changelog GitHub — 2026-04-10](https://github.blog/changelog/2026-04-10-pausing-new-github-copilot-pro-trials)
+GitHub a annoncé deux familles de limites :
 
----
+- limites globales de fiabilité du service ;
+- limites propres à certains modèles ou familles de modèles.
 
-### 2026-04-10 — Limites de débit imposées + Opus 4.6 Fast retiré de Pro+
+L'annonce recommandait de répartir les requêtes dans le temps ou de changer de modèle lorsque la limite d'un modèle était atteinte.
 
-- **Catégorie** : Quotas / Restrictions de modèles
-- **Plan impacté** : Pro+ (principalement)
-- **Avant** : usage de Copilot sans limite de débit appliquée strictement par session
-- **Après** : deux types de limites introduites : (1) limites de fiabilité générale du service, (2) limites par modèle ou famille de modèles. Opus 4.6 Fast retiré de Pro+ dès ce jour.
-- **Ce que ça signifie** : premier signal concret de la mise sous pression de l'infrastructure. Les utilisateurs doivent désormais "étaler" leur consommation ou changer de modèle quand une limite est atteinte.
-- **Source** : [Changelog GitHub — 2026-04-10](https://github.blog/changelog/2026-04-10-enforcing-new-limits-and-retiring-opus-4-6-fast-from-copilot-pro)
+**Source :** [GitHub Changelog — Enforcing new limits](https://github.blog/changelog/2026-04-10-enforcing-new-limits-and-retiring-opus-4-6-fast-from-copilot-pro/)
 
 ---
 
-### 2025-12-18 — Claude Opus 4.5 disponible en GA pour les utilisateurs Pro
+### 2024-12-18 — lancement de Copilot Free
 
-- **Catégorie** : Modèles IA — accès étendu
-- **Plan impacté** : Pro, Business, Enterprise
-- **Avant** : modèles Opus non disponibles ou en preview restreinte
-- **Après** : Claude Opus 4.5 GA — accessible aux utilisateurs Pro ($10/mois) et niveaux supérieurs
-- **Ce que ça signifie** : **fin 2025, un abonnement Pro à $10/mois donne accès à Claude Opus**, l'un des modèles les plus puissants d'Anthropic. Cette situation changera radicalement en avril 2026.
-- **Source** : [Changelog GitHub — 2025-12-18](https://github.blog/changelog/2025-12-18-claude-opus-4-5-is-now-generally-available-in-github-copilot)
+GitHub a lancé Copilot Free avec :
 
----
+- 2 000 code completions par mois ;
+- 50 messages de chat par mois à son lancement ;
+- accès depuis VS Code et GitHub.
 
-### 2024-12-18 — Lancement de GitHub Copilot Free
+Ces quotas décrivent **le lancement de 2024**, pas nécessairement l'allocation actuelle du plan Free.
 
-- **Catégorie** : Nouveaux plans / Découpage d'accès
-- **Plan impacté** : Free (nouveau plan)
-- **Avant** : pas de tier gratuit — Copilot nécessitait un abonnement Pro ($10/mois), Business, ou un accès via GitHub Education
-- **Après** : plan Free lancé avec **2 000 complétions/mois** et **50 messages de chat/mois** — accès limité aux modèles de base
-- **Ce que ça signifie** : GitHub crée un tier d'appel attractif, mais qui établit aussi des limites strictes là où il n'y en avait pas pour les nouveaux utilisateurs. Le plan Pro reste à $10/mois mais se voit désormais différencié par des quotas.
-- **Source** : [Changelog GitHub — 2024-12-18](https://github.blog/changelog/2024-12-18-announcing-github-copilot-free)
+**Source :** [GitHub Changelog — Announcing GitHub Copilot Free](https://github.blog/changelog/2024-12-18-announcing-github-copilot-free/)
 
 ---
 
-### 2024-12-06 — Fenêtre contextuelle Chat portée à 64 000 tokens (GPT-4o)
+## Transition premium requests → AI Credits
 
-- **Catégorie** : Limites de contexte
-- **Plan impacté** : Pro, Business, Enterprise
-- **Avant** : fenêtre contextuelle standard dans Copilot Chat, non documentée publiquement
-- **Après** : fenêtre de 64 000 tokens annoncée pour le Chat avec GPT-4o — amélioration notable pour les échanges longs
-- **Ce que ça signifie** : à cette époque, les contextes longs sont accessibles. Ce paramètre évoluera selon le modèle choisi et le plan, rendant les comparaisons ultérieures plus complexes.
-- **Source** : [Changelog GitHub — 2024-12-06](https://github.blog/changelog/2024-12-06-copilot-chat-now-has-a-64k-context-window-with-openai-gpt-4o)
+Avant juin 2026, le système Copilot utilisait des **premium request units** et des multiplicateurs par modèle. Depuis juin 2026, la facturation standard dépend du modèle et des tokens consommés, puis le coût est converti en AI Credits.
 
----
+| Période | Référentiel principal |
+|---|---|
+| Avant le 1er juin 2026 | Premium requests / multiplicateurs |
+| Depuis le 1er juin 2026 | AI Credits / usage basé sur tokens et modèle |
+| Certains abonnements annuels legacy | Premium requests jusqu'à migration du contrat |
 
-### 2024-11-12 — Content exclusion disponible en GA dans les IDEs
-
-- **Catégorie** : Fonctionnalités réservées
-- **Plan impacté** : Business, Enterprise (exclusivement)
-- **Avant** : content exclusion en preview, périmètre flou
-- **Après** : fonctionnalité GA — mais **réservée aux plans payants organisation** (Business/Enterprise). Indisponible sur Free, Pro, Pro+.
-- **Ce que ça signifie** : la capacité d'exclure des fichiers sensibles du contexte Copilot (données métier, secrets) n'est pas accessible aux développeurs individuels, même payants
-- **Source** : [Changelog GitHub — 2024-11-12](https://github.blog/changelog/2024-11-12-content-exclusion-ga)
+Ne comparez donc pas directement un multiplicateur historique « 7,5× » avec une consommation AI Credits actuelle : il s'agit de deux systèmes de facturation différents.
 
 ---
 
-### 2024-11-01 — Claude 3.5 Sonnet disponible pour tous (preview)
+## Ce qui a été retiré de cette page
 
-- **Catégorie** : Modèles IA
-- **Plan impacté** : Free, Pro, Business, Enterprise
-- **Avant** : seul GPT-4o disponible dans le Chat Copilot
-- **Après** : Claude 3.5 Sonnet (Anthropic) ajouté comme modèle alternatif pour tous les utilisateurs
-- **Ce que ça signifie** : premier signe de l'ère multi-modèles — l'accès est alors généreux, sans système de quotas stricts appliqués par modèle
-- **Source** : [Changelog GitHub — 2024-11-01](https://github.blog/changelog/2024-11-01-claude-3-5-sonnet-is-now-available-to-all-copilot-users-in-public-preview)
+Les anciennes versions contenaient des conclusions commerciales sur le « coût de l'inaction », des projections annuelles supposant qu'un modèle précis resterait attaché à un plan, et des comparaisons de valeur fondées sur une disponibilité de modèle temporaire.
+
+Ces éléments vieillissent vite et ne constituent pas une base fiable pour une documentation technique. Le registre conserve désormais uniquement les **faits datés et sourcés** utiles à la compréhension du produit.
 
 ---
 
-## Synthèse : ce qu'un abonnement Pro ($10/mois) donnait selon la période
+## Pour une décision actuelle
 
-| Période | Modèles inclus | Accès Opus | Quotas | Essais gratuits |
-|---------|---------------|:----------:|--------|:--------------:|
-| Nov. 2024 | GPT-4o + Claude Sonnet 3.5 | Non (preview) | Accès souple | Oui |
-| Déc. 2025 | GPT-4o + Sonnet + **Opus 4.5** | **Oui** | ~300 req/mois | Oui |
-| **Avr. 2026** | GPT-4.1 + Sonnet 4.x | **Non** → Pro+ requis | 300 req/mois strict | **Non** |
-| Juin 2026 | GPT-4.1 + Sonnet 4.x | Non → Pro+ requis | AI Credits | Non |
+Ne partez pas de cette timeline. Consultez plutôt :
 
----
-
-## Le coût de l'inaction : scénario chiffré
-
-!!! danger "Le retard se traduit en euros"
-    Voici l'impact financier direct d'une adoption tardive pour une **équipe de 5 développeurs** cherchant un accès aux modèles les plus avancés (type Opus) :
-
-    | Moment d'adoption | Plan requis | Coût mensuel | Coût annuel |
-    |---|---|---|---|
-    | **Décembre 2025** | Pro — $10/user | $50/mois | **$600/an** |
-    | **Mai 2026** | Pro+ — $39/user | $195/mois | **$2 340/an** |
-
-    **Écart : +$1 740/an, soit +290% pour le même niveau d'accès aux modèles.**
-
-    Ce calcul ne tient pas compte :
-
-    - De la **dette d'apprentissage** : 12 à 18 mois de retard sur les pratiques IA face aux équipes déjà formées
-    - De l'**inaccessibilité temporaire** : inscriptions Pro et Business suspendues depuis avril 2026, rendant la migration plus difficile
-    - Du **coût de migration** : workflows et habitudes à rebâtir lors d'un changement de plan tardif
-
-!!! info "Source des tarifs"
-    Prix vérifiés le 4 mai 2026 sur [docs.github.com/fr/copilot/get-started/plans](https://docs.github.com/fr/copilot/get-started/plans).
+1. [Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) ;
+2. [GitHub Copilot billing](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-billing) ;
+3. le [GitHub Copilot Changelog](https://github.blog/changelog/?label=copilot).
 
 ---
 
-## Checklist mensuelle de mise à jour
+## Claude Code
 
-- [ ] Consulter le [Changelog GitHub Copilot](https://github.blog/changelog/?label=copilot) pour les nouvelles entrées
-- [ ] Revalider plans, prix et quotas depuis la [page officielle des plans](https://docs.github.com/fr/copilot/get-started/plans)
-- [ ] Revalider les modèles inclus/avancés et leurs multiplicateurs
-- [ ] Revalider les règles de dépassement (budget, blocage, fallback)
-- [ ] Ajouter les nouvelles entrées à la timeline ci-dessus avec date précise et source
-- [ ] Mettre à jour le tableau "Synthèse" si un plan ou un accès évolue
-- [ ] Mettre à jour la date "Vérifié le" dans les pages du chapitre 12
+Cette page ne décrit pas la tarification Claude. Pour Claude Code, consultez [Les abonnements Claude](abonnements.md) et les pages d'usage Anthropic. Le fait qu'un modèle Claude soit disponible dans Copilot ne signifie pas que les limites ou prix Copilot s'appliquent à Claude Code utilisé via un abonnement Anthropic.
 
 ---
 
 ## Sources
 
-- Changelog Copilot (source primaire pour les mises à jour) : [github.blog/changelog/?label=copilot](https://github.blog/changelog/?label=copilot) (consulté le 2026-06-20)
-- Plans et prix : [docs.github.com/fr/copilot/get-started/plans](https://docs.github.com/fr/copilot/get-started/plans) (consulté le 2026-06-20)
-- Premium requests (legacy) et multiplicateurs : [docs.github.com/fr/copilot/concepts/billing/copilot-requests](https://docs.github.com/fr/copilot/concepts/billing/copilot-requests) (consulté le 2026-06-20)
-- Facturation usage-based (individuels) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-individuals) (consulté le 2026-06-20)
-- Facturation usage-based (organisations) : [docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises](https://docs.github.com/fr/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) (consulté le 2026-06-20)
-- Modèles et tarification : [docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing](https://docs.github.com/fr/copilot/reference/copilot-billing/models-and-pricing) (consulté le 2026-06-20)
+- [GitHub Docs — Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) — consulté le 2026-09-28
+- [GitHub Docs — Legacy billing changes](https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/what-changed-with-billing) — consulté le 2026-09-28
+- [GitHub Changelog — Updates to Copilot billing and plans](https://github.blog/changelog/2026-06-01-updates-to-github-copilot-billing-and-plans/) — consulté le 2026-09-28
 
----
+## Prochaine étape
 
-## Lecture complémentaire
-
-- **[Les abonnements](abonnements.md)** — comparatif détaillé des plans actuels (Free, Pro, Pro+, Business, Enterprise)
-- **[Premium Requests (legacy)](premium-requests.md)** — mécanique historique des quotas et multiplicateurs par modèle
-- **[Leviers d'économie](leviers-economie.md)** — comment réduire la consommation quel que soit le plan
-- **[Quand utiliser quel mode ?](modes-quand-utiliser.md)** — impact des modes Inline, Chat, Plan, Agent sur la consommation
+**[Les abonnements Claude](abonnements.md)** pour l'état actuel du parcours principal.
