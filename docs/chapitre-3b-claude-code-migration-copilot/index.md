@@ -2,10 +2,10 @@
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-vscode">VS Code</span> <span class="badge-cli">CLI</span>
 
-Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d'Anthropic, et migrer progressivement depuis GitHub Copilot — **sans perte de productivité**. De l'installation aux workflows avancés, en passant par une comparaison honnête des deux écosystèmes, vous y trouverez tout pour décider et agir.
+Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d'Anthropic, et migrer progressivement depuis GitHub Copilot — **sans perte de productivité**. De l'installation aux workflows avancés, en passant par Claude Desktop et une comparaison honnête des deux écosystèmes, vous y trouverez tout pour décider et agir.
 
 !!! info "Claude Code, c'est quoi ?"
-    Là où Copilot est né dans l'IDE (complétion fluide, intégration GitHub), Claude Code est né dans le **terminal** : un agent autonome piloté par une configuration **versionnée** (`.claude/`, `CLAUDE.md`). Les deux peuvent même cohabiter dans le même IDE — Copilot pour la complétion inline, Claude pour les tâches d'agent (refactoring, audit, génération de tests).
+    Là où Copilot est né dans l'IDE (complétion fluide, intégration GitHub), Claude Code est né dans le **terminal** : un agent autonome piloté par une configuration **versionnée** (`.claude/`, `CLAUDE.md`). Il est désormais également accessible via **Claude Desktop**, en plus de la CLI et des intégrations IDE. Copilot peut continuer à cohabiter dans le même environnement pour les usages que vous souhaitez conserver.
 
 ---
 
@@ -18,6 +18,12 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
     <span class="badge-beginner">Débutant</span>
 
     Installer la CLI (macOS, Linux, Windows), l'extension VS Code et le plugin JetBrains. Authentification, mise à jour, dépannage.
+
+- :material-monitor: **[Claude Desktop](claude-desktop.md)**
+
+    <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span>
+
+    Application officielle macOS, Windows et Linux bêta : Chat, Claude Code, travail local, extensions de bureau, deep links `claude://` et articulation avec CLI/IDE.
 
 - :material-folder-cog: **[Architecture `.claude/`](architecture-claude.md)**
 
@@ -111,7 +117,8 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
 ```mermaid
 graph TD
-    I["Installation"] --> A["Architecture .claude/"]
+    I["Installation"] --> D["Claude Desktop"]
+    D --> A["Architecture .claude/"]
     A --> MOD["Modèles Claude"]
     MOD --> P["Prompt Engineering"]
     P --> CK["Cookbook"]
@@ -130,6 +137,7 @@ graph TD
 | Votre besoin | Commencez par |
 |--------------|---------------|
 | Installer et tester Claude vite | [Installation](installation.md) |
+| Utiliser Claude Code dans l'application de bureau | [Claude Desktop](claude-desktop.md) |
 | Structurer un dépôt pour Claude | [Architecture `.claude/`](architecture-claude.md) |
 | Choisir Haiku / Sonnet / Opus | [Modèles Claude](modeles-claude.md) |
 | Écrire de meilleurs prompts | [Prompt Engineering avec Claude](prompt-engineering-claude.md) |
@@ -148,18 +156,12 @@ graph TD
 
 ## Prochaine étape
 
-**[Installer Claude Code — CLI, VS Code et JetBrains](installation.md)** : mettre en place l'outil sur votre poste avant d'explorer sa configuration et ses workflows.
+**[Installer Claude Code — CLI, VS Code et JetBrains](installation.md)** : mettre en place l'outil sur votre poste. Si vous préférez une surface graphique unifiée ou souhaitez passer facilement entre Chat et Code, poursuivez ensuite avec **[Claude Desktop](claude-desktop.md)**.
 
 Concepts clés couverts :
 
-- **CLI native** — installeurs macOS, Linux et Windows, et authentification
-- **Extensions IDE** — VS Code et JetBrains qui réutilisent la même configuration
-- **Premiers pas** — commandes slash de base et mode non interactif
-- **Dépannage** — `claude doctor` et résolution des problèmes courants
-
-
-
-
-
-
-
+- **CLI native** — installeurs macOS, Linux et Windows, et authentification ;
+- **Claude Desktop** — application de bureau, Claude Code intégré, extensions locales et deep links ;
+- **Extensions IDE** — VS Code et JetBrains qui réutilisent la même configuration ;
+- **Premiers pas** — commandes slash de base et mode non interactif ;
+- **Dépannage** — `claude doctor` et résolution des problèmes courants.
