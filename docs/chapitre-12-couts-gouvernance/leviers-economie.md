@@ -1,152 +1,157 @@
-# Leviers d'économie (pragmatiques)
+# Leviers d'économie avec Claude Code
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Économiser des **AI Credits** ne signifie pas moins utiliser Copilot. Cela signifie l'utiliser de façon plus ciblée. La plupart des gaspillages viennent de mauvaises habitudes facilement corrigeables.
+Réduire le coût de Claude Code ne consiste pas à « utiliser moins d'IA » par principe. Il s'agit de limiter le **travail inutile** : contexte trop volumineux, modèle surdimensionné, explorations répétées, sessions interminables et validations manuelles qui auraient pu être automatisées.
 
 ---
 
-## Levier 1 — Choisir le bon modèle pour la bonne tâche
+## Levier 1 — Utiliser le modèle et l'effort adaptés
 
-Le levier le plus impactant. Les modèles puissants ne sont pas toujours meilleurs pour la tâche. La bonne stratégie est d'adapter le modèle au niveau de complexité réel.
+La consommation dépend notamment du modèle et du niveau d'effort. Réservez les configurations les plus coûteuses aux tâches qui en ont réellement besoin.
 
-| Type de tâche | Modèle recommandé | Justification |
-|---------------|-------------------|---------------|
-| Autocomplétion, snippets courts | Modèle inclus (GPT-5 mini / GPT-4.1) | Vitesse > profondeur, coût minimal |
-| Refactoring simple, renommage | Modèle inclus | Tâche mécanique, faible raisonnement |
-| Génération de tests unitaires | Modèle inclus ou modèle avancé léger | Standard suffisant sur des patterns connus |
-| Implémentation d'algo complexe | Sonnet 4.x ou GPT-5.x Codex | Raisonnement + qualité du code |
-| Debug multi-fichiers | Sonnet 4.x | Compréhension du contexte large |
-| Architecture / design système | Modèle avancé "powerful" | Chaîne de raisonnement longue |
-| Revue de sécurité approfondie | Modèle avancé "powerful" | Analyse critique plus robuste |
-| Question de syntaxe | Modèle inclus, voire documentation | Modèle avancé inutile |
+| Tâche | Stratégie |
+|---|---|
+| Recherche locale, lecture, renommage | modèle/effort léger ou auto |
+| Correction simple et bien localisée | interaction directe |
+| Refactoring multi-fichiers | Plan puis agent principal |
+| Audit architecture/sécurité | modèle plus capable si nécessaire |
+| Exploration volumineuse indépendante | subagent isolé |
 
-!!! tip "Règle heuristique"
-    Si la tâche peut être résolue en 2 minutes via doc ou autocomplétion, évite un modèle coûteux.
-
-!!! info "Réduction officielle"
-    Sur les plans payants, GitHub indique une réduction de **10%** sur le coût des modèles lorsque l'**auto model selection** est utilisé dans Copilot Chat, Copilot CLI ou Copilot cloud agent.
+!!! tip "Règle pratique"
+    N'utilisez pas un niveau d'effort élevé pour compenser un mauvais contexte. Commencez par améliorer les entrées et les critères de validation.
 
 ---
 
-## Levier 2 — Préférer l'autocomplétion pour le code répétitif
+## Levier 2 — Garder `CLAUDE.md` court
 
-L'autocomplétion inline est **gratuite** (sur les plans payants) et très efficace pour :
-
-- Implémenter un pattern déjà présent dans le fichier
-- Compléter des getters/setters, constructeurs, méthodes standard
-- Écrire du code boilerplate (imports, interfaces, DTOs)
-
-```
-Ratio optimal : 70–80% du code par autocomplétion
-               20–30% par Chat/Agent sur les parties complexes
-```
-
----
-
-## Levier 3 — Fermer les onglets inutiles
-
-Chaque onglet ouvert est envoyé comme contexte. Plus de contexte = plus de tokens = réponses plus lentes et réponses moins précises quand le contexte est pollué.
-
-**Bonne pratique :** ne garder ouverts que les fichiers directement liés à la tâche en cours.
-
-=== ":material-microsoft-visual-studio-code: VS Code"
-
-    `Ctrl+K W` ferme tous les onglets — puis rouvrir uniquement les fichiers pertinents.
-    
-    Ou utiliser les **Editor Groups** pour isoler le contexte d'une tâche.
-
-=== ":simple-intellijidea: IntelliJ IDEA"
-
-    Clic droit sur un onglet → **Close All** → rouvrir les fichiers nécessaires.
-    
-    IntelliJ prend en compte les fichiers **récemment consultés** plus fortement que VS Code.
-
----
-
-## Levier 4 — Raccourcir les conversations chat
-
-Chaque message dans une conversation chat renvoie **l'historique complet** au modèle. Une conversation de 20 messages consomme 20× plus de tokens que 20 conversations fraîches d'un message chacune.
-
-**Règle pratique :**
-
-- **< 5 échanges** sur un sujet : continuer dans la même conversation
-- **> 5 échanges** ou changement de sujet : **ouvrir une nouvelle conversation**
-
-!!! warning "Anti-pattern fréquent"
-    Garder une conversation chat ouverte toute la journée et l'utiliser pour tout — chaque nouveau message est de plus en plus lent et coûteux. Préférer des conversations courtes et ciblées.
-
----
-
-## Levier 5 — Utiliser des instructions fixes plutôt que de réexpliquer
-
-Répéter les mêmes contraintes à chaque prompt (langage, framework, conventions) est du gaspillage pur.
-
-Centraliser dans `.github/copilot-instructions.md` :
+`CLAUDE.md` est chargé dans les sessions du projet. Il doit contenir les invariants à forte valeur :
 
 ```markdown
-## Conventions de ce projet
+## Commands
+- Tests: `pytest -q`
+- Lint: `ruff check .`
 
-- TypeScript strict mode
-- Tests avec Vitest (pas Jest)
-- Style fonctionnel, éviter les classes sauf pour les services
-- Toutes les fonctions publiques ont une JSDoc en français
-- Les erreurs remontent via `Result<T, E>` (pattern Railway)
+## Rules
+- Preserve public APIs unless requested.
+- Never commit secrets.
+- Run relevant tests before finishing.
 ```
 
-Ces instructions sont incluses automatiquement dans chaque échange — sans répétition manuelle.
+Déplacez les détails spécialisés vers :
+
+- `.claude/rules/` pour les règles ciblées ;
+- `.claude/skills/` pour les procédures ;
+- `.claude/agents/` pour les rôles spécialisés.
 
 ---
 
-## Levier 6 — Éviter les requêtes exploratoires avec des modèles avancés
+## Levier 3 — Charger le contexte à la demande
 
-La recherche d'idées, le brainstorming d'architecture, l'exploration de solutions alternatives : ces activités génèrent beaucoup d'échanges courts. Utiliser le modèle standard pour ces phases d'exploration, puis basculer vers un modèle avancé uniquement pour l'implémentation finale.
+Le dépôt entier n'a pas besoin d'être lu au début de chaque tâche.
 
+Préférez :
+
+```text
+1. point d'entrée ;
+2. recherche des dépendances ;
+3. lecture des seuls fichiers utiles ;
+4. action ;
+5. vérification.
 ```
-Phase exploration  → modèle léger (rapide, faible coût)
-Phase implémentation → modèle plus puissant si nécessaire
+
+Claude Code peut utiliser ses outils pour récupérer le contexte au moment où il devient nécessaire. Cette approche évite de saturer la fenêtre de contexte avec des informations qui ne serviront jamais.
+
+---
+
+## Levier 4 — Isoler les explorations lourdes dans des subagents
+
+Un subagent dispose d'un contexte séparé. Utilisez-le pour :
+
+- cartographier un gros module ;
+- rechercher tous les appelants d'une API ;
+- auditer la sécurité ;
+- comparer plusieurs fichiers ;
+- analyser une documentation volumineuse.
+
+Le résultat doit revenir sous forme de synthèse exploitable plutôt que de recopier toute l'exploration dans la session principale.
+
+---
+
+## Levier 5 — Surveiller MCP et les outils externes
+
+Les serveurs MCP peuvent ajouter des outils et du contexte. Dans `/mcp`, vérifiez les serveurs réellement actifs et désactivez ceux dont vous n'avez pas besoin pour la tâche.
+
+Les outils inutilisés n'apportent pas de valeur et peuvent complexifier la sélection d'outils ou le contexte disponible.
+
+---
+
+## Levier 6 — Réinitialiser le contexte au bon moment
+
+- `/compact` : conserver la continuité avec un résumé plus compact ;
+- `/clear` : repartir proprement pour une tâche indépendante ;
+- nouvelle session : utile après une grosse tâche ou une longue phase d'exploration.
+
+Évitez les seuils arbitraires du type « après 5 messages ». Ce qui compte est la **pertinence du contexte restant**, pas le nombre brut de tours.
+
+---
+
+## Levier 7 — Faire vérifier automatiquement le travail
+
+Une mauvaise implémentation suivie de trois corrections coûte plus qu'un changement correctement validé dès le premier passage.
+
+Demandez à Claude d'exécuter :
+
+- tests ciblés ;
+- lint/typecheck ;
+- build pertinent ;
+- revue du diff ;
+- éventuellement un smoke test.
+
+La vérification est un levier d'économie parce qu'elle réduit le rework.
+
+---
+
+## Levier 8 — Distinguer abonnement et API
+
+Avec les plans Claude payants, l'usage Claude et Claude Code partage des limites. Une fois la limite atteinte, des **usage credits** peuvent permettre de continuer en tarification à l'usage. Une clé `ANTHROPIC_API_KEY` configurée peut également faire basculer Claude Code vers une facturation API distincte.
+
+Pour rester strictement dans l'allocation du plan :
+
+- surveillez `/status` ;
+- n'activez pas les usage credits si vous ne souhaitez pas de dépassement ;
+- vérifiez les variables d'environnement d'API ;
+- attendez le reset de limite si nécessaire.
+
+---
+
+## Checklist quotidienne
+
+```text
+□ CLAUDE.md reste concis
+□ Contexte chargé uniquement quand nécessaire
+□ Exploration lourde isolée si possible
+□ MCP inutiles désactivés
+□ Modèle/effort adaptés à la tâche
+□ Tests et checks exécutés avant conclusion
+□ /compact ou /clear quand le contexte n'est plus pertinent
+□ /status vérifié si l'usage devient contraignant
 ```
 
 ---
 
-## Levier 7 — Limiter l'Agent Mode aux vraies tâches multi-fichiers
+## GitHub Copilot — référence
 
-L'Agent Mode multiplie les appels et donc les tokens consommés. Il est contre-productif sur des tâches single-file.
-
-| Tâche | Mode optimal |
-|-------|-------------|
-| Ajouter une méthode à une classe existante | Chat ou autocomplétion |
-| Refactoriser un seul fichier | Chat guidé |
-| Créer une fonctionnalité traversant 3+ fichiers | Agent Mode |
-| Migrer un module complet | Agent Mode |
-
----
-
-## Récapitulatif — Checklist quotidienne
-
-```
-□ Autocomplétion en premier pour tout code répétitif
-□ Fermer les onglets non pertinents avant une session Chat/Agent
-□ Ouvrir une nouvelle conversation si le sujet change
-□ Modèle léger pour l'exploration, modèle puissant uniquement si nécessaire
-□ Instructions communes dans copilot-instructions.md (pas réexpliquées)
-□ Agent Mode uniquement pour les tâches ≥ 3 fichiers
-```
+Pour Copilot, la logique de coût repose aujourd'hui sur les **GitHub AI Credits** pour les fonctions IA facturées, tandis que les code completions et next edit suggestions restent hors AI Credits sur les plans payants. Cette mécanique est documentée séparément dans [AI Credits — référence Copilot](premium-requests.md).
 
 ---
 
 ## Sources
 
-- [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-20
-- [GitHub Copilot usage-based billing](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-20
+- [Claude Help Center — How do usage and length limits work?](https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work) — consulté le 2026-09-28
+- [Claude Help Center — Manage usage credits for paid Claude plans](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) — consulté le 2026-09-28
+- [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Quand utiliser quel mode ?](modes-quand-utiliser.md)** : guide complet des modes Copilot (Inline, Chat, Plan, Agent) avec impact AI Credits et matrice de décision.
-
-Concepts clés couverts :
-
-- **Quatre modes principaux** — Inline, Chat, Plan, Agent avec coûts croissants
-- **Matrice décision par tâche** — Quel mode pour refactoring, génération, exploration
-- **Comparatif de coûts** — Validée sur des exemples concrets
-- **Anti-patterns courants** — Agent Mode par défaut = gaspillage maximal
+**[Quand utiliser quel mode ?](modes-quand-utiliser.md)** : choisir entre interaction directe, Plan, agent principal, subagents et skills selon la tâche.
