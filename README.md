@@ -4,81 +4,80 @@ Documentation personnelle et pratique sur l'utilisation de l'IA pour le dévelop
 
 ## Orientation du projet
 
-Le parcours principal du dépôt est désormais centré sur **Claude Code** : installation, configuration, contexte, prompt engineering, automatisation, MCP, sécurité, coûts et workflows de développement.
+Le parcours principal est **Claude Code** : installation, configuration, contexte, prompt engineering, agents, skills, hooks, MCP, sécurité, coûts et workflows de développement.
 
-La documentation **GitHub Copilot est volontairement conservée**. Elle reste utile :
+La documentation **GitHub Copilot est volontairement conservée** :
 
-- comme référence pour les environnements qui utilisent encore Copilot ;
-- pour comparer les deux écosystèmes ;
-- pour documenter une migration progressive ou un fonctionnement hybride ;
-- si l'offre ou la tarification de Copilot redevient intéressante à l'avenir.
+- référence pour les environnements qui l'utilisent encore ;
+- comparaison avec Claude Code ;
+- migration progressive ou fonctionnement hybride ;
+- option de retour si son offre/tarification redevient pertinente.
 
-Aucun contenu Copilot ne doit donc être supprimé uniquement parce que Claude Code devient l'outil principal.
+Aucun contenu Copilot n'est supprimé uniquement parce que Claude Code est prioritaire.
 
-## Parcours recommandés
+## Parcours
 
-- **Découvrir ou installer Claude Code** : `docs/chapitre-3b-claude-code-migration-copilot/`
-- **Migrer depuis GitHub Copilot** : comparaison, migration pas à pas et checklist 30/60/90 jours dans le même chapitre
-- **Conserver Copilot** : les chapitres historiques d'installation, paramétrage et personnalisation restent disponibles
-- **Approfondir les pratiques transverses** : contexte, prompt engineering, sécurité, coûts, MCP, RAG, ML et cas d'usage
+- Claude Code : `docs/chapitre-3b-claude-code-migration-copilot/`
+- Contexte, rules, skills, agents, hooks et MCP : `docs/chapitre-4-contexte/`
+- GitHub Copilot — référence : chapitres 1 à 3 et pages explicitement Copilot
+- Pratiques transverses : prompt engineering, ML/RAG, sécurité, coûts, outils et cas d'usage
 
-## Instructions pour les assistants IA
+## Configuration des assistants
 
-- `CLAUDE.md` : instructions principales pour Claude Code
-- `AGENTS.md` : règles communes aux assistants et agents
-- `.github/copilot-instructions.md` : instructions GitHub Copilot conservées
-- `.github/agents/`, `.github/instructions/`, `.github/prompts/` : configurations Copilot historiques conservées et maintenues
+### Claude Code
 
-## Lancer le site en local
+- `CLAUDE.md` — instructions principales
+- `AGENTS.md` — règles communes
+- `.claude/settings.json` — réglages partagés
+- `.claude/rules/` — règles ciblées
+- `.claude/agents/` — subagents du dépôt
+- `.claude/skills/` — skills réutilisables
 
-### Prérequis
+### GitHub Copilot
 
-- Python 3.11+ recommandé
-- Sous Windows, le lanceur Python `py` est utilisé dans les exemples
+- `.github/copilot-instructions.md`
+- `.github/instructions/`
+- `.github/prompts/`
+- `.github/agents/`
+- `.github/skills/`
+- `.github/hooks/`
 
-### Installation des dépendances
+Ces deux ensembles sont maintenus séparément : ils ne partagent pas le même contrat de configuration.
 
-Depuis la racine du projet :
+## Installation locale
 
-```powershell
-py -m pip install --upgrade pip
-py -m pip install -r requirements.txt
+```bash
+python -m venv .venv
 ```
 
-Si `requirements.txt` n'est pas disponible dans votre environnement, l'installation minimale reste :
+Activez ensuite le venv selon votre système puis :
 
-```powershell
-py -m pip install mkdocs-material
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m mkdocs serve
 ```
 
-### Serveur de développement
+Sous Windows, `py -m` peut être utilisé si le launcher Python est la commande disponible.
 
-```powershell
-py -m mkdocs serve
+## Validation
+
+Avant une Pull Request :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
-Lancez la commande depuis le dossier contenant `mkdocs.yml`, puis ouvrez l'URL indiquée dans le terminal, généralement <http://127.0.0.1:8000>.
-
-### Build statique
-
-```powershell
-py -m mkdocs build
-```
-
-Le site généré est écrit dans `site/`.
-
-## Dépannage rapide sous Windows
-
-Si `pip` ou `mkdocs` n'est pas trouvé dans le `PATH`, utilisez les modules Python explicitement :
-
-```powershell
-py --version
-py -m pip --version
-py -m mkdocs --version
-```
-
-Puis lancez les commandes avec `py -m ...` plutôt qu'avec les exécutables `pip` ou `mkdocs` directement.
+La CI de PR exécute les mêmes contrôles de génération, chemins internes et ancres HTML.
 
 ## Contribution
 
-Toute modification doit être réalisée sur une branche puis proposée via Pull Request vers `main`. Consultez `CONTRIBUTING.md` pour le workflow complet et exécutez `py -m mkdocs build` avant de considérer un lot documentaire terminé.
+Toute modification passe par une branche et une Pull Request vers `main` : aucun push direct sur `main` n'est attendu dans le workflow du projet.
+
+Consultez :
+
+- `CONTRIBUTING.md` — workflow complet ;
+- `MAINTENANCE_SCHEDULE.md` — veille mensuelle/trimestrielle ;
+- `DEPLOYMENT.md` — validation et publication GitHub Pages ;
+- `CONTRIBUTING-SCREENSHOTS.md` — captures d'écran.
