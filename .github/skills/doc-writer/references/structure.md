@@ -1,110 +1,65 @@
-# Conventions de Structure — Documentation IA
+# Structure actuelle — Documentation IA
 
-## Arborescence et nommage
+## Parcours
 
-```
-docs/
-├── index.md                             ← Hero banner, page d'accueil
-├── chapitre-N-slug/                     ← N = numéro (1-6+), slug = kebab-case
-│   ├── index.md                         ← Intro du chapitre (obligatoire)
-│   ├── page-de-contenu.md               ← Pages thématiques
-│   ├── comparaison.md                   ← Pattern: comparaison IntelliJ / VS Code
-│   ├── intellij/                        ← Sous-dossier si contenu IDE volumineux
-│   │   ├── tutoriel.md
-│   │   └── reference.md
-│   └── vscode/
-│       ├── tutoriel.md
-│       └── reference.md
-└── appendices/
-    ├── faq.md
-    ├── raccourcis-clavier.md
-    ├── ressources-externes.md
-    └── templates-configuration.md
-```
+Le site est **Claude Code-first**. Les trois premiers chapitres historiques restent consacrés à GitHub Copilot comme référence ; le parcours Claude principal commence dans `chapitre-3b-claude-code-migration-copilot/` et se poursuit dans les chapitres génériques.
 
-## Règles mkdocs.yml (nav)
+Toujours lire `mkdocs.yml` avant d'ajouter ou déplacer une page : la navigation réelle est plus fiable qu'une liste recopiée dans un skill.
 
-```yaml
-nav:
-  - Accueil: index.md
-  - "Titre du Chapitre":           # Guillemets si accent
-    - Introduction: chapitre-N-slug/index.md
-    - "Page de contenu": chapitre-N-slug/page.md
-    - "IntelliJ IDEA":
-      - "Tutoriel pas à pas": chapitre-N-slug/intellij/tutoriel.md
-    - "Visual Studio Code":
-      - "Tutoriel pas à pas": chapitre-N-slug/vscode/tutoriel.md
-    - "Comparaison": chapitre-N-slug/comparaison.md  # Toujours en dernier
-```
+## Dossiers principaux
 
-## Structure d'une page standard
+| Dossier | Rôle |
+|---|---|
+| `chapitre-1-installation` | Installation Copilot — référence |
+| `chapitre-2-parametrage` | Paramétrage Copilot — référence |
+| `chapitre-3-cli-modes` | Modes Copilot — référence |
+| `chapitre-3b-claude-code-migration-copilot` | Claude Code, architecture et migration |
+| `chapitre-4-contexte` | Contexte, rules, skills, agents, hooks, MCP |
+| `chapitre-5-prompt-engineering` | Prompt engineering Claude-first |
+| `chapitre-6-machine-learning` | ML |
+| `chapitre-7-rag` | RAG |
+| `chapitre-8-deep-learning` | Deep Learning |
+| `chapitre-9-bonnes-pratiques` | Bonnes pratiques |
+| `chapitre-10-cas-usage` | Cas d'usage |
+| `chapitre-11-troubleshooting` | Diagnostic |
+| `chapitre-12-couts-gouvernance` | Coûts et gouvernance |
+| `chapitre-13-outils-economies` | Outils, MCP et alternatives |
+| `chapitre-14-veille-ia` | Veille |
+| `chapitre-15-hacker-ia` | Cybersécurité et usages défensifs |
+| `appendices` | FAQ, références, templates |
+| `assets/templates` | Ressources copiables hors nav si nécessaire |
+
+## Structure d'une page publiée
 
 ```markdown
-# Titre de la Page
+# Titre
 
-<span class="badge-beginner">Débutant</span> <span class="badge-vscode">VS Code</span>
+<span class="badge-intermediate">Intermédiaire</span>
 
-Paragraphe d'introduction : 2-3 phrases décrivant ce que cette page explique.
-
----
-
-## Première section majeure
-
-Contenu...
-
-### Sous-section si nécessaire
-
-...
-
-!!! tip "Astuce pratique"
-    Conseil actionnable en lien direct avec la section.
+Introduction courte.
 
 ---
 
-## Deuxième section (avec comparaison IDE)
+## Section
 
-=== "IntelliJ IDEA"
-    Spécificités IntelliJ...
+Contenu.
 
-    ```java
-    // Exemple de code IntelliJ
-    ```
+### Sous-section
 
-=== "Visual Studio Code"
-    Spécificités VS Code...
-
-    ```typescript
-    // Exemple de code VS Code
-    ```
-
----
-
-## Résumé
-
-- Point clé 1
-- Point clé 2
-- Point clé 3
+Détail.
 ```
 
-## Chapitres existants
+Règles : H1 unique, niveaux non sautés, code avec langage, liens relatifs vérifiés, images avec alt text.
 
-| N° | Dossier | Contenu |
-|----|---------|---------|
-| 1 | `chapitre-1-installation` | Installation Copilot par IDE |
-| 2 | `chapitre-2-parametrage` | Réglages et paramètres |
-| 3 | `chapitre-3-contexte` | Personnalisation, instructions, agents, prompts, skills |
-| 4 | `chapitre-4-bonnes-pratiques` | Performance, sécurité, productivité |
-| 5 | `chapitre-5-troubleshooting` | Diagnostic, problèmes courants |
-| 6 | `chapitre-6-cas-usage` | Java, Python, Node.js/React |
+## Navigation
 
-## Conventions de labels dans la nav
+Une nouvelle page destinée à la lecture doit être positionnée dans `mkdocs.yml`. Les templates/assets peuvent rester hors navigation.
 
-| Type de page | Label |
-|---|---|
-| Index de chapitre | "Introduction" |
-| Page thématique | Nom explicite en français |
-| Page IntelliJ seule | "IntelliJ — [Sujet]" |
-| Page VS Code seule | "VS Code — [Sujet]" |
-| Tutoriel | "Tutoriel pas à pas" |
-| Référence rapide | "Guide de référence" |
-| Comparaison | "Comparaison IntelliJ / VS Code" |
+Ne force pas toutes les pages à suivre un modèle « IntelliJ vs VS Code » : Claude Code couvre aussi CLI, MCP, CI, settings et workflows indépendants de l'IDE.
+
+## Validation
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
+```
