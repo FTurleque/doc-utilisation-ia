@@ -18,6 +18,7 @@ graph TD
     S["Skills pertinents"] --> C
     A["Résultats de subagents"] --> C
     M["Outils MCP"] --> C
+    G["Code intelligence / Graphify"] --> C
     C --> L["Agent Claude"]
 ```
 
@@ -43,6 +44,7 @@ Le contexte est une **ressource limitée**. Claude Code recommande de :
 | Agent spécialisé | `.claude/agents/*.md` | `.github/agents/*.agent.md` |
 | Automatisation d'événements | hooks Claude configurés dans settings | hooks Copilot sur les surfaces compatibles |
 | Outils et données externes | MCP | MCP |
+| Cartographie relationnelle du dépôt | outil tiers comme Graphify si nécessaire | outil tiers compatible selon surface |
 | Réglages d'équipe | `.claude/settings.json` | réglages/politiques Copilot + fichiers `.github/` |
 | Préférences locales | `.claude/settings.local.json`, `CLAUDE.local.md` | réglages IDE locaux |
 
@@ -55,6 +57,10 @@ Le contexte est une **ressource limitée**. Claude Code recommande de :
 - :material-file-cog: **[Concepts fondamentaux](concepts.md)**
 
     Fenêtre de contexte, tokens, bruit, sélection du contexte et stratégies de réduction.
+
+- :material-graph: **[Graphify — knowledge graph du dépôt](graphify.md)**
+
+    Cartographie des relations entre code, docs et configurations pour réduire l'exploration brute d'un grand dépôt.
 
 - :material-file-code: **[Instructions projet et règles](guide-instructions.md)**
 
@@ -104,7 +110,7 @@ Le contexte est une **ressource limitée**. Claude Code recommande de :
 
 ---
 
-## `CLAUDE.md`, `AGENTS.md`, rules ou skill ?
+## `CLAUDE.md`, `AGENTS.md`, rules, skill ou graphe ?
 
 | Si l'information… | Utilisez… |
 |---|---|
@@ -113,6 +119,7 @@ Le contexte est une **ressource limitée**. Claude Code recommande de :
 | ne concerne que certains fichiers | `.claude/rules/` avec `paths` |
 | est une procédure multi-étapes ou une expertise occasionnelle | un skill |
 | implique une exploration lourde et isolable | un subagent |
+| nécessite de comprendre les relations entre beaucoup de composants | un outil de code intelligence / knowledge graph comme Graphify, puis vérification dans les sources |
 | doit **interdire techniquement** une action | permissions/settings ou hook, pas une simple phrase dans `CLAUDE.md` |
 
 !!! tip "Taille de CLAUDE.md"
@@ -135,7 +142,7 @@ Cette conservation sert à :
 
 ## Prochaine étape
 
-Commencez par **[Instructions projet et règles](guide-instructions.md)**, puis déplacez les procédures répétitives vers **[Skills](guide-skills.md)**.
+Commencez par **[Instructions projet et règles](guide-instructions.md)**. Pour un gros dépôt difficile à cartographier, consultez aussi **[Graphify](graphify.md)** avant de multiplier les lectures de fichiers.
 
 ---
 
@@ -148,4 +155,5 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Claude Code — Skills](https://code.claude.com/docs/en/skills)
 - [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)
 - [Claude Code — Hooks](https://code.claude.com/docs/en/hooks)
+- [Graphify Labs — dépôt officiel](https://github.com/Graphify-Labs/graphify)
 - [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
