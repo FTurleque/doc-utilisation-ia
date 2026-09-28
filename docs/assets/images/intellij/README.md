@@ -1,66 +1,56 @@
-# 📸 Screenshots — IntelliJ IDEA
+# Captures — IntelliJ IDEA
 
-> Organiseur visual pour les screenshots de documentation GitHub Copilot — IntelliJ IDEA
+Ce dossier contient principalement des captures **GitHub Copilot** existantes. Elles sont conservées comme références. Les futures captures génériques doivent privilégier Claude Code lorsque l'interface est pertinente pour le parcours principal.
 
----
+## Inventaire actuel
 
-## 📁 Structure Répertoires
+Captures Copilot / GitHub présentes dans le dépôt :
 
+- `auth-dialog.png`
+- `chat-copilot-1.png`
+- `chat-copilot-2.png`
+- `chat-copilot-3.png`
+- `completions-copilot.png`
+- `copilot-chat-panel.png`
+- `customizations-copilot-agent-prompt-skill.png`
+- `customizations-copilot-instructions.png`
+- `general-copilot.png`
+- `github-auth-browser.png`
+- `github-mcp-registry.png`
+- `keymap-copilot.png`
+- `marketplace-search.png`
+- `plugins-menu.png`
+- `settings-copilot.png`
+- `status-bar-icon.png`
+
+Autre image conservée : `mark-directoy-as.jpg`.
+
+Cette liste décrit **ce qui existe réellement** ; elle n'est pas une promesse que chaque capture est encore identique à l'UI actuelle. Vérifier la page qui l'utilise et la version du produit avant de s'appuyer sur un détail visuel.
+
+## Nouvelles captures
+
+Convention recommandée :
+
+```text
+intellij-{produit}-{fonction}-{numero}.png
 ```
-intellij/
-├── 01-installation/        ← Installation extension (3 screenshots)
-├── 02-parametrage/         ← Configuration + Auth (3 screenshots)
-├── 03-features/            ← Inline, Chat, Actions (5 screenshots)
-├── 04-troubleshooting/     ← Logs & Diagnostic (2 screenshots)
-└── README.md               ← Ce fichier (guide master)
+
+Exemples :
+
+```text
+intellij-claude-plugin-01.png
+intellij-claude-chat-01.png
+intellij-copilot-settings-02.png
 ```
 
----
+Pour Claude Code, ne capturer que les écrans qui apportent une valeur visuelle durable : installation du plugin, panneau IDE, permissions ou diagnostic. Les commandes CLI et configurations textuelles sont mieux documentées en Markdown/JSON.
 
-## 📋 Checklist Capture
+## Qualité
 
-### Installation (PRIORITAIRE) — 3 screenshots
-- [x] **01** : intellij-marketplace-01.png — Recherche "GitHub Copilot" Marketplace SAMPLE CAPTURED
-- [ ] **02** : intellij-install-dialog-01.png — Dialog Installation avec bouton Install
-- [ ] **03** : intellij-restart-prompt-01.png — Prompt Redémarrage après installation
+- utiliser une version stable compatible d'IntelliJ IDEA ;
+- noter la version du plugin dans la PR si l'écran est version-sensible ;
+- masquer comptes, dépôts privés, chemins locaux et secrets ;
+- garder le texte lisible ;
+- ne pas retoucher une UI pour simuler un état qui n'a pas été observé.
 
-### Paramétrage (PRIORITAIRE) — 3 screenshots
-- [ ] **04** : intellij-settings-copilot-01.png — Settings → Tools → GitHub Copilot
-- [ ] **05** : intellij-auth-login-01.png — Dialog Authentification GitHub (Device Flow)
-- [ ] **06** : intellij-inline-settings-01.png — Toggle "Enable Inline Suggestions"
-
-### Features (IMPORTANT) — 5 screenshots
-- [ ] **07** : intellij-inline-completion-01.png — Suggestion inline grisée (preview)
-- [ ] **08** : intellij-inline-accept-01.png — Appui Tab pour accepter suggestion
-- [ ] **09** : intellij-chat-panel-01.png — Chat Copilot sidebar ouvert
-- [ ] **10** : intellij-chat-context-01.png — Chat avec contexte fichier actif
-- [ ] **11** : intellij-action-menu-01.png — Menu actions (Cmd+Shift+A pour Copilot)
-
-### Troubleshooting (OPTIONNEL) — 2 screenshots
-- [ ] **12** : intellij-logs-location-01.png — Help → Show Log in Explorer
-- [ ] **13** : intellij-plugin-disabled-01.png — Extension disabled (Settings)
-
----
-
-## 📸 Spécifications
-
-| Critère | Détail |
-|---------|--------|
-| **Résolution** | 1920×1080 (Full HD, scale 100%) |
-| **Format** | PNG lossless |
-| **Thème** | Défaut IntelliJ (Darcula recommandé) |
-| **Workspace** | Minimale (1-2 fichiers Java/Kotlin oubliés) |
-| **Taille cible** | <150 KB par fichier |
-
----
-
-## 🎯 Progress
-
-| Phase | Cible | État |
-|-------|-------|------|
-| Installation | 3 | ⏳ 0/3 |
-| Paramétrage | 3 | ⏳ 0/3 |
-| Features | 5 | ⏳ 0/5 |
-| Troubleshooting | 2 | ⏳ 0/2 |
-| **TOTAL** | **13** | **📊 0/13** |
-
+Voir `../SCREENSHOTS-GUIDE.md` et `CAPTURE-TEMPLATE.md`.
