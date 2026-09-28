@@ -1,70 +1,123 @@
-# Coûts & Gouvernance
+# Coûts & Gouvernance — Claude Code
 
-Utiliser GitHub Copilot efficacement, c'est aussi savoir gérer ce qu'il consomme. Ce chapitre couvre les mécanismes de facturation, les leviers pour optimiser l'usage quotidien, et les workflows qui maximisent la valeur tout en minimisant le gaspillage de requêtes.
+Ce chapitre explique comment piloter le **coût, l'usage et la gouvernance de Claude Code** sans confondre les différents modèles de facturation : abonnement Claude, limites d'usage partagées, crédits d'usage éventuels et facturation API/Console.
 
-!!! info "État de référence"
-    Contenu vérifié le **4 mai 2026**.
-    La facturation Copilot bascule vers un modèle **usage-based avec AI Credits** à partir du **1er juin 2026**. Ce chapitre documente la période de transition et fournit un suivi avant/après.
+GitHub Copilot reste documenté : les pages historiques sur les **AI Credits Copilot** sont conservées comme référence distincte, mais ne constituent plus le parcours principal.
+
+!!! info "Référence"
+    Informations revérifiées le **28 septembre 2026** sur les pages officielles Anthropic. Les prix et limites peuvent évoluer ; vérifiez toujours la page de tarification avant une décision budgétaire.
 
 ---
 
-## Pages du Chapitre
+## Pages du chapitre
 
 <div class="grid cards" markdown>
 
-- :material-swap-horizontal: **[Patterns pour réduire les allers-retours](patterns-allers-retours.md)**
+- :material-swap-horizontal: **[Réduire les allers-retours](patterns-allers-retours.md)**
 
-    Structurer ses prompts pour obtenir la bonne réponse dès la première fois : contexte complet, formulation directe, templates réutilisables.
+    Réduire le coût réel en donnant le bon contexte, en découpant les tâches et en demandant des validations exécutables.
 
-- :material-star-circle: **[AI Credits : consommation détaillée](premium-requests.md)**
+- :material-credit-card: **[Abonnements Claude & accès Claude Code](abonnements.md)**
 
-    Comment Copilot consomme les AI Credits, ce qui est facturé, ce qui ne l'est pas, et comment piloter son budget.
+    Pro, Max, Team, Enterprise, limites d'usage, crédits d'usage et différence avec l'API.
 
-- :material-history: **[Historique des changements coûts & modèles](historique-modifications.md)**
+- :material-piggy-bank: **[Leviers d'économie](leviers-economie.md)**
 
-    Suivi mensuel daté avec comparaison **Avant / Après** sur les plans, quotas, modèles et règles de facturation.
-
-- :material-credit-card: **[Les abonnements](abonnements.md)**
-
-    Comparatif Free / Pro / Business / Enterprise : quotas, fonctionnalités et critères de choix selon le profil.
-
-- :material-piggy-bank: **[Leviers d'économie (pragmatiques)](leviers-economie.md)**
-
-    Décisions concrètes pour dépenser moins sans payer en productivité : bon modèle, bon mode, bon contexte.
+    Contexte minimal utile, `/clear`, `/compact`, skills, subagents, choix du modèle et limitation des outils.
 
 - :material-transit-connection-variant: **[Quand utiliser quel mode ?](modes-quand-utiliser.md)**
 
-    Autocomplétion, Chat, Plan, Agent — coût et pertinence de chaque mode selon la tâche à réaliser.
+    Interaction directe, Plan, agent principal, subagents et automatisation selon la complexité réelle.
 
 - :material-routes: **[Workflow recommandé](workflow-recommande.md)**
 
-    Séquence optimale au quotidien pour combiner les modes intelligemment et éviter les requêtes inutiles.
+    Explore → Plan → Implement → Verify avec contrôles de coût et de contexte.
+
+- :material-star-circle: **[AI Credits Copilot — référence](premium-requests.md)**
+
+    Ancien parcours principal conservé pour les utilisateurs GitHub Copilot.
+
+- :material-history: **[Historique coûts & modèles](historique-modifications.md)**
+
+    Journal des changements de tarification et de quotas ; les entrées Copilot restent conservées.
 
 </div>
 
 ---
 
-## Vue d'ensemble rapide
+## Comprendre les quatre couches de coût
 
-| Sujet | Résumé |
-|-------|--------|
-| [Allers-retours](patterns-allers-retours.md) | Chaque itération coûte des requêtes — le contexte complet dès le départ réduit les cycles |
-| [AI Credits](premium-requests.md) | Calcul de consommation, dépassement de budget, et cas legacy de l'ancien mode de quotas |
-| [Historique](historique-modifications.md) | Traçabilité mensuelle des évolutions coûts/modèles avec diff Avant/Après |
-| [Abonnements](abonnements.md) | Free · Pro · Pro+ · Business · Enterprise — comparaison datée et périmètres |
-| [Économies](leviers-economie.md) | Choisir le modèle le plus léger adapté à la tâche |
-| [Modes](modes-quand-utiliser.md) | Inline < Chat < Plan < Agent en termes de coût et d'autonomie |
-| [Workflow](workflow-recommande.md) | Inline pour la répétition, Ask pour explorer, Plan pour cadrer, Agent pour exécuter |
+| Couche | Ce qu'elle signifie |
+|---|---|
+| **Abonnement Claude** | Pro, Max ou siège Team/Enterprise donnant accès à Claude Code selon le plan |
+| **Limites d'usage** | Fenêtres d'usage et limites supplémentaires ; l'activité Claude et Claude Code peut partager le même pool |
+| **Usage credits** | Sur certains plans payants, permettent de continuer après une limite selon les conditions du compte |
+| **API / Console** | Facturation à l'usage aux tarifs API ; distincte de l'abonnement grand public |
+
+!!! warning "Ne pas comparer directement avec les AI Credits Copilot"
+    Les **AI Credits GitHub Copilot** et les limites/crédits d'usage Claude sont deux systèmes différents. Ne transposez pas un quota ou une unité d'un produit vers l'autre.
 
 ---
 
+## Plans Claude actuels — vue rapide
+
+D'après la tarification Anthropic vérifiée le 28 septembre 2026 :
+
+- **Pro** inclut Claude Code ;
+- **Max** inclut Claude Code avec deux niveaux d'usage supérieurs ;
+- **Team** propose des sièges Standard et Premium avec Claude Code ;
+- **Enterprise** combine un coût de siège et de l'usage facturé aux tarifs API selon l'offre ;
+- le plan **Free** n'inclut pas Claude Code dans la matrice actuelle.
+
+Les montants exacts et conditions sont détaillés dans [Les abonnements](abonnements.md).
+
+---
+
+## Le coût le plus important : le rework
+
+Un contexte trop large, un objectif ambigu ou l'absence de tests peuvent coûter plus cher qu'un modèle plus puissant utilisé correctement.
+
+```text
+Contexte ciblé
+→ plan adapté à la complexité
+→ modification limitée
+→ tests / build / diff
+→ correction seulement si une preuve échoue
+```
+
+Les principaux leviers sont donc :
+
+1. garder `CLAUDE.md` concis ;
+2. charger les détails via rules/skills seulement quand ils sont utiles ;
+3. utiliser `/clear` entre tâches sans rapport ;
+4. utiliser `/compact` sur une session longue ;
+5. déléguer les explorations volumineuses à des subagents ;
+6. faire exécuter les validations plutôt que multiplier les échanges spéculatifs.
+
+---
+
+## Gouvernance d'équipe
+
+Pour une équipe, suivez au minimum :
+
+- consommation et limites par population ;
+- modèles autorisés ;
+- permissions d'outils et de providers ;
+- MCP approuvés ;
+- règles sur les données sensibles ;
+- commandes destructives ou à haut impact ;
+- qualité mesurée : taux de tests passés, rework, incidents et temps de revue.
+
+Ne mesurez pas uniquement le nombre de requêtes. Une tâche autonome plus longue peut être rentable si elle produit un résultat testé et réduit plusieurs cycles de correction.
+
+---
+
+## Sources
+
+- [Claude — Plans & Pricing](https://claude.com/pricing) — consulté le 2026-09-28
+- [Anthropic Help — Use Claude Code with Pro or Max](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan) — consulté le 2026-09-28
+- [Claude Code — Cost management](https://code.claude.com/docs/en/costs) — consulté le 2026-09-28
+
 ## Prochaine étape
 
-**[Patterns pour réduire les allers-retours](patterns-allers-retours.md)** : structurer ses prompts pour obtenir la bonne réponse dès la première fois et éviter les cycles inutiles de corrections.
-
-Concepts clés couverts :
-
-- **Contexte complet dès le départ** — Passer de 5 échanges à 1 en formulant précisément
-- **Templates de prompts réutilisables** — Supprimer la redondance dans les explicications
-- **Références explicites avec #file/@workspace** — Éliminer l'ambiguïté sur le contexte
-- **Checkpoints en Agent Mode** — Valider le plan avant exécution plutôt que refactoriser après
+**[Les abonnements Claude](abonnements.md)** : distinguer abonnement, limites d'usage et facturation API avant d'optimiser le workflow.
