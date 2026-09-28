@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
+      pages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,65 +26,58 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          cache: pip
+          cache-dependency-path: requirements.txt
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Configure Git Credentials
+      - name: Build MkDocs (strict)
+        run: python -m mkdocs build --strict
+
+      - name: Validate generated internal links and anchors
+        run: python scripts/validate-links.py
+
+      - name: Configure Git credentials
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Activer GitHub Pages si nécessaire
+      - name: Ensure GitHub Pages configuration
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Vérifier si GitHub Pages est configuré
           response=$(curl -sS -w "\n%{http_code}" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             "https://api.github.com/repos/${{ github.repository }}/pages")
           http_code=$(echo "$response" | tail -1)
-          body=$(echo "$response" | head -n -1)
-          echo "Statut GitHub Pages actuel: HTTP $http_code"
-          echo "Réponse: $body"
 
           if [ "$http_code" = "404" ]; then
-            echo "GitHub Pages n'est pas configuré, création en cours..."
+            echo "GitHub Pages n'est pas configuré ; tentative de création."
             create_response=$(curl -sS -w "\n%{http_code}" -X POST \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Authorization: Bearer $GH_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
-              -d '{"source": {"branch": "gh-pages", "path": "/"}}' \
+              -d '{"source":{"branch":"gh-pages","path":"/"}}' \
               "https://api.github.com/repos/${{ github.repository }}/pages")
             create_code=$(echo "$create_response" | tail -1)
-            create_body=$(echo "$create_response" | head -n -1)
-            echo "Création GitHub Pages: HTTP $create_code"
-            echo "Réponse: $create_body"
             if [ "$create_code" != "201" ] && [ "$create_code" != "200" ]; then
-              echo "Erreur: impossible d'activer GitHub Pages (HTTP $create_code)" >&2
+              echo "Impossible d'activer GitHub Pages (HTTP $create_code)." >&2
               exit 1
             fi
           elif [ "$http_code" != "200" ] && [ "$http_code" != "204" ]; then
-            echo "Erreur inattendue lors de la vérification de GitHub Pages (HTTP $http_code)" >&2
+            echo "Erreur lors de la vérification GitHub Pages (HTTP $http_code)." >&2
             exit 1
-          else
-            echo "GitHub Pages est déjà configuré (HTTP $http_code) - le déploiement va republier le site."
           fi
 
-      - name: Build and deploy
-        run: mkdocs gh-deploy --force
+      - name: Deploy generated documentation
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python -m mkdocs gh-deploy --force
 
-      - name: Supprimer le fichier CNAME de gh-pages
+      - name: Remove CNAME from gh-pages if present
         run: |
           set -e
           git fetch origin gh-pages
@@ -94,25 +87,21 @@ jobs:
             git rm CNAME
             git commit -m "chore: supprimer le fichier CNAME du domaine personnalisé"
             git push origin HEAD:gh-pages
-            echo "Fichier CNAME supprimé et poussé vers gh-pages."
-          else
-            echo "Aucun fichier CNAME trouvé dans gh-pages."
           fi
           cd "$GITHUB_WORKSPACE"
           git worktree remove /tmp/gh-pages-clean
 
-      - name: Supprimer le domaine personnalisé via l'API GitHub Pages
+      - name: Clear custom Pages domain
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           response=$(curl -sS -w "\n%{http_code}" -X PUT \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"cname": null}' \
+            -d '{"cname":null}' \
             "https://api.github.com/repos/${{ github.repository }}/pages")
           http_code=$(echo "$response" | tail -1)
-          body=$(echo "$response" | head -n -1)
-          echo "HTTP status: $http_code"
-          echo "Response: $body"
           if [ "$http_code" != "200" ] && [ "$http_code" != "204" ]; then
-            echo "Avertissement: impossible de supprimer le domaine personnalisé (HTTP $http_code)" >&2
+            echo "Avertissement : impossible de supprimer le domaine personnalisé (HTTP $http_code)." >&2
           fi
