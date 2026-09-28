@@ -1,260 +1,178 @@
-# Node.js & React — Cas d'Usage
+# Node.js & React — workflow full-stack avec Claude Code
 
-## Stack couverte
-
-- **Runtime** : Node.js ≥ 18
-- **Langage** : TypeScript (obligatoire pour tirer le maximum de Copilot)
-- **Frontend** : React 18+ avec TypeScript
-- **Backend** : Express ou Fastify
-- **Tests** : Jest + Testing Library
-- **IDE** : VS Code (recommandé) ou IntelliJ IDEA Ultimate
+Un dépôt full-stack gagne à garder les contextes **frontend** et **backend** explicites tout en partageant les contrats utiles. Claude Code peut naviguer entre les deux, mais il doit éviter de mélanger leurs commandes, dépendances et règles.
 
 ---
 
-## Structure de projet optimale
+## Structure recommandée
 
-Une structure cohérente aide Copilot à comprendre le rôle de chaque fichier :
-
-```
-mon-projet/
-├── .github/
-│   ├── copilot-instructions.md        # Instructions globales
-│   └── instructions/
-│       ├── react-components.instructions.md
-│       ├── api-routes.instructions.md
-│       └── tests.instructions.md
-├── src/
-│   ├── components/
-│   │   ├── Button/
-│   │   │   ├── Button.tsx
-│   │   │   ├── Button.test.tsx
-│   │   │   ├── Button.stories.tsx
-│   │   │   └── index.ts
-│   ├── api/
-│   │   ├── routes/
-│   │   ├── middleware/
-│   │   └── types/
-│   ├── hooks/
-│   ├── utils/
-│   └── types/
-├── package.json
-├── tsconfig.json
-└── jest.config.ts
+```text
+repo/
+├── CLAUDE.md
+├── backend/
+│   ├── CLAUDE.md
+│   ├── package.json
+│   └── src/
+├── frontend/
+│   ├── CLAUDE.md
+│   ├── package.json
+│   └── src/
+└── shared/
+    └── contracts/
 ```
 
+Le fichier racine contient les invariants communs ; chaque sous-projet documente ses commandes et conventions spécifiques.
+
 ---
 
-## Configuration Copilot pour TypeScript/React
+## 1. Cartographier les frontières
 
-### `.github/copilot-instructions.md`
+Avant une feature full-stack :
 
-```markdown
----
-applyTo: '**'
----
-
-# Instructions globales du projet
-
-## Stack
-- React 18 avec TypeScript strict
-- State management: Zustand (pas Redux)
-- API calls: TanStack Query v5
-- Styling: Tailwind CSS (pas CSS-in-JS)
-- Tests: Jest + React Testing Library
-
-## Conventions
-- Composants: functional components avec hooks uniquement
-- Props: toujours typer avec une interface, pas un type alias
-- Exports: named exports uniquement (pas de default export pour les composants)
-- Fichiers: un composant par fichier, même nom que le composant
-```
-
-### `.github/instructions/react-components.instructions.md`
-
-```markdown
----
-applyTo: 'src/components/**/*.tsx'
----
-
-## Conventions des composants React
-
-- Pattern: `interface <ComponentName>Props { ... }` suivi du composant
-- Mémorisation: utiliser `React.memo()` uniquement si profiling le justifie
-- Effets: préférer les custom hooks pour la logique complexe dans useEffect
-- Accessibilité: inclure les attributs aria quand nécessaire
-- Erreurs: retourner null avec un log plutôt que crasher silencieusement
-
-## Pattern standard
-
-```tsx
-interface ButtonProps {
-  label: string;
-  onClick: () => void;
-  disabled?: boolean;
-  variant?: 'primary' | 'secondary' | 'danger';
-}
-
-export const Button: React.FC<ButtonProps> = ({
-  label,
-  onClick,
-  disabled = false,
-  variant = 'primary',
-}) => {
-  return (
-    <button
-      className={`btn btn-${variant}`}
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={label}
-    >
-      {label}
-    </button>
-  );
-};
-```
+```text
+Lis la structure du repo.
+Identifie :
+- point d'entrée backend ;
+- client API frontend ;
+- schéma/contrat partagé ;
+- validation runtime ;
+- tests backend/frontend/E2E ;
+- commandes de chaque workspace.
+Ne modifie rien avant d'avoir montré le flux actuel.
 ```
 
 ---
 
-## Cas d'usage pratiques
+## 2. Contrat d'abord
 
-### 1. Générer un composant React complet
+Pour une nouvelle propriété API :
 
-Stratégie : écrire le type des props + un commentaire descriptif, laisser Copilot compléter.
-
-```tsx
-// Composant de carte produit pour la marketplace
-// Affiche image, nom, prix, note moyenne, et bouton d'ajout au panier
-// Variant: compact (liste) ou full (grille)
-interface ProductCardProps {
-    product: Product;
-    variant: 'compact' | 'full';
-    onAddToCart: (productId: string) => void;
-}
-
-export const ProductCard: React.FC<ProductCardProps> = ({
-    // Copilot complète ici avec destructuring et JSX approprié
+```text
+1. définis le changement de contrat ;
+2. mets à jour validation backend ;
+3. mets à jour types/client frontend ;
+4. ajoute tests contractuels ;
+5. implémente UI ;
+6. exécute tests des deux côtés.
 ```
 
-### 2. Créer un custom hook
+Si le projet génère les types depuis OpenAPI/GraphQL/schema, utilisez cette source de vérité au lieu de dupliquer manuellement les interfaces.
 
-```typescript
-// Hook pour gérer la pagination côté client
-// Prend un array, retourne la page courante, la liste de pages et les handlers
-function usePagination<T>(
-    items: T[],
-    itemsPerPage: number = 10
-) {
-    // Copilot génère l'état et les fonctions next/prev/goTo
+---
+
+## 3. Ne pas partager ce qui ne doit pas l'être
+
+Le dossier `shared/` est utile pour des contrats réellement communs, mais évitez d'y placer :
+
+- logique métier backend ;
+- secrets/config serveur ;
+- dépendances UI ;
+- objets ORM directement exposés au frontend.
+
+Un contrat stable ne signifie pas que toutes les couches doivent utiliser le même type interne.
+
+---
+
+## 4. Workflow feature
+
+```mermaid
+graph LR
+    A["Spec"] --> B["Contract"]
+    B --> C["Backend test + impl"]
+    C --> D["Frontend test + impl"]
+    D --> E["E2E / integration"]
+    E --> F["Review diff"]
 ```
 
-### 3. Générer les tests avec Copilot Chat
+Exemple :
 
-Dans Copilot Chat :
-```
-Génère les tests React Testing Library pour le composant ProductCard.
-Couvre :
-- Rendu avec les deux variants (compact/full)
-- Click sur "Ajouter au panier" appelle onAddToCart avec le bon productId
-- Affichage correct du prix formaté
-- État disabled du bouton si stock épuisé
-```
-
-### 4. Route Express avec validation
-
-```typescript
-// Route POST pour créer un utilisateur
-// Validation: email required, password min 8 chars, role enum USER|ADMIN
-// Returns: 201 avec l'utilisateur créé (sans le mot de passe)
-// Errors: 400 validation, 409 email déjà utilisé
-router.post('/users', async (req, res) => {
-    // Copilot génère la validation Zod et la logique
+```text
+Ajoute l'affichage du statut de livraison.
+Commence par identifier le contrat API existant.
+Propose le changement minimal du contrat et ses impacts.
+Implémente backend puis frontend en deux étapes validées séparément.
+Termine avec le test d'intégration/E2E existant le plus proche.
 ```
 
 ---
 
-## Configuration `tsconfig.json` pour maximiser le contexte
+## 5. Workspaces et package managers
 
-```json
-{
-    "compilerOptions": {
-        "strict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "noUncheckedIndexedAccess": true,
-        "exactOptionalPropertyTypes": true,
-        "paths": {
-            "@components/*": ["./src/components/*"],
-            "@api/*": ["./src/api/*"],
-            "@types/*": ["./src/types/*"]
-        }
-    }
-}
-```
+Si le repo utilise npm/pnpm/yarn workspaces, Claude doit :
 
-!!! tip "strict: true est votre meilleur allié"
-    Le mode strict force les types explicites partout — Copilot a beaucoup plus de contexte pour générer du code correct.
+- utiliser le package manager présent ;
+- conserver le lockfile unique ;
+- exécuter les scripts avec le filtre/workspace approprié ;
+- éviter d'installer une dépendance frontend à la racine si elle n'est utilisée que par une app.
 
 ---
 
-## Configuration IDE
+## 6. Tests ciblés
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    ```json
-    // .vscode/settings.json
-    {
-        "typescript.preferences.quoteStyle": "single",
-        "typescript.suggest.autoImports": true,
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
-        },
-        "github.copilot.enable": {
-            "typescript": true,
-            "typescriptreact": true,
-            "javascript": true,
-            "javascriptreact": true
-        }
-    }
-    ```
+Backend : route/service/DB selon le changement.
 
-=== "IntelliJ IDEA Ultimate"
-    - Activez le support TypeScript : **Settings → Languages → TypeScript**
-    - Configurez le formatter TypeScript : **Settings → Editor → Code Style → TypeScript**
-    - Le plugin GitHub Copilot utilise le service TypeScript d'IntelliJ pour enrichir le contexte
+Frontend : composant/hook/client API.
+
+Full-stack : E2E uniquement lorsque le contrat ou le flux utilisateur le justifie.
+
+```text
+Exécute d'abord les tests backend ciblés et le typecheck.
+Puis les tests frontend ciblés et le typecheck.
+Ne lance la suite E2E qu'une fois ces niveaux verts.
+```
 
 ---
 
-## Workflow TDD avec Copilot
+## 7. Environnements et URLs
 
-La séquence optimale pour du code Node.js/TypeScript de qualité :
+Ne hardcodez pas l'URL backend dans les composants. Utilisez la configuration du projet et distinguez :
 
-```
-1. Écrire l'interface/type de la fonction
-       ↓
-2. Écrire un commentaire JSDoc décrivant la logique
-       ↓
-3. Écrire les tests (Copilot Chat ou inline)
-       ↓
-4. Laisser Copilot générer l'implémentation basée sur les tests
-       ↓
-5. Valider que les tests passent, ajuster si nécessaire
-```
+- développement local ;
+- tests ;
+- preview ;
+- production.
+
+Les variables exposées au bundle frontend ne doivent jamais contenir de secrets.
+
+---
+
+## 8. Authentification
+
+Une modification auth touche souvent les deux côtés :
+
+- cookie/token ;
+- CORS/CSRF ;
+- refresh/session ;
+- routes protégées ;
+- état utilisateur ;
+- tests autorisé/refusé.
+
+Demandez un plan avant modification et vérifiez la documentation officielle actuelle du mécanisme d'authentification utilisé.
+
+---
+
+## 9. Subagents
+
+Pour un gros monorepo, deux explorations indépendantes peuvent être utiles :
+
+- subagent backend : flux API/persistence ;
+- subagent frontend : consommateurs et UI.
+
+Le contexte principal synthétise ensuite le contrat et le plan. Ne laissez pas deux agents modifier simultanément le même contrat partagé sans coordination.
+
+---
+
+## 10. Copilot — référence
+
+Les anciennes instructions `.github/` Node/React peuvent coexister avec les fichiers Claude. Gardez-les si Copilot reste utilisé par une partie de l'équipe ou doit pouvoir être réactivé plus tard.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
-- [React documentation](https://react.dev/) - consulté le 2026-06-20
+- [Claude Code — common workflows](https://code.claude.com/docs/en/common-workflows) — consulté le 2026-09-28
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Node.js & Express](nodejs-express.md)** : explorer les patterns Express spécifiquement optimisés pour Copilot avec TypeScript, Prisma et tests d'intégration.
-
-Concepts clés couverts :
-
-- **Route + Controller Pattern** — Séparation claire des responsabilités
-- **Service + ORM (Prisma)** — Type-safe queries et validations
-- **Middleware d'erreur global** — Gestion cohérente des erreurs
-- **Tests Supertest + Vitest** — Tests d'intégration complets
+Voir les guides spécialisés **[Node.js & Express](nodejs-express.md)** et **[React & TypeScript](react-typescript.md)** pour chaque côté du dépôt.
