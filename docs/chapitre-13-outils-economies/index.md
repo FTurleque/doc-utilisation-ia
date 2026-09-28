@@ -1,277 +1,240 @@
-# Outils pour économiser les crédits IA
+# Outils complémentaires pour Claude Code
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span>
 
-Ce chapitre te propose une méthode concrète pour réduire les crédits Copilot consommés dans un workflow IntelliJ. L'objectif est simple : traiter d'abord ce qui est déterministe, local et automatisable. Copilot reste réservé aux tâches complexes à forte valeur.
+Ce chapitre présente les outils qui complètent Claude Code : utilitaires déterministes, analyse statique, compression de sorties, MCP, modèles locaux et assistants alternatifs.
 
----
-
-## Objectif du chapitre
-
-Objectif opérationnel : **diminuer les appels IA coûteux** en appliquant une séquence outillée avant d'ouvrir Copilot Chat ou Copilot Agent.
-
-!!! info "Règle globale"
-    Si IntelliJ, la CLI ou un outil d'automatisation peut répondre en local, ne consomme pas de crédits IA.
+L'objectif n'est plus « économiser des crédits Copilot » à tout prix. Le bon principe est : **utiliser l'outil le plus fiable et le plus simple pour chaque étape**, puis réserver le raisonnement agentique aux problèmes qui en ont réellement besoin.
 
 ---
 
 ## Principe général
 
-1. **Réduire le contexte avant envoi** (logs, diff, arborescence, données).
-2. **Exploiter IntelliJ natif en premier** (inspections, refactorings, SSR, navigation).
-3. **Industrialiser sans IA** (qualité statique, réécriture, règles d'architecture).
-4. **Monter en gamme IA uniquement si nécessaire** (Copilot en dernier recours).
+```text
+Outil déterministe / IDE / analyse statique
+        ↓
+Contexte ciblé et vérifiable
+        ↓
+Claude Code pour raisonner / modifier
+        ↓
+Tests, lint, build, analyse statique
+        ↓
+Preuve de validation
+```
 
-!!! tip "Impact direct"
-    Cette séquence évite les prompts trop larges, réduit les allers-retours et limite la consommation en chat/agent.
+Un outil local n'est pas automatiquement préférable à Claude, et un appel IA n'est pas automatiquement coûteux ou inutile. La décision dépend de la nature du problème.
 
 ---
 
-## Famille 1 — Réduire et préparer le contexte
-
-Avant toute interaction IA, prépare un contexte minimal et exploitable.
+## 1. Préparer un contexte propre
 
 ### RTK
-- **Rôle** : compresser et nettoyer les sorties terminales.
-- **Cas d'usage** : logs d'erreur volumineux Maven/Gradle/tests.
-- **Évite de demander à Copilot** : "résume ces 500 lignes de logs".
-- **Impact crédits** : **fort** (moins de tokens envoyés).
+
+**[RTK — Rust Token Killer](rtk.md)** compresse les sorties terminales volumineuses afin de réduire le bruit avant analyse.
+
+Cas utiles :
+
+- sorties Maven/Gradle ;
+- logs de tests ;
+- erreurs de compilation ;
+- grands diffs ou rapports textuels.
+
+RTK ne remplace pas `/compact` : l'un transforme une **sortie externe**, l'autre compacte le **contexte de conversation Claude**.
 
 ### TOON
-- **Rôle** : compacter les données tabulaires.
-- **Cas d'usage** : exports CSV, tableaux de métriques, résultats batch.
-- **Évite de demander à Copilot** : "analyse tout ce tableau brut".
-- **Impact crédits** : **fort** sur les prompts data.
 
-### ripgrep (`rg`)
-- **Rôle** : rechercher vite et précisément dans le code.
-- **Cas d'usage** : retrouver une classe, un appel, une exception.
-- **Évite de demander à Copilot** : "où est utilisée cette classe ?" sur tout le repo.
-- **Impact crédits** : **moyen à fort**.
+**[TOON](toon.md)** vise la représentation compacte de données structurées. Utilisez-le lorsque son format est réellement supporté par votre workflow ; ne convertissez pas des données simplement pour « économiser des tokens » si JSON/CSV filtré est déjà suffisamment lisible.
 
-### ast-grep
-- **Rôle** : recherche syntaxique (AST), pas seulement textuelle.
-- **Cas d'usage** : retrouver un pattern de code exact (throw, annotations, appels).
-- **Évite de demander à Copilot** : "trouve tous les endroits qui ressemblent à...".
-- **Impact crédits** : **fort** en phase de refactor.
+### CLI déterministes
 
-### tree
-- **Rôle** : visualiser l'arborescence utile.
-- **Cas d'usage** : partager la structure d'un module sans tout envoyer.
-- **Évite de demander à Copilot** : "explore mon workspace".
-- **Impact crédits** : **moyen**.
-
-### jq / yq
-- **Rôle** : filtrer JSON/YAML localement.
-- **Cas d'usage** : isoler erreurs API, config CI, payloads.
-- **Évite de demander à Copilot** : "parse et filtre ce gros JSON/YAML".
-- **Impact crédits** : **fort**.
-
-### MCP local de réduction
-- **Rôle** : filtrer/résumer localement avant envoi à une IA distante.
-- **Cas d'usage** : traces, logs multi-sources, gros diffs.
-- **Évite de demander à Copilot** : analyse brute d'un volume non filtré.
-- **Impact crédits** : **très fort**.
+Outils toujours utiles avant ou pendant une session Claude :
 
 ```bash
-rg "OrderService|PaymentTimeout" src/
-ast-grep --pattern "throw new $ERR($MSG)" src/
-tree -L 2 src/main/java
-jq '.errors[] | {code, message, service}' logs.json
+rg "PaymentTimeout" src/
+jq '.errors[] | {code, message}' logs.json
+yq '.services.api' config.yaml
+tree -L 2 src/
 ```
 
----
-
-## Famille 2 — Outils IntelliJ à utiliser avant l'IA
-
-Pour IntelliJ, ce sont les gains les plus immédiats **et ces actions ne consomment pas de crédits Copilot**.
-
-- **Inspections** + quick-fixes.
-- **Refactorings** : rename, extract method, inline, safe delete, change signature.
-- **Structural Search and Replace (SSR)**.
-- **Find in Files / Replace in Files**.
-- **Find Usages / Call Hierarchy / Type Hierarchy**.
-- **Navigate to Class / File / Symbol**.
-- **Maven / Gradle tool window** (build, dépendances, tasks).
-- **Run tests / Debugger / Coverage**.
-- **Git tools IntelliJ** (diff, annotate, historique local).
-- **Diagrammes UML** (édition Ultimate).
-
-=== "IntelliJ IDEA"
-    Utilise d'abord : `Analyze > Inspect Code`, `Refactor`, SSR, navigation, puis tests/debug. Ces opérations sont locales à l'IDE et n'appellent pas Copilot.
-
-=== "Visual Studio Code"
-    L'équivalent existe en partie via extensions/CLI, mais IntelliJ est généralement plus robuste pour l'analyse structurelle Java/Kotlin et les refactorings sûrs.
-
-!!! warning "Erreur fréquente"
-    Ouvrir Copilot Chat pour un warning d'inspection que l'IDE peut corriger en 1 clic.
+Claude Code dispose déjà d'outils de recherche et d'exécution. Ces CLI restent intéressantes lorsqu'une commande précise produit une sortie plus petite, reproductible ou facile à réutiliser dans la CI.
 
 ---
 
-## Famille 3 — Automatiser sans IA
+## 2. Utiliser l'IDE et l'analyse statique comme sources de vérité
 
-Quand la dette technique est répétitive, automatise hors LLM.
+Avant de demander à Claude de « deviner » un problème détectable automatiquement, exploitez :
 
-- **Qodana** (JetBrains)
-- **[SonarQube for IDE + Connected Mode](sonarqube.md)**
-- **[SonarQube pour VS Code](sonarqube-vscode.md)**
-- **[RTK + SonarQube](rtk-sonar.md)**
-- **OpenRewrite**
-- **Semgrep**
-- **PMD**
-- **Checkstyle**
-- **SpotBugs**
-- **Error Prone**
-- **ArchUnit**
+- compilateur ;
+- tests ;
+- linter ;
+- type checker ;
+- inspections IDE ;
+- SonarQube ;
+- Semgrep ;
+- Qodana ;
+- SpotBugs / PMD / Checkstyle ;
+- OpenRewrite pour des migrations déterministes.
 
-### Différence entre les types d'outils
+Pages du chapitre :
 
-- **Outil déterministe** : même entrée, même sortie (ex. `rg`, `jq`, inspections).
-- **Analyse statique** : détecte des problèmes sans exécuter le code (ex. SpotBugs, Semgrep, Qodana).
-- **Transformation automatique** : modifie du code via règles explicites (ex. OpenRewrite, SSR).
-- **Assistant IA** : propose des solutions probabilistes selon le contexte (Copilot).
+- **[SonarQube — IntelliJ](sonarqube.md)** ;
+- **[SonarQube — VS Code](sonarqube-vscode.md)** ;
+- **[RTK + SonarQube](rtk-sonar.md)**.
 
-!!! info "Lecture rapide"
-    Plus un outil est déterministe, plus son coût est prévisible et nul côté crédits Copilot.
-
-!!! success "Approche équipe"
-    Mets ces outils en CI pour traiter les problèmes à la source, puis utilise Copilot sur les cas réellement ambigus.
-
-### SonarQube (analyse statique + gouvernance)
-
-- **Rôle** : détecter les bugs, vulnérabilités et code smells avant IA.
-- **Coût Copilot** : nul en détection locale et corrections déterministes.
-- **Escalade** : Quick Fix Sonar/IntelliJ, puis AI CodeFix Sonar, puis Copilot ciblé.
-- **Guide complet IntelliJ** : **[SonarQube — Détecter et corriger sans gaspiller de crédits IA](sonarqube.md)**.
-- **Guide VS Code** : **[SonarQube — Détecter et corriger sans gaspiller de crédits IA (VS Code)](sonarqube-vscode.md)**.
-- **Guide combiné RTK + SonarQube** : **[Construire un filtre anti-bruit avant Copilot](rtk-sonar.md)**.
+Claude est particulièrement utile **après** ces outils : interprétation, priorisation, correction multi-fichiers, tests de non-régression et revue du diff.
 
 ---
 
-## Famille 4 — IA locales et alternatives
+## 3. MCP : connecter Claude à des services externes
 
-Conserver les outils existants du chapitre permet de décharger Copilot sur les tâches simples.
+MCP n'est pas un simple « compresseur de contexte ». Dans Claude Code, MCP sert à **connecter des outils et services externes** : issue tracker, documentation, base de données, observabilité, API interne, navigateur spécialisé, etc.
 
-- **[Ollama](ollama.md)**
-- **[LM Studio](lm-studio.md)**
-- **[Continue.dev](continue-dev.md)**
-- **[Codeium / Windsurf](codeium-windsurf.md)**
-- **[Tabnine](tabnine.md)**
-- **[Amazon Q Developer](amazon-q-developer.md)**
-- **[Supermaven](supermaven.md)**
+```text
+Claude Code
+   │
+   ├── outils intégrés : fichiers, recherche, shell, web
+   │
+   └── MCP : services/outils externes supplémentaires
+```
 
-### Positionnement par outil
+Configuration projet partagée :
 
-| Outil | Rôle | Avantage économique | Limite | Usage recommandé avec IntelliJ |
-|:---:|:---:|:---:|:---:|:---:|
-| Ollama | LLM local | Pas de crédit Copilot | Qualité variable selon modèle/machine | Brainstorm local, explication de code non critique |
-| LM Studio | Exécution locale de modèles | Coût API nul | Setup et perf machine | Tests de prompts hors production |
-| Continue.dev | Pont IDE ↔ modèles locaux/distants | Contrôle fin du routage | Configuration initiale | Complétion/chat local sur fichiers ciblés |
-| Codeium / Windsurf | Assistant alternatif | Réduit usage Copilot | Pertinence variable selon langage | Tâches simples de complétion/correction |
-| Tabnine | Complétion IA | Bon pour saisie répétitive | Moins fort en raisonnement complexe | Boilerplate, snippets, suggestions rapides |
-| Amazon Q Developer | Assistant cloud orienté dev AWS | Peut absorber une partie des usages Copilot | Dépend de l'écosystème AWS | Questions infra/cloud ciblées depuis IntelliJ |
-| Supermaven | Complétion rapide | Réduit les interactions chat | Contexte long parfois moins précis | Flux d'écriture continu dans l'éditeur |
+```text
+.mcp.json
+```
 
-!!! note "Positionnement"
-    Garde Copilot pour les tâches de raisonnement profond multi-fichiers. Pour le reste, une IA locale ou une alternative gratuite suffit souvent.
+Configuration personnelle possible via la configuration Claude utilisateur.
 
----
+Claude Code charge les noms d'outils MCP connectés et peut différer le chargement de leurs schémas complets jusqu'à leur utilisation. Les serveurs inactifs ont donc un coût de contexte limité, mais il reste utile de surveiller les connexions avec :
 
-## Famille 5 — MCP et agents spécialisés
+```text
+/mcp
+```
 
-MCP et agents spécialisés sont utiles, mais seulement avec filtrage d'entrée.
+et de désactiver les serveurs qui ne servent pas au workflow courant.
 
-- Utilise **MCP** pour brancher des outils dynamiques (API, DB, observabilité).
-- Utilise **[MCPs](mcps/index.md)** pour choisir entre la solution locale, les options gratuites et la V2 documentaire.
-- Utilise le **MCP SonarQube** pour filtrer/triager les issues par règle avant correction.
-- Utilise **[OpenSkills](openskills.md)** pour normaliser les skills portables entre agents.
-- N'envoie jamais l'intégralité d'un workspace si seule une sous-zone est utile.
+### Parcours MCP du chapitre
 
-### Parcours MCP
+- **[Présentation et choix](mcps/index.md)** ;
+- **[Configuration](mcps/configuration.md)** ;
+- **[Serveurs et sources externes](mcps/serveurs.md)** ;
+- **[Sécurité](mcps/securite.md)**.
 
-| Page | Rôle |
-|---|---|
-| [Présentation et choix](mcps/index.md) | Vue d'ensemble, familles et critères de décision |
-| [MCP Web local](mcps/configuration.md) | Architecture V1, contrat des outils et sécurité |
-| [MCP Web gratuit](mcps/serveurs.md) | Tavily, Firecrawl et usages de secours |
-| [Comparaison](mcps/securite.md) | Arbitrage local / gratuit / V1 / V2 |
-
-### Exemples de MCP utiles (filtrage local)
-
-- **Recherche locale ciblée** : ne remonter que les fichiers pertinents.
-- **Erreurs Maven/Gradle seulement** : exclure le bruit non build.
-- **Fichiers Git modifiés** : limiter l'analyse au diff courant.
-- **Documentation projet** : extraire uniquement les pages liées au sujet.
-- **Base de connaissance locale** : injecter des réponses validées internes.
-- **Résumé compact de module** : architecture, dépendances, points chauds.
-- **Recherche d'une documentation officielle** : renvoyer seulement les sources validées et leurs URL canonique.
-
-!!! tip "Rappel important"
-    MCP sert d'abord à **filtrer** et **réduire** le contexte avant IA, pas à envoyer plus de données.
-
-!!! danger "Coût caché"
-    Un agent spécialisé mal cadré peut consommer plus qu'un chat classique si tu envoies trop de contexte brut.
+!!! warning "Sécurité MCP"
+    Un serveur MCP peut exposer des outils capables de lire ou modifier des systèmes externes. Appliquez le principe du moindre privilège, limitez les credentials et relisez les permissions avant d'autoriser des actions sensibles.
 
 ---
 
-## Tableau de synthèse
+## 4. Skills et OpenSkills
 
-| Besoin | Outil recommandé | Consommation IA | À utiliser avant Copilot ? | Gain attendu |
-|:---:|:---:|:---:|:---:|:---:|
-| Retrouver une classe | `rg`, Navigate to Class, Find Usages | Nulle | Oui | Rapide, zéro chat |
-| Comprendre un bug localisé | Debugger IntelliJ, tests ciblés, logs filtrés RTK/jq | Nulle à faible | Oui | Réduction forte des allers-retours IA |
-| Corriger un warning | Inspections + quick-fix IntelliJ | Nulle | Oui | Correction immédiate |
-| Corriger une issue Sonar | SonarQube for IDE + Quick Fix Sonar/IntelliJ | Nulle à faible | Oui | Très fort sur Java/IntelliJ |
-| Refactorer un pattern répétitif | SSR + OpenRewrite + ast-grep | Nulle | Oui | Traitement en masse fiable |
-| Migrer une API | OpenRewrite + compil/tests + inspections | Faible | Oui | Migration semi-automatique contrôlée |
-| Analyser tout le repo | Qodana + Semgrep + ArchUnit | Nulle | Oui | Vue globale sans prompt géant |
-| Faire une revue sécurité | Semgrep + SpotBugs + dépendances outillées | Nulle | Oui | Détection systématique initiale |
-| Générer une architecture | Copilot Chat/Agent avec contexte filtré | Élevée | Non (après filtres) | Valeur sur décisions complexes |
-| Écrire une documentation | Structure locale + Copilot pour reformulation finale | Moyenne | Oui (préparer plan d'abord) | Texte plus rapide et plus propre |
-| Rechercher une documentation officielle | MCP Web local, puis Tavily ou Firecrawl si nécessaire | Variable | Oui, après filtrage des sources | Réponses bornées, sources fiables, contexte réduit |
+Claude Code utilise nativement les **skills** dans `.claude/skills/<nom>/SKILL.md`.
+
+La page **[OpenSkills](openskills.md)** documente un outil/format complémentaire visant la portabilité des skills entre agents. Ne confondez pas :
+
+- le mécanisme natif Claude Code ;
+- les conventions d'un projet tiers ;
+- la compatibilité éventuelle avec Copilot ou d'autres agents.
+
+Pour un projet Claude-only, commencez par les skills natifs avant d'ajouter une couche de portabilité.
 
 ---
 
-## Workflow recommandé en 6 étapes
+## 5. Modèles locaux
 
-1. **Isoler le besoin** (fichiers, erreurs, périmètre exact).
-2. **Réduire le contexte** (`rg`, `ast-grep`, RTK, `jq`/`yq`, TOON).
-3. **Essayer IntelliJ natif** (inspection, refactor, usages, tests, debug).
-4. **Passer par l'automatisation** (SonarQube, Qodana, Semgrep, OpenRewrite, règles qualité).
-5. **Préparer une requête IA minimale** :
-    - Problème
-    - Fichiers concernés
-    - Erreurs exactes
-    - Résultat attendu
-6. **Utiliser Copilot Chat, puis Copilot Agent seulement pour des tâches multi-modifications coordonnées**.
+Les modèles locaux peuvent être utiles pour :
+
+- données qui ne doivent pas quitter la machine ;
+- expérimentations ;
+- tâches répétitives simples ;
+- fonctionnement hors ligne ;
+- maîtrise de l'infrastructure.
+
+Pages disponibles :
+
+- **[Ollama](ollama.md)** ;
+- **[LM Studio](lm-studio.md)** ;
+- **[Continue.dev](continue-dev.md)** ;
+- **[Stack locale VS Code](stack-prete-15-min-vscode.md)** ;
+- **[Stack locale IntelliJ](stack-prete-15-min-intellij.md)**.
+
+!!! info "Local ≠ gratuit"
+    Le coût se déplace vers la machine, la mémoire, le GPU, l'électricité, le temps d'administration et parfois une qualité de modèle différente. Comparez sur votre workload réel.
+
+---
+
+## 6. Assistants alternatifs et Copilot
+
+Le dépôt conserve des pages sur :
+
+- **[Codeium / Windsurf](codeium-windsurf.md)** ;
+- **[Tabnine](tabnine.md)** ;
+- **[Amazon Q Developer](amazon-q-developer.md)** ;
+- **[Supermaven](supermaven.md)** ;
+- GitHub Copilot dans ses chapitres dédiés.
+
+Ces outils ne sont pas présentés comme des « remplaçants moins chers » par défaut. Leurs offres, modèles, politiques de données et prix changent ; évaluez-les selon :
+
+```text
+qualité sur votre code
++ intégration IDE
++ confidentialité
++ gouvernance
++ latence
++ coût réel
++ capacité de vérification
+```
+
+Voir **[Comparaison des outils](comparaison.md)** et **[Recommandations par application](recommandations-taille-type-application.md)**.
+
+---
+
+## 7. Choisir le bon outil selon le besoin
+
+| Besoin | Premier outil | Claude Code intervient quand… |
+|---|---|---|
+| trouver un symbole | IDE / `rg` / code intelligence | la relation nécessite interprétation |
+| erreur de compilation | compilateur | il faut comprendre/corriger la cause |
+| vulnérabilité statique | Sonar/Semgrep | la correction touche architecture ou logique |
+| migration répétitive | OpenRewrite / AST tool | cas particuliers ou revue des transformations |
+| gros log | filtre/RTK/jq | il faut diagnostiquer la cause |
+| service externe | MCP | il faut raisonner ou agir avec les données récupérées |
+| procédure récurrente | skill Claude | il faut exécuter le workflow contextualisé |
+| données très sensibles | outil/local model selon politique | seulement si l'accès Claude est autorisé |
+
+---
+
+## 8. Workflow recommandé
 
 ```mermaid
-flowchart LR
-    A[Isoler le besoin] --> B[Réduire le contexte]
-    B --> C[Essayer IntelliJ natif]
-    C --> D[Automatisation sans IA]
-    D --> E[Préparer une requête IA minimale]
-    E --> F[Copilot Chat puis Agent si multi-modifications]
+graph LR
+    A["Reproduire / mesurer"] --> B["Outil déterministe"]
+    B --> C["Contexte ciblé"]
+    C --> D["Claude Code"]
+    D --> E["Validation automatique"]
+    E --> F["Revue du diff / résultat"]
 ```
 
----
-
-## Points clés à retenir
-
-- L'économie de crédits IA se joue d'abord **avant** le prompt.
-- Les outils IntelliJ locaux ne consomment pas de crédits Copilot.
-- SonarQube est complémentaire de RTK : Sonar détecte, RTK réduit le contexte transmis.
-- MCP est un filtre d'entrée : moins de bruit, moins de coût, meilleures réponses.
+1. reproduire le problème ou formuler le résultat attendu ;
+2. utiliser les outils déterministes disponibles ;
+3. donner à Claude les preuves utiles, pas tout le bruit ;
+4. laisser Claude explorer davantage si nécessaire ;
+5. faire exécuter les checks ;
+6. relire le résultat.
 
 ---
+
+## GitHub Copilot — référence conservée
+
+Les outils de ce chapitre peuvent aussi compléter Copilot. Les anciennes formulations centrées sur « économiser les AI Credits Copilot » sont conservées uniquement dans les pages de facturation Copilot lorsque cela est pertinent ; le chapitre Outils est désormais indépendant du fournisseur principal.
+
+---
+
+## Sources
+
+- [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[RTK — Rust Token Killer](rtk.md)** : mettre en place la compression des sorties terminal pour réduire immédiatement les tokens envoyés aux agents.
-
-Concepts clés couverts :
-
-- **Compression terminal** — réduire massivement le bruit des commandes
-- **Hook global** — automatiser l'usage sans friction
-- **Mesure des gains** — suivre les économies via `rtk gain`
-- **Usage IntelliJ** — bonnes pratiques spécifiques au terminal intégré
+**[RTK — Rust Token Killer](rtk.md)** : évaluer la compression des sorties terminales avant de poursuivre vers MCP, analyse statique et modèles locaux.
