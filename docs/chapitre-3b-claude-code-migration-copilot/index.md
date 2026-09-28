@@ -35,7 +35,13 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
     <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-    Haiku, Sonnet ou Opus : grille de décision par tâche, changement de modèle et impact sur le coût.
+    Haiku, Sonnet, Opus ou Fable : grille de décision par tâche, changement de modèle et impact sur l'usage.
+
+- :material-cash-multiple: **[Coûts & quotas](couts-quotas.md)**
+
+    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
+
+    Relier le modèle choisi aux limites d'usage, usage credits, abonnements, API/providers et leviers d'économie.
 
 - :material-message-processing: **[Prompt Engineering avec Claude](prompt-engineering-claude.md)**
 
@@ -91,12 +97,6 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
     Tableau détaillé, avantages/inconvénients, coûts, et grille de décision (rester / passer / hybride).
 
-- :material-cash-multiple: **[Coûts & quotas](couts-quotas.md)**
-
-    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
-
-    Facturation, comptage des tokens, mesure (`/cost`) et leviers d'économie. Comparaison budgétaire.
-
 - :material-swap-horizontal: **[Migration pas à pas](migration-pas-a-pas.md)**
 
     <span class="badge-expert">Expert</span>
@@ -120,7 +120,8 @@ graph TD
     I["Installation"] --> D["Claude Desktop"]
     D --> A["Architecture .claude/"]
     A --> MOD["Modèles Claude"]
-    MOD --> P["Prompt Engineering"]
+    MOD --> CO["Coûts & quotas"]
+    CO --> P["Prompt Engineering"]
     P --> CK["Cookbook"]
     CK --> HK["Hooks avancés"]
     HK --> CI["Workflows CI"]
@@ -129,8 +130,7 @@ graph TD
     MCP --> SEC["Sécurité"]
     SEC --> PL["Plugins d'équipe"]
     PL --> C["Comparaison"]
-    C --> CO["Coûts & quotas"]
-    CO --> M["Migration pas à pas"]
+    C --> M["Migration pas à pas"]
     M --> J["Checklist 30/60/90"]
 ```
 
@@ -139,7 +139,8 @@ graph TD
 | Installer et tester Claude vite | [Installation](installation.md) |
 | Utiliser Claude Code dans l'application de bureau | [Claude Desktop](claude-desktop.md) |
 | Structurer un dépôt pour Claude | [Architecture `.claude/`](architecture-claude.md) |
-| Choisir Haiku / Sonnet / Opus | [Modèles Claude](modeles-claude.md) |
+| Choisir Haiku / Sonnet / Opus / Fable | [Modèles Claude](modeles-claude.md) |
+| Comprendre l'impact du modèle sur budget et limites | [Coûts & quotas](couts-quotas.md) |
 | Écrire de meilleurs prompts | [Prompt Engineering avec Claude](prompt-engineering-claude.md) |
 | Copier des recettes prêtes | [Cookbook](cookbook.md) |
 | Automatiser avec des hooks | [Hooks avancés](hooks-avances.md) |
@@ -149,7 +150,6 @@ graph TD
 | Sécuriser et gouverner l'agent | [Sécurité & gouvernance](securite-gouvernance.md) |
 | Partager la config entre dépôts | [Plugins d'équipe](plugins-equipe.md) |
 | Décider Copilot vs Claude | [Comparaison](comparaison-copilot-claude.md) |
-| Maîtriser le budget | [Coûts & quotas](couts-quotas.md) |
 | Migrer une équipe existante | [Migration pas à pas](migration-pas-a-pas.md) → [Checklist 30/60/90](migration-30-60-90.md) |
 
 ---
