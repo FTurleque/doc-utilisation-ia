@@ -33,6 +33,7 @@ graph LR
 | Page | Niveau | Contenu |
 |---|---|---|
 | [Concepts & architectures](concepts.md) | Tous | Retrieval, embeddings, chunking, reranking, agentic retrieval |
+| [Qdrant](qdrant.md) | Intermédiaire | Moteur vectoriel, payloads, filtres et hybrid search |
 | [Implémentation](implementation.md) | Tous | Progression du prototype à la production |
 | [Niveau 1](niveau-1.md) | Débutant | Pipeline minimal et observable |
 | [Niveau 2](niveau-2.md) | Intermédiaire | Retrieval hybride, reranking, qualité |
@@ -61,11 +62,13 @@ Le pipeline est simple à dessiner mais difficile à rendre fiable. Les erreurs 
 
 ---
 
-## Embeddings et similarité
+## Embeddings, similarité et moteur vectoriel
 
 Une approche courante consiste à représenter textes et requêtes sous forme de vecteurs puis à rechercher les passages proches.
 
 La similarité cosinus est fréquente, mais **un score élevé n'est pas une preuve de pertinence métier**. Un retrieval doit être évalué sur un jeu de questions représentatif.
+
+**[Qdrant](qdrant.md)** fournit un exemple concret de moteur vectoriel adapté à ce rôle, avec filtres sur payload, recherche dense/sparse et requêtes hybrides. Il n'est pas obligatoire : choisissez le store qui correspond à vos contraintes et à vos evals.
 
 Métriques utiles côté retrieval :
 
@@ -177,6 +180,7 @@ Pour les analyses volumineuses, déléguez l'exploration à un subagent afin de 
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 - [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Qdrant — documentation](https://qdrant.tech/documentation/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
