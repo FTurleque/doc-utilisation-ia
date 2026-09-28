@@ -1,104 +1,86 @@
 # AGENTS — recommandations pour ce dépôt
 
-Ce fichier contient les conventions communes aux assistants et agents utilisés pour maintenir la documentation. **Claude Code est désormais l'outil principal** pour les travaux de fond sur le dépôt. Les configurations GitHub Copilot restent conservées pour la compatibilité, la comparaison et un éventuel retour à Copilot.
+Ce fichier contient les conventions communes aux assistants et agents utilisés pour maintenir **l'ensemble du dépôt**. Claude Code est l'outil principal ; les configurations GitHub Copilot restent maintenues pour la compatibilité et la référence.
 
 ## Périmètre
 
 - Documentation publique : `docs/`
-- Navigation du site : `mkdocs.yml`
-- Documentation et règles de contribution : fichiers Markdown à la racine
-- Configuration Claude : `CLAUDE.md` et, si nécessaire, `.claude/`
-- Configuration Copilot historique : `.github/copilot-instructions.md`, `.github/agents/`, `.github/instructions/`, `.github/prompts/`
+- Navigation : `mkdocs.yml`
+- Instructions/gouvernance : fichiers Markdown à la racine
+- Claude Code : `CLAUDE.md` et `.claude/`
+- GitHub Copilot : `.github/copilot-instructions.md`, `.github/agents/`, `.github/instructions/`, `.github/prompts/`, `.github/skills/`, `.github/hooks/`
+- CI/CD : `.github/workflows/`
+- Scripts : `scripts/`
+- Notes internes : `user/`
+- Templates : `docs/assets/templates/`
 
 ## Règles communes
 
-- Écrire en français, avec un ton pédagogique et concret.
+- Écrire en français pour le contenu publié.
 - Vérifier les faits évolutifs auprès de sources officielles avant publication.
-- Présenter Claude Code comme parcours principal lorsqu'une page traite d'un usage IA générique.
-- Ne pas supprimer les contenus Copilot : les conserver dans des sections ou pages clairement identifiées.
-- Ne pas transformer une fonctionnalité propre à Copilot en fonctionnalité Claude sans vérification, et inversement.
-- Maintenir `mkdocs.yml` lorsque des pages publiques sont ajoutées, déplacées ou renommées.
-- Ne jamais merger directement dans `main` dans le cadre d'un travail d'agent ; travailler sur une branche et passer par une Pull Request.
+- Présenter Claude Code comme parcours principal dans les pages génériques.
+- Conserver les références Copilot utiles et les identifier clairement.
+- Ne pas traiter `.claude/*` et `.github/*` comme des formats interchangeables.
+- Mettre `mkdocs.yml` à jour pour les pages publiques ajoutées/déplacées, sauf ressources volontairement hors navigation.
+- Auditer aussi les scripts, templates, agents et workflows lorsqu'une migration transverse les affecte.
+- Ne jamais pousser ou merger directement dans `main` dans un workflow d'agent.
 
-## Rôles recommandés
+## Rôles Claude disponibles
 
-### Rédaction documentaire
+Sous `.claude/agents/` :
 
-Objectif : rédiger, restructurer ou clarifier des pages Markdown.
+- `doc-writer` — rédaction et mise à jour ;
+- `doc-reviewer` — audit en lecture seule ;
+- `nav-maintainer` — navigation MkDocs ;
+- `official-doc-audit` — comparaison aux sources officielles ;
+- `official-doc-sync` — synchronisation documentée.
 
-Tâches typiques :
+Le skill `.claude/skills/doc-writer/` fournit le workflow de rédaction réutilisable.
 
-- proposer un plan ;
-- adapter le niveau débutant/intermédiaire/expert ;
-- réécrire une page Copilot-first en parcours Claude-first tout en conservant la partie Copilot ;
-- harmoniser les admonitions, tableaux, badges et liens internes.
+Les agents/skills sous `.github/` restent les équivalents ou outils spécifiques GitHub Copilot.
 
-### Synchronisation avec la documentation officielle
+## Sources
 
-Objectif : mettre à jour une page à partir de références éditeur actuelles.
+Prioriser :
 
-Sources prioritaires :
+1. documentation officielle du produit ;
+2. changelog/release notes officiels ;
+3. dépôt ou spécification officielle ;
+4. source secondaire seulement en complément.
 
-- Claude Code : `code.claude.com/docs` ;
-- Claude Platform : `docs.anthropic.com` / `platform.claude.com/docs` ;
-- GitHub Copilot : documentation officielle GitHub ;
-- outils tiers : documentation officielle et dépôt de l'éditeur.
+Pour Claude : `code.claude.com/docs`, `platform.claude.com/docs`, `anthropic.com`.
+Pour Copilot : GitHub Docs et GitHub Changelog.
 
-Tâches typiques :
-
-- vérifier les commandes d'installation ;
-- contrôler les fonctionnalités IDE, CLI, MCP, hooks et permissions ;
-- vérifier les modèles, quotas et prix uniquement quand ils sont nécessaires à la page ;
-- dater les informations sensibles à l'évolution.
-
-### Audit documentaire
-
-Objectif : comparer la documentation du dépôt aux sources officielles sans réécrire aveuglément.
-
-Tâches typiques :
-
-- identifier les informations obsolètes ;
-- signaler les pages encore trop dépendantes de Copilot pour un parcours générique ;
-- détecter les contradictions entre pages Claude et pages Copilot ;
-- classer les corrections par lot cohérent.
-
-### Relecture et qualité
-
-Objectif : vérifier la forme et la cohérence après modification.
-
-Tâches typiques :
-
-- orthographe et style ;
-- liens relatifs ;
-- titres et ancres ;
-- navigation MkDocs ;
-- cohérence des noms de produits et commandes ;
-- accessibilité des images et captures.
-
-### Build du site
-
-Objectif : valider le rendu MkDocs avant de considérer un lot terminé.
+## Validation du site
 
 Commande de référence :
 
-```powershell
-py -m mkdocs build
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
-Si les dépendances ne sont pas présentes :
+Sous Windows, `py -m` peut remplacer `python -m` selon l'installation.
 
-```powershell
-py -m pip install -r requirements.txt
-py -m mkdocs build
-```
+La CI de PR exécute ces validations. Ne masque pas un échec par un assouplissement du validateur sans démontrer qu'il s'agit d'un faux positif.
 
-## Exemples de demandes
+## Git et déploiement
 
-- « Mets à jour la page d'installation Claude Code à partir de la documentation officielle et conserve un encadré de migration depuis Copilot. »
-- « Audite le chapitre Coûts & Gouvernance et sépare clairement les tarifs Claude des tarifs Copilot. »
-- « Réoriente le guide de contexte vers `CLAUDE.md`, les règles Claude et MCP, sans supprimer les pages `.instructions.md` propres à Copilot. »
-- « Vérifie les liens internes et la navigation après ce lot, puis exécute le build MkDocs. »
+- Travail sur branche.
+- Push : `git push -u origin HEAD`.
+- Pull Request vers `main`.
+- Merge manuel après revue.
+- Déploiement par `.github/workflows/deploy.yml` après intégration dans `main`.
+
+Le script `scripts/push-and-deploy.ps1` porte un nom historique mais refuse désormais de pousser `main/master`.
+
+## Sécurité
+
+- Ne jamais committer de secrets ou credentials.
+- `.claude/settings.local.json` et les réglages personnels restent locaux.
+- Considérer hooks, skills, agents et workflows comme du code/configuration exécutable à relire.
+- Les exemples offensifs du chapitre cybersécurité doivent rester orientés défense, détection et contrôle.
 
 ## Relation avec `CLAUDE.md`
 
-`CLAUDE.md` contient les instructions spécifiques à Claude Code et importe ce fichier. Les deux fichiers doivent rester courts, complémentaires et cohérents. Les configurations sous `.github/` restent la référence pour les usages GitHub Copilot et ne doivent pas être supprimées au cours de la migration.
+`CLAUDE.md` importe ce fichier et contient les priorités spécifiques Claude. Les deux doivent rester cohérents et suffisamment courts pour ne pas surcharger le contexte.
