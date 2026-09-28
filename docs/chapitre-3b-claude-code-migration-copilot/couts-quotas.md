@@ -220,4 +220,4 @@ Le chapitre **[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)*
 
 ## Prochaine étape
 
-**[Migration depuis Copilot — guide pas à pas](migration-pas-a-pas.md)** : migrer les artefacts en conservant une mesure réelle des coûts avant et après.
+**[Prompt Engineering avec Claude](prompt-engineering-claude.md)** : maintenant que le modèle, les limites et le coût sont compris, optimiser la façon de formuler les tâches et de structurer le contexte avant de passer aux recettes et automatisations.
