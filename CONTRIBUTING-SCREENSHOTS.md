@@ -1,264 +1,116 @@
-# Contributing Screenshots — Guidelines
+# Contribution de captures d'écran
 
-> Guide complet pour capturer et contribuer des screenshots à la documentation
+Ce guide décrit comment ajouter des captures fiables à la documentation. Le parcours principal est **Claude Code** ; les captures GitHub Copilot existantes sont conservées comme références produit et ne doivent pas être supprimées uniquement parce que l'orientation du dépôt a changé.
 
----
+## Principes
 
-## 🎯 Scope
+- Capturer uniquement une interface réellement observée sur une version stable récente de l'IDE/extension.
+- Ne pas figer dans ce guide une version minimale d'IntelliJ IDEA ou de VS Code : vérifier la compatibilité officielle au moment de la capture.
+- Ne jamais fabriquer un écran, un état UI, un raccourci ou un libellé.
+- Masquer les noms de compte, organisations, dépôts privés, tokens, clés, chemins personnels et données métier.
+- Une capture datée reste utile comme référence historique, mais son contexte doit être identifiable.
 
-This document explains how to capture and contribute screenshots for the GitHub Copilot documentation (IntelliJ IDEA and VS Code).
+## Nommage
 
-**Target Audience**: Contributors, documentation maintainers, IDE power users
+Utiliser un nom explicite :
 
-**Expected Effort**: 30-60 minutes total for all 26 screenshots
-
----
-
-## 📋 Prerequisites
-
-### System Requirements
-- **IntelliJ IDEA** users:
-  - Version 2024.1 or newer
-  - GitHub Copilot extension installed
-  - Authenticated with GitHub account
-  
-- **VS Code** users:
-  - Latest version (1.85+)
-  - GitHub Copilot extension installed
-  - Authenticated with GitHub account
-
-### Screen Setup
-- Display: **1920×1080 minimum** (Full HD recommended)
-- Scale: **100%** (no zoom/zoom-in)
-- Display all extension features clearly
-
----
-
-## 📸 Preparation Steps
-
-### 1. Clean IDE Environment
-
-Before capturing ANY screenshot:
-
-```bash
-# Option A: Create fresh workspace
-# Create new empty project
-# File → New → Project → Empty Project
-
-# Option B: Use existing minimal project
-# But close all unrelated files
-# Keep only 1-2 sample files visible
+```text
+{ide}-{produit}-{fonction}-{numero}.png
 ```
 
-**Why?** Clean environment = focused screenshots, no distraction
+Exemples :
 
-### 2. Verify Settings Consistency
+```text
+vscode-claude-chat-01.png
+vscode-copilot-marketplace-01.png
+intellij-claude-plugin-01.png
+intellij-copilot-settings-01.png
+```
 
-**IntelliJ IDEA**:
-- Theme: ☑ Darcula (Settings → Appearance → Theme)
-- Font: ☑ JetBrains Mono, 14px (Settings → Editor → Font)
-- All notifications disabled (Settings → Appearance → Notifications)
+Les anciens fichiers dont le nom ne suit pas encore cette convention peuvent rester en place afin de ne pas casser les liens existants.
 
-**VS Code**:
-- Theme: ☑ Dark (Modern) (Settings → Theme)
-- Font: ☑ Monospace/Fira Code, 14px
-- Extensions sidebar visible by default (Cmd+Shift+X)
+## Emplacement actuel
 
-### 3. Test Copilot Features
+Les images sont actuellement stockées à plat dans :
 
-Before capturing, verify:
-- ☑ Inline suggestions working (type code snippet)
-- ☑ Chat panel opens (Ctrl+Alt+I or Ctrl+I)
-- ☑ Authentication valid (no "Sign In" prompts)
+```text
+docs/assets/images/intellij/
+docs/assets/images/vscode/
+```
 
----
+Ne créez pas de sous-dossiers `01-installation/`, `02-parametrage/`, etc. sans mettre à jour les liens et les guides associés : cette structure n'est pas utilisée actuellement.
 
-## 🎬 Capture Procedure
+## Préparer la capture
 
-### Step-by-Step Workflow
+1. Utiliser la dernière version stable compatible de l'IDE et de l'intégration concernée.
+2. Ouvrir un projet de démonstration sans données sensibles.
+3. Désactiver les notifications non pertinentes.
+4. Garder suffisamment de contexte UI pour que la capture soit compréhensible.
+5. Vérifier le nom exact du produit visible : Claude/Claude Code ou GitHub Copilot.
 
-1. **Select Template**
-   - Open `CAPTURE-TEMPLATE.md` in your IDE repo
-   - Choose one screenshot to capture (e.g., `intellij-marketplace-01.png`)
+La résolution doit rendre le texte lisible ; `1920×1080` est une bonne cible, pas une obligation absolue. Éviter d'imposer un scale système de 100 % si cela réduit l'accessibilité du poste de capture.
 
-2. **Follow Instructions**
-   - Read "Goal", "Steps", "Key Details" sections
-   - Perform each step in your IDE
-   - Do NOT deviate from steps
+## Produits à documenter
 
-3. **Capture Screenshot**
-   - **IntelliJ**: Help → Take Screenshot (built-in)
-   - **VS Code**: `Win+Shift+S` or Screenshot tool
-   - **Mac**: `Cmd+Shift+4` (then click area)
+### Claude Code — priorité documentaire
 
-4. **Crop Image**
-   - Use Screenshot Editor or external tool (Preview, GIMP)
-   - Crop to focus on main UI element
-   - Leave ~20-30px padding around element
-   - Remove sensitive info (usernames, API Keys)
+Captures utiles lorsqu'elles apportent une information que le texte ne suffit pas à transmettre :
 
-5. **Optimize File Size**
-   - **Windows**: Use PNGCrush:
-     ```powershell
-     pngcrush -brute input.png output_optimized.png
-     ```
-   - **Mac**: Use ImageOptim (GUI)
-   - **Online**: Use TinyPNG (tinypng.com)
-   - Target: < 150 KB per file
+- installation/intégration VS Code ;
+- plugin JetBrains ;
+- panneau Claude Code ;
+- permissions ou réglages propres à l'intégration ;
+- écrans de diagnostic dont l'emplacement UI est important.
 
-6. **Name & Save**
-   - Filename: `{ide}-{feature}-{number}.png`
-   - Examples:
-     - `intellij-marketplace-01.png`
-     - `vscode-settings-search-01.png`
-   - Save to correct subdirectory:
-     - `docs/assets/images/intellij/01-installation/`
-     - `docs/assets/images/vscode/02-parametrage/`
+Ne pas créer une capture uniquement pour illustrer une commande CLI stable : un bloc de code est souvent plus durable.
 
-7. **Verify**
-   - Open file in image viewer
-   - Confirm: clarity, focus, no artifacts
-   - Confirm filename matches template
+### GitHub Copilot — référence conservée
 
----
+Les captures existantes Copilot restent valides comme référence si elles correspondent encore à l'interface documentée. Pour une nouvelle capture Copilot, vérifier la documentation GitHub et la version réellement installée avant de décrire un bouton, raccourci ou menu.
 
-## 🤝 Submission Process
+## Format et optimisation
 
-### Option 1: Pull Request (GitHub Recommended)
+- PNG pour l'UI et le texte ; JPEG seulement si une image existante l'impose ou si le contenu photographique le justifie.
+- Recadrer sans supprimer le contexte nécessaire.
+- Optimiser raisonnablement la taille sans dégrader la lisibilité.
+- Ne pas utiliser de service en ligne pour optimiser une capture contenant des informations privées non masquées.
+
+## Intégration Markdown
+
+```markdown
+![Panneau Claude Code dans VS Code](../../assets/images/vscode/vscode-claude-chat-01.png)
+```
+
+Le texte alternatif doit expliquer l'information utile, pas seulement dire « screenshot ».
+
+Après ajout ou remplacement d'une image :
 
 ```bash
-# Clone repo
-git clone https://github.com/yourusername/doc-utilisation-ia.git
-cd doc-utilisation-ia
+python -m mkdocs build --strict
+python scripts/validate-links.py
+```
 
-# Create feature branch
-git checkout -b docs/screenshots-intellij
+## Workflow Git
 
-# Add screenshot(s)
-cp ~/Desktop/intellij-marketplace-01.png docs/assets/images/intellij/01-installation/
-
-# Commit with descriptive message
+```bash
+git switch -c docs/screenshots-claude-vscode
 git add docs/assets/images/
-git commit -m "Add IntelliJ marketplace screenshot for installation phase"
-
-# Push to your fork
-git push origin docs/screenshots-intellij
-
-# Create Pull Request on GitHub
-# Title: "Add IntelliJ IDEA screenshots (Phase 1: Installation)"
-# Description: "Captures 3 screenshots: marketplace, install dialog, restart prompt"
+git commit -m "docs: ajouter des captures Claude Code VS Code"
+git push -u origin HEAD
 ```
 
-### Option 2: Direct Upload (if GH not available)
+Ouvrir ensuite une Pull Request vers `main`. Ne pas pousser directement sur `main`.
 
-1. Email screenshots to `docs@example.com` (or team channel)
-2. Include:
-   - IDE version (e.g., "IntelliJ 2024.1")
-   - Copilot version (shown in Help → About → Plugins)
-   - Notes on capture environment
-   - Filenames matching convention
+## Métadonnées à inclure dans la PR
 
-### Option 3: Shared Drive/Folder
+Pour toute nouvelle capture UI, indiquer :
 
-1. Upload to shared Google Drive / Dropbox folder
-2. Notify maintainers
-3. Maintainers integrate into docs folder
+- produit concerné : Claude Code ou GitHub Copilot ;
+- IDE et système d'exploitation ;
+- version IDE/extension observée si elle est utile à la reproductibilité ;
+- page(s) qui utilisent l'image ;
+- date de capture lorsque l'interface est susceptible d'évoluer rapidement.
 
----
+## Contacts
 
-## ✅ Quality Checklist
-
-Before submitting, verify each screenshot:
-
-- [ ] **Naming**: Matches `{ide}-{feature}-{number}.png` pattern
-- [ ] **Location**: In correct subdirectory (`01-installation/`, `02-parametrage/`, etc.)
-- [ ] **Size**: < 150 KB (file size optimized)
-- [ ] **Resolution**: 1920×1080 or higher captured
-- [ ] **Clarity**: Text readable, UI elements visible
-- [ ] **Consistency**: Same theme, font, zoom as other screenshots
-- [ ] **Focus**: Main UI element in center, properly cropped
-- [ ] **Sanitized**: No sensitive info (API keys, personal data)
-- [ ] **Format**: PNG (not JPG, WebP, or other formats)
-
----
-
-## 📊 Progress Tracking
-
-As you capture, update the README.md checklist:
-
-**IntelliJ** (`docs/assets/images/intellij/README.md`):
-```markdown
-- [x] intellij-marketplace-01.png ✅ 2026-03-22
-- [x] intellij-install-dialog-01.png ✅ 2026-03-22
-- [ ] intellij-restart-prompt-01.png 
-```
-
-**VS Code** (`docs/assets/images/vscode/README.md`):
-```markdown
-- [x] vscode-marketplace-01.png ✅ 2026-03-22
-- [ ] vscode-install-button-01.png
-```
-
----
-
-## 🐛 Troubleshooting
-
-### "Screenshot looks blurry"
-- Check: Display scale = 100%
-- Check: Font size at default (14px)
-- Recapture with screenshot tool (not Snipping Tool)
-
-### "Copilot feature not working"
-- Restart IDE
-- Re-authenticate GitHub (Settings → Sign Out, then Sign In)
-- Check extension version (Settings → Extensions → GitHub Copilot)
-
-### "Screenshot size > 150 KB"
-- Use PNGCrush with `--brute` flag (slow but effective)
-- Try online optimizer: TinyPNG
-- Reduce width to 1400px (scales down for web anyway)
-
-### "Theme doesn't match other screenshots"
-- Verify theme in Settings
-- If different theme, capture entire new set with that theme
-- Don't mix themes in same folder
-
----
-
-## 🎓 Examples
-
-### Good Screenshot 👍
-- ✅ 1920×1080 capture
-- ✅ Darcula theme (IntelliJ) / Dark theme (VS Code)
-- ✅ Single focused UI element (e.g., Marketplace card)
-- ✅ Text clearly readable
-- ✅ 80-120 KB file size
-- ✅ Properly cropped with padding
-
-### Bad Screenshot 👎
-- ❌ Blurry or pixelated
-- ❌ Mixed themes or inconsistent styling
-- ❌ Multiple unrelated UI elements in frame
-- ❌ Notifications or dialogs visible
-- ❌ > 200 KB file size
-- ❌ Cropped too tightly (no context)
-
----
-
-## 📞 Support
-
-**Questions?** Open an issue on GitHub:
-- Title: "[Screenshot] Question about capturing {feature}"
-- Description: Your question + context
-- Assignee: Docs team
-
-**Stuck?** Reach out:
-- Slack/Discord: #docs-contributors
-- Email: docs-team@example.com
-
----
-
-## 🙏 Thank You!
-
-Screenshots make documentation 10x better. Your contribution helps thousands of developers use Copilot more effectively. **Merci!** 🇫🇷
-
+Le dépôt ne définit pas d'adresse e-mail ou de canal Slack/Discord de support documentaire. Utiliser les issues et Pull Requests GitHub du dépôt pour toute question afin d'éviter les coordonnées fictives ou périmées.
