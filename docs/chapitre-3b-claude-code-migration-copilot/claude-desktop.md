@@ -141,7 +141,7 @@ Ce tableau ne signifie pas qu'une surface exclut les autres. Un même développe
 Pour un déploiement d'équipe :
 
 1. distinguez les politiques **Claude Desktop** de celles de la CLI et de l'IDE ;
-2. inventorie les extensions de bureau autorisées ;
+2. inventoriez les extensions de bureau autorisées ;
 3. appliquez le moindre privilège aux connecteurs et MCP ;
 4. ne mettez aucun secret dans les deep links ;
 5. validez les politiques de mise à jour et de déploiement d'entreprise ;
