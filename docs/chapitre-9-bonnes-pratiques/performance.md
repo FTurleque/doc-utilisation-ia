@@ -170,7 +170,44 @@ Pour entraînement ML, build massif ou tests end-to-end :
 
 ---
 
-## 12. Mesurer avant/après
+## 12. Observabilité et GreenOps
+
+Dès qu'un workflow devient distribué ou durable, ne mesurez plus seulement le temps ressenti dans l'IDE.
+
+Suivez selon le système :
+
+- latence et throughput ;
+- erreurs/retries ;
+- CPU, mémoire, GPU ;
+- logs structurés ;
+- métriques métier ;
+- consommation énergétique si elle est pertinente.
+
+Le chapitre **Outils** contient maintenant une section dédiée :
+
+- **[Grafana](../chapitre-13-outils-economies/observabilite/grafana.md)** pour dashboards, exploration et alerting ;
+- **[Loki](../chapitre-13-outils-economies/observabilite/loki.md)** pour les logs ;
+- **[Kepler](../chapitre-13-outils-economies/observabilite/kepler.md)** pour les métriques d'énergie Kubernetes.
+
+Architecture typique :
+
+```text
+application / agent
+→ métriques + logs
+→ Prometheus / Loki
+→ Grafana
+
+Kubernetes
+→ Kepler
+→ Prometheus
+→ Grafana
+```
+
+Pour une optimisation, comparez toujours à **charge fonctionnelle comparable**. Une baisse de CPU ou de watts n'est pas un gain si le traitement devient beaucoup plus lent ou moins correct.
+
+---
+
+## 13. Mesurer avant/après
 
 Pour une optimisation de workflow, mesurez :
 
@@ -178,7 +215,8 @@ Pour une optimisation de workflow, mesurez :
 - nombre d'échecs/retries ;
 - taille des sorties ;
 - appels externes ;
-- métriques métier ou de qualité concernées.
+- métriques métier ou de qualité concernées ;
+- ressources/énergie lorsque l'environnement permet une mesure pertinente.
 
 Évitez les tables génériques « telle configuration = X MB RAM » : elles varient avec l'IDE, le projet, les extensions et les versions.
 
@@ -195,6 +233,9 @@ Les réglages de complétion et diagnostics spécifiques Copilot restent documen
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 - [Anthropic — Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) — consulté le 2026-09-28
 - [Anthropic — Claude Code sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) — consulté le 2026-09-28
+- [Grafana — documentation](https://grafana.com/docs/grafana/latest/) — consulté le 2026-09-28
+- [Grafana Loki — documentation](https://grafana.com/docs/loki/latest/) — consulté le 2026-09-28
+- [CNCF — Kepler](https://www.cncf.io/projects/kepler/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
