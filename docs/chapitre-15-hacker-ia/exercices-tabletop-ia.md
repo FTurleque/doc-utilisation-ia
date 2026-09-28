@@ -1,168 +1,145 @@
-# Exercices tabletop IA (60/90/120 minutes)
+# Exercices tabletop IA
 
 <span class="badge-expert">Expert</span> <span class="badge-intermediate">Intermédiaire</span>
 
-Cette page fournit des exercices tabletop prêts à animer pour tester la réponse de l'organisation face à des incidents cyber impliquant l'IA.
+Ces exercices servent à tester la coordination, les décisions et les contrôles d'une organisation face à des incidents impliquant agents IA, fraude, prompt injection ou fuite de données. La durée et le nombre d'injects doivent être adaptés à l'équipe ; aucun format 60/90/120 minutes n'est universel.
 
 ---
 
-## Objectifs d'un tabletop IA
+## Objectifs
 
-- Tester les décisions sous contrainte de temps
-- Vérifier la coordination SOC, IT, métiers et direction
-- Identifier les angles morts de procédure
-- Améliorer la préparation avant incident réel
+Un bon tabletop doit vérifier :
 
-!!! tip "Format recommandé"
-    Commence par 60 minutes pour installer le réflexe, puis augmente à 90 et 120 minutes quand le niveau de maturité progresse.
+- qui décide et avec quelles informations ;
+- comment les accès sont révoqués ;
+- quelles preuves sont conservées ;
+- comment SOC, IT, Dev, juridique/privacy et métiers coopèrent ;
+- quelles dépendances externes compliquent le confinement ;
+- quelles actions concrètes sortent du debrief.
 
 ---
 
-## Trame d'animation commune
+## Structure générique
 
-```mermaid
-flowchart TD
-    A[Brief scenario] --> B[Inject 1 - Detection]
-    B --> C[Inject 2 - Escalade]
-    C --> D[Inject 3 - Impact metier]
-    D --> E[Inject 4 - Communication]
-    E --> F[Debrief + actions correctives]
+```text
+brief
+→ signal initial
+→ information nouvelle / ambiguïté
+→ aggravation ou impact métier
+→ décision de confinement
+→ reprise / communication
+→ debrief et actions
 ```
 
----
-
-## Exercice 1 - Format 60 minutes (fondation)
-
-### Scénario
-
-Campagne de phishing personnalisée visant finance et support avec demandes urgentes crédibles.
-
-### Rythme proposé
-
-| Minute | Inject | Décision attendue |
-|---|---|---|
-| 0-10 | Alerte initiale | Activation triage incident |
-| 10-20 | Compte VIP ciblé | Validation hors bande et confinement |
-| 20-35 | Tentative de virement | Blocage process et escalade management |
-| 35-50 | Propagation campagne | Communication interne de vigilance |
-| 50-60 | Clôture | Plan d'action à 7 jours |
-
-### Critères de réussite
-
-- Temps d'activation incident
-- Qualité de coordination inter-équipes
-- Rigueur des validations hors bande
+Le facilitateur adapte le rythme aux discussions, plutôt que de forcer un timing arbitraire.
 
 ---
 
-## Exercice 2 - Format 90 minutes (intermédiaire)
+## Scénario 1 — Prompt injection dans un dépôt
 
-### Scénario
+### Point de départ
 
-Deepfake vocal + email de confirmation demandant action sensible sur comptes et paiements.
+Un développeur clone un dépôt tiers. Après ouverture par l'agent, des commandes inattendues sont exécutées et un serveur MCP inconnu apparaît dans la configuration projet.
 
-### Rythme proposé
+### Injects possibles
 
-| Minute | Inject | Décision attendue |
-|---|---|---|
-| 0-15 | Appel voix dirigeant | Procédure anti-usurpation |
-| 15-35 | Email de suivi cohérent | Vérification identité multicritère |
-| 35-55 | Pression temporelle externe | Maintien des contrôles sans exception |
-| 55-75 | Impact réputation | Préparation communication interne/externe |
-| 75-90 | Debrief | Correctifs process + formation |
+- le dépôt contient un `CLAUDE.md` ou une skill inhabituelle ;
+- un token de développement était présent dans l'environnement ;
+- le diff montre une modification hors périmètre ;
+- un appel réseau vers une destination inconnue est observé.
 
-### Critères de réussite
+### Questions
 
-- Pas d'exception aux contrôles critiques
-- Décision juridique/comms alignée
-- Documentation horodatée des décisions
-
----
-
-## Exercice 3 - Format 120 minutes (avancé)
-
-### Scénario
-
-Incident combiné: prompt poisoning dans dépôt + dépendance non approuvée + suspicion d'exfiltration de données.
-
-### Rythme proposé
-
-| Minute | Inject | Décision attendue |
-|---|---|---|
-| 0-20 | Alerte dépôt | Restriction immédiate permissions agent |
-| 20-45 | Dépendance suspecte | Blocage CI/CD et revue supply chain |
-| 45-75 | Indice de fuite | Confinement + procédure juridique/privacy |
-| 75-100 | Pression métier (reprise prod) | Arbitrage risque vs continuité |
-| 100-120 | Debrief final | Plan d'amélioration 30/60/90 jours |
-
-### Critères de réussite
-
-- Confinement rapide et traçable
-- Qualité d'analyse cause racine
-- Robustesse des décisions de reprise
+- qui stoppe l'agent ?
+- quels tokens sont révoqués ?
+- quelles preuves sont préservées ?
+- comment déterminer si une donnée a quitté le poste ?
+- quels contrôles empêchent une répétition ?
 
 ---
 
-## Kit facilitateur (prêt à copier)
+## Scénario 2 — MCP compromis
 
-### Ouverture de session
+### Point de départ
 
-```markdown
-Objectif: tester notre capacité de réponse à un incident cyber avec composante IA.
-Règle: exercice sans blâme, orienté apprentissage.
-Livrables: décisions, timeline, actions correctives priorisées.
-```
+Un MCP utilisé pour la documentation commence à retourner des contenus inhabituels et tente d'accéder à des ressources internes non prévues.
 
-### Questions de cadrage pendant l'exercice
+### Injects
 
-- Qui décide de la sévérité et sur quels critères ?
-- Quelles preuves conservons-nous immédiatement ?
-- Qui valide la communication interne/externe ?
-- À quel moment relançons-nous les opérations ?
+- changement récent de version ;
+- secret statique présent dans sa configuration ;
+- logs montrant une redirection vers une adresse privée ;
+- plusieurs développeurs utilisent le même token.
 
-### Debrief standard
+### Résultats attendus
 
-- Ce qui a bien fonctionné
-- Ce qui a ralenti la réponse
-- Les 3 priorités d'amélioration
-- Les responsables et échéances
+- désactivation du MCP ;
+- rotation des secrets ;
+- revue de provenance/version ;
+- correction des règles réseau/SSRF ;
+- migration vers comptes/scopes individuels ou dédiés.
 
 ---
 
-## Scorecard d'évaluation
+## Scénario 3 — Fuite de données via assistant IA
 
-| Axe | Note 1-5 | Commentaire |
-|---|---|---|
-| Détection et qualification |  |  |
-| Confinement et coordination |  |  |
-| Investigation et preuves |  |  |
-| Communication de crise |  |  |
-| Décision de reprise |  |  |
-| Gouvernance et conformité |  |  |
+Un collaborateur signale qu'un prompt envoyé à un service externe contenait des données client et potentiellement un secret.
 
-!!! info "Conseil"
-    Conserve les scorecards dans un historique trimestriel pour mesurer l'amélioration réelle, pas seulement le ressenti.
+À tester :
+
+- qualification des données ;
+- rotation du secret ;
+- analyse des logs ;
+- implication privacy/juridique ;
+- relation avec le fournisseur ;
+- communication interne/externe selon obligation applicable.
+
+---
+
+## Scénario 4 — Fraude assistée par IA
+
+Une fonction finance reçoit une demande urgente via plusieurs canaux cohérents, dont un appel vocal ressemblant à un dirigeant.
+
+Le tabletop doit vérifier que la procédure repose sur une **preuve d'identité indépendante**, pas sur la qualité apparente du média.
+
+---
+
+## Fiche d'observation
+
+Au lieu d'une note `1-5`, documentez :
+
+| Axe | Observation | Preuve | Action |
+|---|---|---|---|
+| Détection | Ce qui a déclenché l'incident | règle/log | amélioration éventuelle |
+| Accès | Capacité à révoquer | test réalisé | owner |
+| Preuves | Logs disponibles/manquants | emplacement | action instrumentation |
+| Coordination | décision claire ou blocage | timeline | action process |
+| Reprise | critères explicités | checklist | action |
+
+Les observations qualitatives accompagnées de preuves sont souvent plus utiles qu'un score agrégé.
+
+---
+
+## Debrief
+
+À la fin :
+
+1. faits observés pendant l'exercice ;
+2. décisions qui ont ralenti ou échoué ;
+3. contrôles manquants ;
+4. actions avec owner, échéance et preuve de clôture ;
+5. date ou condition du prochain test.
 
 ---
 
 ## Sources
 
-- [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20)
-- [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20)
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) (consulté le 2026-06-20)
-- [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20)
-
----
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
+- [MITRE ATLAS](https://atlas.mitre.org/)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [CISA AI](https://www.cisa.gov/ai)
+- [ANSSI](https://cyber.gouv.fr/)
 
 ## Prochaine étape
 
-**[Cas sectoriels IA et cybersécurité](cas-sectoriels-ia.md)** : adapte maintenant les défenses aux contraintes spécifiques de ton secteur.
-
-Concepts clés couverts :
-
-- **Exercices progressifs** — 60, 90, 120 minutes
-- **Décisions sous pression** — qualité plutôt que vitesse seule
-- **Debrief structuré** — transformer l'exercice en amélioration réelle
-- **Mesure de maturité** — scorecards comparables dans le temps
+**[Cas sectoriels IA et cybersécurité](cas-sectoriels-ia.md)** : adapter les scénarios aux données, actifs et obligations du secteur.
