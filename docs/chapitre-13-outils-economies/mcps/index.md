@@ -1,99 +1,137 @@
-# Présentation et choix
+# MCP avec Claude Code — présentation et choix
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span>
 
-Ce guide présente les MCP utilisés dans ce chapitre comme un **cadre de filtrage du contexte**. L’objectif n’est pas d’envoyer plus d’informations à Copilot, mais de n’en transmettre que ce qui est utile, officiel et borné.
-
----
-
-## Ce qu’est MCP
-
-MCP, pour **Model Context Protocol**, standardise la manière dont un client IA dialogue avec des serveurs externes. Dans ce dépôt, le client principal est **GitHub Copilot**, utilisé depuis **IntelliJ IDEA**.
-
-| Terme | Rôle | Exemple dans ce chapitre |
-|---|---|---|
-| Client | Application qui appelle les serveurs MCP | GitHub Copilot dans l'IDE |
-| Serveur | Processus qui expose des outils et des ressources | `mcp-search-net`, Tavily MCP, Firecrawl MCP |
-| *Tool* (outil) | Action appelable par le client | `search_web`, `fetch_url` |
-| *Resource* (ressource) | Donnée publiée sans action spéciale | Registre YAML, cache, index documentaire |
-| Transport | Canal de communication | `stdio`, HTTP |
-
-!!! tip "Règle de base"
-    Un MCP utile **réduit** le bruit, il ne doit pas l’augmenter. Si le serveur renvoie trop de texte, tu dépenses plus de contexte et tu gagnes moins de précision.
-
-### Recherche Web, récupération d’URL, extraction et crawl
-
-| Fonction | Ce qu’elle fait | Ce qu’elle ne doit pas faire |
-|---|---|---|
-| Recherche Web | Trouver des sources candidates à partir de mots-clés | Remplacer la lecture ciblée d’une page connue |
-| Récupération d’URL | Lire une page déjà identifiée | Explorer tout un site |
-| Extraction | Garder seulement les sections utiles | Renvoyer la page entière si ce n’est pas nécessaire |
-| Crawl | Parcourir plusieurs liens à partir d’une page | Remonter tout Internet ou suivre des liens sans borne |
-
-Séparer `search_web` et `fetch_url` aide à garder des permissions claires : la recherche découvre, la récupération lit, l’extraction compacte, le crawl reste hors V1.
-
-!!! warning "Contexte et coût"
-    Un MCP trop bavard peut augmenter la taille du contexte injecté dans Copilot et, par effet domino, la consommation de crédits ou de requêtes. Borne toujours les résultats et les outils exposés.
+MCP (**Model Context Protocol**) permet à Claude Code de se connecter à des **services et outils externes**. Il ne s'agit pas seulement de « filtrer du contexte » : un serveur MCP peut lire des données, lancer des recherches, interroger une API, accéder à un ticketing ou effectuer des actions selon les outils qu'il expose.
 
 ---
 
-## Familles de solutions
+## Où MCP se place dans Claude Code
 
-| Famille | Positionnement | Avantage principal | Limite principale |
-|---|---|---|---|
-| MCP local autohébergé | Contrôle fort, lecture seule, données bornées | Maîtrise et confidentialité | Installation et maintenance locales |
-| MCP distant gratuit avec quota | Démarrage rapide | Simplicité d’usage | Quota évolutif, dépendance fournisseur |
-| MCP commercial | Offre complète et service managé | Moins d’exploitation locale | Coût, verrouillage possible, quotas |
-| MCP documentaire local avancé | Index dédié à la documentation | Recherche locale rapide | Risque d’obsolescence du corpus |
+Claude Code dispose déjà d'outils intégrés pour les fichiers, la recherche, le shell et le web. Ajoutez MCP lorsqu'une capacité externe manque réellement.
 
-### Choix validés pour ce chapitre
+```mermaid
+graph LR
+    C["Claude Code"] --> B["Outils intégrés\nfichiers / shell / recherche / web"]
+    C --> M["MCP"]
+    M --> G["GitHub / Jira / Linear"]
+    M --> D["Base de données"]
+    M --> O["Observabilité"]
+    M --> W["Recherche / extraction spécialisée"]
+```
 
-| Choix | Statut | Pourquoi |
-|---|---|---|
-| V1 locale | Validée comme cible documentaire | Façade TypeScript + SearXNG + Crawl4AI + SQLite |
-| V2 documentaire | Validée comme évolution | Index local, catalogue et recherche multi-document |
-| Tavily MCP | Solution gratuite principale | Démarrage simple avec quota à vérifier |
-| Firecrawl MCP | Alternative recommandée | Plus adapté aux pages dynamiques et à l’extraction |
-| Environnement principal | Validé | IntelliJ IDEA + GitHub Copilot |
-
-!!! note "V1, V2 et environnement"
-    La V1 décrit une architecture cible documentée, pas un logiciel livré dans ce dépôt. La V2 ajoute un index documentaire local plus riche. L’IDE principal reste IntelliJ IDEA, mais les principes restent portables.
-
----
-
-## Limites à garder en tête
-
-- Authentification requise sur certains services distants.
-- Paywalls et contenus réservés qui ne doivent pas être contournés.
-- CAPTCHA et blocages anti-bot.
-- Respect de `robots.txt` et des conditions d’utilisation.
-- Pages dynamiques, non indexées ou supprimées.
-- Restrictions légales, contractuelles ou internes.
-- Dépendance aux moteurs externes.
-- Blocages possibles de SearXNG selon la source ou le réseau.
-
-!!! danger "Ne pas promettre l’accès à tout le Web"
-    Aucun MCP ne garantit un accès universel à tout Internet. Les sources visibles dépendent des moteurs, des limites réseau, des règles du site et des droits d’accès.
-
----
-
-## Sécurité
-
-| Risque | Mesure attendue |
+| Concept | Rôle |
 |---|---|
-| SSRF | Bloquer localhost, les réseaux privés et les adresses link-local |
-| Prompt injection provenant des pages | Considérer tout contenu externe comme non fiable |
-| Secrets | Ne jamais exposer de secret dans les paramètres ou les exemples |
-| Sur-exposition d’outils | N’activer que les outils utiles à la tâche |
-| Contexte trop large | Limiter les résultats, les sections et les domaines |
+| Client | Claude Code |
+| Serveur MCP | processus/service exposant des capacités |
+| Tool | action invocable par Claude |
+| Resource | donnée exposée par le serveur |
+| Transport | mécanisme de communication du serveur |
 
-### Principes directeurs
+---
 
-- Lecture seule par défaut.
-- Pas de LLM interne dans la V1.
-- Peu d’outils, bien cadrés.
-- Sorties compactes, hiérarchisées et filtrées.
-- Vérifications de sécurité avant toute redirection ou récupération.
+## Configuration projet et personnelle
+
+Pour un serveur partagé avec l'équipe, Claude Code peut utiliser un fichier projet :
+
+```text
+.mcp.json
+```
+
+Ce fichier est versionnable lorsqu'il ne contient pas de secrets.
+
+Les serveurs personnels peuvent aussi être gérés dans la configuration utilisateur Claude.
+
+Dans une session :
+
+```text
+/mcp
+```
+
+permet de gérer les connexions et l'authentification MCP.
+
+---
+
+## Coût de contexte
+
+Claude Code charge les noms des outils MCP connectés et peut différer le chargement des schémas complets jusqu'à ce qu'un outil soit nécessaire. Un serveur inactif n'a donc pas le même coût qu'un gros bloc de contexte injecté à chaque tour.
+
+Cela ne dispense pas de discipline :
+
+- trop de serveurs rendent l'environnement plus complexe ;
+- des outils aux descriptions ambiguës peuvent être mal sélectionnés ;
+- une réponse MCP volumineuse peut gonfler le contexte ;
+- un serveur déconnecté peut faire disparaître ses outils en cours de session.
+
+Utilisez `/mcp` pour contrôler l'état des serveurs et déconnectez ceux qui ne sont pas nécessaires.
+
+---
+
+## Quand utiliser MCP
+
+MCP est adapté lorsque Claude doit :
+
+- lire une issue ou un ticket sans copier-coller ;
+- interroger une base ou une API interne ;
+- récupérer des métriques d'observabilité ;
+- consulter une documentation privée ;
+- contrôler un navigateur spécialisé ;
+- écrire dans un service externe avec des permissions explicites.
+
+MCP est moins utile si la même information est déjà facilement accessible par :
+
+- les fichiers du dépôt ;
+- une commande CLI ;
+- un script local simple ;
+- les outils web natifs disponibles.
+
+---
+
+## Le cas `mcp-search-net` de ce dépôt
+
+Le sous-chapitre conserve une **architecture documentaire** pour un MCP de recherche/extraction Web local nommé `mcp-search-net`.
+
+Objectifs de cette architecture :
+
+- recherche bornée ;
+- récupération d'URL identifiées ;
+- sorties compactes ;
+- sécurité SSRF ;
+- provenance des sources ;
+- pas de secret dans le dépôt.
+
+!!! info "Cible documentaire"
+    Les pages décrivent un design et un contrat d'outils. Elles ne doivent pas laisser entendre qu'un serveur complet est déjà livré dans ce dépôt si ce n'est pas le cas.
+
+---
+
+## Local vs distant
+
+| Option | Atout principal | Point de vigilance |
+|---|---|---|
+| serveur local `stdio` | contrôle de l'exécution locale | dépendances et environnement du poste |
+| serveur distant | partage et maintenance centralisée | auth, réseau, confiance du fournisseur |
+| API tierce via MCP | mise en route rapide | quotas, coûts, données transmises |
+| index documentaire local | réutilisation d'un corpus interne | fraîcheur et maintenance de l'index |
+
+Ne choisissez pas sur le seul critère « gratuit ». Évaluez sécurité, disponibilité, maintenance, qualité et coût réel.
+
+---
+
+## Sécurité minimale
+
+Pour tout MCP :
+
+- principe du moindre privilège ;
+- secrets hors Git ;
+- outils d'écriture séparés des outils de lecture si possible ;
+- confirmation avant action destructive ;
+- contenu externe considéré comme non fiable ;
+- validation des URL/redirections côté serveur Web ;
+- logs sans credentials ;
+- scope projet seulement si le serveur doit être partagé.
+
+Pour un serveur `stdio`, évitez de lui transmettre inutilement tout l'environnement du processus parent. Claude Code fournit des options de durcissement pour réduire l'héritage de credentials par les subprocess.
 
 ---
 
@@ -101,38 +139,25 @@ Séparer `search_web` et `fetch_url` aide à garder des permissions claires : la
 
 | Page | Rôle |
 |---|---|
-| [MCP Web local](./configuration.md) | Architecture V1 et contrat des outils |
-| [MCP Web gratuit et à quota](./serveurs.md) | Tavily et Firecrawl comme solutions simples ou de secours |
-| [Comparaison](./securite.md) | Arbitrage local / gratuit / V1 / V2 |
+| [MCP Web local](configuration.md) | architecture `mcp-search-net` et intégration Claude |
+| [Serveurs externes](serveurs.md) | exemples de services de recherche/extraction |
+| [Sécurité et choix](securite.md) | menaces, permissions et arbitrage local/distant |
+
+---
+
+## GitHub Copilot — référence conservée
+
+Copilot supporte également MCP dans certains environnements. Les mêmes serveurs peuvent parfois être réutilisables, mais la configuration, les permissions et les surfaces disponibles ne doivent pas être supposées identiques. Le parcours principal de ce chapitre utilise désormais Claude Code.
 
 ---
 
 ## Sources
 
-- [Model Context Protocol](https://modelcontextprotocol.io/) (consulté le 2026-06-20)
-- [MCP Specification](https://spec.modelcontextprotocol.io/) (consulté le 2026-06-20)
-- [GitHub Copilot documentation](https://docs.github.com/copilot) (consulté le 2026-06-20)
-- [GitHub Copilot et MCP dans l'IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp) (consulté le 2026-06-20)
-- [Documentation SearXNG](https://docs.searxng.org/) (consulté le 2026-06-20)
-- [Documentation Crawl4AI](https://docs.crawl4ai.com/) (consulté le 2026-06-20)
-- [Documentation Tavily](https://docs.tavily.com/) (consulté le 2026-06-20)
-- [Documentation Firecrawl](https://docs.firecrawl.dev/) (consulté le 2026-06-20)
-- [Docker Compose](https://docs.docker.com/compose/) (consulté le 2026-06-20)
-- [Node.js releases](https://nodejs.org/en/about/releases/) (consulté le 2026-06-20)
-- [TypeScript documentation](https://www.typescriptlang.org/docs/) — consulté le 2026-06-20
-
----
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+- [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
+- [Model Context Protocol](https://modelcontextprotocol.io/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[MCP Web local](./configuration.md)** : cadrer l’architecture V1, les outils exposés et les règles de sécurité avant d’ouvrir la moindre intégration réseau.
-
-Concepts clés couverts :
-
-- **Client / serveur** — distinguer le client IA du serveur MCP
-- **Filtrage** — réduire le contexte avant de l’envoyer à Copilot
-- **Transport** — choisir `stdio` ou HTTP selon le cas d’usage
-- **Sources officielles** — privilégier les domaines validés et bornés
-
-
-
+**[MCP Web local](configuration.md)** : définir un serveur local de recherche/extraction borné et l'intégrer proprement à Claude Code.
