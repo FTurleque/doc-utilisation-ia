@@ -1,239 +1,166 @@
 # Guide de contribution
 
-Ce document décrit les règles de collaboration Git pour ce projet.  
-L'objectif principal est de **protéger la branche `main`** : aucun code ne doit y être poussé sans validation préalable.
-
----
+Ce dépôt publie une documentation MkDocs **Claude Code-first** tout en conservant GitHub Copilot comme référence, compatibilité et solution alternative.
 
 ## Règle fondamentale
 
-> **Aucun push direct sur `main` n'est autorisé.**  
-> Toute modification passe obligatoirement par une Pull Request (PR).  
-> **@FTurleque** est le reviewer obligatoire sur tous les fichiers du dépôt.
+**Ne poussez jamais directement sur `main`.** Toute modification passe par une branche dédiée et une Pull Request vers `main`.
 
-| Contributeur | Peut merger sans approbation externe ? |
-|---|---|
-| @FTurleque (propriétaire) | ✅ Oui — bypass admin activé |
-| Autre développeur | ❌ Non — approbation de @FTurleque requise |
+Cette règle vaut aussi pour les scripts, les agents IA et les automatisations : aucun outil ne doit merger ou pousser directement vers `main` sans action humaine explicite.
 
----
-
-## Stratégie de branches
-
-```
-main          ← branche protégée, toujours stable et déployable
-  └── feature/nom-feature    ← nouvelle fonctionnalité ou nouvelle page
-  └── fix/nom-du-correctif   ← correction d'erreur (typo, lien cassé…)
-  └── docs/nom-du-sujet      ← ajout ou amélioration de contenu
-  └── chore/nom-tache        ← maintenance (dépendances, CI/CD, config)
-```
-
-### Convention de nommage des branches
+## Branches
 
 | Préfixe | Usage | Exemple |
 |---|---|---|
-| `feature/` | Nouvelle page ou fonctionnalité | `feature/chapitre-9-securite` |
-| `fix/` | Correction d'un bug ou d'une erreur | `fix/lien-casse-chapitre-3` |
-| `docs/` | Améliorations de contenu existant | `docs/ameliorer-intro-chapitre-1` |
-| `chore/` | Maintenance (CI, dépendances, config) | `chore/mise-a-jour-mkdocs` |
+| `feat/` | Nouvelle fonctionnalité ou nouveau parcours | `feat/claude-skill-audit` |
+| `docs/` | Ajout ou amélioration documentaire | `docs/actualiser-mcp` |
+| `fix/` | Correction ciblée | `fix/lien-casse` |
+| `chore/` | Maintenance, CI ou configuration | `chore/validation-mkdocs` |
 
----
-
-## Workflow complet — étape par étape
-
-### 1. Avant de commencer
+Avant de travailler :
 
 ```bash
-# Mettre à jour ta copie locale de main
-git checkout main
-git pull origin main
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git switch -c docs/mon-changement
 ```
 
-### 2. Créer une branche dédiée
+Si vous travaillez déjà sur une branche existante, synchronisez-la avec `main` selon la stratégie de votre équipe (rebase ou merge), sans pousser directement sur `main`.
+
+## Workflow de contribution
+
+1. **Lire les instructions du dépôt** : `CLAUDE.md` et `AGENTS.md`. Si vous utilisez GitHub Copilot, lire aussi `.github/copilot-instructions.md`.
+2. **Identifier la portée** : page publiée, configuration IA, template, script ou CI.
+3. **Vérifier les faits évolutifs** auprès des sources officielles avant de modifier modèles, prix, quotas, fonctionnalités, sécurité ou compatibilité IDE.
+4. **Appliquer un changement cohérent** sans supprimer les contenus Copilot uniquement parce que Claude est le parcours principal.
+5. **Valider localement** avant le push.
+6. **Pousser la branche courante** et ouvrir/mettre à jour une Pull Request vers `main`.
+
+### Validation locale
+
+Après installation de `requirements.txt` :
 
 ```bash
-# Remplace le préfixe et le nom selon le tableau ci-dessus
-git checkout -b feature/ma-nouvelle-page
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
-### 3. Travailler et committer
+Sous Windows, `py -m` peut être utilisé à la place de `python -m` si nécessaire.
 
-```bash
-# Vérifier le build avant de committer
-py -m mkdocs build
+Le build strict vérifie la configuration et la génération MkDocs. `scripts/validate-links.py` vérifie les chemins et ancres internes du site généré.
 
-# Ajouter les fichiers modifiés
-git add docs/chapitre-X/ma-page.md mkdocs.yml
+## Conventions de commit
 
-# Committer avec un message clair (voir conventions ci-dessous)
-git commit -m "docs: ajout de la page sur la sécurité Copilot"
-```
-
-### 4. Pousser la branche
-
-```bash
-git push origin feature/ma-nouvelle-page
-```
-
-### 5. Ouvrir une Pull Request sur GitHub
-
-1. Aller sur le dépôt GitHub → onglet **Pull requests** → **New pull request**
-2. Sélectionner `base: main` ← `compare: feature/ma-nouvelle-page`
-3. Remplir le template de PR (description, type de changement, checklist)
-4. Soumettre — **@FTurleque sera automatiquement ajouté en reviewer** (via CODEOWNERS)
-
-### 6. Revue et merge
-
-- @FTurleque examine la PR, laisse des commentaires ou approuve
-- Une fois approuvée, le merge est effectué dans `main`
-- La branche source peut être supprimée après le merge
-
----
-
-## Conventions de message de commit
-
-Format : `type: description courte en français`
+Format recommandé : `type: description courte`.
 
 | Type | Usage |
 |---|---|
-| `docs` | Ajout ou modification de contenu documentaire |
-| `feat` | Nouvelle fonctionnalité ou nouvelle page |
+| `docs` | Contenu documentaire |
+| `feat` | Nouvelle capacité ou nouveau parcours |
 | `fix` | Correction d'erreur |
-| `chore` | Maintenance (dépendances, CI/CD, config) |
-| `refactor` | Restructuration sans changement de contenu |
-| `style` | Mise en forme pure (CSS, indentation) |
+| `chore` | Maintenance, CI, dépendances, configuration |
+| `refactor` | Restructuration sans changement fonctionnel |
+| `style` | Présentation pure |
 
-**Exemples valides :**
+Exemples :
 
+```text
+docs: actualiser les modèles Claude
+fix: corriger les ancres du chapitre hooks
+chore: renforcer la validation MkDocs
+docs: mettre à jour la référence Copilot JetBrains
 ```
-docs: ajout du chapitre sur les hooks Copilot
-fix: correction du lien cassé vers la page FAQ
-chore: mise à jour de mkdocs-material en 9.6
-feat: nouvelle page comparaison IntelliJ vs VS Code
-```
 
----
+## Règles éditoriales IA
 
-## Configurer les Branch Protection Rules sur GitHub
+### Claude Code — parcours principal
 
-> **Action manuelle requise une seule fois.** Ces règles ne peuvent pas être définies par un fichier — elles se configurent dans l'interface GitHub.
+Les pages génériques et les nouveaux workflows doivent partir de Claude Code lorsque le sujet s'y prête. Les artefacts projet Claude vivent notamment dans :
 
-### Étapes
+- `CLAUDE.md` et `AGENTS.md` ;
+- `.claude/rules/` ;
+- `.claude/skills/` ;
+- `.claude/agents/` ;
+- `.claude/settings.json` lorsque des réglages partagés sont nécessaires.
 
-1. Aller sur **GitHub → dépôt → Settings → Branches**
-2. Cliquer sur **Add branch protection rule** (ou **Add classic branch protection rule**)
-3. Dans **Branch name pattern**, saisir : `main`
-4. Activer les options suivantes :
+### GitHub Copilot — référence conservée
 
-| Option | Valeur | Effet |
-|---|---|---|
-| **Require a pull request before merging** | ✅ Activé | Bloque les push directs sur `main` |
-| **Required number of approvals** | `1` | 1 approbation requise avant le merge |
-| **Dismiss stale pull request approvals when new commits are pushed** | ✅ Recommandé | Re-demande l'approbation si des commits sont ajoutés |
-| **Require review from Code Owners** | ✅ Activé | Force la revue de @FTurleque (défini dans CODEOWNERS) |
-| **Do not allow bypassing the above settings** | ❌ Désactivé | Laisse les admins (toi) contourner les règles |
+Les artefacts `.github/copilot-instructions.md`, `.github/instructions/`, `.github/prompts/`, `.github/agents/`, `.github/skills/` et `.github/hooks/` restent volontairement dans le dépôt. Ils doivent être maintenus lorsqu'une fonctionnalité Copilot est documentée, mais ne doivent pas faire repasser les pages génériques en Copilot-first.
 
-5. Cliquer sur **Create** / **Save changes**
+### Sources
 
-### Pourquoi "Do not allow bypassing" doit rester désactivé ?
+Pour un fait susceptible d'évoluer, privilégier :
 
-Si cette option est **désactivée**, les utilisateurs avec le rôle **Admin** sur le dépôt (i.e. @FTurleque) peuvent merger leurs propres PRs sans attendre l'approbation d'un tiers.  
-Si elle était **activée**, même @FTurleque devrait se faire approuver par quelqu'un d'autre — ce qui n'est pas le comportement souhaité.
+1. documentation officielle du produit ;
+2. changelog/release notes officiels ;
+3. dépôt ou spécification officielle ;
+4. source secondaire uniquement en complément.
 
----
+Ne pas conserver de version minimale, prix, quota ou nom de modèle figé sans nécessité et sans source récente.
 
-## Vérification du dispositif
+## Navigation MkDocs
 
-Après la configuration des Branch Protection Rules, valider avec ces tests :
+Toute page destinée au site doit être intégrée à `mkdocs.yml`, sauf fichiers explicitement utilisés comme templates/assets.
+
+Après une modification de navigation :
 
 ```bash
-# Test 1 — push direct bloqué (d'un autre dev)
-git checkout main
-echo "test" >> README.md
-git add README.md
-git commit -m "test: push direct"
-git push origin main
-# ➜ doit être rejeté avec : "remote: error: GH006: Protected branch update failed"
-
-# Test 2 — @FTurleque peut merger sa propre PR sans blocage
-# ➜ ouvrir une PR depuis feature/test-bypass → main
-# ➜ merger directement sans approbation tierce
-# ➜ doit réussir grâce au bypass admin
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
----
+Ne supposez pas que toute page `docs/**/*.md` doit être visible dans la navigation : les fichiers sous `docs/assets/templates/` sont des ressources copiables et peuvent volontairement rester hors nav.
 
-## Fichiers de gouvernance Git
+## Pull Request
 
-| Fichier | Rôle |
-|---|---|
-| `.github/CODEOWNERS` | Désigne @FTurleque comme reviewer obligatoire |
-| `.github/pull_request_template.md` | Checklist pré-remplie à chaque nouvelle PR |
-| `CONTRIBUTING.md` | Ce fichier — workflow et conventions |
+Avant de soumettre :
 
----
+- la branche doit être synchronisée avec `main` ;
+- le build strict doit réussir ;
+- les liens et ancres internes doivent être valides ;
+- les faits évolutifs modifiés doivent avoir été vérifiés ;
+- les contenus Copilot utiles doivent rester identifiables comme référence ;
+- aucun secret, token, identifiant personnel ou donnée sensible ne doit être commité.
 
-## Questions ou problèmes ?
+Poussez uniquement la branche de travail :
 
-Ouvrir une issue avec le label `question` sur le dépôt GitHub.
+```bash
+git push -u origin HEAD
+```
 
----
+Puis ouvrez une PR avec `base: main`.
 
 ## Développement local
 
-But : exécuter et tester le site MkDocs localement pour éditer la documentation avant commit.
+### Windows PowerShell
 
-Remarque : le dossier `.venv/` est local et ne doit pas être versionné. Utilisez `requirements.txt` pour partager les dépendances.
-
-Prérequis
-- Python 3 installé (ou le launcher `py`) et `pip`.
-
-Créer et préparer l’environnement (Windows)
-
-PowerShell :
 ```powershell
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-py -m pip install --upgrade pip
-py -m pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m mkdocs serve
 ```
 
-Invite de commandes (cmd) :
-```cmd
-py -3 -m venv .venv
-.\.venv\Scripts\activate.bat
-py -m pip install --upgrade pip
-py -m pip install -r requirements.txt
+### macOS / Linux
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m mkdocs serve
 ```
 
-Remarque : si la commande `py` n'est pas disponible, remplacez `py -m` par `.\.venv\Scripts\python -m`.
+Le site est ensuite accessible sur `http://127.0.0.1:8000/` par défaut.
 
-Deux façons de lancer le site
-- Mode A — Serveur de développement (rechargement automatique) — recommandé pour édition active :
-```powershell
-py -m mkdocs serve
-# ou si 'py' absent :
-.\\.venv\\Scripts\\python -m mkdocs serve
-```
-Ouvrir http://127.0.0.1:8000
+Pour les notes internes Windows, voir `user/developpement-local.md`.
 
-- Mode B — Build statique + serveur simple — utile pour tester le site construit :
-```powershell
-py -m mkdocs build
-py -m http.server --directory site 8000
-# ou :
-.\\.venv\\Scripts\\python -m mkdocs build
-.\\.venv\\Scripts\\python -m http.server --directory site 8000
-```
+## Gouvernance
 
-Dépannage rapide
-- Erreur « py : introuvable » → utiliser `.\.venv\Scripts\python -m ...` ou installer le launcher Python depuis python.org (cocher "Install launcher").
-- PowerShell bloque l'exécution des scripts → exécuter :
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
-```
-- Si `mkdocs` absent → `py -m pip install mkdocs mkdocs-material`.
+`.github/CODEOWNERS` définit les propriétaires de fichiers. Les règles de protection/rulesets GitHub restent la source de vérité pour les contrôles réellement imposés côté plateforme : ce guide décrit le workflow attendu mais ne prétend pas refléter automatiquement chaque réglage d'administration GitHub.
 
-Suggestion
-- Pour plus de détails et exemples, voir la page dédiée `docs/appendices/developpement-local.md`.
- - Pour plus de détails et exemples, voir la page dédiée `user/developpement-local.md`.
+## Questions
+
+Ouvrir une issue dans le dépôt avec le contexte, le fichier concerné et, lorsqu'il s'agit d'une divergence documentaire, la source officielle utilisée pour la comparaison.
