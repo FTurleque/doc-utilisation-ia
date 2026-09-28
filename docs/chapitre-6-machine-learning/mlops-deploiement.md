@@ -1,367 +1,232 @@
-# MLOps & Déploiement de Modèles avec Copilot
+# MLOps & Déploiement avec Claude Code
 
 <span class="badge-expert">Expert</span>
 
-Le MLOps (Machine Learning Operations) applique les pratiques DevOps au cycle de vie ML : versionner les modèles, automatiser les pipelines d'entraînement, monitorer les performances en production.
+Le MLOps applique les pratiques d'ingénierie logicielle au cycle de vie des modèles : versionnement, reproductibilité, validation automatique, packaging, déploiement et monitoring. Claude Code peut accélérer ces tâches parce qu'il peut travailler directement dans le dépôt et exécuter les outils du projet.
+
+!!! warning "Claude n'est pas le système MLOps"
+    La source de vérité reste votre CI, votre registry, votre tracking d'expériences et vos métriques de production. Claude aide à construire, diagnostiquer et maintenir ce système ; il ne remplace pas ses contrôles.
 
 ---
 
-## Cycle de Vie MLOps
+## Cycle de vie
 
 ```mermaid
 graph LR
-    D["📦 Data\nVersioning"] --> T["🏋️ Training\nPipeline"]
-    T --> E["📊 Expériment\nTracking"]
-    E --> R["📦 Model\nRegistry"]
-    R --> CD["🚀 CI/CD\nDéploiement"]
-    CD --> M["📈 Monitoring\nProduction"]
-    M -->|"Drift détecté"| D
+    D["Data / schema"] --> T["Training"]
+    T --> E["Evaluation"]
+    E --> R["Registry / artifacts"]
+    R --> C["CI/CD"]
+    C --> M["Monitoring"]
+    M -->|"drift / incident"| D
+```
 
-    style D fill:#e8f5e9
-    style T fill:#e3f2fd
-    style E fill:#fff3e0
-    style R fill:#fce4ec
-    style CD fill:#ede7f6
-    style M fill:#e0f7fa
+À chaque étape, exigez des artefacts vérifiables : configuration, hash/version, métriques, logs, image, modèle ou rapport.
+
+---
+
+## 1. Versionner ce qui rend un run reproductible
+
+Un résultat ML n'est pas seulement un fichier modèle. Versionnez ou tracez au minimum :
+
+- code source et commit ;
+- dépendances et environnement ;
+- configuration d'entraînement ;
+- version/snapshot des données ou identifiant du dataset ;
+- seed et protocole de split ;
+- métriques ;
+- artefacts produits.
+
+Exemple de demande à Claude :
+
+```text
+Audite la reproductibilité de ce projet ML.
+Pour chaque run, vérifie si l'on peut retrouver :
+commit, config, dataset, dépendances, seed, métriques et artefact modèle.
+Crée un plan de correction avant de modifier quoi que ce soit.
 ```
 
 ---
 
-## Versioning des Données et Modèles
+## 2. Tracking d'expériences
 
-### MLflow — Suivi des Expériences
+MLflow, Weights & Biases ou un système interne peuvent enregistrer paramètres, métriques et artefacts. Ne présentez pas un outil particulier comme obligatoire : choisissez celui déjà adopté par l'équipe.
 
-MLflow est l'outil standard pour tracker les expériences ML, versioner les modèles et les déployer.
+Claude peut :
 
-```powershell
-pip install mlflow
-```
+- encapsuler l'entraînement dans un run ;
+- ajouter le logging manquant ;
+- standardiser les noms de métriques ;
+- comparer deux runs à protocole identique ;
+- écrire des tests pour empêcher la promotion d'un modèle sans métadonnées minimales.
 
-```python
-# Prompt : "Encapsuler l'entraînement d'un modèle Random Forest dans MLflow
-#           en loggant les hyperparamètres, métriques et artefacts"
-import mlflow
-import mlflow.sklearn
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
-import pandas as pd
-
-mlflow.set_experiment("pokemon-classifier")
-
-with mlflow.start_run(run_name="random_forest_v1"):
-    # Hyperparamètres
-    params = {
-        "n_estimators": 100,
-        "max_depth": 10,
-        "min_samples_split": 5,
-        "random_state": 42
-    }
-    mlflow.log_params(params)
-
-    # Entraînement
-    model = RandomForestClassifier(**params)
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
-
-    # Métriques
-    metrics = {
-        "accuracy": accuracy_score(y_test, y_pred),
-        "f1_score": f1_score(y_test, y_pred, average='weighted'),
-        "roc_auc": roc_auc_score(y_test, model.predict_proba(X_test)[:, 1])
-    }
-    mlflow.log_metrics(metrics)
-
-    # Sauvegarder le modèle dans le registre
-    mlflow.sklearn.log_model(
-        sk_model=model,
-        artifact_path="model",
-        registered_model_name="pokemon-classifier"
-    )
-
-    print(f"✅ Run terminé — Accuracy: {metrics['accuracy']:.3f}")
-    print(f"   F1-Score: {metrics['f1_score']:.3f}")
-    print(f"   ROC-AUC: {metrics['roc_auc']:.3f}")
-```
-
-```powershell
-# Lancer l'interface MLflow
-mlflow ui
-# Ouvrir http://localhost:5000
+```text
+Ajoute le tracking au training existant sans changer l'algorithme.
+Logge config, métriques de validation et artefact final.
+Exécute un run de test et donne le chemin/ID permettant de le retrouver.
 ```
 
 ---
 
-## Déploiement en API REST (FastAPI)
+## 3. Servir un modèle
 
-### Exposer un modèle ML comme API
+Pour une API FastAPI, séparez :
 
-```python
-# Prompt : "Créer une API FastAPI qui charge un modèle joblib et expose
-#           un endpoint /predict pour prédire la victoire d'un Pokémon"
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
-import joblib
-import numpy as np
-import pandas as pd
-from typing import Optional
-
-app = FastAPI(
-    title="Pokémon Battle Predictor",
-    description="API ML pour prédire le résultat d'un combat Pokémon",
-    version="1.0.0"
-)
-
-# Chargement du modèle au démarrage
-model = joblib.load("models/pokemon_classifier.pkl")
-scaler = joblib.load("models/scaler.pkl")
-
-
-class PokemonFeatures(BaseModel):
-    """Features d'un Pokémon pour la prédiction."""
-    pv: int = Field(..., ge=1, le=500, description="Points de Vie")
-    attaque: int = Field(..., ge=1, le=200, description="Stat Attaque")
-    defense: int = Field(..., ge=1, le=200, description="Stat Défense")
-    sp_atk: int = Field(..., ge=1, le=200, description="Attaque Spéciale")
-    sp_def: int = Field(..., ge=1, le=200, description="Défense Spéciale")
-    vitesse: int = Field(..., ge=1, le=200, description="Stat Vitesse")
-    type1: str = Field(..., description="Type primaire")
-    type2: Optional[str] = Field(default="None", description="Type secondaire")
-
-
-class PredictionResponse(BaseModel):
-    victoire: bool
-    probabilite: float
-    confiance: str
-
-
-@app.post("/predict", response_model=PredictionResponse)
-async def predict(pokemon: PokemonFeatures):
-    """Prédit si un Pokémon gagnera son prochain combat."""
-    try:
-        features = pd.DataFrame([{
-            "PV": pokemon.pv,
-            "Attaque": pokemon.attaque,
-            "Defense": pokemon.defense,
-            "Sp. Atk": pokemon.sp_atk,
-            "Sp. Def": pokemon.sp_def,
-            "Vitesse": pokemon.vitesse,
-            "Type1": pokemon.type1,
-            "Type2": pokemon.type2
-        }])
-
-        prediction = model.predict(features)[0]
-        proba = model.predict_proba(features)[0].max()
-
-        return PredictionResponse(
-            victoire=bool(prediction),
-            probabilite=round(float(proba), 4),
-            confiance="haute" if proba > 0.8 else "moyenne" if proba > 0.6 else "faible"
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.get("/health")
-async def health_check():
-    return {"status": "ok", "modele": "pokemon-classifier-v1"}
+```text
+src/
+├── api.py          # contrat HTTP
+├── inference.py    # chargement + prédiction
+├── schema.py       # validation entrée/sortie
+└── settings.py     # configuration
 ```
 
-```powershell
-# Lancer l'API
-uvicorn main:app --reload
-# Docs auto : http://localhost:8000/docs
-```
+Demandez à Claude de tester :
+
+- schémas invalides ;
+- modèle absent/incompatible ;
+- health/readiness ;
+- timeouts et erreurs ;
+- concurrence si pertinente ;
+- absence de secrets dans les réponses/logs.
+
+Évitez les exemples qui renvoient directement `str(exception)` au client : cela peut divulguer des détails internes.
 
 ---
 
-## Containerisation avec Docker
+## 4. Containerisation
+
+Le Dockerfile doit être reproductible et minimal :
 
 ```dockerfile
-# Prompt : "Créer un Dockerfile optimisé pour une API FastAPI avec modèle ML"
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /app
+COPY pyproject.toml ./
+COPY src ./src
+RUN pip install --no-cache-dir .
 
-# Copier et installer les dépendances d'abord (cache Docker)
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copier le code et le modèle
-COPY src/ ./src/
-COPY models/ ./models/
-
+USER 10001
 EXPOSE 8000
-
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-```yaml
-# docker-compose.yml
-version: '3.8'
-services:
-  ml-api:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./models:/app/models:ro
-    environment:
-      - MODEL_PATH=/app/models/pokemon_classifier.pkl
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+Le numéro Python ci-dessus est un **exemple**, pas une exigence : utilisez la version réellement supportée et verrouillée par votre projet.
+
+Demande utile :
+
+```text
+Revois ce Dockerfile pour :
+- reproductibilité ;
+- utilisateur non-root ;
+- taille d'image ;
+- cache de build ;
+- secrets ;
+- healthcheck ;
+- compatibilité avec notre pyproject/lockfile.
+Valide le build si Docker est disponible.
 ```
 
 ---
 
-## Pipeline CI/CD ML avec GitHub Actions
+## 5. CI : tests avant entraînement coûteux
 
-```yaml
-# .github/workflows/ml-pipeline.yml
-# Prompt : "Pipeline GitHub Actions pour entraîner, évaluer et déployer un modèle ML"
-name: ML Training Pipeline
+Ordre recommandé :
 
-on:
-  push:
-    paths:
-      - 'data/**'
-      - 'src/**'
-      - 'models/config/**'
+1. lint / type-check ;
+2. tests unitaires ;
+3. tests du preprocessing ;
+4. smoke training sur petit échantillon ;
+5. évaluation ;
+6. seulement ensuite job coûteux ou promotion.
 
-jobs:
-  train-and-evaluate:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      
-      - name: Train model
-        run: python src/train.py
-      
-      - name: Evaluate model
-        run: python src/evaluate.py --threshold 0.85
-      
-      - name: Upload model artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: trained-model
-          path: models/
-      
-  deploy:
-    needs: train-and-evaluate
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    
-    steps:
-      - name: Deploy to production
-        run: |
-          echo "Déploiement du modèle en production..."
-          # docker build + push + deploy
+Claude peut générer le workflow, mais faites relire explicitement les **permissions**, secrets et déclencheurs GitHub Actions.
+
+!!! danger "PR non fiable"
+    Un workflow déclenché depuis une contribution externe ne doit pas avoir accès inutilement aux secrets ou credentials de déploiement. Séparez entraînement/validation et promotion.
+
+---
+
+## 6. Quality gates de modèle
+
+Ne bloquez pas uniquement sur un seuil unique de score. Un gate peut combiner :
+
+- métrique principale ;
+- régression maximale par rapport à la baseline ;
+- latence ;
+- taille du modèle ;
+- tests de données ;
+- fairness/robustesse si le cas d'usage l'exige ;
+- absence de fuite de données détectée.
+
+```text
+Implémente un script `scripts/model_gate.py` qui compare candidate.json à baseline.json.
+Le script doit retourner exit 1 si un critère obligatoire échoue et expliquer chaque échec.
+Ajoute des tests unitaires du gate.
 ```
 
 ---
 
-## Monitoring en Production
+## 7. Monitoring production
 
-### Détecter le Data Drift
+Surveillez séparément :
 
-Le **data drift** survient quand la distribution des données en production diverge du jeu d'entraînement (concept drift = le comportement cible change).
+| Axe | Exemples |
+|---|---|
+| Service | latence, erreurs, saturation |
+| Données | valeurs manquantes, changement de distributions |
+| Modèle | qualité lorsque le ground truth arrive |
+| Métier | KPI réellement visé |
 
-```python
-# Prompt : "Détecter le data drift avec evidently et générer un rapport HTML"
-from evidently.report import Report
-from evidently.metric_preset import DataDriftPreset, ClassificationPreset
-import pandas as pd
-
-# Données de référence (entraînement) vs production
-reference_data = pd.read_csv("data/train.csv")
-current_data = pd.read_csv("data/production_last_week.csv")
-
-# Rapport de drift
-drift_report = Report(metrics=[
-    DataDriftPreset(),
-    ClassificationPreset()
-])
-
-drift_report.run(
-    reference_data=reference_data,
-    current_data=current_data
-)
-
-drift_report.save_html("reports/drift_report.html")
-print("✅ Rapport généré dans reports/drift_report.html")
-```
-
-### Logging des Prédictions
-
-```python
-# Prompt : "Logger chaque prédiction de l'API avec timestamp et features"
-import logging
-import json
-from datetime import datetime
-
-logging.basicConfig(
-    filename='logs/predictions.log',
-    level=logging.INFO,
-    format='%(asctime)s - %(message)s'
-)
-
-@app.post("/predict", response_model=PredictionResponse)
-async def predict(pokemon: PokemonFeatures):
-    result = ...  # prédiction
-
-    # Loguer chaque appel
-    log_entry = {
-        "timestamp": datetime.utcnow().isoformat(),
-        "input": pokemon.model_dump(),
-        "prediction": result.victoire,
-        "probability": result.probabilite
-    }
-    logging.info(json.dumps(log_entry))
-
-    return result
-```
+Un drift statistique n'implique pas automatiquement une baisse de performance. Claude peut aider à diagnostiquer les corrélations, mais la décision de retrain doit suivre un protocole défini.
 
 ---
 
-## Stack MLOps Recommandé
+## 8. Automatiser avec skills et hooks
 
-| Catégorie | Outil | Usage |
-|-----------|-------|-------|
-| **Tracking expériences** | MLflow | Metrics, params, artefacts |
-| **Versioning données** | DVC | Git pour les données |
-| **Déploiement API** | FastAPI + Docker | Inference REST |
-| **Orchestration** | Prefect / Airflow | Pipelines automatisés |
-| **Monitoring** | Evidently | Data drift, métriques |
-| **CI/CD** | GitHub Actions | Automatisation entraînement |
-| **Feature Store** | Feast | Partager features entre modèles |
+Un skill Claude peut encapsuler la procédure de promotion :
+
+```markdown
+---
+name: validate-model-release
+description: Vérifie un candidat ML avant promotion.
+---
+
+1. Exécuter tests et model gate.
+2. Vérifier métadonnées de reproductibilité.
+3. Comparer à la baseline.
+4. Vérifier l'image de serving.
+5. Produire un rapport ; ne jamais promouvoir automatiquement sans instruction explicite.
+```
+
+Un hook peut lancer un linter ou un test léger après modification, mais évitez d'attacher des entraînements coûteux à chaque événement d'édition.
+
+---
+
+## 9. MCP et systèmes externes
+
+Si vos expériences, tickets ou métriques vivent dans des services externes, MCP peut donner à Claude un accès contrôlé à ces outils. Séparez :
+
+- accès lecture pour exploration/diagnostic ;
+- accès écriture pour actions ;
+- permissions de production, à limiter strictement.
+
+La configuration projet partagée se place dans `.mcp.json`.
+
+---
+
+## Copilot
+
+Les anciens exemples Copilot/GitHub Actions ne sont pas supprimés du dépôt lorsque leur contenu reste utile. Le parcours principal est désormais Claude Code ; Copilot reste une référence secondaire et pourra être réévalué si son modèle de coût ou ses capacités changent.
 
 ---
 
 ## Sources
 
-- [TensorFlow documentation](https://www.tensorflow.org/guide) - consulté le 2026-06-20
-- [PyTorch documentation](https://pytorch.org/docs/stable/index.html) - consulté le 2026-06-20
-- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+- [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
+- [Anthropic — Trustworthy agents in practice](https://www.anthropic.com/research/trustworthy-agents) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Comparaison des Écosystèmes ML](comparaison-ecosystemes-ml.md)** : Python, R ou Julia — comparer les langages selon votre contexte et l'intégration avec Copilot.
-
-Concepts clés couverts :
-
-- **Vue d'ensemble comparative** — Popularité ML, courbe d'apprentissage, support Copilot, performance brute pour Python, R et Julia
-- **Python** — Le standard industriel : écosystème complet, intégration Copilot maximale, du notebook à l'API en production
-- **R** — Le roi de la statistique : ggplot2, tidyverse, RMarkdown — idéal pour la recherche académique
-- **Guide de décision** — Tableau synthétique : quel langage choisir selon votre profil (startup, recherche, simulation...)
+**[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** : appliquer les mêmes principes de reproductibilité, évaluation et observabilité aux systèmes de retrieval et de génération.
