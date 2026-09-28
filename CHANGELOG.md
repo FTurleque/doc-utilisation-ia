@@ -91,6 +91,8 @@ Le validateur comprend le préfixe GitHub Pages (`site_url`) et contrôle les ch
 
 Le workflow de déploiement exécute désormais ces mêmes validations avant publication vers `gh-pages`.
 
+La couverture Claude Desktop a été validée par la CI de PR : build strict et liens/ancres internes passent sur le head concerné.
+
 ## 2026-06-15 — Intégration SonarQube
 
 Ajout du chapitre/outillage SonarQube et du kit réutilisable sous `docs/assets/templates/sonar/` : collecte et réduction du bruit Sonar, triage, prompts de correction bornée, custom agent Copilot, configuration MCP d'exemple et règles de sécurité.
