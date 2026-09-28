@@ -1,139 +1,173 @@
-# MCP Web gratuit et à quota
+# MCP de recherche et d'extraction externes
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span>
 
-Cette page compare deux options rapides pour interroger le Web sans construire la V1 locale complète : **Tavily MCP** comme solution simple ou de secours, et **Firecrawl MCP** comme alternative plus puissante pour l’extraction. Les offres gratuites et les quotas peuvent évoluer ; quand une valeur est temporelle, elle doit être recontrôlée avant publication.
-
----
-
-## Tavily MCP
-
-Tavily est une option pratique quand tu veux aller vite et garder un serveur simple à exploiter.
-
-### Positionnement
-
-- Recherche orientée documentation et information.
-- Filtrage possible par domaine.
-- Réduction du temps de mise en route.
-- Adapté aux requêtes ponctuelles et bornées.
-
-### Avantages
-
-- Démarrage rapide.
-- Bonne solution de secours quand la V1 locale n’est pas disponible.
-- Moins d’effort d’exploitation qu’un serveur local complet.
-- Convenable pour une recherche ciblée dans la documentation officielle.
-
-### Limites
-
-- Dépendance au fournisseur.
-- Quota gratuit susceptible d’évoluer.
-- Tarifs et limites à contrôler au 2026-06-20 sur la documentation officielle.
-- Pas d’accès garanti à tout le Web.
-- Les réponses trop larges consomment plus de contexte.
-
-### Confidentialité
-
-- Les requêtes passent par un service externe.
-- Les secrets ne doivent jamais être transmis dans les paramètres.
-- Les résultats doivent être bornés avant injection dans Copilot.
-
-### Réglages pour limiter la consommation
-
-- Limiter les domaines.
-- Restreindre la langue.
-- Limiter le nombre de résultats.
-- Utiliser des requêtes courtes et précises.
-- Privilégier la récupération d’une URL connue après la recherche.
-
-!!! warning "Ne pas promettre un gratuit éternel"
-    Une offre gratuite peut changer de quota, de conditions ou de disponibilité. Documente toujours la date de contrôle si tu mentionnes un chiffre précis.
+Cette page conserve **Tavily** et **Firecrawl** comme exemples de services externes pouvant compléter Claude Code via MCP ou via une intégration équivalente. Elle ne fige plus de quotas ni de promesse de gratuité : offres, limites et plans changent rapidement.
 
 ---
 
-## Firecrawl MCP
+## Quand préférer un service externe
 
-Firecrawl est l’alternative la plus intéressante quand la page est dynamique, complexe ou difficile à extraire proprement.
+Un service managé peut être pertinent si vous avez besoin de :
 
-### Positionnement
+- recherche Web prête à l'emploi ;
+- extraction de pages dynamiques ;
+- gestion de crawling plus avancée ;
+- réduction de l'exploitation locale ;
+- API ou connecteur maintenu par un fournisseur.
 
-- Recherche web.
-- Extraction avancée.
-- Crawl contrôlé.
-- Pages dynamiques ou riches en navigation.
+En contrepartie, évaluez :
 
-### Avantages
-
-- Plus adapté aux pages complexes.
-- Bon pour les documents riches en structure ou en contenu rendu côté client.
-- Pertinent si tu dois extraire plus qu’un simple extrait HTML.
-
-### Limites
-
-- Dépendance externe.
-- Quota à vérifier selon l’offre.
-- Risque d’exposer trop d’outils si la configuration est trop large.
-- Risque de crawl trop large si les bornes sont faibles.
-- Confidentialité à évaluer avant tout usage sur contenu sensible.
-
-### Points de vigilance
-
-- N’expose que les outils nécessaires.
-- N’autorise pas un crawl libre sur des sites sensibles.
-- Borne les domaines et les chemins.
-- Préfère une extraction ciblée à un parcours exhaustif.
-
-!!! tip "Cas d’usage typique"
-    Firecrawl devient intéressant quand une page officielle charge une partie du contenu dynamiquement et qu’un simple `fetch_url` ne suffit plus.
+- données transmises ;
+- conservation/logging ;
+- quotas ;
+- coût ;
+- disponibilité ;
+- dépendance fournisseur ;
+- qualité réelle sur vos sources.
 
 ---
 
-## Recommandation
+## Tavily
 
-| Besoin | Outil recommandé | Pourquoi |
-|---|---|---|
-| Solution principale | MCP local | Maîtrise, filtrage fort, indépendance relative |
-| Solution simple / secours | Tavily MCP | Mise en route rapide, usage ponctuel |
-| Extraction plus complexe | Firecrawl MCP | Pages dynamiques, extraction avancée |
+Tavily propose des outils orientés recherche et récupération d'information.
 
-!!! note "Choix de principe"
-    Pour ce dépôt, la solution locale reste la cible principale. Tavily sert de voie rapide et Firecrawl sert de voie plus puissante quand la structure des pages l’exige.
+Cas d'usage typiques :
+
+```text
+Question sur une API récente
+→ recherche bornée sur domaines officiels
+→ récupération de quelques sources
+→ Claude compare les sources et cite les URLs
+```
+
+Points à vérifier avant adoption :
+
+- MCP officiel ou serveur recommandé actuellement ;
+- méthode d'authentification ;
+- limites du plan utilisé ;
+- filtres de domaine ;
+- structure des résultats ;
+- politique de données.
+
+Ne copiez pas un quota depuis cette documentation : consultez la documentation Tavily au moment de la configuration.
 
 ---
 
-## Exemples
+## Firecrawl
 
-=== "IntelliJ IDEA"
-    - Rechercher la documentation officielle JetBrains d’une API ou d’un plugin.
-    - Lire ensuite l’URL exacte trouvée au lieu de lancer un crawl large.
-    - N’envoyer à Copilot que le résultat borné utile à la décision.
+Firecrawl est davantage orienté récupération/extraction/crawl de contenu Web et peut être utile lorsque les pages sont difficiles à transformer en texte propre.
 
-=== "Documentation officielle"
-    - Chercher `modelcontextprotocol.io` pour les concepts MCP.
-    - Lire `docs.github.com` pour la prise en charge Copilot.
-    - Extraire la section utile, pas la page entière.
+Cas d'usage :
+
+- documentation dynamique ;
+- extraction Markdown ;
+- crawl explicitement borné d'un petit corpus ;
+- collecte de pages avant indexation interne.
+
+Points de vigilance :
+
+- ne pas crawler sans profondeur/volume maximum ;
+- respecter robots.txt, conditions d'utilisation et droits d'accès ;
+- vérifier les coûts avant crawl important ;
+- traiter tout contenu récupéré comme non fiable ;
+- conserver les URL sources.
+
+---
+
+## Claude Code comme client
+
+Quel que soit le fournisseur, l'intégration doit rester observable depuis Claude :
+
+```text
+/mcp
+```
+
+Vérifiez que le serveur attendu est connecté et que ses outils sont disponibles.
+
+Pour un serveur partagé au niveau du projet, préférez une configuration versionnable sans secrets. Les tokens/API keys doivent venir d'un secret manager, d'une variable d'environnement ou du mécanisme OAuth approprié.
+
+---
+
+## Ne pas multiplier les outils équivalents
+
+Évitez d'activer simultanément plusieurs MCP offrant exactement la même fonction « search web » sans raison claire.
+
+Cela ajoute :
+
+- des descriptions d'outils ;
+- de l'ambiguïté dans le choix ;
+- des credentials à maintenir ;
+- des surfaces d'attaque ;
+- des coûts potentiels.
+
+Préférez une stratégie explicite :
+
+```text
+Web natif Claude suffisant ? → l'utiliser
+Besoin spécialisé ?           → MCP ciblé
+Besoin d'extraction dynamique ? → outil spécialisé
+Besoin d'un corpus interne ?   → index/local MCP adapté
+```
+
+---
+
+## Matrice de choix
+
+| Besoin | Option souvent adaptée |
+|---|---|
+| recherche générale simple | outils Web natifs Claude ou recherche fournisseur |
+| domaines officiels bornés | recherche avec allowlist de domaines |
+| page dynamique difficile | extracteur spécialisé type Firecrawl |
+| données internes | MCP interne/authentifié |
+| forte confidentialité | serveur local ou service approuvé |
+| corpus réutilisé fréquemment | index dédié plutôt que re-crawl systématique |
+
+Ce tableau n'est pas un classement de fournisseurs.
+
+---
+
+## Vérifier une réponse obtenue via MCP
+
+Une réponse de recherche n'est pas une preuve par elle-même.
+
+Demandez à Claude de :
+
+1. conserver l'URL canonique ;
+2. distinguer résultat de recherche et page effectivement lue ;
+3. privilégier la documentation officielle ;
+4. indiquer la date lorsqu'elle est pertinente ;
+5. signaler les sources contradictoires ;
+6. éviter de transformer un snippet en fait établi sans ouvrir la source.
+
+---
+
+## Sécurité
+
+Pour les services distants :
+
+- clé avec privilèges minimaux ;
+- rotation possible ;
+- budget/quota configuré ;
+- domaines autorisés si le serveur le supporte ;
+- pas de données internes sensibles dans une requête externe sans autorisation ;
+- revue des conditions de traitement des données.
+
+---
+
+## Référence Copilot
+
+Tavily, Firecrawl ou d'autres MCP peuvent aussi être utilisés avec GitHub Copilot lorsque l'environnement Copilot concerné supporte le serveur. La configuration doit être vérifiée séparément dans la documentation GitHub actuelle.
 
 ---
 
 ## Sources
 
-- [Documentation Tavily](https://docs.tavily.com/) (consulté le 2026-06-20)
-- [Tavily Pricing](https://tavily.com/pricing) (consulté le 2026-06-20)
-- [Documentation Firecrawl](https://docs.firecrawl.dev/) (consulté le 2026-06-20)
-- [Firecrawl Pricing](https://firecrawl.dev/pricing) (consulté le 2026-06-20)
-- [Model Context Protocol](https://modelcontextprotocol.io/) (consulté le 2026-06-20)
-- [GitHub Copilot et MCP dans l'IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp) (consulté le 2026-06-20)
-
----
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+- [Tavily documentation](https://docs.tavily.com/) — à vérifier au moment de l'intégration
+- [Firecrawl documentation](https://docs.firecrawl.dev/) — à vérifier au moment de l'intégration
+- [Model Context Protocol](https://modelcontextprotocol.io/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Comparaison](./securite.md)** : trancher entre local, gratuit, V1 et V2 selon la maîtrise, la confidentialité et la charge de maintenance.
-
-Concepts clés couverts :
-
-- **Option gratuite** — utile pour démarrer ou dépanner
-- **Tavily** — simple, borné, pratique pour la recherche ciblée
-- **Firecrawl** — plus fort sur l’extraction et les pages dynamiques
-- **Contexte** — limiter ce qui remonte dans Copilot
-
+**[Sécurité et choix](securite.md)** : décider entre local et distant à partir des permissions, des données et de la maintenance — pas uniquement du prix.
