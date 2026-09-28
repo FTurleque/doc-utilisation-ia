@@ -1,90 +1,64 @@
-# Développement local (notes internes)
+# Développement local — notes internes
 
-Ce guide explique comment préparer un environnement local pour développer et tester la documentation MkDocs du projet (Windows).
+Ce guide décrit l'environnement local minimal pour développer et valider la documentation MkDocs. Il est stocké dans `user/` et n'est pas publié dans le site.
 
-> Note : ce fichier est stocké dans `user/` et n'est pas inclus dans le site publié.
+## Windows PowerShell
 
-## Vue d'ensemble
-- Créer un environnement virtuel (`.venv`) pour isoler les dépendances.
-- Installer les dépendances depuis `requirements.txt`.
-- Deux modes pour visualiser le site : serveur de développement (rechargement auto) ou build statique.
-
-## Étapes détaillées (Windows)
-
-1) Créer le venv
-
-PowerShell :
 ```powershell
 py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-Si `py` n'est pas installé, utiliser l'installateur Python et activer l'option "Install launcher".
+Une fois le venv activé, utiliser `python -m ...` afin d'exécuter les outils avec l'interpréteur de l'environnement virtuel.
 
-2) Activer le venv
-
-PowerShell :
-```powershell
-.\\.venv\\Scripts\\Activate.ps1
-```
-
-Invite de commandes (cmd) :
-```cmd
-.\\.venv\\Scripts\\activate.bat
-```
-
-3) Installer les dépendances
+Si PowerShell refuse l'activation du venv, ajuster la politique uniquement si la politique de votre poste l'autorise :
 
 ```powershell
-py -m pip install --upgrade pip
-py -m pip install -r requirements.txt
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-Remarque : si `py` n'est pas disponible, remplacez `py -m` par `.\\.venv\\Scripts\\python -m`.
+## macOS / Linux
 
-## Lancer le site — deux façons
-
-Mode A — Serveur de développement (preferé pour édition)
-
-```powershell
-py -m mkdocs serve
-# ou si 'py' absent :
-.\\.venv\\Scripts\\python -m mkdocs serve
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-Le site est accessible par défaut sur : `http://127.0.0.1:8000`.
+## Développer le site
 
-Mode B — Build statique + serveur simple
+Serveur avec rechargement automatique :
 
-```powershell
-py -m mkdocs build
-py -m http.server --directory site 8000
-# ou :
-.\\.venv\\Scripts\\python -m mkdocs build
-.\\.venv\\Scripts\\python -m http.server --directory site 8000
+```bash
+python -m mkdocs serve
 ```
 
-Ce mode permet de vérifier le rendu final (fichiers générés dans `site/`).
+Le site est accessible par défaut sur `http://127.0.0.1:8000/`.
 
-## Dépannage
+## Validation complète
 
-- `py` introuvable : utiliser `.\\.venv\\Scripts\\python -m` ou installer le launcher Python.
-- PowerShell bloque l'exécution des scripts :
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
-```
-- `mkdocs` manquant :
-```powershell
-py -m pip install mkdocs mkdocs-material
+Avant un push :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
-## Bonnes pratiques
+Le second contrôle s'exécute sur le dossier `site/` produit par MkDocs et vérifie les chemins et ancres internes.
 
-- Ne pas committer le dossier `.venv/` — il doit être dans `.gitignore`.
-- Mettre à jour `requirements.txt` quand on ajoute une dépendance :
-```powershell
-py -m pip freeze > requirements.txt
-```
+## Dépendances
 
----
+`requirements.txt` est volontairement minimal. N'utilisez pas `pip freeze > requirements.txt` depuis un environnement de travail complet : cette commande peut y ajouter des dépendances transitives ou étrangères au projet.
 
-Ces notes sont destinées aux contributeurs et sont volontairement hors-site pour ne pas apparaître dans la documentation publiée.
+Lorsqu'une dépendance directe devient nécessaire, ajoutez-la explicitement à `requirements.txt`, puis vérifiez l'installation dans un venv propre.
+
+## Git
+
+- `.venv/` et `site/` sont ignorés par Git.
+- Ne poussez jamais directement sur `main`.
+- Travaillez sur une branche, puis poussez-la avec `git push -u origin HEAD` et ouvrez une Pull Request.
+
+Le script `scripts/push-and-deploy.ps1` porte un nom historique : il valide et pousse uniquement la branche courante ; le déploiement réel se produit après merge manuel dans `main` via GitHub Actions.
