@@ -1,172 +1,110 @@
-# Sources Officielles & Changelogs
+# Sources officielles & changelogs
 
 <span class="badge-beginner">Débutant</span>
 
-Les sources les plus fiables sont les blogs et changelogs **des éditeurs eux-mêmes**. Cette page regroupe toutes les sources officielles à suivre, classées par éditeur.
+Cette page rassemble les **sources primaires** à consulter avant de modifier une information périssable du dépôt. Claude Code est désormais la priorité documentaire ; GitHub Copilot reste suivi comme référence secondaire.
 
 ---
 
-## GitHub Copilot & GitHub
+## Claude Code & Anthropic — priorité 1
 
-La source numéro 1 pour tout ce qui concerne Copilot.
+| Ressource | Usage |
+|---|---|
+| [Claude Code documentation](https://code.claude.com/docs/) | Référence fonctionnelle principale |
+| [Claude Code changelog](https://code.claude.com/docs/en/changelog) | Commandes, comportements et fonctionnalités récentes |
+| [Anthropic Newsroom](https://www.anthropic.com/news) | Modèles, produit, annonces et sécurité |
+| [Anthropic Research](https://www.anthropic.com/research) | Recherche, évaluations et sécurité |
+| [Claude Platform docs](https://platform.claude.com/docs/) | API, modèles et plateforme développeur |
+| [Claude pricing](https://claude.com/pricing) | Plans Claude ; à vérifier au moment d'une décision budgétaire |
 
-| Ressource | URL | Contenu | Fréquence |
-|-----------|-----|---------|-----------|
-| **GitHub Blog** | [github.blog](https://github.blog) | Annonces produit, nouvelles fonctionnalités Copilot | Hebdomadaire |
-| **GitHub Changelog** | [github.blog/changelog](https://github.blog/changelog/) | Toutes les modifications produit, filtrable par catégorie | Quotidienne |
-| **Copilot Changelog** | [github.blog/changelog (filtre Copilot)](https://github.blog/changelog/?query=copilot) | Uniquement les changements Copilot | Hebdomadaire |
-| **GitHub Docs — Copilot** | [docs.github.com/copilot](https://docs.github.com/en/copilot) | Documentation officielle à jour | Continue |
-| **Copilot Plans** | [Docs — Plans](https://docs.github.com/en/copilot/get-started/plans) | Plans individuels et organisationnels | Continue |
-| **Copilot Billing & Pricing** | [Docs — Models and pricing](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing) | Tarification par modèle et impacts coûts | Continue |
-| **Copilot Troubleshooting** | [Docs — Troubleshoot Copilot](https://docs.github.com/en/copilot/how-tos/troubleshoot-copilot) | Procédures officielles de diagnostic | Continue |
-| **VS Code Release Notes** | [code.visualstudio.com/updates](https://code.visualstudio.com/updates) | Mises à jour mensuelles de VS Code (incluant Copilot) | Mensuelle |
-| **GitHub Universe** | [githubuniverse.com](https://githubuniverse.com) | Conférence annuelle — annonces majeures Copilot | Annuelle (octobre) |
-
-!!! tip "Astuce : le Changelog filtré"
-    Le [GitHub Changelog filtré sur Copilot](https://github.blog/changelog/?query=copilot) est la source la plus précise pour suivre chaque mise à jour de Copilot. Ajoute-le à ton lecteur RSS ou vérifie-le chaque semaine.
-
-!!! info "Mise à jour"
-    Les liens Copilot de cette page ont été revérifiés le **3 juin 2026**.
+!!! tip "Règle de maintenance"
+    Pour une affirmation sur Claude Code, cherchez d'abord dans `code.claude.com`. Pour les modèles, plans ou annonces générales, utilisez Anthropic/Claude officiels.
 
 ---
 
-## OpenAI (GPT-4o, o3, o4-mini…)
+## GitHub Copilot — référence conservée
 
-Les modèles derrière Copilot Chat et Agent mode.
+| Ressource | Usage |
+|---|---|
+| [GitHub Copilot docs](https://docs.github.com/en/copilot) | Fonctionnalités et configuration |
+| [GitHub Changelog](https://github.blog/changelog/) | Changements produit |
+| [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) | Plans et périmètres |
+| [GitHub billing](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-billing) | Facturation Copilot |
+| [VS Code release notes](https://code.visualstudio.com/updates) | Intégrations VS Code/Copilot |
 
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **OpenAI Blog** | [openai.com/blog](https://openai.com/blog) | Annonces de nouveaux modèles, recherches |
-| **OpenAI Platform Changelog** | [platform.openai.com/docs/changelog](https://platform.openai.com/docs/changelog) | Changelog technique des API |
-| **OpenAI Safety** | [openai.com/safety](https://openai.com/safety) | Rapports de sécurité, red teaming, alignement |
-| **OpenAI Research** | [openai.com/research](https://openai.com/research) | Papers et travaux de recherche |
-
----
-
-## Anthropic (Claude 3.5 Sonnet, Claude 4…)
-
-Un des modèles avancés dans Copilot, ainsi que l'éditeur Claude Code.
-
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **Anthropic News** | [anthropic.com/news](https://www.anthropic.com/news) | Annonces produit, nouveaux modèles |
-| **Anthropic Research** | [anthropic.com/research](https://www.anthropic.com/research) | Papers de recherche (sécurité, alignment) |
-| **Claude Docs** | [docs.anthropic.com](https://docs.anthropic.com) | Documentation API et guides |
-| **Claude Code Changelog** | [docs.anthropic.com/en/docs/claude-code](https://docs.anthropic.com/en/docs/claude-code/overview) | Mises à jour de Claude Code |
+Ne recopiez pas durablement un tableau de prix ou de quotas : conservez la date de vérification et un lien canonique.
 
 ---
 
-## Google (Gemini, Gemma…)
+## Sécurité IA et systèmes agentiques
 
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **Google AI Blog** | [blog.google/technology/ai](https://blog.google/technology/ai/) | Annonces Gemini, recherche IA |
-| **Google DeepMind** | [deepmind.google/research](https://deepmind.google/research/) | Recherche fondamentale |
-| **Gemini Docs** | [ai.google.dev/docs](https://ai.google.dev/docs) | Documentation technique Gemini API |
+| Ressource | Usage |
+|---|---|
+| [OWASP GenAI Security Project](https://genai.owasp.org/) | Référence sécurité GenAI/agentique |
+| [OWASP Top 10 for LLM and GenAI](https://genai.owasp.org/initiative/owasp-top-10-for-llm-and-genai/) | Risques LLM actuels |
+| [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) | Gestion des risques IA |
+| [MITRE ATLAS](https://atlas.mitre.org/) | Tactiques et techniques d'attaque IA |
+| [CNIL — IA](https://www.cnil.fr/fr/intelligence-artificielle) | Données personnelles et IA en France |
 
----
-
-## Microsoft (Azure AI, Copilot 365…)
-
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **Microsoft AI Blog** | [blogs.microsoft.com/ai](https://blogs.microsoft.com/ai/) | Annonces IA Microsoft (Azure, 365, Copilot) |
-| **Azure AI Updates** | [azure.microsoft.com/updates/?category=ai-machine-learning](https://azure.microsoft.com/en-us/updates/?category=ai-machine-learning) | Mises à jour Azure AI spécifiques |
-| **Microsoft Research** | [microsoft.com/research](https://www.microsoft.com/en-us/research/) | Papers et projets de recherche |
+En septembre 2026, OWASP a annoncé le **Top 10 for LLM Applications 2026** et un **Agent Control Standard**. Les pages sécurité de ce dépôt doivent donc être relues avec une perspective agentique, pas uniquement « chatbot ». 
 
 ---
 
-## Meta (Llama, Code Llama…)
+## Outils réellement utilisés par ce dépôt
 
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **Meta AI Blog** | [ai.meta.com/blog](https://ai.meta.com/blog/) | Annonces modèles open source (Llama) |
-| **Meta Research** | [ai.meta.com/research](https://ai.meta.com/research/) | Papers et librairies open source |
+Suivez les sources officielles plutôt qu'un agrégateur :
 
----
+- [RTK](https://github.com/rtk-ai/rtk)
+- [SonarQube MCP Server](https://github.com/SonarSource/sonarqube-mcp-server)
+- [Ollama](https://docs.ollama.com/)
+- [LM Studio](https://lmstudio.ai/docs/)
+- [OpenSkills](https://github.com/numman-ali/openskills)
+- [TOON](https://github.com/toon-format/toon)
 
-## JetBrains (AI Assistant)
-
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **JetBrains Blog** | [blog.jetbrains.com](https://blog.jetbrains.com/) | Mises à jour IDE et AI Assistant |
-| **JetBrains AI** | [jetbrains.com/ai](https://www.jetbrains.com/ai/) | Fonctionnalités AI Assistant |
-| **IntelliJ IDEA What's New** | [jetbrains.com/idea/whatsnew](https://www.jetbrains.com/idea/whatsnew/) | Nouveautés par version |
+Une page legacy doit être conservée si elle aide les utilisateurs existants, mais son statut de maintenance doit être explicite.
 
 ---
 
-## Hugging Face (Écosystème open source)
+## Autres éditeurs à surveiller selon besoin
 
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **Hugging Face Blog** | [huggingface.co/blog](https://huggingface.co/blog) | Modèles, datasets, outils open source |
-| **Papers with Code** | [paperswithcode.com](https://paperswithcode.com/) | Papers de recherche avec code reproductible |
-| **Hugging Face Daily Papers** | [huggingface.co/papers](https://huggingface.co/papers) | Sélection quotidienne de papers IA |
+OpenAI, Google, Microsoft, JetBrains, AWS/Kiro, Windsurf/Cognition et Tabnine restent utiles lorsque leurs produits apparaissent dans une page du dépôt. Ils ne doivent pas occuper la veille principale si aucune décision documentaire n'en dépend.
 
 ---
 
-## Organismes de standardisation et régulation
+## Sources communautaires : signal, pas preuve
 
-| Ressource | URL | Contenu |
-|-----------|-----|---------|
-| **NIST AI** | [nist.gov/artificial-intelligence](https://www.nist.gov/artificial-intelligence) | Standards et framework de gestion des risques IA |
-| **AI Act (UE)** | [artificialintelligenceact.eu](https://artificialintelligenceact.eu/) | Réglementation européenne sur l'IA |
-| **CNIL — IA** | [cnil.fr (rubrique IA)](https://www.cnil.fr/fr/intelligence-artificielle) | Position de la CNIL sur l'IA et les données personnelles |
+Newsletters, Reddit, Discord, YouTube, blogs personnels et réseaux sociaux peuvent signaler :
 
----
+- une régression ;
+- un changement de prix ;
+- une faille ;
+- un nouveau workflow.
 
-## Comment organiser ta veille
-
-### Option 1 — Lecteur RSS (recommandé)
-
-La plupart de ces blogs ont un flux RSS. Utilise un lecteur comme **Feedly**, **Inoreader** ou **Miniflux** :
-
-```
-# Flux RSS principaux
-https://github.blog/changelog/feed/
-https://openai.com/blog/rss.xml
-https://www.anthropic.com/news/rss
-https://code.visualstudio.com/feed.xml
-https://blog.google/technology/ai/rss/
-```
-
-!!! info "Feedly est gratuit"
-    La version gratuite de [Feedly](https://feedly.com) supporte jusqu'à 100 sources et 3 dossiers. Largement suffisant pour démarrer.
-
-### Option 2 — Alertes GitHub
-
-Pour suivre spécifiquement les releases d'outils :
-
-1. Va sur le repo GitHub de l'outil (ex. [github.com/rtk-ai/rtk](https://github.com/rtk-ai/rtk))
-2. Clique sur **Watch** → **Custom** → coche **Releases**
-3. Tu recevras un email à chaque nouvelle release
-
-### Option 3 — Notifications VS Code
-
-VS Code affiche les notes de version automatiquement après chaque mise à jour. Lis-les — elles contiennent souvent les nouveautés Copilot.
+Avant de modifier la documentation, confirmez le point auprès d'une source primaire, d'un changelog, d'un dépôt officiel ou d'un avis de sécurité.
 
 ---
 
-## Résumé : les 5 sources essentielles
+## Procédure de mise à jour documentaire
 
-Si tu ne devais en suivre que 5 :
+Pour toute information susceptible de changer :
 
-| # | Source | Pourquoi |
-|---|--------|----------|
-| 1 | [GitHub Changelog (Copilot)](https://github.blog/changelog/?query=copilot) | Chaque mise à jour Copilot |
-| 2 | [OpenAI Blog](https://openai.com/blog) | Nouveaux modèles derrière Copilot |
-| 3 | [Anthropic News](https://www.anthropic.com/news) | Modèles avancés Copilot + Claude Code |
-| 4 | [VS Code Release Notes](https://code.visualstudio.com/updates) | Intégrations IDE mensuelles |
-| 5 | [OWASP LLM Top 10](https://owasp.org/www-project-top-10-for-large-language-model-applications/) | Sécurité IA à jour |
+1. retrouver la source officielle ;
+2. vérifier la date de publication **et** la date effective du changement ;
+3. distinguer GA, preview, beta, deprecated et legacy ;
+4. éviter les modèles/prix figés si un lien officiel suffit ;
+5. ajouter une date de consultation lorsque le contenu est temporel ;
+6. vérifier les liens croisés et la navigation après modification.
 
 ---
 
-## Sources
+## Les cinq flux les plus utiles pour ce dépôt
 
-- [GitHub Blog — AI](https://github.blog/ai-and-ml/) - consulté le 2026-06-20
-- [Anthropic research](https://www.anthropic.com/research) - consulté le 2026-06-20
-- [OpenAI research](https://openai.com/research/) - consulté le 2026-06-20
+1. Claude Code changelog ;
+2. Anthropic Newsroom ;
+3. GitHub Changelog/Copilot docs ;
+4. OWASP GenAI Security Project ;
+5. releases/changelogs des outils réellement documentés.
 
 ## Prochaine étape
 
-**[Vidéos, Podcasts & Conférences](videos-podcasts.md)** : les meilleures chaînes YouTube, podcasts et conférences pour apprendre et rester informé en format vidéo et audio.
+**[Sécurité, risques & failles](securite-risques.md)** pour transformer cette veille en contrôles opérationnels.
