@@ -143,7 +143,8 @@ nav:
     - Accueil: chapitre-6-machine-learning/index.md
     - Concepts Fondamentaux: chapitre-6-machine-learning/concepts-fondamentaux.md
     - Algorithmes Courants: chapitre-6-machine-learning/algorithmes-courants.md
-    - Copilot pour le ML: chapitre-6-machine-learning/copilot-workflow-ml.md
+    - Claude Code pour le ML: chapitre-6-machine-learning/claude-workflow-ml.md
+    - "Copilot pour le ML (référence)": chapitre-6-machine-learning/copilot-workflow-ml.md
     - Python & Data Science: chapitre-6-machine-learning/python-data-science.md
     - Deep Learning: chapitre-6-machine-learning/deep-learning.md
     - Notebooks Jupyter: chapitre-6-machine-learning/notebooks-jupyter.md
@@ -187,7 +188,7 @@ nav:
     - Java & Spring Boot: chapitre-10-cas-usage/java-spring-boot.md
     - Node.js & React: chapitre-10-cas-usage/nodejs-react.md
     - Node.js & Express: chapitre-10-cas-usage/nodejs-express.md
-    - React 19 & TypeScript: chapitre-10-cas-usage/react-typescript.md
+    - React & TypeScript: chapitre-10-cas-usage/react-typescript.md
     - Python & FastAPI: chapitre-10-cas-usage/python.md
 
   - Troubleshooting:
