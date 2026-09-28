@@ -1,65 +1,54 @@
-# 📸 Screenshots — Visual Studio Code
+# Captures — Visual Studio Code
 
-> Organiseur visual pour les screenshots de documentation GitHub Copilot — VS Code
+Ce dossier contient actuellement des captures **GitHub Copilot** conservées comme références. Claude Code étant le parcours principal du dépôt, les nouvelles captures génériques doivent le privilégier lorsqu'une image apporte une information utile.
 
----
+## Inventaire actuel
 
-## 📁 Structure Répertoires
+Fichiers présents :
 
+- `vscode-auth-github-01.png`
+- `vscode-chat-sidebar-01.png`
+- `vscode-install-button-01.png`
+- `vscode-marketplace-01.png`
+- `vscode-status-bar-icon.png`
+
+Ces images décrivent des écrans observés au moment de leur capture. Elles ne constituent pas une checklist de fonctionnalités actuelles et ne garantissent pas qu'un libellé, raccourci ou bouton est encore identique dans la dernière version.
+
+## Nouvelles captures
+
+Convention recommandée :
+
+```text
+vscode-{produit}-{fonction}-{numero}.png
 ```
-vscode/
-├── 01-installation/        ← Installation extension (3 screenshots)
-├── 02-parametrage/         ← Configuration + Auth (3 screenshots)
-├── 03-features/            ← Inline, Chat, Quick Fix (5 screenshots)
-├── 04-troubleshooting/     ← Logs & Diagnostic (2 screenshots)
-└── README.md               ← Ce fichier (guide master)
+
+Exemples :
+
+```text
+vscode-claude-chat-01.png
+vscode-claude-permissions-01.png
+vscode-copilot-marketplace-02.png
 ```
 
----
+Ne renommez pas les images existantes sans mettre à jour toutes leurs références.
 
-## 📋 Checklist Capture
+## Priorités Claude Code
 
-### Installation (PRIORITAIRE) — 3 screenshots
-- [ ] **01** : vscode-marketplace-01.png — Extension "GitHub Copilot" Marketplace
-- [ ] **02** : vscode-install-button-01.png — Bouton Install dans extension panel
-- [ ] **03** : vscode-auth-github-01.png — Device Flow authentification GitHub
+Une nouvelle capture Claude est pertinente principalement pour :
 
-### Paramétrage (PRIORITAIRE) — 3 screenshots
-- [ ] **04** : vscode-settings-search-01.png — Settings search "copilot"
-- [ ] **05** : vscode-copilot-settings-01.png — Copilot settings (Inline toggle)
-- [ ] **06** : vscode-keybindings-01.png — Keybindings Copilot (Ctrl+I, etc.)
+- installation/intégration VS Code ;
+- panneau Claude Code ;
+- permissions et interactions IDE ;
+- diagnostic ou réglage dont l'emplacement UI est difficile à expliquer uniquement par texte.
 
-### Features (IMPORTANT) — 5 screenshots
-- [ ] **07** : vscode-inline-suggestion-01.png — Suggestion inline grisée (preview)
-- [ ] **08** : vscode-inline-accept-01.png — Appui Tab pour accepter suggestion
-- [ ] **09** : vscode-chat-sidebar-01.png — Chat Copilot sidebar ouvert
-- [ ] **10** : vscode-chat-input-01.png — Input chat avec /commands visibles
-- [ ] **11** : vscode-quick-fix-01.png — Lightbulb menu avec Copilot suggestions
+Pour les commandes CLI, rules, skills, agents, hooks ou settings JSON, privilégier les exemples texte qui vieillissent mieux.
 
-### Troubleshooting (OPTIONNEL) — 2 screenshots
-- [ ] **12** : vscode-output-logs-01.png — Output → GitHub Copilot logs
-- [ ] **13** : vscode-extension-disabled-01.png — Extension disabled state
+## Qualité
 
----
+- utiliser une version stable compatible de VS Code ;
+- documenter la version de l'extension dans la PR si nécessaire ;
+- masquer compte, dépôts privés, secrets et chemins personnels ;
+- garder suffisamment de contexte pour comprendre l'écran ;
+- ne pas fabriquer de device code ou d'état d'interface.
 
-## 📸 Spécifications
-
-| Critère | Détail |
-|---------|--------|
-| **Résolution** | 1920×1080 (Full HD, scale 100%) |
-| **Format** | PNG lossless |
-| **Thème** | Défaut VS Code (Dark mode recommandé) |
-| **Workspace** | Minimale (1-2 fichiers JS/TS ouverts) |
-| **Taille cible** | <150 KB par fichier |
-
----
-
-## 🎯 Progress
-
-| Phase | Cible | État |
-|-------|-------|------|
-| Installation | 3 | ⏳ 0/3 |
-| Paramétrage | 3 | ⏳ 0/3 |
-| Features | 5 | ⏳ 0/5 |
-| Troubleshooting | 2 | ⏳ 0/2 |
-| **TOTAL** | **13** | **📊 0/13** |
+Voir `../SCREENSHOTS-GUIDE.md` et `CAPTURE-TEMPLATE.md`.
