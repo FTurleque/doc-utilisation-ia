@@ -20,6 +20,19 @@ Ce fichier suit les changements structurants du dépôt. Les détails très fins
 - Veille et cybersécurité actualisées avec perspective agentique.
 - Appendices et références Copilot conservés mais clairement identifiés.
 
+### Extension outils, RAG et observabilité
+
+Ajout de nouvelles briques spécialisées, chacune placée dans le chapitre correspondant à son rôle :
+
+- **Qdrant** dans le chapitre RAG : vector search, payload filtering et hybrid search ;
+- **Graphify** dans Contexte & Personnalisation : knowledge graph du dépôt et intégration Claude/MCP ;
+- **Grafana** et **Loki** dans une nouvelle section Observabilité & GreenOps ;
+- **Kepler** dans cette même section pour les métriques énergétiques Kubernetes ;
+- **Solace** dans Outils comme infrastructure event-driven distincte de MCP ;
+- nouvelle section **Agents de code alternatifs** dédiée à **Cline** et **Kilo Code**.
+
+Les index RAG, Contexte, Performance et Outils, la comparaison des outils et la navigation MkDocs ont été synchronisés avec ces ajouts.
+
 ### Configuration Claude Code native
 
 Ajout d'un socle versionné :
