@@ -1,236 +1,131 @@
-# Comparaison des Écosystèmes ML : Python vs R vs Julia
+# Comparaison des écosystèmes ML : Python, R et Julia
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Trois langages dominent le Machine Learning. Ce guide compare leurs forces, faiblesses et leur intégration avec GitHub Copilot pour vous aider à choisir le bon outil selon votre contexte.
+Python, R et Julia peuvent tous être pertinents en Machine Learning et calcul scientifique. Le choix ne doit pas reposer sur des étoiles de « popularité », un supposé score Copilot ou des affirmations générales de performance : comparez les besoins du projet.
 
 ---
 
-## Vue d'Ensemble
+## Vue d'ensemble qualitative
 
-| Critère | Python | R | Julia |
-|---------|--------|---|-------|
-| **Popularité ML** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐ |
-| **Courbe d'apprentissage** | Douce | Moyenne | Raide |
-| **Support Copilot** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| **Bibliothèques ML** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| **Performance brute** | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Visualisation stats** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
-| **Communauté** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ |
-| **Déploiement prod** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ |
+| Écosystème | Forces fréquentes | Points à vérifier |
+|---|---|---|
+| Python | écosystème ML/DL très large, déploiement et tooling | environnement, dépendances natives, performance des parties Python pures |
+| R | statistiques, visualisation, reporting reproductible | intégration production, packaging, compétences équipe |
+| Julia | calcul numérique, multiple dispatch, performance JIT | maturité des packages nécessaires, déploiement, expertise équipe |
 
 ---
 
-## Python — Le Standard Industriel
+## Python
 
-<span class="badge-beginner">Recommandé pour démarrer</span>
+Python est un choix naturel lorsque le projet combine :
 
-Python est le langage dominant du ML et de la Data Science, avec un écosystème incomparable.
+- pandas/NumPy/scikit-learn ;
+- PyTorch/TensorFlow/JAX/Keras ;
+- API/automatisation ;
+- notebooks ;
+- MLOps et tooling généraliste.
 
-### Points Forts
+Son avantage principal est l'étendue de l'écosystème, pas une « précision IA » supérieure garantie.
 
-- **Écosystème complet** : pandas, numpy, scikit-learn, TensorFlow, PyTorch, FastAPI, Django
-- **Intégration Copilot maximale** : le corpus d'entraînement de Copilot est riche en code Python ML
-- **Polyvalent** : du notebook d'exploration à l'API en production, tout en Python
-- **Communauté massive** : Stack Overflow, Hugging Face, Kaggle — toujours une solution disponible
+### Workflow Claude
 
-### Points Faibles
-
-- Performance limitée sans NumPy/Cython (GIL Python)
-- Pas conçu initialement pour les statistiques académiques
-
-### Exemple — Régression avec scikit-learn
-
-```python
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-import pandas as pd
-
-df = pd.read_csv("data.csv")
-X, y = df.drop("target", axis=1), df["target"]
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-model = LinearRegression()
-model.fit(X_train, y_train)
-
-rmse = mean_squared_error(y_test, model.predict(X_test), squared=False)
-print(f"RMSE : {rmse:.3f}")
-```
-
-### Intégration Copilot
-
-!!! success "Copilot + Python : le meilleur combo"
-    Copilot a été entraîné sur des millions de notebooks Python. Il génère des pipelines sklearn complets, suggère les visualisations seaborn adaptées et propose automatiquement des patterns comme `train_test_split` avec `random_state=42`.
-
----
-
-## R — Le Roi de la Statistique
-
-<span class="badge-intermediate">Recommandé pour la recherche académique</span>
-
-R est le langage de référence pour les statistiques, la bio-informatique et la recherche académique.
-
-### Points Forts
-
-- **Statistiques avancées** : tests d'hypothèses, modèles mixtes, survie — inégalé
-- **ggplot2** : la meilleure bibliothèque de visualisation statistique
-- **tidyverse** : manipulation de données élégante et lisible
-- **RMarkdown / Quarto** : rapports reproductibles intégrant code + prose
-
-### Points Faibles
-
-- Déploiement en production complexe (pas de FastAPI natif)
-- Moins de bibliothèques Deep Learning (TensorFlow via `{keras}` wrapper)
-- Performance inférieure à Python pour les gros volumes
-
-### Exemple — Même régression en R
-
-```r
-library(tidyverse)
-library(tidymodels)
-
-# Chargement et split
-data <- read_csv("data.csv")
-split <- initial_split(data, prop = 0.8)
-train_data <- training(split)
-test_data <- testing(split)
-
-# Modèle
-recipe <- recipe(target ~ ., data = train_data)
-model <- linear_reg() |> set_engine("lm")
-workflow <- workflow() |> add_recipe(recipe) |> add_model(model)
-
-# Fit et évaluation
-fit <- workflow |> fit(data = train_data)
-predictions <- fit |> predict(new_data = test_data)
-
-rmse <- sqrt(mean((test_data$target - predictions$.pred)^2))
-cat(sprintf("RMSE : %.3f\n", rmse))
-```
-
-### Intégration Copilot
-
-!!! info "Copilot et R"
-    Copilot supporte bien R, surtout pour tidyverse et tidymodels. Il connaît `ggplot2` en profondeur et suggère des geoms adaptés. Moins performant pour le Deep Learning et les architectures réseau.
-
----
-
-## Julia — Le Futur des Sciences Computationnelles ?
-
-<span class="badge-expert">Pour les besoins de haute performance</span>
-
-Julia est conçu pour allier la facilité de Python et les performances du C/Fortran. Il excelle en simulation numérique et calcul scientifique.
-
-### Points Forts
-
-- **Performance native** : aussi rapide que C, sans compilation explicite (JIT)
-- **Syntaxe mathématique** : `∑`, `∀`, notation matricielle naturelle
-- **Flux.jl** : framework Deep Learning performant
-- **Multiple dispatch** : paradigme de programmation très puissant
-
-### Points Faibles
-
-- **Latence de démarrage** ("time to first plot") — améliorée en Julia 1.9+
-- Écosystème ML moins mature que Python
-- **Support Copilot limité** — corpus Julia plus petit
-
-### Exemple — Même régression en Julia
-
-```julia
-using DataFrames, CSV, MLJ, Statistics
-
-# Charger les données
-df = CSV.read("data.csv", DataFrame)
-
-# Split train/test
-train, test = partition(eachindex(df.target), 0.8, shuffle=true)
-
-# Modèle
-LinearRegressor = @load LinearRegressor pkg=MLJLinearModels
-model = LinearRegressor()
-
-X = select(df, Not(:target))
-y = df.target
-
-mach = machine(model, X[train, :], y[train])
-fit!(mach)
-
-ŷ = predict(mach, X[test, :])
-rmse = sqrt(mean((y[test] .- ŷ).^2))
-println("RMSE : $(round(rmse, digits=3))")
+```text
+Lis pyproject/lockfile et les scripts du projet.
+Identifie la stack data/ML et les commandes de test.
+Réutilise les pipelines existants et exécute les evals avant de conclure.
 ```
 
 ---
 
-## Guide de Décision
+## R
 
-```mermaid
-graph TD
-    Q1{"Quel est ton\nprofil principal ?"}
-    Q1 --> DEV["💻 Développeur\n/ Ingénieur"]
-    Q1 --> STAT["📊 Statisticien\n/ Chercheur"]
-    Q1 --> SCI["🔬 Scientifique\n/ Physicien"]
-    DEV --> PY["✅ Python"]
-    STAT --> Q2{"Déploiement\nen production ?"}
-    Q2 -->|Oui| PY
-    Q2 -->|Non| R["✅ R"]
-    SCI --> Q3{"Calcul\nhaute perf ?"}
-    Q3 -->|Oui| JU["✅ Julia"]
-    Q3 -->|Non| PY
+R reste particulièrement intéressant pour :
+
+- statistiques ;
+- analyse exploratoire ;
+- visualisation ;
+- rapports Quarto/R Markdown ;
+- domaines où l'écosystème CRAN/Bioconductor est central.
+
+La décision « Python vs R » peut aussi être organisationnelle : modèles développés en R puis servis via une autre couche, ou workflow analytique complet en R.
+
+Claude Code doit utiliser les scripts, tests et outils réellement présents (`renv`, Quarto, testthat, etc.) plutôt que transposer des conventions Python.
+
+---
+
+## Julia
+
+Julia peut être pertinente pour :
+
+- simulation ;
+- optimisation ;
+- calcul scientifique ;
+- workloads où le modèle d'exécution JIT et le multiple dispatch apportent une valeur réelle.
+
+Évaluez la disponibilité des bibliothèques nécessaires et la facilité de déploiement dans votre organisation.
+
+Ne présentez pas « Julia = vitesse du C » comme un benchmark universel : mesurez le workload réel, y compris compilation/warm-up.
+
+---
+
+## Exemple de comparaison reproductible
+
+Si deux langages sont réellement candidats :
+
+```text
+Même dataset
+Même problème
+Même métrique
+Même hardware
+Même niveau d'optimisation raisonnable
+Mesurer :
+- temps de développement ;
+- durée du pipeline ;
+- mémoire ;
+- qualité du modèle ;
+- packaging/déploiement ;
+- maintenabilité équipe.
 ```
 
-| Contexte | Recommandation | Raison |
-|----------|---------------|--------|
-| Startup / Produit ML | **Python** | Écosystème, déploiement, Copilot |
-| Recherche académique | **R** | Stats avancées, publication |
-| Bio-informatique | **R ou Python** | Bioconductor (R) ou Biopython |
-| Simulation physique | **Julia** | Performance, notation mathématique |
-| NLP / Vision | **Python** | HuggingFace, PyTorch dominent |
-| Reporting statistique | **R** | ggplot2 + RMarkdown incomparables |
-| Formation ML débutant | **Python** | Ressources, communauté, Copilot |
+Les temps de première compilation, caches et warm-up doivent être distingués du steady-state.
 
 ---
 
 ## Interopérabilité
 
-Il est possible de combiner ces langages ! Copilot aide à écrire le code d'intégration.
+Un système peut être polyglotte :
 
-```python
-# Appeler R depuis Python avec rpy2
-import rpy2.robjects as ro
-from rpy2.robjects.packages import importr
-
-stats = importr('stats')
-result = stats.lm("mpg ~ cyl + hp", data=ro.r['mtcars'])
-print(ro.r['summary'](result))
+```text
+R/Julia pour analyse ou calcul
+→ artefact/modèle/service
+→ Python/Java/Node pour orchestration ou API
 ```
 
-```python
-# Appeler Julia depuis Python avec juliacall
-from juliacall import Main as jl
-jl.seval("using Flux")
-
-# Utiliser un modèle Julia dans Python
-model = jl.seval("Chain(Dense(10 => 5, relu), Dense(5 => 1))")
-```
+N'ajoutez cette complexité que si elle résout un problème réel. Un seul langage bien maîtrisé est souvent préférable à une architecture polyglotte motivée uniquement par un benchmark synthétique.
 
 ---
 
-## Sources
+## Claude Code et langage
 
-- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
-- [TensorFlow documentation](https://www.tensorflow.org/guide) - consulté le 2026-06-20
-- [PyTorch documentation](https://pytorch.org/docs/stable/index.html) - consulté le 2026-06-20
-- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+Claude Code travaille à partir du dépôt et des outils accessibles. Sa qualité dépend davantage de :
+
+- conventions explicites ;
+- tests ;
+- exemples voisins ;
+- docs officielles accessibles ;
+- feedback du compilateur/runtime ;
+
+que d'un classement statique par langage.
+
+---
+
+## Copilot — référence
+
+Les anciennes notes « support Copilot ⭐⭐⭐⭐⭐ » ont été supprimées car elles n'étaient pas basées sur un benchmark reproductible. Copilot reste documenté comme outil séparé dans les chapitres de référence.
+
+---
 
 ## Prochaine étape
 
-**[Comparaison des Outils ML](comparaison-outils.md)** : maintenant que vous avez choisi votre langage, comparez les frameworks ML au sein de l'écosystème Python.
-
-Concepts clés couverts :
-
-- **scikit-learn vs TensorFlow vs PyTorch vs Keras** — Forces, faiblesses et cas d'usage de chaque framework
-- **Critères de choix** — Taille du dataset, type de modèle (classique vs DL), besoin de déploiement, support Copilot
-- **Courbes d'apprentissage** — Quel framework est le plus assisté par Copilot et le plus rapide à prendre en main
-- **Tableau de décision** — Guide synthétique pour choisir le bon outil selon votre contexte projet
+**[Comparaison des outils ML](comparaison-outils.md)** pour choisir ensuite les bibliothèques/frameworks à l'intérieur de l'écosystème retenu.
