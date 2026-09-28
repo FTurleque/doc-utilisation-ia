@@ -33,7 +33,8 @@ Sous `.claude/agents/` :
 - `doc-reviewer` — audit en lecture seule ;
 - `nav-maintainer` — navigation MkDocs ;
 - `official-doc-audit` — comparaison aux sources officielles ;
-- `official-doc-sync` — synchronisation documentée.
+- `official-doc-sync` — synchronisation documentée ;
+- `sonar-remediation` — correction Sonar bornée avec preuves de build/tests.
 
 Le skill `.claude/skills/doc-writer/` fournit le workflow de rédaction réutilisable.
 
