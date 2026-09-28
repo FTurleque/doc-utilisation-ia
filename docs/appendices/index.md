@@ -1,6 +1,6 @@
-﻿# Appendices
+# Appendices
 
-Ressources complémentaires, références rapides et templates pour la documentation sur GitHub Copilot.
+Ressources complémentaires, références rapides et templates pour le parcours **Claude Code**, avec GitHub Copilot conservé comme référence de compatibilité.
 
 ---
 
@@ -8,27 +8,40 @@ Ressources complémentaires, références rapides et templates pour la documenta
 
 <div class="grid cards" markdown>
 
--   :material-frequently-asked-questions: **[FAQ](faq.md)**
-    
-    Réponses aux questions les plus fréquemment posées sur GitHub Copilot, l'installation, la configuration, et l'utilisation.
+- :material-frequently-asked-questions: **[FAQ](faq.md)**
 
--   :material-keyboard: **[Raccourcis Clavier](raccourcis-clavier.md)**
-    
-    Référence complète des raccourcis clavier essentiels pour VS Code et IntelliJ IDEA avec Copilot.
+    Questions fréquentes sur Claude Code, modèles locaux, Copilot conservé, sécurité et dépannage.
 
--   :material-link-multiple: **[Ressources Externes](ressources-externes.md)**
-    
-    Liens vers la documentation officielle, tutoriels, community forums, et outils complémentaires.
+- :material-keyboard: **[Raccourcis clavier](raccourcis-clavier.md)**
 
--   :material-file-document: **[Templates Configuration](templates-configuration.md)**
-    
-    Templates prêts à utiliser : `.instructions.md`, `.prompt.md`, `.agent.md`, configurations JSON.
+    Commandes et points d'entrée Claude Code, plus raccourcis Copilot de référence.
+
+- :material-link-multiple: **[Ressources externes](ressources-externes.md)**
+
+    Documentation officielle Claude/Anthropic, Copilot, IDE, sécurité et outils complémentaires.
+
+- :material-file-document: **[Templates configuration](templates-configuration.md)**
+
+    Templates `CLAUDE.md`, rules, skills, MCP et configurations Copilot conservées.
 
 </div>
 
 ---
 
+## Principe des appendices
+
+Les appendices ne doivent pas réintroduire d'anciens choix par défaut. Lorsqu'un exemple Claude et un exemple Copilot coexistent :
+
+- Claude Code est présenté en premier ;
+- Copilot reste explicitement marqué comme référence ;
+- les versions, prix et raccourcis instables renvoient vers la documentation officielle lorsqu'ils évoluent trop vite.
+
+---
+
 ## Navigation rapide
 
-- [Retour aux Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)
-- [Troubleshooting](../chapitre-11-troubleshooting/index.md) — En cas de problème
+- [Claude Code](../chapitre-3b-claude-code-migration-copilot/index.md)
+- [Contexte & Personnalisation](../chapitre-4-contexte/index.md)
+- [Troubleshooting](../chapitre-11-troubleshooting/index.md)
+- [Outils](../chapitre-13-outils-economies/index.md)
+- [Veille IA](../chapitre-14-veille-ia/index.md)
