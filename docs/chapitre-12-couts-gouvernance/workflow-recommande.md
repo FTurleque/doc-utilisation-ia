@@ -1,192 +1,196 @@
-# Workflow recommandé
+# Workflow recommandé avec Claude Code
 
 <span class="badge-expert">Expert</span>
 
-Un workflow efficace avec Copilot, c'est d'abord une séquence de décisions : quel mode, quel modèle, quel niveau de contexte. Ce guide propose une structure journalière et des séquences type pour les tâches les plus courantes.
+Un workflow efficace avec Claude Code minimise surtout le **rework** et le **contexte inutile**. Le parcours de référence est :
+
+```text
+Explore → Plan → Implement → Verify
+```
+
+Toutes les tâches n'ont pas besoin des quatre étapes formelles ; adaptez le niveau de contrôle à la complexité et au risque.
 
 ---
 
-## Principe directeur
+## 1. Explore — comprendre avant de modifier
 
-```
-Toujours commencer par le mode le moins coûteux.
-Monter en puissance uniquement si nécessaire.
+Claude doit d'abord récupérer le minimum de contexte nécessaire :
+
+- fichiers concernés ;
+- tests voisins ;
+- configuration ;
+- conventions du dépôt ;
+- erreur ou comportement observé.
+
+```text
+Explore le chemin d'exécution de `createOrder`.
+Identifie les fichiers réellement impliqués et les tests existants.
+Ne modifie rien.
+Retourne uniquement : flux, invariants, risques et questions ouvertes.
 ```
 
-```mermaid
-graph LR
-    A["Inline\n(gratuit)"] -->|"Pas assez"| B["Chat Ask\n(1 req)"]
-    B -->|"Besoin de cadrer\nune tâche complexe"| P["Plan\n(1-2 interactions)"]
-    P -->|"Plan validé"| D["Agent\n(5-20 req)"]
-    B -->|"Besoin de modifier\n2-3 fichiers"| C["Chat guide\n(1-3 interactions)"]
-
-    style A fill:#d4edda,color:#000
-    style B fill:#cce5ff,color:#000
-    style C fill:#fff3cd,color:#000
-    style D fill:#f8d7da,color:#000
-```
+Pour une exploration volumineuse, utilisez un subagent afin de ne pas saturer le contexte principal.
 
 ---
 
-## Workflow journalier type
+## 2. Plan — seulement quand le risque le justifie
 
-### Début de session — Mise en contexte (5 min)
+Un plan est utile si la tâche touche plusieurs composants ou si une erreur de direction serait coûteuse.
 
-1. **Ouvrir uniquement les fichiers pertinents** pour la tâche du jour
-2. **Vérifier les instructions actives** (`.github/copilot-instructions.md` à jour ?)
-3. **Choisir le modèle** : standard pour les tâches légères, modèle avancé si une implémentation complexe est prévue
+```text
+Propose un plan minimal pour corriger le bug.
+Pour chaque étape : fichiers, changement, risque, test de validation.
+Préserve l'API publique.
+```
+
+Validez surtout :
+
+- périmètre ;
+- ordre ;
+- migrations éventuelles ;
+- compatibilité ;
+- stratégie de test.
+
+---
+
+## 3. Implement — modifier par incréments
+
+Évitez les réécritures massives lorsque des étapes indépendantes sont possibles.
+
+```text
+Implémente uniquement les étapes 1 et 2 du plan.
+Respecte les patterns voisins.
+N'ajoute pas de dépendance.
+Exécute les tests ciblés après modification.
+```
+
+Une petite boucle observée est souvent moins coûteuse qu'une génération massive suivie de plusieurs corrections.
+
+---
+
+## 4. Verify — obtenir du ground truth
+
+La vérification doit venir autant que possible de l'environnement :
+
+```text
+Avant de terminer :
+1. exécute les tests pertinents ;
+2. exécute lint/typecheck/build selon le dépôt ;
+3. inspecte le diff ;
+4. vérifie qu'aucun fichier hors périmètre n'a changé ;
+5. résume les commandes exécutées et leur résultat.
+```
+
+Une phrase comme « cela devrait fonctionner » n'est pas une validation.
+
+---
+
+## Exemple — corriger un bug
+
+```text
+1. Reproduis le bug avec le test ou la commande fournie.
+2. Localise la cause racine ; ne change rien avant de l'avoir identifiée.
+3. Ajoute ou adapte un test qui démontre le bug.
+4. Applique le correctif minimal.
+5. Exécute le test ciblé puis la suite pertinente.
+6. Relis le diff et signale toute modification annexe.
+```
+
+Cette séquence est généralement plus robuste qu'une demande « corrige ce bug » sans preuve reproductible.
+
+---
+
+## Exemple — nouvelle fonctionnalité multi-fichiers
+
+```text
+Explore les patterns similaires dans le dépôt.
+Passe en Plan et propose les fichiers à modifier.
+Après validation : implémente par petites étapes.
+Après chaque étape significative, exécute le test le plus ciblé.
+À la fin : tests + build + diff.
+```
+
+Pour les composants indépendants, des subagents peuvent explorer en parallèle puis retourner des synthèses courtes.
+
+---
+
+## Exemple — migration de dépendance
+
+```text
+1. Lis la version actuelle dans le lockfile / build file.
+2. Consulte la documentation et le changelog officiels actuels.
+3. Identifie uniquement les breaking changes applicables à ce dépôt.
+4. Mets à jour dépendance + code concerné.
+5. Exécute tests et build.
+6. N'affirme pas la compatibilité si le runtime cible n'a pas été testé.
+```
+
+Le coût de recherche initiale est souvent inférieur au coût d'une migration basée sur une API obsolète.
+
+---
+
+## Hygiène de contexte
+
+### Nouvelle tâche sans rapport
+
+Utilisez `/clear` pour ne pas transporter l'historique précédent.
+
+### Session longue mais même objectif
+
+Utilisez `/compact` quand le contexte devient lourd, en conservant décisions, erreurs non résolues et état courant.
+
+### Gros logs ou données
+
+Préférez :
+
+- `head`, `tail`, filtres et recherches ciblées ;
+- fichiers intermédiaires ;
+- références légères ;
+- subagents pour les explorations bruyantes.
+
+Anthropic décrit cette logique comme du **just-in-time context** : charger les informations quand elles deviennent nécessaires au lieu de tout injecter au départ.
+
+---
+
+## Checklist de fin de tâche
 
 ```markdown
-# Checklist début de session
-□ Fichiers de contexte ouverts (types, interfaces, services voisins)
-□ copilot-instructions.md reflète les conventions actuelles
-□ Budget AI Credits vérifié si grosse tâche planifiée
+- [ ] Objectif atteint sans élargissement non demandé
+- [ ] Tests ciblés exécutés
+- [ ] Build/lint/typecheck exécutés si pertinents
+- [ ] Diff relu
+- [ ] Aucun secret ou artefact temporaire ajouté
+- [ ] Documentation mise à jour si comportement public modifié
+- [ ] Commandes et limites de validation résumées
 ```
 
 ---
 
-### Séquence type — Implémenter une fonctionnalité
+## Ce qui réduit réellement le coût
 
-```mermaid
-sequenceDiagram
-    participant D as Développeur
-    participant C as Copilot
-
-    D->>D: 1. Lire la spec / ticket
-    D->>D: 2. Ouvrir les fichiers adjacents
-    D->>C: 3. Chat : "Explique la structure actuelle de UserService"
-    C-->>D: Résumé clair du code existant
-    D->>D: 4. Rédiger le prompt complet (contexte + contraintes + format)
-    D->>C: 5. Plan (valider la stratégie) puis Agent si ≥ 5 fichiers
-    C-->>D: Implémentation proposée
-    D->>D: 6. Relire, tester, valider
-    D->>C: 7. Chat /tests pour les tests manquants
-    C-->>D: Tests générés
-    D->>D: 8. Validation finale manuelle
-```
-
-**Budget type :** consommation faible à modérée en AI Credits pour une fonctionnalité moyenne, selon modèle et contexte transmis.
+| Mauvaise pratique | Alternative |
+|---|---|
+| Tout le dépôt dans le prompt | Recherche ciblée / just-in-time |
+| Session unique pour plusieurs sujets | `/clear` entre sujets |
+| Longues instructions permanentes | `CLAUDE.md` court + rules/skills |
+| Agent sans test | boucle avec validation exécutable |
+| Plusieurs corrections spéculatives | reproduire → corriger → tester |
+| Sous-agents systématiques | uniquement pour contexte isolable |
 
 ---
 
-### Séquence type — Déboguer un bug
+## GitHub Copilot — référence
 
-```mermaid
-sequenceDiagram
-    participant D as Développeur
-    participant C as Copilot
-
-    D->>D: 1. Reproduire le bug, isoler le stack trace
-    D->>C: 2. Chat /fix avec #selection du code problématique
-    C-->>D: Hypothèses + correction proposée
-    D->>D: 3. Appliquer et tester
-    alt Bug résolu
-        D->>D: ✓ Done
-    else Bug persistant
-        D->>C: 4. Chat avec contexte enrichi (log complet, fichiers adjacents)
-        C-->>D: Analyse approfondie
-    end
-```
-
-**Règle :** ne pas utiliser Agent Mode pour déboguer avant d'avoir essayé Chat d'abord.
-
----
-
-### Séquence type — Revue de code
-
-| Étape | Action | Mode |
-|-------|--------|------|
-| 1 | Sélectionner le bloc à revoir | — |
-| 2 | `/explain` pour comprendre l'intention | Chat |
-| 3 | Question ciblée : "Y a-t-il des problèmes de sécurité ici ?" | Chat (modèle standard) |
-| 4 | Si problème identifié : `/fix` sur la section | Chat |
-| 5 | Générer les tests manquants : `/tests` | Chat |
-
-**Budget type :** 2–5 messages avec coût souvent faible si modèle léger et contexte maîtrisé.
-
----
-
-## Règles de décision rapide
-
-### Le "modèle mental" en 3 questions
-
-```
-1. Je sais exactement ce que je veux écrire ?
-   → Oui : autocomplétion inline
-   → Non : continuer
-
-2. La tâche touche 1 ou 2 fichiers max ?
-    → Oui : Chat (modèle standard si la tâche est simple)
-   → Non : continuer
-
-3. La tâche nécessite un vrai raisonnement ou traverse 5+ fichiers ?
-    → Oui : Plan puis Agent Mode avec modèle adapté
-   → Non : revenir à Chat avec contexte enrichi
-```
-
----
-
-## Gestion du budget mensuel
-
-La gestion dépend de votre plan, de vos allocations AI Credits, et de vos politiques de budget.
-
-| Profil d'usage | Plan conseillé | Règle de pilotage |
-|---------------|----------------|-------------------|
-| Usage modéré solo | Pro | Réserver les modèles avancés aux tâches complexes |
-| Usage intensif solo | Pro+ | Allouer un budget hebdomadaire et surveiller les pics |
-| Équipe | Business | Définir budgets et garde-fous au niveau organisation |
-| Grande organisation | Enterprise | Piloter par budgets, observabilité et politiques |
-
-!!! tip "Approche pragmatique"
-    Fixer un budget hebdomadaire, puis comparer la consommation réelle à la planification dans [Historique des changements coûts & modèles](historique-modifications.md).
-
----
-
-## Anti-patterns à éviter
-
-| Anti-pattern | Impact | Solution |
-|-------------|--------|----------|
-| Relancer Agent Mode pour corriger une erreur de l'agent | ×2 à ×3 le coût | Corriger manuellement si l'erreur est mineure |
-| Laisser une conversation ouverte toute la journée | Tokens croissants, réponses lentes | Nouvelles conversations par sujet |
-| Utiliser un modèle avancé pour des questions de syntaxe | Gaspillage pur | Standard ou documentation |
-| Demander un scaffold complet avec Agent dès le début | Risque de direction incorrecte | Plan → validation → exécution |
-| Ne jamais utiliser l'autocomplétion | Sous-exploitation du mode le plus efficace | 70%+ du code via autocomplétion |
-
----
-
-## Template de session efficace
-
-```markdown
-# Session Copilot — [Date]
-
-## Tâche principale
-[Description en 1-2 phrases]
-
-## Fichiers de contexte ouverts
-- [ ] [fichier-1.ts]
-- [ ] [fichier-2.ts]
-
-## Plan d'exécution
-1. Chat /explain sur [composant existant]
-2. Plan rapide si ambiguïté de scope
-3. Agent ou Chat guidé selon complexité
-4. /tests pour la couverture
-
-## Budget estimé
-~[N] AI Credits (estimation)
-```
-
-Copier ce template dans le chat en début de tâche complexe cadre l'interaction dès le premier message.
+L'ancien workflow Inline → Ask → Plan → Agent et sa logique AI Credits restent valables uniquement dans l'écosystème Copilot. Les pages Copilot sont conservées pour comparaison et éventuel retour futur.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-20
-- [GitHub Copilot usage-based billing](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-20
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices) — consulté le 2026-09-28
+- [Anthropic — Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — consulté le 2026-09-28
 
-## Chapitres suivants
+## Prochaine étape
 
-**[Outils & Économies](../chapitre-13-outils-economies/index.md)** : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères et préserver vos AI Credits.
-
-**[Appendices](../appendices/index.md)** : ressources de référence complètes — FAQ, raccourcis clavier, templates de configuration prêts à copier-coller.
+**[Leviers d'économie](leviers-economie.md)** : mesurer puis réduire contexte, rework et autonomie inutile.
