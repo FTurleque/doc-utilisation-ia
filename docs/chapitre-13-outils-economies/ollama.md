@@ -1,136 +1,140 @@
-# Ollama
+# Ollama — backend local ou cloud pour Claude Code
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Ollama permet d'exécuter des modèles de langage en local, via une CLI et une API HTTP.
-C'est la base la plus simple pour une stratégie "local-first" sans coût API.
-
----
-
-## À quoi sert Ollama
-
-- Exécuter des LLM en local pour le chat et l'aide au code
-- Exposer une API locale pour des outils comme Continue.dev
-- Protéger les données sensibles en évitant l'envoi vers un service cloud
-
-!!! success "Quand l'utiliser"
-    Ollama est idéal pour les tâches légères à moyennes : explication de code, génération de brouillons, documentation, tests unitaires simples.
+Ollama exécute des modèles localement et propose aussi des modèles cloud. Son API expose désormais une compatibilité **Anthropic Messages API**, ce qui permet de connecter **Claude Code directement à Ollama** sans passer par Continue.
 
 ---
 
-## Quand l'utiliser
+## Pourquoi Ollama est pertinent ici
 
-- Quand tu veux une base 100% locale.
-- Quand tu veux protéger des données sensibles.
-- Quand tu veux alimenter Continue.dev avec un modèle local.
+Ollama peut servir à :
 
-## Quand l'éviter
+- exécuter un modèle local sur votre machine ;
+- exposer une API locale sur `http://localhost:11434` ;
+- utiliser un modèle local ou cloud via les API Ollama ;
+- fournir un backend compatible Anthropic à Claude Code ;
+- tester une stratégie local-first avant d'utiliser un modèle distant plus coûteux.
 
-- Quand tu n'as pas assez de RAM pour le modèle choisi.
-- Quand tu veux une solution purement GUI sans CLI.
-- Quand tu as besoin d'un modèle cloud très spécialisé.
+!!! warning "Claude Code ≠ modèle Claude"
+    Lorsque Claude Code pointe vers Ollama, l'interface et les outils restent ceux de Claude Code, mais le **modèle sous-jacent peut être un modèle Ollama non-Anthropic**. Les capacités, la qualité des tool calls, le contexte et le comportement peuvent donc différer fortement.
 
 ---
 
-## Mise en œuvre
+## Démarrage rapide avec Claude Code
 
-### Installation
+La documentation Ollama actuelle propose :
 
-=== "Windows"
-    1. Télécharger l'installeur officiel sur ollama.com.
-    2. Installer puis vérifier que la commande `ollama` fonctionne.
-    3. Lancer un premier modèle.
-
-=== "macOS / Linux"
-    1. Suivre l'installation officielle.
-    2. Lancer un modèle de test.
-
-### Commandes de base
-
-```powershell
-ollama run mistral
-ollama run qwen2.5-coder:7b
-ollama serve
+```bash
+ollama launch claude
 ```
 
-### Connexion avec d'autres outils
+Pour configurer sans lancer immédiatement :
 
-- **[Continue.dev](continue-dev.md)**: provider `ollama`, endpoint `http://localhost:11434`
-- **RTK**: filtrer logs/tests avant de les soumettre au modèle
-- Outils locaux scripts/CLI via API REST Ollama
+```bash
+ollama launch claude --config
+```
 
----
+Configuration manuelle :
 
-## Cas d'usage pertinents
+```bash
+export ANTHROPIC_AUTH_TOKEN=ollama
+export ANTHROPIC_BASE_URL=http://localhost:11434
+claude --model <modele-ollama>
+```
 
-- **Chat technique local**: comprendre un message d'erreur ou un bout de code
-- **Boilerplate**: générer des classes, DTO, scripts répétitifs
-- **Refactoring assisté**: proposer une version plus lisible d'une méthode
-- **Documentation interne**: produire une première version de sections Markdown
-
-Cas moins adaptés:
-
-- Raisonnement architecture très complexe
-- Requêtes nécessitant des connaissances fraîches en ligne sans source fournie
+Sur Windows, adaptez les variables d'environnement au shell utilisé.
 
 ---
 
-## Exploiter son plein potentiel
+## API locale
 
-1. **Choisir le bon modèle pour la tâche**
-   - Petit modèle pour vitesse
-   - Modèle code-spécialisé pour génération/refactoring
-2. **Standardiser en équipe**
-   - Définir 2 ou 3 modèles valides par cas d'usage
-3. **Maîtriser le contexte**
-   - Envoyer des extraits ciblés au lieu de fichiers entiers
-4. **Mesurer la valeur**
-   - Suivre le ratio "temps gagné / corrections manuelles"
-
-!!! warning "Point de vigilance"
-    La performance dépend fortement de la RAM/CPU/GPU et du modèle choisi. Toujours tester sur des prompts réels de l'équipe.
-
----
-
-## Exemples concrets
+Le serveur local Ollama expose notamment :
 
 ```text
-Prompt local:
-"Explique cette fonction TypeScript et propose une version plus testable
-sans changer la signature publique."
+http://localhost:11434/api
 ```
 
-```powershell
-# Extraire uniquement les erreurs de test avant analyse locale
-rtk npm test
+et des surfaces de compatibilité :
+
+```text
+OpenAI compatible :   http://localhost:11434/v1
+Anthropic compatible : http://localhost:11434
 ```
+
+La compatibilité Anthropic inclut actuellement `/v1/messages`, streaming, messages multi-tours et tool calling, avec certaines différences par rapport à l'API Anthropic complète.
 
 ---
 
-## Résumé
+## Différences à connaître
 
-Ollama est la brique locale la plus simple pour transformer un poste de
-développement en environnement IA hors cloud. Il devient encore plus utile
-quand il alimente Continue.dev ou un autre client IDE.
+La documentation Ollama signale notamment que certaines fonctions Anthropic ne sont pas prises en charge ou seulement partiellement :
+
+- endpoint `count_tokens` ;
+- prompt caching Anthropic ;
+- Batches API ;
+- citations ;
+- documents PDF via les content blocks Anthropic ;
+- certains détails de `tool_choice` ou metadata ;
+- extended thinking avec sémantique différente selon le modèle.
+
+Ne partez donc pas du principe qu'un workflow testé sur Claude Sonnet/Opus se comporte à l'identique sur un modèle local.
+
+---
+
+## Choisir un modèle
+
+Évitez de figer ici une liste « meilleure en 2026 ». La bibliothèque évolue rapidement.
+
+Pour un agent de code, testez au minimum :
+
+- qualité du tool calling ;
+- longueur de contexte réellement utilisable ;
+- respect des instructions ;
+- capacité à modifier plusieurs fichiers sans dérive ;
+- latence ;
+- mémoire GPU/RAM ;
+- réussite sur vos tests de dépôt.
+
+La documentation Ollama recommande elle-même plusieurs modèles orientés code, mais cette liste doit être vérifiée au moment du choix.
+
+---
+
+## Sécurité locale
+
+« Local » ne signifie pas automatiquement « sécurisé ».
+
+- Vérifiez où sont stockés les modèles et logs.
+- Ne bind pas le serveur sur `0.0.0.0` sans authentification/règles réseau appropriées.
+- Un modèle local peut toujours lire des secrets si Claude Code lui donne accès au fichier.
+- Les permissions Claude, hooks et MCP restent nécessaires pour contrôler les actions.
+
+---
+
+## Quand utiliser Ollama avec Claude Code
+
+| Situation | Intérêt |
+|---|---|
+| Code sensible devant rester sur le poste | Fort si le modèle et tout le pipeline restent locaux |
+| Tâches simples/répétitives | Bon candidat |
+| Machine GPU puissante | Permet des modèles plus capables |
+| Laptop limité | Préférer petit modèle ou backend distant |
+| Workflow agentique critique | Benchmark obligatoire avant adoption |
+
+---
+
+## Copilot et autres clients
+
+Ollama peut aussi alimenter d'autres clients compatibles OpenAI/Anthropic ou des plugins IDE. Ces usages restent possibles, mais le parcours principal de ce dépôt est désormais **Claude Code directement connecté à Ollama** lorsque l'objectif est local-first.
 
 ---
 
 ## Sources
 
-- Site officiel: [ollama.com](https://ollama.com/) (consulté le 2026-06-07)
-- Installation officielle: [Download Ollama](https://ollama.com/download) (consulté le 2026-06-07)
-- Bibliothèque de modèles: [Ollama Library](https://ollama.com/library) (consulté le 2026-06-07)
-- Dépôt officiel: [ollama/ollama](https://github.com/ollama/ollama) (consulté le 2026-06-07)
-
----
+- [Ollama — API](https://docs.ollama.com/api) — consulté le 2026-09-28
+- [Ollama — compatibilité Anthropic et Claude Code](https://docs.ollama.com/api/anthropic-compatibility) — consulté le 2026-09-28
+- [Ollama — dépôt officiel](https://github.com/ollama/ollama) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[LM Studio](lm-studio.md)** : utiliser une interface graphique locale pour télécharger, tester et servir des modèles sans passer par la CLI.
-
-Concepts clés couverts :
-
-- **Interface graphique** - démarrage rapide pour débuter
-- **Serveur local** - endpoint compatible outils IDE
-- **Comparaison locale** - tester plusieurs modèles facilement
-- **Workflow hybride** - combiner LM Studio avec Continue.dev
+**[LM Studio](lm-studio.md)** pour une alternative locale avec GUI, API v1, compatibilité Anthropic et intégration Claude Code documentée.
