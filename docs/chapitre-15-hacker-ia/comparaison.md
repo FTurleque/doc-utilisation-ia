@@ -1,96 +1,128 @@
-# Comparaison — Sécurité IA pour développeurs (IntelliJ vs VS Code)
+# Comparaison — sécurité IA dans VS Code et JetBrains
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Cette page compare les réflexes de sécurité à appliquer dans les deux IDE quand tu utilises des assistants IA de code et des agents capables de modifier ton projet.
+Le choix de l'IDE ne détermine pas à lui seul la sécurité d'un workflow agentique. Le risque dépend surtout des **permissions**, des extensions/plugins, des credentials disponibles, des MCP, des règles projet et des contrôles de validation.
+
+Cette page compare donc les surfaces à auditer plutôt que de désigner un IDE « plus sûr ».
 
 ---
 
-## Tableau comparatif
+## Surfaces communes
 
-| Critère | IntelliJ IDEA | Visual Studio Code |
+Dans les deux environnements, vérifiez :
+
+- plugins/extensions installés et leur provenance ;
+- accès terminal/shell de l'agent ;
+- credentials hérités du processus IDE ;
+- fichiers d'instructions du dépôt ;
+- serveurs MCP et leurs secrets ;
+- hooks, skills et autres customisations ;
+- permissions Git/GitHub/cloud ;
+- capacité à relire le diff et exécuter les validations.
+
+---
+
+## Claude Code — différences opérationnelles
+
+| Sujet | VS Code | JetBrains |
 |---|---|---|
-| Gouvernance des extensions | Marketplace JetBrains + politiques entreprise | Marketplace VS Code + politiques de workspace |
-| Contrôle des actions agentiques | Dépend des plugins et politiques du poste | Très flexible, nécessite cadrage explicite |
-| Durcissement du poste | Forte adoption en environnements entreprise | Très répandu, parfois plus hétérogène |
-| Risque principal observé | Confiance excessive dans les suggestions | Multiplication d'extensions et permissions |
-| Priorité sécurité | Revue de code et pipeline obligatoire | Permissions, isolation, confirmations et logs |
+| Intégration Claude | Extension/interface Claude Code | Plugin/intégration JetBrains Claude Code |
+| CLI standalone | Utile pour le terminal, pas nécessaire à toutes les fonctions du panneau | Requise par l'intégration JetBrains actuelle |
+| Refactorings déterministes | Dépendent davantage du langage/extensions | Refactorings et analyses natives riches selon l'IDE/langage |
+| Gestion extensions/plugins | Marketplace VS Code + policies éventuelles | Marketplace JetBrains + policies éventuelles |
+| Keybindings/config | Settings/Keyboard Shortcuts | Settings/Keymap |
+| Validation | tests, tâches, extensions, terminal | tests, inspections, debugger, build tools, terminal |
+
+Ces différences influencent le workflow, pas un niveau de sécurité intrinsèque.
 
 ---
 
-## Réglages défensifs recommandés
+## Contrôles recommandés dans les deux IDE
 
-=== "IntelliJ IDEA"
-    ### Baseline sécurité
+### Extensions/plugins
 
-    - Restreindre l'installation de plugins aux sources approuvées
-    - Activer les inspections de sécurité et la quality gate CI
-    - Exiger une revue humaine pour toute modification critique générée
+- limiter les composants aux besoins réels ;
+- vérifier l'éditeur et le statut de maintenance ;
+- contrôler les mises à jour dans les environnements sensibles ;
+- supprimer les outils legacy inutilisés.
 
-    !!! tip "Pratique équipe"
-        Formalise une checklist PR dédiée aux changements assistés par IA.
+### Credentials
 
-=== "Visual Studio Code"
-    ### Baseline sécurité
+- ne pas lancer l'IDE avec des credentials de production permanents ;
+- utiliser des identités dédiées/scopées ;
+- préférer des tokens temporaires ;
+- tester la révocation.
 
-    - Réduire le nombre d'extensions actives au strict nécessaire
-    - Contrôler les permissions des agents et outils terminal
-    - Activer les confirmations sur commandes à impact
+### Agent
 
-    !!! tip "Pratique équipe"
-        Standardise la configuration de sécurité via templates de workspace et politiques d'organisation.
-
----
-
-## Bonnes pratiques communes
-
-- Appliquer le principe du moindre privilège
-- Ne jamais exposer de secrets dans le contexte IA
-- Scanner dépendances et code généré avant fusion
-- Garder des journaux d'audit des actions automatisées
-- Simuler des scénarios d'ingénierie sociale tous les trimestres
+- moindre privilège ;
+- revue des commandes sensibles ;
+- contexte externe considéré comme non fiable ;
+- validation par tests/CI ;
+- audit des fichiers d'instructions et `.mcp.json`.
 
 ---
 
-## Quand choisir quoi
+## Outils déterministes avant agent
 
-| Contexte | Recommandation |
-|---|---|
-| Équipe fortement standardisée, gouvernance stricte | IntelliJ peut être plus simple à homogénéiser |
-| Équipe multi-outils, besoin d'agilité et d'automatisation | VS Code est puissant mais exige une politique de sécurité claire |
-| Projet critique (finance, santé, infra) | Le choix de l'IDE compte moins que la discipline de revue et de contrôle |
+Pour une opération mécanique, utilisez la capacité native de l'IDE lorsqu'elle offre une transformation vérifiable :
 
-!!! info "Décision pragmatique"
-    Le niveau de sécurité final dépend davantage des garde-fous organisationnels que de l'IDE lui-même.
+```text
+rename / find usages / extract / inspections / debugger / tests
+→ puis agent si analyse ou coordination complexe nécessaire
+```
+
+Ce principe est particulièrement visible dans les IDE JetBrains, mais VS Code dispose également de capacités de refactoring via ses language servers et extensions.
 
 ---
 
-## Exemples concrets de décision
+## Workspace/dépôt non fiable
 
-| Situation | Décision recommandée | Justification sécurité |
-|---|---|---|
-| Projet réglementé avec revue stricte | Standardiser un socle unique par équipe | Réduction des écarts de configuration |
-| Forte rotation de contributeurs | Templates de workspace et checklists obligatoires | Réduction du risque humain et des oublis |
-| Usage intensif d'agents IA | Permissions minimales + confirmations systématiques | Limiter l'impact des actions automatiques |
-| Dépendances sensibles (supply chain) | Bloquer merge sans SCA et validation humaine | Contrôle de provenance et de qualité |
+Lors de l'ouverture d'un dépôt externe :
+
+1. inspecter les fichiers d'instructions ;
+2. inspecter les configurations de tâches/scripts ;
+3. vérifier `.mcp.json` et les serveurs déclarés ;
+4. ne pas exécuter automatiquement les scripts d'installation ;
+5. éviter de rendre immédiatement accessibles des secrets ;
+6. utiliser les mécanismes de confiance/sandbox disponibles dans l'environnement.
+
+Le risque vient du dépôt **et** de ce que l'agent peut faire avec son contenu.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Copilot existe dans VS Code et JetBrains avec des capacités et paramètres qui évoluent. Les pages Copilot dédiées de ce dépôt restent la référence pour ses instructions, agents, prompt files et options IDE.
+
+Ne transposez pas automatiquement une permission ou configuration Claude vers Copilot : vérifiez le mécanisme du client réellement utilisé.
+
+---
+
+## Décider sans classement arbitraire
+
+Choisissez l'IDE selon :
+
+- langage et qualité des outils natifs ;
+- standard d'équipe ;
+- capacité de gouvernance des plugins/extensions ;
+- intégrations de sécurité ;
+- besoin de refactoring/navigation ;
+- capacité à reproduire les validations en CI.
+
+Pour un projet critique, le contrôle des identités, secrets, permissions et pipelines importe davantage qu'un classement général VS Code vs IntelliJ.
 
 ---
 
 ## Sources
 
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20)
-- [MITRE ATLAS](https://atlas.mitre.org/) (consulté le 2026-06-20)
-- [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20)
-- [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20)
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code)
+- [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains)
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [MITRE ATLAS](https://atlas.mitre.org/)
 
-!!! tip "Lecture rapide"
-    Utilise OWASP pour les risques applicatifs, NIST pour la gouvernance, MITRE ATLAS pour la modélisation de menace et CISA/ANSSI pour les pratiques opérationnelles.
+## Suite
 
----
-
-## Chapitres suivants
-
-**[Appendices](../appendices/index.md)** : FAQ, raccourcis, et modèles prêts à l'emploi pour industrialiser tes pratiques.
-
-**[Veille IA](../chapitre-14-veille-ia/index.md)** : reste à jour sur les évolutions sécurité, risques et vulnérabilités.
+**[Appendices](../appendices/index.md)** : références rapides et templates Claude-first.
