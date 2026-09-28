@@ -1,333 +1,257 @@
-﻿# Procédures de Réparation
+# Procédures de réparation — Claude Code
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Cette page est destinée aux cas **où les solutions des [Problèmes Courants](problemes-courants.md) n'ont pas suffi**. Elle propose des procédures graduées, de la plus simple (niveau 1) à la plus complète (niveau entreprise).
+Cette page s'utilise après [Problèmes courants](problemes-courants.md) et [Logs & diagnostic](logs-diagnostic.md). Les procédures sont classées de la moins invasive à la plus invasive.
 
----
-
-## Quand utiliser ces procédures ?
-
-| Symptôme persistant | Procédure recommandée |
-|--------------------|-----------------------|
-| Re-login ne résout pas l'auth | [Procédure 1 — Reset complet](#procedure-1-reset-complet-copilot) |
-| Bug étrange après une mise à jour | [Procédure 2 — Nettoyage du cache](#procedure-2-nettoyage-du-cache) |
-| Problème grave non résolu par le cache | [Procédure 3 — Réinstallation complète](#procedure-3-reinstallation-complete) |
-| Erreurs SSL / proxy en entreprise | [Procédure 4 — Configuration proxy/SSL](#procedure-4-configuration-proxy-ssl) |
-| Conflit avec d'autres extensions | [Procédure 5 — Résolution de conflits](#procedure-5-resolution-de-conflits-d-extensions) |
+!!! warning "Ne commencez pas par supprimer des fichiers"
+    `~/.claude.json`, `~/.claude/settings.json` et les données sous `~/.claude/` peuvent contenir authentification, préférences, plugins, transcriptions et historique. Isolez d'abord la cause.
 
 ---
 
-## Procédure 1 — Reset complet Copilot {#procedure-1-reset-complet-copilot}
+## Niveau 1 — Diagnostic et correction intégrés
 
-**Durée estimée : 2 minutes**
+Dans Claude Code :
 
-La première étape avant toute action plus invasive est de forcer un cycle complet de déconnexion et reconnexion.
+```text
+/doctor
+/status
+/mcp
+```
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    1. ++ctrl+shift+p++ → **"GitHub Copilot: Sign Out"**
-    2. ++ctrl+shift+p++ → **"Developer: Reload Window"**
-    3. Attendez que l'extension se réinitialise (icône Copilot dans la barre de statut)
-    4. ++ctrl+shift+p++ → **"GitHub Copilot: Sign In"**
-    5. Complétez le flux OAuth dans le navigateur
-    6. Testez en ouvrant un fichier de code et en tapant quelques caractères
+Si `/doctor` propose une correction, lisez-la avant validation.
 
-=== ":simple-intellijidea: IntelliJ"
-    1. **Tools → GitHub Copilot → Log Out**
-    2. **File → Invalidate Caches** → cochez toutes les cases → **"Invalidate and Restart"**
-    3. Après le redémarrage : **Tools → GitHub Copilot → Login to GitHub**
-    4. Complétez l'authentification dans le navigateur
-    5. Testez en ouvrant un fichier de code
+Hors session :
 
-!!! tip "Check rapide"
-    Après reconnexion, vérifiez que l'icône Copilot dans la barre de statut est verte/active et non barrée.
+```bash
+claude --version
+claude doctor
+```
+
+Cette étape suffit pour de nombreux problèmes d'installation ou de configuration.
 
 ---
 
-## Procédure 2 — Nettoyage du cache {#procedure-2-nettoyage-du-cache}
+## Niveau 2 — Isoler les customisations
 
-**Durée estimée : 5 minutes**
+Lancez :
 
-Quand une mise à jour de l'extension laisse des données corrompues ou des paramètres obsolètes en cache.
+```bash
+claude --safe-mode
+```
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    **Étape 1 — Fermer VS Code complètement**
-    
-    Assurez-vous que tous les processus VS Code sont arrêtés.
-    
-    **Étape 2 — Supprimer le cache de l'extension**
-    
-    === "Windows"
-        ```powershell
-        # Supprimer le cache des extensions Copilot
-        Remove-Item -Recurse -Force "$env:APPDATA\Code\User\globalStorage\github.copilot" -ErrorAction SilentlyContinue
-        Remove-Item -Recurse -Force "$env:APPDATA\Code\User\globalStorage\github.copilot-chat" -ErrorAction SilentlyContinue
-        
-        # Supprimer les logs de l'extension
-        Remove-Item -Recurse -Force "$env:APPDATA\Code\logs" -ErrorAction SilentlyContinue
-        ```
-    
-    === "macOS"
-        ```bash
-        rm -rf ~/Library/Application\ Support/Code/User/globalStorage/github.copilot
-        rm -rf ~/Library/Application\ Support/Code/User/globalStorage/github.copilot-chat
-        ```
-    
-    === "Linux"
-        ```bash
-        rm -rf ~/.config/Code/User/globalStorage/github.copilot
-        rm -rf ~/.config/Code/User/globalStorage/github.copilot-chat
-        ```
-    
-    **Étape 3 — Rouvrir VS Code et se reconnecter**
-    
-    Au premier démarrage, VS Code restaurera les fichiers nécessaires. Reconnectez-vous à GitHub Copilot.
+Si le problème disparaît, réactivez progressivement :
 
-=== ":simple-intellijidea: IntelliJ"
-    IntelliJ offre une commande intégrée pour invalider tous les caches :
-    
-    1. **File → Invalidate Caches…**
-    2. Cochez toutes les options :
-        - Clear file system cache and local history
-        - Clear VCS log caches and indexes
-        - Clear downloaded shared indexes
-    3. Cliquez **"Invalidate and Restart"**
-    4. Après le redémarrage, reconnectez-vous à Copilot
-    
-    !!! tip "Cache spécifique au plugin Copilot"
-        Si le problème persiste après l'invalidation des caches, supprimez manuellement le dossier de configuration du plugin :
-        
-        === "Windows"
-            ```
-            %APPDATA%\JetBrains\<IDE><version>\plugins\github-copilot\
-            ```
-        
-        === "macOS"
-            ```
-            ~/Library/Application Support/JetBrains/<IDE><version>/plugins/github-copilot/
-            ```
+1. settings projet ;
+2. hooks ;
+3. skills/agents ;
+4. plugins ;
+5. MCP.
+
+L'objectif est d'identifier **la première couche qui reproduit le problème**.
 
 ---
 
-## Procédure 3 — Réinstallation complète {#procedure-3-reinstallation-complete}
+## Niveau 3 — Réduire à une configuration minimale
 
-**Durée estimée : 10-15 minutes**
+Conservez temporairement uniquement les éléments indispensables :
 
-À utiliser quand le cache nettoyé n'a pas suffi et que le comportement reste incorrect après une mise à jour ou une corruption.
+```text
+CLAUDE.md                # court
+.claude/settings.json    # permissions/settings nécessaires
+```
 
-=== ":material-microsoft-visual-studio-code: VS Code"
+Déplacez provisoirement les customisations non nécessaires hors du projet ou désactivez-les proprement, plutôt que de les supprimer définitivement.
 
-    **Étape 1 — Désinstaller les extensions Copilot**
-    
-    ```powershell
-    # Depuis le terminal (ou PowerShell)
-    code --uninstall-extension GitHub.copilot
-    code --uninstall-extension GitHub.copilot-chat
-    ```
-    
-    **Étape 2 — Supprimer les données persistantes** (voir [Procédure 2](#procedure-2-nettoyage-du-cache) pour les chemins)
-    
-    **Étape 3 — Réinstaller les extensions**
-    
-    ```powershell
-    code --install-extension GitHub.copilot
-    code --install-extension GitHub.copilot-chat
-    ```
-    
-    Ou depuis l'interface : ++ctrl+shift+x++ → chercher "GitHub Copilot" → Install.
-    
-    **Étape 4 — Configuration minimale pour tester**
-    
-    ```json
-    // .vscode/settings.json — configuration de test minimale
-    {
-        "github.copilot.enable": {
-            "*": true
-        },
-        "editor.inlineSuggest.enabled": true
-    }
-    ```
-    
-    **Étape 5 — Valider le fonctionnement**
-    
-    Ouvrez un fichier TypeScript ou JavaScript et tapez `function ` — une suggestion doit apparaître.
+Testez ensuite :
 
-=== ":simple-intellijidea: IntelliJ"
+```bash
+claude
+```
 
-    **Étape 1 — Désinstaller le plugin**
-    
-    **Settings → Plugins** → Trouver "GitHub Copilot" → Clic droit → **"Uninstall"** → Redémarrer IntelliJ.
-    
-    **Étape 2 — Supprimer les données du plugin**
-    
-    Après désinstallation, supprimez les dossiers persistants :
-    
-    === "Windows"
-        ```powershell
-        Remove-Item -Recurse -Force "$env:APPDATA\JetBrains\IntelliJIdea*\plugins\github-copilot" -ErrorAction SilentlyContinue
-        Remove-Item -Recurse -Force "$env:APPDATA\JetBrains\IntelliJIdea*\options\github.copilot*" -ErrorAction SilentlyContinue
-        ```
-    
-    === "macOS"
-        ```bash
-        rm -rf ~/Library/Application\ Support/JetBrains/IntelliJIdea*/plugins/github-copilot
-        ```
-    
-    **Étape 3 — Réinstaller le plugin**
-    
-    **Settings → Plugins → Marketplace** → chercher "GitHub Copilot" → Install → Redémarrer IntelliJ.
-    
-    **Étape 4 — Réauthentification**
-    
-    **Tools → GitHub Copilot → Login to GitHub** et compléter le flux OAuth.
+Si la configuration minimale fonctionne, réintroduisez les fichiers un par un.
 
 ---
 
-## Procédure 4 — Configuration proxy/SSL {#procedure-4-configuration-proxy-ssl}
+## Niveau 4 — Réauthentification
 
-**Durée estimée : 15-30 minutes selon l'environnement réseau**
+Dans Claude Code :
 
-Cette procédure concerne les environnements d'entreprise avec proxy interceptant le trafic HTTPS.
+```text
+/status
+/login
+```
+
+Avant de conclure à un problème d'abonnement, vérifiez également :
+
+```bash
+# Linux/macOS
+printenv ANTHROPIC_API_KEY
+
+# PowerShell
+Get-ChildItem Env:ANTHROPIC_API_KEY
+```
+
+Une API key présente peut faire utiliser la facturation API au lieu de l'allocation de votre abonnement Claude.
+
+Ne copiez jamais la valeur de la clé dans un ticket ou une capture.
+
+---
+
+## Niveau 5 — Réseau, proxy et TLS
 
 ### Symptômes typiques
 
-- Erreur `SSL handshake failure` dans les logs IntelliJ
-- Erreur `self-signed certificate` dans les logs VS Code
-- `curl https://api.github.com` retourne une erreur de certificat mais pas un timeout
+- timeout ;
+- handshake TLS ;
+- connexion qui fonctionne sur un réseau mais pas sur un autre ;
+- erreur uniquement derrière VPN/proxy d'entreprise.
 
-=== ":material-microsoft-visual-studio-code: VS Code"
+Procédure :
 
-    **Configuration du proxy**
-    
-    ```json
-    // settings.json (utilisateur ou workspace)
-    {
-        "http.proxy": "http://proxy.company.com:8080",
-        "http.proxyStrictSSL": false,
-        "github.copilot.advanced": {
-            "debug.useNodeFetcher": true
-        }
-    }
-    ```
-    
-    !!! warning "http.proxyStrictSSL: false"
-        Désactiver la vérification SSL est une solution temporaire acceptable sur un réseau d'entreprise contrôlé. Ne l'utilisez pas sur des réseaux publics ou personnels.
-    
-    **Proxy avec authentification**
-    
-    ```json
-    {
-        "http.proxy": "http://user:password@proxy.company.com:8080"
-    }
-    ```
-    
-    !!! danger "Mot de passe dans settings.json"
-        Si `settings.json` est partagé via Settings Sync ou dans git, n'y stockez jamais un mot de passe en clair. Préférez la variable d'environnement `HTTPS_PROXY` dans votre profil shell.
+1. consultez [status.anthropic.com](https://status.anthropic.com/) ;
+2. vérifiez la configuration proxy officielle de votre environnement ;
+3. vérifiez les certificats racine de l'entreprise ;
+4. comparez le terminal et l'IDE ;
+5. demandez à l'équipe réseau les domaines/flux autorisés si nécessaire.
 
-=== ":simple-intellijidea: IntelliJ"
-
-    **Étape 1 — Configurer le proxy dans l'IDE**
-    
-    **Settings → Appearance & Behavior → System Settings → HTTP Proxy**
-    
-    - Sélectionner "Manual proxy configuration"
-    - Renseigner Host, Port, et les credentials si requis
-    - Cliquer "Check connection" avec `https://api.github.com`
-    
-    **Étape 2 — Importer le certificat SSL de l'entreprise (si nécessaire)**
-    
-    Si votre proxy inspecte le trafic HTTPS ("man-in-the-middle"), il signe les connexions avec son propre certificat. IntelliJ utilisant la JVM, le certificat doit être importé dans le keystore JVM.
-    
-    ```powershell
-    # Windows — récupérer le chemin du JDK utilisé par IntelliJ
-    # Help → About → Runtime (ou via File → Project Structure)
-    
-    # Importer le certificat (certificat en format .cer ou .pem)
-    $javaHome = "C:\Program Files\JetBrains\IntelliJIdea\jbr"
-    $certFile = "C:\certs\company-proxy-cert.cer"
-    $alias = "company-proxy"
-    
-    & "$javaHome\bin\keytool.exe" -import -alias $alias `
-        -keystore "$javaHome\lib\security\cacerts" `
-        -file $certFile -storepass changeit -noprompt
-    ```
-    
-    Redémarrez IntelliJ après l'import.
-    
-    !!! tip "Obtenir le certificat de votre proxy"
-        Demandez ce certificat à votre équipe sécurité/réseau. Il peut être exporté depuis un navigateur (cadenas → Certificat → Exporter) sur un domaine interne.
+!!! danger "Ne désactivez pas la validation TLS comme correctif permanent"
+    Importez correctement le certificat de l'entreprise ou configurez le proxy selon la politique de sécurité. Une option équivalente à « ignorer SSL » masque le problème et affaiblit la sécurité.
 
 ---
 
-## Procédure 5 — Résolution de conflits d'extensions {#procedure-5-resolution-de-conflits-d-extensions}
+## Niveau 6 — MCP
 
-**Durée estimée : 10-20 minutes**
+Si le problème concerne uniquement un serveur externe :
 
-Quand Copilot ne fonctionne pas correctement et qu'une autre extension semble interférer.
+```text
+/mcp
+```
 
-### Identifier le conflit — Approche bisect (VS Code)
+Puis :
 
-Cette méthode est systématique et garantit d'identifier la bonne extension sans tâtonnement.
+- désactivez les autres MCP ;
+- vérifiez la commande/URL du serveur ;
+- vérifiez ses variables d'environnement ;
+- vérifiez le scope de `.mcp.json` ;
+- exécutez le serveur indépendamment de Claude si sa documentation le permet ;
+- contrôlez les logs du serveur lui-même.
 
-1. **Ouvrir le panneau Extensions** (++ctrl+shift+x++)
-2. **Désactiver la moitié de vos extensions** (sauf Copilot)
-3. Tester si le problème persiste
-4. Si le problème disparaît → le conflit est dans la moitié désactivée
-5. Réactiver la moitié désactivée, désactiver l'autre moitié → tester
-6. Diviser par deux jusqu'à isoler l'extension problématique
+Ne réinstallez pas Claude Code pour une erreur propre à un serveur MCP.
 
-**Extensions connues pour créer des conflits avec Copilot :**
+---
 
-| Extension | Type de conflit | Résolution |
-|-----------|----------------|------------|
-| Tabnine | Suggestions inline en double | Désactiver l'un des deux |
-| Kite | Autocomplétion concurrente | Désactiver Kite |
-| IntelliCode | Priorité de suggestions | Régler la priorité dans les paramètres |
-| vim (vscodevim) | Raccourcis ++tab++ interceptés | Configurer Copilot dans le mode Normal |
-| Extensions LSP personnalisées | Conflits avec le Language Server | Désactiver l'extension LSP tierce |
+## Niveau 7 — VS Code
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    
-    **Mode sans extensions (test rapide)**
-    
-    ```powershell
-    # Lancer VS Code sans aucune extension pour tester
-    code --disable-extensions
-    ```
-    
-    Si Copilot fonctionne en mode sans extensions, le problème vient d'une extension tierce.
-    
-    **Désactiver une extension problématique identifiée**
-    
-    Dans le panneau Extensions → clic droit sur l'extension → **"Disable"** (workspace uniquement pour tester sans impact global).
+Si la CLI fonctionne mais pas le panneau VS Code :
 
-=== ":simple-intellijidea: IntelliJ"
-    
-    **Test sans plugins tiers**
-    
-    **Settings → Plugins** : désactivez tous les plugins tiers (conservez uniquement les plugins JetBrains + GitHub Copilot). Redémarrez et testez.
-    
-    **Identifier via les logs**
-    
-    Dans `idea.log`, cherchez des traces d'incompatibilité :
-    ```bash
-    # Windows PowerShell
-    Select-String -Path idea.log -Pattern "PluginException|incompatible|conflict"
-    ```
-    
-    Les erreurs mentionnant un nom de plugin tiers indiquent généralement le coupable.
+1. mettez à jour VS Code ;
+2. mettez à jour l'extension Claude ;
+3. rechargez la fenêtre ;
+4. vérifiez le compte utilisé ;
+5. comparez avec un workspace minimal ;
+6. désactivez temporairement les extensions pouvant intervenir dans le même workflow.
 
-!!! info "Réactiver les extensions"
-    Une fois le conflit résolu (extension désactivée ou mise à jour), réactivez le reste de vos extensions une par une pour confirmer qu'aucune autre ne crée de problème.
+Si `claude` ne fonctionne que dans un terminal externe, comparez PATH et variables d'environnement avec le terminal intégré VS Code.
+
+---
+
+## Niveau 8 — JetBrains
+
+Si `claude --version` fonctionne mais que le plugin JetBrains échoue :
+
+1. mettez à jour l'IDE et le plugin ;
+2. redémarrez l'IDE ;
+3. vérifiez le PATH visible par JetBrains ;
+4. vérifiez proxy/TLS ;
+5. testez depuis le terminal intégré ;
+6. réduisez temporairement les plugins tiers pour isoler un conflit.
+
+Ne lancez pas systématiquement « Invalidate Caches » : ce mécanisme JetBrains traite principalement les index IDE et n'est pas une réparation générique de Claude Code.
+
+---
+
+## Niveau 9 — Mise à jour ou réinstallation Claude Code
+
+Si l'installation elle-même est endommagée, suivez la méthode d'installation officielle correspondant à votre système.
+
+Avant réinstallation :
+
+- notez `claude --version` ;
+- sauvegardez uniquement les configurations dont vous avez besoin ;
+- ne publiez pas les credentials ;
+- identifiez votre méthode d'installation actuelle pour éviter deux installations concurrentes.
+
+Après réinstallation :
+
+```bash
+claude --version
+claude doctor
+```
+
+Puis testez d'abord sans customisations complexes.
+
+---
+
+## Niveau 10 — Purger uniquement l'état projet si nécessaire
+
+Claude Code propose une commande ciblée pour supprimer l'état qu'il maintient pour un projet :
+
+```bash
+claude project purge
+```
+
+Cette opération peut supprimer des transcriptions et de la mémoire automatique liées au projet. Elle n'est pas nécessaire pour un simple problème réseau ou d'authentification.
+
+!!! warning "Conséquence"
+    Vous pouvez perdre la capacité de reprendre certaines anciennes sessions ou d'utiliser leur mémoire. Utilisez cette procédure uniquement lorsqu'un état projet corrompu est raisonnablement suspecté.
+
+---
+
+## Niveau 11 — Diagnostic mémoire avancé
+
+Pour un problème de mémoire réellement reproductible :
+
+```text
+/heapdump
+```
+
+Traitez le fichier produit comme **hautement sensible**. Il peut contenir conversation et credentials. Ne le joignez pas à une issue publique.
+
+---
+
+## Ordre recommandé
+
+```text
+/doctor
+  ↓
+--safe-mode
+  ↓
+configuration minimale
+  ↓
+auth / réseau / MCP selon le symptôme
+  ↓
+intégration IDE
+  ↓
+mise à jour / réinstallation
+  ↓
+purge état projet ou heap dump uniquement en dernier recours
+```
+
+---
+
+## GitHub Copilot — référence conservée
+
+Les anciennes procédures de reset des extensions GitHub Copilot, caches `github.copilot`, login GitHub et logs Copilot appartiennent à un autre produit. Si vous utilisez encore Copilot, suivez sa documentation de troubleshooting ; n'appliquez pas ces suppressions de cache à Claude Code.
 
 ---
 
 ## Sources
 
-- [Troubleshooting GitHub Copilot](https://docs.github.com/en/copilot/troubleshooting-github-copilot) - consulté le 2026-06-20
+- [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
+- [Claude Code — Setup](https://code.claude.com/docs/en/setup) — consulté le 2026-09-28
+- [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 
-## Chapitres suivants
+## Chapitre suivant
 
-**[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : comprendre les modes d'abonnement, les AI Credits et les leviers pour maîtriser vos dépenses GitHub Copilot.
-
-**[Outils & Économies](../chapitre-13-outils-economies/index.md)** : découvrir les outils complémentaires à Copilot pour déléguer les tâches légères, maîtriser votre consommation d'AI Credits et optimiser vos coûts.
+**[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : maîtriser l'usage Claude après avoir stabilisé l'environnement.
