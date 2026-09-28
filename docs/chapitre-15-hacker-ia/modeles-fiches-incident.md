@@ -2,184 +2,155 @@
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Cette page fournit des modèles prêts à l'emploi pour documenter un incident lié à l'IA, structurer l'enquête et piloter les actions correctives.
+Ces modèles servent à documenter un incident impliquant un agent IA, un MCP, une fuite de données, une fraude assistée par IA ou un composant GenAI. Privilégiez les **faits horodatés, sources de preuve et décisions** plutôt qu'un récit reconstruit après coup.
 
 ---
 
-## Comment utiliser ces modèles
-
-- Copie le modèle dans ton outil de ticketing ou ton wiki interne
-- Remplis les champs obligatoires pendant la crise, pas après
-- Évite les récits vagues: privilégie faits, horodatages et décisions
-
-!!! tip "Bon réflexe"
-    Un modèle simple utilisé systématiquement vaut mieux qu'un modèle parfait utilisé une fois sur dix.
-
----
-
-## Modèle 1 - Fiche d'incident (version courte)
+## Fiche incident courte
 
 ```markdown
-# Incident IA - Fiche courte
+# Incident IA
 
 ## Métadonnées
 - Incident ID:
-- Date/Heure détection:
-- Détecté par:
-- Gravité initiale: (Critique / Haute / Moyenne / Basse)
-- Statut: (Ouvert / Confiné / En remédiation / Clos)
+- Détection:
+- Owner:
+- Statut:
+- Sévérité selon la politique interne:
 
-## Résumé
-- Type d'incident: (phishing IA, deepfake, prompt poisoning, fuite données, autre)
-- Systèmes impactés:
-- Données potentiellement impactées:
+## Faits observés
+- Signal initial:
+- Systèmes/comptes concernés:
+- Données potentiellement concernées:
+- Sources de preuve:
 
-## Actions immédiates (T+0 à T+60)
-- [ ] Confinement initié
-- [ ] Tokens/sessions révoqués
-- [ ] IOC/IOA bloqués
-- [ ] Communication interne envoyée
+## Composants IA
+- Agent/client:
+- Modèle/backend si pertinent:
+- MCP actifs:
+- Plugins/skills/hooks:
+- Credentials accessibles:
 
-## Décisions clés
-- Décision 1:
-- Décision 2:
+## Confinement
+- Accès révoqués:
+- Agent/MCP désactivé:
+- Systèmes isolés:
+- Déploiements/écritures suspendus:
 
-## Prochaines actions (24h)
-- Action A - Owner - Échéance
-- Action B - Owner - Échéance
+## Prochaines actions
+| Action | Owner | Échéance | Preuve attendue |
+|---|---|---|---|
 ```
 
 ---
 
-## Modèle 2 - Fiche d'incident (version complète)
+## Fiche d'investigation complète
 
 ```markdown
-# Incident IA - Fiche complète
+# Investigation incident IA
 
-## 1. Contexte
-- ID incident:
-- Date/Heure ouverture:
-- Équipe coordinatrice:
-- Niveau de sévérité:
-- Canal de détection initial:
+## 1. Périmètre
+- Identités:
+- Endpoints/runners:
+- Dépôts/branches/commits:
+- CI/CD:
+- Services cloud:
+- Données:
 
-## 2. Chronologie horodatée
-- HH:MM - Événement observé
-- HH:MM - Action prise
-- HH:MM - Décision management
+## 2. Chronologie
+| Heure | Fait observé | Source | Action prise |
+|---|---|---|---|
 
-## 3. Périmètre impact
-- Identités impactées:
-- Endpoints impactés:
-- Dépôts/CI impactés:
-- Applications métiers impactées:
-- Impact client/externe:
+## 3. Chaîne agentique
+- Source du contexte:
+- Instructions chargées:
+- Outils appelés:
+- Commandes exécutées:
+- Fichiers lus/écrits:
+- Destinations réseau:
+- Credentials utilisés:
 
-## 4. Analyse technique
-- Hypothèse d'attaque:
-- Indicateurs collectés (IOC/IOA):
-- Corrélations validées:
-- Cause racine probable:
+## 4. Hypothèses
+| Hypothèse | Éléments pour | Éléments contre | Statut |
+|---|---|---|---|
 
-## 5. Confinement et remédiation
-- Mesures de confinement:
-- Correctifs appliqués:
+## 5. Confinement/remédiation
+- Tokens rotatés:
+- Permissions réduites:
+- Composants retirés/mis à jour:
 - Contrôles ajoutés:
 
-## 6. Conformité et communication
-- Données personnelles impliquées (oui/non):
-- Obligations de notification:
-- Message interne:
-- Message externe:
+## 6. Données & conformité
+- Données personnelles/sensibles:
+- Fournisseurs impliqués:
+- Obligations à évaluer:
+- Décisions juridique/privacy:
 
 ## 7. Clôture
-- Critères de clôture atteints:
-- Date de clôture:
+- Critères de clôture:
 - Risques résiduels:
+- Preuves de validation:
 ```
 
 ---
 
-## Modèle 3 - Post-mortem sans blâme
+## Post-mortem sans blâme
 
 ```markdown
-# Post-mortem Incident IA
+# Post-mortem incident IA
 
-## Résumé exécutif
+## Résumé
 - Ce qui s'est passé:
-- Impact métier:
-- Durée:
+- Impact:
+- Durée / période:
 
-## Ce qui a bien fonctionné
-- Point fort 1
-- Point fort 2
+## Chronologie confirmée
+...
 
-## Ce qui a échoué
-- Lacune 1
-- Lacune 2
-
-## Causes racines
+## Cause racine et facteurs contributifs
 - Technique:
 - Processus:
-- Humain:
 - Gouvernance:
+- Fournisseur/outil:
 
-## Plan d'actions 30/60/90 jours
-- 30 jours:
-- 60 jours:
-- 90 jours:
+## Contrôles
+### Ont fonctionné
+- ...
 
-## KPI de suivi
-- MTTD:
-- MTTC:
-- Taux conformité revue humaine:
+### Ont échoué ou manqué
+- ...
 
-## Validation
-- Sponsor direction:
-- RSSI:
-- Date revue:
+## Actions
+| Action | Owner | Échéance | Preuve de clôture |
+|---|---|---|---|
+
+## Risque résiduel
+- ...
 ```
 
----
-
-## Exemple rempli (synthétique)
-
-| Champ | Exemple |
-|---|---|
-| Type incident | Phishing personnalisé assisté IA |
-| Point d'entrée | Email ciblé finance |
-| Impact | Tentative de virement bloquée |
-| Confinement | Révocation session + blocage domaine |
-| Leçon clé | Validation hors bande non contournable |
+Évitez de forcer un plan « 30/60/90 » si l'action critique doit être traitée immédiatement ou si une action structurelle nécessite davantage de temps.
 
 ---
 
-## Erreurs courantes à éviter
+## Erreurs à éviter
 
-- Écrire un récit subjectif sans preuves horodatées
-- Oublier d'attribuer des owners et des échéances
-- Clore l'incident sans mesurer les risques résiduels
-- Négliger la coordination juridique/comms
+- recopier la réponse du modèle comme preuve ;
+- supprimer les logs avant capture ;
+- conclure à une exfiltration sans preuve réseau/forensique ;
+- conclure à l'absence d'exfiltration uniquement parce que l'agent ne la mentionne pas ;
+- fermer l'incident sans owner ni preuve de remédiation ;
+- stocker de nouveaux secrets dans le ticket d'incident.
 
 ---
 
 ## Sources
 
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) (consulté le 2026-06-20)
-- [CISA AI](https://www.cisa.gov/ai) (consulté le 2026-06-20)
-- [ANSSI](https://www.ssi.gouv.fr/) (consulté le 2026-06-20)
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) (consulté le 2026-06-20)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) (consulté le 2026-06-20)
-
----
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [MITRE ATLAS](https://atlas.mitre.org/)
+- [CISA AI](https://www.cisa.gov/ai)
+- [ANSSI](https://cyber.gouv.fr/)
 
 ## Prochaine étape
 
-Consulte le **[Plan 90 jours — Passer à l'action](plan-90-jours.md)** pour transformer ces fiches en programme complet de remédiation avec quick wins, jalons et responsables par rôle.
-
-Concepts clés couverts :
-
-- **Documentation incident** — traçabilité claire et actionnable
-- **Post-mortem structuré** — amélioration continue sans blâme
-- **Responsabilités explicites** — owners et échéances non ambiguës
-- **Capitalisation équipe** — transformer chaque incident en progrès
+Utilisez le [plan 90 jours](plan-90-jours.md) comme feuille de route adaptable, puis réévaluez les contrôles à partir des preuves collectées.
