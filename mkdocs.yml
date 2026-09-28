@@ -82,6 +82,7 @@ nav:
   - Claude Code:
     - Introduction: chapitre-3b-claude-code-migration-copilot/index.md
     - "Installation (CLI, VS Code, JetBrains)": chapitre-3b-claude-code-migration-copilot/installation.md
+    - "Claude Desktop": chapitre-3b-claude-code-migration-copilot/claude-desktop.md
     - "Architecture .claude/": chapitre-3b-claude-code-migration-copilot/architecture-claude.md
     - "Choisir le bon modèle": chapitre-3b-claude-code-migration-copilot/modeles-claude.md
     - "Prompt Engineering avec Claude": chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md
