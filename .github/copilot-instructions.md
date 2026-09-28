@@ -1,119 +1,118 @@
-# Documentation IA — Instructions Workspace
+# Documentation IA — instructions GitHub Copilot
 
 ## Contexte du projet
 
-Ce projet est une **documentation technique en français** sur GitHub Copilot, construite avec **MkDocs Material**. Elle couvre la configuration et l'utilisation de Copilot pour deux IDEs : IntelliJ IDEA et Visual Studio Code.
+Ce dépôt publie une documentation technique MkDocs Material en français. **Claude Code est le parcours principal**. GitHub Copilot reste volontairement documenté comme référence, compatibilité, comparaison et option future.
 
-**Audience cible** : développeurs francophones, tous niveaux (débutant → expert).
+Ces instructions s'appliquent lorsque le dépôt est édité avec GitHub Copilot. Elles ne signifient pas que Copilot est le produit principal documenté.
 
-## Structure du projet
+Avant toute modification importante, lire aussi `AGENTS.md` et `CLAUDE.md` afin de respecter les règles communes du dépôt.
 
-```
+## Priorités éditoriales
+
+1. Dans une page générique, présenter Claude Code en premier lorsque le sujet concerne les assistants/agents de développement.
+2. Ne jamais supprimer un contenu Copilot uniquement parce qu'il n'est plus prioritaire.
+3. Identifier clairement ce qui est : **Claude-only**, **Copilot-only** ou **commun**.
+4. Ne pas présenter un format Copilot (`.github/prompts`, `.github/agents`, `applyTo`, hooks Copilot) comme un standard universel.
+5. Pour les faits évolutifs, vérifier une source officielle récente avant d'écrire : modèles, prix, quotas, compatibilité IDE, previews, settings, MCP, skills, agents, hooks et sécurité.
+
+## Structure actuelle du dépôt
+
+```text
+CLAUDE.md                         instructions Claude Code
+AGENTS.md                         règles communes pour les agents
+.claude/                          configuration native Claude Code (si présente)
+.github/
+├── copilot-instructions.md       ce fichier
+├── instructions/                 custom instructions Copilot
+├── prompts/                      prompt files Copilot
+├── agents/                       custom agents Copilot
+├── skills/                       skills Copilot
+├── hooks/                        hooks Copilot
+└── workflows/                    CI/CD GitHub
+
 docs/
-├── index.md                          ← Page d'accueil
-├── chapitre-1-installation/          ← Installation par IDE
-├── chapitre-2-parametrage/           ← Paramètres Copilot
-├── chapitre-3-contexte/              ← Personnalisation et contexte
-├── chapitre-4-bonnes-pratiques/      ← Best practices
-├── chapitre-5-troubleshooting/       ← Résolution de problèmes
-├── chapitre-6-cas-usage/             ← Use cases (Java, Python, Node.js)
-├── appendices/                       ← FAQ, raccourcis, ressources
-├── assets/images/                    ← Captures d'écran (intellij/ et vscode/)
-└── stylesheets/extra.css             ← Styles personnalisés
-mkdocs.yml                            ← Configuration (nav, thème, extensions)
+├── index.md
+├── chapitre-1-installation/      GitHub Copilot — référence
+├── chapitre-2-parametrage/       GitHub Copilot — référence
+├── chapitre-3-cli-modes/         modes Copilot — référence
+├── chapitre-3b-claude-code-migration-copilot/
+├── chapitre-4-contexte/
+├── chapitre-5-prompt-engineering/
+├── chapitre-6-machine-learning/
+├── chapitre-7-rag/
+├── chapitre-8-deep-learning/
+├── chapitre-9-bonnes-pratiques/
+├── chapitre-10-cas-usage/
+├── chapitre-11-troubleshooting/
+├── chapitre-12-couts-gouvernance/
+├── chapitre-13-outils-economies/
+├── chapitre-14-veille-ia/
+├── chapitre-15-hacker-ia/
+├── appendices/
+└── assets/
+
+mkdocs.yml
+requirements.txt
+scripts/
+user/
 ```
 
-## Commandes essentielles (Windows)
+Ne recopier aucune ancienne arborescence depuis une instruction ou un prompt : `mkdocs.yml` et le tree du dépôt sont les sources de vérité.
 
-```powershell
-# Serveur de développement local
-py -m mkdocs serve
+## Conventions documentaires
 
-# Build statique
-py -m mkdocs build
+- contenu publié en français ;
+- un seul `# H1` par page publiée ;
+- sections `## H2`, puis `### H3` sans saut de niveau ;
+- blocs de code avec langage ;
+- texte alternatif descriptif pour les images ;
+- admonitions et onglets MkDocs uniquement quand ils améliorent réellement la lecture ;
+- noms de fichiers en kebab-case sauf fichiers conventionnels (`README.md`, `CLAUDE.md`, etc.).
 
-# Vérifier la version
-py -m mkdocs --version
+Pour une nouvelle page publiée, mettre à jour `mkdocs.yml` sauf si le fichier est volontairement un template/resource hors navigation.
+
+## Validation
+
+Après modification affectant `docs/`, `mkdocs.yml`, les templates ou la navigation :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
-Toujours utiliser `py -m` (pas `mkdocs` directement) car les scripts Python ne sont pas dans le PATH sur ce système Windows.
+Sous Windows, `py -m` peut être utilisé lorsque `python` ne pointe pas vers l'environnement voulu. Ne pas imposer `py` comme règle universelle.
 
-## Conventions de rédaction
+## Git
 
-- **Langue** : français exclusivement pour tout contenu documentaire
-- **Ton** : pédagogique, concis, direct ; le tutoiement est acceptable
-- **Titres** : chaque page commence par un `# H1` comme titre principal, suivi de `## H2` pour les sections — ne jamais sauter de niveau de titre
-- **Nommage des fichiers** : `kebab-case.md` dans `chapitre-N-slug/`
-- **Images** : captures dans `docs/assets/images/intellij/` ou `docs/assets/images/vscode/`
+- Ne jamais pousser directement sur `main`.
+- Ne jamais merger automatiquement une Pull Request.
+- Travailler sur une branche et pousser avec `git push -u origin HEAD`.
+- Le déploiement GitHub Pages a lieu après intégration manuelle dans `main`.
 
-## Syntaxe MkDocs Material à utiliser
+## Artefacts IA
 
-### Badges de niveau (en haut de chaque page pertinente)
+### Claude Code
 
-```html
-<span class="badge-beginner">Débutant</span>
-<span class="badge-intermediate">Intermédiaire</span>
-<span class="badge-expert">Expert</span>
-<span class="badge-vscode">VS Code</span>
-<span class="badge-intellij">IntelliJ</span>
-```
+Les équivalents natifs Claude Code appartiennent à `.claude/` : rules, skills, subagents et settings partagés. Ne pas placer un nouvel artefact Claude dans `.github/` par commodité.
 
-### Admonitions
+### GitHub Copilot
 
-```markdown
-!!! tip "Titre optionnel"
-    Conseil pratique.
+Les artefacts sous `.github/instructions`, `.github/prompts`, `.github/agents`, `.github/skills` et `.github/hooks` restent des configurations Copilot. Les maintenir lorsqu'ils sont utiles, mais les adapter à la politique Claude-first du contenu.
 
-!!! info "Information"
-    Note informative.
+## Rapports et fichiers temporaires
 
-!!! warning "Attention"
-    Point de vigilance.
+- rapports IA temporaires : `ai-reports/` ;
+- logs locaux : `logs/` ;
+- sortie MkDocs : `site/` ;
+- ne pas versionner les settings Claude locaux ou secrets.
 
-!!! danger "Danger"
-    Risque critique.
+## Sources internes utiles
 
-!!! example "Exemple"
-    Exemple concret.
-```
-
-### Contenu à onglets (comparaisons IntelliJ / VS Code)
-
-```markdown
-=== "IntelliJ IDEA"
-    Contenu IntelliJ...
-
-=== "Visual Studio Code"
-    Contenu VS Code...
-```
-
-### Blocs de code
-
-Toujours spécifier le langage : ` ```powershell `, ` ```python `, ` ```java `, ` ```typescript `, ` ```yaml `, ` ```markdown `
-
-### Diagrammes Mermaid
-
-```markdown
-```mermaid
-graph TD
-    A[Début] --> B[Étape]
-```
-```
-
-## Règles obligatoires
-
-1. **Mettre à jour `mkdocs.yml`** (section `nav:`) pour toute nouvelle page créée
-2. **Pages de comparaison** : suivre le pattern `comparaison-*.md` avec tableaux `| Critère | IntelliJ | VS Code |`
-3. **Pages `index.md`** : chaque chapitre a un index qui présente le sommaire du chapitre
-4. **Validation** : après modification, vérifier que `py -m mkdocs build` ne produit pas d'erreurs
-5. **Pas de contenu spécifique à un seul IDE** dans les pages de chapitre générales — utiliser des onglets ou des pages dédiées
-6. **Rapports IA** : tout fichier généré automatiquement par une IA (rapport de session, résumé de session, certificat, QA report, rapport de monitoring, etc.) doit être créé dans `ai-reports/` à la racine du projet — jamais à la racine directement. Ce dossier est exclu de git via `.gitignore`.
-7. **Logs techniques** : tout fichier de log local (`*.log`, `*.txt` de diagnostic/build/check) doit être placé dans `logs/` à la racine du projet, jamais à la racine directement. Le dossier `logs/` est exclu de git via `.gitignore`.
-
-## Ressources de référence internes
-
-- `docs/chapitre-3-contexte/instructions.md` — Conventions d'instructions Copilot
-- `docs/chapitre-3-contexte/agents.md` — Conventions d'agents Copilot
-- `docs/chapitre-3-contexte/prompt-files.md` — Conventions de prompt files
-- `docs/stylesheets/extra.css` — Classes CSS personnalisées disponibles
-- `mkdocs.yml` — Structure de navigation existante (référence de pattern)
+- `CLAUDE.md` — instructions principales Claude Code ;
+- `AGENTS.md` — workflow commun ;
+- `CONTRIBUTING.md` — contribution, validation et Git ;
+- `MAINTENANCE_SCHEDULE.md` — veille repo-wide ;
+- `docs/chapitre-4-contexte/` — instructions, rules, skills, agents, hooks et contexte ;
+- `mkdocs.yml` — navigation réelle ;
+- `scripts/validate-links.py` — validation interne du site généré.
