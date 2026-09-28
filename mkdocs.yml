@@ -85,6 +85,7 @@ nav:
     - "Claude Desktop": chapitre-3b-claude-code-migration-copilot/claude-desktop.md
     - "Architecture .claude/": chapitre-3b-claude-code-migration-copilot/architecture-claude.md
     - "Choisir le bon modèle": chapitre-3b-claude-code-migration-copilot/modeles-claude.md
+    - "Coûts & quotas": chapitre-3b-claude-code-migration-copilot/couts-quotas.md
     - "Prompt Engineering avec Claude": chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md
     - "Cookbook — recettes prêtes": chapitre-3b-claude-code-migration-copilot/cookbook.md
     - "Hooks avancés": chapitre-3b-claude-code-migration-copilot/hooks-avances.md
@@ -94,7 +95,6 @@ nav:
     - "Sécurité & gouvernance": chapitre-3b-claude-code-migration-copilot/securite-gouvernance.md
     - "Plugins d'équipe": chapitre-3b-claude-code-migration-copilot/plugins-equipe.md
     - "Comparaison Copilot vs Claude": chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md
-    - "Coûts & quotas": chapitre-3b-claude-code-migration-copilot/couts-quotas.md
     - "Migration pas à pas": chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md
     - "Checklist 30/60/90 jours": chapitre-3b-claude-code-migration-copilot/migration-30-60-90.md
 
