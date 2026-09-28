@@ -1,212 +1,199 @@
-﻿# Comparaison : Efficacité Copilot par Écosystème
+# Comparaison des écosystèmes de développement avec Claude Code
 
 <span class="badge-expert">Expert</span>
 
-## Vue d'Ensemble
+Claude Code fonctionne avec les principaux écosystèmes de développement. Le bon choix de stack ne doit pas dépendre d'un supposé « score IA » : choisissez d'abord selon le produit, l'équipe, l'exploitation et le code existant.
 
-GitHub Copilot adapte ses suggestions selon l'écosystème. Voici un **comparatif** pour choisir la stack optimisant l'efficacité :
-
----
-
-## Tableau Comparatif Détaillé
-
-| Critère | Java/Spring Boot | Node.js/Express | React 19 | Python FastAPI |
-|---------|-----------------|-----------------|----------|-----------------|
-| **Type Safety** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ (TS) | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ (hints) |
-| **Copilot Accuracy** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| **Async Patterns** | Via @Async | Natif Promise | Natif (async/await) | Natif (async/await) |
-| **IDE Integration** | IntelliJ (Best) | VS Code | VS Code/Cursor | VS Code |
-| **Testing Setup** | JUnit 5 facile | Vitest/Jest facile | RTL parfait | pytest facile |
-| **Boilerplate Generate** | Moyen (verbose) | Bas (simple) | Bas (composants) | Très bas |
-| **ORM Generation** | Excellent (JPA) | Très bon (Prisma) | N/A | Très bon (SQLAlchemy) |
-| **Error Handling** | Try-catch verbeux | Try-catch clair | Généralement ok | Try-except simple |
-| **API Documentation** | Springdoc (auto) | Swagger (manuel) | Auto (API spec) | Pydantic auto |
-| **Production Readiness** | Très haut | Haut | Très haut | Haut |
-| **Learning Curve** | Moyen (concepts Spring) | Bas | Bas | Très bas |
-| **Copilot Prompt Length** | Court (annotations) | Court | Court | Très court |
+Cette page remplace les anciens classements Copilot et benchmarks de génération non sourcés par des **critères vérifiables**.
 
 ---
 
-## Recommandations par Cas d'Usage
+## Vue d'ensemble
 
-### 🏢 **Enterprise Backend (Microservices, Scalabilité)**
+| Écosystème | Forces structurelles | Points de vigilance pour un agent |
+|---|---|---|
+| Java / Spring | types, build structuré, tests, refactoring IDE | build parfois long, configuration distribuée |
+| Node.js / TypeScript | feedback rapide, types, écosystème web | dépendances nombreuses, ESM/CJS, versions runtime |
+| React / TypeScript | composants et types découvrables | état client/serveur, tooling et framework autour de React |
+| Python / FastAPI | code concis, tests simples, data/ML naturel | dépendances/runtime, typage parfois partiel, sync/async |
 
-**Meilleur** : **Java/Spring Boot**
-- ✅ Copilot génère controllers + services + tests avec 90% accuracy
-- ✅ JPA entities = intérêt relationnel complet (ForeignKey, indices, generics)
-- ✅ IntelliJ IDEA = top-tier IDE pour Copilot backend
-- ✅ Spring annotations = contexte riche pour prompts
-- ❌ Boilerplate initial (mais Copilot gère)
+Claude peut être efficace dans chacun si le dépôt expose clairement ses commandes et conventions.
 
-**Alternative** : Python FastAPI (si API-first, équipe Python)
+---
 
-```bash
-# Spring Boot projet complet en Copilot
-copilot: "Génère entity User + Repository + Service + Controller + Test pour Spring Boot"
-# → 4 fichiers générés perfectionnés (1000+ LOC)
+## Critères qui comptent réellement
+
+### 1. Source de vérité du build
+
+Un projet doit fournir une commande reproductible :
+
+```text
+Java       → ./mvnw test / ./gradlew test
+Node/React → npm/pnpm/yarn scripts
+Python     → pyproject + pytest
 ```
 
+Claude doit utiliser le wrapper/gestionnaire déjà versionné plutôt que deviner une installation globale.
+
+### 2. Feedback rapide
+
+Plus un test ciblé est rapide, plus l'agent peut vérifier souvent.
+
+Organisez les suites pour permettre :
+
+- test d'une classe/module ;
+- typecheck ciblé ;
+- smoke build ;
+- suite complète en CI.
+
+### 3. Contrats explicites
+
+Types Java/TypeScript, Pydantic, interfaces et schémas API donnent des invariants testables. Leur valeur principale est l'ingénierie logicielle ; ils fournissent également de meilleurs signaux à Claude.
+
+### 4. Documentation locale
+
+Pour chaque sous-projet, documentez :
+
+- commande build ;
+- commande test ;
+- architecture ;
+- fichiers d'entrée ;
+- contraintes de compatibilité.
+
 ---
 
-### ⚡ **API Rapide / Prototype (Itération Rapide)**
+## Java / Spring
 
-**Meilleur** : **Node.js/Express + TypeScript**
-- ✅ Setup minimal (npm init express)
-- ✅ Middleware pattern cristallisé → Copilot comprend
-- ✅ Prisma ORM = génération de schema auto
-- ✅ Même API que Spring Boot, mais moins verbose
-- ✅ HMR développement = feedback rapide
+À privilégier lorsque l'équipe et le système bénéficient déjà de :
 
-```bash
-copilot: "Crée route POST /users avec validation Zod + Prisma + error middleware"
-# → 30 secondes, API prête à tester
+- JVM et écosystème Spring ;
+- contrats typés ;
+- forte intégration IDE ;
+- conventions Maven/Gradle ;
+- infrastructure de production mature.
+
+Workflow Claude :
+
+```text
+Lis `pom.xml`/`build.gradle` et les packages voisins.
+Trouve le pattern controller/service/repository déjà utilisé.
+Implémente le changement minimal.
+Exécute les tests ciblés puis le build pertinent.
 ```
 
-**Alternative** : Python FastAPI (même style, mais Python)
+Ne générez pas une architecture entière « parce que Spring est verbose » : réutilisez les conventions existantes.
 
 ---
 
-### 🎨 **Frontend / UI (React, SPAs)**
+## Node.js / TypeScript
 
-**Meilleur** : **React 19 + TypeScript + Tailwind**
-- ✅ Copilot génère composants avec 95% qualité (props typing parfait)
-- ✅ Tailwind classes = code lisible + autocomplet
-- ✅ React 19 hooks = patterns crystallisés
-- ✅ VS Code/Cursor = éditeurs optimisés
+Bon choix pour API et services web lorsque l'équipe maîtrise déjà l'écosystème JavaScript/TypeScript.
 
-```bash
-copilot: "Composant React pour liste utilisateurs avec delete + pagination, TypeScript + Tailwind"
-# → UserList.tsx parfait (150 LOC, tests inclus possibles)
+Points à expliciter :
+
+- version Node via `.nvmrc`, `.node-version`, Volta ou container ;
+- gestionnaire de paquets et lockfile ;
+- module system ;
+- framework HTTP ;
+- validation runtime ;
+- commande de typecheck.
+
+Claude ne doit pas ajouter un package pour une fonction disponible dans la plateforme ou le projet sans justification.
+
+---
+
+## React / TypeScript
+
+React est une bibliothèque UI ; le workflow dépend fortement du framework autour (Vite, Next.js ou autre).
+
+Avant une modification, Claude doit identifier :
+
+- rendu client/serveur ;
+- stratégie de routing ;
+- gestion d'état ;
+- tests ;
+- conventions CSS ;
+- APIs disponibles dans la version réellement installée.
+
+Évitez les pages qui figent « React 19 = tel pattern » sans vérifier `package.json` et la documentation actuelle du framework utilisé.
+
+---
+
+## Python / FastAPI
+
+Python est particulièrement naturel pour API, automatisation et data/ML.
+
+Documentez :
+
+- version Python ;
+- environnement/lockfile ;
+- commandes pytest/ruff/type checker ;
+- conventions sync/async ;
+- modèles Pydantic ;
+- migrations DB.
+
+Claude doit exécuter les tests dans l'environnement du projet, pas dans un environnement Python supposé compatible.
+
+---
+
+## Full-stack et monorepo
+
+Dans un monorepo, ne choisissez pas une stack uniquement pour « réduire le changement de contexte IA ».
+
+Préférez :
+
+```text
+repo/
+├── CLAUDE.md
+├── backend/
+│   └── CLAUDE.md
+└── frontend/
+    └── CLAUDE.md
 ```
 
-**Alternative** : Vue 3 (mais moins de données Copilot)
+Chaque sous-projet documente ses commandes et invariants. Claude charge le contexte local au moment nécessaire.
 
 ---
 
-### 🔧 **Full-Stack (Un même projet)**
+## Comment comparer deux choix pour un greenfield
 
-**Meilleur** : **Next.js 15 (React 19) + API Route Backend**
-- ✅ React Frontend + Node Backend = même IDE + Copilot
-- ✅ Server Components = Data fetching simplifié
-- ✅ Single repo = moins de contexte à passer
-- ✅ Vercel deploy = zero-config
+Créez un spike minimal si le choix est réellement ouvert :
 
-**Alternative** :
-- Spring Boot (backend) + React (frontend) = 2 contextes Copilot
-- Node.js Express (backend) + React (frontend) = 2 contextes
+| Critère | Mesure |
+|---|---|
+| Mise en œuvre | temps et complexité du prototype |
+| Qualité | tests, types, observabilité |
+| Exploitation | image, déploiement, monitoring |
+| Performance | benchmark sur charge représentative |
+| Équipe | compétences et coût de maintenance |
+| Écosystème | dépendances et support long terme |
 
----
-
-### 📊 **Data Processing / Analytics**
-
-**Meilleur** : **Python FastAPI / Pandas**
-- ✅ Copilot pour pandas = très bon (séries, dataframes)
-- ✅ Numpy, SciPy = excellent support
-- ✅ Jupyter notebooks = itération rapide
-- ✅ Peu de boilerplate
-
-```bash
-copilot: "Pandas dataframe — groupe par email, compte occurrences, trie desc"
-# → .groupby().count().sort_values() généré correctement
-```
+Claude peut construire les spikes, mais la comparaison doit utiliser le **même besoin et les mêmes critères**, pas un nombre de lignes générées.
 
 ---
 
-## Matrice Décision : Choisir ton Écosystème
+## IDE
 
-```mermaid
-graph TD
-    A["Projet à démarrer"] --> B{Type ?}
-    
-    B -->|Enterprise Backend| C["☕ Java/Spring Boot"]
-    C --> C1["IntelliJ IDEA<br/>Maven/Gradle<br/>JPA/Hibernate"]
-    
-    B -->|API Rapide| D["⚡ Node.js/Express<br/>ou Python FastAPI"]
-    D --> D1["Express:<br/>VS Code + Prisma<br/>FastAPI:<br/>VS Code + SQLAlchemy"]
-    
-    B -->|Frontend UI| E["🎨 React 19<br/>+ Tailwind"]
-    E --> E1["Next.js (fullstack)<br/>ou Vite (SPA)<br/>VS Code/Cursor"]
-    
-    B -->|Full-Stack| F["🔗 Next.js 15"]
-    F --> F1["Same IDE<br/>React 19 + API Routes<br/>Minimal context switch"]
-    
-    B -->|Data/Analytics| G["📊 Python + Jupyter"]
-    G --> G1["FastAPI backend<br/>Pandas/NumPy<br/>Observable"]
-    
-    style C fill:#fff3cd
-    style D fill:#e7f3ff
-    style E fill:#e8f5e9
-    style F fill:#f3e5f5
-    style G fill:#fff9c4
-```
+VS Code et JetBrains ont tous deux une intégration Claude Code. Choisissez l'IDE selon la stack et les préférences de l'équipe, pas selon un classement absolu.
+
+- IntelliJ/JetBrains garde des avantages IDE importants sur JVM et plusieurs langages.
+- VS Code fournit une intégration Claude Code très directe et un écosystème léger.
+- PyCharm reste une option forte pour Python ; l'ancienne affirmation du dépôt selon laquelle Pylance serait « meilleur » de façon générale n'est pas une base sérieuse de décision.
 
 ---
 
-## Critères Avancés : IDE + Copilot
+## Copilot — référence
 
-### Meilleur duo IDE + Copilot + Stack
-
-| Combo | Note | Raison |
-|-------|------|--------|
-| **IntelliJ IDEA + Java/Spring Boot** | ⭐⭐⭐⭐⭐ | PSI language engine, Spring Framework integré |
-| **VS Code + React 19 (Cursor optional)** | ⭐⭐⭐⭐⭐ | Lightweight, extensions excelentes, Tailwind LSP |
-| **VS Code + Node.js/Express + TS** | ⭐⭐⭐⭐⭐ | ESM modernes, type checking rapide |
-| **PyCharm + Python FastAPI** | ⭐⭐⭐⭐ | Déduction types dynamique limitée |
-| **Cursor + NextJS** | ⭐⭐⭐⭐⭐ | Copilot optimisé + React super fluide |
-| **VS Code + Python** | ⭐⭐⭐⭐ | Bon support Pylance, manque inférence IDE |
-
----
-
-## Benchmark : Temps de Génération
-
-| Tâche | Spring Boot | Express | React | FastAPI |
-|-------|-----------|---------|-------|---------|
-| **CRUD Service complète** | 2-3 min | 1 min | 1-2 min | 1 min |
-| **Entity + Repo + Tests** | 3-4 min | 2 min | N/A | 2 min |
-| **API Endpoint** | 1 min | 30 sec | N/A | 30 sec |
-| **React Component + Tests** | N/A | N/A | 1-2 min | N/A |
-| **Error Handler Middleware** | 2 min | 1 min | 1 min | 1 min |
-
-**Conclusion** : Node.js/Express + React ~30% plus rapide généralement.
-
----
-
-## Recommandations Finales
-
-| Situation | Stack | Raison |
-|-----------|-------|--------|
-| Startup prototype | Next.js 15 | Deploy rapide, full-stack efficace |
-| API critique production | Spring Boot | Robustesse, scalabilité, monitoring |
-| Équipe JavaScript only | Express + React | Moins d'apprentissage, cohérent |
-| Équipe polyglotte | Services microservices | Frontend React, Backend au choix |
-| Migration legacy | Depend du legacy | Garder langage existant si possible |
-| Greenfield 2025+ | Spring Boot 3.3 + Reactor | Async natif, Spring au top |
-
----
-
-## Custom Instructions par Écosystème
-
-**Conseil** : Adapter `.github/copilot-instructions.md` pour CHAQUE stack.
-
-Voir détails complets :
-- [Java/Spring Boot](java-spring-boot.md)
-- [Node.js/Express](nodejs-express.md)
-- [React 19](react-typescript.md)
-- [Python FastAPI](python.md)
+Les anciens tableaux « Copilot accuracy », temps de génération et notes par stack ont été supprimés car ils n'étaient pas sourcés et ne représentaient pas un benchmark reproductible. Les guides Copilot restent présents ailleurs dans le dépôt pour les mécanismes spécifiques au produit.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
+- [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Java — Cas d'Usage](java.md)** : explorer les patterns Spring Boot optimisés pour GitHub Copilot et les pièges les plus courants en production.
-
-Concepts clés couverts :
-
-- **Architecture en couches** — Controllers, Services, Repositories, Entities
-- **Patterns Spring optimisés** — Services, Repositories, Entities JPA avec Copilot
-- **Tests JUnit 5 + Mockito** — générer des tests de qualité automatiquement
-- **Pièges courants** — N+1 queries, lazy loading, injection circulaire
+Choisissez le guide correspondant à votre dépôt : [Java & Spring](java-spring-boot.md), [Node.js & Express](nodejs-express.md), [React & TypeScript](react-typescript.md) ou [Python & FastAPI](python.md).
