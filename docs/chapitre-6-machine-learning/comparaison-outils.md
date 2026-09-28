@@ -1,263 +1,149 @@
-# Comparaison des Frameworks ML : scikit-learn vs TensorFlow vs PyTorch vs Keras
+# Comparaison des outils ML : scikit-learn, TensorFlow, PyTorch et Keras
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Choisir le bon framework ML dépend de votre cas d'usage, de votre niveau et de votre environnement de déploiement. 
+Le choix d'un outil dépend du type de problème, du code existant, du runtime de production et de l'équipe. Les anciennes notes en étoiles et « support Copilot » ont été retirés : elles ne mesuraient rien de reproductible.
 
 ---
 
-## Tableau de Comparaison Général
+## Vue d'ensemble
 
-| Critère | scikit-learn | TensorFlow | PyTorch | Keras |
-|---------|-------------|-----------|---------|-------|
-| **Usage principal** | ML classique | Deep Learning prod | Deep Learning recherche | API haut niveau DL |
-| **Courbe d'apprentissage** | ⭐ Très facile | ⭐⭐⭐ Moyen | ⭐⭐⭐ Moyen | ⭐⭐ Facile |
-| **Débogage** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |
-| **Déploiement** | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **GPU natif** | ❌ | ✅ | ✅ | ✅ |
-| **Support Copilot** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| **Communauté** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
-| **Interprétabilité** | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐ | ⭐⭐ |
+| Outil | Usage fréquent | Point de vigilance |
+|---|---|---|
+| scikit-learn | ML classique, pipelines tabulaires, preprocessing | pas un framework général de deep learning |
+| TensorFlow | deep learning et écosystème TensorFlow | chemin de déploiement/API à vérifier selon version |
+| PyTorch | deep learning, recherche et production | export/serving dépend du runtime cible |
+| Keras 3 | API haut niveau multi-backend | rester dans les APIs portables si vous voulez changer de backend |
 
 ---
 
 ## scikit-learn
 
-**Le couteau suisse du ML classique.**
+Très adapté à :
 
-### Quand l'utiliser
+- régression/classification/clustering classiques ;
+- preprocessing structuré ;
+- pipelines reproductibles ;
+- cross-validation et model selection.
 
-- Données tabulaires (CSV, base de données)
-- Algorithmes classiques : régression, classification, clustering
-- Prototypage rapide avec évaluation rigoureuse
-- Pipelines de preprocessing intégrés
-
-### Exemple caractéristique
+Exemple :
 
 ```python
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import GridSearchCV
-
-# Pipeline propre en quelques lignes
 pipeline = Pipeline([
-    ('scaler', StandardScaler()),
-    ('model', GradientBoostingClassifier())
+    ("preprocess", preprocess),
+    ("model", LogisticRegression(max_iter=1000)),
 ])
 
-# Recherche hyperparamètres
-param_grid = {
-    'model__n_estimators': [100, 200],
-    'model__learning_rate': [0.05, 0.1],
-    'model__max_depth': [3, 5]
-}
-
-gs = GridSearchCV(pipeline, param_grid, cv=5, n_jobs=-1)
-gs.fit(X_train, y_train)
-print(f"Meilleur score : {gs.best_score_:.3f}")
+pipeline.fit(X_train, y_train)
 ```
 
-### Forces avec Copilot
-
-!!! success "scikit-learn + Copilot"
-    Copilot connaît l'ensemble de l'API sklearn en détail. Il complète les noms de paramètres, suggère les bonnes métriques selon le type de problème et génère des pipelines `ColumnTransformer` complexes en quelques commentaires.
+L'intérêt principal du `Pipeline` est méthodologique : les transformations apprises peuvent rester dans la boucle d'entraînement/CV et limiter les fuites de données.
 
 ---
 
-## TensorFlow / Keras (Google)
+## TensorFlow
 
-**Le framework de production de Google.**
+TensorFlow reste pertinent pour les équipes qui utilisent son écosystème d'entraînement et de déploiement.
 
-### Quand l'utiliser
+Avant adoption ou migration, vérifiez :
 
-- Modèles en production à grande échelle
-- Déploiement mobile (TensorFlow Lite) ou web (TensorFlow.js)
-- Intégration avec l'écosystème Google Cloud (Vertex AI)
-- `tf.data` pour les pipelines de données efficaces
+- APIs réellement supportées dans la version installée ;
+- chemin de serving/mobile/edge ;
+- besoins de distribution ;
+- compatibilité hardware ;
+- expertise équipe.
 
-### Exemple caractéristique
-
-```python
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import layers
-
-# API Sequential — simple
-model = keras.Sequential([
-    layers.Dense(128, activation='relu', input_shape=(10,)),
-    layers.BatchNormalization(),
-    layers.Dropout(0.3),
-    layers.Dense(64, activation='relu'),
-    layers.Dense(1, activation='sigmoid')
-])
-
-# Ou API Fonctionnelle — pour architectures complexes
-inputs = keras.Input(shape=(10,))
-x = layers.Dense(128, activation='relu')(inputs)
-x = layers.BatchNormalization()(x)
-outputs = layers.Dense(1, activation='sigmoid')(x)
-model = keras.Model(inputs=inputs, outputs=outputs)
-
-model.compile(
-    optimizer='adam',
-    loss='binary_crossentropy',
-    metrics=['accuracy']
-)
-model.summary()
-```
-
-### TensorFlow Serving — Déploiement Production
-
-```python
-# Sauvegarder pour TensorFlow Serving
-model.save("models/my_model/1")  # Versioning automatique
-
-# Ou en format TF Lite pour mobile
-converter = tf.lite.TFLiteConverter.from_saved_model("models/my_model/1")
-tflite_model = converter.convert()
-with open("models/model.tflite", "wb") as f:
-    f.write(tflite_model)
-```
+Évitez la formule « framework de production par défaut » : une production PyTorch/JAX/scikit-learn peut être tout aussi légitime selon le cas.
 
 ---
 
-## PyTorch (Meta)
+## PyTorch
 
-**La référence de la recherche en Deep Learning.**
+PyTorch fournit une API impérative et un écosystème très large.
 
-### Quand l'utiliser
+Point important pour la documentation actuelle : **TorchScript est déprécié** dans les versions PyTorch récentes ; les nouveaux workflows d'export doivent examiner `torch.export` et les options recommandées pour leur runtime. citeturn921034search0turn921034search4
 
-- Recherche et prototypage de nouvelles architectures
-- Contrôle fin de la boucle d'entraînement
-- NLP (HuggingFace utilise PyTorch)
-- Debugging et visualisation des gradients
-
-### Exemple caractéristique
-
-```python
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
-
-# Définir le modèle — classe Python claire
-class PokemonNet(nn.Module):
-    def __init__(self, input_size: int, hidden_size: int, num_classes: int):
-        super().__init__()
-        self.network = nn.Sequential(
-            nn.Linear(input_size, hidden_size),
-            nn.BatchNorm1d(hidden_size),
-            nn.ReLU(),
-            nn.Dropout(0.3),
-            nn.Linear(hidden_size, hidden_size // 2),
-            nn.ReLU(),
-            nn.Linear(hidden_size // 2, num_classes)
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.network(x)
-
-# Boucle d'entraînement explicite — contrôle total
-model = PokemonNet(input_size=6, hidden_size=64, num_classes=2)
-optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
-criterion = nn.CrossEntropyLoss()
-scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=100)
-
-dataset = TensorDataset(
-    torch.FloatTensor(X_train),
-    torch.LongTensor(y_train)
-)
-loader = DataLoader(dataset, batch_size=32, shuffle=True)
-
-for epoch in range(100):
-    model.train()
-    total_loss = 0.0
-    for X_batch, y_batch in loader:
-        optimizer.zero_grad()
-        output = model(X_batch)
-        loss = criterion(output, y_batch)
-        loss.backward()
-        optimizer.step()
-        total_loss += loss.item()
-    scheduler.step()
-
-    if (epoch + 1) % 10 == 0:
-        print(f"Époque {epoch+1:3d} — Loss: {total_loss/len(loader):.4f}")
-```
-
-### Forces avec Copilot
-
-!!! tip "PyTorch + Copilot"
-    Copilot propose automatiquement les patterns PyTorch courants : `optimizer.zero_grad()`, `loss.backward()`, `optimizer.step()`. Il génère aussi les boucles d'évaluation avec `model.eval()` et `torch.no_grad()`.
+Ne remplacez toutefois pas un pipeline legacy TorchScript fonctionnel sans évaluer la compatibilité et le coût de migration.
 
 ---
 
-## Guide de Décision Rapide
+## Keras 3
 
-```mermaid
-graph TD
-    Q1{"Type de données ?"}
-    Q1 -->|"Tabulaires\n(CSV)"| SK["✅ scikit-learn"]
-    Q1 -->|"Images / Texte / Audio"| Q2{"Objectif ?"}
-    Q2 -->|"Production\n& déploiement"| TF["✅ TensorFlow/Keras"]
-    Q2 -->|"Recherche\n& flexibilité"| PT["✅ PyTorch"]
-    Q2 -->|"Prototypage rapide"| KE["✅ Keras (API haut niveau)"]
-```
+Keras 3 adopte une approche multi-backend : il peut cibler JAX, TensorFlow et PyTorch. citeturn921034search3
 
-| Cas d'Usage | Framework Recommandé |
-|------------|---------------------|
-| Classification Pokémon (données CSV) | **scikit-learn** |
-| Application mobile de reconnaissance d'images | **TensorFlow Lite** |
-| Fine-tuning d'un LLM (BERT, GPT) | **PyTorch + HuggingFace** |
-| API ML en production sur GCP | **TensorFlow + Keras** |
-| Nouveau papier de recherche | **PyTorch** |
-| Débutant en Deep Learning | **Keras** |
-| Clustering de clients | **scikit-learn** |
+Cette portabilité est surtout valable lorsque le code s'appuie sur les APIs Keras compatibles multi-backend. Un modèle utilisant directement beaucoup d'opérations spécifiques au backend réduit cette portabilité.
 
 ---
 
-## Résumé des Commandes d'Installation
+## Comment choisir
 
-```powershell
-# scikit-learn
-pip install scikit-learn
+### Tabulaire classique
 
-# TensorFlow (CPU)
-pip install tensorflow
+Commencez généralement par une baseline simple et bien évaluée. scikit-learn est souvent suffisant ; un réseau profond n'est pas une étape obligatoire.
 
-# TensorFlow (GPU - NVIDIA)
-pip install tensorflow[gpu]
+### Vision / NLP / modèles profonds
 
-# PyTorch (CPU)
-pip install torch torchvision torchaudio
+Choisissez selon :
 
-# PyTorch (GPU CUDA 12.1)
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+- modèles pré-entraînés disponibles ;
+- runtime cible ;
+- hardware ;
+- bibliothèques internes ;
+- compétences équipe ;
+- capacité à benchmarker/exporter/monitorer.
 
-# Keras standalone
-pip install keras
+### Besoin d'API haut niveau multi-backend
+
+Évaluez Keras 3 avec un prototype réel plutôt que supposer que toutes les opérations seront portables.
+
+---
+
+## Spike comparatif
+
+```text
+Implémente la même baseline avec les deux frameworks candidats.
+Garde constants : dataset, split, seed, métrique et hardware.
+Mesure :
+- qualité ;
+- temps d'entraînement ;
+- mémoire ;
+- latence d'inférence ;
+- taille/export ;
+- complexité de code et déploiement.
 ```
 
-!!! info "Keras 3 — Multi-Backend"
-    Depuis Keras 3 (2024), Keras peut utiliser TensorFlow, PyTorch **ou** JAX comme backend. Vous écrivez le code une fois, vous choisissez le backend selon votre environnement.
-    ```python
-    import os
-    os.environ["KERAS_BACKEND"] = "torch"  # ou "tensorflow" ou "jax"
-    import keras
-    ```
+Claude Code peut créer et exécuter ce spike, mais les résultats doivent être conservés dans un artefact reproductible.
+
+---
+
+## Export et déploiement
+
+Ne choisissez pas le format d'export avant d'avoir défini la cible :
+
+- Python server ;
+- C++ ;
+- mobile ;
+- navigateur ;
+- edge accelerator ;
+- service managé.
+
+Dans PyTorch, les documents officiels actuels orientent les nouveaux workflows vers `torch.export`, et l'export ONNX moderne s'appuie également sur les mécanismes Dynamo/export. citeturn921034search6turn921034search7
+
+---
+
+## Copilot — référence
+
+Le fait qu'un outil possède beaucoup d'exemples publics ne permet pas de conclure à un « support Copilot 5/5 ». Ces scores ont été supprimés. Les usages Copilot restent couverts par les pages dédiées.
 
 ---
 
 ## Sources
 
-- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
-- [TensorFlow documentation](https://www.tensorflow.org/guide) - consulté le 2026-06-20
-- [PyTorch documentation](https://pytorch.org/docs/stable/index.html) - consulté le 2026-06-20
-- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+- [scikit-learn — User Guide](https://scikit-learn.org/stable/user_guide.html)
+- [TensorFlow — Guide](https://www.tensorflow.org/guide)
+- [PyTorch — Documentation](https://pytorch.org/docs/stable/)
+- [Keras — Keras 3](https://keras.io/keras_3/)
 
-## Chapitres suivants
+## Prochaine étape
 
-**[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** — Implémenter le RAG pas à pas avec code fonctionnel
-**[Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)** — Utilisation effective, productivité, sécurité et workflows IA au quotidien
-
+**[Deep Learning](../chapitre-8-deep-learning/index.md)** pour les architectures et workflows d'entraînement plus avancés.
