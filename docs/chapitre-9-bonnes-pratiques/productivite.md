@@ -1,386 +1,207 @@
-# Productivité avec GitHub Copilot
+# Productivité avec Claude Code
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-## Optimiser votre Workflow Copilot
-
-### ⚡ Les 4 Modes d'Interaction
-
-| Mode | Usage | Productivité | Qualité |
-|------|-------|--------------|---------|
-| **Inline Suggestions** | Auto-complétion en temps réel | Très rapide (2-5 sec/ligne) | 60-75% acceptable |
-| **Inline Chat** | Question ciblée sur sélection | Rapide (10-20 sec) | 80-90% bon |
-| **Chat Panel** | Architectural, multi-fichier, complex | Lent (30-60 sec) | 90-95% excellent |
-| **Plan + Agent** | Planifier puis exécuter une tâche complexe | Plus lent au départ, plus robuste | Élevée si le scope est clair |
-
-**Recommandation** :
-
-- Inline Suggestions : 60% du temps (autocomplétion simple)
-- Inline Chat : 30% du temps (corrections, tests, refactor)
-- Chat Panel / Plan / Agent : 10% du temps (architecture, tâches complexes)
+La productivité avec Claude Code vient surtout de deux choses : **réduire les boucles inutiles** et **donner à l'agent un moyen de vérifier son travail**. Il n'existe pas de ratio universel entre chat, planification et agents ; choisissez le mécanisme le plus simple qui convient à la tâche.
 
 ---
 
-## Raccourcis Essentiels par IDE
+## Choisir le bon niveau d'interaction
 
-!!! info "Légende de fréquence"
-    ⭐ = rarement utilisé · ⭐⭐⭐ = utile régulièrement · ⭐⭐⭐⭐⭐ = geste essentiel au quotidien
+| Situation | Mécanisme recommandé |
+|---|---|
+| Question ciblée / petite correction | Conversation directe |
+| Tâche multi-fichiers avec inconnues | Exploration puis Plan |
+| Procédure répétitive | Skill |
+| Recherche volumineuse | Subagent |
+| Système externe | MCP |
+| Invariant automatique | Hook |
 
-### Visual Studio Code
-
-=== "Windows / Linux"
-
-    | Action | Raccourci | Fréquence d'utilisation |
-    |--------|-----------|:-----------------------:|
-    | Accepter suggestion | ++tab++ | ⭐⭐⭐⭐⭐ |
-    | Accepter mot par mot | ++ctrl+right++ | ⭐⭐⭐⭐ |
-    | Suggestion suivante | ++alt+bracket-right++ | ⭐⭐⭐⭐ |
-    | Suggestion précédente | ++alt+bracket-left++ | ⭐⭐⭐ |
-    | Rejeter suggestion | ++escape++ | ⭐⭐⭐⭐⭐ |
-    | Déclencher manuellement | ++alt+backslash++ | ⭐⭐⭐ |
-    | 10 suggestions (panneau) | ++ctrl+enter++ | ⭐⭐ |
-    | **Ouvrir Copilot Chat** | ++ctrl+alt+i++ | ⭐⭐⭐⭐⭐ |
-    | **Inline Chat** | ++ctrl+i++ | ⭐⭐⭐⭐ |
-    | Quick Chat | ++ctrl+shift+i++ | ⭐⭐⭐ |
-
-=== "macOS"
-
-    | Action | Raccourci | Fréquence d'utilisation |
-    |--------|-----------|:-----------------------:|
-    | Accepter suggestion | ++tab++ | ⭐⭐⭐⭐⭐ |
-    | Accepter mot par mot | ++option+right++ | ⭐⭐⭐⭐ |
-    | Suggestion suivante | ++option+bracket-right++ | ⭐⭐⭐⭐ |
-    | Suggestion précédente | ++option+bracket-left++ | ⭐⭐⭐ |
-    | Rejeter suggestion | ++escape++ | ⭐⭐⭐⭐⭐ |
-    | Déclencher manuellement | ++option+backslash++ | ⭐⭐⭐ |
-    | **Ouvrir Copilot Chat** | ++cmd+alt+i++ | ⭐⭐⭐⭐⭐ |
-    | **Inline Chat** | ++cmd+i++ | ⭐⭐⭐⭐ |
-
-### IntelliJ IDEA
-
-=== "Windows / Linux"
-
-    | Action | Raccourci | Fréquence d'utilisation |
-    |--------|-----------|:-----------------------:|
-    | Accepter suggestion | ++tab++ | ⭐⭐⭐⭐⭐ |
-    | Accepter mot par mot | ++ctrl+right++ | ⭐⭐⭐⭐ |
-    | Suggestion suivante | ++alt+bracket-right++ | ⭐⭐⭐⭐ |
-    | Suggestion précédente | ++alt+bracket-left++ | ⭐⭐⭐ |
-    | Rejeter suggestion | ++escape++ | ⭐⭐⭐⭐⭐ |
-    | Déclencher manuellement | ++alt+backslash++ | ⭐⭐⭐ |
-    | **Inline Chat** | ++ctrl+i++ | ⭐⭐⭐⭐ |
-    | Expliquer (clic droit) | Clic droit → Explain This | ⭐⭐⭐ |
-
-=== "macOS"
-
-    | Action | Raccourci | Fréquence |
-    |--------|-----------|:---------:|
-    | Accepter suggestion | ++tab++ | ⭐⭐⭐⭐⭐ |
-    | Accepter mot par mot | ++option+right++ | ⭐⭐⭐⭐ |
-    | Suggestion suivante | ++option+bracket-right++ | ⭐⭐⭐⭐ |
-    | Rejeter suggestion | ++escape++ | ⭐⭐⭐⭐⭐ |
-    | **Inline Chat** | ++cmd+i++ | ⭐⭐⭐⭐ |
+L'erreur classique consiste à utiliser un agent complexe pour une tâche de cinq lignes ou, à l'inverse, à demander une migration entière en un seul prompt sans plan.
 
 ---
 
-## Workflows Optimisés
+## 1. Préparer une tâche avant de lancer Claude
 
-### Workflow 1 : Développement TDD avec Copilot
+Une demande productive contient quatre éléments :
 
-```
-1. Écrire le test en premier (décrivez le comportement attendu)
-   it('should return 404 when user not found', async () => {
-       // Copilot va suggérer le setup du mock et la vérification
-
-2. Laisser Copilot compléter le test
-   → Accepter tab par tab, ajuster si nécessaire
-
-3. Écrire la signature de la fonction à implémenter
-   async findUserById(id: string): Promise<User> {
-   // Copilot implémente en tenant compte du test existant
-
-4. Exécuter les tests → Itérer avec Copilot si nécessaire
+```text
+Objectif    : quel résultat concret ?
+Périmètre   : quels fichiers/composants ?
+Contraintes : ce qui ne doit pas changer ?
+Validation  : comment prouver que c'est terminé ?
 ```
 
-### Workflow 2 : Génération de boilerplate rapide
+Exemple :
 
-Pour des fichiers répétitifs (controllers, services, etc.) :
-
-```
-1. Créer un nouveau fichier
-2. Commencer par un commentaire décrivant le module :
-   // OrderController — REST API pour la gestion des commandes
-   // CRUD standard : GET /orders, GET /orders/:id, POST, PUT, DELETE
-   // Auth requise, rate limiting 100 req/min
-
-3. Taper la première ligne de classe :
-   export class OrderController {
-
-4. Accepter les suggestions Copilot une par une
-   → Copilot va générer un controller complet cohérent
-```
-
-### Workflow 3 : Refactoring assisté
-
-```
-1. Sélectionner le code à refactoriser
-2. Ouvrir Inline Chat ++ctrl+i++ (++cmd+i++ macOS)
-3. Taper : "Refactorise ce code pour [objectif précis]"
-   Exemples :
-   - "extraire la logique de validation dans une fonction séparée"
-   - "remplacer la boucle for par un map/filter/reduce"
-   - "simplifier ce switch-case avec un objet de mapping"
-4. Copilot proposes les changements dans l'éditeur
-5. Accepter, rejeter, ou modifier ligne par ligne
-```
-
-### Workflow 4 : Documentation accélérée
-
-=== ":material-microsoft-visual-studio-code: VS Code"
-
-    ```
-    1. Positionner le curseur au-dessus d'une fonction
-    2. Taper /** puis ++enter++ (déclenche le template JSDoc)
-    3. Copilot complète automatiquement les @param et @returns
-    4. Ajuster les descriptions si nécessaire
-    ```
-
-=== ":simple-intellijidea: IntelliJ"
-
-    ```
-    1. Taper /** au-dessus d'une méthode
-    2. IntelliJ génère le squelette Javadoc de base
-    3. Positionner le curseur sur une ligne @param
-    4. Copilot complète la description
-    ```
-
-### Workflow 5 : Débogage avec Copilot Chat
-
-```
-Quand vous avez une erreur :
-
-1. Copier le message d'erreur complet
-2. Ouvrir Copilot Chat
-3. Coller l'erreur + demander une explication :
-   "J'ai cette erreur : [ERREUR]. 
-    Voici le code : [CODE SÉLECTIONNÉ avec #selection]
-    Qu'est-ce qui cause cette erreur et comment la corriger ?"
-
-4. Copilot explique la cause racine et propose une correction
-5. Utiliser l'Inline Chat ++ctrl+i++ pour appliquer la correction directement
+```text
+Corrige la désérialisation des dates dans `src/api/orders`.
+Ne change pas le contrat HTTP.
+Ajoute un test de régression reproduisant le bug.
+Exécute les tests du module et le typecheck avant de terminer.
 ```
 
 ---
 
-## Intégration dans le développement quotidien
+## 2. Réutiliser les patterns du dépôt
 
-### Quand utiliser Copilot (ROI maximal)
+Au lieu d'expliquer longuement un style :
 
-| Tâche | Gain Copilot | Notes |
-|-------|:------------:|-------|
-| Boilerplate (CRUD, getters) | ⭐⭐⭐⭐⭐ | Gain de temps immense |
-| Tests unitaires | ⭐⭐⭐⭐⭐ | Copilot excellent pour les cas de test |
-| Documentation (JSDoc/KDoc/Javadoc) | ⭐⭐⭐⭐⭐ | Fastidieux manuellement |
-| Regex complexe | ⭐⭐⭐⭐ | Toujours vérifier le résultat |
-| Conversion de types/formats | ⭐⭐⭐⭐ | JSON→CSV, XML→JSON, etc. |
-| Implémentations d'algorithmes connus | ⭐⭐⭐⭐ | Vérifier l'impl |
-| Logique métier complexe | ⭐⭐⭐ | Vérification plus approfondie |
-| Architecture du système | ⭐⭐ | Copilot suggère, vous décidez |
-
-### Quand être plus prudent
-
-| Situation | Pourquoi | Action recommandée |
-|-----------|----------|-------------------|
-| Code de sécurité | Algorithmes de sécurité doivent être précis | Audit manuel + tests |
-| Requêtes SQL complexes | Risque d'injection ou de requête inefficace | Review + EXPLAIN |
-| Logique financière | Les erreurs coûtent cher | Tests exhaustifs, pair review |
-| Code multi-thread | Race conditions difficiles à voir | Review approfondie |
-
-### Copilot en pair programming
-
-Copilot est particulièrement efficace quand vous expliquez à voix haute ce que vous faites — les commentaires que vous tapez naturellement pendant le pair programming deviennent d'excellents prompts.
-
-```typescript
-// "Ok, je vais créer une fonction qui va chercher tous les 
-// produits en promotion pour cette catégorie et les trier par remise"
-
-// → Typez ce commentaire et laissez Copilot faire le reste
+```text
+Implémente `InvoiceService` en suivant le pattern de `OrderService` :
+même injection de dépendances, même gestion d'erreurs et même structure de tests.
 ```
+
+Un exemple existant est souvent un meilleur contexte qu'une page de prose.
 
 ---
 
-## Raccourcis de productivité supplémentaires
+## 3. Faire produire le test ou la reproduction d'abord
 
-### VS Code — Raccourcis utiles en contexte Copilot
+Pour un bug :
 
-| Action | Raccourci Windows | Raccourci macOS |
-|--------|:-----------------:|:---------------:|
-| Aller à la définition | ++f12++ | ++f12++ |
-| Voir toutes les références | ++shift+f12++ | ++shift+f12++ |
-| Renommer symbole | ++f2++ | ++f2++ |
-| Quick fix | ++ctrl+period++ | ++cmd+period++ |
-| Format document | ++shift+alt+f++ | ++shift+option+f++ |
-| Toggle line comment | ++ctrl+slash++ | ++cmd+slash++ |
-| Duplicate line | ++shift+alt+down++ | ++shift+option+down++ |
+```text
+Reproduis le problème avec un test qui échoue.
+Ne modifie pas le code de production avant d'avoir confirmé l'échec.
+```
 
-### IntelliJ — Raccourcis utiles en contexte Copilot
+Pour une optimisation :
 
-| Action | Raccourci Windows | Raccourci macOS |
-|--------|:-----------------:|:---------------:|
-| Complétion avancée | ++ctrl+shift+space++ | ++ctrl+shift+space++ |
-| Voir documentation | ++ctrl+q++ | ++ctrl+j++ |
-| Aller à la définition | ++ctrl+b++ | ++cmd+b++ |
-| Refactoring menu | ++ctrl+alt+shift+t++ | ++ctrl+t++ |
-| Générer (code) | ++alt+insert++ | ++cmd+n++ |
-| Implémenter méthodes | ++ctrl+i++ | ++ctrl+i++ |
-| Reformater code | ++ctrl+alt+l++ | ++cmd+option+l++ |
+```text
+Ajoute d'abord un benchmark reproductible.
+N'optimise que si le benchmark montre le problème.
+```
+
+Cette stratégie réduit les itérations où l'agent « améliore » quelque chose qui n'était pas la cause du problème.
 
 ---
 
-## Gestion de la Fenêtre de Contexte
+## 4. Garder les tâches courtes et cohérentes
 
-La **fenêtre de contexte** est la quantité de texte que Copilot peut traiter en une seule fois pour générer une suggestion. Comprendre ce concept vous permet d'optimiser la pertinence des suggestions.
+Préférez :
 
-### Qu'est-ce que la context window ?
-
-Imaginez que Copilot lit vos fichiers ouverts comme un développeur qui relit du code avant de suggérer quelque chose. Il a une **mémoire de travail limitée** : si vous lui donnez trop de texte, il doit choisir quoi lire — et peut rater l'information cruciale.
-
-| Modèle Copilot (2025) | Context window approx. |
-|-----------------------|------------------------|
-| GPT-4o (Chat) | ~128 000 tokens (~100k mots) |
-| Claude 3.5 Sonnet (Chat) | ~200 000 tokens (~150k mots) |
-| Suggestions inline | Fenêtre réduite (fichier courant + contexte proche) |
-
-### Stratégies pour rester dans la fenêtre
-
-```
-❌ Session peu efficace
-   10 onglets ouverts dont 8 non pertinents
-   2 fichiers de 1500 lignes
-   Suggestions : génériques, hors contexte
-
-✅ Session optimale
-   3-4 onglets ciblés sur la tâche en cours
-   Fichiers < 400 lignes bien nommés
-   Suggestions : précises, cohérentes avec votre code
+```text
+1. tests
+2. changement métier
+3. validation
+4. doc si nécessaire
 ```
 
-**Actions concrètes :**
+à une demande regroupant migration, refactor, nouvelle fonctionnalité, tests, CI et documentation sans étapes intermédiaires.
 
-1. **Fermer les onglets non pertinents** avant de démarrer une session de travail ciblée
-2. **Ouvrir les fichiers liés** (service + types + tests) pour donner le bon contexte
-3. **Utiliser `#file` ou `#selection`** dans Chat pour cibler précisément plutôt que d'utiliser `@workspace` systématiquement
-4. **Splitter les gros fichiers** : au-delà de 500 lignes, envisagez de découper en modules
-
-!!! tip "Signal d'une context window saturée"
-    Quand Copilot commence à suggérer des noms de variables qui n'existent pas dans votre projet, ou répète du code que vous venez d'écrire — c'est souvent le signe que la fenêtre de contexte est saturée. Fermez des onglets et relancez.
+Chaque étape terminée fournit un point de contrôle et un diff plus facile à relire.
 
 ---
 
-## Workflows Avancés
+## 5. Utiliser les skills comme raccourcis d'équipe
 
-### Workflow 6 : Session d'Édition Multi-Fichiers Assistée
+Les meilleurs gains viennent des workflows récurrents :
 
-**Objectif** : Modifier une fonctionnalité qui touche plusieurs fichiers en une seule session cohérente.
-
-```
-Scénario : Ajouter un champ `phone` optionnel au modèle User
-(impacts : types, service, controller, tests, migration DB)
-
-1. Ouvrir la vue d'édition multi-fichiers (++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++)
-
-2. Constituer le Working Set :
-   + src/types/User.ts          ← Type User
-   + src/services/UserService.ts ← Logique métier
-   + src/controllers/UserController.ts ← Routes
-   + src/__tests__/UserService.test.ts ← Tests
-   + prisma/schema.prisma        ← Schéma DB
-
-3. Rédiger la demande :
-   "Ajoute un champ `phone?: string` au modèle User.
-    - Validation : format E.164 (+33612345678) avec Zod
-    - Exposé dans les réponses API
-    - Index unique dans Prisma si phone est fourni
-    - Mets à jour les tests existants"
-
-4. Reviewer les modifications proposées fichier par fichier :
-   ✓ User.ts — Accepter l'ajout du type
-   ✓ UserController.ts — Accepter la validation Zod mise à jour
-   ? UserService.ts — Vérifier la logique d'update
-   ✓ tests — Accepter les nouveaux cas de test
-
-5. Committer le Working Set validé
+```text
+.claude/skills/
+├── review-pr/SKILL.md
+├── add-api-endpoint/SKILL.md
+├── migrate-schema/SKILL.md
+└── release-check/SKILL.md
 ```
 
-!!! warning "Gardez le Working Set minimal"
-    Résistez à la tentation d'ajouter tous les fichiers du projet. Un Working Set de 4-6 fichiers est optimal. Au-delà, les suggestions deviennent moins cohérentes et plus difficiles à reviewer.
-
-### Workflow 7 : Agent Mode Autonome
-
-**Objectif** : Déléguer une tâche bien définie à Copilot en mode entièrement autonome.
-
-!!! info "Prérequis"
-   Le mode Agent nécessite **GitHub Copilot Pro+** (ou Business/Enterprise). Il est accessible dans VS Code depuis le sélecteur de modes Chat (**Ask / Plan / Agent**).
-
-```
-Scénario : Migrer tous les callbacks async vers async/await dans un module
-
-1. Préparer une instruction claire et vérifiable :
-   "Dans src/legacy/, convertis tous les callbacks Node.js style (err, result)
-    en async/await. Garde la même signature publique des fonctions.
-    Exécute les tests après chaque fichier modifié pour valider."
-
-2. Activer le mode Agent dans Copilot Chat
-
-3. Copilot va :
-   → Analyser les fichiers ciblés
-   → Proposer les modifications fichier par fichier
-   → Exécuter `npm test` pour vérifier
-   → Itérer si des tests échouent
-
-4. Monitorer la progression dans le panel Agent :
-   → Vous pouvez interrompre à tout moment avec "Stop"
-   → Reviewer chaque modification dans le diff
-
-5. Valider le résultat final avant commit
-```
-
-**Tâches idéales pour l'Agent :**
-- Migrations de syntaxe (callbacks → async/await, CommonJS → ESM)
-- Ajout systématique de gestion d'erreurs manquante
-- Conversion de tests (Jest → Vitest, unittest → pytest)
-- Génération de documentation pour tous les modules d'un dossier
-
-**Tâches à éviter pour l'Agent :**
-- Logique métier complexe avec règles implicites
-- Refactoring d'architecture (trop risqué sans supervision étroite)
-- Code touchant la sécurité (auth, crypto)
+Le skill doit contenir la procédure, les commandes et les critères de réussite. Évitez d'y copier une encyclopédie : chargez les références détaillées uniquement si nécessaire.
 
 ---
 
-## Top 5 des gestes à retenir
+## 6. Subagents : paralléliser seulement les travaux indépendants
 
-1. **++tab++** — Accepter une suggestion (universel, les deux IDEs)
-2. **++ctrl+right++ / ++option+right++** — Accepter mot par mot pour garder le contrôle
-3. **++ctrl+i++ / ++cmd+i++** — Inline Chat directement dans l'éditeur
-4. **++alt+bracket-right++** — Parcourir les suggestions alternatives avant de rejeter
-5. **++ctrl+shift+alt+i++ / ++cmd+shift+alt+i++** — Ouvrir la vue d'édition multi-fichiers
+Bons candidats :
+
+- rechercher les appelants d'une API ;
+- auditer sécurité et tests séparément ;
+- explorer plusieurs modules indépendants ;
+- comparer plusieurs hypothèses techniques.
+
+Mauvais candidat : modifier le même fichier à plusieurs endroits avec plusieurs agents sans coordination.
+
+La parallélisation améliore le débit uniquement lorsque les sous-tâches sont réellement indépendantes.
+
+---
+
+## 7. Réduire le coût du contexte
+
+Anthropic décrit Claude Code comme utilisant une stratégie hybride : instructions de base chargées au départ, puis recherche dynamique par chemins, glob/grep et outils au moment nécessaire.
+
+Pratiques utiles :
+
+- garder `CLAUDE.md` court ;
+- utiliser rules et skills ciblés ;
+- ne pas coller des fichiers déjà accessibles ;
+- utiliser `/clear` entre tâches indépendantes ;
+- compacter les sessions longues ;
+- faire retourner des synthèses courtes aux subagents.
+
+---
+
+## 8. Exécution en parallèle : commandes, pas chaos
+
+Lorsque des vérifications sont indépendantes, Claude peut les lancer séparément :
+
+```text
+Lance en parallèle si possible :
+- les tests unitaires du backend ;
+- le typecheck frontend ;
+- le lint docs.
+Ensuite agrège uniquement les échecs utiles.
+```
+
+Ne parallélisez pas des commandes qui écrivent dans les mêmes artefacts ou partagent un état non isolé.
+
+---
+
+## 9. Éviter les longues attentes actives
+
+Pour un job long (training, build lourd, migration), privilégiez les mécanismes du système : CI, logs, scheduler, observabilité. Claude peut préparer, lancer ou diagnostiquer le job, mais ne doit pas devenir votre système de monitoring permanent.
+
+---
+
+## 10. Sandboxing et permissions
+
+Plus vous autorisez Claude à agir, plus le **blast radius** potentiel augmente. Un sandbox bien configuré peut réduire les prompts d'autorisation sans donner un accès illimité au poste.
+
+Réflexes :
+
+- filesystem limité au projet quand possible ;
+- réseau limité aux domaines nécessaires ;
+- accès en écriture seulement quand utile ;
+- credentials à portée minimale ;
+- confirmation humaine pour les actions irréversibles ou de production.
+
+---
+
+## 11. Mesurer la productivité sur le résultat
+
+Évitez les métriques artificielles du type « pourcentage de lignes générées » ou « temps par suggestion ». Mesurez plutôt :
+
+- temps jusqu'à un changement validé ;
+- nombre de boucles correction/retest ;
+- bugs échappés ;
+- temps de revue ;
+- stabilité du build ;
+- facilité à reproduire la modification.
+
+Un changement plus lent mais correctement testé peut être plus productif qu'une génération instantanée suivie d'une longue correction.
+
+---
+
+## Référence Copilot
+
+Les raccourcis IDE, suggestions inline et modes spécifiques Copilot restent documentés dans les chapitres **GitHub Copilot (référence)**. Ils ne sont pas repris ici car ils dépendent fortement de l'IDE et évoluent séparément de Claude Code.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot best practices for using GitHub Copilot](https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot) - consulté le 2026-06-20
-- [GitHub Copilot Trust Center](https://resources.github.com/copilot-trust-center/) - consulté le 2026-06-20
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
+- [Anthropic — Claude Code sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) — consulté le 2026-09-28
+- [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Sécurité & Qualité](securite-qualite.md)** : valider et sécuriser le code généré pour éviter les pièges courants de la génération IA.
-
-Concepts clés couverts :
-
-- **Injection SQL, secrets hardcodés, XSS** — les vulnérabilités que Copilot peut générer sans le signaler
-- **Hallucinations d'API** — packages inventés, méthodes inexistantes, versions fantômes
-- **Checklist avant commit** — validation sécurité en 5 points pour tout code généré
-- **`.copilotignore`** — exclure les fichiers sensibles de l'analyse Copilot
-- **Tests obligatoires** — aucun code généré ne va en production sans tests
+**[Sécurité & Qualité](securite-qualite.md)** : augmenter l'autonomie sans augmenter inutilement le risque.
