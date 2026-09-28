@@ -1,171 +1,163 @@
-# Patterns pour réduire les allers-retours
+# Réduire les allers-retours avec Claude Code
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Chaque échange avec Copilot — qu'il s'agisse d'une complétion, d'un message de chat ou d'un cycle agent — consomme des ressources (requêtes, tokens, temps). La majorité des cycles inutiles vient d'un contexte insuffisant au départ : Copilot devine, on corrige, on redemande... trois fois au lieu d'une.
+Chaque tour inutile consomme du **temps**, du **contexte** et une partie de votre **allocation d'usage**. L'objectif n'est donc pas de forcer artificiellement « une seule réponse », mais de donner à Claude assez d'information pour travailler correctement puis de lui fournir une **boucle de vérification** fiable.
 
-L'objectif de ce guide est de **passer de 5 échanges à 1** sur les tâches courantes.
+!!! info "Principe directeur"
+    Un bon workflow réduit les ambiguïtés avant l'implémentation et laisse Claude récupérer le contexte supplémentaire **à la demande**. Trop peu de contexte provoque des corrections ; trop de contexte noie l'information utile.
 
 ---
 
-## Pourquoi les allers-retours coûtent cher
+## Pourquoi les cycles inutiles coûtent cher
 
 ```mermaid
 graph LR
-    A["Prompt vague"] --> B["Réponse incomplète"]
-    B --> C["Correction / précision"]
-    C --> D["Nouvelle réponse"]
-    D --> E["Encore un ajustement..."]
-    E --> F["Résultat attendu"]
-
-    style A fill:#ffcccc
-    style F fill:#ccffcc
+    A["Demande vague"] --> B["Hypothèses implicites"]
+    B --> C["Implémentation incorrecte"]
+    C --> D["Correction"]
+    D --> E["Nouvelle exécution"]
+    E --> F["Validation"]
 ```
 
-Un aller-retour typique sur une tâche d'implémentation :
+Les facteurs qui augmentent l'usage Claude incluent notamment :
 
-| Cycle | Requêtes consommées | Temps perdu |
-|-------|---------------------|-------------|
-| Prompt vague → correction × 3 | 3–5 interactions facturables AI Credits | 5–10 min |
-| Prompt complet dès le départ | 1 interaction facturable AI Credits | 1–2 min |
+- longueur et complexité de la conversation ;
+- modèle et niveau d'effort utilisés ;
+- appels d'outils ;
+- contexte chargé dans la session ;
+- répétition d'explorations qui auraient pu être isolées dans un subagent.
+
+Il n'existe pas de ratio universel du type « 5 prompts = X crédits ». Mesurez votre usage réel avec `/status` et `/usage` plutôt que d'inventer une conversion fixe.
 
 ---
 
-## Pattern 1 — Le contexte complet en une fois
+## Pattern 1 — Donner le contrat de la tâche
 
-### Mauvais exemple (3 cycles)
+Un bon prompt de développement précise au minimum :
 
-```
-Toi : "Écris-moi une fonction de validation."
-Copilot : [quelque chose de générique]
-
-Toi : "Pour des emails."
-Copilot : [validation email basique]
-
-Toi : "Avec les règles métier : pas de sous-domaines, que des .com/.fr/.org"
-Copilot : [enfin la bonne chose]
+```text
+Objectif     → ce qui doit changer
+Périmètre    → fichiers/modules concernés
+Contraintes  → compatibilité, sécurité, conventions
+Validation   → tests/build/lint ou comportement observable
+Exclusions   → ce qui ne doit pas changer
 ```
 
-### Bon exemple (1 cycle)
+Exemple :
 
-```
-Toi : "Écris une fonction TypeScript `validateEmail(email: string): boolean`.
-       Règles : RFC 5322 basique, refuser les sous-domaines (a.b@domain),
-       accepter uniquement .com / .fr / .org comme TLD.
-       Inclure les tests unitaires Jest pour 5 cas (valide, TLD invalide,
-       sous-domaine, chaîne vide, sans @)."
-```
+```text
+Ajoute la validation d'email au service utilisateur.
 
-!!! tip "Le principe"
-    Formuler le prompt comme si vous écriviez une **spécification fonctionnelle** : entrée, sortie, contraintes, format attendu.
+Périmètre : `src/users/` uniquement.
+Contraintes : ne change pas l'API publique et réutilise les patterns existants.
+Validation : exécute les tests du module puis le typecheck.
+Avant de terminer, relis le diff et signale toute hypothèse restante.
+```
 
 ---
 
-## Pattern 2 — Le template de prompt structuré
+## Pattern 2 — Laisser Claude récupérer le contexte juste à temps
 
-Pour les tâches récurrentes, créer un prompt file dans `.github/prompts/` réduit le temps de formulation et garantit la cohérence.
+Évitez de charger tout le dépôt « au cas où ». Donnez :
 
-**Exemple : `.github/prompts/implement-feature.prompt.md`**
+- le point d'entrée de la tâche ;
+- les contraintes stables dans `CLAUDE.md` ;
+- les règles ciblées dans `.claude/rules/` ;
+- les fichiers explicitement importants lorsque vous les connaissez.
 
-```markdown
-# Implémenter une fonctionnalité
+Puis laissez Claude chercher les dépendances réelles avec ses outils.
 
-## Tâche
-[Décris la fonctionnalité en 1-2 phrases]
-
-## Signature attendue
-```[langage]
-[Signature de la fonction / interface]
-```
-
-## Contraintes
-- [Contrainte 1]
-- [Contrainte 2]
-
-## À inclure
-- [ ] Implémentation
-- [ ] Tests unitaires
-- [ ] Validation des entrées
-- [ ] Commentaire JSDoc / Javadoc
-```
-
-Ce template se réutilise via `#prompt:implement-feature.prompt.md` — une ligne, zéro ambiguïté.
+!!! tip "Contexte ciblé"
+    Une exploration lourde qui produit beaucoup de texte peut être confiée à un subagent. Son contexte reste isolé de la session principale et seul le résultat synthétique revient à l'orchestrateur.
 
 ---
 
-## Pattern 3 — Le contexte explicite avec références
+## Pattern 3 — Planifier quand le périmètre est réellement complexe
 
-Plutôt que de laisser Copilot deviner quel fichier regarder, pointer explicitement.
+Le mode Plan est utile lorsque la tâche :
 
-=== ":material-microsoft-visual-studio-code: VS Code"
+- touche plusieurs composants ;
+- implique une migration ;
+- modifie une API publique ;
+- comporte un risque de sécurité ou de données ;
+- nécessite une décision architecturale avant écriture.
 
-    ```
-    "Implémente le service `UserService` en suivant exactement
-     le pattern de #file:src/services/ProductService.ts.
-     Le contrat est dans #file:src/types/user.types.ts."
-    ```
+Pour une correction locale évidente, imposer systématiquement un long plan peut au contraire ajouter du coût sans valeur.
 
-    Les variables `#file:`, `#selection`, `@workspace` éliminent une classe entière d'ambiguïté.
-
-=== ":simple-intellijidea: IntelliJ IDEA"
-
-    Ouvrir les fichiers cibles dans des onglets actifs avant de lancer le chat. Copilot indexe automatiquement le contenu des onglets ouverts.
-
-    Pour ajouter explicitement un fichier dans le contexte : bouton **+** dans la fenêtre de chat → **Add File**.
+```text
+Explore le code concerné et propose un plan.
+Le plan doit lister : fichiers, comportement actuel, changement prévu,
+risques et commandes de validation.
+N'implémente rien tant que le plan n'est pas cohérent avec le dépôt.
+```
 
 ---
 
-## Pattern 4 — Demander la validation avant l'exécution (Agent Mode)
+## Pattern 4 — Donner à Claude un moyen de vérifier son travail
 
-En Agent Mode, préciser le plan attendu avant l'exécution évite les refactorings complets :
+Le levier le plus efficace contre les itérations inutiles est la **vérification exécutable** :
 
+```text
+Avant de conclure :
+1. exécute les tests ciblés ;
+2. exécute le lint/typecheck pertinent ;
+3. corrige les échecs provoqués par tes changements ;
+4. relis `git diff` ;
+5. résume ce qui reste non vérifié.
 ```
-"Avant de commencer, liste les fichiers que tu vas modifier et les
- changements prévus dans chaque. Attends ma validation avant d'écrire."
-```
 
-Cela transforme un cycle de 8 tool calls en 3 : plan → validation → exécution.
+Sans feedback de l'environnement, Claude doit deviner si le résultat fonctionne réellement.
 
 ---
 
-## Pattern 5 — Les checkpoints explicites
+## Pattern 5 — Transformer les procédures répétitives en skills
 
-Pour les tâches longues, découper en étapes avec validation intermédiaire :
+Une procédure stable ne doit pas être réécrite dans chaque prompt.
 
+```text
+.claude/
+└── skills/
+    └── verify-change/
+        └── SKILL.md
 ```
-"Étape 1 uniquement : crée le schéma de base de données. Stop.
- Attends que je valide avant de passer à l'étape 2 (API)."
-```
 
-!!! warning "Agent sans contrainte"
-    Un agent sans checkpoint peut générer 20 fichiers avant que vous réalisiez qu'il est parti dans la mauvaise direction. Les checkpoints sont de la dette évitée, pas de la lenteur ajoutée.
+Le skill peut contenir par exemple :
+
+1. lire le diff ;
+2. identifier les tests affectés ;
+3. exécuter les checks ;
+4. classer les erreurs entre préexistantes et introduites ;
+5. produire un résumé reproductible.
+
+Les règles globales restent dans `CLAUDE.md`; les workflows détaillés vont dans des skills.
 
 ---
 
-## Récapitulatif des patterns
+## Pattern 6 — Changer de tâche proprement
 
-| Pattern | Gain estimé | Applicable dans |
-|---------|-------------|-----------------|
-| Contexte complet dès le départ | −60% de cycles | Chat, Agent |
-| Template de prompt réutilisable | −40% de temps de formulation | Chat, Agent |
-| Références explicites (#file, @workspace) | −50% d'ambiguïtés | VS Code Chat |
-| Plan avant exécution (Agent) | −65% de tool calls | Agent Mode |
-| Checkpoints explicites | Évite les refactorings | Agent Mode |
+Quand une conversation a accumulé un contexte qui n'est plus utile :
+
+- `/compact` si vous devez garder la continuité ;
+- `/clear` si vous passez à une tâche indépendante ;
+- un subagent si une exploration volumineuse peut rester isolée.
+
+L'objectif est de ne pas payer indéfiniment le contexte d'un travail terminé.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Les mêmes principes restent valables avec Copilot : contexte explicite, prompt files, instructions de dépôt et validation avant changements importants. Les mécanismes spécifiques Copilot (`.github/prompts/`, `#file`, AI Credits) sont documentés dans les pages Copilot de référence.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-20
-- [GitHub Copilot usage-based billing](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-20
+- [Claude Help Center — How do usage and length limits work?](https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work) — consulté le 2026-09-28
+- [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Claude Code — Commands](https://code.claude.com/docs/en/commands) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[AI Credits : consommation détaillée](premium-requests.md)** : comprendre ce qui consomme des crédits, comment lire la facturation, et comment éviter les dérives.
-
-Concepts clés couverts :
-
-- **Coût des modèles** — impact direct du prix/token sur les crédits
-- **Allocations par plan** — individuel ou pool organisation
-- **Surveiller son solde** — dashboards de facturation GitHub
-- **Comportement après épuisement** — dépend des budgets et politiques
+**[Leviers d'économie](leviers-economie.md)** : réduire l'usage sans sacrifier la qualité en jouant sur le contexte, les modèles, les subagents et les validations.
