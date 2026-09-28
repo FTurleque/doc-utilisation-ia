@@ -1,316 +1,134 @@
-﻿# :simple-intellijidea: Tutoriel — Installer GitHub Copilot sur IntelliJ IDEA
+# JetBrains / IntelliJ IDEA — installer GitHub Copilot
 
 <span class="badge-intellij">IntelliJ IDEA</span> <span class="badge-beginner">Débutant</span>
 
-## Présentation
+!!! info "Référence Copilot conservée"
+    Le parcours principal du dépôt est désormais **Claude Code**. Cette page reste maintenue pour les équipes utilisant GitHub Copilot dans IntelliJ IDEA et les autres IDE JetBrains pris en charge.
 
-Ce tutoriel vous guide pas à pas pour installer et configurer GitHub Copilot sur **IntelliJ IDEA** (et toute la suite JetBrains : PyCharm, WebStorm, GoLand, Rider, etc.). Durée estimée : **5 minutes**.
-
-GitHub Copilot sur IntelliJ IDEA permet de :
-
-- Recevoir des suggestions de code en temps réel (inline)
-- Utiliser Copilot Chat pour questions et refactorings
-- Effectuer des modifications multi-fichiers automatisées (Agents)
-- Intégration native avec l'analyse sémantique JetBrains (PSI)
+GitHub Copilot pour JetBrains fournit les suggestions de code, le chat et plusieurs fonctions agentiques. Leur disponibilité exacte dépend de la version du plugin, du plan Copilot et des politiques de l'organisation.
 
 ---
 
 ## Prérequis
 
-Avant de commencer, vérifiez :
+- un compte GitHub avec accès à Copilot, y compris **Copilot Free** ou un plan payant ;
+- une connexion Internet ;
+- un IDE JetBrains actuellement compatible ;
+- la version du plugin Copilot compatible avec votre IDE ;
+- les politiques de votre organisation autorisant Copilot si le compte est géré.
 
-- [ ] **IntelliJ IDEA 2024.1+** (ou PyCharm/WebStorm/GoLand équivalent) — vérifiable via *Help → About*
-- [ ] **Compte GitHub actif** avec accès à Copilot (Free/Pro/Enterprise)
-- [ ] **Connexion internet** (authentification OAuth)
-- [ ] (Optionnel) **JDK 21+** si vous développez en Java
+!!! warning "Compatibilité : vérifier le Marketplace"
+    Ne considérez pas `IntelliJ 2024.1+` comme un prérequis universel et permanent. GitHub renvoie désormais vers la fiche **GitHub Copilot Versions** du JetBrains Marketplace pour la compatibilité exacte entre IDE et plugin. Utilisez de préférence la dernière version stable compatible.
 
-Vérifiez votre version : *Help → About* (doit afficher "IntelliJ IDEA 2024.x" ou supérieur)
-
-!!! warning "Version insuffisante ?"
-    Le plugin Copilot nécessite **IntelliJ 2024.1 minimum**. Les versions anciennes (2023.x) ne supportent pas toutes les features modernes (Agents, Edits).
-    
-    Mettez à jour via *Help → Check for Updates* ou [jetbrains.com/idea](https://www.jetbrains.com/idea/)
+Les IDE actuellement cités par GitHub incluent notamment IntelliJ IDEA, Android Studio, CLion, DataGrip, DataSpell, GoLand, PhpStorm, PyCharm, Rider, RubyMine, RustRover et WebStorm.
 
 ---
 
-## :material-folder-open: Étape 1 — Ouvrir le gestionnaire de plugins
+## Installation du plugin
 
-Ouvrez IntelliJ IDEA et accédez au **gestionnaire de plugins**.
-
-### :keyboard: Méthode 1 : Raccourci clavier
-
-- **Windows/Linux** : ++ctrl+alt+s++ (Settings) → *Plugins*
-- **macOS** : ++cmd+comma++ (Preferences) → *Plugins*
-
-### :material-menu: Méthode 2 : Menu principal
-
-1. Cliquez *File* (Windows/Linux) ou le nom de l'app (macOS)
-2. Sélectionnez *Settings* (Windows/Linux) ou *Preferences* (macOS)
-3. Dans le volet gauche : *Plugins*
-
-<figure markdown>
-  ![Gestionnaire de plugins IntelliJ IDEA](../../assets/images/intellij/plugins-menu.png){ .reduced-screenshot }
-  <figcaption markdown="span">:material-camera: Gestionnaire de plugins via Settings</figcaption>
-</figure>
-
-### :material-magnify: Méthode 3 : Recherche rapide
-
-- Appuyez ++shift++ + ++shift++ pour ouvrir *Search Everywhere*
-- Tapez : `"Plugins"`
-- Appuyez ++enter++
-
-!!! tip "Raccourci direct"
-    Vous pouvez aussi accéder aux Plugins directement via la barre de recherche rapide (*Search Everywhere*) : appuyez sur ++shift+shift++, puis tapez `"Plugins"`.
-
-!!! example "Vous verrez :"
-    Le gestionnaire de plugins avec onglets : *Marketplace*, *Installed*, *Updates*
+1. Ouvrez votre IDE JetBrains.
+2. Accédez à **Settings/Preferences → Plugins**.
+3. Ouvrez l'onglet **Marketplace**.
+4. Recherchez **GitHub Copilot**.
+5. Vérifiez que le plugin est publié par GitHub.
+6. Cliquez **Install**.
+7. Redémarrez l'IDE lorsque cela est demandé.
 
 ---
 
-## :material-download: Étape 2 — Installer GitHub Copilot
+## Connexion à GitHub
 
-### :material-list-box: Étapes d'installation
+Après redémarrage :
 
-1. Assurez-vous d'être sur l'onglet **Marketplace** (pas "Installed")
-2. Tapez **`GitHub Copilot`** dans la barre de recherche
-3. Le **premier résultat** doit être publié par `GitHub` (avec badge ✓)
-4. Cliquez **Install** 
+1. ouvrez **Tools → GitHub Copilot → Login to GitHub** ;
+2. utilisez **Copy and Open** pour ouvrir la page d'activation ;
+3. collez le device code ;
+4. connectez-vous au bon compte GitHub ;
+5. autorisez le plugin ;
+6. revenez dans l'IDE et confirmez la connexion.
 
-<figure markdown>
-  ![Résultat de recherche GitHub Copilot dans le Marketplace](../../assets/images/intellij/marketplace-search.png){ .doc-screenshot }
-  <figcaption markdown="span">:material-camera: Résultats de recherche « GitHub Copilot »</figcaption>
-</figure>
-
-!!! danger "Vérifiez l'éditeur du plugin"
-    Assurez-vous que le plugin est bien publié par **GitHub** (vérifié avec badge ✓). Il existe des plugins tiers imitateurs — installez uniquement l'officiel (identifiant : `com.github.copilot`).
-
-
-### Après l'installation
-
-Le gestionnaire affiche : **Restart IDE** (bouton bleu)
+Pour les comptes gérés sur GHE.com, consultez la procédure GitHub dédiée avant l'authentification.
 
 ---
 
-## :material-restart: Étape 3 — Redémarrer IntelliJ
+## Vérification rapide
 
-Cliquez **Restart IDE**. IntelliJ relance automatiquement.
+Testez séparément :
 
-!!! warning "Redémarrage obligatoire"
-    IntelliJ doit redémarrer pour charger le plugin. Sauvegardez votre travail en cours avant de cliquer sur **Restart IDE**. Tous vos projets ouverts seront restaurés automatiquement.
+1. **complétion inline** dans un petit fichier ;
+2. **Chat** sur du code déjà présent ;
+3. **Agent/Edit mode** uniquement si la fonction est disponible dans votre version ;
+4. **diff + build/tests** après toute modification proposée.
 
-## :material-github: Étape 4 — Authentification avec GitHub
-
-Après redémarrage, authentifiez-vous avec votre compte GitHub.
-
-### :material-bell: Cas 1 : Notification automatique
-
-1. Une notification **"GitHub Copilot"** peut apparaître automatiquement en bas à droite → cliquez-la
-
-### :material-cursor-default-click: Cas 2 : Authentification manuelle
-
-1. Menu : *Tools → GitHub Copilot → Login to GitHub*
-   - Ou recherche rapide (++shift+shift++) : `"Login to GitHub"`
-2. Une **boîte de dialogue** s'ouvre avec un code de vérification unique (ex: `AB12-CD34`)
-
-<figure markdown>
-  ![Boîte de dialogue avec code de vérification Copilot](../../assets/images/intellij/auth-dialog.png){ .doc-screenshot }
-  <figcaption markdown="span">:material-camera: Boîte de dialogue avec code de vérification</figcaption>
-</figure>
-
-3. Cliquez **Copy and Open** — le code est copié et votre navigateur s'ouvre automatiquement
-4. Sur la page GitHub qui s'ouvre, collez le code dans le champ prévu
-
-### :material-web: Processus navigateur
-
-1. Connexion GitHub (si nécessaire)
-2. Collez le code de vérification dans le champ prévu
-3. Cliquez **Continue**, puis **Authorize GitHub Copilot Plugin**
-4. GitHub peut demander votre mot de passe ou une authentification 2FA
-5. Une fois autorisé, un message de confirmation s'affiche dans le navigateur
-6. Revenez dans IntelliJ — Copilot est maintenant authentifié
-
-<figure markdown>
-  ![Page d'autorisation GitHub dans le navigateur](../../assets/images/intellij/github-auth-browser.png){ .doc-screenshot }
-  <figcaption markdown="span">:material-camera: Page d'autorisation GitHub dans le navigateur</figcaption>
-</figure>
-
-!!! tip "Le navigateur ne s'ouvre pas ?"
-    Copiez manuellement l'URL affichée dans la boîte de dialogue et collez-la dans votre navigateur. Le code de vérification reste valide pendant **15 minutes**.
-
-## :material-check-circle: Étape 5 — Vérifier que Copilot est actif
-
-### :material-check: Vérification rapide
-
-1. Regardez la **barre de statut en bas à droite** d'IntelliJ
-2. Vous devez voir l'icône Copilot (éclair/logo)
-3. **Vert** ou sans point rouge = actif ✅ ou (status: Ready)
-
-<figure markdown>
-  ![Icône Copilot dans la barre de statut IntelliJ](../../assets/images/intellij/status-bar-icon.png){ .reduced-screenshot }
-  <figcaption markdown="span">:material-camera: Icône Copilot active dans la barre de statut</figcaption>
-</figure>
-
-### :material-play: Test rapide
-
-1. Créez un nouveau fichier : *File → New → Java Class* (ou autre langage)
-2. Tapez `// TODO: fonction pour` 
-3. Appuyez ++enter++ et continuez
-4. Après 1-2 sec, une suggestion grise devrait apparaître
-5. Appuyez ++tab++ pour accepter, ++escape++ pour rejeter
-
-!!! example "Exemple Java :"
-    ```java
-    // TODO: fonction pour trier une liste de utilisateurs par nom
-    public List<User>
-    ```
-    
-    Copilot suggère (en gris) :
-    ```java
-    public List<User> sortUsersByName(List<User> users) {
-        return users.stream()
-            .sorted(Comparator.comparing(User::getName))
-            .collect(Collectors.toList());
-    }
-    ```
-    
-    ++tab++ = accepter la suggestion
-
-!!! success "Ça fonctionne !"
-    Si vous voyez la suggestion grisée s'afficher dans l'éditeur, GitHub Copilot est correctement installé et opérationnel. Appuyez sur ++tab++ pour accepter.
-
-## :material-chat: Bonus — Votre première interaction avec Copilot Chat
-
-Testez le chat interactif dès maintenant.
-
-### :material-chat-outline: Ouvrir Copilot Chat
-
-- **Windows/Linux** : ++ctrl+shift+a++
-- **macOS** : ++cmd+shift+a++
-- Ou *Tools → GitHub Copilot → Open Chat*
-
-### :material-lightbulb: Première question
-
-1. Le panneau **Chat** s'ouvre à droite
-
-<figure markdown>
-  ![Panneau Copilot Chat ouvert dans IntelliJ IDEA](../../assets/images/intellij/copilot-chat-panel.png){ .doc-screenshot }
-  <figcaption markdown="span">:material-camera: Panneau Copilot Chat dans la barre latérale</figcaption>
-</figure>
-
-2. Tapez une question simple :
-   ```
-   Comment implémenter un HashMap custom en Java ?
-   ```
-
-3. Copilot répond avec explication + exemples de code
-
-### Raccourcis Chat disponibles
-
-- **Ouvrir Chat** : ++ctrl+shift+a++ (Windows/Linux) / ++cmd+shift+a++ (macOS)
-- **Inline Chat** : ++shift+enter++ (dans éditeur)
-- **Slash commands** : `/explain`, `/fix`, `/tests`, `/doc`
+La présence du plugin ne garantit pas que toutes les fonctions de la matrice Copilot sont activées : le plan, les politiques d'organisation et le canal stable/preview peuvent modifier l'expérience.
 
 ---
 
-## Prochaines étapes
+## État des fonctions JetBrains
 
-### 1. **Découvrir les raccourcis** (5 min)
-→ [Guide Référence — Raccourcis complets](reference.md)
+GitHub publie une **Copilot feature matrix** par IDE et par version de plugin. À la date de cette révision, JetBrains prend en charge notamment :
 
-Apprenez :
-- Accepter suggestions (++tab++, navigation alternatives)
-- Déclencher Copilot manuellement (++ctrl+backslash++)
-- Ouvrir Chat (++ctrl+shift+a++)
+- code completion ;
+- Chat ;
+- Agent mode ;
+- Edit mode ;
+- MCP ;
+- checkpoints ;
+- code review ;
+- workspace indexing.
 
-### 2. **Personnaliser vos préférences** (10 min)
-→ [Paramétrage avancé](../../chapitre-2-parametrage/intellij-parametrage.md)
+Plusieurs personnalisations sont encore indiquées **Preview** dans la matrice courante, notamment selon la version :
 
-Configurez :
-- Activation par langage
-- Mode manual vs auto
-- Raccourcis clavier personnalisés
+- custom instructions ;
+- custom agents ;
+- prompt files ;
+- agent skills ;
+- next edit suggestions ;
+- certaines fonctions BYOK/vision.
 
-### 3. **Apprendre les best practices** (15 min)
-→ [Utilisation Effective](../../chapitre-9-bonnes-pratiques/utilisation-effective.md)
-
-Maîtrisez :
-- Écrire des prompts efficaces
-- Valider le code généré
-- Quand utiliser Chat vs Agents
-
-### 4. **Explorer personnalisation & contexte** (20+ min)
-→ [Contexte & Personnalisation IntelliJ](../../chapitre-4-contexte/intellij-contexte.md)
-
-Avancé :
-- Custom instructions par projet
-- Multi-module Maven/Gradle setup
-- PSI integration (analyse sémantique profonde)
+Ne présentez donc pas l'ensemble des capacités JetBrains comme strictement équivalentes à VS Code.
 
 ---
 
-## Foire aux questions
+## Réglages essentiels après installation
 
-**Q : Copilot ne suggère rien. Qu'est-ce qui ne va pas ?**
+Dans **Settings → Tools → GitHub Copilot** :
 
-A : Vérifiez :
-- [ ] Plugin GitHub Copilot installé (Settings → Plugins)
-- [ ] IntelliJ relancé après installation
-- [ ] Vous êtes authentifié (icône Copilot visible en bas)
-- [ ] Copilot activé pour ce langage (Settings → GitHub Copilot)
-
-**Q : Je vois une erreur d'authentification .
-
-A :
-1. Menu : *Tools → GitHub Copilot → Logout*
-2. Attendez 10 secondes
-3. *Tools → GitHub Copilot → Login to GitHub*
-4. Reconnectez-vous
-
-**Q : Copilot suggère du code de mauvaise qualité.**
-
-A : C'est normal — **vous êtes responsable** de vérifier. Lisez la section [Best Practices](../../chapitre-9-bonnes-pratiques/utilisation-effective.md) pour apprendre à valider.
+- contrôlez le compte connecté ;
+- vérifiez le canal de mise à jour ;
+- activez/désactivez les complétions par langage si nécessaire ;
+- vérifiez les fonctions preview autorisées par votre organisation ;
+- revoyez les raccourcis dans **Settings → Keymap** plutôt que de supposer un mapping universel.
 
 ---
 
-## Pièges à éviter
+## Sécurité minimale
 
-!!! danger "Pièges courants lors de l'installation"
+- n'installez que le plugin officiel ;
+- relisez les diffs ;
+- évitez les secrets dans les prompts et logs ;
+- gardez les permissions agentiques minimales ;
+- contrôlez les dépendances proposées ;
+- compilez, testez et appliquez les contrôles CI/Sonar/SAST habituels.
 
-    **1. Version IntelliJ trop ancienne**
-    Le plugin ne sera pas visible dans le Marketplace ou refusera de s'installer.
-    ✅ Solution : mettez à jour IntelliJ via *Help → Check for Updates*
+---
 
-    **2. Plugin installé mais pas de suggestions**
-    Il peut s'agir d'un problème d'authentification non complété.
-    ✅ Solution : *Tools → GitHub Copilot → Login to GitHub* et recommencez
+## Claude Code dans JetBrains
 
-    **3. Suggestions uniquement en anglais**
-    C'est le comportement par défaut. Copilot génère du code (qui est en anglais), mais vous pouvez interagir avec Chat en français.
-    ✅ Voir [Paramétrage](../../chapitre-2-parametrage/intellij-parametrage.md) pour la configuration de langue
+Pour le parcours principal de cette documentation :
 
-    **4. Icône Copilot absente dans la barre d'état**
-    Copilot est peut-être désactivé pour le projet ouvert.
-    ✅ Cliquez sur *Tools → GitHub Copilot → Enable Completions*
+**[Claude Code — Installation CLI, VS Code et JetBrains](../../chapitre-3b-claude-code-migration-copilot/installation.md)**
 
-    **5. Conflit avec un autre plugin d'autocomplétion**
-    Certains plugins comme Tabnine peuvent créer des conflits.
-    ✅ Désactivez temporairement les autres plugins d'IA pour tester
+Le plugin JetBrains Claude Code et la CLI ont leur propre modèle de configuration ; ne supposez pas qu'un réglage Copilot est automatiquement transposable à Claude.
 
 ---
 
 ## Sources
 
-- [Installing GitHub Copilot in your environment](https://docs.github.com/en/copilot/managing-copilot/configure-personal-settings/installing-github-copilot-in-your-environment) - consulté le 2026-06-20
-- [GitHub Copilot in JetBrains IDEs](https://docs.github.com/en/copilot/getting-started-with-github-copilot?tool=jetbrains) - consulté le 2026-06-20
+- [GitHub Docs — Installing the GitHub Copilot extension in your environment](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension) — consulté le 2026-09-28
+- [GitHub Docs — Copilot feature matrix](https://docs.github.com/en/copilot/reference/copilot-feature-matrix) — consulté le 2026-09-28
+- [GitHub Docs — Configuring GitHub Copilot in your environment](https://docs.github.com/en/copilot/how-tos/configure-personal-settings/configure-in-ide) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Guide Référence — GitHub Copilot sur IntelliJ IDEA](reference.md)** : documentation complète avec tous les raccourcis, paramètres techniques, et fonctionnalités de Copilot sur IntelliJ IDEA.
-
-Concepts clés couverts :
-
-- **Raccourcis clavier complets** — accepter suggestions, naviguer, invoke action, chat
-- **Paramètres avancés** — activation par langage, modèles, authentification
-- **Dossier `.idea`** — paramètres au niveau du project
-- **Keymaps personnalisés** — adapter les raccourcis à vos préférences
-- **MCP (Model Context Protocol)** — intégration de serveurs externes pour enrichir le contexte
+**[Référence Copilot JetBrains](reference.md)** pour les fichiers de configuration, capacités et diagnostics version-safe.
