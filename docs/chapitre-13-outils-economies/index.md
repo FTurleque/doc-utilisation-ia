@@ -2,7 +2,7 @@
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Ce chapitre présente les outils qui complètent Claude Code : utilitaires déterministes, analyse statique, compression de sorties, MCP, modèles locaux et assistants alternatifs.
+Ce chapitre présente les outils qui complètent Claude Code : utilitaires déterministes, analyse statique, compression de sorties, MCP, observabilité, GreenOps, architectures event-driven, modèles locaux et agents alternatifs.
 
 L'objectif n'est plus « économiser des crédits Copilot » à tout prix. Le bon principe est : **utiliser l'outil le plus fiable et le plus simple pour chaque étape**, puis réserver le raisonnement agentique aux problèmes qui en ont réellement besoin.
 
@@ -19,7 +19,7 @@ Claude Code pour raisonner / modifier
         ↓
 Tests, lint, build, analyse statique
         ↓
-Preuve de validation
+Observabilité et preuve de validation
 ```
 
 Un outil local n'est pas automatiquement préférable à Claude, et un appel IA n'est pas automatiquement coûteux ou inutile. La décision dépend de la nature du problème.
@@ -44,6 +44,10 @@ RTK ne remplace pas `/compact` : l'un transforme une **sortie externe**, l'autre
 ### TOON
 
 **[TOON](toon.md)** vise la représentation compacte de données structurées. Utilisez-le lorsque son format est réellement supporté par votre workflow ; ne convertissez pas des données simplement pour « économiser des tokens » si JSON/CSV filtré est déjà suffisamment lisible.
+
+### Graphify
+
+Pour un dépôt volumineux, **[Graphify](../chapitre-4-contexte/graphify.md)** peut construire un knowledge graph afin de cartographier les relations entre code, documentation et configurations. Sa place principale reste le chapitre **Contexte**, car il sert d'abord à réduire l'exploration brute du repository.
 
 ### CLI déterministes
 
@@ -139,7 +143,46 @@ Pour un projet Claude-only, commencez par les skills natifs avant d'ajouter une 
 
 ---
 
-## 5. Modèles locaux
+## 5. Observabilité & GreenOps
+
+Un workflow agentique doit être observable comme n'importe quel système distribué.
+
+La nouvelle section **[Observabilité & GreenOps](observabilite/index.md)** couvre :
+
+- **[Grafana](observabilite/grafana.md)** pour dashboards, exploration et alerting ;
+- **[Loki](observabilite/loki.md)** pour centraliser et interroger les logs ;
+- **[Kepler](observabilite/kepler.md)** pour mesurer la consommation énergétique de workloads Kubernetes.
+
+Architecture typique :
+
+```text
+applications / agents
+├── métriques → Prometheus → Grafana
+└── logs      → Loki       → Grafana
+
+Kubernetes → Kepler → Prometheus → Grafana
+```
+
+Cette télémétrie sert de preuve pendant un diagnostic ou une optimisation : Claude peut analyser les données, mais ne doit pas remplacer la mesure.
+
+---
+
+## 6. Architecture event-driven avec Solace
+
+**[Solace](solace.md)** documente le rôle d'un Event Broker/Event Mesh dans des architectures temps réel et la manière dont des agents peuvent être déclenchés par des événements.
+
+Solace et MCP résolvent des problèmes différents :
+
+```text
+Event Mesh → distribuer les événements
+MCP        → exposer des outils/ressources à un agent
+```
+
+Les deux peuvent être combinés via des workflows agentiques lorsque le besoin est réel.
+
+---
+
+## 7. Modèles locaux
 
 Les modèles locaux peuvent être utiles pour :
 
@@ -162,13 +205,34 @@ Pages disponibles :
 
 ---
 
-## 6. Assistants alternatifs et Copilot
+## 8. Agents de code alternatifs — Cline & Kilo Code
 
-Le dépôt conserve des pages sur :
+Une section spéciale **[Agents de code alternatifs](agents-code/index.md)** est dédiée à :
+
+- **[Cline](agents-code/cline.md)** ;
+- **[Kilo Code](agents-code/kilo-code.md)**.
+
+Ces outils sont des **agent runtimes complets**, pas seulement des modèles. Ils sont particulièrement intéressants pour comparer :
+
+- harness agentique ;
+- multi-provider ;
+- modèles locaux ;
+- IDE/CLI ;
+- rules/skills ;
+- MCP ;
+- politiques d'approbation et gouvernance.
+
+Claude Code reste le parcours principal du dépôt ; Cline et Kilo sont documentés comme alternatives à évaluer sur un même jeu de tâches.
+
+---
+
+## 9. Autres assistants alternatifs et références
+
+Le dépôt conserve également des pages sur :
 
 - **[Codeium / Windsurf](codeium-windsurf.md)** ;
 - **[Tabnine](tabnine.md)** ;
-- **[Amazon Q Developer](amazon-q-developer.md)** ;
+- **[Amazon Q Developer / Kiro](amazon-q-developer.md)** ;
 - **[Supermaven](supermaven.md)** ;
 - GitHub Copilot dans ses chapitres dédiés.
 
@@ -188,22 +252,27 @@ Voir **[Comparaison des outils](comparaison.md)** et **[Recommandations par appl
 
 ---
 
-## 7. Choisir le bon outil selon le besoin
+## 10. Choisir le bon outil selon le besoin
 
 | Besoin | Premier outil | Claude Code intervient quand… |
 |---|---|---|
 | trouver un symbole | IDE / `rg` / code intelligence | la relation nécessite interprétation |
+| cartographier les relations d'un gros dépôt | Graphify / outil de code intelligence | il faut vérifier et modifier les sources |
 | erreur de compilation | compilateur | il faut comprendre/corriger la cause |
 | vulnérabilité statique | Sonar/Semgrep | la correction touche architecture ou logique |
 | migration répétitive | OpenRewrite / AST tool | cas particuliers ou revue des transformations |
-| gros log | filtre/RTK/jq | il faut diagnostiquer la cause |
+| gros log | Loki / filtre / RTK / jq | il faut diagnostiquer la cause |
+| dashboards / corrélation télémétrie | Grafana | il faut analyser ou automatiser un runbook |
+| énergie Kubernetes | Kepler + Prometheus | il faut comparer ou expliquer les mesures |
 | service externe | MCP | il faut raisonner ou agir avec les données récupérées |
+| événements temps réel multi-systèmes | event broker / Solace selon architecture | il faut déclencher ou alimenter un workflow agentique |
 | procédure récurrente | skill Claude | il faut exécuter le workflow contextualisé |
+| agent multi-provider | Cline/Kilo selon contraintes | comparer au workflow Claude avec mêmes tests |
 | données très sensibles | outil/local model selon politique | seulement si l'accès Claude est autorisé |
 
 ---
 
-## 8. Workflow recommandé
+## 11. Workflow recommandé
 
 ```mermaid
 graph LR
@@ -211,7 +280,7 @@ graph LR
     B --> C["Contexte ciblé"]
     C --> D["Claude Code"]
     D --> E["Validation automatique"]
-    E --> F["Revue du diff / résultat"]
+    E --> F["Observabilité / revue du résultat"]
 ```
 
 1. reproduire le problème ou formuler le résultat attendu ;
@@ -219,7 +288,7 @@ graph LR
 3. donner à Claude les preuves utiles, pas tout le bruit ;
 4. laisser Claude explorer davantage si nécessaire ;
 5. faire exécuter les checks ;
-6. relire le résultat.
+6. mesurer et relire le résultat.
 
 ---
 
@@ -234,7 +303,11 @@ Les outils de ce chapitre peuvent aussi compléter Copilot. Les anciennes formul
 - [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 - [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+- [Grafana — documentation](https://grafana.com/docs/grafana/latest/) — consulté le 2026-09-28
+- [Cline — site officiel](https://cline.bot/) — consulté le 2026-09-28
+- [Kilo Code — documentation](https://kilo.ai/docs) — consulté le 2026-09-28
+- [Solace — Event Broker](https://solace.com/products/event-broker/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[RTK — Rust Token Killer](rtk.md)** : évaluer la compression des sorties terminales avant de poursuivre vers MCP, analyse statique et modèles locaux.
+**[RTK — Rust Token Killer](rtk.md)** pour préparer des sorties compactes, puis choisissez la sous-section correspondant au besoin réel : MCP, observabilité, event-driven, modèles locaux ou agents alternatifs.
