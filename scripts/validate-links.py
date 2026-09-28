@@ -6,12 +6,9 @@ example ``/doc-utilisation-ia/`` on GitHub Pages), so absolute links generated
 by Material are resolved against the local ``site/`` directory correctly.
 """
 
-import os
 import re
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
-
-import yaml
 
 
 class LinkValidator:
@@ -25,15 +22,23 @@ class LinkValidator:
         self.html_files = []
 
     def _load_base_path(self) -> str:
-        """Return the URL path prefix from MkDocs ``site_url`` if configured."""
+        """Return the URL path prefix from MkDocs ``site_url`` if configured.
+
+        Do not parse the whole MkDocs YAML file: Material uses Python-specific
+        YAML tags (for example ``!!python/name:...``) that PyYAML SafeLoader is
+        intentionally unable to construct. We only need the top-level
+        ``site_url`` scalar, so reading that line directly is safer and keeps
+        this validator independent from MkDocs' custom YAML loader.
+        """
         if not self.config_file.exists():
             return ""
 
-        with self.config_file.open("r", encoding="utf-8") as stream:
-            config = yaml.safe_load(stream) or {}
+        text = self.config_file.read_text(encoding="utf-8")
+        match = re.search(r"(?m)^site_url:\s*['\"]?([^'\"\s]+)['\"]?\s*$", text)
+        if not match:
+            return ""
 
-        site_url = config.get("site_url") or ""
-        return urlsplit(site_url).path.rstrip("/")
+        return urlsplit(match.group(1)).path.rstrip("/")
 
     def validate(self):
         """Run complete validation and return True when no broken links remain."""
@@ -88,9 +93,9 @@ class LinkValidator:
         else:
             target = (source_file.parent / link_path).resolve()
 
-        # A directory produced by use_directory_urls is a valid target because
-        # MkDocs serves its index.html automatically.
-        if target.exists() or (target.is_dir() and (target / "index.html").exists()):
+        # With use_directory_urls, a directory is a valid target because its
+        # generated index.html is what the web server serves.
+        if target.exists():
             self.valid_links.append(link)
             return
 
