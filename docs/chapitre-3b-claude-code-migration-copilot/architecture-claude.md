@@ -234,7 +234,7 @@ Les skills peuvent être invoqués via `/nom` et, selon leur configuration, Clau
 
 ---
 
-## Subagents
+## Agents — subagents isolés
 
 Les subagents sont définis dans `.claude/agents/*.md` et possèdent leur propre contexte, prompt et sélection d'outils.
 
@@ -255,7 +255,7 @@ Les champs disponibles évoluent : modèle, outils, permissions, skills, MCP, ho
 
 ---
 
-## Hooks
+## Hooks — automatisation avant/après action
 
 Les hooks exécutent automatiquement une action à des événements de Claude Code. Ils peuvent être des commandes shell, appels HTTP, outils MCP, prompts ou subagents.
 
