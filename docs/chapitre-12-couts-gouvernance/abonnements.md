@@ -1,144 +1,128 @@
-# Les abonnements GitHub Copilot
+# Les abonnements Claude et l'accès à Claude Code
 
 <span class="badge-beginner">Débutant</span>
 
-Le choix d'un plan Copilot se fait maintenant avec une logique claire: **prix de licence + allocation AI Credits + politique de dépassement**.
+Cette page décrit le modèle de coût **Claude** actuel. La documentation GitHub Copilot n'est pas supprimée : les AI Credits et plans Copilot restent documentés dans les pages de référence du chapitre.
 
-!!! info "Référence de cette page"
-    Valeurs revérifiées le **1 juin 2026** sur la documentation officielle GitHub Copilot.
-
-!!! warning "Valeurs susceptibles d'évoluer"
-    Les prix, crédits inclus et politiques de dépassement peuvent changer. Vérifiez toujours les pages officielles avant une décision budgétaire.
+!!! info "Référence"
+    Tarification vérifiée le **28 septembre 2026** sur `claude.com/pricing` et le centre d'aide Anthropic. Les prix affichés ici sont hors taxes et peuvent évoluer.
 
 ---
 
-## Vue rapide des plans
+## Vue d'ensemble actuelle
 
-| Plan | Prix | Allocation AI Credits | Remarques clés |
-|------|------|------------------------|----------------|
-| Free | Gratuit | Incluse (limitée) | 2000 completions/mois, modèles sélectionnés |
-| Student | Gratuit (éligible) | Incluse (limitée) | Completions illimitées, modèles sélectionnés |
-| Pro | 10 USD/mois | 1500 (1000 base + 500 flex) | Individuel, usage régulier |
-| Pro+ | 39 USD/mois | 7000 (3900 base + 3100 flex) | Individuel intensif |
-| Max | 100 USD/mois | 20000 (10000 base + 10000 flex) | Très gros volume |
-| Business | 19 USD/utilisateur/mois | 1900 par siège (poolé) | Gouvernance organisation |
-| Enterprise | 39 USD/utilisateur/mois | 3900 par siège (poolé) | Gouvernance avancée |
+| Plan | Prix public indiqué | Claude Code | Usage |
+|---|---:|:---:|---|
+| Free | 0 USD | ❌ | Usage Claude de base |
+| Pro | 20 USD/mois, ou 200 USD/an | ✅ | Plus d'usage que Free |
+| Max 5x | 100 USD/mois | ✅ | 5x l'usage Pro par fenêtre de session, sous réserve des autres limites |
+| Max 20x | 200 USD/mois | ✅ | 20x l'usage Pro par fenêtre de session, sous réserve des autres limites |
+| Team Standard | 20 USD/siège/mois annuel, 25 USD mensuel | ✅ | Plus d'usage que Pro |
+| Team Premium | 100 USD/siège/mois annuel, 125 USD mensuel | ✅ | 5x l'usage d'un siège Standard |
+| Enterprise | offre entreprise | ✅ | Siège + usage aux tarifs API selon l'offre |
 
-!!! note "Période promotionnelle 2026 (orga/enterprise existants)"
-    Pour les clients existants, GitHub annonce des montants inclus plus élevés sur la fenêtre de transition (juin à septembre 2026).
-
----
-
-## Ce qui est facturé en AI Credits
-
-Fonctionnalités facturées:
-
-- Copilot Chat
-- Copilot CLI
-- Copilot cloud agent
-- Copilot Spaces
-- Spark
-- Agents tiers
-
-Fonctionnalités non facturées en AI Credits:
-
-- Code completions
-- Next edit suggestions
+!!! warning "Pas de nombre fixe de messages"
+    Anthropic n'annonce pas un nombre universel de requêtes Claude Code. La consommation dépend notamment de la longueur des conversations, du modèle, des outils et de la complexité des tâches.
 
 ---
 
-## Individuels: comment lire Pro, Pro+, Max
+## Pro et Max : pool partagé
 
-### Pro
+Pour les abonnements individuels, Claude Code et les autres surfaces Claude utilisent un **pool d'usage partagé**. Les limites se réinitialisent notamment sur une fenêtre glissante de cinq heures, avec des limites supplémentaires possibles sur des périodes plus longues.
 
-- Point d'entrée pour usage quotidien
-- 1500 AI Credits inclus (base + flex)
-- Convient pour chat fréquent et tâches de développement standard
+Conséquence :
 
-### Pro+
-
-- Plus de marge sur tâches complexes et agentiques
-- 7000 AI Credits inclus
-- Adapté aux usages multi-projets et modèles plus coûteux
-
-### Max
-
-- Cible power users à fort volume
-- 20000 AI Credits inclus
-- Utile si l'usage avancé est quotidien et soutenu
+- une longue session Claude Code peut réduire la capacité disponible ailleurs ;
+- une conversation web volumineuse peut aussi consommer une partie du même budget ;
+- la bonne unité de pilotage n'est pas « nombre de prompts », mais la quantité de travail réellement accomplie avant rework.
 
 ---
 
-## Organisations: logique de pool
+## Que se passe-t-il à la limite ?
 
-Pour Business et Enterprise:
+Selon le plan et les réglages disponibles, vous pouvez :
 
-- chaque siège contribue à un **pool partagé**
-- un utilisateur lourd peut consommer plus, compensé par des utilisateurs légers
-- ajout de sièges en cours de cycle: le pool augmente immédiatement
-- retrait de sièges en cours de cycle: effet au cycle suivant
+1. attendre le renouvellement de la limite ;
+2. passer à un plan avec davantage d'usage ;
+3. sur certains plans payants, activer des **usage credits** pour continuer au tarif API standard.
 
-!!! tip "Lecture finance"
-    En organisation, le coût réel est: licences + éventuelle consommation additionnelle (si autorisée).
+Vérifiez l'état actuel dans **Settings → Usage** côté Claude.
 
 ---
 
-## Dépassement et contrôle budgétaire
+## Abonnement Claude ≠ API Anthropic
 
-### Individuels
+Deux modèles de facturation coexistent :
 
-- soit budget additionnel
-- soit attente du prochain cycle
+### Abonnement Claude
 
-### Organisations / entreprises
+Adapté aux développeurs utilisant Claude Code au quotidien avec une enveloppe d'usage incluse.
 
-- si usage additionnel autorisé: facturation continue
-- si usage additionnel bloqué: blocage des fonctionnalités consommatrices d'AI Credits
+### Claude API / Console
 
-Important:
+Facturation à l'usage selon le modèle et les tokens/ressources consommés. Elle convient notamment aux intégrations programmatiques, agents automatisés et pipelines applicatifs.
 
-- Pas de fallback automatique vers un modèle moins cher quand un budget bloque l'usage.
+Ne supposez pas qu'un abonnement Pro ou Max constitue automatiquement un crédit API général.
 
 ---
 
-## Quel plan choisir ?
+## Comment choisir un plan sans pseudo-benchmark
 
-```mermaid
-graph TD
-    A[Quel est ton contexte ?] --> B{Individuel\nou organisation ?}
-    B -->|Individuel| C{Volume AI\nfaible, moyen, élevé ?}
-    C -->|Faible| D[Free ou Student]
-    C -->|Moyen| E[Pro]
-    C -->|Élevé| F[Pro+ ou Max]
-    B -->|Organisation| G{Besoins de\ngouvernance avancée ?}
-    G -->|Oui| H[Enterprise]
-    G -->|Non| I[Business]
+Ne choisissez pas uniquement sur la taille du dépôt. Mesurez pendant une période représentative :
 
-    style D fill:#d4edda,color:#000
-    style E fill:#d4edda,color:#000
-    style F fill:#fff3cd,color:#000
-    style H fill:#f8d7da,color:#000
-    style I fill:#d4edda,color:#000
+- nombre de sessions interrompues par une limite ;
+- fréquence des tâches longues ;
+- volume de contexte nécessaire ;
+- part de travail interactif vs automatisé ;
+- coût du temps perdu lorsque l'usage est bloqué ;
+- possibilité d'utiliser un provider/API géré par l'organisation.
+
+```text
+Usage occasionnel de Claude Code
+→ Pro peut suffire
+
+Usage quotidien avec sessions longues
+→ comparer Pro et Max sur vos limites réelles
+
+Équipe avec gouvernance centralisée
+→ Team / Enterprise selon sécurité, identité, audit et budget
+
+Automatisation applicative / CI
+→ raisonner aussi en coût API, pas seulement en siège
 ```
+
+Ce sont des critères de décision, pas une recommandation universelle.
+
+---
+
+## Réduire la consommation avant d'augmenter le plan
+
+Avant de payer davantage, vérifiez :
+
+- `CLAUDE.md` trop long ;
+- sessions mélangeant plusieurs sujets ;
+- gros outputs de commandes réinjectés intégralement ;
+- MCP trop bavards ;
+- sous-agents lancés sans besoin clair ;
+- absence de `/clear` entre tâches ;
+- absence de tests ou critères de validation, entraînant plusieurs corrections.
+
+Un meilleur contexte peut réduire la consommation sans diminuer la qualité.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Les anciens tableaux Free / Student / Pro / Pro+ / Max / Business / Enterprise et les allocations **AI Credits** restent pertinents uniquement pour GitHub Copilot. Consultez [AI Credits Copilot — référence](premium-requests.md) et [Historique](historique-modifications.md).
 
 ---
 
 ## Sources
 
-- [Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) (consulté le 2026-06-03)
-- [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) (consulté le 2026-06-01)
-- [About billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/organizations-and-enterprises) (consulté le 2026-06-01)
-- [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) (consulté le 2026-06-01)
-
----
+- [Claude — Plans & Pricing](https://claude.com/pricing) — consulté le 2026-09-28
+- [Anthropic Help — Use Claude Code with Pro or Max](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan) — consulté le 2026-09-28
+- [Anthropic Help — What is the Max plan?](https://support.claude.com/en/articles/11049741-what-is-the-max-plan) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Leviers d'économie](leviers-economie.md)** : stratégies concrètes pour réduire la consommation d'AI Credits sans réduire la qualité de sortie.
-
-Concepts clés couverts :
-
-- **Choix de modèle par tâche** — aligner coût et complexité
-- **Réduction des tokens** — moins de contexte inutile
-- **Budgets et garde-fous** — éviter les dépassements
-- **Pilotage des usages** — décisions basées sur les métriques
+**[Leviers d'économie](leviers-economie.md)** : optimiser contexte, modèle et autonomie avant de modifier le plan.
