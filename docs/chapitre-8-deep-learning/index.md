@@ -2,9 +2,9 @@
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Le **Deep Learning** (apprentissage profond) est une branche du Machine Learning qui s'appuie sur des **réseaux de neurones artificiels** comportant de multiples couches pour apprendre des représentations de plus en plus abstraites des données. Là où le chapitre précédent introduisait les bases du ML, ce chapitre plonge au cœur des architectures neuronales : de la théorie fondamentale à la conception, l'entraînement et l'optimisation de réseaux performants.
+Le **Deep Learning** est une branche du Machine Learning fondée sur des réseaux de neurones à plusieurs couches. Ce chapitre reste d'abord un chapitre technique : mathématiques, architectures, entraînement, optimisation et frameworks.
 
-Que tu souhaites comprendre comment fonctionne un réseau de neurones, en concevoir un de zéro, ou pousser ses performances au maximum, ce chapitre couvre l'ensemble du parcours.
+Claude Code intervient comme **outil d'ingénierie** autour de ces expériences : préparation du dépôt, génération de tests, exécution des runs, comparaison de métriques, diagnostic et automatisation. Il ne remplace pas le protocole expérimental.
 
 ---
 
@@ -12,51 +12,97 @@ Que tu souhaites comprendre comment fonctionne un réseau de neurones, en concev
 
 ```mermaid
 graph LR
-    M["📐<br/>Fondations<br/>Mathématiques"] -->|"Appliquer"| A["🧠<br/>Réseaux de<br/>Neurones<br/>(Théorie)"]
-    A -->|"Fondamentaux"| B["🏗️<br/>Architectures<br/>Avancées"]
-    B -->|"Choisir"| C["🔧<br/>Concevoir<br/>& Entraîner"]
-    C -->|"Optimiser"| D["⚡<br/>Performance<br/>Maximale"]
-    D -->|"Comparer"| E["📊<br/>Frameworks<br/>& Outils"]
-
-    style M fill:#e8f5e9
-    style A fill:#e3f2fd
-    style B fill:#bbdefb
-    style C fill:#fff3e0
-    style D fill:#fce4ec
-    style E fill:#f3e5f5
+    M["Fondations\nmathématiques"] --> A["Réseaux de\nneurones"]
+    A --> B["Architectures"]
+    B --> C["Concevoir\n& entraîner"]
+    C --> D["Optimiser"]
+    D --> E["Comparer\nles frameworks"]
 ```
 
 ---
 
-## Contenu de ce chapitre
+## Contenu du chapitre
 
 | Page | Niveau | Description |
-|------|--------|-------------|
-| [Fondations mathématiques du Deep Learning](fondations-mathematiques.md) | Débutant / Intermédiaire | Probabilités, calcul vectoriel, produits matriciels, gradients et exemple pas à pas |
-| [Réseaux de neurones : fondamentaux](reseaux-neurones.md) | Intermédiaire | Qu'est-ce qu'un réseau de neurones artificiel, inspiration biologique, perceptron, propagation, apprentissage |
-| [Architectures de Deep Learning](architectures-deep-learning.md) | Intermédiaire / Expert | CNN, RNN, LSTM, GAN, Transformers, Autoencodeurs — panorama complet |
-| [Concevoir et entraîner un réseau](concevoir-entrainer.md) | Expert | Guide pas à pas : définition du problème, choix d'architecture, hyperparamètres, entraînement, évaluation |
-| [Optimisation et performance](optimisation-performance.md) | Expert | Régularisation, accélération GPU, entraînement distribué, quantification, pruning |
-| [Comparaison des frameworks](comparaison.md) | Intermédiaire | TensorFlow vs PyTorch vs Keras vs JAX — critères de choix |
+|---|---|---|
+| [Fondations mathématiques](fondations-mathematiques.md) | Débutant / Intermédiaire | Probabilités, vecteurs, matrices, gradients |
+| [Réseaux de neurones : fondamentaux](reseaux-neurones.md) | Intermédiaire | Perceptron, propagation et apprentissage |
+| [Architectures de Deep Learning](architectures-deep-learning.md) | Intermédiaire / Expert | CNN, RNN/LSTM, Transformers, autoencodeurs et autres familles |
+| [Concevoir et entraîner](concevoir-entrainer.md) | Expert | Données, architecture, hyperparamètres, entraînement et évaluation |
+| [Optimisation et performance](optimisation-performance.md) | Expert | Régularisation, accélération, distribution, quantification et pruning |
+| [Comparaison des frameworks](comparaison.md) | Intermédiaire | PyTorch, TensorFlow, Keras 3, JAX et critères de choix |
+
+---
+
+## Workflow Claude recommandé
+
+Pour une expérience Deep Learning :
+
+```text
+1. Lis la configuration et le code d'entraînement.
+2. Identifie le dataset, les splits, la seed et la métrique.
+3. Exécute un smoke test court avant le run coûteux.
+4. Vérifie qu'aucune donnée du test final n'entre dans le tuning.
+5. Lance l'expérience avec la configuration versionnée.
+6. Enregistre métriques, logs et artefacts.
+7. Compare à la baseline au même protocole.
+8. N'attribue un gain qu'à une modification isolée ou explicitement documentée.
+```
+
+Pour les runs longs, Claude peut préparer et vérifier la commande, mais le monitoring de l'entraînement doit reposer sur vos outils habituels plutôt que sur une conversation ouverte indéfiniment.
+
+---
+
+## `CLAUDE.md` minimal pour un projet DL
+
+```markdown
+## Deep Learning
+- Smoke test: `python -m train --config configs/smoke.yaml`
+- Tests: `pytest -q`
+- Never tune against the final test set.
+- Record config, seed, dataset version and metrics for every run.
+- Do not change architecture and data pipeline in the same experiment unless explicitly requested.
+- Validate export on the real target runtime before declaring deployment compatibility.
+```
+
+---
+
+## Baseline avant complexité
+
+Un réseau plus profond n'est pas automatiquement meilleur. Comparez toujours à une baseline simple et documentez :
+
+- gain de qualité ;
+- temps d'entraînement ;
+- mémoire ;
+- latence d'inférence ;
+- complexité de déploiement.
+
+Claude peut produire le tableau comparatif, mais il doit utiliser les **mesures exécutées** du projet, pas des chiffres génériques trouvés dans sa connaissance du monde.
+
+---
+
+## Frameworks : vérifier la documentation actuelle
+
+L'écosystème évolue rapidement. La page [Comparaison des frameworks](comparaison.md) a été actualisée pour éviter les classements figés. Exemples de changements importants : Keras 3 est multi-backend (JAX, TensorFlow, PyTorch) et les nouveaux workflows PyTorch ne doivent plus partir du principe que TorchScript est la voie d'export recommandée partout.
 
 ---
 
 ## Prérequis
 
-!!! info "Avant de commencer"
-    Ce chapitre suppose une connaissance des bases du Machine Learning couvertes au [chapitre 6](../chapitre-6-machine-learning/index.md) : types d'apprentissage (supervisé, non supervisé, par renforcement), notions de régression et classification, métriques d'évaluation.
+Ce chapitre suppose une connaissance des bases couvertes au [chapitre Machine Learning](../chapitre-6-machine-learning/index.md), en particulier :
+
+- séparation train/validation/test ;
+- métriques ;
+- overfitting ;
+- fuite de données ;
+- baseline expérimentale.
 
 ---
 
-## Ressources de référence
+## Sources principales
 
-Ce chapitre s'appuie sur des sources reconnues :
-
-- [AWS — Qu'est-ce qu'un réseau de neurones ?](https://aws.amazon.com/fr/what-is/neural-network/) — Introduction claire et visuelle
-- [CNIL — Définition réseau de neurones artificiels](https://cnil.fr/fr/definition/reseau-de-neurones-artificiels-artificial-neural-network) — Définition institutionnelle française
-- [OVHcloud — Qu'est-ce qu'un réseau de neurones ?](https://www.ovhcloud.com/fr/learn/what-is-neural-network/) — Vulgarisation technique
-- [SAS — Réseaux de neurones](https://www.sas.com/fr_ca/insights/analytics/neural-networks.html) — Perspective analytics
-- [OpenClassrooms — Initiez-vous au Deep Learning](https://openclassrooms.com/fr/courses/5801891-initiez-vous-au-deep-learning) — Cours structuré en français
-- [Orange Business — Tutoriel réseau de neurones](https://perspective.orange-business.com/fr/tutoriel-machine-learning-comprendre-ce-quest-un-reseau-de-neurones-et-en-creer-un/) — Tutoriel pratique
-- [IRMA / Université de Strasbourg — Scientific Machine Learning](https://irma.math.unistra.fr/~franck/cours/SciML/output/html/my-great-book.html) — Cours universitaire approfondi
-- [Université de Toulouse — Réseaux de neurones](https://www.math.univ-toulouse.fr/~besse/Wikistat/pdf/st-m-app-rn.pdf) — Support académique (PDF)
+- [PyTorch documentation](https://pytorch.org/docs/stable/) — consulté le 2026-09-28
+- [TensorFlow Guide](https://www.tensorflow.org/guide) — consulté le 2026-09-28
+- [Keras 3](https://keras.io/keras_3/) — consulté le 2026-09-28
+- [JAX documentation](https://docs.jax.dev/) — consulté le 2026-09-28
+- [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
