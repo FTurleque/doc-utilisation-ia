@@ -1,11 +1,11 @@
-# Installer Claude Code — CLI, VS Code et JetBrains
+# Installer Claude Code — CLI, Desktop, VS Code et JetBrains
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-vscode">VS Code</span> <span class="badge-cli">CLI</span>
 
-Cette page décrit les points d'entrée actuels de **Claude Code** : CLI native, extension Visual Studio Code et plugin JetBrains. Elle couvre aussi l'authentification, les mises à jour et les diagnostics de base.
+Cette page décrit les principaux points d'entrée actuels de **Claude Code** : CLI native, **Claude Desktop**, extension Visual Studio Code et plugin JetBrains. Elle couvre aussi l'authentification, les mises à jour et les diagnostics de base.
 
 !!! info "Vérifié le 28 septembre 2026"
-    Les commandes et prérequis ci-dessous ont été revérifiés dans la documentation officielle Claude Code. Les pages officielles de référence sont désormais sous `code.claude.com/docs/`.
+    Les commandes et prérequis ci-dessous ont été revérifiés dans la documentation officielle Claude Code et Claude Desktop.
 
 ---
 
@@ -14,12 +14,19 @@ Cette page décrit les points d'entrée actuels de **Claude Code** : CLI native,
 | Besoin | Point d'entrée recommandé | CLI requise ? |
 |---|---|:---:|
 | Travailler principalement dans un terminal | **CLI Claude Code** | — |
+| Utiliser Claude Code dans une application graphique unifiée avec Chat et outils locaux | **Claude Desktop** | Non pour l'application ; CLI utile pour les workflows terminal et le transfert de session |
 | Travailler dans VS Code avec panneau graphique, diffs et `@mentions` | **Extension VS Code** | Non |
 | Travailler dans IntelliJ / PyCharm / WebStorm avec intégration IDE | **Plugin JetBrains + CLI** | Oui |
 | Automatiser dans un script ou une CI | **CLI en mode `-p`** | Oui |
 
-!!! important "VS Code et JetBrains ne fonctionnent pas de la même manière"
-    L'extension **VS Code** peut être installée et authentifiée directement dans l'éditeur : la CLI locale n'est pas un prérequis. Le plugin **JetBrains**, lui, lance la commande `claude` dans le terminal intégré et nécessite donc la CLI sur le `PATH`.
+!!! important "Desktop, VS Code et JetBrains ne fonctionnent pas de la même manière"
+    **Claude Desktop** est l'application officielle de bureau et peut exécuter Claude Code directement. L'extension **VS Code** peut être installée et authentifiée directement dans l'éditeur : la CLI locale n'est pas un prérequis. Le plugin **JetBrains**, lui, lance la commande `claude` dans le terminal intégré et nécessite donc la CLI sur le `PATH`.
+
+### Claude Desktop
+
+Claude Desktop est disponible sur macOS et Windows, ainsi que sur Linux en bêta pour les distributions actuellement prises en charge. Il réunit Chat et Claude Code dans une application native, prend en charge des extensions de bureau pour des ressources locales et le schéma de deep link `claude://`.
+
+Consultez la page dédiée **[Claude Desktop](claude-desktop.md)** pour l'installation, les extensions locales, les deep links, `/desktop` et les différences avec CLI/IDE.
 
 ---
 
@@ -47,7 +54,7 @@ Pour l'authentification directe Anthropic, Claude Code accepte :
 - ou un fournisseur tiers configuré : Amazon Bedrock, Google Cloud Agent Platform / Vertex AI, Microsoft Foundry, etc.
 
 !!! warning "Le plan Claude gratuit ne donne pas accès à Claude Code"
-    L'accès local à Claude Code nécessite actuellement un compte payant compatible, un compte Console ou un fournisseur tiers configuré.
+    L'accès local à Claude Code nécessite actuellement un compte payant compatible, un compte Console ou un fournisseur tiers configuré. Le chat Claude Desktop, lui, reste disponible sur le plan Free.
 
 ---
 
@@ -201,6 +208,7 @@ Quelques commandes utiles :
 | `/compact` | Compacter le contexte de la session |
 | `/mcp` | Inspecter et gérer les connexions MCP |
 | `/usage` | Consulter les informations d'usage disponibles |
+| `/desktop` | Passer vers Claude Desktop lorsqu'il est pris en charge par la version installée |
 
 !!! note "Les commandes évoluent rapidement"
     Utilisez `/help` dans votre version installée comme source opérationnelle. Cette documentation évite de figer une liste exhaustive de commandes slash.
@@ -295,10 +303,11 @@ Avec Git for Windows installé, Claude Code peut utiliser Git Bash pour son outi
 
 | Installation | Mise à jour |
 |---|---|
-| Installeur natif | Mise à jour automatique en arrière-plan ; `claude update` permet de forcer une vérification |
+| Installeur natif Claude Code | Mise à jour automatique en arrière-plan ; `claude update` permet de forcer une vérification |
 | Homebrew | `brew upgrade claude-code` ou `brew upgrade claude-code@latest` |
 | WinGet | `winget upgrade Anthropic.ClaudeCode` |
 | npm | Mise à jour via npm |
+| Claude Desktop Linux via `apt` | Mise à jour via les mises à jour normales du gestionnaire de paquets |
 
 !!! warning "WinGet n'est pas l'installeur natif auto-updaté"
     Une installation WinGet nécessite par défaut une mise à jour via WinGet. Ne la classez pas avec l'installeur natif lorsqu'il s'agit de politique de mise à jour.
@@ -315,6 +324,7 @@ Claude Code permet également de choisir un canal de mise à jour (`latest` ou `
 | Le plugin JetBrains ne démarre pas | Vérifier que la CLI est installée et que le plugin connaît le chemin de `claude` |
 | L'extension VS Code ne s'affiche pas | **Developer: Reload Window** ou redémarrage de VS Code |
 | Une clé API n'est pas utilisée dans VS Code | Lancer `code .` depuis un shell qui contient la variable, ou utiliser la connexion Claude |
+| Claude Desktop n'ouvre pas une session Code | Vérifier le plan compatible, la version Desktop et la disponibilité de Claude Code sur la plateforme |
 | Connexion expirée | Vérifier `/status`, puis refaire `/login` |
 | Settings invalides | `claude doctor` et `/status` signalent les erreurs de configuration |
 
@@ -322,7 +332,7 @@ Claude Code permet également de choisir un canal de mise à jour (`latest` ou `
 
 ## Prochaine étape
 
-Passez à **[Architecture et paramétrage Claude Code](architecture-claude.md)** pour structurer `CLAUDE.md`, `.claude/settings.json`, les permissions, skills, agents, hooks et MCP.
+Si vous souhaitez une interface graphique unifiée, passez à **[Claude Desktop](claude-desktop.md)**. Pour structurer ensuite la configuration versionnée du projet, poursuivez avec **[Architecture et paramétrage Claude Code](architecture-claude.md)**.
 
 ---
 
@@ -330,6 +340,9 @@ Passez à **[Architecture et paramétrage Claude Code](architecture-claude.md)**
 
 Sources officielles consultées le **28 septembre 2026** :
 
+- [Claude — Télécharger Claude Desktop](https://claude.com/download)
+- [Anthropic Help Center — Installer Claude Desktop](https://support.claude.com/fr/articles/10065433-installer-claude-desktop)
+- [Anthropic Help Center — Ouvrir Claude Desktop avec un lien](https://support.claude.com/fr/articles/14729294-ouvrir-claude-desktop-avec-un-lien)
 - [Claude Code — Advanced setup](https://code.claude.com/docs/en/setup)
 - [Claude Code — Authentication](https://code.claude.com/docs/en/authentication)
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code)
