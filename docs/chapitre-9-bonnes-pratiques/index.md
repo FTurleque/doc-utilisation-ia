@@ -1,88 +1,134 @@
-# Bonnes Pratiques avec GitHub Copilot
+# Bonnes pratiques avec Claude Code
 
-Installer et configurer Copilot, c'est bien. L'utiliser efficacement au quotidien, c'est mieux. Ce chapitre rassemble les bonnes pratiques pour tirer le maximum de GitHub Copilot tout en maintenant qualité, sécurité et productivité.
+Claude Code est plus utile lorsqu'il reçoit un dépôt lisible, un objectif vérifiable et la possibilité d'exécuter les contrôles du projet. Ce chapitre regroupe les pratiques qui améliorent la qualité **sans augmenter inutilement l'autonomie ou le contexte**.
 
----
-
-## Pyramide d'Efficacité Copilot
-
-```
-                        ▲
-                       ╱ ╲  Nommage + Typage
-                      ╱   ╱ + Structure claire
-                     ╱───╱  + Commentaires
-                    ╱   ╱   + Custom Instructions
-                   ╱───╱    + Validation Tests
-                  ╱   ╱     + IDE Optimisé
-                 ╱───╱
-```
-
-À chaque niveau, l'efficacité Copilot +20-30%. **Sans base** : 40% accuracy. **Avec base solide** : 95%+ accuracy.
+GitHub Copilot reste documenté comme référence : les mécanismes spécifiques Copilot ne sont pas supprimés, mais le parcours principal devient Claude Code.
 
 ---
 
-## Pages du Chapitre
+## Les principes qui comptent le plus
+
+| Principe | Application |
+|---|---|
+| **Contexte ciblé** | `CLAUDE.md` court, rules/skills à la demande |
+| **Plan avant gros changement** | explorer et planifier avant d'éditer plusieurs fichiers |
+| **Ground truth** | exécuter tests, build, lint, benchmarks et commandes réelles |
+| **Petits diffs** | une hypothèse ou responsabilité par changement |
+| **Outils minimaux** | ne donner à un agent que les capacités nécessaires |
+| **Relecture du diff** | l'agent produit, le développeur reste responsable du commit |
+| **Sécurité** | protéger secrets, permissions, données et systèmes externes |
+| **Contexte propre** | `/clear` entre tâches indépendantes, compaction si nécessaire |
+
+---
+
+## Pages du chapitre
 
 <div class="grid cards" markdown>
 
-- :material-comment-text: **[Utilisation Effective](utilisation-effective.md)**
+- :material-comment-text: **[Utilisation effective](utilisation-effective.md)**
 
-    Prompts efficaces, slash commands, variables de contexte (`#file`, `@workspace`), NES, édition multi-fichiers assistée
+    Choisir entre conversation, Plan, skills, subagents, MCP et vérification.
 
-- :material-code-tags: **[Organisation du Code](organisation-code.md)**
+- :material-code-tags: **[Organisation du code](organisation-code.md)**
 
-    Nommage descriptif, typage explicite, `COPILOT.md`, `copilot-instructions.md`, gestion de la context window
+    Structurer le dépôt pour qu'un agent puisse comprendre et valider les changements.
 
 - :material-lightning-bolt: **[Productivité](productivite.md)**
 
-    Raccourcis essentiels, context window, Workflow Edits multi-fichiers, Agent mode autonome
+    Réduire les allers-retours, garder le contexte utile et automatiser les tâches répétitives.
 
 - :material-shield-check: **[Sécurité & Qualité](securite-qualite.md)**
 
-    Checklist validation, hallucinations d'API, packages inventés, sur-ingénierie silencieuse
+    Relecture, hallucinations, dépendances, secrets, permissions et contrôles avant commit.
 
 - :material-speedometer: **[Performance & Ressources](performance.md)**
 
-    Impact IDE, optimisation, throttling contextuel, désactivation sélective
+    Contexte, coûts, outils externes et impact des sessions longues.
 
-- :material-routes: **[Workflows IA Complets](workflows-ia.md)**
+- :material-routes: **[Workflows IA complets](workflows-ia.md)**
 
-    PRD-Driven Dev, TDD assisté, sprint planning, code review, refactoring progressif, débogage
+    PRD/spec → plan → implémentation → tests → review, TDD, debugging et refactoring.
 
 </div>
 
 ---
 
-## Principes Fondamentaux
+## Un bon agent a besoin d'un bon environnement
 
-| Principe | Impact | Détail |
-|----------|--------|--------|
-| **Context is King** | ⭐⭐⭐⭐⭐ | Code clair = suggestions parfaites |
-| **Always Verify** | ⭐⭐⭐⭐⭐ | Vous êtes responsable du commit |
-| **Type Everything** | ⭐⭐⭐⭐⭐ | Types = guide pour Copilot |
-| **Tests First** | ⭐⭐⭐⭐ | TDD améliore qualité suggestions |
-| **Security Review** | ⭐⭐⭐⭐ | SQL/Secrets/XSS/hallucinations check mandatory |
-| **Context Config** | ⭐⭐⭐⭐ | `copilot-instructions.md` + `COPILOT.md` = contexte persistant |
-| **Iterate Fast** | ⭐⭐⭐⭐ | Tours courts + validation à chaque étape = meilleur résultat |
+Avant de perfectionner vos prompts, vérifiez que le dépôt fournit :
+
+- commandes build/test/lint documentées ;
+- architecture lisible ;
+- conventions versionnées ;
+- tests exécutables ;
+- petits jeux de données ou fixtures pour reproduire les erreurs ;
+- absence de secrets dans les fichiers accessibles inutilement.
+
+Claude peut alors récupérer du **ground truth** depuis l'environnement plutôt que de produire une réponse uniquement plausible.
+
+---
+
+## `CLAUDE.md` : moins mais mieux
+
+Gardez-y les informations valables pour presque toutes les sessions :
+
+```markdown
+# Project
+
+## Commands
+- Test: `pytest -q`
+- Lint: `ruff check .`
+- Build: `mkdocs build --strict`
+
+## Rules
+- Keep changes scoped.
+- Run relevant tests before finishing.
+- Never commit secrets.
+- Preserve existing public behavior unless the task says otherwise.
+```
+
+Les procédures longues vont dans des **skills** ; les règles ciblées dans `.claude/rules/` ; les explorations lourdes dans des **subagents**.
 
 ---
 
-!!! tip "Par où commencer ?"
-    **Débutant** → [Utilisation Effective](utilisation-effective.md) — Slash commands, PRD, variables de contexte  
-    **Intermédiaire** → [Organisation du Code](organisation-code.md) — Configurer le contexte IA du projet  
-    **Avancé** → [Workflows IA Complets](workflows-ia.md) — Cycles de développement bout en bout  
-    **Sécurité** → [Sécurité & Qualité](securite-qualite.md) — Hallucinations et risques spécifiques à l'IA
+## Boucle de travail recommandée
+
+```mermaid
+graph LR
+    A["Comprendre"] --> B["Planifier"]
+    B --> C["Modifier"]
+    C --> D["Vérifier"]
+    D --> E["Relire le diff"]
+    E --> F{"OK ?"}
+    F -- Non --> C
+    F -- Oui --> G["Commit / PR"]
+```
+
+Cette boucle est plus importante qu'un « prompt parfait ».
 
 ---
+
+## Copilot
+
+Les pages historiques Copilot restent utiles pour :
+
+- complétions inline ;
+- mécanismes `.github/` ;
+- comparaison des workflows ;
+- environnements qui utilisent encore Copilot ;
+- éventuel retour si les prix ou capacités évoluent.
+
+Lorsqu'une fonctionnalité est strictement Copilot, elle doit être marquée comme telle au lieu d'être présentée comme générique.
+
+---
+
+## Sources
+
+- [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
+- [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Utilisation Effective](utilisation-effective.md)** : maîtriser les techniques de prompting et les outils Copilot pour être efficace au quotidien.
-
-Concepts clés couverts :
-
-- **Commentaire-prompt** — plus votre commentaire est précis, meilleure est la suggestion inline
-- **Mini-PRD** — formaliser le besoin avant de coder pour guider Copilot Chat
-- **Slash commands** `/explain`, `/tests`, `/fix`, `/doc` — raccourcis pour les tâches courantes
-- **Variables de contexte** `#file`, `#selection`, `@workspace` — cibler le bon périmètre
-- **NES & édition multi-fichiers assistée** — anticiper les prochaines modifications et éditer plusieurs fichiers à la fois
+**[Utilisation effective](utilisation-effective.md)** : choisir le bon mécanisme Claude selon la tâche et structurer une session qui finit avec des preuves vérifiables.
