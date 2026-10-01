@@ -11,7 +11,7 @@ GitHub Copilot reste documenté comme référence : les mécanismes spécifiques
 | Principe | Application |
 |---|---|
 | **Contexte ciblé** | `CLAUDE.md` court, rules/skills à la demande |
-| **Plan avant gros changement** | explorer et planifier avant d'éditer plusieurs fichiers |
+| **Spec/plan avant gros changement** | clarifier le besoin et les critères avant d'éditer plusieurs fichiers |
 | **Ground truth** | exécuter tests, build, lint, benchmarks et commandes réelles |
 | **Petits diffs** | une hypothèse ou responsabilité par changement |
 | **Outils minimaux** | ne donner à un agent que les capacités nécessaires |
@@ -33,6 +33,14 @@ GitHub Copilot reste documenté comme référence : les mécanismes spécifiques
 
     Structurer le dépôt pour qu'un agent puisse comprendre et valider les changements.
 
+- :material-file-document-edit: **[OpenSpec — spec-driven development](openspec.md)**
+
+    Formaliser proposal, specs, design et tasks avant implémentation, avec des artefacts versionnés dans Git.
+
+- :material-file-tree: **[OpenSpec Custom Schemas](openspec-schemas.md)**
+
+    Étendre OpenSpec avec des workflows behaviour-driven, intent-driven, event-driven, ADR ou minimalist.
+
 - :material-lightning-bolt: **[Productivité](productivite.md)**
 
     Réduire les allers-retours, garder le contexte utile et automatiser les tâches répétitives.
@@ -50,6 +58,20 @@ GitHub Copilot reste documenté comme référence : les mécanismes spécifiques
     PRD/spec → plan → implémentation → tests → review, TDD, debugging et refactoring.
 
 </div>
+
+---
+
+## Quand utiliser une spec versionnée ?
+
+Une conversation ou un plan de session suffit souvent pour une correction locale. Une spec versionnée devient plus intéressante lorsque :
+
+- plusieurs fichiers, services ou repos sont concernés ;
+- les critères métier doivent survivre à la session ;
+- plusieurs développeurs ou agents doivent partager la même intention ;
+- le changement implique une décision d'architecture ;
+- la PR doit expliquer clairement pourquoi et quoi modifier avant le comment.
+
+**[OpenSpec](openspec.md)** est un exemple de framework qui structure cette discipline. Il reste optionnel : le principe important est d'adapter le niveau de formalisation au risque et à la durée de vie du changement.
 
 ---
 
@@ -87,7 +109,7 @@ Gardez-y les informations valables pour presque toutes les sessions :
 - Preserve existing public behavior unless the task says otherwise.
 ```
 
-Les procédures longues vont dans des **skills** ; les règles ciblées dans `.claude/rules/` ; les explorations lourdes dans des **subagents**.
+Les procédures longues vont dans des **skills** ; les règles ciblées dans `.claude/rules/` ; les explorations lourdes dans des **subagents** ; les exigences spécifiques d'un changement peuvent vivre dans un framework de spec comme OpenSpec lorsque cela se justifie.
 
 ---
 
@@ -95,7 +117,7 @@ Les procédures longues vont dans des **skills** ; les règles ciblées dans `.c
 
 ```mermaid
 graph LR
-    A["Comprendre"] --> B["Planifier"]
+    A["Comprendre"] --> B["Spécifier / planifier"]
     B --> C["Modifier"]
     C --> D["Vérifier"]
     D --> E["Relire le diff"]
@@ -128,7 +150,9 @@ Lorsqu'une fonctionnalité est strictement Copilot, elle doit être marquée com
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
+- [OpenSpec — dépôt officiel](https://github.com/Fission-AI/OpenSpec) — consulté le 2026-10-01
+- [OpenSpec Custom Schemas](https://github.com/intent-driven-dev/openspec-schemas) — consulté le 2026-10-01
 
 ## Prochaine étape
 
-**[Utilisation effective](utilisation-effective.md)** : choisir le bon mécanisme Claude selon la tâche et structurer une session qui finit avec des preuves vérifiables.
+**[Utilisation effective](utilisation-effective.md)** : choisir le bon mécanisme Claude selon la tâche. Pour les changements structurants, poursuivez avec **[OpenSpec](openspec.md)** ou votre méthode de spec/plan versionnée.
