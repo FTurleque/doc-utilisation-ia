@@ -5,7 +5,7 @@ Ce chapitre explique comment piloter le **coût, l'usage et la gouvernance de Cl
 GitHub Copilot reste documenté : les pages historiques sur les **AI Credits Copilot** sont conservées comme référence distincte, mais ne constituent plus le parcours principal.
 
 !!! info "Référence"
-    Informations revérifiées le **28 septembre 2026** sur les pages officielles Anthropic. Les prix et limites peuvent évoluer ; vérifiez toujours la page de tarification avant une décision budgétaire.
+    Informations revérifiées le **1er octobre 2026** sur les pages officielles Anthropic et les projets tiers cités. Les prix et limites peuvent évoluer ; vérifiez toujours la page de tarification avant une décision budgétaire.
 
 ---
 
@@ -24,6 +24,10 @@ GitHub Copilot reste documenté : les pages historiques sur les **AI Credits Cop
 - :material-piggy-bank: **[Leviers d'économie](leviers-economie.md)**
 
     Contexte minimal utile, `/clear`, `/compact`, skills, subagents, choix du modèle et limitation des outils.
+
+- :material-compress: **[Caveman — réduction du bruit et des tokens](caveman.md)**
+
+    Skill, proxy local et middleware pour réduire certaines sorties et tool results, avec mesure A/B avant adoption.
 
 - :material-transit-connection-variant: **[Quand utiliser quel mode ?](modes-quand-utiliser.md)**
 
@@ -92,7 +96,24 @@ Les principaux leviers sont donc :
 3. utiliser `/clear` entre tâches sans rapport ;
 4. utiliser `/compact` sur une session longue ;
 5. déléguer les explorations volumineuses à des subagents ;
-6. faire exécuter les validations plutôt que multiplier les échanges spéculatifs.
+6. faire exécuter les validations plutôt que multiplier les échanges spéculatifs ;
+7. lorsque le bruit vient réellement des sorties ou tool results, évaluer des outils ciblés comme **[Caveman](caveman.md)** ou RTK au lieu de compresser tout le workflow par principe.
+
+---
+
+## Compression : mesurer plutôt que supposer
+
+Les outils de réduction de tokens agissent à des niveaux différents :
+
+| Outil / mécanisme | Cible |
+|---|---|
+| `/compact` | historique/contexte de conversation Claude |
+| Caveman skill | verbosité des réponses de l'agent |
+| Caveman proxy/middleware | certaines entrées et tool results |
+| RTK | sorties terminales volumineuses |
+| Semble | quantité de code chargée pendant la recherche |
+
+Une réduction de tokens n'est utile que si le taux de réussite reste stable. Comparez coût **et** qualité sur un corpus réel de tâches.
 
 ---
 
@@ -106,6 +127,7 @@ Pour une équipe, suivez au minimum :
 - MCP approuvés ;
 - règles sur les données sensibles ;
 - commandes destructives ou à haut impact ;
+- outils de compression/proxy autorisés et leur traitement des données ;
 - qualité mesurée : taux de tests passés, rework, incidents et temps de revue.
 
 Ne mesurez pas uniquement le nombre de requêtes. Une tâche autonome plus longue peut être rentable si elle produit un résultat testé et réduit plusieurs cycles de correction.
@@ -117,7 +139,8 @@ Ne mesurez pas uniquement le nombre de requêtes. Une tâche autonome plus longu
 - [Claude — Plans & Pricing](https://claude.com/pricing) — consulté le 2026-09-28
 - [Anthropic Help — Use Claude Code with Pro or Max](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan) — consulté le 2026-09-28
 - [Claude Code — Cost management](https://code.claude.com/docs/en/costs) — consulté le 2026-09-28
+- [Caveman — dépôt officiel](https://github.com/JuliusBrussee/caveman) — consulté le 2026-10-01
 
 ## Prochaine étape
 
-**[Les abonnements Claude](abonnements.md)** : distinguer abonnement, limites d'usage et facturation API avant d'optimiser le workflow.
+**[Les abonnements Claude](abonnements.md)** : distinguer abonnement, limites d'usage et facturation API ; puis **[Leviers d'économie](leviers-economie.md)** et **[Caveman](caveman.md)** pour les optimisations mesurées.
