@@ -24,7 +24,8 @@ Anthropic décrit justement cette évolution vers le **just-in-time context** : 
 
 ```mermaid
 graph LR
-    A["Concepts"] --> B["Niveau 1\nretrieval simple"]
+    A["Concepts"] --> I["Ingestion\nDocling"]
+    I --> B["Niveau 1\nretrieval simple"]
     B --> C["Niveau 2\nqualité retrieval"]
     C --> D["Niveau 3\nproduction"]
     D --> E["Agentic retrieval\n& multi-source"]
@@ -33,6 +34,7 @@ graph LR
 | Page | Niveau | Contenu |
 |---|---|---|
 | [Concepts & architectures](concepts.md) | Tous | Retrieval, embeddings, chunking, reranking, agentic retrieval |
+| [Docling](docling.md) | Intermédiaire | Ingestion PDF/DOCX/PPTX/etc., OCR, structure, exports et chunks |
 | [Qdrant](qdrant.md) | Intermédiaire | Moteur vectoriel, payloads, filtres et hybrid search |
 | [Implémentation](implementation.md) | Tous | Progression du prototype à la production |
 | [Niveau 1](niveau-1.md) | Débutant | Pipeline minimal et observable |
@@ -47,8 +49,9 @@ graph LR
 
 ```mermaid
 graph TD
-    DOCS["Documents"] --> CHUNK["Découpage"]
-    CHUNK --> IDX["Index / store"]
+    DOCS["Documents"] --> ING["Ingestion / parsing\nex. Docling"]
+    ING --> CHUNK["Découpage"]
+    CHUNK --> IDX["Index / store\nex. Qdrant"]
     Q["Question"] --> RET["Retrieval"]
     IDX --> RET
     RET --> CTX["Passages pertinents"]
@@ -58,7 +61,23 @@ graph TD
     LLM --> ANS["Réponse + sources"]
 ```
 
-Le pipeline est simple à dessiner mais difficile à rendre fiable. Les erreurs peuvent venir du chunking, de l'indexation, du retrieval, du reranking, du prompt ou du modèle.
+Le pipeline est simple à dessiner mais difficile à rendre fiable. Les erreurs peuvent venir de l'ingestion, du chunking, de l'indexation, du retrieval, du reranking, du prompt ou du modèle.
+
+---
+
+## Ingestion documentaire : Docling
+
+Avant les embeddings et le vector store, il faut transformer les sources en un corpus exploitable.
+
+**[Docling](docling.md)** est un exemple d'outil spécialisé dans cette étape :
+
+- PDF avec structure de page, ordre de lecture, tableaux, formules et OCR ;
+- DOCX, PPTX, XLSX, HTML, EPUB, images, audio et autres formats ;
+- représentation structurée `DoclingDocument` ;
+- exports Markdown/JSON/texte et sortie de chunks ;
+- exécution locale, bibliothèque Python, service API et serveur MCP.
+
+Docling n'est pas obligatoire : choisissez un parseur selon vos formats et contraintes. Le point important est de **mesurer la qualité de l'ingestion avant de juger le retrieval**.
 
 ---
 
@@ -88,6 +107,7 @@ Conservez plutôt une matrice de décision :
 
 | Composant | Questions à poser |
 |---|---|
+| Parsing / ingestion | formats, structure, OCR, tableaux, local/cloud, confidentialité |
 | Embeddings | langue, domaine, dimension, coût, hébergement, confidentialité |
 | Store | volume, filtres metadata, latence, sauvegarde, coût opérationnel |
 | Reranker | gain mesuré, latence ajoutée, coût par requête |
@@ -102,7 +122,7 @@ Les prix doivent être vérifiés sur les pages officielles des fournisseurs au 
 
 Commencez par :
 
-1. un corpus propre ;
+1. un corpus propre et une ingestion vérifiée ;
 2. un chunking simple ;
 3. un retrieval observable ;
 4. des citations ;
@@ -114,17 +134,19 @@ Cette approche suit le principe Anthropic : privilégier des patterns simples et
 
 ---
 
-## Évaluer le retrieval séparément de la génération
+## Évaluer ingestion, retrieval et génération séparément
 
 Si la réponse est mauvaise, demandez d'abord :
 
+- le document a-t-il été correctement parsé ?
+- sa structure, ses tableaux ou son OCR sont-ils corrects ?
 - le bon document était-il indexé ?
 - a-t-il été chunké correctement ?
 - le bon passage était-il dans le top-k ?
 - le reranker l'a-t-il conservé ?
 - le modèle a-t-il utilisé la source ?
 
-Ne changez pas simultanément embeddings, chunk size, prompt et modèle : vous perdrez la capacité d'expliquer l'amélioration.
+Ne changez pas simultanément parseur, embeddings, chunk size, prompt et modèle : vous perdrez la capacité d'expliquer l'amélioration.
 
 ---
 
@@ -134,6 +156,7 @@ Un agent peut décider **quand** chercher, **quelle source** interroger et **s'i
 
 Claude Code peut accéder à des systèmes externes via MCP. Pour un projet RAG, cela permet par exemple de connecter :
 
+- un service Docling pour traiter un document ;
 - une base documentaire ;
 - un moteur de recherche interne ;
 - une base SQL ;
@@ -148,7 +171,7 @@ MCP fournit l'accès aux outils et données ; les **skills** peuvent documenter 
 
 Le retrieval fait entrer du contenu externe dans le contexte du modèle. Considérez ce contenu comme **non fiable** :
 
-- contrôlez les droits d'accès avant retrieval ;
+- contrôlez les droits d'accès avant ingestion et retrieval ;
 - ne faites pas remonter de document qu'un utilisateur n'a pas le droit de voir ;
 - conservez la provenance ;
 - séparez données et instructions ;
@@ -180,8 +203,9 @@ Pour les analyses volumineuses, déléguez l'exploration à un subagent afin de 
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 - [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Docling — dépôt officiel](https://github.com/docling-project/docling) — consulté le 2026-10-01
 - [Qdrant — documentation](https://qdrant.tech/documentation/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Concepts & architectures RAG](concepts.md)** : comprendre retrieval, chunking, embeddings, hybrid search, reranking et agentic retrieval avant l'implémentation.
+**[Concepts & architectures RAG](concepts.md)** : comprendre retrieval et chunking ; puis **[Docling](docling.md)** pour l'ingestion documentaire et **[Qdrant](qdrant.md)** pour un exemple de moteur d'index/retrieval.
