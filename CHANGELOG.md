@@ -2,6 +2,19 @@
 
 Ce fichier suit les changements structurants du dépôt. Les détails très fins sur les prix, modèles et quotas restent dans les pages spécialisées et leur historique, afin d'éviter de dupliquer des données rapidement périssables.
 
+## 2026-10-01 — Code intelligence, SDD, ingestion RAG et optimisation des tokens
+
+Ajout de six projets après audit de leurs dépôts officiels et vérification qu'aucune section dédiée n'existait déjà dans `doc-utilisation-ia` :
+
+- **Serena** dans **Contexte & Personnalisation** : code intelligence sémantique, symboles, références, édition/refactoring et intégration MCP/LSP/JetBrains ;
+- **Semble** dans **Contexte & Personnalisation** : recherche hybride et locale de snippets pour agents, MCP/instructions/subagent ;
+- **Docling** dans **RAG** : parsing multi-format, OCR, structure documentaire, exports et chunks avant indexation ;
+- **OpenSpec** dans **Bonnes Pratiques** : spec-driven development avec proposal, specs, design et tasks versionnés ;
+- **OpenSpec Custom Schemas** dans **Bonnes Pratiques** : workflows behaviour-driven, intent-driven, event-driven, ADR et minimalist ;
+- **Caveman** dans **Coûts & Gouvernance** : skill, proxy et middleware de réduction du bruit/tokens avec mesure A/B recommandée.
+
+La navigation MkDocs a été regroupée par rôle : **Code intelligence & retrieval**, **Ingestion documentaire / RAG**, **Spec-driven development** et **optimisation des tokens**. La vue transversale du chapitre Outils renvoie vers les pages spécialisées au lieu de dupliquer leur contenu.
+
 ## 2026-09-28 — Migration Claude Code-first et audit repo-wide
 
 ### Orientation
