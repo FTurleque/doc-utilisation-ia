@@ -70,7 +70,9 @@
 
 /* Marges de la zone principale réduites */
 .md-main__inner {
-  margin-top: 0.4rem;
+  /* Material utilise cette marge pour le seuil du titre actif dans le sommaire.
+     Une marge plus petite laisse le titre précédent actif après un clic. */
+  margin-top: 1.5rem;
   max-width: 100%;
   padding-left: 0;
 }
@@ -232,6 +234,27 @@ kbd {
 .md-button--primary:hover {
   background-color: #79c0ff !important;
   border-color: #79c0ff !important;
+}
+
+/* Contraste stable sur le bandeau sombre, dans les deux thèmes. */
+.md-typeset .hero-banner .md-button,
+.md-typeset .hero-banner .md-button:visited {
+  background-color: #16213e;
+  border-color: #b3ddff;
+  color: #ffffff;
+}
+
+.md-typeset .hero-banner .md-button:hover,
+.md-typeset .hero-banner .md-button:focus,
+.md-typeset .hero-banner .md-button:active {
+  background-color: #b3ddff;
+  border-color: #b3ddff;
+  color: #0d1117;
+}
+
+.md-typeset .hero-banner .md-button:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
 }
 
 /* Grille de cartes améliorée */
@@ -443,20 +466,16 @@ figure .reduced-screenshot {
 [data-md-color-scheme="default"] .md-nav__link--active {
   color: #0052cc !important;
   font-weight: 700;
-  border-left: 3px solid #0052cc;
-  padding-left: 0.45rem;
   background-color: rgba(0, 82, 204, 0.08);
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
 }
 
 /* Page active : style fort pour thème sombre */
 [data-md-color-scheme="slate"] .md-nav__link--active {
   color: #7ec8ff !important;
   font-weight: 700;
-  border-left: 3px solid #7ec8ff;
-  padding-left: 0.45rem;
   background-color: rgba(126, 200, 255, 0.12);
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
 }
 
 /* Hover sur les liens de nav (thème clair) */

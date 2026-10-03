@@ -269,4 +269,4 @@ Ne bloquez pas toutes les PR sur un benchmark coûteux si un smoke eval suffit p
 
 ## Prochaine étape
 
-Reliez ces evals aux exigences du **[Niveau 3](niveau-3.md)** et aux cas métier décrits dans **[Cas d'usage par secteur](cas-usage-secteurs.md)**.
+Poursuivez avec **[Bonnes Pratiques — Accueil](../chapitre-9-bonnes-pratiques/index.md)**, la page suivante dans le menu.

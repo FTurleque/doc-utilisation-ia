@@ -40,6 +40,10 @@ Ce tableau compare l'utilisation des modes CLI Copilot entre VS Code et IntelliJ
 - [Prompt Engineering](../chapitre-5-prompt-engineering/index.md) — Maîtriser la rédaction de prompts efficaces avec Copilot
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[applyTo Copilot (référence)](../chapitre-4-contexte/applyto-avance.md)**, la page suivante dans le menu.
+
 ## Sources
 
 - [GitHub Copilot in the CLI](https://docs.github.com/en/copilot/github-copilot-in-the-cli/about-github-copilot-in-the-cli) - consulté le 2026-06-20

@@ -122,17 +122,17 @@ Cette stratégie limite les modifications hors périmètre et rend chaque correc
 
 ---
 
-## Copilot — référence conservée
-
-Le même packet peut être fourni à GitHub Copilot ou à un autre agent. La logique de réduction reste portable ; seul le client et son mécanisme de contexte changent.
-
----
-
 ## Sources
 
 - [SonarQube MCP Server officiel](https://github.com/SonarSource/sonarqube-mcp-server) — consulté le 2026-09-28
 - [RTK](https://github.com/rtk-ai/rtk) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-rtk-sonar).
+
 ## Prochaine étape
 
-**[SonarQube pour VS Code](sonarqube-vscode.md)** pour le workflow IDE léger, ou **[MCP](mcps/index.md)** pour connecter directement les données Sonar à Claude Code.
+Poursuivez avec **[TOON](toon.md)**, la page suivante dans le menu.

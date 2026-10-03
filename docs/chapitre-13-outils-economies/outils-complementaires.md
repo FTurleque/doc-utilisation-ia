@@ -123,7 +123,6 @@ Ces deux outils disposent d'une **[section spéciale](agents-code/index.md)** po
 | Windsurf | IDE agentique actuel, issu de Codeium, désormais chez Cognition | [Windsurf](codeium-windsurf.md) |
 | Tabnine | Gouvernance et options de déploiement entreprise | [Tabnine](tabnine.md) |
 | Amazon Q / Kiro | Spécialisation AWS, migration en cours vers Kiro | [Amazon Q](amazon-q-developer.md) |
-| GitHub Copilot | Référence conservée pour compatibilité et éventuel retour | Chapitres Copilot |
 
 ---
 
@@ -198,6 +197,12 @@ Pour chaque outil ajouté :
 - [Solace](solace.md)
 - [Recommandations par contexte](recommandations-taille-type-application.md)
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-outils-complementaires).
+
 ## Prochaine étape
 
-**[Recommandations par contexte](recommandations-taille-type-application.md)** : partir des contraintes d'un projet plutôt que d'un classement d'outils.
+Poursuivez avec **[Recommandations par application](recommandations-taille-type-application.md)**, la page suivante dans le menu.

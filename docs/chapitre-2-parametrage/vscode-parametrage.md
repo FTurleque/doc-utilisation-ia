@@ -203,4 +203,4 @@ Les formats spécifiques restent séparés afin d'éviter de faire croire qu'ils
 
 ## Prochaine étape
 
-**[Comparaison des paramètres](comparaison-parametres.md)** pour rapprocher VS Code, JetBrains et les mécanismes Claude sans les confondre.
+Poursuivez avec **[Paramétrage — Comparaison](comparaison-parametres.md)**, la page suivante dans le menu.

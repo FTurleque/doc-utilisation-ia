@@ -59,9 +59,14 @@ Les anciennes extensions et documentations peuvent encore utiliser le nom **Code
 ## Sources
 
 - [Windsurf](https://windsurf.com/) — consulté le 2026-09-28
-- [Windsurf — comparaison Copilot](https://windsurf.com/compare/windsurf-vs-github-copilot) — consulté le 2026-09-28
 - [Cognition](https://cognition.ai/) — consulté le 2026-09-28
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-codeium-windsurf).
 
 ## Prochaine étape
 
-**[Tabnine](tabnine.md)** pour une alternative particulièrement orientée gouvernance et déploiement entreprise.
+Poursuivez avec **[Tabnine](tabnine.md)**, la page suivante dans le menu.

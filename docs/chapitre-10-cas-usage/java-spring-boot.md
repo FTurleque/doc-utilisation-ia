@@ -150,6 +150,8 @@ Hiérarchie pratique :
 
 Claude doit réutiliser les annotations et fixtures déjà présentes au lieu de choisir automatiquement `@SpringBootTest` pour tout.
 
+**Migration vers Spring Boot 4 :** `@MockBean` et `@SpyBean` ont été retirées au profit de `@MockitoBean` et `@MockitoSpyBean` de Spring Framework. Ne recopiez pas des tests d'un tutoriel Boot 3 sans vérifier les imports et les règles de remplacement des beans. Les dépendances et annotations de certains tests HTTP changent aussi ; consultez le guide de migration pour la version visée.
+
 ---
 
 ## 9. Migration de version
@@ -188,18 +190,21 @@ description: Implémente un changement Spring Boot en respectant architecture, s
 
 ---
 
-## Copilot — référence
-
-Les anciennes custom instructions Copilot Spring restent utilisables dans `.github/` pour les équipes concernées. Elles ne doivent pas être supprimées lors de la migration vers Claude.
-
----
-
 ## Sources
+
+- [Spring Boot 4 — migration des tests](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Migration-Guide) — vérifié le 2026-10-03
+- [Spring Framework — `@MockitoBean` et `@MockitoSpyBean`](https://docs.spring.io/spring-framework/reference/testing/annotations/integration-spring/annotation-mockitobean.html) — vérifié le 2026-10-03
 
 - [Spring Boot — documentation](https://docs.spring.io/spring-boot/) — à vérifier pour la version du projet
 - [Spring Security — documentation](https://docs.spring.io/spring-security/reference/) — à vérifier pour la version du projet
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-java-spring-boot).
+
 ## Prochaine étape
 
-**[Node.js & Express](nodejs-express.md)** ou **[React & TypeScript](react-typescript.md)** selon la prochaine partie de votre stack.
+Poursuivez avec **[Node.js & React](nodejs-react.md)**, la page suivante dans le menu.

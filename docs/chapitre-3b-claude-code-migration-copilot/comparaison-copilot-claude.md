@@ -137,16 +137,7 @@ graph LR
 
 ## Prochaine étape
 
-**[Coûts & quotas de Claude Code](couts-quotas.md)** : comprendre la facturation, mesurer sa consommation et appliquer les leviers d'économie avant de planifier une migration.
-
-Concepts clés couverts :
-
-- **Modèles de facturation** — abonnement Pro/Max, API à l'usage, Bedrock/Vertex
-- **Comptage des tokens** — entrée vs sortie, accumulation de l'historique
-- **Mesurer** — `/cost`, `/status` et tableau de bord Console
-- **Leviers d'économie** — modèle, `CLAUDE.md` concis, `/compact`/`/clear`
-
----
+Poursuivez avec **[Migration pas à pas](migration-pas-a-pas.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -155,5 +146,3 @@ Concepts clés couverts :
 - [Anthropic — Claude Code overview](https://docs.anthropic.com/en/docs/claude-code/overview) - consulté le 2026-06-20
 - [Anthropic — Settings](https://docs.anthropic.com/en/docs/claude-code/settings) - consulté le 2026-06-20
 - [Anthropic — Model Context Protocol (MCP)](https://docs.anthropic.com/en/docs/claude-code/mcp) - consulté le 2026-06-20
-
-

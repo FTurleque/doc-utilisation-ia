@@ -152,13 +152,11 @@ Les modèles, disponibilités et politiques de routage évoluent ; consultez la 
 
 ## Auto mode et permissions
 
-Depuis août 2026, Anthropic déploie **auto mode** comme comportement par défaut pour de nouvelles sessions sur plusieurs plans Claude Code, sauf préférence déjà épinglée. Ce mécanisme concerne surtout la gestion sûre des actions/outils ; il ne remplace ni les permissions du projet ni la validation finale du travail.
+Avec **Claude Code v2.1.283 ou ultérieur**, auto mode est le mode de départ intégré des sessions interactives terminal et VS Code sur tous les plans et fournisseurs, sous réserve de disponibilité et des réglages qui le remplacent. Les versions antérieures ont un périmètre différent : vérifiez `claude --version` et le mode affiché. Un modèle local derrière une API compatible n'est pas automatiquement pris en charge par le classificateur.
 
----
+Auto mode fait analyser les actions par un classificateur distinct ; il ne constitue pas une sandbox. Les règles `ask` explicites peuvent encore provoquer une demande. L'organisation peut désactiver ce mode. Le réglage `permissions.defaultMode: "auto"` ne prend pas effet depuis les fichiers projet `.claude/settings.json` ou `.claude/settings.local.json` : utilisez la portée utilisateur/administrée appropriée ou `claude --permission-mode auto`.
 
-## Référence GitHub Copilot
-
-Pour Copilot, les modes Inline / Ask / Plan / Agent et leur consommation en AI Credits restent documentés dans les pages Copilot conservées. Ne transposez pas leurs unités de coût à Claude Code.
+[Modes et conditions officiels](https://code.claude.com/docs/en/permission-modes#eliminate-prompts-with-auto-mode), revérifiés le **3 octobre 2026**. Pour l'isolation des commandes, voir [Sandbox](../chapitre-4-contexte/sandbox.md).
 
 ---
 
@@ -168,6 +166,12 @@ Pour Copilot, les modes Inline / Ask / Plan / Agent et leur consommation en AI C
 - [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents) — consulté le 2026-09-28
 - [Claude — Auto mode default in Claude Code](https://claude.com/blog/auto-mode-default-in-claude-code) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-12-couts-gouvernance.md#page-chapitre-12-couts-gouvernance-modes-quand-utiliser).
+
 ## Prochaine étape
 
-**[Workflow recommandé](workflow-recommande.md)** : combiner ces niveaux d'autonomie dans une boucle de travail vérifiable.
+Poursuivez avec **[Workflow recommandé](workflow-recommande.md)**, la page suivante dans le menu.

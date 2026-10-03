@@ -99,6 +99,10 @@ Ce chapitre suppose une connaissance des bases couvertes au [chapitre Machine Le
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Fondations Mathématiques](fondations-mathematiques.md)**, la page suivante dans le menu.
+
 ## Sources principales
 
 - [PyTorch documentation](https://pytorch.org/docs/stable/) — consulté le 2026-09-28

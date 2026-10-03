@@ -102,4 +102,4 @@ La vérification externe reste indispensable pour les faits actuels.
 
 ## Prochaine étape
 
-Retour à l'[index de veille](index.md), puis utilisez les [ressources externes des appendices](../appendices/ressources-externes.md) pour les liens durables.
+Poursuivez avec **[Cybersécurité & IA — Introduction](../chapitre-15-hacker-ia/index.md)**, la page suivante dans le menu.

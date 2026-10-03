@@ -208,7 +208,6 @@ Pour les travaux destinés à durer :
 4. gardez les notebooks minces et reproductibles ;
 5. nettoyez les outputs lourds avant commit quand ils ne sont pas utiles.
 
-Pour une expérience très centrée sur l'édition de cellules dans l'IDE, la page [Workflow ML avec Copilot](copilot-workflow-ml.md) reste conservée comme référence.
 
 ---
 
@@ -249,12 +248,6 @@ Avant de terminer :
 
 ---
 
-## Référence Copilot conservée
-
-La page **[Copilot pour le workflow ML](copilot-workflow-ml.md)** n'est pas supprimée. Elle documente l'ancien parcours principal et reste utile si l'équipe revient à GitHub Copilot ou utilise les deux outils.
-
----
-
 ## Sources
 
 - [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
@@ -262,6 +255,12 @@ La page **[Copilot pour le workflow ML](copilot-workflow-ml.md)** n'est pas supp
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 - [scikit-learn — Pipeline](https://scikit-learn.org/stable/modules/compose.html) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-claude-workflow-ml).
+
 ## Prochaine étape
 
-**[Python & Data Science](python-data-science.md)** : appliquer ce workflow à pandas, NumPy, scikit-learn et aux projets data reproductibles.
+Poursuivez avec **[Python & Data Science](python-data-science.md)**, la page suivante dans le menu.

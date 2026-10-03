@@ -91,6 +91,8 @@ Le projet fournit notamment des commandes de statistiques et de trial ; vérifie
 
 ---
 
+Le proxy conserve les originaux dans une base SQLite locale : leur rétention, leurs droits d’accès et leur suppression font partie de la gouvernance. Un proxy partagé nécessite en plus une isolation des namespaces/sessions et une authentification adaptée. Réduire le texte envoyé au modèle ne supprime pas la copie originale sur disque. [Architecture officielle Caveman](https://github.com/JuliusBrussee/caveman), revérifiée le 3 octobre 2026.
+
 ## Risques et gouvernance
 
 Une compression agressive peut supprimer du contexte utile. Les garde-fous importants sont :
@@ -129,4 +131,4 @@ Sources consultées le **1er octobre 2026** :
 
 ## Prochaine étape
 
-Mesurez d'abord avec **[Leviers d'économie](leviers-economie.md)** et `/usage`. Si le bruit provient surtout des tool results ou de la verbosité, évaluez Caveman avec un protocole A/B sur vos tâches réelles.
+Poursuivez avec **[Quand utiliser quel mode ?](modes-quand-utiliser.md)**, la page suivante dans le menu.

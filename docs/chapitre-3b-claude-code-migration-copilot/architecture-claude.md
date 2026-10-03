@@ -201,8 +201,6 @@ Cette règle agit également sur certains chemins référencés via `@...`, là 
 
 ---
 
-## Skills et commands
-
 ### Skills
 
 Un skill vit dans `.claude/skills/<nom>/SKILL.md` :
@@ -228,9 +226,6 @@ Les skills peuvent être invoqués via `/nom` et, selon leur configuration, Clau
 ### Commands
 
 `.claude/commands/*.md` reste pris en charge. Les commands utilisent désormais le **même mécanisme que les skills** pour les prompts mono-fichier. Pour une nouvelle capacité structurée ou accompagnée de références, préférez généralement un skill.
-
-!!! info "Migration depuis Copilot"
-    Les anciens `.github/prompts/*.prompt.md` restent conservés dans ce dépôt. Lorsqu'un workflow devient Claude-first, sa nouvelle version peut être déplacée vers un skill ou une command Claude sans supprimer l'original Copilot.
 
 ---
 
@@ -339,11 +334,13 @@ Puis ajouter progressivement :
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-architecture-claude).
+
 ## Prochaine étape
 
-Passez à **[Choisir le bon modèle Claude](modeles-claude.md)**, puis aux pages Skills, agents, hooks et MCP selon le besoin.
-
----
+Poursuivez avec **[Choisir le bon modèle](modeles-claude.md)**, la page suivante dans le menu.
 
 ## Sources
 

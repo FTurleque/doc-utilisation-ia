@@ -2,7 +2,7 @@
 
 <span class="badge-beginner">Débutant</span>
 
-Le prompt engineering consiste à donner à un modèle les **bonnes instructions, le bon contexte et un moyen de vérifier le résultat**. Dans ce dépôt, les exemples pratiques utilisent d'abord **Claude Code**, mais les principes restent valables pour Copilot et les autres assistants.
+Le prompt engineering consiste à donner à un modèle les **bonnes instructions, le bon contexte et un moyen de vérifier le résultat**.
 
 ---
 
@@ -110,7 +110,7 @@ Le plan mode est utile quand vous ne pourriez pas décrire le diff attendu en un
 
 ---
 
-## 6. Contraindre la sortie quand elle doit être exploitable
+## 6. Définir une sortie vérifiable
 
 ### Rapport Markdown
 
@@ -139,11 +139,13 @@ Retourne uniquement un JSON valide :
 }
 ```
 
-Un format strict est utile pour CI, scripts et génération de rapports.
+Un format strict est utile pour CI, scripts et génération de rapports. Une consigne « JSON uniquement » reste une instruction au modèle : pour une intégration CLI, utilisez `--output-format json` avec `--json-schema`. Le résultat conforme se trouve dans `structured_output`, à distinguer de l'enveloppe de session. Contrôlez aussi le statut de fin et les contraintes métier ; un schéma ne prouve pas que les faits sont corrects et le mot-clé `format` n'est pas un validateur d'adresse email dans Claude Code.
+
+[Claude Code — sorties structurées](https://code.claude.com/docs/en/headless#get-structured-output), vérifié le 3 octobre 2026.
 
 ---
 
-## 7. Erreurs fréquentes
+## 7. Éviter les demandes ambiguës
 
 ### Demande trop large
 
@@ -195,6 +197,12 @@ Si quatre ou cinq cases suffisent, n'ajoutez pas de prose inutile.
 - [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices) — consulté le 2026-09-28
 - [Claude Code — Memory & rules](https://code.claude.com/docs/en/memory) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-5-prompt-engineering.md#page-chapitre-5-prompt-engineering-fondamentaux).
+
 ## Prochaine étape
 
-**[Techniques intermédiaires](techniques-intermediaires.md)** : exemples, rôles, contraintes, décomposition et boucles de feedback.
+Poursuivez avec **[Techniques Intermédiaires](techniques-intermediaires.md)**, la page suivante dans le menu.

@@ -148,4 +148,4 @@ Sources consultées le **1er octobre 2026** :
 
 ## Prochaine étape
 
-Si vous avez besoin d'opérations sémantiques de niveau IDE, passez à **[Serena](serena.md)**. Pour une cartographie relationnelle globale du dépôt, consultez **[Graphify](graphify.md)**.
+Poursuivez avec **[Serena — Code intelligence sémantique](serena.md)**, la page suivante dans le menu.

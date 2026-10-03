@@ -32,9 +32,21 @@ Tarifs publics US affichés le 28 septembre 2026 :
 
 Taxes, devise et contrats entreprise peuvent modifier ces montants.
 
----
+### Combien de sièges Team, et comment dépasser la limite ?
 
-## Usage inclus vs usage credits
+Un **siège** correspond à un accès attribué à un membre. Au **3 octobre 2026**, Team accepte **de 2 à 150 sièges**, Standard et Premium confondus. Le minimum est de deux membres, et non cinq dans la documentation actuelle. Les limites d'usage sont propres à chaque membre.
+
+| Besoin | Possibilité |
+|---|---|
+| Ajouter des collègues en restant à 150 sièges ou moins | Ajouter des sièges dans l'organisation Team |
+| Donner davantage d'usage à certains membres | Examiner les sièges Premium et les usage credits ; cela n'augmente pas le plafond de membres |
+| Dépasser 150 sièges dans la même organisation | **Migrer vers Enterprise**, parcours indiqué par Anthropic ; Team n'offre pas une extension publique au-delà de 150 |
+
+Exemple : une équipe de 120 membres peut ajouter 30 sièges Team. Pour accueillir un 151e membre, préparer la migration Enterprise plutôt que compter sur un changement Standard → Premium.
+
+Voir [les limites Team](https://support.claude.com/en/articles/9266767-what-is-the-team-plan) et [la procédure de migration Team → Enterprise](https://support.claude.com/en/articles/13779868-migrate-your-organization-from-team-to-enterprise). Les conditions Enterprise doivent être vérifiées pour l'organisation concernée.
+
+---
 
 ### Pro et Max
 
@@ -191,24 +203,10 @@ Le coût par token seul n'est pas suffisant pour choisir une stack : une solutio
 
 ---
 
-## Claude vs Copilot : ne pas comparer des unités différentes
-
-GitHub Copilot utilise actuellement son propre système de plans et d'**AI Credits**. Claude combine selon le plan allocations incluses, usage credits, API ou consommation entreprise.
-
-Une comparaison budgétaire sérieuse doit donc utiliser un même corpus de tâches et mesurer :
-
-- coût de licence/siège ;
-- consommation variable ;
-- temps développeur ;
-- taux de réussite des validations ;
-- rework ;
-- contraintes de gouvernance.
-
-Le chapitre **[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** détaille cette approche et conserve les AI Credits Copilot comme référence.
-
----
-
 ## Sources
+
+- [Claude Help — Team, minimum et maximum de sièges](https://support.claude.com/en/articles/9266767-what-is-the-team-plan) — vérifié le 2026-10-03
+- [Claude Help — Migration Team vers Enterprise](https://support.claude.com/en/articles/13779868-migrate-your-organization-from-team-to-enterprise) — consulté le 2026-10-03
 
 - [Claude Code — Manage costs effectively](https://code.claude.com/docs/en/costs) — consulté le 2026-09-28
 - [Claude Code — Monitoring](https://code.claude.com/docs/en/monitoring-usage) — consulté le 2026-09-28
@@ -218,6 +216,12 @@ Le chapitre **[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)*
 - [Claude Help — Manage usage credits for Team and seat-based Enterprise](https://support.claude.com/en/articles/12005970-manage-usage-credits-for-team-and-seat-based-enterprise-plans) — consulté le 2026-09-28
 - [Claude Help — Enterprise billing](https://support.claude.com/en/articles/11526368-how-am-i-billed-for-my-enterprise-plan) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-couts-quotas).
+
 ## Prochaine étape
 
-**[Prompt Engineering avec Claude](prompt-engineering-claude.md)** : maintenant que le modèle, les limites et le coût sont compris, optimiser la façon de formuler les tâches et de structurer le contexte avant de passer aux recettes et automatisations.
+Poursuivez avec **[Prompt Engineering avec Claude](prompt-engineering-claude.md)**, la page suivante dans le menu.

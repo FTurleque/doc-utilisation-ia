@@ -1,14 +1,11 @@
-# Agents spécialisés — Claude Code et référence Copilot
+# Agents spécialisés — Claude Code
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
 Claude Code peut déléguer une tâche à un **subagent** qui possède son propre contexte, son prompt et ses outils. C'est particulièrement utile pour la recherche, la revue, l'exploration d'un gros dépôt ou une expertise que vous ne voulez pas laisser envahir la conversation principale.
 
-Les custom agents GitHub Copilot restent documentés plus bas comme référence distincte.
 
 ---
-
-## Où placer un subagent Claude ?
 
 ### Projet
 
@@ -214,33 +211,6 @@ Pour la page demandée :
 
 ---
 
-## GitHub Copilot — custom agents conservés
-
-Le dépôt contient déjà des agents Copilot dans :
-
-```text
-.github/agents/*.agent.md
-```
-
-Ils sont **conservés** comme référence et pour une éventuelle utilisation Copilot future.
-
-Les custom agents Copilot disposent de leur propre schéma, de leurs outils et de leur support par surface. Plusieurs fonctionnalités sont encore en preview dans JetBrains : n'utilisez pas un exemple Claude `.claude/agents/*.md` comme s'il était interchangeable avec un `.github/agents/*.agent.md`.
-
-### Stratégie de migration
-
-| Besoin | Claude Code | Copilot conservé |
-|---|---|---|
-| agent spécialisé projet | `.claude/agents/<nom>.md` | `.github/agents/<nom>.agent.md` |
-| description de délégation | `description` | champ équivalent selon schéma Copilot |
-| outils | outils Claude (`Read`, `Grep`, etc.) | outils Copilot de la surface concernée |
-| mémoire persistante agent | `memory` Claude | ne pas supposer un équivalent identique |
-| orchestration | `Agent(...)`, subagents, skills | agents/subagents/handoffs selon surface |
-
-!!! tip "Ne convertissez pas automatiquement les noms d'outils"
-    `Read`, `Grep`, `Glob`, `Bash` côté Claude ne correspondent pas mécaniquement à `codebase`, `editFiles`, `runCommands` ou autres outils Copilot. Migrez le **rôle et l'intention**, puis adaptez les capacités au client cible.
-
----
-
 ## Bonnes pratiques
 
 1. **Un rôle clair par agent** : évitez l'agent universel.
@@ -252,11 +222,13 @@ Les custom agents Copilot disposent de leur propre schéma, de leurs outils et d
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-agents).
+
 ## Prochaine étape
 
-Voir **[Orchestration multi-agents](orchestration-multi-agents.md)** puis **[Hooks](guide-hooks.md)** pour encadrer les actions des agents.
-
----
+Poursuivez avec **[Orchestration multi-agents](orchestration-multi-agents.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -265,4 +237,3 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)
 - [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
 - [GitHub Docs — Custom agents configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
-- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)

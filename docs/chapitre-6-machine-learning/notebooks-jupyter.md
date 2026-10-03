@@ -4,9 +4,6 @@
 
 Les notebooks Jupyter sont excellents pour l'exploration, la visualisation et la communication d'une analyse. Avec Claude Code, le workflow le plus robuste consiste à utiliser le notebook comme **interface d'exploration**, puis à déplacer la logique stable vers des modules Python testables et versionnables.
 
-!!! info "Copilot reste documenté"
-    GitHub Copilot conserve une expérience notebook très intégrée dans VS Code. Une section dédiée en bas de page résume ce workflow ; elle est conservée comme référence.
-
 ---
 
 ## Ce que Claude Code peut apporter
@@ -168,19 +165,6 @@ Pour les tâches longues, utilisez un subagent d'exploration afin que les sortie
 
 ---
 
-## Référence GitHub Copilot
-
-Copilot reste pertinent pour un workflow très centré sur la complétion **cellule par cellule** dans VS Code avec l'extension Jupyter. Les principes historiques restent valables :
-
-- suggestions inline dans les cellules de code ;
-- chat IDE ;
-- génération à partir d'une cellule Markdown ou d'un commentaire ;
-- commandes et contexte propres à l'intégration Copilot/VS Code.
-
-Cette capacité est conservée dans la documentation car elle peut redevenir utile si l'équipe réactive Copilot. Le parcours principal du dépôt reste cependant Claude Code.
-
----
-
 ## Checklist avant commit
 
 - [ ] notebook exécutable depuis un kernel propre ;
@@ -199,6 +183,12 @@ Cette capacité est conservée dans la documentation car elle peut redevenir uti
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [Claude Code issue tracker — notebook file-size limitations](https://github.com/anthropics/claude-code/issues/16984) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-notebooks-jupyter).
+
 ## Prochaine étape
 
-**[MLOps & Déploiement](mlops-deploiement.md)** : transformer les expériences reproductibles en pipeline de validation, packaging et monitoring.
+Poursuivez avec **[MLOps & Déploiement](mlops-deploiement.md)**, la page suivante dans le menu.

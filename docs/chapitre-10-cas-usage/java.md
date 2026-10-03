@@ -88,6 +88,8 @@ public record CreateUserRequest(
 
 La documentation doit éviter « utilisez Java 21 » comme règle universelle : un service maintenu sur une autre LTS peut avoir de bonnes raisons de rester ainsi.
 
+Un record fournit des champs finaux et des méthodes générées, mais ne rend pas profondément immuables les objets qu'il référence. Si un composant contient une collection mutable, vérifiez les copies défensives nécessaires. Son `toString()` expose les composants : évitez d'y placer un secret qui pourrait être journalisé.
+
 ---
 
 ## 6. Tests
@@ -130,17 +132,19 @@ Avant d'ajouter une dépendance Java :
 
 ---
 
-## 9. Copilot — référence conservée
-
-Les fichiers `.github/copilot-instructions.md` et les guides Copilot Java restent valides pour les environnements qui utilisent encore Copilot. Le parcours principal de cette page utilise désormais `CLAUDE.md`, rules, skills et la validation par commandes.
-
----
-
 ## Sources
+
+- [Java — contrats des record classes](https://docs.oracle.com/en/java/javase/25/language/records.html) — vérifié le 2026-10-03 ; adapter au JDK du projet
 
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 - [Claude Code — common workflows](https://code.claude.com/docs/en/common-workflows) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-java).
+
 ## Prochaine étape
 
-**[Java & Spring Boot](java-spring-boot.md)** pour les patterns propres à Spring, JPA, configuration et tests d'intégration.
+Poursuivez avec **[Java & Spring Boot](java-spring-boot.md)**, la page suivante dans le menu.

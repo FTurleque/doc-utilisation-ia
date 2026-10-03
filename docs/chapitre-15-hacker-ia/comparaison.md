@@ -38,8 +38,6 @@ Ces différences influencent le workflow, pas un niveau de sécurité intrinsèq
 
 ---
 
-## Contrôles recommandés dans les deux IDE
-
 ### Extensions/plugins
 
 - limiter les composants aux besoins réels ;
@@ -92,14 +90,6 @@ Le risque vient du dépôt **et** de ce que l'agent peut faire avec son contenu.
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Copilot existe dans VS Code et JetBrains avec des capacités et paramètres qui évoluent. Les pages Copilot dédiées de ce dépôt restent la référence pour ses instructions, agents, prompt files et options IDE.
-
-Ne transposez pas automatiquement une permission ou configuration Claude vers Copilot : vérifiez le mécanisme du client réellement utilisé.
-
----
-
 ## Décider sans classement arbitraire
 
 Choisissez l'IDE selon :
@@ -123,6 +113,12 @@ Pour un projet critique, le contrôle des identités, secrets, permissions et pi
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
 - [MITRE ATLAS](https://atlas.mitre.org/)
 
-## Suite
+---
 
-**[Appendices](../appendices/index.md)** : références rapides et templates Claude-first.
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-15-hacker-ia.md#page-chapitre-15-hacker-ia-comparaison).
+
+## Prochaine étape
+
+Poursuivez avec **[Annexe — Accueil](../appendices/index.md)**, la page suivante dans le menu.

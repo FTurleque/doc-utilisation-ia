@@ -13,6 +13,40 @@ En septembre 2026, Anthropic présente l'application Desktop comme un point d'ac
 
 Ces surfaces peuvent coexister et partager le même compte Claude, mais elles n'ont pas exactement les mêmes capacités ni les mêmes contraintes.
 
+## Différences concrètes entre Chat, Cowork, Code, CLI et IDE
+
+Desktop est le contenant ; **Chat, Cowork et Code sont des usages distincts**. Une conversation Chat avec un fichier joint ne devient pas automatiquement une session Claude Code sur le dépôt.
+
+| Surface | Ce que vous faites | Contrainte à connaître |
+|---|---|---|
+| **Desktop — Chat** | Poser des questions, analyser des pièces jointes, utiliser les connecteurs disponibles | Donner du code dans le chat ne donne pas automatiquement accès au dépôt, aux tests ou à son terminal |
+| **Desktop — Cowork** | Déléguer du travail sur des documents et fichiers, selon les dossiers et outils autorisés | Vérifier séparément sa disponibilité, ses permissions et les politiques de l'organisation ; les réglages Code ne décrivent pas à eux seuls Cowork |
+| **Desktop — Code** | Lire/modifier un dépôt, lancer ses commandes, voir les diffs, prévisualiser une application et gérer plusieurs sessions | Choisir l'environnement d'exécution : local, cloud, SSH ou WSL. Les fonctionnalités disponibles diffèrent selon cet environnement |
+| **Claude Code CLI** | Faire le même travail agentique depuis un terminal ; automatiser avec `claude -p` et des scripts | Les dépendances, credentials et fichiers doivent exister dans l'environnement du terminal ; l'interface graphique de revue Desktop n'est pas fournie par la CLI |
+| **VS Code** | Travailler avec le contexte de l'éditeur et examiner les modifications dans l'IDE | Sous-ensemble de commandes slash, pas de raccourci Bash `!` ; l'extension n'ajoute pas `claude` au PATH : installer aussi la CLI pour les commandes du terminal |
+| **JetBrains** | Utiliser Claude Code dans le terminal de l'IDE avec son intégration éditeur | La CLI doit être installée ; gérer les plugins Claude depuis ce terminal lorsque l'IDE n'offre pas le navigateur de plugins |
+
+### Limites de Code dans Desktop
+
+Au **3 octobre 2026**, la documentation distingue notamment :
+
+- **Automatisation** : utiliser la CLI pour `--print`/`-p`, les scripts et la CI. Les tâches planifiées Desktop sont un autre mécanisme.
+- **Agent teams** : disponibles dans la CLI, pas dans Desktop ; les subagents et les workflows dans une session répondent à un autre besoin.
+- **Plugins** : utilisables en sessions locales et SSH ; le navigateur de plugins n'est pas disponible en cloud, les plugins installés sur le poste n'y sont pas transférés, et les sessions WSL Desktop ne les prennent pas en charge actuellement.
+- **Contexte éditeur** : les mentions de fichiers et certaines interfaces de connecteurs dépendent de l'environnement ; ne pas supposer que tout ce qui fonctionne localement fonctionne en cloud/WSL.
+- **Contrôle d'applications** : computer use est une preview sur macOS/Windows pour Pro/Max, indisponible sur Team/Enterprise et Linux à cette date ; ce n'est pas une capacité générale incluse avec tous les sièges Code.
+- **Providers** : Desktop utilise Anthropic par défaut. Une gateway ou un provider tiers demande le parcours de configuration prévu, pas simplement une connexion au même compte.
+
+Ces contraintes sont détaillées dans la [comparaison officielle Desktop/CLI](https://code.claude.com/docs/en/desktop#feature-comparison).
+
+### Ce qui se partage, et ce qui se configure séparément
+
+Les sessions **Code locales** Desktop et CLI réutilisent notamment les instructions `CLAUDE.md`, les settings, skills et hooks du projet. Les plugins installés sur un ordinateur sont partagés entre les surfaces Code compatibles de cet ordinateur. Cela ne synchronise pas toutes les installations entre ordinateurs.
+
+Pour MCP, Desktop peut charger `claude_desktop_config.json` dans Chat et dans Code local. La CLI autonome ne lit pas directement ce fichier : utiliser l'import documenté ou une configuration MCP Claude Code. Un serveur visible dans Chat n'est donc pas une preuve qu'il est disponible dans votre terminal. Voir [la configuration partagée et les différences MCP](https://code.claude.com/docs/en/desktop#shared-configuration).
+
+**Exemple** : pour faire corriger une API et exécuter ses tests, ouvrir **Code** sur le dépôt ou utiliser la CLI/IDE. Pour expliquer un PDF joint, **Chat** suffit. Pour traiter une série de documents dans un dossier autorisé, examiner le parcours **Cowork**.
+
 ---
 
 ## Disponibilité
@@ -155,6 +189,13 @@ Les organisations gérées peuvent utiliser les mécanismes de déploiement entr
 
 Sources consultées le **28 septembre 2026** :
 
+Comparaison des surfaces et contraintes revérifiée le **3 octobre 2026** :
+
+- [Claude Code — Desktop, comparaison CLI et configuration](https://code.claude.com/docs/en/desktop)
+- [Claude Code — Installation des plugins selon la surface](https://code.claude.com/docs/en/plugins/install)
+- [Claude Code — VS Code, différences avec la CLI](https://code.claude.com/docs/en/vs-code)
+- [Claude Code — JetBrains et prérequis CLI](https://code.claude.com/docs/en/jetbrains)
+
 - [Claude — Télécharger les applications](https://claude.com/download)
 - [Anthropic Help Center — Installer Claude Desktop](https://support.claude.com/fr/articles/10065433-installer-claude-desktop)
 - [Anthropic Help Center — Ouvrir Claude Desktop avec un lien](https://support.claude.com/fr/articles/14729294-ouvrir-claude-desktop-avec-un-lien)
@@ -162,4 +203,4 @@ Sources consultées le **28 septembre 2026** :
 
 ## Prochaine étape
 
-Pour installer la CLI ou les intégrations IDE, revenez à **[Installer Claude Code](installation.md)**. Pour comprendre la configuration versionnée du dépôt, poursuivez avec **[Architecture `.claude/`](architecture-claude.md)**.
+Poursuivez avec **[Architecture et paramétrage Claude Code](architecture-claude.md)**, la page suivante dans le menu.

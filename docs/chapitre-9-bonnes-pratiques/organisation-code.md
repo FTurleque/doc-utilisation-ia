@@ -133,6 +133,8 @@ paths:
 
 Les règles ciblées évitent de charger des conventions frontend lorsqu'on travaille sur le backend.
 
+Cette sélection exige le frontmatter `paths` : sans lui, une règle est chargée dès le lancement. Une règle ciblée est activée lorsque Read, Write ou Edit accède à un fichier correspondant au motif. Vérifiez ce qui a réellement été chargé avec `/context` ; un simple nom de dossier dans le titre de la règle ne suffit pas.
+
 ---
 
 ## 7. Les commentaires expliquent le « pourquoi »
@@ -187,6 +189,8 @@ Ne faites pas indexer ou relire inutilement :
 
 Utilisez `.gitignore`, l'organisation du workspace et les permissions Claude lorsque des chemins ne doivent pas être lus.
 
+`.gitignore` est un filtre de découverte, pas une interdiction de lecture. Pour protéger un chemin sensible, utilisez les restrictions d'accès appropriées et vérifiez aussi les commandes shell et les outils externes susceptibles de le lire.
+
 ---
 
 ## 10. Monorepos
@@ -223,18 +227,6 @@ Claude peut les découvrir et les citer lors d'un changement d'architecture.
 
 ---
 
-## 12. Copilot — compatibilité conservée
-
-Si le dépôt utilise encore Copilot :
-
-- `.github/copilot-instructions.md` reste versionné ;
-- `.github/instructions/`, `.github/agents/`, `.github/prompts/` et `.github/skills/` restent disponibles ;
-- ne remplacez pas ces fichiers par les équivalents Claude si une équipe en dépend.
-
-Le dépôt peut porter les deux configurations tant que leur rôle est explicite et qu'elles ne se contredisent pas.
-
----
-
 ## Checklist
 
 - [ ] responsabilités de dossiers explicites ;
@@ -250,9 +242,17 @@ Le dépôt peut porter les deux configurations tant que leur rôle est explicite
 
 ## Sources
 
+- [Claude Code — règles ciblées et chargement des instructions](https://code.claude.com/docs/en/memory) — vérifié le 2026-10-03
+
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 - [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-organisation-code).
+
 ## Prochaine étape
 
-**[Productivité](productivite.md)** : réduire les allers-retours sans transformer chaque tâche en workflow complexe.
+Poursuivez avec **[OpenSpec](openspec.md)**, la page suivante dans le menu.

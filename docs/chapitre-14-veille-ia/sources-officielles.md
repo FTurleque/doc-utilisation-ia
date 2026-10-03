@@ -2,7 +2,7 @@
 
 <span class="badge-beginner">Débutant</span>
 
-Cette page rassemble les **sources primaires** à consulter avant de modifier une information périssable du dépôt. Claude Code est désormais la priorité documentaire ; GitHub Copilot reste suivi comme référence secondaire.
+Cette page rassemble les **sources primaires** à consulter avant de modifier une information périssable du dépôt.
 
 ---
 
@@ -19,20 +19,6 @@ Cette page rassemble les **sources primaires** à consulter avant de modifier un
 
 !!! tip "Règle de maintenance"
     Pour une affirmation sur Claude Code, cherchez d'abord dans `code.claude.com`. Pour les modèles, plans ou annonces générales, utilisez Anthropic/Claude officiels.
-
----
-
-## GitHub Copilot — référence conservée
-
-| Ressource | Usage |
-|---|---|
-| [GitHub Copilot docs](https://docs.github.com/en/copilot) | Fonctionnalités et configuration |
-| [GitHub Changelog](https://github.blog/changelog/) | Changements produit |
-| [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) | Plans et périmètres |
-| [GitHub billing](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-billing) | Facturation Copilot |
-| [VS Code release notes](https://code.visualstudio.com/updates) | Intégrations VS Code/Copilot |
-
-Ne recopiez pas durablement un tableau de prix ou de quotas : conservez la date de vérification et un lien canonique.
 
 ---
 
@@ -101,10 +87,15 @@ Pour toute information susceptible de changer :
 
 1. Claude Code changelog ;
 2. Anthropic Newsroom ;
-3. GitHub Changelog/Copilot docs ;
 4. OWASP GenAI Security Project ;
 5. releases/changelogs des outils réellement documentés.
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-14-veille-ia.md#page-chapitre-14-veille-ia-sources-officielles).
+
 ## Prochaine étape
 
-**[Sécurité, risques & failles](securite-risques.md)** pour transformer cette veille en contrôles opérationnels.
+Poursuivez avec **[Vidéos, Podcasts & Conférences](videos-podcasts.md)**, la page suivante dans le menu.

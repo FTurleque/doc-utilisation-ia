@@ -116,4 +116,4 @@ Ne classez pas « phishing IA = critique » ou « prompt injection = moyen » sa
 
 ## Prochaine étape
 
-**[Études de cas 2024-2026](etudes-de-cas-2024-2026.md)** : relier des cas documentés à des contrôles défensifs vérifiables.
+Poursuivez avec **[Études de cas 2024-2026](etudes-de-cas-2024-2026.md)**, la page suivante dans le menu.

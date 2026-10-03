@@ -91,6 +91,8 @@ Préférez :
 
 Chaque étape terminée fournit un point de contrôle et un diff plus facile à relire.
 
+Après plusieurs corrections sans progrès, arrêtez la boucle : consignez la reproduction, les hypothèses écartées et les contraintes découvertes, puis démarrez une session propre avec cette synthèse. La documentation officielle propose ce changement d'approche après deux corrections infructueuses ; ce repère aide à éviter une conversation saturée d'essais contradictoires.
+
 ---
 
 ## 5. Utiliser les skills comme raccourcis d'équipe
@@ -190,18 +192,20 @@ Un changement plus lent mais correctement testé peut être plus productif qu'un
 
 ---
 
-## Référence Copilot
-
-Les raccourcis IDE, suggestions inline et modes spécifiques Copilot restent documentés dans les chapitres **GitHub Copilot (référence)**. Ils ne sont pas repris ici car ils dépendent fortement de l'IDE et évoluent séparément de Claude Code.
-
----
-
 ## Sources
+
+- [Claude Code — erreurs de workflow fréquentes](https://code.claude.com/docs/en/best-practices#avoid-common-failure-patterns) — vérifié le 2026-10-03
 
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 - [Anthropic — Claude Code sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) — consulté le 2026-09-28
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-productivite).
+
 ## Prochaine étape
 
-**[Sécurité & Qualité](securite-qualite.md)** : augmenter l'autonomie sans augmenter inutilement le risque.
+Poursuivez avec **[Sécurité & Qualité](securite-qualite.md)**, la page suivante dans le menu.

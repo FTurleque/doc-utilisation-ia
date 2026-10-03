@@ -2,7 +2,7 @@
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Python, R et Julia peuvent tous être pertinents en Machine Learning et calcul scientifique. Le choix ne doit pas reposer sur des étoiles de « popularité », un supposé score Copilot ou des affirmations générales de performance : comparez les besoins du projet.
+Python, R et Julia peuvent tous être pertinents en Machine Learning et calcul scientifique.
 
 ---
 
@@ -120,12 +120,10 @@ que d'un classement statique par langage.
 
 ---
 
-## Copilot — référence
+## Référence en annexe
 
-Les anciennes notes « support Copilot ⭐⭐⭐⭐⭐ » ont été supprimées car elles n'étaient pas basées sur un benchmark reproductible. Copilot reste documenté comme outil séparé dans les chapitres de référence.
-
----
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-comparaison-ecosystemes-ml).
 
 ## Prochaine étape
 
-**[Comparaison des outils ML](comparaison-outils.md)** pour choisir ensuite les bibliothèques/frameworks à l'intérieur de l'écosystème retenu.
+Poursuivez avec **[Comparaison des Outils](comparaison-outils.md)**, la page suivante dans le menu.

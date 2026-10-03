@@ -19,7 +19,7 @@ Aucun contenu Copilot n'est supprimé uniquement parce que Claude Code est prior
 
 - Claude Code : `docs/chapitre-3b-claude-code-migration-copilot/`
 - Contexte, rules, skills, agents, hooks et MCP : `docs/chapitre-4-contexte/`
-- GitHub Copilot — référence : chapitres 1 à 3 et pages explicitement Copilot
+- Annexe, en fin de menu : ressources générales, références GitHub Copilot, comparaison et migration
 - Pratiques transverses : prompt engineering, ML/RAG, sécurité, coûts, outils et cas d'usage
 
 ## Configuration des assistants
@@ -65,11 +65,17 @@ Sous Windows, `py -m` peut être utilisé si le launcher Python est la commande 
 Avant une Pull Request :
 
 ```bash
+python scripts/sync-navigation.py
+python scripts/validate-copilot-scope.py
 python -m mkdocs build --strict
 python scripts/validate-links.py
 ```
 
-La CI de PR exécute les mêmes contrôles de génération, chemins internes et ancres HTML.
+La CI de PR exécute les mêmes contrôles de progression, génération, chemins internes et ancres HTML.
+
+Après un changement d'ordre dans `mkdocs.yml`, exécutez `python scripts/sync-navigation.py --write` pour réaligner les sections « Prochaine étape ». Les sommaires des chapitres doivent également suivre cet ordre. Tout contenu Copilot reste dans « Annexe » ; le parcours principal conserve uniquement des liens vers ces références. `validate-copilot-scope.py` vérifie cette séparation.
+
+Pour vérifier le comportement des tables des matières, construisez le site puis servez `site/` avec `python -m http.server 8765 --directory site`. Dans un autre terminal disposant de Node.js, Playwright et Chromium, lancez `node scripts/validate-toc.cjs http://127.0.0.1:8765/`. Le script contrôle l'ordre des ancres, la sélection après chaque clic et la reprise du suivi au défilement, sur ordinateur et mobile, pour toutes les pages navigables. Les ressources externes sont bloquées afin de tester le sommaire hors ligne ; ce contrôle ne valide pas le rendu Mermaid/MathJax. `PLAYWRIGHT_CHROMIUM_EXECUTABLE` permet de choisir un Chromium déjà installé.
 
 ## Contribution
 

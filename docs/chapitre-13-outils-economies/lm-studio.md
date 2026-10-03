@@ -31,6 +31,7 @@ Puis configurez Claude Code :
 ```bash
 export ANTHROPIC_BASE_URL=http://localhost:1234
 export ANTHROPIC_AUTH_TOKEN=lmstudio
+export CLAUDE_CODE_ATTRIBUTION_HEADER=0
 claude --model <identifiant-du-modele>
 ```
 
@@ -137,6 +138,14 @@ Les anciennes versions de cette documentation recommandaient LM Studio + Continu
 
 ---
 
+### Configuration locale et retour au fournisseur habituel
+
+Les blocs `export` ciblent Bash (Linux, macOS ou WSL). Dans PowerShell, utilisez par exemple `$env:ANTHROPIC_BASE_URL = "http://localhost:11434"` pour Ollama, ou le port `1234` pour LM Studio, puis définissez `$env:ANTHROPIC_AUTH_TOKEN`. Pour LM Studio, ajoutez `$env:CLAUDE_CODE_ATTRIBUTION_HEADER = "0"`, comme dans son guide actuel. Ces variables routent la session vers un autre backend : retirez-les avant de revenir à votre connexion Claude habituelle et vérifiez `/status`.
+
+Exigez un modèle prenant en charge les appels d’outils et testez un petit changement avec validation. Un modèle servi localement ne rend pas automatiquement locaux les MCP, recherches Web ou autres outils de la session.
+
+Guides revérifiés le **3 octobre 2026** : [Ollama — compatibilité Anthropic](https://docs.ollama.com/api/anthropic-compatibility) et [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code).
+
 ## Sources
 
 - [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code) — consulté le 2026-09-28
@@ -146,4 +155,4 @@ Les anciennes versions de cette documentation recommandaient LM Studio + Continu
 
 ## Prochaine étape
 
-Utilisez les guides de stack uniquement après avoir choisi entre **Claude officiel**, **Ollama** et **LM Studio** selon sécurité, ressources machine et qualité mesurée.
+Poursuivez avec **[Stack locale rapide — VS Code](stack-prete-15-min-vscode.md)**, la page suivante dans le menu.

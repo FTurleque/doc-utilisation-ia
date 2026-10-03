@@ -247,19 +247,13 @@ Pour les tâches automatisées, le mode non interactif propose aussi des formats
 
 ---
 
-## 11. Copilot reste une référence distincte
+## Référence en annexe
 
-Les techniques générales — objectif clair, contexte précis, exemples, vérification — restent utiles avec GitHub Copilot. Les mécanismes de stockage diffèrent toutefois.
-
-Pour les détails Copilot, voir **[Prompting avec GitHub Copilot](../chapitre-5-prompt-engineering/avec-copilot.md)** plutôt que de mélanger `.github/` et `.claude/` dans une même recette.
-
----
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-prompt-engineering-claude).
 
 ## Prochaine étape
 
-Passez au **[Cookbook](cookbook.md)** pour transformer les workflows récurrents en skills, agents et automatisations versionnées.
-
----
+Poursuivez avec **[Cookbook — recettes prêtes](cookbook.md)**, la page suivante dans le menu.
 
 ## Sources
 

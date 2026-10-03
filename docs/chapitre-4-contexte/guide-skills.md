@@ -1,14 +1,12 @@
-# Skills — Claude Code et interopérabilité Copilot
+# Skills — Claude Code
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
 Un **skill** est une capacité réutilisable stockée dans un dossier contenant `SKILL.md`. Dans Claude Code, il sert à fournir une procédure, une expertise domaine ou un workflow qui ne mérite pas d'être chargé en permanence dans `CLAUDE.md`.
 
-Les skills sont aussi une zone d'interopérabilité intéressante : certaines surfaces GitHub Copilot savent lire des skills placés sous `.claude/skills/`. Cela permet de conserver une seule source lorsque le contenu est réellement compatible.
+Cela permet de conserver une seule source lorsque le contenu est réellement compatible.
 
 ---
-
-## Emplacement Claude Code
 
 ### Projet
 
@@ -191,28 +189,6 @@ Pour un nouveau workflow :
 
 ---
 
-## GitHub Copilot — référence et interopérabilité
-
-GitHub Copilot documente aujourd'hui les skills dans plusieurs emplacements projet, dont :
-
-```text
-.github/skills/<skill>/SKILL.md
-.claude/skills/<skill>/SKILL.md
-.agents/skills/<skill>/SKILL.md
-```
-
-Cela ne signifie pas que tous les champs Claude Code ont exactement le même comportement dans Copilot. Pour un skill partagé :
-
-1. gardez le frontmatter au sous-ensemble réellement compatible ;
-2. évitez les commandes ou outils spécifiques à un seul agent si le skill doit rester portable ;
-3. testez sur les surfaces Copilot réellement utilisées ;
-4. créez une variante spécifique seulement si les comportements divergent réellement.
-
-!!! info "Fin de `copilot-skill://` comme modèle principal de ce guide"
-    L'ancien contenu de cette page présentait les skills essentiellement comme des URI `copilot-skill://`. Le guide est désormais centré sur le format `SKILL.md` et les emplacements documentés actuellement par Claude Code et GitHub Copilot.
-
----
-
 ## Exemple pour ce dépôt
 
 ```text
@@ -228,17 +204,18 @@ Le skill peut expliquer comment :
 
 - respecter le français et le ton pédagogique ;
 - mettre à jour `mkdocs.yml` si nécessaire ;
-- distinguer Claude-first et référence Copilot ;
 - vérifier les informations évolutives contre la documentation officielle ;
 - lancer `py -m mkdocs build` lorsqu'un environnement local est disponible.
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-skills).
+
 ## Prochaine étape
 
-Passez à **[Agents](guide-agents.md)** pour isoler les tâches de recherche, revue et vérification qui produisent beaucoup de contexte.
-
----
+Poursuivez avec **[Hooks Claude](guide-hooks.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -247,4 +224,3 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Claude Code — Skills](https://code.claude.com/docs/en/skills)
 - [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
 - [GitHub Docs — Adding agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
-- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)

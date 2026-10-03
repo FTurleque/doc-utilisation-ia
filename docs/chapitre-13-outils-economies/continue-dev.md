@@ -88,17 +88,17 @@ Le choix d'un autre assistant complet (Cursor, Windsurf, etc.) doit faire l'obje
 
 ---
 
-## Copilot — référence conservée
-
-Certaines anciennes configurations associaient Continue au chat et Copilot à la complétion inline. Elles restent documentables pour les environnements existants, mais ne constituent plus le workflow recommandé du dépôt.
-
----
-
 ## Sources
 
 - [Continue — dépôt officiel](https://github.com/continuedev/continue) — consulté le 2026-09-28
 - [Organisation Continue sur GitHub](https://github.com/continuedev) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-continue-dev).
+
 ## Prochaine étape
 
-**[Ollama](ollama.md)** pour une brique d'inférence locale toujours active, ou **[LM Studio](lm-studio.md)** pour une approche locale avec interface graphique et serveur API.
+Poursuivez avec **[Ollama](ollama.md)**, la page suivante dans le menu.

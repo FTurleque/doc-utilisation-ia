@@ -2,6 +2,8 @@
 
 Les raccourcis IDE et commandes évoluent. Cette page privilégie les **points d'entrée stables** et renvoie vers `/help`, la palette de commandes VS Code ou le Keymap JetBrains pour la liste réellement disponible dans votre version.
 
+La [cheat sheet des commandes Claude Code](../chapitre-3b-claude-code-migration-copilot/commandes-claude.md) recense les commandes de session, leurs alias, les sous-commandes du terminal et les options CLI.
+
 ---
 
 ## Claude Code — commandes utiles
@@ -111,6 +113,12 @@ Pour un problème complexe, voyez le chapitre [Troubleshooting](../chapitre-11-t
 - supposer qu'un binding VS Code existe aussi dans JetBrains ;
 - publier des noms de modèles figés dans la commande `/model` ;
 - confondre une commande Claude Code avec une commande Copilot portant un nom similaire.
+
+---
+
+## Prochaine étape
+
+Poursuivez avec **[Ressources Externes](ressources-externes.md)**, la page suivante dans le menu.
 
 ## Sources
 

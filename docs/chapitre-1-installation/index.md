@@ -76,14 +76,9 @@ Cette matrice évolue rapidement : utilisez la [Copilot customization cheat shee
 
 ---
 
-## Où aller ensuite ?
+## Prochaine étape
 
-- **Nouveau poste / nouveau projet** : [Installer Claude Code](../chapitre-3b-claude-code-migration-copilot/installation.md)
-- **Conserver Copilot** : choisir le tutoriel IntelliJ ou VS Code ci-dessus
-- **Comparer les deux approches** : [Copilot vs Claude](../chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md)
-- **Paramétrer Copilot** : [Paramétrage Copilot — référence](../chapitre-2-parametrage/index.md)
-
----
+Poursuivez avec **[IntelliJ IDEA — Tutoriel](intellij/tutoriel.md)**, la page suivante dans le menu.
 
 ## Sources
 

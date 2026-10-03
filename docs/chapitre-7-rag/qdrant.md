@@ -67,6 +67,14 @@ Qdrant permet de combiner des conditions `AND`, `OR` et `NOT`. Pour les champs f
 
 ---
 
+## API de recherche actuelle
+
+Pour les nouveaux exemples Python, utilisez `client.query_points(...)` (Query API) : `prefetch` définit les candidats dense/sparse et la requête principale leur fusion ou reranking. L’API couvre aussi les requêtes multi-étapes ; ne supposez pas que les snippets historiques `client.search(...)` fonctionnent dans votre SDK verrouillé.
+
+Appliquez les filtres d’autorisation à **chaque branche de prefetch**, puis à toute récupération des parents ou des documents complets. Ne faites pas confiance à un `tenant_id` fourni directement par le modèle : le service doit le déduire de l’identité authentifiée. Gardez la même convention de distance et le même modèle d’embeddings entre ingestion et requêtes.
+
+[Qdrant — Query API et fusion](https://qdrant.tech/documentation/search/hybrid-queries/), revérifiés le 3 octobre 2026.
+
 ## Qdrant et Claude Code
 
 Claude Code peut intervenir comme **outil de développement et d'exploitation** du pipeline :
@@ -170,7 +178,6 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Qdrant — Filtering](https://qdrant.tech/documentation/search/filtering/)
 - [Qdrant — Fundamentals / FAQ](https://qdrant.tech/documentation/faq/)
 
-## À lire ensuite
+## Prochaine étape
 
-- **[Optimisation avancée](optimisation-avancee.md)** pour mesurer la qualité du retrieval ;
-- **[Graphify](../chapitre-4-contexte/graphify.md)** pour une approche par knowledge graph du contexte de code.
+Poursuivez avec **[Implémentation (Basic→Expert) — Présentation](implementation.md)**, la page suivante dans le menu.

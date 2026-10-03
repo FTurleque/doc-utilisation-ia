@@ -4,7 +4,7 @@
 
 Ce chapitre présente les outils qui complètent Claude Code : utilitaires déterministes, analyse statique, compression de sorties, MCP, observabilité, GreenOps, architectures event-driven, modèles locaux et agents alternatifs.
 
-L'objectif n'est plus « économiser des crédits Copilot » à tout prix. Le bon principe est : **utiliser l'outil le plus fiable et le plus simple pour chaque étape**, puis réserver le raisonnement agentique aux problèmes qui en ont réellement besoin.
+Le bon principe est : **utiliser l'outil le plus fiable et le plus simple pour chaque étape**, puis réserver le raisonnement agentique aux problèmes qui en ont réellement besoin.
 
 ---
 
@@ -26,7 +26,7 @@ Un outil local n'est pas automatiquement préférable à Claude, et un appel IA 
 
 ---
 
-## 1. Préparer un contexte propre
+## 1. Réduire le bruit avec des outils ciblés
 
 ### RTK
 
@@ -137,8 +137,6 @@ La page **[OpenSkills](openskills.md)** documente un outil/format complémentair
 
 - le mécanisme natif Claude Code ;
 - les conventions d'un projet tiers ;
-- la compatibilité éventuelle avec Copilot ou d'autres agents.
-
 Pour un projet Claude-only, commencez par les skills natifs avant d'ajouter une couche de portabilité.
 
 ---
@@ -234,8 +232,6 @@ Le dépôt conserve également des pages sur :
 - **[Tabnine](tabnine.md)** ;
 - **[Amazon Q Developer / Kiro](amazon-q-developer.md)** ;
 - **[Supermaven](supermaven.md)** ;
-- GitHub Copilot dans ses chapitres dédiés.
-
 Ces outils ne sont pas présentés comme des « remplaçants moins chers » par défaut. Leurs offres, modèles, politiques de données et prix changent ; évaluez-les selon :
 
 ```text
@@ -292,12 +288,6 @@ graph LR
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Les outils de ce chapitre peuvent aussi compléter Copilot. Les anciennes formulations centrées sur « économiser les AI Credits Copilot » sont conservées uniquement dans les pages de facturation Copilot lorsque cela est pertinent ; le chapitre Outils est désormais indépendant du fournisseur principal.
-
----
-
 ## Sources
 
 - [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
@@ -308,6 +298,12 @@ Les outils de ce chapitre peuvent aussi compléter Copilot. Les anciennes formul
 - [Kilo Code — documentation](https://kilo.ai/docs) — consulté le 2026-09-28
 - [Solace — Event Broker](https://solace.com/products/event-broker/) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-index).
+
 ## Prochaine étape
 
-**[RTK — Rust Token Killer](rtk.md)** pour préparer des sorties compactes, puis choisissez la sous-section correspondant au besoin réel : MCP, observabilité, event-driven, modèles locaux ou agents alternatifs.
+Poursuivez avec **[RTK AI](rtk.md)**, la page suivante dans le menu.

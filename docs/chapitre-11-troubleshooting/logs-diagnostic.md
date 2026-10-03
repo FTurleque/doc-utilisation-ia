@@ -25,6 +25,9 @@ Utilité :
 | `/status` | version, modèle, compte, connectivité |
 | `/context` | répartition de l'usage de contexte |
 | `/mcp` | connexions MCP et outils associés |
+| `/memory`, `/skills`, `/hooks` | instructions, skills et hooks effectivement disponibles |
+| `/permissions` | règles d'autorisation/interdiction effectives |
+| `/usage` | consommation et limites selon le mode de connexion |
 
 `/doctor` peut proposer des corrections. Relisez ce qui sera modifié avant de les accepter.
 
@@ -45,7 +48,7 @@ Pour isoler les customisations :
 claude --safe-mode
 ```
 
-Si le problème disparaît en safe mode, la cause se situe probablement dans une customisation : settings, hooks, plugins ou MCP.
+Safe mode désactive instructions, skills, plugins, hooks, MCP et agents personnalisés. Les settings, permissions, authentification et outils natifs restent actifs, ainsi que les hooks et politiques gérés par l'organisation. Si le problème disparaît, cherchez parmi les customisations neutralisées ; pour isoler aussi les fichiers de settings utilisateur/projet, consultez la **[configuration minimale](procedures-reparation.md#niveau-3-reduire-a-une-configuration-minimale)**.
 
 ---
 
@@ -64,6 +67,8 @@ claude --debug
 ```
 
 Utilisez le debug uniquement le temps de reproduire le problème. Conservez un extrait minimal et redacté pour un rapport de bug.
+
+`/debug description-du-problème` active la journalisation et demande à Claude d'analyser le problème avec les chemins de settings et les logs. Pour un MCP seul, `claude --debug=mcp` réduit le périmètre ; les logs sont normalement sous `~/.claude/debug/<session-id>.txt`. Relisez et masquez les valeurs sensibles avant tout partage.
 
 ---
 
@@ -84,6 +89,8 @@ Exemples :
 ```
 
 Sur Windows, `~/.claude` correspond par défaut à `%USERPROFILE%\.claude`.
+
+`CLAUDE_CONFIG_DIR` peut déplacer ce répertoire : vérifiez sa présence et `/status` avant de chercher les logs dans un ancien emplacement. Les répertoires Windows et WSL peuvent être distincts.
 
 !!! danger "Les transcriptions sont sensibles"
     Les transcriptions de session peuvent contenir le texte des conversations, les résultats d'outils, des extraits de fichiers et toute valeur affichée par une commande. Les permissions du système de fichiers constituent la protection principale de ces données locales.
@@ -221,6 +228,8 @@ Le plugin JetBrains dépend de l'installation locale Claude Code.
 
 Pour un cas mémoire avancé, Claude Code propose `/heapdump`.
 
+La commande écrit normalement deux fichiers sur le Bureau (ou dans le home si le Bureau manque) : `<session-id>.heapsnapshot`, et `<session-id>-diagnostics.json`. Le JSON contient des statistiques, sans conversations ni credentials selon la documentation ; relisez-le tout de même avant partage. Le snapshot contient les chaînes en mémoire et ne doit jamais être publié. Ce diagnostic porte sur le heap JavaScript, pas sur toutes les allocations natives du processus.
+
 !!! danger "Ne partagez pas un heap dump brut"
     Un `.heapsnapshot` peut contenir de la conversation et des credentials en mémoire. Traitez-le comme un artefact sensible. Préférez un diagnostic synthétique ou les données minimales demandées par le support.
 
@@ -235,7 +244,7 @@ Avant d'ouvrir une issue, rassemblez :
 - OS :
 - Claude Code : sortie de `claude --version`
 - Surface : CLI / VS Code / JetBrains
-- Auth : abonnement Claude / Console / Bedrock / Vertex / autre
+- Auth : abonnement Claude / Console / Bedrock / Google Cloud Agent Platform / Foundry / gateway
 
 ## Symptôme
 Description concise.
@@ -258,18 +267,21 @@ Ne joignez jamais de token, cookie, clé API ou transcription complète.
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Les logs GitHub Copilot dans VS Code/JetBrains restent pertinents pour les utilisateurs Copilot, mais ils appartiennent à un autre produit et à une autre chaîne d'authentification. Utilisez la documentation GitHub pour ce diagnostic spécifique.
-
----
-
 ## Sources
+
+- [Claude Code — diagnostic de configuration et safe mode](https://code.claude.com/docs/en/debug-your-config) — vérifié le 2026-10-03
+- [Claude Code — mémoire et fichiers de diagnostic](https://code.claude.com/docs/en/troubleshooting) — vérifié le 2026-10-03
 
 - [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
 - [Claude Code — Commands](https://code.claude.com/docs/en/commands) — consulté le 2026-09-28
 - [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-11-troubleshooting.md#page-chapitre-11-troubleshooting-logs-diagnostic).
+
 ## Prochaine étape
 
-**[Comparaison des problèmes](comparaison-problemes.md)** : identifier si le problème vient de la CLI, de VS Code, de JetBrains ou d'une couche partagée.
+Poursuivez avec **[Comparaison des Problèmes](comparaison-problemes.md)**, la page suivante dans le menu.

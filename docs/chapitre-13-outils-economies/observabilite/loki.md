@@ -21,6 +21,8 @@ graph LR
 
 Les logs sont regroupés en **streams** identifiés par leurs labels.
 
+Pour une nouvelle collecte, utilisez **Grafana Alloy** ou un autre client maintenu. **Promtail est en fin de vie depuis le 2 mars 2026** : les anciens tutoriels Promtail nécessitent une migration. [État officiel et migration](https://grafana.com/docs/loki/latest/send-data/promtail/), vérifié le 3 octobre 2026.
+
 ---
 
 ## Labels : privilégier la faible cardinalité
@@ -143,6 +145,10 @@ Loki est pertinent lorsque :
 Un simple fichier local ou les logs natifs d'une petite plateforme peuvent suffire pour des projets modestes.
 
 ---
+
+## Prochaine étape
+
+Poursuivez avec **[Kepler](kepler.md)**, la page suivante dans le menu.
 
 ## Sources
 

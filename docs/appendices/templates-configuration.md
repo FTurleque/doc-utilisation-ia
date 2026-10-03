@@ -230,3 +230,9 @@ sauf si ce sont réellement les versions du projet. Claude doit lire `package.js
 - [Skills](../chapitre-4-contexte/guide-skills.md)
 - [Agents](../chapitre-4-contexte/guide-agents.md)
 - [MCP](../chapitre-13-outils-economies/mcps/index.md)
+
+---
+
+## Prochaine étape
+
+Poursuivez avec **[Installation — Accueil](../chapitre-1-installation/index.md)**, la page suivante dans le menu.

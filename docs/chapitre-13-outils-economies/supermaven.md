@@ -46,7 +46,6 @@ Claude Code
 
 Si votre besoin est uniquement la **complétion inline**, évaluez un moteur actuellement maintenu dans votre IDE plutôt que d'ajouter une dépendance à Supermaven.
 
-Si vous cherchez une plateforme agentique complète, comparez Claude Code, Windsurf, Tabnine, Kiro, GitHub Copilot ou d'autres solutions actuelles selon vos contraintes réelles ; ne considérez pas Supermaven comme une option active équivalente.
 
 ---
 
@@ -55,6 +54,12 @@ Si vous cherchez une plateforme agentique complète, comparez Claude Code, Winds
 - [Supermaven — Sunsetting Supermaven](https://supermaven.com/blog/sunsetting-supermaven) — consulté le 2026-09-28
 - [Supermaven — équipe rejoignant Cursor](https://supermaven.com/blog/cursor-announcement) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-supermaven).
+
 ## Prochaine étape
 
-**[Comparaison des outils](comparaison.md)** pour choisir une combinaison actuellement maintenue selon l'agent principal, l'IDE, la gouvernance et le besoin de modèles locaux.
+Poursuivez avec **[Comparaison des Outils](comparaison.md)**, la page suivante dans le menu.

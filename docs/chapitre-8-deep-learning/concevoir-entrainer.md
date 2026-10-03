@@ -176,6 +176,8 @@ Mesurez throughput et qualité. « 32 » n'est pas une règle générale.
 Sauvegardez le meilleur checkpoint selon une métrique de validation adaptée.
 
 ```python
+from keras.callbacks import EarlyStopping, ModelCheckpoint
+
 callbacks = [
     ModelCheckpoint("best.keras", monitor="val_loss", save_best_only=True),
     EarlyStopping(monitor="val_loss", patience=patience, restore_best_weights=True),
@@ -185,6 +187,8 @@ callbacks = [
 `patience` doit être choisi selon la dynamique du run.
 
 ---
+
+Avec Keras 3, sauvegardez un modèle rechargeable avec `model.save("modele.keras")` ; utilisez `model.export(...)` pour un artefact de serving. Une sauvegarde des seuls poids n’inclut pas tout l’état nécessaire à la reprise d’entraînement. Vérifiez aussi optimizer, scheduler et RNG selon le framework. [Export Keras](https://keras.io/api/models/model_saving_apis/export/), revérifié le 3 octobre 2026.
 
 ## 10. Diagnostiquer
 
@@ -242,4 +246,4 @@ Pour un tuning massif, utilisez le scheduler/outil d'expérimentation du projet 
 
 ## Prochaine étape
 
-**[Optimisation et performance](optimisation-performance.md)** : comparer régularisation, précision mixte, quantification et autres techniques avec un benchmark contrôlé.
+Poursuivez avec **[Optimisation et Performance](optimisation-performance.md)**, la page suivante dans le menu.

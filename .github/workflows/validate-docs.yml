@@ -26,6 +26,11 @@ jobs:
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
 
+      - name: Validate chapter progression
+        run: python scripts/sync-navigation.py
+      - name: Validate Copilot appendix scope
+        run: python scripts/validate-copilot-scope.py
+
       - name: Build MkDocs (strict)
         run: python -m mkdocs build --strict
 

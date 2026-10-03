@@ -235,4 +235,4 @@ Le schéma de metadata est souvent aussi important que le modèle d'embeddings.
 
 ## Prochaine étape
 
-**[Optimisation avancée](optimisation-avancee.md)** pour construire un protocole d'amélioration reproductible à partir de ces cas d'usage.
+Poursuivez avec **[Optimisation Avancée](optimisation-avancee.md)**, la page suivante dans le menu.

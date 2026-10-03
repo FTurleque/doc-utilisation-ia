@@ -129,8 +129,6 @@ Le coût de recherche initiale est souvent inférieur au coût d'une migration b
 
 ---
 
-## Hygiène de contexte
-
 ### Nouvelle tâche sans rapport
 
 Utilisez `/clear` pour ne pas transporter l'historique précédent.
@@ -179,18 +177,18 @@ Anthropic décrit cette logique comme du **just-in-time context** : charger les 
 
 ---
 
-## GitHub Copilot — référence
-
-L'ancien workflow Inline → Ask → Plan → Agent et sa logique AI Credits restent valables uniquement dans l'écosystème Copilot. Les pages Copilot sont conservées pour comparaison et éventuel retour futur.
-
----
-
 ## Sources
 
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 - [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices) — consulté le 2026-09-28
 - [Anthropic — Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-12-couts-gouvernance.md#page-chapitre-12-couts-gouvernance-workflow-recommande).
+
 ## Prochaine étape
 
-**[Leviers d'économie](leviers-economie.md)** : mesurer puis réduire contexte, rework et autonomie inutile.
+Poursuivez avec **[Outils — Accueil](../chapitre-13-outils-economies/index.md)**, la page suivante dans le menu.

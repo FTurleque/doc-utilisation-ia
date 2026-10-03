@@ -358,19 +358,25 @@ l'apprentissage devient très lent.
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from tensorflow import keras
-from tensorflow.keras import layers
+import keras
+from keras import layers
+
+keras.utils.set_random_seed(42)
 
 # 1) Donnees
 iris = load_iris()
 X, y = iris.data, iris.target
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_train, y_train, test_size=0.2, random_state=42, stratify=y_train
 )
 
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
+X_val = scaler.transform(X_val)
 X_test = scaler.transform(X_test)
 
 # 2) Modele
@@ -389,7 +395,10 @@ model.compile(
 )
 
 # 4) Entrainement
-model.fit(X_train, y_train, epochs=50, batch_size=16, validation_split=0.2)
+model.fit(
+    X_train, y_train, epochs=50, batch_size=16,
+    validation_data=(X_val, y_val),
+)
 
 # 5) Evaluation
 test_loss, test_acc = model.evaluate(X_test, y_test)
@@ -403,6 +412,8 @@ print(f"Precision test: {test_acc:.2%}")
     - Optimiseur Adam et loss catégorielle sparse.
 
 ---
+
+La validation est séparée **avant** d’apprendre le scaler : ses statistiques ne contaminent pas l’entraînement. Cet exemple emploie Keras 3 avec un backend compatible installé ; les tailles de couches, epochs et batch sont illustratives. Une seed facilite la comparaison sans garantir une reproduction bit à bit sur tout matériel. [Guide Keras 3](https://keras.io/guides/migrating_to_keras_3/) et [préprocessing sans fuite](https://scikit-learn.org/stable/common_pitfalls.html), vérifiés le 3 octobre 2026.
 
 ## Références officielles des formules
 
@@ -452,11 +463,4 @@ officielle (framework ou référence mathématique standard).
 
 ## Prochaine étape
 
-**[Architectures spécialisées du Deep Learning](architectures-deep-learning.md)** : comparer CNN, RNN et Transformers, comprendre leurs cas d'usage, leurs forces et leurs limites.
-
-Concepts clés couverts :
-
-- **CNN** - extraction locale de motifs pour images
-- **RNN** - traitement de séquences et dépendances temporelles
-- **Transformers** - attention et parallélisation à grande échelle
-- **Choix d'architecture** - aligner le modèle avec le type de données
+Poursuivez avec **[Architectures de Deep Learning](architectures-deep-learning.md)**, la page suivante dans le menu.

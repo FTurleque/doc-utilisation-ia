@@ -117,10 +117,6 @@
 
 ---
 
-## Où aller ensuite ?
+## Prochaine étape
 
-- [Installation Claude Code](../chapitre-3b-claude-code-migration-copilot/installation.md)
-- [Contexte & Personnalisation](../chapitre-4-contexte/index.md)
-- [Troubleshooting](../chapitre-11-troubleshooting/index.md)
-- [Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)
-- [Outils](../chapitre-13-outils-economies/index.md)
+Poursuivez avec **[Raccourcis Clavier](raccourcis-clavier.md)**, la page suivante dans le menu.

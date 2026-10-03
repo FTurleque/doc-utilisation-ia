@@ -64,6 +64,8 @@ Claude Code peut utiliser ses outils pour récupérer le contexte au moment où 
 
 ---
 
+Déplacer du texte dans `.claude/rules/` ne réduit pas à lui seul le contexte : les règles sans frontmatter `paths` sont chargées au lancement. Utilisez des règles conditionnelles avec `paths` pour les contraintes ciblées et des skills pour les procédures occasionnelles. [Chargement des règles](https://code.claude.com/docs/en/memory#path-specific-rules), revérifié le 3 octobre 2026.
+
 ## Levier 4 — Isoler les explorations lourdes dans des subagents
 
 Un subagent dispose d'un contexte séparé. Utilisez-le pour :
@@ -77,6 +79,8 @@ Un subagent dispose d'un contexte séparé. Utilisez-le pour :
 Le résultat doit revenir sous forme de synthèse exploitable plutôt que de recopier toute l'exploration dans la session principale.
 
 ---
+
+Un subagent préserve le contexte du parent en renvoyant une synthèse ; il effectue néanmoins ses propres appels modèle. Le coût total peut augmenter, surtout si plusieurs agents relisent les mêmes fichiers. Mesurez les appels de tous les agents, pas seulement la taille de la conversation principale.
 
 ## Levier 5 — Surveiller MCP et les outils externes
 
@@ -114,16 +118,22 @@ La vérification est un levier d'économie parce qu'elle réduit le rework.
 
 ## Levier 8 — Distinguer abonnement et API
 
-Avec les plans Claude payants, l'usage Claude et Claude Code partage des limites. Une fois la limite atteinte, des **usage credits** peuvent permettre de continuer en tarification à l'usage. Une clé `ANTHROPIC_API_KEY` configurée peut également faire basculer Claude Code vers une facturation API distincte.
+Sur Pro/Max et les offres par sièges avec usage inclus, Claude et Claude Code partagent l'enveloppe prévue par le plan. Selon l'offre et les réglages, des **usage credits** permettent de continuer à l'usage. Les contrats Enterprise à consommation doivent être lus séparément. Une clé `ANTHROPIC_API_KEY` configurée peut également faire basculer Claude Code vers une facturation API distincte.
 
 Pour rester strictement dans l'allocation du plan :
 
-- surveillez `/status` ;
+- surveillez `/usage` pour les limites et la consommation ; `/status` décrit le compte et la configuration ;
 - n'activez pas les usage credits si vous ne souhaitez pas de dépassement ;
 - vérifiez les variables d'environnement d'API ;
 - attendez le reset de limite si nécessaire.
 
 ---
+
+### Mesure de coût et prompt caching
+
+Dans `/usage`, le bloc de session est une estimation locale de consommation API ; il ne transforme pas l’usage inclus Pro/Max en facture supplémentaire. La Console ou le fournisseur reste la référence de facturation. Depuis v2.1.211, `/clear` remet le total de session à zéro : enregistrez vos mesures avant d’effacer la session. Le prompt caching réduit le coût de relecture d’un préfixe éligible ; il ne raccourcit pas la fenêtre de contexte et n’équivaut pas à une compression. Distinguez tokens d’entrée non cachés, écriture du cache, lecture du cache et sortie.
+
+[Claude Code — mesure des coûts](https://code.claude.com/docs/en/costs#track-your-costs), revérifié le 3 octobre 2026.
 
 ## Checklist quotidienne
 
@@ -135,14 +145,8 @@ Pour rester strictement dans l'allocation du plan :
 □ Modèle/effort adaptés à la tâche
 □ Tests et checks exécutés avant conclusion
 □ /compact ou /clear quand le contexte n'est plus pertinent
-□ /status vérifié si l'usage devient contraignant
+□ /usage vérifié si l'usage devient contraignant
 ```
-
----
-
-## GitHub Copilot — référence
-
-Pour Copilot, la logique de coût repose aujourd'hui sur les **GitHub AI Credits** pour les fonctions IA facturées, tandis que les code completions et next edit suggestions restent hors AI Credits sur les plans payants. Cette mécanique est documentée séparément dans [AI Credits — référence Copilot](premium-requests.md).
 
 ---
 
@@ -152,6 +156,12 @@ Pour Copilot, la logique de coût repose aujourd'hui sur les **GitHub AI Credits
 - [Claude Help Center — Manage usage credits for paid Claude plans](https://support.claude.com/en/articles/12429409-manage-usage-credits-for-paid-claude-plans) — consulté le 2026-09-28
 - [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-12-couts-gouvernance.md#page-chapitre-12-couts-gouvernance-leviers-economie).
+
 ## Prochaine étape
 
-**[Quand utiliser quel mode ?](modes-quand-utiliser.md)** : choisir entre interaction directe, Plan, agent principal, subagents et skills selon la tâche.
+Poursuivez avec **[Caveman — Réduction des tokens](caveman.md)**, la page suivante dans le menu.

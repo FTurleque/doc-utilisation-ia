@@ -2,7 +2,6 @@
 
 Claude Code peut travailler sur des projets Java, Node.js, React, Python et d'autres stacks dès lors que le dépôt expose clairement sa structure, ses commandes et ses critères de validation. Ce chapitre montre comment adapter le workflow **Explore → Plan → Implement → Verify** aux principaux écosystèmes du dépôt.
 
-GitHub Copilot reste documenté comme référence dans ses chapitres dédiés ; les exemples génériques ci-dessous utilisent désormais Claude Code.
 
 ---
 
@@ -22,6 +21,10 @@ GitHub Copilot reste documenté comme référence dans ses chapitres dédiés ; 
 
     Controllers, services, repositories, JPA, configuration et tests d'intégration.
 
+- **[Node.js & React](nodejs-react.md)**
+
+    Workflow full-stack et séparation du contexte frontend/backend.
+
 - :simple-nodedotjs: **[Node.js & Express](nodejs-express.md)**
 
     TypeScript, validation, middlewares, tests et dépendances npm.
@@ -33,10 +36,6 @@ GitHub Copilot reste documenté comme référence dans ses chapitres dédiés ; 
 - :simple-python: **[Python & FastAPI](python.md)**
 
     Pydantic, async, pytest, packaging et APIs Python.
-
-- **[Node.js & React](nodejs-react.md)**
-
-    Workflow full-stack et séparation du contexte frontend/backend.
 
 </div>
 
@@ -94,6 +93,8 @@ Claude Code s'intègre à VS Code et JetBrains. Le choix d'IDE doit rester guid�
 
 Ce tableau décrit des affinités, pas des obligations.
 
+Le panneau VS Code fournit une CLI privée pour son interface, mais n'installe pas `claude` dans le PATH du terminal. Pour les commandes CLI de ces guides, installez la CLI standalone et utilisez le même environnement que le build (Windows, WSL ou conteneur). Distinguez une panne de cette CLI d'une panne du panneau IDE.
+
 ---
 
 ## Validation par stack
@@ -123,18 +124,20 @@ Ne demandez pas à Claude d'utiliser « la dernière version » sans vérificati
 
 ---
 
-## Copilot
-
-Les contenus Copilot ne sont pas supprimés. Ils restent utiles pour les équipes qui utilisent encore les complétions inline ou les artefacts `.github/`, et comme option de retour si l'offre évolue.
-
----
-
 ## Sources
+
+- [Claude Code — extension VS Code et CLI standalone](https://code.claude.com/docs/en/vs-code#vs-code-extension-vs-claude-code-cli) — vérifié le 2026-10-03
 
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-index).
+
 ## Prochaine étape
 
-Commencez par **[Comparaison des écosystèmes](comparaison-ecosystemes.md)**, puis ouvrez le guide correspondant à la stack réellement utilisée par votre projet.
+Poursuivez avec **[Comparaison Écosystèmes](comparaison-ecosystemes.md)**, la page suivante dans le menu.

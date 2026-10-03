@@ -107,6 +107,8 @@ Cela signifie qu'un schéma peut apporter deux dimensions :
 
 Vérifiez toujours le contenu des skills avant installation, notamment leurs permissions, commandes et dépendances.
 
+Le répertoire `.agents/skills/` utilisé par ce guide n'est pas le répertoire natif des skills Claude Code. Pour les utiliser avec Claude, installez les skills relus sous `.claude/skills/<nom>/SKILL.md`, ou via un plugin compatible, puis vérifiez leur présence avec `/skills`. Ne supposez pas qu'un fichier placé sous `.agents/skills/` sera automatiquement découvert.
+
 ---
 
 ## Acceptation exécutable
@@ -142,6 +144,9 @@ La décision doit rester proportionnée au risque et à la longévité du change
 
 ## Sources
 
+- [Guide d'installation des schémas — prérequis et companion skills](https://github.com/intent-driven-dev/openspec-schemas/blob/main/AGENT_INSTALL.md) — vérifié le 2026-10-03
+- [Claude Code — emplacements des skills](https://code.claude.com/docs/en/skills) — vérifié le 2026-10-03
+
 Sources consultées le **1er octobre 2026** :
 
 - [OpenSpec Custom Schemas — dépôt officiel](https://github.com/intent-driven-dev/openspec-schemas)
@@ -150,4 +155,4 @@ Sources consultées le **1er octobre 2026** :
 
 ## Prochaine étape
 
-Pour le framework de base et le workflow standard, revenez à **[OpenSpec](openspec.md)**. N'adoptez un schéma spécialisé qu'après avoir identifié le besoin qu'il résout.
+Poursuivez avec **[Productivité](productivite.md)**, la page suivante dans le menu.

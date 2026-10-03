@@ -77,12 +77,6 @@ Kilo propose des **custom rules** et des modes permettant d'adapter le comportem
 
 Pour un dépôt multi-agents :
 
-```text
-AGENTS.md                 → conventions partagées
-CLAUDE.md / .claude/      → Claude Code
-.kilo/ ou kilo.jsonc      → Kilo Code
-.github/                  → GitHub Copilot
-```
 
 Évitez de dupliquer les mêmes règles longues dans quatre formats. Les fichiers spécifiques doivent surtout décrire les différences de runtime.
 
@@ -171,8 +165,12 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Kilo Code — MCP Overview](https://kilo.ai/docs/automate/mcp/overview)
 - [Kilo Code — Using MCP](https://kilo.ai/docs/automate/mcp/using-in-kilo-code)
 
-## À lire ensuite
+---
 
-- **[Cline](cline.md)** ;
-- **[Vue d'ensemble Cline & Kilo Code](index.md)** ;
-- **[Graphify](../../chapitre-4-contexte/graphify.md)**.
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-agents-code-kilo-code).
+
+## Prochaine étape
+
+Poursuivez avec **[Windsurf (Codeium historique)](../codeium-windsurf.md)**, la page suivante dans le menu.

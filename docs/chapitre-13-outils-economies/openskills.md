@@ -78,6 +78,8 @@ Cette organisation aide à maîtriser le contexte, mais elle ne « réduit pas l
 
 ---
 
+Le dossier universel `.agent/skills/` est un choix d’OpenSkills, pas une garantie de découverte native par tous les clients. Vérifiez le mécanisme de chaque agent. Claude Code charge `CLAUDE.md` ; un `AGENTS.md` généré doit être explicitement importé/référencé si vous voulez lui rendre ce manifeste disponible. Ne confondez pas compatibilité du contenu `SKILL.md` et chargement automatique du manifeste. [OpenSkills — fonctionnement](https://github.com/numman-ali/openskills), revérifié le 3 octobre 2026.
+
 ## OpenSkills et `AGENTS.md`
 
 `npx openskills sync` peut générer dans `AGENTS.md` une liste structurée des skills disponibles. Les agents capables de lire ce manifeste peuvent ensuite charger une skill avec :
@@ -95,7 +97,6 @@ Claude Code, lui, possède son propre mécanisme natif de découverte/invocation
 OpenSkills est particulièrement pertinent lorsque le même dépôt doit fonctionner avec :
 
 - Claude Code ;
-- GitHub Copilot ;
 - Cursor / Windsurf ;
 - Codex ;
 - Aider ou un autre agent capable de lire `AGENTS.md`.
@@ -145,18 +146,18 @@ Les deux mécanismes sont complémentaires : **skill = savoir-faire versionné**
 
 ---
 
-## Copilot — référence conservée
-
-OpenSkills peut servir de pont vers GitHub Copilot lorsqu'un environnement sait lire `AGENTS.md` ou lorsqu'une instruction Copilot lui demande explicitement de charger une skill. Ce comportement dépend davantage du client que dans Claude Code ; vérifiez donc la documentation Copilot actuelle au lieu de supposer une découverte automatique identique.
-
----
-
 ## Sources
 
 - [OpenSkills — dépôt officiel](https://github.com/numman-ali/openskills) — consulté le 2026-09-28
 - [Anthropic Skills](https://github.com/anthropics/skills) — consulté le 2026-09-28
 - [Claude Code — Skills](https://code.claude.com/docs/en/skills) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-openskills).
+
 ## Prochaine étape
 
-**[MCP](mcps/index.md)** : utiliser MCP lorsque la tâche nécessite un service ou une donnée dynamique plutôt qu'une simple procédure versionnée.
+Poursuivez avec **[Présentation et choix](mcps/index.md)**, la page suivante dans le menu.

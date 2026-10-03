@@ -93,18 +93,18 @@ Claude = raisonnement + modifications + orchestration
 
 ---
 
-## Copilot — référence conservée
-
-GitHub Copilot peut toujours être utilisé à la place de Claude pour analyser une issue Sonar. Les pages Copilot restent disponibles dans la documentation, mais elles ne constituent plus le parcours par défaut.
-
----
-
 ## Sources
 
 - [SonarQube MCP Server](https://github.com/SonarSource/sonarqube-mcp-server) — consulté le 2026-09-28
 - [SonarQube for IDE](https://docs.sonarsource.com/sonarqube-for-ide/) — consulté le 2026-09-28
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-sonarqube-vscode).
+
 ## Prochaine étape
 
-**[RTK + SonarQube](rtk-sonar.md)** pour un workflow de réduction de contexte et de priorisation des issues.
+Poursuivez avec **[RTK + SonarQube](rtk-sonar.md)**, la page suivante dans le menu.

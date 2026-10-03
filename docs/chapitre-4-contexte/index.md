@@ -2,7 +2,7 @@
 
 La qualité d'un agent de développement dépend moins d'un « prompt magique » que de la qualité du **contexte utile** qu'il reçoit : instructions du projet, fichiers réellement pertinents, outils disponibles, historique de session et règles spécialisées.
 
-Dans ce dépôt, ce chapitre est désormais organisé autour de **Claude Code**. Les mécanismes GitHub Copilot restent documentés dans les pages historiques et dans des encadrés de compatibilité.
+Dans ce dépôt, ce chapitre est désormais organisé autour de **Claude Code**.
 
 ---
 
@@ -37,19 +37,19 @@ Le contexte est une **ressource limitée**. Claude Code recommande de :
 
 ## Quel mécanisme utiliser ?
 
-| Besoin | Claude Code — recommandé | Copilot — conservé comme référence |
-|---|---|---|
-| Conventions globales projet | `CLAUDE.md` ou `AGENTS.md` | `.github/copilot-instructions.md` |
-| Règles ciblées par chemins | `.claude/rules/*.md` avec `paths` | `.github/instructions/*.instructions.md` avec `applyTo` |
-| Procédure / expertise réutilisable | `.claude/skills/<nom>/SKILL.md` | skills Copilot, y compris `.claude/skills` sur certaines surfaces |
-| Agent spécialisé | `.claude/agents/*.md` | `.github/agents/*.agent.md` |
-| Automatisation d'événements | hooks Claude configurés dans settings | hooks Copilot sur les surfaces compatibles |
-| Outils et données externes | MCP | MCP |
-| Recherche rapide de snippets dans un gros dépôt | outil tiers comme Semble si les outils natifs deviennent trop verbeux | outil tiers compatible selon surface |
-| Navigation symbolique / références / refactoring | outil tiers comme Serena si le backend langage est pertinent | outil tiers compatible selon surface |
-| Cartographie relationnelle du dépôt | outil tiers comme Graphify si nécessaire | outil tiers compatible selon surface |
-| Réglages d'équipe | `.claude/settings.json` | réglages/politiques Copilot + fichiers `.github/` |
-| Préférences locales | `.claude/settings.local.json`, `CLAUDE.local.md` | réglages IDE locaux |
+| Besoin | Claude Code — recommandé |
+|---|---|
+| Conventions globales projet | `CLAUDE.md` ou `AGENTS.md` |
+| Règles ciblées par chemins | `.claude/rules/*.md` avec `paths` |
+| Procédure / expertise réutilisable | `.claude/skills/<nom>/SKILL.md` |
+| Agent spécialisé | `.claude/agents/*.md` |
+| Automatisation d'événements | hooks Claude configurés dans settings |
+| Outils et données externes | MCP |
+| Recherche rapide de snippets dans un gros dépôt | outil tiers comme Semble si les outils natifs deviennent trop verbeux |
+| Navigation symbolique / références / refactoring | outil tiers comme Serena si le backend langage est pertinent |
+| Cartographie relationnelle du dépôt | outil tiers comme Graphify si nécessaire |
+| Réglages d'équipe | `.claude/settings.json` |
+| Préférences locales | `.claude/settings.local.json`, `CLAUDE.local.md` |
 
 ---
 
@@ -85,37 +85,17 @@ Ces outils sont optionnels. Commencez par les capacités natives de Claude Code 
 
     Cartographie des relations entre code, docs et configurations pour réduire l'exploration brute d'un grand dépôt.
 
-- :material-file-code: **[Instructions projet et règles](guide-instructions.md)**
+- :material-file-tree: **[Tree-sitter — analyse syntaxique](tree-sitter.md)**
 
-    `CLAUDE.md`, `AGENTS.md`, `.claude/rules/`, imports et équivalents Copilot conservés.
-
-- :material-lightbulb: **[Skills (SKILL.md)](guide-skills.md)**
-
-    Capacités réutilisables Claude Code et interopérabilité possible avec GitHub Copilot.
-
-- :material-robot: **[Agents](guide-agents.md)**
-
-    Agents spécialisés et différences entre Claude subagents et custom agents Copilot.
+    Grammaires, arbres syntaxiques, parsing incrémental, queries et limites de l'analyse du code.
 
 - :material-account-group: **[Orchestration multi-agents](orchestration-multi-agents.md)**
 
-    Isolation du contexte, délégation, synthèse et vérification.
-
-- :material-hook: **[Hooks](guide-hooks.md)**
-
-    Automatisations et garde-fous ; distinguer hooks Claude, hooks Copilot et hooks Git classiques.
+    Subagents, sessions en arrière-plan, agent teams, coordination et pièges du travail parallèle.
 
 - :material-folder-cog: **[Paramètres du dépôt](parametres-depot.md)**
 
-    Organiser `CLAUDE.md`, `.claude/`, `.mcp.json` et les fichiers `.github/` conservés.
-
-- :material-file-document: **[Prompt files Copilot — référence](prompt-files.md)**
-
-    Ancien mécanisme Copilot conservé ; pour un nouveau workflow Claude, privilégier un skill ou une commande compatible.
-
-- :material-tune-variant: **[applyTo Copilot — référence](applyto-avance.md)**
-
-    Ciblage des instructions Copilot. L'équivalent Claude est `paths` dans `.claude/rules/`.
+    Organiser `CLAUDE.md`, `.claude/` et `.mcp.json` pour partager une configuration de projet.
 
 - :material-microsoft-visual-studio-code: **[VS Code — contexte](vscode-contexte.md)**
 
@@ -130,6 +110,8 @@ Ces outils sont optionnels. Commencez par les capacités natives de Claude Code 
     Comparer les mécanismes sans supposer qu'une fonctionnalité existe sur toutes les surfaces.
 
 </div>
+
+Pour compléter les instructions du projet, consultez [le sandbox et son intégration à vos outils](sandbox.md). La [cheat sheet des commandes Claude Code](../chapitre-3b-claude-code-migration-copilot/commandes-claude.md) regroupe les commandes de session et du terminal.
 
 ---
 
@@ -152,24 +134,13 @@ Ces outils sont optionnels. Commencez par les capacités natives de Claude Code 
 
 ---
 
-## Copilot reste documenté
+## Référence en annexe
 
-Les fichiers `.github/copilot-instructions.md`, `.github/instructions/`, `.github/prompts/`, `.github/agents/`, `.github/skills/` et `.github/hooks/` ne sont pas supprimés de ce dépôt.
-
-Cette conservation sert à :
-
-- maintenir une référence pour les utilisateurs Copilot ;
-- comparer les deux écosystèmes ;
-- conserver les migrations réversibles ;
-- profiter des zones d'interopérabilité, notamment certains `SKILL.md`.
-
----
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-index).
 
 ## Prochaine étape
 
-Commencez par **[Instructions projet et règles](guide-instructions.md)**. Pour un gros dépôt difficile à explorer, comparez **[Semble](semble.md)**, **[Serena](serena.md)** et **[Graphify](graphify.md)** selon le problème réel.
-
----
+Poursuivez avec **[Concepts Clés](concepts.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -183,4 +154,3 @@ Sources officielles consultées le **1er octobre 2026** :
 - [Serena — dépôt officiel](https://github.com/oraios/serena)
 - [Semble — dépôt officiel](https://github.com/MinishLab/semble)
 - [Graphify Labs — dépôt officiel](https://github.com/Graphify-Labs/graphify)
-- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)

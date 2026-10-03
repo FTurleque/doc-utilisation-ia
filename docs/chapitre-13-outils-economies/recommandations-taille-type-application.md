@@ -14,7 +14,6 @@ La taille seule ne suffit pas pour choisir une stack IA. Un petit projet réglem
 4. Choisir le backend de modèle si le local ou un fournisseur particulier est requis.
 5. Ajouter uniquement les outils qui résolvent un problème mesuré.
 
-Le parcours par défaut du dépôt reste **Claude Code**, avec GitHub Copilot conservé comme référence.
 
 ---
 
@@ -155,20 +154,6 @@ Sinon, le local peut augmenter l'exploitation sans améliorer le résultat.
 
 ---
 
-## Quand conserver Copilot
-
-Les pages Copilot restent utiles si :
-
-- l'organisation le fournit déjà ;
-- la complétion inline y apporte de la valeur ;
-- des workflows `.github/` sont déjà industrialisés ;
-- le prix ou l'offre redevient favorable ;
-- certains développeurs utilisent encore cet environnement.
-
-Le but de la migration est de rendre Claude principal, pas de casser volontairement les workflows Copilot existants.
-
----
-
 ## Checklist avant d'ajouter un outil
 
 - Quel problème précis résout-il ?
@@ -188,3 +173,13 @@ Si ces réponses ne sont pas claires, n'ajoutez pas l'outil à la stack standard
 **[Veille IA](../chapitre-14-veille-ia/index.md)** : maintenir les informations produits, modèles et sécurité sans laisser la documentation se périmer.
 
 **[Hacker IA](../chapitre-15-hacker-ia/index.md)** : traiter les risques offensifs/défensifs et les contrôles opérationnels.
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-recommandations-taille-type-application).
+
+## Prochaine étape
+
+Poursuivez avec **[Veille IA — Accueil](../chapitre-14-veille-ia/index.md)**, la page suivante dans le menu.

@@ -69,7 +69,9 @@ Le workflow actuel met en avant :
 /opsx:archive
 ```
 
-Le nom exact de l'invocation peut varier selon l'agent. OpenSpec documente par exemple des variantes pour Cursor, Copilot, Codex et d'autres outils.
+Le nom exact de l'invocation peut varier selon l'agent.
+
+Le profil par défaut propose ce parcours compact. Pour les commandes étendues (`/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, etc.), sélectionnez le profil adapté avec `openspec config profile`, puis régénérez les intégrations avec `openspec update`. L'absence d'une commande étendue peut donc venir du profil choisi plutôt que d'une installation cassée.
 
 !!! note "CLI et commandes agent sont deux choses différentes"
     Certaines commandes s'exécutent dans le terminal (`openspec ...`), d'autres sont des commandes adressées à l'agent. Consultez la page officielle *How Commands Work* si un workflow ne réagit pas comme prévu.
@@ -165,12 +167,20 @@ Le workflow OpenSpec peut être personnalisé avec des schemas. Pour des variant
 
 ## Sources
 
+- [OpenSpec — installation et profils de commandes actuels](https://github.com/Fission-AI/OpenSpec#quick-start) — vérifié le 2026-10-03
+
 Sources consultées le **1er octobre 2026** :
 
 - [OpenSpec — dépôt officiel](https://github.com/Fission-AI/OpenSpec)
 - [OpenSpec — documentation](https://github.com/Fission-AI/OpenSpec/blob/main/docs/README.md)
 - [OpenSpec — schéma `spec-driven`](https://github.com/Fission-AI/OpenSpec/tree/main/docs-lab/reference/schemas/spec-driven)
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-openspec).
+
 ## Prochaine étape
 
-Pour adapter ce workflow à un contexte plus spécialisé, consultez **[OpenSpec Custom Schemas](openspec-schemas.md)**. Pour appliquer le principe sans outil tiers, revenez à **[Workflows IA complets](workflows-ia.md)**.
+Poursuivez avec **[OpenSpec Custom Schemas](openspec-schemas.md)**, la page suivante dans le menu.

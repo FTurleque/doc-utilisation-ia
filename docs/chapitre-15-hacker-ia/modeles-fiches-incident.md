@@ -153,4 +153,4 @@ Ces modèles servent à documenter un incident impliquant un agent IA, un MCP, u
 
 ## Prochaine étape
 
-Utilisez le [plan 90 jours](plan-90-jours.md) comme feuille de route adaptable, puis réévaluez les contrôles à partir des preuves collectées.
+Poursuivez avec **[Plan 90 jours — Passer à l'action](plan-90-jours.md)**, la page suivante dans le menu.

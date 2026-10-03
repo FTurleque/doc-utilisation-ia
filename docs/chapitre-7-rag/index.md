@@ -208,4 +208,4 @@ Pour les analyses volumineuses, déléguez l'exploration à un subagent afin de 
 
 ## Prochaine étape
 
-**[Concepts & architectures RAG](concepts.md)** : comprendre retrieval et chunking ; puis **[Docling](docling.md)** pour l'ingestion documentaire et **[Qdrant](qdrant.md)** pour un exemple de moteur d'index/retrieval.
+Poursuivez avec **[Concepts & Architectures](concepts.md)**, la page suivante dans le menu.

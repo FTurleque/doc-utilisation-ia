@@ -31,12 +31,15 @@ Cline existe sur plusieurs surfaces, avec une forte orientation IDE/CLI.
 La documentation officielle actuelle mentionne notamment :
 
 - VS Code ;
-- JetBrains en Early Access / selon l'offre courante ;
+- JetBrains, selon la version de plugin et l'offre retenues ;
 - CLI ;
+- application desktop et SDK pour les intégrations propres ;
 - autres éditeurs ou intégrations selon les mécanismes supportés.
 
 !!! warning "Vérifiez la surface exacte"
     Les disponibilités IDE évoluent rapidement. Ne copiez pas une matrice de compatibilité ancienne ; vérifiez la page Cline IDE avant déploiement en équipe.
+
+Les surfaces CLI, extension, plugin, desktop et SDK sont documentées dans le [README officiel Cline](https://github.com/cline/cline), revérifié le **3 octobre 2026**. Leur présence ne garantit pas une parité de fonctions ni de permissions.
 
 ---
 
@@ -183,8 +186,6 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Cline — CLI](https://cline.bot/cli)
 - [Cline — CLI 2.0](https://cline.bot/blog/announcing-cline-cli-2-0)
 
-## À lire ensuite
+## Prochaine étape
 
-- **[Kilo Code](kilo-code.md)** ;
-- **[Vue d'ensemble Cline & Kilo Code](index.md)** ;
-- **[MCP](../mcps/index.md)**.
+Poursuivez avec **[Kilo Code](kilo-code.md)**, la page suivante dans le menu.

@@ -91,6 +91,8 @@ Conservez :
 
 ---
 
+Les fonctions `load_and_chunk_documents`, `build_index` et l’interface `index.search` sont du **pseudocode de contrat**, pas des fonctions installées par un package. Pour Qdrant, adaptez cette étape à sa [Query API](qdrant.md#api-de-recherche-actuelle). Le modèle de génération ne fournit pas nécessairement les embeddings : choisissez et versionnez un encodeur distinct, ses dimensions, sa normalisation et son tokenizer.
+
 ## 4. Retrieval inspectable
 
 Avant de générer une réponse, affichez ou loggez les résultats du retrieval :
@@ -179,4 +181,4 @@ Claude doit exécuter l'eval avant de conclure.
 
 ## Prochaine étape
 
-Passez à **[Niveau 2](niveau-2.md)** uniquement si la baseline montre des erreurs de retrieval qu'une technique ciblée peut améliorer.
+Poursuivez avec **[Niveau 2 (Intermédiaire)](niveau-2.md)**, la page suivante dans le menu.

@@ -10,7 +10,6 @@ Cette page ne classe pas les assistants par « meilleur outil ». Elle aide à d
 
 | Catégorie | Exemples | Rôle |
 |---|---|---|
-| Agent / environnement | Claude Code, Cline, Kilo Code, Windsurf, GitHub Copilot, Kiro | Lire/modifier le dépôt et orchestrer des tâches |
 | Backend de modèle | Claude, Ollama, LM Studio | Fournir le modèle/inférence |
 | Outil de preuve ou contexte | SonarQube, RTK, MCP, skills, Graphify | Produire des signaux, réduire le bruit ou structurer le contexte |
 | Observabilité | Grafana, Loki | Visualiser, explorer, alerter et analyser les logs |
@@ -36,7 +35,7 @@ Claude Code
 └── RTK uniquement si les sorties CLI sont trop volumineuses
 ```
 
-GitHub Copilot reste documenté comme environnement de référence secondaire. Cline et Kilo Code disposent désormais d'une section dédiée comme agents alternatifs multi-provider.
+Cline et Kilo Code disposent désormais d'une section dédiée comme agents alternatifs multi-provider.
 
 ---
 
@@ -59,7 +58,6 @@ GitHub Copilot reste documenté comme environnement de référence secondaire. C
 | IDE agentique dédié | Windsurf | gouvernance, migration IDE, coûts actuels |
 | Gouvernance/déploiement privé poussés | Tabnine | engagements contractuels et architecture cible |
 | Stack AWS | Kiro / Amazon Q pendant la transition | échéance Q IDE, permissions AWS |
-| Copilot déjà déployé | GitHub Copilot | AI Credits, politiques org, modèles disponibles |
 
 ---
 
@@ -170,6 +168,12 @@ Une comparaison utile doit être faite sur un petit corpus de tâches réelles d
 
 Les pages détaillées de chaque outil citent leurs sources officielles et leur date de vérification. Pour les prix, quotas et disponibilités, utilisez toujours la source du fournisseur au moment de la décision.
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-comparaison).
+
 ## Prochaine étape
 
-**[Vue d'ensemble des outils](outils-complementaires.md)** pour comprendre rapidement le rôle de chaque brique avant de composer une stack.
+Poursuivez avec **[Vue d'ensemble des outils](outils-complementaires.md)**, la page suivante dans le menu.

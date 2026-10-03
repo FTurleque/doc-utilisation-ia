@@ -131,6 +131,10 @@ Voir **[Troubleshooting](../../chapitre-11-troubleshooting/index.md)**.
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Installation — Comparaison](../comparaison.md)**, la page suivante dans le menu.
+
 ## Sources
 
 - [GitHub Docs — Copilot feature matrix](https://docs.github.com/en/copilot/reference/copilot-feature-matrix) — consulté le 2026-09-28

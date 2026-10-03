@@ -24,6 +24,28 @@ Claude Code permet de sélectionner un alias ou un identifiant complet de modèl
 | `opusplan` | Utilise Opus pendant le plan puis Sonnet pendant l'exécution |
 | `sonnet[1m]` / `opus[1m]` | Demande une fenêtre 1M lorsqu'elle est pertinente pour le provider/modèle |
 
+### Que signifie `[1m]` ?
+
+**`1m` signifie un million de tokens : 1 000 000**, et non mille. `200K` signifie **200 000 tokens** ; `MTok`, dans les prix API, signifie également un million de tokens facturés.
+
+Un token est une unité de texte traitée par le modèle : un mot peut représenter plusieurs tokens. Il n'existe pas de conversion fixe en mots, pages ou lignes de code.
+
+La **fenêtre de contexte** est le budget d'informations que le modèle peut prendre en compte dans une interaction : instructions, historique, code lu, résultats d'outils et place nécessaire à la réponse. Ce n'est ni une mémoire permanente de tout le dépôt, ni un quota mensuel, ni la taille maximale de chaque réponse.
+
+### Quand faut-il sélectionner la variante 1M ?
+
+Selon la [configuration officielle](https://code.claude.com/docs/en/model-config#extended-context), revérifiée le **3 octobre 2026** :
+
+| Modèle utilisé par Claude Code | Fenêtre et sélection |
+|---|---|
+| Fable 5/5.1, Sonnet 5 et suivants, Opus 4.7 et suivants sur Anthropic | **1 000 000 tokens nativement**, sans sélectionner `[1m]` pour activer cette fenêtre |
+| Opus 4.6 / Sonnet 4.6 | **200 000 tokens sans variante** ; sélectionner la variante `[1m]` pour demander 1 000 000, sous réserve de l'accès du plan/provider |
+| Haiku 4.5 | **200 000 tokens** ; ajouter `[1m]` ne crée pas une capacité non prise en charge |
+
+Pour Opus 4.6, la variante 1M est incluse sur Max, Team et Enterprise ; sur Pro elle nécessite des usage credits. Pour Sonnet 4.6, elle nécessite des usage credits sur les plans par abonnement. Ces conditions ne doivent pas être transposées aux modèles à fenêtre 1M native.
+
+Une gateway peut imposer une limite inférieure à celle annoncée au client. La variable `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` ramène aussi la fenêtre utilisée par Claude Code à 200 000 sur les modèles concernés. Vérifiez `/model` et `/context`, le modèle résolu et la configuration du provider avant de conclure que la session dispose effectivement de 1M.
+
 !!! warning "Un alias n'est pas un numéro de version"
     Les alias pointent vers la version recommandée pour votre provider et peuvent évoluer. Si votre environnement exige une reproductibilité stricte, épinglez un identifiant de modèle explicitement supporté par votre provider.
 
@@ -31,18 +53,20 @@ Claude Code permet de sélectionner un alias ou un identifiant complet de modèl
 
 ## Gamme Claude actuelle
 
-Au **28 septembre 2026**, la Claude Platform documente notamment :
+Au **3 octobre 2026**, la Claude Platform documente notamment :
 
 | Modèle | Positionnement officiel | Contexte Platform | Prix API liste entrée / sortie* |
 |---|---|---:|---:|
-| **Claude Fable 5.1** | Raisonnement exigeant et travail agentique longue durée | 1M | $10 / $50 par MTok |
-| **Claude Opus 5.5** | Coding agentique complexe et knowledge work | 1M | $4 / $20 par MTok |
-| **Claude Sonnet 5** | Vitesse + intelligence pour les usages quotidiens | 1M | $2 / $10 par MTok |
-| **Claude Haiku 4.5** | Latence et coût les plus faibles | 200K | $1 / $5 par MTok |
+| **Claude Fable 5.1** | Raisonnement exigeant et travail agentique longue durée | 1 000 000 tokens | $10 / $50 par MTok |
+| **Claude Opus 5.5** | Coding agentique complexe et knowledge work | 1 000 000 tokens | $4 / $20 par MTok |
+| **Claude Sonnet 5.5** | Vitesse + intelligence pour les usages quotidiens | 1 000 000 tokens | $2 / $10 par MTok |
+| **Claude Haiku 4.5** | Latence et coût les plus faibles | 200 000 tokens | $1 / $5 par MTok |
 
 \* Prix API Anthropic affichés dans la documentation Platform à cette date. Un abonnement Claude, un provider cloud ou un contrat entreprise peut avoir une logique de facturation différente.
 
-La documentation Platform recommande actuellement **Opus 5.5 comme point de départ pour la plupart des workloads**, Fable 5.1 lorsque le niveau de capacité supplémentaire est justifié, Sonnet 5 pour les workloads quotidiens où vitesse/coût comptent davantage, et Haiku 4.5 pour les tâches à fort volume ou sensibles à la latence.
+La documentation Platform recommande actuellement **Opus 5.5 comme point de départ pour la plupart des workloads**, Fable 5.1 lorsque le niveau de capacité supplémentaire est justifié, Sonnet 5.5 pour les workloads quotidiens où vitesse/coût comptent davantage, et Haiku 4.5 pour les tâches à fort volume ou sensibles à la latence.
+
+La sortie maximale est une limite distincte : **128 000 tokens** pour Fable 5.1, Opus 5.5 et Sonnet 5.5, **64 000** pour Haiku 4.5 dans la grille Platform. Claude Code peut compacter l'historique avant saturation ; une grande fenêtre ne dispense pas de sélectionner les fichiers utiles. Voir [les caractéristiques Platform](https://platform.claude.com/docs/en/models/overview).
 
 ---
 
@@ -50,11 +74,11 @@ La documentation Platform recommande actuellement **Opus 5.5 comme point de dép
 
 La configuration Claude Code actuelle précise que les alias peuvent résoudre vers des versions différentes selon le fournisseur.
 
-Exemple au 28 septembre 2026 :
+Correspondances revérifiées au **3 octobre 2026** :
 
 | Provider | `opus` | `sonnet` |
 |---|---|---|
-| Anthropic API | Opus 5.5 | Sonnet 5 |
+| Anthropic API | Opus 5.5 | Sonnet 5.5 |
 | Claude Platform on AWS | Opus 5.5 | Sonnet 4.6 |
 | Amazon Bedrock / Google Cloud Agent Platform | Opus 5.5 | Sonnet 4.5 |
 | Microsoft Foundry | Opus 4.6 | Sonnet 4.5 |
@@ -189,10 +213,10 @@ Pour un environnement entreprise reproductible :
 
 ## Sources
 
-- [Claude Code — Model configuration](https://code.claude.com/docs/en/model-config) — consulté le 2026-09-28
-- [Claude Platform — Models overview](https://platform.claude.com/docs/en/models/overview) — consulté le 2026-09-28
+- [Claude Code — Model configuration](https://code.claude.com/docs/en/model-config) — revérifié le 2026-10-03
+- [Claude Platform — Models overview](https://platform.claude.com/docs/en/models/overview) — revérifié le 2026-10-03
 - [Claude Platform — Choosing the right model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Coûts & quotas](couts-quotas.md)** pour comprendre comment les plans, usage credits, API et providers changent la logique de coût.
+Poursuivez avec **[Coûts & quotas](couts-quotas.md)**, la page suivante dans le menu.

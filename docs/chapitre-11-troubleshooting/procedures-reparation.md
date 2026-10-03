@@ -50,11 +50,33 @@ Si le problème disparaît, réactivez progressivement :
 
 L'objectif est d'identifier **la première couche qui reproduit le problème**.
 
+Safe mode conserve les settings, les permissions et l'authentification ; il ne neutralise pas les politiques ni les hooks gérés par l'organisation. Un problème qui persiste peut donc venir de ces couches, du réseau ou de l'installation. Il ne prouve pas à lui seul une corruption de la CLI.
+
 ---
 
 ## Niveau 3 — Réduire à une configuration minimale
 
-Conservez temporairement uniquement les éléments indispensables :
+Pour tester une configuration utilisateur vide **sans déplacer vos fichiers**, lancez Claude depuis un répertoire temporaire sans configuration projet, avec un autre répertoire de configuration. Exemple PowerShell qui restaure ensuite la variable et le répertoire de travail :
+
+```powershell
+Get-Command claude -ErrorAction Stop | Out-Null
+$diagnosticRoot = Join-Path ([IO.Path]::GetTempPath()) ([Guid]::NewGuid().ToString())
+$diagnosticProject = Join-Path $diagnosticRoot 'project'
+$diagnosticConfig = Join-Path $diagnosticRoot 'config'
+New-Item -ItemType Directory -Path $diagnosticProject, $diagnosticConfig | Out-Null
+$previousClaudeConfig = $env:CLAUDE_CONFIG_DIR
+try {
+    $env:CLAUDE_CONFIG_DIR = $diagnosticConfig
+    Push-Location -LiteralPath $diagnosticProject
+    try { claude } finally { Pop-Location }
+} finally {
+    $env:CLAUDE_CONFIG_DIR = $previousClaudeConfig
+}
+```
+
+Une nouvelle connexion peut être nécessaire. Les politiques gérées et les autres variables héritées (provider, proxy, clé API) restent actives : cette session isole les fichiers utilisateur/projet, pas toute la machine. Le répertoire temporaire contient les données de cette session de diagnostic ; gérez sa conservation selon votre politique.
+
+Pour reconstruire ensuite une configuration projet minimale, gardez les éléments indispensables :
 
 ```text
 CLAUDE.md                # court
@@ -86,10 +108,10 @@ Avant de conclure à un problème d'abonnement, vérifiez également :
 
 ```bash
 # Linux/macOS
-printenv ANTHROPIC_API_KEY
+if [ -n "${ANTHROPIC_API_KEY:-}" ]; then echo "Clé API présente"; else echo "Clé API absente ou vide"; fi
 
 # PowerShell
-Get-ChildItem Env:ANTHROPIC_API_KEY
+if ($env:ANTHROPIC_API_KEY) { 'Clé API présente' } else { 'Clé API absente ou vide' }
 ```
 
 Une API key présente peut faire utiliser la facturation API au lieu de l'allocation de votre abonnement Claude.
@@ -98,7 +120,7 @@ Ne copiez jamais la valeur de la clé dans un ticket ou une capture.
 
 ---
 
-## Niveau 5 — Réseau, proxy et TLS
+## Niveau 5 — Réseau et TLS
 
 ### Symptômes typiques
 
@@ -195,13 +217,15 @@ Puis testez d'abord sans customisations complexes.
 
 ## Niveau 10 — Purger uniquement l'état projet si nécessaire
 
-Claude Code propose une commande ciblée pour supprimer l'état qu'il maintient pour un projet :
+**Depuis Claude Code 2.1.288**, la commande est `claude purge` ; auparavant elle s'appelait `claude project purge`. Vérifiez `claude --version` et l'aide de la commande correspondant à votre installation. Commencez par un aperçu sans suppression :
 
 ```bash
-claude project purge
+claude purge /chemin/vers/le-projet --dry-run
 ```
 
-Cette opération peut supprimer des transcriptions et de la mémoire automatique liées au projet. Elle n'est pas nécessaire pour un simple problème réseau ou d'authentification.
+Pour une version antérieure à 2.1.288, utilisez `claude project purge /chemin/vers/le-projet --dry-run`. Remplacez le chemin d'exemple par celui du projet et relisez le plan. Pour supprimer, retirez `--dry-run` : la commande demande une confirmation. Évitez `--all` et `--yes` lors d'un diagnostic manuel.
+
+La purge supprime les transcriptions et la mémoire automatique du projet, son historique de prompts, son entrée dans la configuration globale et les données de session associées (tasks, debug, checkpoints). Elle ne supprime pas le code applicatif. Les images et scratchpads temporaires, ainsi que les sauvegardes globales, ne sont pas tous effacés par cette opération : **ce n'est pas une procédure d'effacement complet de données sensibles**.
 
 !!! warning "Conséquence"
     Vous pouvez perdre la capacité de reprendre certaines anciennes sessions ou d'utiliser leur mémoire. Utilisez cette procédure uniquement lorsqu'un état projet corrompu est raisonnablement suspecté.
@@ -216,7 +240,7 @@ Pour un problème de mémoire réellement reproductible :
 /heapdump
 ```
 
-Traitez le fichier produit comme **hautement sensible**. Il peut contenir conversation et credentials. Ne le joignez pas à une issue publique.
+Deux fichiers sont produits : un `.heapsnapshot` contenant potentiellement conversations et credentials, et un `-diagnostics.json` de statistiques. Ne publiez jamais le snapshot ; relisez le JSON avant de partager le diagnostic minimal demandé par le support.
 
 ---
 
@@ -240,18 +264,20 @@ purge état projet ou heap dump uniquement en dernier recours
 
 ---
 
-## GitHub Copilot — référence conservée
+## Référence en annexe
 
-Les anciennes procédures de reset des extensions GitHub Copilot, caches `github.copilot`, login GitHub et logs Copilot appartiennent à un autre produit. Si vous utilisez encore Copilot, suivez sa documentation de troubleshooting ; n'appliquez pas ces suppressions de cache à Claude Code.
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-11-troubleshooting.md#page-chapitre-11-troubleshooting-procedures-reparation).
 
----
+## Prochaine étape
+
+Poursuivez avec **[Coûts & Gouvernance — Accueil](../chapitre-12-couts-gouvernance/index.md)**, la page suivante dans le menu.
 
 ## Sources
+
+- [Claude Code — isolation et diagnostic de configuration](https://code.claude.com/docs/en/debug-your-config) — vérifié le 2026-10-03
+- [Claude Code — purge, périmètre et changement de commande](https://code.claude.com/docs/en/claude-directory#clear-local-data) — vérifié le 2026-10-03
+- [Claude Code — diagnostic mémoire](https://code.claude.com/docs/en/troubleshooting) — vérifié le 2026-10-03
 
 - [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
 - [Claude Code — Setup](https://code.claude.com/docs/en/setup) — consulté le 2026-09-28
 - [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
-
-## Chapitre suivant
-
-**[Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)** : maîtriser l'usage Claude après avoir stabilisé l'environnement.

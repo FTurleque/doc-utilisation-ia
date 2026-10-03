@@ -4,7 +4,7 @@
 
 Tabnine est une plateforme d'assistance et d'agents de développement particulièrement positionnée sur la **confidentialité, la gouvernance et les déploiements entreprise**.
 
-En 2026, Tabnine a été acquis par **Tricentis**. Cette évolution doit être prise en compte dans les évaluations de fournisseur, contrats, support et roadmap.
+Pour une adoption d'entreprise, identifiez l'entité contractante et vérifiez les engagements actuels de traitement des données, de support et de roadmap dans l'offre retenue. Une annonce commerciale ne remplace pas ces garanties contractuelles.
 
 ---
 
@@ -32,7 +32,6 @@ Ces points sont des **engagements fournisseur à vérifier contractuellement** p
 
 ## Ne pas comparer uniquement la complétion
 
-Tabnine propose désormais une plateforme agentique ; une comparaison 2026 limitée à « autocomplete vs Copilot » est donc incomplète.
 
 Évaluez :
 
@@ -76,6 +75,12 @@ Tabnine est une **plateforme alternative** à comparer avec Claude Code lorsque 
 - [Tabnine — Agentic Platform](https://www.tabnine.com/blog/introducing-the-tabnine-agentic-platform/) — consulté le 2026-09-28
 - [Tabnine — gouvernance 6.1](https://www.tabnine.com/blog/governance-you-can-trust-whats-new-in-tabnine-6-1/) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-tabnine).
+
 ## Prochaine étape
 
-**[Amazon Q Developer](amazon-q-developer.md)** pour l'écosystème AWS, en tenant compte de sa transition actuelle vers Kiro.
+Poursuivez avec **[Amazon Q / Kiro (transition)](amazon-q-developer.md)**, la page suivante dans le menu.

@@ -68,6 +68,8 @@ Appliquez les ACL **avant** de retourner les documents au modèle.
 
 ---
 
+Le filtre ACL doit provenir de l’identité authentifiée et être réappliqué aux recherches lexicales, denses, parents, reranking et caches. Une fusion ne doit pas réintroduire un candidat interdit par une autre branche. Le LLM ne décide jamais seul du tenant ou des droits d’accès.
+
 ## 4. Reranking
 
 Symptôme : le bon document est souvent dans top-20 mais rarement top-5.
@@ -185,4 +187,4 @@ Conservez le résultat dans un artefact JSON/CSV afin de ne pas dépendre de la 
 
 ## Prochaine étape
 
-**[Niveau 3](niveau-3.md)** pour sécurité, observabilité, résilience et exploitation à grande échelle.
+Poursuivez avec **[Niveau 3 (Expert)](niveau-3.md)**, la page suivante dans le menu.

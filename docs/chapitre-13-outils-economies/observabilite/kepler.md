@@ -123,11 +123,14 @@ Exemple de protocole :
 
 ## Limites
 
+- la branche actuelle s'appuie sur RAPL/powercap ; HWMon, GPU NVIDIA et puissance de plateforme Redfish sont documentés comme expérimentaux. Une métrique CPU ne représente donc pas à elle seule l'énergie totale d'un job GPU ;
 - l'attribution énergétique reste une mesure/modélisation dépendante du matériel et de l'environnement ;
 - les résultats de deux clusters différents ne sont pas automatiquement comparables ;
 - une baisse de watts instantanés n'implique pas une baisse d'énergie totale si le traitement dure plus longtemps ;
 - mesurez plusieurs répétitions et conservez le contexte de charge ;
 - ne transformez pas une métrique estimée en bilan carbone sans méthodologie supplémentaire.
+
+[Capteurs et limites de la réécriture Kepler](https://github.com/sustainable-computing-io/kepler#-whats-new-in-the-rewrite), revérifiés le 3 octobre 2026. Documentez les capteurs réellement disponibles avec chaque benchmark.
 
 ---
 
@@ -138,7 +141,6 @@ Sources officielles consultées le **28 septembre 2026** :
 - [CNCF — Kepler](https://www.cncf.io/projects/kepler/)
 - [Kepler — dépôt officiel](https://github.com/sustainable-computing-io/kepler)
 
-## À lire ensuite
+## Prochaine étape
 
-- **[Grafana](grafana.md)** pour la visualisation ;
-- **[Performance & Ressources](../../chapitre-9-bonnes-pratiques/performance.md)** pour la démarche de mesure avant/après.
+Poursuivez avec **[Solace](../solace.md)**, la page suivante dans le menu.

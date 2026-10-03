@@ -109,8 +109,6 @@ paths:
 
 ---
 
-## Démarrer Claude dans IntelliJ
-
 ### Depuis le terminal intégré
 
 ```bash
@@ -178,26 +176,17 @@ Ces détails évoluent : consultez la page JetBrains officielle Claude avant de 
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Les équipes utilisant encore Copilot dans IntelliJ peuvent conserver :
-
-- `.github/copilot-instructions.md` ;
-- `.github/instructions/` ;
-- `.github/prompts/` ;
-- `.github/agents/` ;
-- les agent skills supportés par leur version du plugin.
-
-La matrice officielle GitHub doit être consultée pour distinguer les fonctions stables et celles en preview.
-
----
-
 ## Sources
 
 - [Claude Code — JetBrains IDEs](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 - [Claude Code — Memory & rules](https://code.claude.com/docs/en/memory) — consulté le 2026-09-28
-- [GitHub Docs — Copilot feature matrix](https://docs.github.com/en/copilot/reference/copilot-feature-matrix) — consulté le 2026-09-28
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-intellij-contexte).
 
 ## Prochaine étape
 
-**[Comparaison des contextes IDE](comparaison-contexte.md)** : choisir le bon point d'entrée Claude selon votre stack et votre workflow.
+Poursuivez avec **[Comparaison des IDE](comparaison-contexte.md)**, la page suivante dans le menu.

@@ -75,6 +75,8 @@ Cette technique est plus utile qu'une mise en scène de « Tree of Thoughts » s
 
 Pour les tâches sensibles, utilisez une seconde passe avec un contexte neuf.
 
+Choisissez une délégation isolée en fournissant le diff, les critères et les commandes de validation. Un **fork** de conversation transporte son historique : il ne constitue pas une revue aveugle. Demandez au reviewer de repartir des preuves et de vérifier les hypothèses, plutôt que de simplement approuver la synthèse de l'auteur. [Subagents et fork](https://code.claude.com/docs/en/sub-agents), revérifiés le 3 octobre 2026.
+
 ### Pattern producteur / reviewer
 
 ```mermaid
@@ -214,4 +216,4 @@ Cette architecture est plus maintenable qu'un « méga-prompt » unique.
 
 ## Prochaine étape
 
-**[Prompt Engineering avec Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)** : appliquer ces patterns directement dans une session Claude.
+Poursuivez avec **[Machine Learning — Accueil](../chapitre-6-machine-learning/index.md)**, la page suivante dans le menu.

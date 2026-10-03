@@ -145,12 +145,6 @@ Pour un serveur `stdio`, évitez de lui transmettre inutilement tout l'environne
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Copilot supporte également MCP dans certains environnements. Les mêmes serveurs peuvent parfois être réutilisables, mais la configuration, les permissions et les surfaces disponibles ne doivent pas être supposées identiques. Le parcours principal de ce chapitre utilise désormais Claude Code.
-
----
-
 ## Sources
 
 - [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
@@ -158,6 +152,12 @@ Copilot supporte également MCP dans certains environnements. Les mêmes serveur
 - [Claude Code — `.claude/` directory](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 - [Model Context Protocol](https://modelcontextprotocol.io/) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-mcps-index).
+
 ## Prochaine étape
 
-**[MCP Web local](configuration.md)** : définir un serveur local de recherche/extraction borné et l'intégrer proprement à Claude Code.
+Poursuivez avec **[MCP Web local](configuration.md)**, la page suivante dans le menu.

@@ -118,4 +118,4 @@ description: Revue de changements avant commit ou PR ; recherche bugs, régressi
 
 ## Prochaine étape
 
-**[Agents spécialisés](guide-agents.md)** : comparer les agents Copilot conservés avec les subagents Claude désormais utilisés comme référence principale.
+Poursuivez avec **[Copilot (référence)](../chapitre-5-prompt-engineering/avec-copilot.md)**, la page suivante dans le menu.

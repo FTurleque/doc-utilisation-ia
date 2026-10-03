@@ -84,3 +84,9 @@ Avant d'ajouter une ressource externe :
 - [Veille IA](../chapitre-14-veille-ia/index.md)
 - [Sécurité IA](../chapitre-14-veille-ia/securite-risques.md)
 - [Outils complémentaires](../chapitre-13-outils-economies/outils-complementaires.md)
+
+---
+
+## Prochaine étape
+
+Poursuivez avec **[Templates Configuration](templates-configuration.md)**, la page suivante dans le menu.

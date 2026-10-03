@@ -124,21 +124,17 @@ Cette approche complète `/compact`, `/clear`, les subagents et les règles de c
 
 ---
 
-## Claude Code, Copilot et autres agents
-
-Claude Code est le parcours principal de cette documentation. RTK documente également des intégrations pour d'autres assistants, dont GitHub Copilot, Cursor, Gemini CLI ou Codex selon la version.
-
-Les options d'initialisation propres à ces agents évoluent. Pour Copilot, conservez les configurations existantes du dépôt et utilisez uniquement l'option explicitement documentée par votre version de RTK ; ne laissez pas une commande d'initialisation écraser `.github/copilot-instructions.md` ou des hooks existants sans revue.
-
----
-
 ## Sécurité et limites
 
+- Le hook automatique traite les appels **Bash** ; les outils intégrés `Read`, `Grep` et `Glob` ne passent pas par ce hook. Leur sortie n'est donc pas automatiquement compactée.
+- Le projet propose une télémétrie facultative, désactivée par défaut et soumise à consentement. Vérifiez `rtk telemetry status` ; `rtk telemetry disable` retire le consentement et `RTK_TELEMETRY_DISABLED=1` la bloque par environnement.
 - Une sortie « compacte » peut masquer un détail utile : reproduisez sans RTK si le diagnostic semble incomplet.
 - Ne considérez pas un résumé de logs comme une preuve que le build ou les tests passent.
 - Les logs peuvent contenir des secrets ; RTK ne doit pas être considéré comme un mécanisme de redaction de secrets.
 - Vérifiez les scripts/hooks installés avant de les déployer à toute une équipe.
 - Épinglez une version dans les environnements reproductibles si un changement de filtrage pourrait affecter le diagnostic.
+
+Ces comportements ont été revérifiés dans le [README officiel RTK](https://github.com/rtk-ai/rtk) le **3 octobre 2026**. Les économies affichées par `rtk gain` sont des estimations de sorties évitées, pas une facture Anthropic.
 
 ---
 
@@ -148,6 +144,12 @@ Les options d'initialisation propres à ces agents évoluent. Pour Copilot, cons
 - [RTK — Quick Start](https://github.com/rtk-ai/rtk/blob/develop/docs/guide/getting-started/quick-start.md) — consulté le 2026-09-28
 - [RTK — Installation](https://github.com/rtk-ai/rtk/blob/develop/docs/guide/getting-started/installation.md) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-rtk).
+
 ## Prochaine étape
 
-**[SonarQube](sonarqube.md)** : utiliser l'analyse statique et le MCP Sonar comme sources de preuves ciblées avant de demander une correction agentique.
+Poursuivez avec **[IntelliJ](sonarqube.md)**, la page suivante dans le menu.

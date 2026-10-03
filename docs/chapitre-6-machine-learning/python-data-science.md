@@ -243,18 +243,18 @@ Les transcriptions locales de Claude Code peuvent contenir les sorties d'outils 
 
 ---
 
-## Copilot
-
-Les exemples historiques Copilot restent disponibles dans [Copilot pour le workflow ML](copilot-workflow-ml.md). Ils ne sont pas supprimés : cette documentation reste utile pour comparaison ou retour futur à Copilot.
-
----
-
 ## Sources
 
 - [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [scikit-learn — Pipelines and composite estimators](https://scikit-learn.org/stable/modules/compose.html) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-python-data-science).
+
 ## Prochaine étape
 
-**[Notebooks Jupyter](notebooks-jupyter.md)** puis **[MLOps & Déploiement](mlops-deploiement.md)** pour passer d'une exploration locale à un workflow reproductible et industrialisé.
+Poursuivez avec **[Notebooks Jupyter](notebooks-jupyter.md)**, la page suivante dans le menu.

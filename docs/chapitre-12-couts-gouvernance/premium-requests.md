@@ -107,4 +107,4 @@ Voir [Les abonnements Claude](abonnements.md) pour le parcours principal.
 
 ## Prochaine étape
 
-**[Historique des évolutions](historique-modifications.md)** : conserver les changements Copilot comme registre historique sans les confondre avec le modèle économique Claude.
+Poursuivez avec **[Historique restrictions & évolutions](historique-modifications.md)**, la page suivante dans le menu.

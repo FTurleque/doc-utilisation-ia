@@ -87,4 +87,4 @@ Le contrôle central reste le **moindre privilège**, complété par validation 
 
 ## Prochaine étape
 
-Commencez par **[Panorama IA et hacking](page-principale.md)**, puis utilisez les **[études de cas 2024-2026](etudes-de-cas-2024-2026.md)** pour relier les sources aux contrôles opérationnels.
+Poursuivez avec **[IA et hacking](page-principale.md)**, la page suivante dans le menu.

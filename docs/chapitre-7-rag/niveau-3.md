@@ -224,4 +224,4 @@ Les anciens coûts « par million de requêtes », prix de fournisseurs, tailles
 
 ## Prochaine étape
 
-**[Optimisation avancée](optimisation-avancee.md)** : organiser l'expérimentation et le monitoring sans transformer des benchmarks ponctuels en règles universelles.
+Poursuivez avec **[Cas d'Usage par Secteur](cas-usage-secteurs.md)**, la page suivante dans le menu.

@@ -112,6 +112,8 @@ CMD ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]
 
 Le numéro Python ci-dessus est un **exemple**, pas une exigence : utilisez la version réellement supportée et verrouillée par votre projet.
 
+Ce Dockerfile illustre le packaging, mais ne verrouille pas à lui seul les dépendances : `pip install .` peut résoudre des versions différentes. Pour un build reproductible, intégrez le lockfile du projet avec son outil d'installation, épinglez l'image par digest et copiez les fichiers réellement exigés par le backend de build (`README`, package et données déclarés). Validez aussi le chemin ASGI : `src.api:app` correspond à cet exemple, pas nécessairement à votre layout Python.
+
 Demande utile :
 
 ```text
@@ -214,12 +216,6 @@ La configuration projet partagée se place dans `.mcp.json`.
 
 ---
 
-## Copilot
-
-Les anciens exemples Copilot/GitHub Actions ne sont pas supprimés du dépôt lorsque leur contenu reste utile. Le parcours principal est désormais Claude Code ; Copilot reste une référence secondaire et pourra être réévalué si son modèle de coût ou ses capacités changent.
-
----
-
 ## Sources
 
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
@@ -227,6 +223,12 @@ Les anciens exemples Copilot/GitHub Actions ne sont pas supprimés du dépôt lo
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 - [Anthropic — Trustworthy agents in practice](https://www.anthropic.com/research/trustworthy-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-mlops-deploiement).
+
 ## Prochaine étape
 
-**[RAG — Retrieval-Augmented Generation](../chapitre-7-rag/index.md)** : appliquer les mêmes principes de reproductibilité, évaluation et observabilité aux systèmes de retrieval et de génération.
+Poursuivez avec **[Comparaison Écosystèmes ML](comparaison-ecosystemes-ml.md)**, la page suivante dans le menu.

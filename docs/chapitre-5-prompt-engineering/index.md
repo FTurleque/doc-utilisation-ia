@@ -4,7 +4,7 @@
 
 Le **prompt engineering** consiste à formuler une tâche, fournir le bon contexte et définir des critères de réussite pour obtenir un résultat utile d'un modèle ou d'un agent IA.
 
-Les principes restent génériques aux LLM, mais ce dépôt les applique désormais en priorité à **Claude Code** : travail agentique sur un dépôt, contexte explicite, planification, vérification, skills et subagents. La page GitHub Copilot reste conservée comme référence spécifique.
+Les principes restent génériques aux LLM, mais ce dépôt les applique désormais en priorité à **Claude Code** : travail agentique sur un dépôt, contexte explicite, planification, vérification, skills et subagents.
 
 ---
 
@@ -36,6 +36,12 @@ Claude Code recommande explicitement de **donner à l'agent un moyen de vérifie
 
 <div class="grid cards" markdown>
 
+- :material-robot: **[Prompt Engineering avec Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**
+
+    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
+
+    Contexte de dépôt, plan mode, références ciblées, vérification, skills, subagents et gestion de contexte.
+
 - :material-school: **[Fondamentaux](fondamentaux.md)**
 
     <span class="badge-beginner">Débutant</span>
@@ -53,18 +59,6 @@ Claude Code recommande explicitement de **donner à l'agent un moyen de vérifie
     <span class="badge-expert">Expert</span>
 
     Chaining, RAG, orchestration, sécurité des entrées et évaluation systématique.
-
-- :material-robot: **[Prompt Engineering avec Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**
-
-    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
-
-    Contexte de dépôt, plan mode, références ciblées, vérification, skills, subagents et gestion de contexte.
-
-- :material-github: **[Prompting avec GitHub Copilot — référence](avec-copilot.md)**
-
-    <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span>
-
-    Page conservée pour les complétions, Chat, instructions et workflows Copilot.
 
 </div>
 
@@ -131,6 +125,8 @@ Le contexte inutile dégrade les réponses. Quelques réflexes Claude Code :
 
 ## À éviter
 
+Pour des tâches longues vérifiables, les versions actuelles proposent aussi `/goal` avec une condition évaluée séparément, et un hook `Stop` peut servir de gate déterministe. Choisissez un critère concret ; un agent qui répète une assertion de réussite ne constitue pas une validation. Vérifiez la disponibilité dans votre version et consultez la [cheatsheet Claude Code](../chapitre-3b-claude-code-migration-copilot/commandes-claude.md) ainsi que les [bonnes pratiques officielles](https://code.claude.com/docs/en/best-practices#give-claude-a-way-to-verify-its-work), revérifiées le 3 octobre 2026.
+
 - Un prompt géant qui mélange plusieurs objectifs indépendants.
 - Un `CLAUDE.md` qui contient des tutoriels entiers.
 - Répéter des corrections pendant dix tours au lieu de repartir avec `/clear` et une consigne améliorée.
@@ -150,16 +146,17 @@ graph LR
     B --> D
     C --> D
     D --> E["Skills / subagents / hooks"]
-    A --> F["Copilot — référence"]
 ```
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-5-prompt-engineering.md#page-chapitre-5-prompt-engineering-index).
+
 ## Prochaine étape
 
-Commencez par **[Fondamentaux](fondamentaux.md)**, puis appliquez les principes à **[Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**.
-
----
+Poursuivez avec **[Fondamentaux](fondamentaux.md)**, la page suivante dans le menu.
 
 ## Sources
 

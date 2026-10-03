@@ -49,9 +49,13 @@ Claude Code prend en charge des mécanismes de sandboxing visant à limiter nota
 
 Le sandbox réduit le **blast radius** ; il ne rend pas automatiquement sûr un script destructif à l'intérieur de la zone autorisée.
 
+Le sandbox intégré fonctionne sur **macOS, Linux et WSL2**, avec les commandes shell et leurs processus enfants. Sur Windows natif, ces commandes ne bénéficient pas de cette frontière. Les outils Read/Edit/Write, les hooks et les serveurs MCP restent hors du sandbox shell : appliquez leurs permissions et, si nécessaire, isolez leur processus séparément. Consultez **[Sandbox — isolation des commandes](../chapitre-4-contexte/sandbox.md)** pour l'activation et les tests de frontière.
+
+`CLAUDE.md` exprime des consignes ; il ne constitue pas un contrôle d'accès. Une règle `.gitignore` réduit le bruit des recherches mais n'empêche pas la lecture explicite d'un secret.
+
 ---
 
-## 4. Secrets
+## 4. Secrets et données sensibles
 
 ### Ne pas exposer inutilement
 
@@ -70,7 +74,7 @@ Considérez qu'il peut se retrouver dans :
 - capture CI ;
 - commentaire de PR.
 
-Révoquez/rottez selon la politique de l'organisation plutôt que de simplement supprimer la ligne du diff.
+Révoquez ou renouvelez le secret selon la politique de l'organisation plutôt que de simplement supprimer la ligne du diff.
 
 ---
 
@@ -198,12 +202,6 @@ Un connecteur pratique ne doit pas devenir un accès administrateur permanent.
 
 ---
 
-## 12. Référence Copilot
-
-Les mécanismes de filtrage du code public, politiques Business/Enterprise et réglages spécifiques GitHub Copilot restent des sujets valides, mais ils appartiennent aux pages Copilot dédiées et doivent être vérifiés dans la documentation GitHub au moment de leur utilisation.
-
----
-
 ## Checklist sécurité
 
 - [ ] permissions minimales ;
@@ -219,11 +217,20 @@ Les mécanismes de filtrage du code public, politiques Business/Enterprise et r�
 
 ## Sources
 
+- [Claude Code — périmètre du sandbox](https://code.claude.com/docs/en/sandboxing) — vérifié le 2026-10-03
+- [Claude Code — instructions et contrôles de sécurité](https://code.claude.com/docs/en/debug-your-config) — vérifié le 2026-10-03
+
 - [Anthropic — Claude Code sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) — consulté le 2026-09-28
 - [Anthropic — How we contain Claude across products](https://www.anthropic.com/engineering/how-we-contain-claude) — consulté le 2026-09-28
 - [Anthropic — Claude Code auto mode](https://www.anthropic.com/engineering/claude-code-auto-mode) — consulté le 2026-09-28
 - [Claude Code — permissions](https://code.claude.com/docs/en/permissions) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-securite-qualite).
+
 ## Prochaine étape
 
-**[Performance & Ressources](performance.md)** : maîtriser contexte, outils et parallélisme sans dépendre de chiffres matériels figés.
+Poursuivez avec **[Performance & Ressources](performance.md)**, la page suivante dans le menu.

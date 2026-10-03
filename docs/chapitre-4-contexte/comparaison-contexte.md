@@ -92,21 +92,6 @@ Quel que soit l'IDE :
 
 ---
 
-## Et GitHub Copilot ?
-
-Les pages Copilot sont conservées dans le dépôt. Si les deux assistants sont installés :
-
-| Claude Code | GitHub Copilot |
-|---|---|
-| `CLAUDE.md` | `.github/copilot-instructions.md` |
-| `.claude/rules/*.md` + `paths` | `.github/instructions/*.instructions.md` + `applyTo` |
-| `.claude/skills/` | Agent skills dans les emplacements supportés |
-| `.claude/agents/` | `.github/agents/` |
-
-VS Code prend explicitement en charge plusieurs formats de customisation selon le harness sélectionné. Pour JetBrains, vérifiez la matrice Copilot actuelle avant d'affirmer qu'une fonctionnalité avancée est stable : plusieurs fonctions restent marquées preview selon la version.
-
----
-
 ## Recommandation de maintenance de la documentation
 
 Les pages génériques doivent décrire le **moteur Claude Code et ses fichiers versionnés**. Les différences d'IDE doivent se limiter à l'interface, au lancement, aux raccourcis et aux capacités d'intégration spécifiques.
@@ -115,13 +100,19 @@ Cette séparation évite de dupliquer les mêmes règles dans trois pages et fac
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-comparaison-contexte).
+
+## Prochaine étape
+
+Poursuivez avec **[Prompt Engineering — Accueil](../chapitre-5-prompt-engineering/index.md)**, la page suivante dans le menu.
+
 ## Sources
 
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 - [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices) — consulté le 2026-09-28
-- [GitHub Docs — Copilot feature matrix](https://docs.github.com/en/copilot/reference/copilot-feature-matrix) — consulté le 2026-09-28
-
 ## Chapitre suivant
 
 **[Prompt Engineering](../chapitre-5-prompt-engineering/index.md)** : appliquer ces mécanismes de contexte à des demandes plus précises, vérifiables et économiques.

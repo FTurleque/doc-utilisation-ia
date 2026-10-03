@@ -21,8 +21,6 @@ graph LR
 ### Étape 1 — Formaliser le besoin
 
 ```markdown
-## Feature — Notifications email de commande
-
 ### Objectif
 Informer le client après chaque transition de statut pertinente.
 
@@ -179,6 +177,8 @@ Ne liste pas de préférences de style déjà couvertes par le linter.
 
 Pour une PR importante, des subagents séparés peuvent auditer sécurité, tests et performance, puis le contexte principal synthétise les résultats.
 
+Donnez au reviewer le diff, les critères d'acceptation et les preuves de test, puis demandez-lui de chercher une défaillance concrète. Une revue indépendante limite les hypothèses héritées de l'implémentation. Chaque finding doit être confirmé ; l'accord de plusieurs agents ne remplace pas un test ni une preuve dans le code.
+
 ---
 
 ## Workflow 6 — Mise à jour documentation + code
@@ -273,19 +273,21 @@ Exemple :
 
 ---
 
-## Référence Copilot
-
-Les anciens workflows Copilot (chat, édition multi-fichiers, agents, slash commands) restent documentés dans la section **GitHub Copilot (référence)** et les pages dédiées du chapitre Contexte. Ils ne sont pas supprimés ; les exemples génériques de cette page utilisent désormais Claude Code.
-
----
-
 ## Sources
+
+- [Claude Code — vérification et revue indépendante](https://code.claude.com/docs/en/best-practices) — vérifié le 2026-10-03
 
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [Claude Code — common workflows](https://code.claude.com/docs/en/common-workflows) — consulté le 2026-09-28
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 - [Anthropic — Trustworthy agents in practice](https://www.anthropic.com/research/trustworthy-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-workflows-ia).
+
 ## Prochaine étape
 
-Appliquez ces workflows aux guides technologiques du chapitre **[Cas d'Usage](../chapitre-10-cas-usage/index.md)**.
+Poursuivez avec **[Cas d'Usage — Accueil](../chapitre-10-cas-usage/index.md)**, la page suivante dans le menu.

@@ -123,6 +123,8 @@ Retourne uniquement :
 !!! warning "Un JSON valide n'est pas une preuve de vérité"
     Le format améliore l'intégration, pas l'exactitude. Conservez une étape de vérification indépendante.
 
+Pour une CLI automatisée, associez `--output-format json` à `--json-schema` et lisez `structured_output`. Le prompt seul ne contraint pas le format avec la même fiabilité. Vérifiez l'erreur éventuelle et les contraintes métier après décodage. Voir [le détail et les limites de validation](fondamentaux.md#json-pour-automatisation).
+
 ---
 
 ## 6. Boucles de feedback courtes
@@ -192,4 +194,4 @@ Pour une tâche importante, un **subagent de revue** peut fournir une seconde op
 
 ## Prochaine étape
 
-**[Techniques avancées](techniques-avancees.md)** : orchestration, RAG, évaluations, vérification indépendante et défense contre les injections.
+Poursuivez avec **[Techniques Avancées](techniques-avancees.md)**, la page suivante dans le menu.

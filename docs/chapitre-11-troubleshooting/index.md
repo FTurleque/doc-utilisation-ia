@@ -2,7 +2,7 @@
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Ce chapitre couvre le diagnostic de **Claude Code** : installation, authentification, erreurs API, configuration, MCP, IDE, recherche, contexte et performance. Les procédures GitHub Copilot ne sont pas supprimées ; elles restent une référence secondaire lorsqu'elles sont encore utiles.
+Ce chapitre couvre le diagnostic de **Claude Code** : installation, authentification, erreurs API, configuration, MCP, IDE, recherche, contexte et performance.
 
 ---
 
@@ -16,7 +16,7 @@ Si Claude Code démarre :
 
 `/doctor` vérifie l'installation, les settings, extensions et l'usage du contexte, puis peut proposer des corrections à confirmer.
 
-Si `claude` ne démarre pas :
+Si le shell affiche « commande introuvable », commencez par le **[PATH et l'installation standalone](problemes-courants.md#1-claude-est-introuvable-ou-ne-demarre-pas)**. Si l'exécutable est trouvé mais que l'interface ne démarre pas, lancez :
 
 ```bash
 claude --version
@@ -63,7 +63,7 @@ La documentation officielle recommande ces points d'entrée avant les opération
 Claude Code ne fonctionne pas
 │
 ├─ `claude` introuvable / ne démarre pas
-│  └─ `claude --version` puis `claude doctor`
+│  └─ vérifier PATH/installation ; puis `claude --version` et `claude doctor`
 │
 ├─ Claude démarre mais login/auth échoue
 │  └─ `/login` + vérifier compte/organisation/provider
@@ -72,7 +72,7 @@ Claude Code ne fonctionne pas
 │  └─ consulter Error reference + status Anthropic + limites d'usage
 │
 ├─ Settings / hooks / skills / MCP non chargés
-│  ├─ `/doctor`
+│  ├─ `/context`, `/skills`, `/hooks`, `/doctor`
 │  ├─ `/mcp`
 │  └─ tester `claude --safe-mode`
 │
@@ -116,6 +116,9 @@ La référence officielle Claude Code distingue notamment :
 | Configuration | settings invalides, workspace non trusted, MCP bloqué |
 | IDE | CLI non trouvé, extension/plugin non connecté |
 | Performance | CPU/mémoire, hang, recherche lente, compaction thrashing |
+| Stockage local | `ENOSPC`, quota disque, transcript non sauvegardé |
+
+Un disque ou répertoire temporaire plein peut empêcher la sauvegarde de la session. Vérifiez l'espace, le quota et les droits de l'emplacement indiqué ; protégez les sessions utiles avant tout nettoyage et évitez de purger globalement l'historique pour une panne de stockage ciblée.
 
 ---
 
@@ -145,18 +148,22 @@ Pour un problème non résolu :
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Les anciens diagnostics Copilot (extension, suggestions inline, logs GitHub, `.copilotignore`, etc.) restent pertinents uniquement pour les utilisateurs Copilot. Ils seront conservés dans les pages de référence Copilot et l'audit global ; ils ne servent plus de parcours principal de ce chapitre.
-
----
-
 ## Sources
+
+- [Claude Code — installation et connexion](https://code.claude.com/docs/en/troubleshoot-install) — vérifié le 2026-10-03
+- [Claude Code — diagnostic de configuration](https://code.claude.com/docs/en/debug-your-config) — vérifié le 2026-10-03
+- [Claude Code — erreurs et sauvegarde des transcriptions](https://code.claude.com/docs/en/errors) — vérifié le 2026-10-03
 
 - [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
 - [Claude Code — Error reference](https://code.claude.com/docs/en/errors) — consulté le 2026-09-28
 - [Claude Code — Advanced setup](https://code.claude.com/docs/en/setup) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-11-troubleshooting.md#page-chapitre-11-troubleshooting-index).
+
 ## Prochaine étape
 
-**[Problèmes courants](problemes-courants.md)** pour diagnostiquer le symptôme précis avant d'appliquer une réparation plus invasive.
+Poursuivez avec **[Problèmes Courants](problemes-courants.md)**, la page suivante dans le menu.

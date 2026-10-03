@@ -24,7 +24,6 @@ Actions possibles :
 |---|---|
 | Inventorier agents, IDE, MCP, plugins, skills et backends | registre avec owner |
 | Identifier les credentials accessibles aux agents | cartographie des scopes |
-| Revoir `CLAUDE.md`, `.claude/`, `.mcp.json` et configurations Copilot | PR/revue documentée |
 | Retirer les secrets des instructions et exemples | scan + diff |
 | Vérifier MFA et comptes privilégiés | rapport IAM |
 | Tester la révocation d'un token | exercice documenté |
@@ -61,8 +60,6 @@ Chaque contrôle doit avoir un test ou une preuve observable.
 - préparer la prochaine itération selon les risques réellement observés.
 
 ---
-
-## Par rôle
 
 ### Dev / Platform
 
@@ -126,6 +123,12 @@ Ne concluez pas « maturité atteinte » parce que la checklist est terminée. V
 - [ANSSI](https://cyber.gouv.fr/)
 - [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
 
-## Suite
+---
 
-Après cette première itération, utilisez la [checklist d'audit interne](checklist-audit-interne.md), le [playbook incident](playbook-incident-ia.md) et les [tabletops](exercices-tabletop-ia.md) comme boucle d'amélioration continue.
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-15-hacker-ia.md#page-chapitre-15-hacker-ia-plan-90-jours).
+
+## Prochaine étape
+
+Poursuivez avec **[Cybersécurité & IA — Comparaison](comparaison.md)**, la page suivante dans le menu.

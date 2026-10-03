@@ -39,6 +39,8 @@ Testez plusieurs valeurs et mesurez train/validation ; ne partez pas du principe
 ### Weight decay
 
 ```python
+from keras.optimizers import AdamW
+
 optimizer = AdamW(
     learning_rate=learning_rate,
     weight_decay=weight_decay,
@@ -111,6 +113,10 @@ numerical stability
 N'annoncez pas « 2× plus rapide » sans mesure locale.
 
 ---
+
+Pour PyTorch récent, utilisez `torch.amp.autocast("cuda", dtype=torch.float16)` et, pour l’entraînement FP16, `torch.amp.GradScaler("cuda")`. Les anciennes variantes `torch.cuda.amp.*` et `torch.cpu.amp.*` sont dépréciées. BF16 et FP16 n’ont pas les mêmes besoins de scaling ; vérifiez le matériel, les opérations et les gradients. Le backward doit suivre le protocole AMP du framework, sans transformer aveuglément tous les tensors en FP16.
+
+[PyTorch — AMP](https://docs.pytorch.org/docs/2.14/amp.html), vérifié le 3 octobre 2026. Les snippets `AdamW` de cette page utilisent Keras (`learning_rate`) ; PyTorch emploie `lr` dans `torch.optim.AdamW`.
 
 ## 5. Compilation / JIT
 
@@ -265,4 +271,4 @@ Stockez les résultats dans un fichier versionné ou un système de tracking.
 
 ## Prochaine étape
 
-**[Comparaison des frameworks](comparaison.md)** pour choisir et benchmarker l'écosystème adapté au runtime cible.
+Poursuivez avec **[Comparaison des Frameworks](comparaison.md)**, la page suivante dans le menu.

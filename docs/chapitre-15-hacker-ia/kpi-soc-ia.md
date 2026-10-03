@@ -150,4 +150,4 @@ Supprimez un KPI qui ne pilote rien.
 
 ## Prochaine étape
 
-**[Exercices tabletop IA](exercices-tabletop-ia.md)** : tester vos métriques et runbooks sur des scénarios réalistes avant un incident réel.
+Poursuivez avec **[Exercices tabletop IA](exercices-tabletop-ia.md)**, la page suivante dans le menu.

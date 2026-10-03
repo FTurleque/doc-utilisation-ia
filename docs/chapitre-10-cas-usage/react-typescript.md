@@ -80,6 +80,8 @@ Propose le changement minimal et ajoute les tests pertinents.
 
 Claude ne doit pas appliquer mécaniquement `useMemo`/`useCallback` comme optimisation sans mesure ou besoin structurel.
 
+Avec `StrictMode`, React peut répéter les rendus et effectuer un cycle supplémentaire de setup/cleanup des effets **en développement** pour révéler des erreurs. Si une connexion ou un abonnement se duplique, vérifiez son cleanup et ses dépendances. Désactiver StrictMode ou ajouter un drapeau « déjà exécuté » peut masquer le défaut au lieu de le corriger ; ces vérifications ne décrivent pas le comportement normal de production.
+
 ---
 
 ## 5. Client vs serveur
@@ -180,18 +182,20 @@ Ne copiez pas des recettes « React 19 » ou « Next X » dans un projet d'une a
 
 ---
 
-## Copilot — référence
-
-Les suggestions inline Copilot et instructions `.github/` restent documentées dans les pages dédiées. Cette page utilise désormais le workflow Claude-first mais n'impose pas leur suppression.
-
----
-
 ## Sources
+
+- [React — contrôles de StrictMode en développement](https://react.dev/reference/react/StrictMode) — vérifié le 2026-10-03
 
 - [React — documentation](https://react.dev/) — vérifier la version et le framework du projet
 - [TypeScript — documentation](https://www.typescriptlang.org/docs/) — vérifier la version installée
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-react-typescript).
+
 ## Prochaine étape
 
-**[Node.js & React](nodejs-react.md)** pour le workflow full-stack ou **[Python & FastAPI](python.md)** pour une API Python.
+Poursuivez avec **[Python & FastAPI](python.md)**, la page suivante dans le menu.

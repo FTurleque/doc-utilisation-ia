@@ -129,4 +129,4 @@ Cette page ne décrit pas la tarification Claude. Pour Claude Code, consultez [L
 
 ## Prochaine étape
 
-**[Les abonnements Claude](abonnements.md)** pour l'état actuel du parcours principal.
+Poursuivez avec **[Comparaison Copilot vs Claude](../chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md)**, la page suivante dans le menu.

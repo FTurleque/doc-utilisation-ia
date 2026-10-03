@@ -146,6 +146,10 @@ Il n'est pas nécessaire pour un petit script ponctuel dont quelques logs locaux
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Loki](loki.md)**, la page suivante dans le menu.
+
 ## Sources
 
 Sources officielles consultées le **28 septembre 2026** :

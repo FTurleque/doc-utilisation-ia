@@ -77,6 +77,12 @@ La CLI permet également de choisir le type de chunking et la limite de tokens p
 
 ---
 
+### Formats, dépendances et exécution locale
+
+Le support d’un format n’implique pas que toute dépendance soit incluse dans l’installation de base. Les formats Office binaires DOC/XLS/PPT et RTF requièrent LibreOffice ; l’audio requiert l’extra `asr`, et la vidéo requiert aussi `ffmpeg`. Les formats Apple Pages/Keynote utilisent l’extra `format-iwork`. Les exports incluent désormais aussi DocLang archive (`dclx`) et LaTeX. Vérifiez la version et les extras dans le lockfile.
+
+Une conversion locale peut télécharger des modèles au premier usage ; préparez leurs artefacts pour un environnement hors réseau. L’activation d’un moteur OCR/VLM distant change le périmètre de confidentialité. Conservez IDs, pages, titres et métadonnées de provenance avec les chunks. [Formats officiels Docling](https://docling-project.github.io/docling/usage/supported_formats/), revérifiés le 3 octobre 2026.
+
 ## Utilisation Python
 
 ```python
@@ -168,4 +174,4 @@ Sources consultées le **1er octobre 2026** :
 
 ## Prochaine étape
 
-Après l'ingestion, passez à **[Qdrant](qdrant.md)** ou au moteur de retrieval choisi, puis évaluez séparément ingestion, retrieval et génération.
+Poursuivez avec **[Qdrant — Vector DB & Hybrid Search](qdrant.md)**, la page suivante dans le menu.

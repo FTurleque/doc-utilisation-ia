@@ -58,6 +58,8 @@ Pour une nouvelle propriété API :
 
 Si le projet génère les types depuis OpenAPI/GraphQL/schema, utilisez cette source de vérité au lieu de dupliquer manuellement les interfaces.
 
+Un type TypeScript partagé n'effectue aucune validation HTTP : ses annotations sont effacées à l'exécution. Vérifiez le schéma runtime côté serveur et, selon les exigences du client, les réponses reçues côté frontend. Un type généré peut être à jour alors que le serveur déployé ne l'est pas encore : testez aussi la compatibilité entre versions.
+
 ---
 
 ## 3. Ne pas partager ce qui ne doit pas l'être
@@ -162,17 +164,19 @@ Le contexte principal synthétise ensuite le contrat et le plan. Ne laissez pas 
 
 ---
 
-## 10. Copilot — référence
-
-Les anciennes instructions `.github/` Node/React peuvent coexister avec les fichiers Claude. Gardez-les si Copilot reste utilisé par une partie de l'équipe ou doit pouvoir être réactivé plus tard.
-
----
-
 ## Sources
+
+- [TypeScript — effacement des types à l'exécution](https://www.typescriptlang.org/docs/handbook/2/basic-types.html#erased-types) — vérifié le 2026-10-03
 
 - [Claude Code — common workflows](https://code.claude.com/docs/en/common-workflows) — consulté le 2026-09-28
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-nodejs-react).
+
 ## Prochaine étape
 
-Voir les guides spécialisés **[Node.js & Express](nodejs-express.md)** et **[React & TypeScript](react-typescript.md)** pour chaque côté du dépôt.
+Poursuivez avec **[Node.js & Express](nodejs-express.md)**, la page suivante dans le menu.

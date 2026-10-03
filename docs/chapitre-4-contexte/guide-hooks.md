@@ -1,4 +1,4 @@
-# Hooks — Claude Code et référence Copilot
+# Hooks — Claude Code
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
@@ -248,40 +248,13 @@ Un **hook Git** doit continuer à être présenté comme un hook Git, même si C
 
 ---
 
-## GitHub Copilot — hooks conservés
+## Référence en annexe
 
-Le dépôt conserve :
-
-```text
-.github/hooks/
-```
-
-pour les configurations Copilot existantes.
-
-Les hooks Copilot et Claude ont des formats, événements et surfaces différents. GitHub documente actuellement les hooks Copilot notamment pour Copilot CLI et le cloud agent, avec d'autres surfaces signalées en preview ou non supportées selon la matrice produit.
-
-Ne copiez donc pas un JSON `.github/hooks/*.json` dans `.claude/settings.json` en supposant une compatibilité directe.
-
----
-
-## Migration Copilot → Claude
-
-Pour chaque hook existant :
-
-1. identifiez l'**intention** : blocage, validation, notification, formatage ;
-2. vérifiez si une permission Claude suffit ;
-3. sinon choisissez l'événement Claude équivalent ;
-4. adaptez le format de l'entrée JSON et la décision de sortie ;
-5. testez un cas autorisé **et** un cas bloqué ;
-6. conservez le hook Copilot d'origine s'il sert encore aux utilisateurs Copilot.
-
----
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-hooks).
 
 ## Prochaine étape
 
-Voir **[Paramètres du dépôt](parametres-depot.md)** puis **[Hooks avancés Claude](../chapitre-3b-claude-code-migration-copilot/hooks-avances.md)**.
-
----
+Poursuivez avec **[Paramètres du Dépôt](parametres-depot.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -289,5 +262,3 @@ Sources officielles consultées le **28 septembre 2026** :
 
 - [Claude Code — Hooks reference](https://code.claude.com/docs/en/hooks)
 - [Claude Code — Settings](https://code.claude.com/docs/en/settings)
-- [GitHub Docs — About hooks for GitHub Copilot](https://docs.github.com/en/copilot/concepts/agents/hooks)
-- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)

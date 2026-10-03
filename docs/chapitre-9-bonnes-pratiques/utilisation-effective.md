@@ -160,7 +160,7 @@ Mauvais usage : lancer une suite de tests de 30 minutes après chaque modificati
 
 ---
 
-## 9. Hygiène de contexte
+## 9. Gérer l'historique et les checkpoints
 
 ### `/clear`
 
@@ -172,7 +172,9 @@ Utilisez la compaction lorsqu'une tâche longue doit continuer mais que l'histor
 
 ### `/rewind`
 
-Utilisez les mécanismes de rewind/checkpoint lorsqu'un changement ou une direction de conversation doit être annulé selon les capacités de votre version Claude Code.
+`/rewind` permet de restaurer le code, la conversation ou les deux depuis un checkpoint. Il suit les modifications faites avec les outils d'édition de Claude : **les changements par commande shell et ceux d'autres sessions ne sont pas couverts**. Il ne revient pas sur une migration DB, un push ou une action externe. Gardez Git et les sauvegardes nécessaires.
+
+Claude conserve les snapshots des 100 checkpoints les plus récents de la session ; leur rétention dépend de `cleanupPeriodDays` (environ 30 jours après la dernière sauvegarde par défaut). Une conversation encore consultable ne garantit donc pas que ses fichiers puissent être restaurés.
 
 Gardez aussi `CLAUDE.md` court : il est chargé fréquemment et doit contenir les invariants, pas une encyclopédie.
 
@@ -215,20 +217,6 @@ Si tu ne peux pas l'exécuter, dis exactement ce qui manque.
 
 ---
 
-## 12. Copilot — référence conservée
-
-Les mécanismes suivants restent documentés dans les chapitres Copilot :
-
-- complétion inline ;
-- slash commands Copilot ;
-- variables de contexte propres à VS Code/Copilot ;
-- `.github/copilot-instructions.md` ;
-- `.prompt.md` et `.agent.md`.
-
-Ne transposez pas automatiquement ces syntaxes dans Claude Code : utilisez les équivalents `CLAUDE.md`, rules, skills, subagents, hooks et MCP.
-
----
-
 ## Checklist d'une session efficace
 
 - [ ] objectif et scope explicites ;
@@ -243,11 +231,20 @@ Ne transposez pas automatiquement ces syntaxes dans Claude Code : utilisez les �
 
 ## Sources
 
+- [Claude Code — bonnes pratiques](https://code.claude.com/docs/en/best-practices) — vérifié le 2026-10-03
+- [Claude Code — checkpoints et limites de restauration](https://code.claude.com/docs/en/checkpointing) — vérifié le 2026-10-03
+
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-utilisation-effective).
+
 ## Prochaine étape
 
-**[Organisation du code](organisation-code.md)** puis **[Workflows IA complets](workflows-ia.md)** pour appliquer ces principes à des changements réels de bout en bout.
+Poursuivez avec **[Organisation du Code](organisation-code.md)**, la page suivante dans le menu.

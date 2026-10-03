@@ -77,6 +77,17 @@ Points de vigilance :
 
 ## Claude Code comme client
 
+Configurations distantes vérifiées le **3 octobre 2026** :
+
+```bash
+claude mcp add --transport http tavily https://mcp.tavily.com/mcp/
+claude mcp add --transport http firecrawl https://mcp.firecrawl.dev/v2/mcp-oauth
+```
+
+Ces variantes utilisent une connexion OAuth au compte fournisseur ; terminez l'authentification depuis `/mcp` lorsque demandée. Firecrawl distingue aussi une variante sans compte limitée et une variante à clé API. Leurs droits, quotas et facturation dépendent de l'accès choisi. Une URL de serveur MCP se configure dans le client ; elle n'est pas une page documentaire à ouvrir directement.
+
+[Guide Tavily MCP](https://docs.tavily.com/documentation/mcp) et [guide Firecrawl MCP](https://docs.firecrawl.dev/mcp-server). Pour la configuration projet Claude Code, utilisez `.mcp.json` ; les exemples d'autres clients ne sont pas interchangeables.
+
 Quel que soit le fournisseur, l'intégration doit rester observable depuis Claude :
 
 ```text
@@ -155,12 +166,6 @@ Pour les services distants :
 
 ---
 
-## Référence Copilot
-
-Tavily, Firecrawl ou d'autres MCP peuvent aussi être utilisés avec GitHub Copilot lorsque l'environnement Copilot concerné supporte le serveur. La configuration doit être vérifiée séparément dans la documentation GitHub actuelle.
-
----
-
 ## Sources
 
 - [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
@@ -168,6 +173,12 @@ Tavily, Firecrawl ou d'autres MCP peuvent aussi être utilisés avec GitHub Copi
 - [Firecrawl documentation](https://docs.firecrawl.dev/) — à vérifier au moment de l'intégration
 - [Model Context Protocol](https://modelcontextprotocol.io/) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-mcps-serveurs).
+
 ## Prochaine étape
 
-**[Sécurité et choix](securite.md)** : décider entre local et distant à partir des permissions, des données et de la maintenance — pas uniquement du prix.
+Poursuivez avec **[Sécurité](securite.md)**, la page suivante dans le menu.

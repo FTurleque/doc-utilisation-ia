@@ -58,8 +58,6 @@ Pour l'authentification directe Anthropic, Claude Code accepte :
 
 ---
 
-## 1. Installer la CLI
-
 ### macOS, Linux et WSL
 
 L'installation native est la méthode recommandée :
@@ -223,8 +221,6 @@ Le mode `-p` est adapté aux scripts et à la CI. Pour les automatisations sans 
 
 ---
 
-## 4. Installer Claude Code dans VS Code
-
 ### Prérequis
 
 La documentation officielle demande actuellement :
@@ -255,9 +251,6 @@ L'intégration VS Code peut notamment :
 - afficher des diffs ;
 - travailler selon le mode de permissions choisi ;
 - reprendre des sessions précédentes.
-
-!!! tip "Copilot reste compatible avec ce dépôt"
-    La documentation GitHub Copilot est conservée. Vous pouvez garder Copilot installé en parallèle, par exemple pour comparer les workflows ou conserver une complétion inline spécifique. Ce dépôt recommande toutefois Claude Code comme parcours principal.
 
 ---
 
@@ -330,11 +323,13 @@ Claude Code permet également de choisir un canal de mise à jour (`latest` ou `
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-installation).
+
 ## Prochaine étape
 
-Si vous souhaitez une interface graphique unifiée, passez à **[Claude Desktop](claude-desktop.md)**. Pour structurer ensuite la configuration versionnée du projet, poursuivez avec **[Architecture et paramétrage Claude Code](architecture-claude.md)**.
-
----
+Poursuivez avec **[Claude Desktop](claude-desktop.md)**, la page suivante dans le menu.
 
 ## Sources
 

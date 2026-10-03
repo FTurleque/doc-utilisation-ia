@@ -4,7 +4,6 @@
 
 Claude Code fonctionne avec les principaux écosystèmes de développement. Le bon choix de stack ne doit pas dépendre d'un supposé « score IA » : choisissez d'abord selon le produit, l'équipe, l'exploitation et le code existant.
 
-Cette page remplace les anciens classements Copilot et benchmarks de génération non sourcés par des **critères vérifiables**.
 
 ---
 
@@ -21,7 +20,7 @@ Claude peut être efficace dans chacun si le dépôt expose clairement ses comma
 
 ---
 
-## Critères qui comptent réellement
+## Critères communs de comparaison
 
 ### 1. Source de vérité du build
 
@@ -182,18 +181,20 @@ VS Code et JetBrains ont tous deux une intégration Claude Code. Choisissez l'ID
 
 ---
 
-## Copilot — référence
-
-Les anciens tableaux « Copilot accuracy », temps de génération et notes par stack ont été supprimés car ils n'étaient pas sourcés et ne représentaient pas un benchmark reproductible. Les guides Copilot restent présents ailleurs dans le dépôt pour les mécanismes spécifiques au produit.
-
----
-
 ## Sources
+
+- [Claude Code — intégration VS Code et commandes CLI](https://code.claude.com/docs/en/vs-code) — vérifié le 2026-10-03
 
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-comparaison-ecosystemes).
+
 ## Prochaine étape
 
-Choisissez le guide correspondant à votre dépôt : [Java & Spring](java-spring-boot.md), [Node.js & Express](nodejs-express.md), [React & TypeScript](react-typescript.md) ou [Python & FastAPI](python.md).
+Poursuivez avec **[Java](java.md)**, la page suivante dans le menu.

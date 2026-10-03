@@ -72,6 +72,10 @@ Les deux outils peuvent rester installés. Dans le cadre de ce dépôt :
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Paramétrage — Accueil](../chapitre-2-parametrage/index.md)**, la page suivante dans le menu.
+
 ## Sources
 
 Sources officielles consultées le **28 septembre 2026** :

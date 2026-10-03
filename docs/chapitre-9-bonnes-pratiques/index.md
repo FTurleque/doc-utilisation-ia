@@ -2,7 +2,6 @@
 
 Claude Code est plus utile lorsqu'il reçoit un dépôt lisible, un objectif vérifiable et la possibilité d'exécuter les contrôles du projet. Ce chapitre regroupe les pratiques qui améliorent la qualité **sans augmenter inutilement l'autonomie ou le contexte**.
 
-GitHub Copilot reste documenté comme référence : les mécanismes spécifiques Copilot ne sont pas supprimés, mais le parcours principal devient Claude Code.
 
 ---
 
@@ -10,7 +9,7 @@ GitHub Copilot reste documenté comme référence : les mécanismes spécifiques
 
 | Principe | Application |
 |---|---|
-| **Contexte ciblé** | `CLAUDE.md` court, rules/skills à la demande |
+| **Contexte ciblé** | `CLAUDE.md` court, rules avec `paths` ciblées et skills à la demande |
 | **Spec/plan avant gros changement** | clarifier le besoin et les critères avant d'éditer plusieurs fichiers |
 | **Ground truth** | exécuter tests, build, lint, benchmarks et commandes réelles |
 | **Petits diffs** | une hypothèse ou responsabilité par changement |
@@ -130,21 +129,10 @@ Cette boucle est plus importante qu'un « prompt parfait ».
 
 ---
 
-## Copilot
-
-Les pages historiques Copilot restent utiles pour :
-
-- complétions inline ;
-- mécanismes `.github/` ;
-- comparaison des workflows ;
-- environnements qui utilisent encore Copilot ;
-- éventuel retour si les prix ou capacités évoluent.
-
-Lorsqu'une fonctionnalité est strictement Copilot, elle doit être marquée comme telle au lieu d'être présentée comme générique.
-
----
-
 ## Sources
+
+- [Claude Code — bonnes pratiques actuelles](https://code.claude.com/docs/en/best-practices) — vérifié le 2026-10-03
+- [Claude Code — chargement des rules](https://code.claude.com/docs/en/memory) — vérifié le 2026-10-03
 
 - [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
@@ -153,6 +141,12 @@ Lorsqu'une fonctionnalité est strictement Copilot, elle doit être marquée com
 - [OpenSpec — dépôt officiel](https://github.com/Fission-AI/OpenSpec) — consulté le 2026-10-01
 - [OpenSpec Custom Schemas](https://github.com/intent-driven-dev/openspec-schemas) — consulté le 2026-10-01
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-index).
+
 ## Prochaine étape
 
-**[Utilisation effective](utilisation-effective.md)** : choisir le bon mécanisme Claude selon la tâche. Pour les changements structurants, poursuivez avec **[OpenSpec](openspec.md)** ou votre méthode de spec/plan versionnée.
+Poursuivez avec **[Utilisation Effective](utilisation-effective.md)**, la page suivante dans le menu.

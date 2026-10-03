@@ -131,4 +131,4 @@ Le plugin JetBrains Claude Code et la CLI ont leur propre modèle de configurati
 
 ## Prochaine étape
 
-**[Référence Copilot JetBrains](reference.md)** pour les fichiers de configuration, capacités et diagnostics version-safe.
+Poursuivez avec **[IntelliJ IDEA — Référence](reference.md)**, la page suivante dans le menu.

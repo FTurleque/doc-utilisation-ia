@@ -132,6 +132,10 @@ En cas de dysfonctionnement :
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Visual Studio Code — Tutoriel](../vscode/tutoriel.md)**, la page suivante dans le menu.
+
 ## Sources
 
 - [GitHub Docs — Installing the GitHub Copilot extension](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension) — consulté le 2026-09-28

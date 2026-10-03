@@ -2,7 +2,7 @@
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Le choix d'un outil dépend du type de problème, du code existant, du runtime de production et de l'équipe. Les anciennes notes en étoiles et « support Copilot » ont été retirés : elles ne mesuraient rien de reproductible.
+Le choix d'un outil dépend du type de problème, du code existant, du runtime de production et de l'équipe.
 
 ---
 
@@ -75,7 +75,7 @@ Cette portabilité est surtout valable lorsque le code s'appuie sur les APIs Ker
 
 ---
 
-## Comment choisir
+## Choisir selon la tâche
 
 ### Tabulaire classique
 
@@ -129,11 +129,11 @@ Ne choisissez pas le format d'export avant d'avoir défini la cible :
 
 Dans PyTorch, les documents officiels actuels orientent les nouveaux workflows vers `torch.export`, et l'export ONNX moderne s'appuie également sur les mécanismes Dynamo/export.
 
----
+Pour un modèle déjà entraîné, l'export ONNX moderne utilise `torch.onnx.export(model.eval(), (example_input,), dynamo=True)`, puis la sauvegarde de l'`ONNXProgram` retourné. Fixez l'opset et les formes dynamiques selon le runtime cible, et comparez ses prédictions à celles du modèle Python. `torch.compile` accélère une exécution ; il ne remplace pas un format d'export.
 
-## Copilot — référence
+Avec Keras 3, `model.save("modele.keras")` conserve un modèle rechargeable, tandis que `model.export("serving", format="tf_saved_model")` produit un artefact d'inférence. Un dossier SavedModel ne se recharge pas avec `keras.models.load_model()` comme un fichier `.keras`.
 
-Le fait qu'un outil possède beaucoup d'exemples publics ne permet pas de conclure à un « support Copilot 5/5 ». Ces scores ont été supprimés. Les usages Copilot restent couverts par les pages dédiées.
+Références revérifiées le **3 octobre 2026** : [export ONNX PyTorch](https://docs.pytorch.org/docs/2.14/onnx.html), [migration Keras 3](https://keras.io/guides/migrating_to_keras_3/) et [export Keras](https://keras.io/api/models/model_saving_apis/export/). Vérifiez les APIs de la version verrouillée par votre projet.
 
 ---
 
@@ -146,6 +146,12 @@ Le fait qu'un outil possède beaucoup d'exemples publics ne permet pas de conclu
 - [PyTorch — Compilers / torch.export](https://docs.pytorch.org/tutorials/compilers_index.html)
 - [Keras — Keras 3](https://keras.io/keras_3/)
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-comparaison-outils).
+
 ## Prochaine étape
 
-**[Deep Learning](../chapitre-8-deep-learning/index.md)** pour les architectures et workflows d'entraînement plus avancés.
+Poursuivez avec **[Deep Learning & Réseaux de Neurones — Accueil](../chapitre-8-deep-learning/index.md)**, la page suivante dans le menu.

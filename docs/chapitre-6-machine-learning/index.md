@@ -4,7 +4,6 @@
 
 Ce chapitre couvre le Machine Learning sous deux angles complémentaires : comprendre les **fondamentaux théoriques** et utiliser **Claude Code comme agent de développement** pour rendre les expérimentations reproductibles, testables et vérifiables.
 
-GitHub Copilot n'est pas retiré : son ancien workflow ML reste disponible comme **référence** pour les équipes qui l'utilisent encore ou qui y reviendraient plus tard.
 
 ---
 
@@ -32,17 +31,9 @@ GitHub Copilot n'est pas retiré : son ancien workflow ML reste disponible comme
 
     Bonnes pratiques de collaboration IA sur les notebooks et limites à connaître.
 
-- :material-layers: **[Deep Learning](deep-learning.md)**
-
-    Réseaux de neurones, TensorFlow/Keras/PyTorch et validation des expériences.
-
 - :material-rocket-launch: **[MLOps & Déploiement](mlops-deploiement.md)**
 
     Passage de l'expérimentation au pipeline versionné, testé et monitoré.
-
-- :material-github: **[Workflow ML avec Copilot — référence](copilot-workflow-ml.md)**
-
-    Ancien parcours Copilot conservé volontairement.
 
 - :material-scale-balance: **[Comparaison écosystèmes ML](comparaison-ecosystemes-ml.md)**
 
@@ -120,18 +111,18 @@ Cette discipline rejoint le fonctionnement agentique recommandé par Anthropic :
 
 ---
 
-## Copilot reste documenté
-
-La page [Copilot pour le workflow ML](copilot-workflow-ml.md) reste disponible et ne doit pas être supprimée. Elle sert de référence historique, comparative et opérationnelle si l'environnement Copilot redevient pertinent.
-
----
-
 ## Sources
 
 - [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
 - [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-index).
+
 ## Prochaine étape
 
-**[Concepts fondamentaux du Machine Learning](concepts-fondamentaux.md)** pour les bases, puis **[Claude Code pour le workflow ML](claude-workflow-ml.md)** pour le parcours pratique.
+Poursuivez avec **[Concepts Fondamentaux](concepts-fondamentaux.md)**, la page suivante dans le menu.

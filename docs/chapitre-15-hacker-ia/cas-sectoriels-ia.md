@@ -115,4 +115,4 @@ Les seuils viennent des objectifs de risque et SLA internes.
 
 ## Prochaine étape
 
-**[Matrice menaces IA → contrôles](matrice-controles-menaces.md)** : transformer ce threat model sectoriel en contrôles prouvables.
+Poursuivez avec **[Matrice menaces IA -> contrôles](matrice-controles-menaces.md)**, la page suivante dans le menu.

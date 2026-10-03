@@ -76,6 +76,7 @@ claude --model <modele-local>
 lms server start --port 1234
 export ANTHROPIC_BASE_URL=http://localhost:1234
 export ANTHROPIC_AUTH_TOKEN=lmstudio
+export CLAUDE_CODE_ATTRIBUTION_HEADER=0
 claude --model <modele-local>
 ```
 
@@ -132,6 +133,14 @@ L'ancien montage IntelliJ + Continue + Ollama est conservé uniquement pour les 
 
 ---
 
+### Configuration locale et retour au fournisseur habituel
+
+Les blocs `export` ciblent Bash (Linux, macOS ou WSL). Dans PowerShell, utilisez par exemple `$env:ANTHROPIC_BASE_URL = "http://localhost:11434"` pour Ollama, ou le port `1234` pour LM Studio, puis définissez `$env:ANTHROPIC_AUTH_TOKEN`. Pour LM Studio, ajoutez `$env:CLAUDE_CODE_ATTRIBUTION_HEADER = "0"`, comme dans son guide actuel. Ces variables routent la session vers un autre backend : retirez-les avant de revenir à votre connexion Claude habituelle et vérifiez `/status`.
+
+Exigez un modèle prenant en charge les appels d’outils et testez un petit changement avec validation. Un modèle servi localement ne rend pas automatiquement locaux les MCP, recherches Web ou autres outils de la session.
+
+Guides revérifiés le **3 octobre 2026** : [Ollama — compatibilité Anthropic](https://docs.ollama.com/api/anthropic-compatibility) et [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code).
+
 ## Sources
 
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
@@ -141,4 +150,4 @@ L'ancien montage IntelliJ + Continue + Ollama est conservé uniquement pour les 
 
 ## Prochaine étape
 
-**[Comparaison des outils](comparaison.md)** pour choisir entre backend Claude officiel, local et assistants alternatifs selon vos contraintes.
+Poursuivez avec **[Vue d'ensemble](agents-code/index.md)**, la page suivante dans le menu.

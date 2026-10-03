@@ -189,11 +189,13 @@ Les politiques gérées par l'organisation peuvent prendre le dessus sur les pr�
 
 ---
 
-## GitHub Copilot — référence
+## Référence en annexe
 
-Les risques MCP sont largement indépendants du client. En revanche, l'interface de permissions et la configuration Copilot ne sont pas identiques à Claude Code ; vérifiez la documentation GitHub lorsque vous réutilisez un serveur côté Copilot.
+[Copilot — archive de ce chapitre](../../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-mcps-securite).
 
----
+## Prochaine étape
+
+Poursuivez avec **[Vue d'ensemble](../observabilite/index.md)**, la page suivante dans le menu.
 
 ## Sources
 

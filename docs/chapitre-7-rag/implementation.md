@@ -261,4 +261,4 @@ Versionnez le tableur ou script d'estimation dans le projet si le coût est une 
 
 ## Prochaine étape
 
-Commencez par **[Niveau 1](niveau-1.md)** et ne passez aux niveaux suivants qu'après avoir enregistré une baseline et identifié une limite mesurable.
+Poursuivez avec **[Niveau 1 (Débutant)](niveau-1.md)**, la page suivante dans le menu.

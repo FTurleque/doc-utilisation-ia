@@ -127,4 +127,4 @@ Sources consultées le **1er octobre 2026** :
 
 ## Prochaine étape
 
-Pour une recherche sémantique de snippets plus légère, consultez **[Semble](semble.md)**. Pour une représentation relationnelle plus globale, consultez **[Graphify](graphify.md)**.
+Poursuivez avec **[Graphify — Knowledge Graph](graphify.md)**, la page suivante dans le menu.

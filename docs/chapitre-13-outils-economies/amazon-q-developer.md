@@ -75,4 +75,4 @@ Avant une décision d'achat, vérifiez les pages officielles Amazon Q/Kiro et le
 
 ## Prochaine étape
 
-**[Supermaven](supermaven.md)** : référence historique d'autocomplétion, désormais en extinction après son intégration à Cursor.
+Poursuivez avec **[Supermaven (historique)](supermaven.md)**, la page suivante dans le menu.

@@ -261,16 +261,7 @@ exit 0
 
 ## Prochaine étape
 
-**[Hooks avancés](hooks-avances.md)** : transformer ces recettes en automatisations garanties — formatage, garde-fous de sécurité et tests déclenchés automatiquement autour des actions de Claude.
-
-Concepts clés couverts :
-
-- **Cycle de vie complet** — `SessionStart`, `PreToolUse`, `PostToolUse`, `Stop`, `PreCompact`
-- **Exemples prêts à l'emploi** — formatage multi-langage, blocage de commandes dangereuses, tests impactés
-- **Configuration d'équipe** — assembler plusieurs hooks dans `settings.json`
-- **Débogage** — tester un hook en isolation et diagnostiquer
-
----
+Poursuivez avec **[Hooks avancés](hooks-avances.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -278,5 +269,3 @@ Concepts clés couverts :
 - [Anthropic — Slash commands & custom commands](https://docs.anthropic.com/en/docs/claude-code/slash-commands) - consulté le 2026-06-20
 - [Anthropic — Subagents](https://docs.anthropic.com/en/docs/claude-code/sub-agents) - consulté le 2026-06-20
 - [Anthropic — Hooks reference](https://docs.anthropic.com/en/docs/claude-code/hooks) - consulté le 2026-06-20
-
-

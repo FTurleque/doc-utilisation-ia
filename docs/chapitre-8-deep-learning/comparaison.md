@@ -89,6 +89,8 @@ C'est particulièrement intéressant pour :
 
 La portabilité n'est toutefois pas magique : du code utilisant directement des opérations spécifiques TensorFlow/PyTorch/JAX peut casser l'abstraction.
 
+Keras propose aussi un backend **OpenVINO pour l'inférence uniquement** : il ne remplace pas les backends d'entraînement JAX, TensorFlow et PyTorch. Fixez `KERAS_BACKEND` avant l'import et vérifiez les opérations supportées. [Documentation Keras 3](https://keras.io/keras_3/#run-inference-with-the-openvino-backend), revérifiée le 3 octobre 2026.
+
 ---
 
 ## JAX
@@ -105,6 +107,8 @@ def mse(y_true, y_pred):
 ```
 
 Le coût principal est souvent organisationnel : paradigme différent, gestion de l'état, compilation et debugging demandent une équipe à l'aise avec ces concepts.
+
+Les fonctions transformées doivent respecter les contraintes de pureté de JAX, avec état et clés aléatoires explicites. Pour un benchmark, attendez la fin effective du calcul (`block_until_ready()` sur le résultat lorsque pertinent) et séparez compilation initiale et exécutions suivantes. [JAX — pièges de programmation](https://docs.jax.dev/en/latest/notebooks/Common_Gotchas_in_JAX.html), revérifié le 3 octobre 2026.
 
 ---
 
@@ -164,6 +168,10 @@ L'interopérabilité doit être testée sur le modèle réel : les opérateurs c
 Les affirmations telles que « PyTorch = 80 % des publications », « TensorFlow = standard industrie » ou « JAX = le plus rapide » ont été retirées. Elles dépendent du sous-domaine, de la période, du matériel et du benchmark et vieillissent mal.
 
 ---
+
+## Prochaine étape
+
+Poursuivez avec **[RAG — Introduction](../chapitre-7-rag/index.md)**, la page suivante dans le menu.
 
 ## Sources
 

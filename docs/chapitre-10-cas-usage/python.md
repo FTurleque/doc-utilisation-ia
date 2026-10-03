@@ -70,6 +70,8 @@ Utilise la syntaxe et les validators déjà adoptés.
 
 Ne mélangez pas les recettes historiques de versions différentes (`Config`, `model_config`, anciens decorators, etc.).
 
+Pour **Pydantic 2**, utilisez notamment `model_dump()` pour sérialiser en dictionnaire et `model_validate()` pour valider des données. La lecture d'attributs ORM demande `from_attributes=True` dans `model_config` ; elle ne remplace pas la gestion du chargement des relations en base. Une migration de validators doit aussi vérifier le comportement, pas uniquement renommer les méthodes.
+
 ---
 
 ## 5. SQLAlchemy
@@ -92,6 +94,8 @@ Ajoute le test d'intégration le plus proche.
 
 ## 6. Async : ne pas l'ajouter par défaut
 
+Une `AsyncSession` SQLAlchemy représente une transaction avec un état mutable : ne la partagez pas entre tâches concurrentes, notamment dans `asyncio.gather()`. Utilisez une session par tâche, avec une durée de vie explicite ; vérifiez aussi les relations qui déclencheraient des I/O implicites lors de la sérialisation.
+
 `async def` est utile pour des opérations I/O compatibles async. Il n'accélère pas automatiquement du CPU-bound.
 
 Claude doit identifier :
@@ -102,6 +106,8 @@ Claude doit identifier :
 - threadpool éventuel.
 
 Ne mélangez pas clients sync et async sans comprendre la conséquence sur la boucle événementielle.
+
+FastAPI exécute ses routes et dépendances déclarées avec `def` dans un threadpool. En revanche, une fonction utilitaire synchrone appelée directement depuis une route `async def` reste un appel bloquant dans cette route : elle n'est pas automatiquement déportée. Choisissez un client async ou une exécution explicitement adaptée aux I/O bloquantes ; pour un entraînement CPU/GPU long, utilisez un worker ou un job séparé.
 
 ---
 
@@ -173,19 +179,23 @@ FastAPI génère OpenAPI à partir des routes et modèles. Si l'API publique cha
 
 ---
 
-## Copilot — référence
-
-Les anciennes instructions Copilot Python/FastAPI restent disponibles comme référence. Claude Code utilise `CLAUDE.md`, rules, skills et les commandes du dépôt comme parcours principal.
-
----
-
 ## Sources
+
+- [FastAPI — routes, dépendances et fonctions utilitaires sync/async](https://fastapi.tiangolo.com/async/) — vérifié le 2026-10-03
+- [Pydantic — guide de migration vers la version 2](https://docs.pydantic.dev/latest/migration/) — vérifié le 2026-10-03
+- [SQLAlchemy — sessions async et tâches concurrentes](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html#using-asyncsession-with-concurrent-tasks) — vérifié le 2026-10-03 ; choisir la documentation correspondant à la version installée
 
 - [FastAPI — documentation](https://fastapi.tiangolo.com/) — vérifier la version du projet
 - [Pydantic — documentation](https://docs.pydantic.dev/) — vérifier la version installée
 - [SQLAlchemy — documentation](https://docs.sqlalchemy.org/) — vérifier la version installée
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-python).
+
 ## Prochaine étape
 
-**[Comparaison des écosystèmes](comparaison-ecosystemes.md)** pour replacer ce guide dans les critères communs de choix et validation.
+Poursuivez avec **[Troubleshooting — Accueil](../chapitre-11-troubleshooting/index.md)**, la page suivante dans le menu.

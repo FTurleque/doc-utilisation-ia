@@ -4,7 +4,12 @@
 
 **Solace** fournit des technologies de messaging et d'architecture event-driven. Son **Event Broker** permet de transporter des événements entre applications, services, appareils et agents, tandis qu'un **event mesh** fédère plusieurs brokers pour router les événements entre environnements.
 
-Solace documente également **Agent Mesh**, qui peut connecter des agents et workflows à différents points d'entrée, notamment MCP, webhooks et événements provenant d'un event mesh.
+Solace documente également **Agent Mesh** pour l'orchestration d'agents. Il faut distinguer son produit actuel de l'ancien framework Python et vérifier les connecteurs disponibles dans l'édition retenue.
+
+!!! warning "Ancien framework Python déprécié — vérifié le 3 octobre 2026"
+    Le dépôt `SolaceLabs/solace-agent-mesh` annonce que sa version Python n'est plus activement développée et ne recevra plus de fonctionnalités, corrections de bugs ou mises à jour de sécurité. Il redirige vers la documentation du nouvel Agent Mesh et son application desktop. Les anciennes instructions d'installation et APIs Python sont des références historiques, pas un point de départ maintenu.
+
+[Annonce dans le dépôt officiel](https://github.com/SolaceLabs/solace-agent-mesh) et [documentation du produit actuel](https://docs.solace.com/Agent-Mesh/agent-mesh.htm).
 
 !!! info "Deux couches à ne pas confondre"
     **Event Broker / Event Mesh** transporte les événements. **Agent Mesh** orchestre des agents/workflows et peut consommer ou exposer ces capacités via plusieurs entrypoints. MCP est l'un de ces mécanismes, pas un synonyme de l'event mesh.
@@ -80,7 +85,7 @@ Le broker assure le transport ; l'agent assure le raisonnement. Gardez ces respo
 
 ## Solace Agent Mesh et MCP
 
-La documentation Solace Agent Mesh décrit plusieurs types d'entrypoints :
+L'ancien framework décrivait notamment les entrypoints suivants. Cette liste explique une architecture possible ; elle ne garantit pas la disponibilité de chaque intégration dans le produit actuel :
 
 - **MCP** : exposer des agents comme outils MCP à des clients tels que Claude Code ;
 - **Event Mesh** : router des événements de topics vers un agent ou workflow ;
@@ -184,7 +189,6 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Solace Developer](https://www.solace.dev/)
 - [Solace Agent Mesh — Entrypoints](https://docs.solace.com/Agent-Mesh/Framework/building/entrypoints/index.htm)
 
-## À lire ensuite
+## Prochaine étape
 
-- **[MCP — présentation et choix](mcps/index.md)** pour connecter des outils à Claude ;
-- **[Observabilité & GreenOps](observabilite/index.md)** pour surveiller les workflows distribués.
+Poursuivez avec **[Continue.dev (legacy)](continue-dev.md)**, la page suivante dans le menu.

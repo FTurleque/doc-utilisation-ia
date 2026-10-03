@@ -58,8 +58,8 @@ Entrées :
 ```json
 {
   "query": "Claude Code MCP security",
-  "domains": ["code.claude.com"],
-  "max_results": 5
+  "allowedDomains": ["code.claude.com"],
+  "maxResults": 5
 }
 ```
 
@@ -84,7 +84,7 @@ Entrées :
 ```json
 {
   "url": "https://code.claude.com/docs/en/mcp",
-  "max_chars": 20000
+  "maxCharacters": 12000
 }
 ```
 
@@ -94,6 +94,8 @@ Sortie : contenu nettoyé + URL canonique + métadonnées minimales.
     Séparer découverte et récupération rend les permissions, logs et limites plus lisibles.
 
 ---
+
+Les noms camelCase des exemples ci-dessus correspondent à l’interface MCP disponible pendant cet audit ; un autre serveur peut publier un contrat différent. Pour un catalogue documentaire, complétez avec `search_docs` puis `read_doc_section`. Validez le schéma annoncé par le serveur plutôt que de supposer que tous les MCP Web utilisent les mêmes arguments.
 
 ## Intégration Claude Code
 
@@ -204,7 +206,7 @@ Ne présentez pas un document mis en cache comme « actuel » sans afficher sa d
 
 ---
 
-## Tests minimaux
+## Tests du serveur
 
 ### Fonctionnels
 
@@ -247,18 +249,18 @@ Ne présentez pas un document mis en cache comme « actuel » sans afficher sa d
 
 ---
 
-## GitHub Copilot — compatibilité
-
-La même architecture MCP peut être réutilisable avec Copilot si son client MCP supporte le transport et le contrat concernés. Ne supposez pas toutefois que scopes, permissions, auth ou UI sont identiques à Claude Code.
-
----
-
 ## Sources
 
 - [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
 - [Claude Code — Environment variables](https://code.claude.com/docs/en/env-vars) — consulté le 2026-09-28
 - [Model Context Protocol](https://modelcontextprotocol.io/) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-mcps-configuration).
+
 ## Prochaine étape
 
-**[Serveurs externes](serveurs.md)** : utiliser un service managé lorsque construire et maintenir `mcp-search-net` n'est pas justifié.
+Poursuivez avec **[MCP Web gratuit](serveurs.md)**, la page suivante dans le menu.

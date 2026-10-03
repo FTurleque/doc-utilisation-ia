@@ -55,13 +55,9 @@ Avant de recopier un réglage d'un IDE à l'autre, vérifiez la [Copilot customi
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-- [Architecture et paramétrage Claude Code](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md)
-- [Migration Copilot → Claude pas à pas](../chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md)
-- [Contexte & personnalisation](../chapitre-4-contexte/index.md)
-
----
+Poursuivez avec **[IntelliJ IDEA](intellij-parametrage.md)**, la page suivante dans le menu.
 
 ## Sources
 

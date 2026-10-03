@@ -146,32 +146,18 @@ Les outils externes doivent rester minimaux : chaque serveur MCP ou outil suppl�
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Si Copilot reste installé dans VS Code, conservez ses fichiers propres :
-
-```text
-.github/
-├── copilot-instructions.md
-├── instructions/
-├── prompts/
-├── agents/
-└── skills/
-```
-
-VS Code sait aujourd'hui gérer plusieurs formats de personnalisation selon le harness sélectionné : Copilot utilise notamment `.github/copilot-instructions.md` et `*.instructions.md`, tandis que Claude utilise `CLAUDE.md` et `.claude/rules/`.
-
-!!! warning "Évitez les règles contradictoires"
-    Si Claude et Copilot cohabitent, gardez les conventions métier communes alignées entre les deux arborescences.
-
----
-
 ## Sources
 
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 - [Claude Code — Memory & rules](https://code.claude.com/docs/en/memory) — consulté le 2026-09-28
 - [VS Code — Custom instructions](https://code.visualstudio.com/docs/agent-customization/custom-instructions) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-vscode-contexte).
+
 ## Prochaine étape
 
-**[IntelliJ IDEA — Contexte Claude](intellij-contexte.md)** : adapter le même modèle Claude-first aux projets JetBrains, notamment Java/Kotlin.
+Poursuivez avec **[IntelliJ IDEA — Claude](intellij-contexte.md)**, la page suivante dans le menu.

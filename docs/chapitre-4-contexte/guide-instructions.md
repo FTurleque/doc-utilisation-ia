@@ -1,10 +1,10 @@
-# Instructions projet — Claude Code, rules et compatibilité Copilot
+# Instructions projet — Claude Code
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
 Les instructions persistantes doivent contenir ce que vous ne voulez **pas réexpliquer à chaque session** : commandes de build, architecture, conventions, contraintes et pièges du projet.
 
-Dans ce dépôt, le mécanisme principal est désormais **Claude Code**. Les instructions GitHub Copilot restent documentées dans une section dédiée afin de préserver la compatibilité.
+Dans ce dépôt, le mécanisme principal est désormais **Claude Code**.
 
 ---
 
@@ -155,10 +155,6 @@ paths:
 | `src/**/*.{ts,tsx}` | TypeScript / TSX sous `src/` |
 | `tests/**/*.test.ts` | tests TypeScript ciblés |
 
-!!! important "Claude et Copilot n'utilisent pas le même champ"
-    - Claude Code : `paths` dans `.claude/rules/*.md`.
-    - GitHub Copilot : `applyTo` dans `.github/instructions/*.instructions.md`.
-
 Ne copiez pas un frontmatter de l'un vers l'autre sans adaptation.
 
 ---
@@ -187,6 +183,8 @@ Pour empêcher réellement une action, utilisez :
 - le sandboxing lorsque disponible ;
 - un hook `PreToolUse` lorsque le contrôle doit être dynamique.
 
+La page [Sandbox Claude Code — isoler les commandes et intégrer le runtime](sandbox.md) détaille l'activation, les plateformes, les restrictions de fichiers/réseau et l'intégration du runtime à vos propres outils.
+
 ```json
 {
   "permissions": {
@@ -197,56 +195,6 @@ Pour empêcher réellement une action, utilisez :
   }
 }
 ```
-
----
-
-## 8. GitHub Copilot — référence conservée
-
-### Instructions globales Copilot
-
-```text
-.github/copilot-instructions.md
-```
-
-Ce fichier reste présent dans ce dépôt pour les utilisateurs Copilot.
-
-### Instructions ciblées Copilot
-
-```text
-.github/instructions/
-├── markdown.instructions.md
-├── java.instructions.md
-└── tests.instructions.md
-```
-
-Exemple :
-
-```markdown
----
-description: Conventions TypeScript
-applyTo: "**/*.{ts,tsx}"
----
-
-- TypeScript strict.
-- Pas de `any` sans justification.
-```
-
-Le support précis dépend de la surface Copilot. Consultez la matrice officielle plutôt que de supposer que VS Code et JetBrains sont identiques.
-
----
-
-## 9. Migration progressive Copilot → Claude
-
-| Copilot existant | Claude-first |
-|---|---|
-| `.github/copilot-instructions.md` | `CLAUDE.md` ou import depuis celui-ci |
-| `.github/instructions/*.instructions.md` + `applyTo` | `.claude/rules/*.md` + `paths` |
-| longue procédure dans une instruction | `.claude/skills/<nom>/SKILL.md` |
-| contrainte comportementale | `CLAUDE.md` / rules |
-| interdiction de sécurité exprimée en texte | permissions/settings/hook |
-
-!!! tip "Ne supprimez pas l'original Copilot pendant la migration"
-    Tant que Copilot reste une référence du dépôt, créez l'équivalent Claude puis maintenez les deux seulement lorsqu'ils servent réellement des utilisateurs différents. Évitez les copies inutiles qui divergent silencieusement.
 
 ---
 
@@ -274,11 +222,13 @@ claude doctor
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-instructions).
+
 ## Prochaine étape
 
-Passez à **[Skills](guide-skills.md)** pour externaliser les workflows et connaissances qui ne doivent pas rester dans le contexte permanent.
-
----
+Poursuivez avec **[Sandbox — Isolation des commandes](sandbox.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -287,4 +237,3 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Claude Code — Memory, CLAUDE.md, AGENTS.md et rules](https://code.claude.com/docs/en/memory)
 - [Claude Code — Settings](https://code.claude.com/docs/en/settings)
 - [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
-- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)

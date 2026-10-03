@@ -2,7 +2,6 @@
 
 Ce chapitre explique comment piloter le **coût, l'usage et la gouvernance de Claude Code** sans confondre les différents modèles de facturation : abonnement Claude, limites d'usage partagées, crédits d'usage éventuels et facturation API/Console.
 
-GitHub Copilot reste documenté : les pages historiques sur les **AI Credits Copilot** sont conservées comme référence distincte, mais ne constituent plus le parcours principal.
 
 !!! info "Référence"
     Informations revérifiées le **1er octobre 2026** sur les pages officielles Anthropic et les projets tiers cités. Les prix et limites peuvent évoluer ; vérifiez toujours la page de tarification avant une décision budgétaire.
@@ -37,14 +36,6 @@ GitHub Copilot reste documenté : les pages historiques sur les **AI Credits Cop
 
     Explore → Plan → Implement → Verify avec contrôles de coût et de contexte.
 
-- :material-star-circle: **[AI Credits Copilot — référence](premium-requests.md)**
-
-    Ancien parcours principal conservé pour les utilisateurs GitHub Copilot.
-
-- :material-history: **[Historique coûts & modèles](historique-modifications.md)**
-
-    Journal des changements de tarification et de quotas ; les entrées Copilot restent conservées.
-
 </div>
 
 ---
@@ -57,9 +48,6 @@ GitHub Copilot reste documenté : les pages historiques sur les **AI Credits Cop
 | **Limites d'usage** | Fenêtres d'usage et limites supplémentaires ; l'activité Claude et Claude Code peut partager le même pool |
 | **Usage credits** | Sur certains plans payants, permettent de continuer après une limite selon les conditions du compte |
 | **API / Console** | Facturation à l'usage aux tarifs API ; distincte de l'abonnement grand public |
-
-!!! warning "Ne pas comparer directement avec les AI Credits Copilot"
-    Les **AI Credits GitHub Copilot** et les limites/crédits d'usage Claude sont deux systèmes différents. Ne transposez pas un quota ou une unité d'un produit vers l'autre.
 
 ---
 
@@ -134,6 +122,10 @@ Ne mesurez pas uniquement le nombre de requêtes. Une tâche autonome plus longu
 
 ---
 
+## Suivre l’usage réellement facturé
+
+Utilisez `/usage` pour les barres de limites du plan et le détail de consommation, `/status` pour vérifier compte, modèle et configuration. Le coût de session affiché pour les appels API est une estimation ; la Console et le contrat fournisseur déterminent la facture. `/clear` peut remettre ce compteur à zéro. [Documentation officielle des coûts](https://code.claude.com/docs/en/costs), revérifiée le 3 octobre 2026.
+
 ## Sources
 
 - [Claude — Plans & Pricing](https://claude.com/pricing) — consulté le 2026-09-28
@@ -141,6 +133,12 @@ Ne mesurez pas uniquement le nombre de requêtes. Une tâche autonome plus longu
 - [Claude Code — Cost management](https://code.claude.com/docs/en/costs) — consulté le 2026-09-28
 - [Caveman — dépôt officiel](https://github.com/JuliusBrussee/caveman) — consulté le 2026-10-01
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-12-couts-gouvernance.md#page-chapitre-12-couts-gouvernance-index).
+
 ## Prochaine étape
 
-**[Les abonnements Claude](abonnements.md)** : distinguer abonnement, limites d'usage et facturation API ; puis **[Leviers d'économie](leviers-economie.md)** et **[Caveman](caveman.md)** pour les optimisations mesurées.
+Poursuivez avec **[Réduire les allers-retours](patterns-allers-retours.md)**, la page suivante dans le menu.

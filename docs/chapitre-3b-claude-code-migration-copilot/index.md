@@ -1,11 +1,8 @@
-# Claude Code & Migration depuis Copilot
+# Claude Code
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-vscode">VS Code</span> <span class="badge-cli">CLI</span>
 
-Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d'Anthropic, et migrer progressivement depuis GitHub Copilot — **sans perte de productivité**. De l'installation aux workflows avancés, en passant par Claude Desktop et une comparaison honnête des deux écosystèmes, vous y trouverez tout pour décider et agir.
-
-!!! info "Claude Code, c'est quoi ?"
-    Là où Copilot est né dans l'IDE (complétion fluide, intégration GitHub), Claude Code est né dans le **terminal** : un agent autonome piloté par une configuration **versionnée** (`.claude/`, `CLAUDE.md`). Il est désormais également accessible via **Claude Desktop**, en plus de la CLI et des intégrations IDE. Copilot peut continuer à cohabiter dans le même environnement pour les usages que vous souhaitez conserver.
+Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d'Anthropic, et structurer vos usages dans le dépôt : installation, Claude Desktop, configuration du projet et workflows avancés.
 
 ---
 
@@ -89,25 +86,11 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
     <span class="badge-expert">Expert</span>
 
-    Packager et partager une configuration `.claude/` cohérente entre tous vos dépôts.
+    Versionner et partager des skills, agents, hooks et intégrations ; distinguer le plugin des instructions et settings propres à `.claude/`.
 
-- :material-compare: **[Comparaison Copilot vs Claude](comparaison-copilot-claude.md)**
+- :material-console: **[Cheat sheet — Commandes Claude Code](commandes-claude.md)**
 
-    <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span>
-
-    Tableau détaillé, avantages/inconvénients, coûts, et grille de décision (rester / passer / hybride).
-
-- :material-swap-horizontal: **[Migration pas à pas](migration-pas-a-pas.md)**
-
-    <span class="badge-expert">Expert</span>
-
-    Convertir vos fichiers Copilot (`instructions`, `prompts`, `agents`, hooks) en configuration Claude.
-
-- :material-calendar-check: **[Checklist 30/60/90 jours](migration-30-60-90.md)**
-
-    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
-
-    Un plan calendaire pour piloter la bascule en équipe avec des points de décision mesurables.
+    Commandes `/`, terminal, options CLI, alias et différences de disponibilité.
 
 </div>
 
@@ -129,9 +112,6 @@ graph TD
     ORCH --> MCP["MCP"]
     MCP --> SEC["Sécurité"]
     SEC --> PL["Plugins d'équipe"]
-    PL --> C["Comparaison"]
-    C --> M["Migration pas à pas"]
-    M --> J["Checklist 30/60/90"]
 ```
 
 | Votre besoin | Commencez par |
@@ -149,19 +129,14 @@ graph TD
 | Brancher GitHub / Jira / BDD | [MCP — sources externes](mcp-sources-externes.md) |
 | Sécuriser et gouverner l'agent | [Sécurité & gouvernance](securite-gouvernance.md) |
 | Partager la config entre dépôts | [Plugins d'équipe](plugins-equipe.md) |
-| Décider Copilot vs Claude | [Comparaison](comparaison-copilot-claude.md) |
 | Migrer une équipe existante | [Migration pas à pas](migration-pas-a-pas.md) → [Checklist 30/60/90](migration-30-60-90.md) |
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-index).
+
 ## Prochaine étape
 
-**[Installer Claude Code — CLI, VS Code et JetBrains](installation.md)** : mettre en place l'outil sur votre poste. Si vous préférez une surface graphique unifiée ou souhaitez passer facilement entre Chat et Code, poursuivez ensuite avec **[Claude Desktop](claude-desktop.md)**.
-
-Concepts clés couverts :
-
-- **CLI native** — installeurs macOS, Linux et Windows, et authentification ;
-- **Claude Desktop** — application de bureau, Claude Code intégré, extensions locales et deep links ;
-- **Extensions IDE** — VS Code et JetBrains qui réutilisent la même configuration ;
-- **Premiers pas** — commandes slash de base et mode non interactif ;
-- **Dépannage** — `claude doctor` et résolution des problèmes courants.
+Poursuivez avec **[Installation (CLI, VS Code, JetBrains)](installation.md)**, la page suivante dans le menu.

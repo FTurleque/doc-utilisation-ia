@@ -93,6 +93,10 @@ Cela compare le **harness agentique** plutôt que de confondre qualité du modè
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Cline](cline.md)**, la page suivante dans le menu.
+
 ## Sources
 
 Sources officielles consultées le **28 septembre 2026** :

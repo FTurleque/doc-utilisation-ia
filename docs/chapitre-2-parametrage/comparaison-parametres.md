@@ -94,11 +94,7 @@ Lorsqu'un serveur MCP n'est pas lié à une fonctionnalité propre à Copilot, d
 
 ## Prochaine étape
 
-- Claude-first : [Architecture et paramétrage Claude Code](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md)
-- Migration : [Migration pas à pas](../chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md)
-- Copilot conservé : pages IntelliJ et VS Code de ce chapitre
-
----
+Poursuivez avec **[Modes CLI — Accueil](../chapitre-3-cli-modes/index.md)**, la page suivante dans le menu.
 
 ## Sources
 

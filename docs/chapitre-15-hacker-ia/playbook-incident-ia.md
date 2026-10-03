@@ -188,4 +188,4 @@ Si des données personnelles, secrets clients ou systèmes réglementés sont co
 
 ## Prochaine étape
 
-**[KPI & SOC pour menaces IA](kpi-soc-ia.md)** : mesurer la capacité de détection et de réponse sans inventer de seuil universel.
+Poursuivez avec **[KPI & SOC pour menaces IA](kpi-soc-ia.md)**, la page suivante dans le menu.

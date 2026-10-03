@@ -119,7 +119,6 @@ Un backend local réduit certains transferts cloud mais ne protège pas automati
 
 ## Validation du code généré
 
-Claude, Copilot ou un autre agent ne constitue pas un contrôle de sécurité final.
 
 ```text
 modification IA
@@ -163,10 +162,10 @@ Le chapitre 15 fournit les playbooks et matrices opérationnelles correspondants
 
 ---
 
-## Copilot — référence conservée
+## Référence en annexe
 
-Les risques de prompt injection, dépendances, permissions excessives, secrets et supply chain s'appliquent également à GitHub Copilot et aux autres agents. Les mécanismes de contrôle précis diffèrent selon le client : vérifiez la documentation officielle du produit avant d'appliquer une procédure Claude à Copilot ou inversement.
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-14-veille-ia.md#page-chapitre-14-veille-ia-securite-risques).
 
 ## Prochaine étape
 
-**[Chapitre 15 — Hacker IA](../chapitre-15-hacker-ia/index.md)** : passer de la veille sécurité aux contrôles, playbooks d'incident, exercices et matrices de risque.
+Poursuivez avec **[Newsletters & Communautés](newsletters-communautes.md)**, la page suivante dans le menu.

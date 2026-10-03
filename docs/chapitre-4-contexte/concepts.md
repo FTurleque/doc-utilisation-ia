@@ -4,7 +4,6 @@
 
 Le **contexte** est l'ensemble des informations disponibles pour l'agent au moment où il raisonne : instructions, historique de conversation, fichiers lus, résultats de commandes, sorties MCP, skills invoqués et synthèses de subagents.
 
-Dans ce dépôt, les exemples sont désormais centrés sur **Claude Code**, tout en gardant les principes suffisamment génériques pour être utiles avec Copilot et d'autres agents.
 
 ---
 
@@ -33,6 +32,51 @@ Claude Code recommande de gérer ce contexte activement. Une fenêtre remplie d'
 
 ## Contexte permanent vs contexte à la demande
 
+**Permanent signifie conservé sur disque et chargé automatiquement dans les sessions concernées.** Cela ne signifie pas que le modèle mémorise définitivement votre dépôt. **À la demande signifie chargé seulement lorsqu'une tâche le nécessite** : une lecture, l'invocation d'un skill ou un appel d'outil apporte alors son contenu dans la conversation.
+
+Il faut distinguer trois choses : le fichier existe, Claude sait qu'il existe, et son contenu est effectivement dans la fenêtre de contexte. Un manuel présent dans le dépôt n'est pas automatiquement lu. Une courte description de skill peut être disponible pour permettre sa sélection, sans que toute sa procédure soit déjà chargée.
+
+### Le socle automatique
+
+Le `CLAUDE.md` du projet contient les informations nécessaires presque toujours : commandes de test, conventions essentielles et architecture générale. Les instructions applicables du répertoire de travail et de ses parents sont chargées au démarrage. Les règles `.claude/rules/` **sans `paths`** font également partie du socle automatique : séparer un long document en plusieurs fichiers sans condition ne réduit donc pas son coût en contexte.
+
+Un import `@docs/conventions.md` dans `CLAUDE.md` charge aussi ce document avec les instructions. À l'inverse, écrire « consultez `docs/conventions.md` si vous modifiez l'API » donne une consigne de lecture, sans importer immédiatement tout le document.
+
+Ce socle doit rester court : il occupe une partie du budget même pour une petite correction. Réservez-lui ce qui doit guider toutes les tâches, pas les détails de chaque domaine.
+
+### Le contexte conditionnel
+
+Une règle avec `paths` constitue un niveau intermédiaire : elle est conservée dans le dépôt, mais chargée lorsque Claude utilise Read, Write ou Edit sur un chemin correspondant. Par exemple, `.claude/rules/api.md` :
+
+```markdown
+---
+paths:
+  - "src/api/**/*.ts"
+---
+
+# Conventions API
+
+- Valider les entrées avant d'appeler le service.
+- Ajouter un test pour chaque nouvelle réponse d'erreur.
+```
+
+Cette règle n'a pas besoin d'encombrer une session consacrée aux styles CSS. Les `CLAUDE.md` de sous-répertoires peuvent aussi être chargés lors de la lecture de fichiers de leur périmètre. **Conditionnel ne signifie pas temporaire au sens d'une suppression immédiate** : une fois chargé, le contenu participe au contexte de travail de la session.
+
+### Le contexte à la demande
+
+Pour une procédure occasionnelle, utilisez un skill, par exemple `.claude/skills/release/SKILL.md`. Sa description aide Claude à décider quand l'utiliser ; son corps est chargé lors de l'invocation par vous ou par Claude, selon sa configuration. Les fichiers annexes du skill doivent ensuite être lus lorsqu'ils sont utiles : installer un skill ne charge pas automatiquement tous ses exemples.
+
+De même, les fichiers sources, logs et résultats MCP entrent dans le contexte lorsqu'ils sont consultés. Un subagent peut isoler une exploration volumineuse : la conversation principale reçoit sa synthèse, plutôt que chacune de ses lectures.
+
+### Exemple : corriger une route puis préparer une release
+
+1. Au démarrage, Claude reçoit le socle `CLAUDE.md` : comment tester et quelles conventions communes respecter.
+2. En lisant `src/api/users.ts`, il reçoit la règle API ciblée et le contenu de ce fichier.
+3. Il lit les tests concernés et les résultats de leur exécution. Les autres services restent hors du contexte tant qu'ils ne sont pas consultés.
+4. Lors d'une release, vous invoquez le skill dédié : sa procédure est alors chargée. Elle n'avait pas besoin d'être présente pendant la correction de route.
+
+Le gain vient du **moment où l'information est chargée**, pas seulement de son emplacement dans l'arborescence.
+
 | Information | Mécanisme Claude recommandé |
 |---|---|
 | conventions et commandes utiles presque toujours | `CLAUDE.md` |
@@ -44,6 +88,14 @@ Claude Code recommande de gérer ce contexte activement. Une fenêtre remplie d'
 
 !!! tip "Ne mettez pas tout dans CLAUDE.md"
     Claude Code recommande un `CLAUDE.md` concis, idéalement sous environ 200 lignes. Une procédure longue ou locale doit généralement devenir une rule ciblée ou un skill.
+
+### Que reste-t-il après une nouvelle session ?
+
+Les fichiers versionnés restent disponibles sur disque et les instructions automatiques applicables sont rechargées. Les fichiers lus et les résultats d'outils d'une ancienne conversation ne deviennent pas pour autant des instructions permanentes. `/clear` remet à zéro l'historique de conversation ; `/compact` le résume, avec une possible perte de détails. Consignez donc une décision durable dans un fichier approprié et relisez les preuves nécessaires à une nouvelle tâche.
+
+La mémoire automatique de Claude Code est un mécanisme distinct : elle conserve certains apprentissages entre sessions, mais ne remplace ni les instructions d'équipe versionnées ni une vérification de l'état réel du code. Utilisez `/memory` et `/context` pour inspecter les instructions et l'occupation du contexte.
+
+Ces règles de chargement ont été vérifiées dans la [documentation officielle sur la mémoire](https://code.claude.com/docs/en/memory) le **3 octobre 2026**. Le chargement progressif des procédures est décrit dans la [documentation des skills](https://code.claude.com/docs/en/skills).
 
 ---
 
@@ -148,8 +200,6 @@ Pour faire respecter une interdiction :
 
 ---
 
-## Contexte vs capacité
-
 ### Contexte
 
 Ce que l'agent doit savoir **pour cette situation** : état du dépôt, contraintes, fichiers, décisions.
@@ -178,20 +228,6 @@ Des outils comme RTK, documentés dans le chapitre Outils, peuvent aussi compres
 
 ---
 
-## Copilot — principes toujours valables
-
-GitHub Copilot possède ses propres mécanismes de contexte et de personnalisation, conservés dans ce dépôt. Les principes restent les mêmes :
-
-- contexte ciblé plutôt qu'exhaustif ;
-- instructions courtes ;
-- outils externes uniquement lorsqu'ils apportent une vraie information ;
-- critères de réussite explicites ;
-- vérification du résultat.
-
-Pour les fichiers Copilot spécifiques, voir [Instructions projet et règles](guide-instructions.md) et les pages de référence `.github/`.
-
----
-
 ## Les 5 réflexes à retenir
 
 1. **Borner la tâche** avant de demander une modification.
@@ -202,11 +238,13 @@ Pour les fichiers Copilot spécifiques, voir [Instructions projet et règles](gu
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-concepts).
+
 ## Prochaine étape
 
-**[Instructions projet et règles](guide-instructions.md)** : formaliser ce qui doit persister entre les sessions sans transformer le contexte permanent en encyclopédie.
-
----
+Poursuivez avec **[Semble — Recherche de code](semble.md)**, la page suivante dans le menu.
 
 ## Sources
 

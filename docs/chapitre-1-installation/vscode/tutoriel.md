@@ -116,4 +116,4 @@ Les deux outils peuvent coexister, mais évitez de dupliquer les mêmes instruct
 
 ## Prochaine étape
 
-**[Référence Copilot VS Code](reference.md)** pour les réglages et capacités qui doivent être vérifiés selon la version installée.
+Poursuivez avec **[Visual Studio Code — Référence](reference.md)**, la page suivante dans le menu.

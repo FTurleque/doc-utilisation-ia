@@ -146,18 +146,18 @@ L'objectif est de ne pas payer indéfiniment le contexte d'un travail terminé.
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Les mêmes principes restent valables avec Copilot : contexte explicite, prompt files, instructions de dépôt et validation avant changements importants. Les mécanismes spécifiques Copilot (`.github/prompts/`, `#file`, AI Credits) sont documentés dans les pages Copilot de référence.
-
----
-
 ## Sources
 
 - [Claude Help Center — How do usage and length limits work?](https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work) — consulté le 2026-09-28
 - [Claude Code — Features overview](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
 - [Claude Code — Commands](https://code.claude.com/docs/en/commands) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-12-couts-gouvernance.md#page-chapitre-12-couts-gouvernance-patterns-allers-retours).
+
 ## Prochaine étape
 
-**[Leviers d'économie](leviers-economie.md)** : réduire l'usage sans sacrifier la qualité en jouant sur le contexte, les modèles, les subagents et les validations.
+Poursuivez avec **[Les abonnements](abonnements.md)**, la page suivante dans le menu.

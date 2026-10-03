@@ -156,4 +156,4 @@ Conservez une seule source métier de vérité autant que possible et évitez le
 
 ## Prochaine étape
 
-Pour le parcours principal, revenez à **[Prompt Engineering avec Claude Code](../chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md)**.
+Poursuivez avec **[Copilot pour le ML (référence)](../chapitre-6-machine-learning/copilot-workflow-ml.md)**, la page suivante dans le menu.

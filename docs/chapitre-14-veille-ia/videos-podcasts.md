@@ -6,8 +6,6 @@ Les formats audio/vidéo sont utiles pour comprendre des démonstrations, suivre
 
 ---
 
-## Priorité pour ce dépôt
-
 ### Claude & Anthropic
 
 - replays et annonces Anthropic ;
@@ -18,8 +16,6 @@ Les formats audio/vidéo sont utiles pour comprendre des démonstrations, suivre
 
 - chaîne GitHub ;
 - chaîne Visual Studio Code ;
-- replays GitHub Universe lorsque Copilot ou les workflows développeur sont concernés.
-
 ### Recherche et engineering
 
 Quelques sources utiles à suivre selon besoin :
@@ -78,6 +74,10 @@ Les sources francophones peuvent être utiles pour la vulgarisation ou le partag
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-14-veille-ia.md#page-chapitre-14-veille-ia-videos-podcasts).
+
 ## Prochaine étape
 
-**[Sécurité, risques & failles](securite-risques.md)** : transformer les annonces et recherches en contrôles de sécurité concrets.
+Poursuivez avec **[Sécurité, Risques & Failles](securite-risques.md)**, la page suivante dans le menu.

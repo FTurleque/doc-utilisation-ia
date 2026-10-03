@@ -142,4 +142,4 @@ Les observations qualitatives accompagnées de preuves sont souvent plus utiles 
 
 ## Prochaine étape
 
-**[Cas sectoriels IA et cybersécurité](cas-sectoriels-ia.md)** : adapter les scénarios aux données, actifs et obligations du secteur.
+Poursuivez avec **[Cas sectoriels IA et cybersécurité](cas-sectoriels-ia.md)**, la page suivante dans le menu.

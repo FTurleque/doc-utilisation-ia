@@ -113,4 +113,4 @@ Un seul écart critique peut être plus important que vingt contrôles mineurs c
 
 ## Prochaine étape
 
-**[Modèles de fiches incident et post-mortem IA](modeles-fiches-incident.md)** : conserver une trace exploitable des incidents et des actions de remédiation.
+Poursuivez avec **[Modèles fiches incident & post-mortem](modeles-fiches-incident.md)**, la page suivante dans le menu.

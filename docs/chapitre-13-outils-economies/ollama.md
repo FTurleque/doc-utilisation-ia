@@ -123,11 +123,13 @@ La documentation Ollama recommande elle-même plusieurs modèles orientés code,
 
 ---
 
-## Copilot et autres clients
+### Configuration locale et retour au fournisseur habituel
 
-Ollama peut aussi alimenter d'autres clients compatibles OpenAI/Anthropic ou des plugins IDE. Ces usages restent possibles, mais le parcours principal de ce dépôt est désormais **Claude Code directement connecté à Ollama** lorsque l'objectif est local-first.
+Les blocs `export` ciblent Bash (Linux, macOS ou WSL). Dans PowerShell, utilisez par exemple `$env:ANTHROPIC_BASE_URL = "http://localhost:11434"` pour Ollama, ou le port `1234` pour LM Studio, puis définissez `$env:ANTHROPIC_AUTH_TOKEN`. Pour LM Studio, ajoutez `$env:CLAUDE_CODE_ATTRIBUTION_HEADER = "0"`, comme dans son guide actuel. Ces variables routent la session vers un autre backend : retirez-les avant de revenir à votre connexion Claude habituelle et vérifiez `/status`.
 
----
+Exigez un modèle prenant en charge les appels d’outils et testez un petit changement avec validation. Un modèle servi localement ne rend pas automatiquement locaux les MCP, recherches Web ou autres outils de la session.
+
+Guides revérifiés le **3 octobre 2026** : [Ollama — compatibilité Anthropic](https://docs.ollama.com/api/anthropic-compatibility) et [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code).
 
 ## Sources
 
@@ -135,6 +137,12 @@ Ollama peut aussi alimenter d'autres clients compatibles OpenAI/Anthropic ou des
 - [Ollama — compatibilité Anthropic et Claude Code](https://docs.ollama.com/api/anthropic-compatibility) — consulté le 2026-09-28
 - [Ollama — dépôt officiel](https://github.com/ollama/ollama) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-ollama).
+
 ## Prochaine étape
 
-**[LM Studio](lm-studio.md)** pour une alternative locale avec GUI, API v1, compatibilité Anthropic et intégration Claude Code documentée.
+Poursuivez avec **[LM Studio](lm-studio.md)**, la page suivante dans le menu.

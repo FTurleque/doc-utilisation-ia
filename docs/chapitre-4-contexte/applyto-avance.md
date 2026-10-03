@@ -101,4 +101,4 @@ Gardez les règles métier communes cohérentes entre les deux formats. N'essaye
 
 ## Prochaine étape
 
-**[Prompt files Copilot](prompt-files.md)** : conserver des prompts Copilot réutilisables, et comprendre quand préférer un skill Claude.
+Poursuivez avec **[Prompt Files Copilot (référence)](prompt-files.md)**, la page suivante dans le menu.

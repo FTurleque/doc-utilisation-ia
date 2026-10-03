@@ -16,8 +16,6 @@ Il ne remplace pas JSON comme format d'échange applicatif général. Une strat�
 
 ---
 
-## Exemple
-
 ### JSON
 
 ```json
@@ -93,8 +91,6 @@ Pour un workflow récurrent, vous pouvez encapsuler la conversion dans un script
 
 ---
 
-## Installation
-
 ### CLI
 
 ```bash
@@ -123,18 +119,18 @@ TOON réduit la syntaxe, pas les risques liés aux données :
 
 ---
 
-## Copilot — référence conservée
-
-TOON peut naturellement être utilisé avec GitHub Copilot ou d'autres agents. La logique est identique : compacter des données structurées **avant** de les injecter dans le contexte. La documentation principale utilise désormais Claude Code comme exemple, mais le format reste indépendant de l'agent.
-
----
-
 ## Sources
 
 - [TOON — implémentation de référence](https://github.com/toon-format/toon) — consulté le 2026-09-28
 - [TOON — spécification 4.1](https://github.com/toon-format/spec) — consulté le 2026-09-28
 - [TOON — benchmarks](https://github.com/toon-format/toon/blob/main/benchmarks/README.md) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-toon).
+
 ## Prochaine étape
 
-**[OpenSkills](openskills.md)** : gérer des skills `SKILL.md` portables tout en gardant Claude Code comme consommateur natif principal.
+Poursuivez avec **[OpenSkills](openskills.md)**, la page suivante dans le menu.

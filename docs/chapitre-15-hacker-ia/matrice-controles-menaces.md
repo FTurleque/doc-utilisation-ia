@@ -83,4 +83,4 @@ Mesurez ce qui correspond au périmètre réel :
 
 ## Prochaine étape
 
-**[Checklist audit interne IA](checklist-audit-interne.md)** : vérifier régulièrement que les contrôles restent actifs, justifiés et prouvables.
+Poursuivez avec **[Checklist audit interne IA](checklist-audit-interne.md)**, la page suivante dans le menu.

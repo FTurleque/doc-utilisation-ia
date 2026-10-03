@@ -13,7 +13,7 @@ Le diagnostic Claude Code doit distinguer les problèmes **partagés** — compt
 | Authentification inattendue | mauvais compte ou API key active | `/status`, variables d'environnement |
 | Limite atteinte | usage partagé du plan | `/usage`, `/status` |
 | Réponses qui dérivent | contexte devenu trop chargé | `/context`, `/compact` |
-| Skill/rule ignoré | scope, frontmatter, précédence | `/doctor` |
+| Skill/rule ignoré | scope, frontmatter, précédence | `/context`, `/skills`, `/doctor` |
 | MCP indisponible | serveur/auth/config | `/mcp` |
 | Comportement étrange après ajout de plugins/hooks | customisation | `claude --safe-mode` |
 | Timeout / erreur réseau | proxy, TLS, service | status Anthropic + réseau |
@@ -38,8 +38,6 @@ Si la CLI fonctionne mais pas l'IDE, concentrez le diagnostic sur l'intégration
 
 ## VS Code
 
-### Particularités
-
 Le panneau Claude Code VS Code fournit une expérience intégrée. La CLI standalone est séparée et n'est nécessaire que si vous souhaitez exécuter `claude` dans le terminal intégré.
 
 | Symptôme | Vérification |
@@ -56,8 +54,6 @@ Le panneau Claude Code VS Code fournit une expérience intégrée. La CLI standa
 ---
 
 ## JetBrains
-
-### Particularités
 
 Le plugin JetBrains utilise Claude Code installé localement. Une installation CLI fonctionnelle est donc un prérequis important du diagnostic.
 
@@ -98,7 +94,8 @@ Claude Code peut être utilisé via différents modes d'authentification ou four
 - clé API ;
 - permissions Console ;
 - configuration Amazon Bedrock ;
-- configuration Google Vertex AI ;
+- configuration Google Cloud's Agent Platform (documentation historiquement sous `google-vertex-ai`) ;
+- configuration Microsoft Foundry ;
 - configuration d'entreprise/gateway.
 
 Quand un provider tiers est utilisé, séparez le diagnostic Claude Code du diagnostic IAM/région/quota du provider.
@@ -127,18 +124,22 @@ Mesurez le symptôme réel et isolez la couche fautive.
 
 ---
 
-## GitHub Copilot — référence
-
-Copilot dispose de ses propres extensions, logs, politiques et mécanismes de facturation. Les matrices Copilot VS Code/JetBrains restent dans les pages de référence Copilot ; elles ne doivent pas servir à diagnostiquer Claude Code.
-
----
-
 ## Sources
+
+- [Claude Code — couches de configuration et commandes de diagnostic](https://code.claude.com/docs/en/debug-your-config) — vérifié le 2026-10-03
+- [Claude Code — séparation extension VS Code et CLI](https://code.claude.com/docs/en/vs-code#vs-code-extension-vs-claude-code-cli) — vérifié le 2026-10-03
+- [Claude Code — diagnostic des connexions et fournisseurs](https://code.claude.com/docs/en/troubleshoot-install) — vérifié le 2026-10-03
 
 - [Claude Code — Troubleshooting](https://code.claude.com/docs/en/troubleshooting) — consulté le 2026-09-28
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-11-troubleshooting.md#page-chapitre-11-troubleshooting-comparaison-problemes).
+
 ## Prochaine étape
 
-**[Procédures de réparation](procedures-reparation.md)** : réparer de façon graduée après avoir identifié la couche en cause.
+Poursuivez avec **[Procédures de Réparation](procedures-reparation.md)**, la page suivante dans le menu.

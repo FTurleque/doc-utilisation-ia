@@ -2,7 +2,7 @@
 
 <span class="badge-beginner">Débutant</span>
 
-La performance de Claude Code dépend moins d'un chiffre fixe de RAM ou CPU que de la **taille du contexte utile**, des commandes exécutées, du nombre d'outils exposés et de la complexité de la tâche. Cette page remplace les anciens profils matériels Copilot non vérifiés par des pratiques mesurables.
+La performance de Claude Code dépend moins d'un chiffre fixe de RAM ou CPU que de la **taille du contexte utile**, des commandes exécutées, du nombre d'outils exposés et de la complexité de la tâche.
 
 ---
 
@@ -100,6 +100,8 @@ Un subagent est utile quand une sous-tâche :
 
 Exemple : cartographier 300 fichiers puis retourner uniquement les 10 composants et dépendances significatives.
 
+Isoler le contexte ne garantit pas une économie totale : chaque subagent fait ses propres appels au modèle. Mesurez le coût et la durée de l'ensemble, et évitez de déléguer plusieurs fois la même recherche. `/context` aide à comprendre ce qui occupe la session principale ; `/usage` renseigne l'usage selon votre mode de connexion.
+
 ---
 
 ## 7. MCP : exposer peu d'outils, avec des réponses compactes
@@ -148,6 +150,8 @@ Si votre machine ralentit :
 5. fermez les environnements non utilisés.
 
 Ne supposez pas qu'une extension IA est la cause sans mesure.
+
+Si le processus Claude accumule de la mémoire sur une session longue, quittez-le puis utilisez `claude --continue` dans le même projet : la conversation reprend dans un nouveau processus. `/compact` réduit le contexte transmis au modèle, sans garantir que toute mémoire native du processus soit libérée. Le diagnostic mémoire détaillé est présenté dans **[Logs & diagnostic](../chapitre-11-troubleshooting/logs-diagnostic.md#11-heap-dump-et-diagnostic-memoire)**.
 
 ---
 
@@ -222,13 +226,10 @@ Pour une optimisation de workflow, mesurez :
 
 ---
 
-## Référence Copilot
-
-Les réglages de complétion et diagnostics spécifiques Copilot restent documentés dans les pages Copilot. Ils ne sont plus utilisés comme base générique pour estimer les ressources d'un workflow Claude.
-
----
-
 ## Sources
+
+- [Claude Code — contexte et investigations déléguées](https://code.claude.com/docs/en/best-practices) — vérifié le 2026-10-03
+- [Claude Code — diagnostic de performance et mémoire](https://code.claude.com/docs/en/troubleshooting) — vérifié le 2026-10-03
 
 - [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
 - [Anthropic — Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) — consulté le 2026-09-28
@@ -237,6 +238,12 @@ Les réglages de complétion et diagnostics spécifiques Copilot restent documen
 - [Grafana Loki — documentation](https://grafana.com/docs/loki/latest/) — consulté le 2026-09-28
 - [CNCF — Kepler](https://www.cncf.io/projects/kepler/) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-9-bonnes-pratiques.md#page-chapitre-9-bonnes-pratiques-performance).
+
 ## Prochaine étape
 
-**[Workflows IA complets](workflows-ia.md)** pour appliquer ces optimisations dans des cycles de développement complets.
+Poursuivez avec **[Workflows IA Complets](workflows-ia.md)**, la page suivante dans le menu.

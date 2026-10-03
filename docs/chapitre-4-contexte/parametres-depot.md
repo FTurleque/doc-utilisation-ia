@@ -4,41 +4,25 @@
 
 La configuration IA versionnée doit être lisible comme n'importe quelle autre configuration du projet : peu de fichiers globaux, des responsabilités claires et aucune règle de sécurité critique laissée à une simple phrase de prompt.
 
-Ce dépôt adopte une stratégie **Claude-first** tout en conservant les fichiers GitHub Copilot existants.
 
 ---
 
 ## Arborescence recommandée
 
 ```text
-mon-projet/
-├─ CLAUDE.md
-├─ AGENTS.md                       # optionnel, partageable entre outils
-├─ .mcp.json                       # seulement si MCP projet nécessaire
-├─ .claude/
-│  ├─ settings.json               # réglages partagés Claude
-│  ├─ rules/
-│  │  └─ *.md
-│  ├─ skills/
-│  │  └─ <skill>/SKILL.md
-│  ├─ agents/
-│  │  └─ <agent>.md
-│  └─ hooks/
-│     └─ <scripts>
-└─ .github/
-   ├─ copilot-instructions.md      # référence Copilot conservée
-   ├─ instructions/
-   ├─ prompts/
-   ├─ agents/
-   ├─ skills/
-   └─ hooks/
+projet/
+├── CLAUDE.md
+├── .mcp.json
+└── .claude/
+    ├── settings.json
+    ├── rules/
+    ├── skills/
+    └── agents/
 ```
 
 Tous ces dossiers ne sont pas obligatoires. Ajoutez-les seulement lorsqu'un besoin réel apparaît.
 
 ---
-
-## Les couches Claude Code
 
 ### `CLAUDE.md`
 
@@ -122,29 +106,6 @@ Une règle textuelle est utile pour guider ; un réglage technique est nécessai
 
 ---
 
-## Ne pas dupliquer tout Copilot
-
-La migration ne consiste pas à créer automatiquement deux copies de chaque fichier.
-
-Utilisez cette règle :
-
-- si le contenu est **spécifique Claude** → `.claude/` ;
-- s'il est **spécifique Copilot** → `.github/` ;
-- s'il peut être **réellement partagé** → choisissez un format compatible et documentez cette décision ;
-- si personne n'utilise plus une copie mais qu'elle sert de référence historique, conservez-la clairement étiquetée plutôt que de la maintenir artificiellement en parallèle.
-
-### Exemple : skills
-
-Certaines surfaces Copilot savent charger :
-
-```text
-.claude/skills/<skill>/SKILL.md
-```
-
-Un skill générique peut donc parfois rester unique. Testez cependant les champs utilisés sur chaque client concerné.
-
----
-
 ## Validation d'une configuration projet
 
 Après un changement Claude :
@@ -181,11 +142,6 @@ reste la validation fonctionnelle à exécuter lorsque l'environnement local est
 
 Aujourd'hui, le socle utile est :
 
-```text
-CLAUDE.md
-AGENTS.md
-.github/                         # Copilot conservé
-```
 
 À terme, les workflows de maintenance peuvent être migrés progressivement vers :
 
@@ -204,38 +160,13 @@ L'objectif est de **réduire les instructions permanentes** et de charger les ca
 
 ---
 
-## Copilot — configuration conservée
+## Référence en annexe
 
-La configuration historique reste sous `.github/` :
-
-```text
-.github/
-├─ copilot-instructions.md
-├─ instructions/
-├─ prompts/
-├─ agents/
-├─ skills/
-└─ hooks/
-```
-
-Elle reste utile pour :
-
-- documenter Copilot ;
-- comparer les mécanismes ;
-- conserver une possibilité de retour ;
-- maintenir les workflows encore utilisés sur certaines surfaces.
-
----
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-parametres-depot).
 
 ## Prochaine étape
 
-- [Instructions projet et rules](guide-instructions.md)
-- [Skills](guide-skills.md)
-- [Agents spécialisés](guide-agents.md)
-- [Hooks](guide-hooks.md)
-- [Architecture Claude Code complète](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md)
-
----
+Poursuivez avec **[VS Code — Claude](vscode-contexte.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -247,4 +178,3 @@ Sources officielles consultées le **28 septembre 2026** :
 - [Claude Code — Skills](https://code.claude.com/docs/en/skills)
 - [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)
 - [Claude Code — Hooks](https://code.claude.com/docs/en/hooks)
-- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)

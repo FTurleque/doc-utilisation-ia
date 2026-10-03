@@ -2,14 +2,16 @@
 
 <span class="badge-beginner">Débutant</span>
 
-Cette page décrit le modèle de coût **Claude** actuel. La documentation GitHub Copilot n'est pas supprimée : les AI Credits et plans Copilot restent documentés dans les pages de référence du chapitre.
+Cette page décrit le modèle de coût **Claude** actuel.
 
 !!! info "Référence"
-    Tarification vérifiée le **28 septembre 2026** sur `claude.com/pricing` et le centre d'aide Anthropic. Les prix affichés ici sont hors taxes et peuvent évoluer.
+    Tarification vérifiée le **3 octobre 2026** sur `claude.com/pricing` et le centre d'aide Anthropic. Les prix affichés ici sont hors taxes et peuvent évoluer.
 
 ---
 
 ## Vue d'ensemble actuelle
+
+Pour Team, le plafond est de **150 sièges**, avec un minimum de **2 membres** selon la documentation revérifiée le 3 octobre 2026. Au-delà, Anthropic indique le passage à Enterprise. Les sièges Premium et usage credits augmentent les possibilités d'usage, pas le plafond de membres : voir [les détails et la procédure de migration](../chapitre-3b-claude-code-migration-copilot/couts-quotas.md#combien-de-sieges-team-et-comment-depasser-la-limite).
 
 | Plan | Prix public indiqué | Claude Code | Usage |
 |---|---:|:---:|---|
@@ -19,12 +21,14 @@ Cette page décrit le modèle de coût **Claude** actuel. La documentation GitHu
 | Max 20x | 200 USD/mois | ✅ | 20x l'usage Pro par fenêtre de session, sous réserve des autres limites |
 | Team Standard | 20 USD/siège/mois annuel, 25 USD mensuel | ✅ | Plus d'usage que Pro |
 | Team Premium | 100 USD/siège/mois annuel, 125 USD mensuel | ✅ | 5x l'usage d'un siège Standard |
-| Enterprise | offre entreprise | ✅ | Siège + usage aux tarifs API selon l'offre |
+| Enterprise | offre publique : 20 USD/siège/mois annuel ; contrat à vérifier | ✅ | Usage aux tarifs API en supplément selon l'offre |
 
 !!! warning "Pas de nombre fixe de messages"
     Anthropic n'annonce pas un nombre universel de requêtes Claude Code. La consommation dépend notamment de la longueur des conversations, du modèle, des outils et de la complexité des tâches.
 
 ---
+
+Les tarifs Team ci-dessus sont les prix publics **US en USD**. Devise, taxes et prix locaux peuvent différer. [Centre d’aide — Team](https://support.claude.com/en/articles/9266767-what-is-the-team-plan), revérifié le 3 octobre 2026. Vérifiez le devis Enterprise : les offres par sièges et les contrats à consommation ne donnent pas une enveloppe identique.
 
 ## Pro et Max : pool partagé
 
@@ -111,18 +115,18 @@ Un meilleur contexte peut réduire la consommation sans diminuer la qualité.
 
 ---
 
-## GitHub Copilot — référence conservée
-
-Les anciens tableaux Free / Student / Pro / Pro+ / Max / Business / Enterprise et les allocations **AI Credits** restent pertinents uniquement pour GitHub Copilot. Consultez [AI Credits Copilot — référence](premium-requests.md) et [Historique](historique-modifications.md).
-
----
-
 ## Sources
 
 - [Claude — Plans & Pricing](https://claude.com/pricing) — consulté le 2026-09-28
 - [Anthropic Help — Use Claude Code with Pro or Max](https://support.claude.com/en/articles/11145838-use-claude-code-with-your-pro-or-max-plan) — consulté le 2026-09-28
 - [Anthropic Help — What is the Max plan?](https://support.claude.com/en/articles/11049741-what-is-the-max-plan) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-12-couts-gouvernance.md#page-chapitre-12-couts-gouvernance-abonnements).
+
 ## Prochaine étape
 
-**[Leviers d'économie](leviers-economie.md)** : optimiser contexte, modèle et autonomie avant de modifier le plan.
+Poursuivez avec **[Leviers d'économie](leviers-economie.md)**, la page suivante dans le menu.

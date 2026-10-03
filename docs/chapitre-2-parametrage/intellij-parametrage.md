@@ -159,4 +159,4 @@ Ne dupliquez pas une convention dans les deux écosystèmes si elle peut vivre d
 
 ## Prochaine étape
 
-**[Comparaison des paramètres](comparaison-parametres.md)** pour distinguer les réglages JetBrains, VS Code et les mécanismes Claude.
+Poursuivez avec **[Visual Studio Code](vscode-parametrage.md)**, la page suivante dans le menu.

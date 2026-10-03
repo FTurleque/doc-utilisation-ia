@@ -59,6 +59,10 @@ Pour les tâches simples et locales, passez directement à l'implémentation et 
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Modes CLI Détail](page-principale.md)**, la page suivante dans le menu.
+
 ## Sources
 
 Sources officielles consultées le **28 septembre 2026** :

@@ -84,6 +84,10 @@ Claude ne remplace pas la télémétrie. Sans données fiables, l'agent ne fait 
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Grafana](grafana.md)**, la page suivante dans le menu.
+
 ## Sources
 
 Sources officielles consultées le **28 septembre 2026** :

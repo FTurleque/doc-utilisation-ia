@@ -251,4 +251,4 @@ Claude Code est utile pour automatiser cette boucle, à condition de lui demande
 
 ## Prochaine étape
 
-**[Implémentation RAG](implementation.md)** : construire une baseline observable puis ajouter progressivement retrieval hybride, reranking et mécanismes agentiques.
+Poursuivez avec **[Docling — Ingestion documentaire](docling.md)**, la page suivante dans le menu.

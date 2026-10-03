@@ -159,4 +159,4 @@ Les articles fournisseurs et médias peuvent compléter le contexte, mais ne doi
 
 ## Prochaine étape
 
-**[Playbook incident IA](playbook-incident-ia.md)** : transformer ces scénarios en procédure de confinement, investigation, révocation et retour d'expérience.
+Poursuivez avec **[Playbook incident IA](playbook-incident-ia.md)**, la page suivante dans le menu.

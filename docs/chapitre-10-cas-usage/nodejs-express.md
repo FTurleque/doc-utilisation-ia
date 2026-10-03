@@ -63,7 +63,7 @@ router.post("/users", validate(createUserSchema), async (req, res, next) => {
 });
 ```
 
-Ce n'est pas un template universel : Express, son écosystème et les versions récentes peuvent offrir d'autres patterns de gestion async. Claude doit lire la version installée et le style existant avant de recopier une recette historique.
+L'extrait suppose que `router`, `validate`, le schéma et le service existent déjà. Avec **Express 5**, une promesse rejetée ou une exception dans un handler `async` est automatiquement transmise à `next`. Le `try/catch` explicite ci-dessus reste utile pour un pattern compatible avec Express 4. Cette capture automatique ne couvre pas une erreur dans un callback différé détaché de la promesse du handler : transmettez-la explicitement.
 
 ---
 
@@ -86,13 +86,23 @@ N'introduisez pas Zod/Joi/Valibot simplement parce qu'un exemple de documentatio
 Centralisez le mapping vers HTTP selon le pattern du projet :
 
 ```typescript
-app.use((error: unknown, req, res, next) => {
+import type { ErrorRequestHandler } from "express";
+
+const errorHandler: ErrorRequestHandler = (error: unknown, req, res, next) => {
+  if (res.headersSent) {
+    next(error);
+    return;
+  }
   const response = toHttpError(error);
   res.status(response.status).json(response.body);
-});
+};
+
+app.use(errorHandler);
 ```
 
 Ne retournez pas automatiquement `error.message`, stack traces ou erreurs DB au client.
+
+`toHttpError` représente le mapping propre au projet. Enregistrez ce middleware **après les routes** ; ses quatre paramètres permettent à Express de reconnaître un gestionnaire d'erreur. Si les en-têtes sont déjà envoyés, déléguez à `next(error)` plutôt que d'écrire une seconde réponse.
 
 ---
 
@@ -109,6 +119,8 @@ Avant d'ajouter un package :
 ```
 
 Méfiez-vous des noms de packages plausibles mais inexistants ou non maintenus.
+
+Avec npm, `npm ci` réinstalle depuis le lockfile sans le modifier et échoue si `package.json` est incohérent avec lui. Utilisez `npm install` pour ajouter ou mettre à jour une dépendance, puis `npm ci` pour vérifier l'installation figée attendue en CI. Gardez les options qui ont servi à produire le lockfile cohérentes entre ces étapes.
 
 ---
 
@@ -165,18 +177,21 @@ Pour une API Node :
 
 ---
 
-## Copilot — référence
-
-Les instructions `.github/copilot-instructions.md` et exemples Copilot Node restent dans le dépôt lorsque nécessaires. Claude utilise en priorité `CLAUDE.md`, rules et skills.
-
----
-
 ## Sources
+
+- [Express — erreurs asynchrones et middleware d'erreur](https://expressjs.com/en/guide/error-handling.html) — vérifié le 2026-10-03
+- [npm — contrat de `npm ci`](https://docs.npmjs.com/cli/v11/commands/npm-ci/) — vérifié le 2026-10-03
 
 - [Node.js — documentation](https://nodejs.org/docs/latest/api/) — vérifier la version réellement installée
 - [Express — documentation](https://expressjs.com/) — vérifier la version du projet
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-nodejs-express).
+
 ## Prochaine étape
 
-**[React & TypeScript](react-typescript.md)** pour le frontend, ou **[Node.js & React](nodejs-react.md)** pour un workflow full-stack.
+Poursuivez avec **[React & TypeScript](react-typescript.md)**, la page suivante dans le menu.

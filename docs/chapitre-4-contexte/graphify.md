@@ -4,6 +4,8 @@
 
 **Graphify** transforme un dépôt et ses artefacts associés en **knowledge graph interrogeable**. Pour le code, il s'appuie notamment sur une analyse AST avec Tree-sitter ; il peut aussi intégrer documentation, schémas SQL, configurations et autres fichiers dans le graphe.
 
+La page [Tree-sitter — comprendre et analyser la structure du code](tree-sitter.md) explique le parseur, ses arbres syntaxiques, les queries et leurs limites. Tree-sitter fournit une structure syntaxique ; les relations du graphe demandent un traitement supplémentaire par Graphify.
+
 Sa place naturelle dans cette documentation est le chapitre **Contexte & Personnalisation** : Graphify ne remplace ni `CLAUDE.md` ni les skills, mais fournit à l'agent une **carte structurée des relations du projet**.
 
 !!! warning "Projet tiers"
@@ -200,8 +202,6 @@ Source principale consultée le **28 septembre 2026** :
 
 Le dépôt officiel documente notamment l'installation `graphifyy`, l'intégration Claude Code, le mode projet/strict, les sorties `graphify-out/` et le serveur MCP.
 
-## À lire ensuite
+## Prochaine étape
 
-- **[Concepts fondamentaux](concepts.md)** pour gérer le budget de contexte ;
-- **[MCP](../chapitre-13-outils-economies/mcps/index.md)** pour connecter des outils externes ;
-- **[Qdrant](../chapitre-7-rag/qdrant.md)** pour le retrieval vectoriel et hybride.
+Poursuivez avec **[Tree-sitter — Analyse syntaxique](tree-sitter.md)**, la page suivante dans le menu.
