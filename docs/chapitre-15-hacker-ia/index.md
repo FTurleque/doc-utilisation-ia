@@ -1,62 +1,90 @@
-# Hacker & IA — Menaces, Réalités, Défense
+# Hacker & IA — Menaces, défense et réponse
 
-Ce chapitre présente comment l'IA transforme les pratiques de cyberattaque et de cybersécurité. L'objectif est de comprendre les risques réels, d'identifier les scénarios d'attaque les plus probables, et d'appliquer des protections concrètes côté équipe, outils, et organisation.
+Ce chapitre traite des usages malveillants ou détournés de l'IA **uniquement sous l'angle défensif** : comprendre les menaces documentées, réduire l'exposition, détecter les incidents et organiser la réponse.
 
-Le contenu est orienté sensibilisation et défense: il n'inclut pas de mode opératoire technique offensif exploitable.
+Claude Code étant l'agent principal du dépôt, une attention particulière est portée aux risques des agents de développement : instructions non fiables, MCP, permissions, secrets, supply chain et actions automatisées.
 
 ---
 
 ## Pages du chapitre
 
 | Page | Description |
-|------|-------------|
-| [Panorama IA et hacking](page-principale.md) | Vue d'ensemble des usages de l'IA dans les cyberattaques et la défense, risques, protections et checklist opérationnelle. |
-| [Études de cas 2024-2026](etudes-de-cas-2024-2026.md) | Cas et tendances observés (phishing, deepfake, empoisonnement de contexte, supply chain), avec mesures défensives et leçons opérationnelles. |
-| [Playbook incident IA](playbook-incident-ia.md) | Plan d'action prêt à l'emploi pour détecter, contenir, investiguer et communiquer lors d'un incident impliquant l'IA. |
-| [KPI & SOC pour menaces IA](kpi-soc-ia.md) | Indicateurs clés, règles de détection et pilotage opérationnel pour mesurer et améliorer la réponse aux menaces assistées par IA. |
-| [Exercices tabletop IA](exercices-tabletop-ia.md) | Scénarios prêts à animer (60, 90, 120 min) pour entraîner équipes sécurité, IT, métiers et direction. |
-| [Cas sectoriels IA et cybersécurité](cas-sectoriels-ia.md) | Exemples concrets par secteur (finance, santé, industrie, SaaS, public) avec priorités défensives adaptées. |
-| [Matrice menaces IA -> contrôles](matrice-controles-menaces.md) | Cartographie menace-vers-contrôles avec priorisation impact/effort et registre de preuves. |
-| [Checklist audit interne IA](checklist-audit-interne.md) | Grille d'audit trimestrielle avec score de maturité, plan de remédiation et synthèse exécutive. |
-| [Modèles de fiches incident et post-mortem IA](modeles-fiches-incident.md) | Templates copiables pour fiche incident courte/complète et post-mortem sans blâme. |
-| [Plan 90 jours — Passer à l'action](plan-90-jours.md) | Synthèse actionnable du chapitre : quick wins, consolidation, maturité par rôle (Dev, SecOps, Direction, Métiers). |
-| [Comparaison IntelliJ vs VS Code pour la sécurité IA](comparaison.md) | Différences pratiques entre IDEs pour limiter les risques liés aux assistants IA de code. |
+|---|---|
+| [Panorama IA et hacking](page-principale.md) | Menaces documentées, limites de l'attribution et contrôles défensifs |
+| [Études de cas 2024-2026](etudes-de-cas-2024-2026.md) | Cas et tendances sourcés, avec distinction entre observation et extrapolation |
+| [Playbook incident IA](playbook-incident-ia.md) | Détection, confinement, investigation, rotation des secrets et communication |
+| [KPI & SOC pour menaces IA](kpi-soc-ia.md) | Indicateurs à adapter au contexte réel de l'organisation |
+| [Exercices tabletop IA](exercices-tabletop-ia.md) | Exercices défensifs pour équipes sécurité, IT, métiers et direction |
+| [Cas sectoriels](cas-sectoriels-ia.md) | Contraintes différentes selon secteur et données |
+| [Matrice menaces → contrôles](matrice-controles-menaces.md) | Cartographie de contrôles et preuves attendues |
+| [Checklist audit interne IA](checklist-audit-interne.md) | Revue périodique de gouvernance, accès et sécurité |
+| [Modèles incident & post-mortem](modeles-fiches-incident.md) | Templates de documentation d'incident |
+| [Plan 90 jours](plan-90-jours.md) | Plan de montée en maturité à adapter à l'organisation |
+| [Comparaison IDE](comparaison.md) | Différences de surface d'attaque et de contrôle VS Code / JetBrains |
 
 ---
 
-## Ce que tu vas apprendre
+## Sources prioritaires
 
-- Distinguer les promesses marketing des menaces réellement observées
-- Cartographier les usages de l'IA dans les cyberattaques modernes
-- Mettre en place des garde-fous concrets pour ton équipe
-- Évaluer les risques liés aux "IA hacker" qui circulent sur le web
+Commencez par des sources primaires et des référentiels :
 
-!!! warning "Positionnement important"
-    Ce chapitre traite aussi des usages malveillants de l'IA à des fins de prévention, de gouvernance et de réduction du risque. La finalité est strictement défensive.
-
----
-
-## Références de départ
-
-- [SelfHack AI](https://selfhack.ai/)
-- [AI-Powered Hacking (Digital.ai)](https://digital.ai/fr/catalyst-blog/ai-powered-hacking/)
-- [Google Cloud: AI hacking myths and truths](https://cloud.google.com/transform/truths-about-ai-hacking-every-ciso-needs-to-know-qa?hl=en)
-- [GitHub Secure Code Game](https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/)
-- [Udemy Business: AI for penetration testers](https://business.udemy.com/fr/learning-path/ai-for-penetration-testers-ethical-hackers/?utm_source=google&utm_medium=organic-search)
-- [OPSWAT: AI hacking et cyberattaques](https://french.opswat.com/blog/ai-hacking-how-hackers-use-artificial-intelligence-in-cyberattacks)
-
-## Références officielles complémentaires
-
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [MITRE ATLAS](https://atlas.mitre.org/)
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
-- [CISA AI](https://www.cisa.gov/ai)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [ANSSI](https://www.ssi.gouv.fr/)
-- [Europol IOCTA](https://www.europol.europa.eu/publications-events/main-reports)
+- [CISA — AI](https://www.cisa.gov/ai)
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
+- [ANSSI](https://cyber.gouv.fr/)
+- [Anthropic Threat Intelligence](https://www.anthropic.com/threat-intelligence)
+
+Le rapport Anthropic de septembre 2026 décrit des opérations malveillantes détectées et interrompues sur sa plateforme. Il est utile comme **source de cas réels**, mais Anthropic précise qu'il présente les activités les plus notables/novatrices identifiées, pas un échantillon représentatif de l'ensemble des usages malveillants de l'IA.
+
+---
+
+## Ce que ce chapitre ne doit pas faire
+
+- transformer un cas médiatisé en probabilité universelle ;
+- attribuer une attaque à un acteur sans source fiable ;
+- présenter une démonstration offensive comme un tutoriel exploitable ;
+- confondre capacités d'un modèle et preuve d'une compromission réelle ;
+- donner un score de maturité ou de risque comme vérité objective sans méthodologie définie.
+
+---
+
+## Modèle de lecture défensif
+
+Pour chaque cas :
+
+```text
+source
+→ fait observé
+→ niveau d'incertitude
+→ actifs exposés
+→ contrôles préventifs
+→ détection
+→ réponse
+→ preuve que le contrôle fonctionne
+```
+
+Cette structure évite les récits sensationnalistes et produit des actions vérifiables.
+
+---
+
+## Risques spécifiques aux agents de code
+
+Les agents modernes ajoutent des surfaces nouvelles :
+
+- lecture de contenu non fiable ;
+- exécution de commandes ;
+- accès à des secrets du shell ;
+- MCP et outils externes ;
+- hooks/skills/plugins ;
+- modification de plusieurs fichiers ;
+- interaction avec Git, CI, cloud ou tickets.
+
+Le contrôle central reste le **moindre privilège**, complété par validation indépendante, traçabilité et segmentation des accès.
 
 ---
 
 ## Prochaine étape
 
-Commence par **[Panorama IA et hacking](page-principale.md)** pour comprendre les attaques les plus probables, les signaux faibles à surveiller, et les contre-mesures prioritaires.
+Poursuivez avec **[IA et hacking](page-principale.md)**, la page suivante dans le menu.

@@ -1,142 +1,144 @@
-# Stack prête en 15 min — VS Code
+# Stack locale rapide — VS Code + Claude Code
 
 <span class="badge-beginner">Débutant</span> <span class="badge-vscode">VS Code</span>
 
-Cette stack vise un objectif simple: te donner un environnement de travail
-local-first en moins de 15 minutes. Tu gardes les crédits IA pour les
-cas complexes, et tu délègues le quotidien à des outils légers.
+Cette page remplace l'ancienne stack **Continue + Ollama + RTK**. Continue n'étant plus activement maintenu, le parcours recommandé est désormais plus simple : **Claude Code + backend Claude officiel, Ollama ou LM Studio**, avec RTK et SonarQube en compléments si nécessaire.
+
+Le nom de fichier historique contient « 15 min », mais le temps réel dépend du téléchargement des modèles, du matériel et de l'environnement réseau.
 
 ---
 
-## Prérequis
+## Stack cible
 
-- VS Code installé
-- Accès internet pour l'installation initiale
-- Au moins 8 Go de RAM pour un modèle local confortable
-- Un compte Continue.dev si tu veux aussi un routage cloud optionnel
+```text
+VS Code
+└── Claude Code
+    ├── Anthropic / fournisseur Claude habituel
+    ├── OU Ollama compatible Anthropic
+    └── OU LM Studio compatible Anthropic
 
-!!! tip "Stack cible"
-    Pour cette version rapide, la combinaison recommandée est:
-    **[Ollama](ollama.md)** + **[Continue.dev](continue-dev.md)** + **[RTK](rtk.md)**.
-
----
-
-## Étape 1 — Installer Ollama
-
-1. Télécharger Ollama depuis son site officiel.
-2. Installer l'application.
-3. Lancer un modèle local de démarrage.
-
-```powershell
-ollama run mistral
-```
-
-4. Laisser le serveur local disponible sur `http://localhost:11434`.
-
----
-
-## Étape 2 — Installer Continue.dev
-
-1. Ouvrir les extensions de VS Code.
-2. Installer **Continue**.
-3. Ouvrir le panneau Continue dans la barre latérale.
-4. Configurer un modèle local via Ollama.
-
-Exemple minimal:
-
-```json
-{
-  "models": [
-    {
-      "title": "Chat local",
-      "provider": "ollama",
-      "model": "mistral",
-      "apiBase": "http://localhost:11434"
-    }
-  ]
-}
+Compléments optionnels
+├── RTK pour réduire les sorties terminal
+├── SonarQube for IDE pour l'analyse statique
+└── MCP pour les services externes
 ```
 
 ---
 
-## Étape 3 — Ajouter RTK au terminal
+## Option A — Claude Code standard
 
-RTK sert à filtrer les sorties CLI avant de les partager dans un chat IA.
-Dans cette stack, son rôle est simple: réduire le bruit avant analyse.
+Installez Claude Code selon le guide principal puis ouvrez le dépôt dans VS Code.
 
-Exemple:
+Validez :
 
-```powershell
-rtk npm test
-rtk git diff
-rtk rg "PaymentTimeout" src
+```bash
+claude --version
+claude doctor
 ```
 
----
-
-## Étape 4 — Valider la stack
-
-Teste ces 3 usages avant de considérer la stack opérationnelle:
-
-1. **Chat simple** dans Continue.dev
-   - demander l'explication d'un fichier
-2. **Sortie terminal filtrée** avec RTK
-   - comparer un log brut et un log compressé
-3. **Modèle local** via Ollama
-   - vérifier qu'un prompt simple répond sans cloud
-
-!!! success "Critère de validation"
-    La stack est valide si tu peux: expliquer un fichier, filtrer un log, et
-    obtenir une réponse locale sans consommer de crédits IA.
+Dans Claude Code, vérifiez `/status` et les permissions avant de lancer une modification importante.
 
 ---
 
-## Ce que cette stack couvre
+## Option B — Claude Code + Ollama
 
-- Questions simples sur le code
-- Génération de brouillons de tests
-- Explication de fichiers ou fonctions
-- Nettoyage de logs et de diffs
+Ollama documente directement Claude Code comme client compatible.
 
-Elle ne remplace pas Copilot pour:
+```bash
+ollama launch claude
+```
 
-- Les refactorings multi-fichiers complexes
-- Les décisions d'architecture ambigües
-- Les sujets qui demandent un raisonnement profond et long
+Ou manuellement :
+
+```bash
+export ANTHROPIC_AUTH_TOKEN=ollama
+export ANTHROPIC_BASE_URL=http://localhost:11434
+claude --model <modele-local>
+```
+
+Le modèle local doit être évalué sur vos tâches réelles, en particulier tool calling et contexte.
+
+---
+
+## Option C — Claude Code + LM Studio
+
+Démarrez le serveur :
+
+```bash
+lms server start --port 1234
+```
+
+Puis :
+
+```bash
+export ANTHROPIC_BASE_URL=http://localhost:1234
+export ANTHROPIC_AUTH_TOKEN=lmstudio
+export CLAUDE_CODE_ATTRIBUTION_HEADER=0
+claude --model <modele-local>
+```
+
+LM Studio permet également de configurer ces variables pour l'extension Claude Code VS Code.
 
 ---
 
-## Quand passer à Copilot
+## Ajouter RTK si nécessaire
 
-Passe à Copilot Chat ou Agent quand:
+RTK est utile lorsque tests, builds ou Git produisent des sorties très volumineuses.
 
-- plusieurs modules doivent être modifiés ensemble
-- le contexte est trop large pour un modèle local
-- tu veux une solution plus robuste sur un cas critique
+```bash
+rtk init --global --dry-run
+rtk init --global
+rtk gain
+```
 
-!!! info "Bonne règle"
-    Si Continue + Ollama + RTK ne suffit pas, monte d'abord en précision de
-    contexte avant de monter en puissance de modèle.
+Ne l'ajoutez pas « par principe » : mesurez d'abord le bruit réel.
 
 ---
+
+## Ajouter SonarQube for IDE
+
+Pour les problèmes de qualité déterministes :
+
+1. installez l'extension officielle SonarSource ;
+2. corrigez les issues simples avec les quick fixes ;
+3. utilisez Claude pour les cas complexes ;
+4. relancez tests et analyse Sonar.
+
+---
+
+## Validation minimale
+
+Avant de considérer la stack opérationnelle :
+
+- Claude Code lit le dépôt ;
+- une modification simple peut être annulée/revue ;
+- les tests ciblés sont exécutables ;
+- le backend choisi tient le contexte nécessaire ;
+- les secrets ne sont pas stockés dans les settings du workspace ;
+- les outils MCP éventuels sont limités au strict nécessaire.
+
+---
+
+## Continue — référence legacy
+
+Si une équipe utilise encore Continue, conservez sa configuration tant qu'elle fonctionne, mais ne l'introduisez pas comme nouvelle dépendance centrale : son dépôt officiel n'est plus activement maintenu et la release 2.0.0 est finale.
+
+---
+
+### Configuration locale et retour au fournisseur habituel
+
+Les blocs `export` ciblent Bash (Linux, macOS ou WSL). Dans PowerShell, utilisez par exemple `$env:ANTHROPIC_BASE_URL = "http://localhost:11434"` pour Ollama, ou le port `1234` pour LM Studio, puis définissez `$env:ANTHROPIC_AUTH_TOKEN`. Pour LM Studio, ajoutez `$env:CLAUDE_CODE_ATTRIBUTION_HEADER = "0"`, comme dans son guide actuel. Ces variables routent la session vers un autre backend : retirez-les avant de revenir à votre connexion Claude habituelle et vérifiez `/status`.
+
+Exigez un modèle prenant en charge les appels d’outils et testez un petit changement avec validation. Un modèle servi localement ne rend pas automatiquement locaux les MCP, recherches Web ou autres outils de la session.
+
+Guides revérifiés le **3 octobre 2026** : [Ollama — compatibilité Anthropic](https://docs.ollama.com/api/anthropic-compatibility) et [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code).
 
 ## Sources
 
-- VS Code extensions: [Continue sur Marketplace](https://marketplace.visualstudio.com/items?itemName=Continue.continue) (consultée le 2026-06-07)
-- Documentation officielle: [Continue Docs](https://docs.continue.dev/) (consultée le 2026-06-07)
-- Site officiel: [Continue](https://www.continue.dev/) (consultée le 2026-06-07)
-- Site officiel: [Ollama](https://ollama.com/) (consultée le 2026-06-07)
-- Documentation officielle: [Ollama GitHub](https://github.com/ollama/ollama) (consultée le 2026-06-07)
-
----
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
+- [Ollama — Claude Code](https://docs.ollama.com/api/anthropic-compatibility) — consulté le 2026-09-28
+- [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Stack prête en 15 min — IntelliJ](stack-prete-15-min-intellij.md)** : adapter le même principe local-first à IntelliJ IDEA.
-
-Concepts clés couverts :
-
-- **Installation rapide** - démarrer sans reconfigurer tout le projet
-- **Chat local** - garder les prompts simples hors quota
-- **Filtrage terminal** - réduire les logs avant analyse
-- **Validation de base** - vérifier que la stack répond à 3 usages majeurs
+Poursuivez avec **[Stack locale rapide — IntelliJ](stack-prete-15-min-intellij.md)**, la page suivante dans le menu.

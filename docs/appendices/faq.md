@@ -1,152 +1,122 @@
-﻿# FAQ — Questions Fréquentes
+# FAQ — Questions fréquentes
 
-## Installation & Abonnement
+## Claude Code
 
-??? question "Faut-il payer pour utiliser GitHub Copilot ?"
-    GitHub Copilot propose plusieurs plans, dont un plan gratuit limité.
+??? question "Claude Code est-il le parcours principal de cette documentation ?"
+    Oui. Les pages génériques utilisent désormais **Claude Code** comme outil principal. GitHub Copilot reste documenté comme référence, comparaison et option de retour si son offre redevient pertinente.
 
-    - **Copilot Free** : limité (complétions et interactions mensuelles plafonnées)
-    - **Copilot Pro** : plan individuel payant
-    - **Copilot Pro+** : plan individuel payant avec allocation AI Credits plus élevée
-    - **Copilot Business** : plan organisation avec gestion centralisée
-    - **Copilot Enterprise** : plan entreprise avec gouvernance avancée
+??? question "Claude Code fonctionne-t-il dans VS Code et JetBrains ?"
+    Oui. Claude Code possède une intégration VS Code et une intégration JetBrains. Vérifiez la documentation officielle pour les prérequis exacts : l'intégration JetBrains s'appuie sur la CLI Claude Code, tandis que l'expérience VS Code dispose également de sa propre surface intégrée.
 
-    Les montants exacts et allocations peuvent évoluer. Vérifiez toujours la page officielle : [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans).
+??? question "Quelle configuration projet faut-il commencer par ?"
+    Gardez le socle petit :
 
-    Les **étudiants et mainteneurs open source** peuvent être éligibles à un accès gratuit via [GitHub Education](https://education.github.com/) ou les programmes GitHub dédiés.
+    ```text
+    CLAUDE.md
+    .claude/
+      rules/
+      skills/
+    ```
 
-??? question "Puis-je utiliser Copilot sur plusieurs machines avec le même compte ?"
-    Oui. Votre abonnement GitHub Copilot est lié à votre compte GitHub, pas à une machine. Vous pouvez l'utiliser sur autant de machines que vous souhaitez avec la même authentification. Les sessions simultanées sont supportées.
+    Ajoutez agents, hooks, plugins et MCP uniquement lorsqu'un besoin concret le justifie.
 
-??? question "Copilot fonctionne-t-il hors ligne ?"
-    Non. GitHub Copilot nécessite une connexion Internet pour envoyer le contexte aux serveurs GitHub et recevoir les suggestions. Il n'existe pas de mode hors ligne officiel.
-    
-    En cas de connexion intermittente, les suggestions deviennent indisponibles jusqu'au rétablissement.
+??? question "À quoi servent `CLAUDE.md` et `AGENTS.md` ?"
+    `CLAUDE.md` est le mécanisme principal d'instructions projet Claude Code. `AGENTS.md` peut servir de convention portable/multi-agent et est également pris en charge dans les versions récentes de Claude Code. Évitez de dupliquer de longues règles contradictoires dans les deux fichiers.
 
----
+??? question "Quand utiliser une rule, une skill, un subagent ou MCP ?"
+    | Besoin | Mécanisme |
+    |---|---|
+    | Invariant court du dépôt | `CLAUDE.md` |
+    | Règle ciblée par fichiers/contexte | `.claude/rules/` |
+    | Procédure réutilisable | `.claude/skills/` |
+    | Travail isolé / recherche indépendante | subagent |
+    | Service ou donnée externe dynamique | MCP |
 
-## Confidentialité & Sécurité
+??? question "Comment diagnostiquer Claude Code ?"
+    Commencez par les mécanismes intégrés : `/doctor`, `claude doctor`, `/status`, `/context` et `/mcp` selon le symptôme. Utilisez `--safe-mode` lorsqu'il faut isoler plugins, hooks ou MCP.
 
-??? question "Mon code est-il envoyé à GitHub ? Est-il utilisé pour entraîner le modèle ?"
-    **Copilot Individual** : par défaut, GitHub peut utiliser les snippets pour améliorer le modèle. Vous pouvez désactiver cela dans **github.com/settings/copilot** → "Allow GitHub to use my code snippets from the code editor for product improvements."
-    
-    **Copilot Business et Enterprise** : les snippets ne sont **jamais** utilisés pour l'entraînement du modèle. C'est une garantie contractuelle de GitHub.
-    
-    Dans tous les cas, des métadonnées non-code (telemetry) sont envoyées. Consultez la [politique de confidentialité GitHub Copilot](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement) pour les détails.
-
-??? question "Copilot peut-il générer du code sous copyright ?"
-    Il existe un risque théorique que Copilot génère des séquences de code identiques à du code sous licence restrictive (GPL, AGPL, etc.). Pour réduire ce risque :
-    
-    1. Dans **github.com/settings/copilot**, activez **"Block suggestions matching public code"**
-    2. En Copilot Business/Enterprise, ce filtrage est disponible en tant que politique organisationnelle
-    
-    Ce paramètre n'élimine pas totalement le risque mais le réduit significativement.
-
-??? question "Peut-on utiliser Copilot pour des projets confidentiels ?"
-    Avec **Copilot Business ou Enterprise**, GitHub s'engage contractuellement à ne pas utiliser votre code pour entraîner le modèle. Le code est traité comme des données confidentielles.
-    
-    Pour les projets hautement sensibles (défense, données médicales, etc.), vérifiez les informations sous-traitants et certifications de conformité de GitHub auprès de votre DPO.
+??? question "Puis-je utiliser un modèle local avec Claude Code ?"
+    Oui, certains backends comme **Ollama** et **LM Studio** exposent une compatibilité Anthropic permettant de connecter Claude Code à un modèle local. Cela ne transforme pas ce modèle en Claude : tool calling, contexte, qualité et sécurité doivent être benchmarkés séparément.
 
 ---
 
-## Fonctionnalités & Utilisation
+## Coûts et données
 
-??? question "Quelle est la différence entre les suggestions inline et Copilot Chat ?"
-    - **Suggestions inline** : suggestions "ghost text" qui apparaissent directement dans l'éditeur pendant que vous tapez. Idéal pour compléter des fonctions, des lignes, du boilerplate.
-    - **Copilot Chat** : interface conversationnelle dans un panneau dédié. Idéal pour expliquer du code, générer des tests, refactoriser, poser des questions sur le projet.
-    
-    Les deux fonctionnent de manière complémentaire. La plupart des développeurs utilisent les deux selon le contexte.
+??? question "Faut-il un abonnement pour Claude Code ?"
+    Claude Code peut être utilisé via les offres Claude compatibles ou via des configurations API/cloud prises en charge. Les plans, limites et mécanismes d'usage évoluent : vérifiez [Claude pricing](https://claude.com/pricing) et la documentation Claude Code avant une décision budgétaire.
 
-??? question "Copilot Chat peut-il analyser tout mon projet ?"
-    Avec la variable `@workspace` dans Copilot Chat (VS Code), Copilot effectue une recherche sémantique dans votre projet avant de répondre. Il ne "lit" pas tout le projet d'un coup, mais indexe et retrouve les fichiers pertinents.
-    
-    La qualité de l'analyse dépend de la taille et de la clarté de la structure du projet.
+??? question "Mon code est-il envoyé dans le cloud ?"
+    Cela dépend du backend et de la configuration. Avec un backend Anthropic/cloud, le contenu nécessaire à la requête est traité par le service distant. Avec un backend local compatible, l'inférence peut rester locale, mais d'autres composants (MCP, plugins, télémétrie, logs, services externes) peuvent toujours communiquer avec le réseau.
 
-??? question "Comment améliorer la qualité des suggestions Copilot ?"
-    Les leviers principaux, par ordre d'impact :
-    
-    1. **Types explicites** — annotez partout, Copilot comprend votre modèle de données
-    2. **Noms descriptifs** — `getUsersByActiveStatus()` >> `query()`
-    3. **Fichiers liés ouverts** — ouvrez les types, interfaces, et dépendances dans des onglets
-    4. **Instructions contextuelles** — configurez `.github/copilot-instructions.md`
-    5. **Commentaires de description** — écrivez l'intention en commentaire avant la fonction
-    6. **Curseur positionné intelligemment** — juste après du code existant plutôt qu'en fichier vide
+    Pour un projet sensible, cartographiez toute la chaîne de données au lieu de vous fier au seul mot « local ».
 
-??? question "Copilot peut-il générer des tests automatiquement ?"
-    Oui, c'est l'une de ses utilisations les plus efficaces. Deux approches :
-    
-    1. **Inline** : écrivez `// Test pour la fonction getUserById` et Copilot complète
-    2. **Chat** : `Génère les tests Jest pour cette fonction, couvre les cas nominaux et les cas d'erreur`
-    
-    La qualité est bonne mais nécessite toujours une revue : Copilot peut manquer des cas limites ou générer des assertions trop permissives.
-
-??? question "Quelle est la différence entre `.instructions.md`, `.prompt.md`, `.agent.md` et `SKILL.md` ?"
-    | Fichier | Rôle |
-    |---------|------|
-    | `.instructions.md` | Règles permanentes appliquées automatiquement selon le type de fichier (`applyTo`) |
-    | `.prompt.md` | Prompts pré-configurés invocables manuellement depuis le Chat (`/prompt-name`) |
-    | `.agent.md` | Définit un agent personnalisé avec des outils spécifiques et un comportement dédié |
-    | `SKILL.md` | Regroupe un ensemble de comportements et connaissances invocables via URI `copilot-skill://` |
-    
-    Voir [Contexte & Personnalisation](../chapitre-4-contexte/index.md) pour le guide complet.
+??? question "Peut-on donner des secrets à Claude pour qu'il configure un service ?"
+    Évitez de placer des secrets dans les prompts, instructions ou fichiers versionnés. Préférez variables d'environnement, secret managers et identités temporaires/scopées. L'agent ne doit voir que les credentials strictement nécessaires.
 
 ---
 
-## IDE & Compatibilité
+## Contexte et qualité
 
-??? question "IntelliJ et VS Code offrent-ils les mêmes fonctionnalités Copilot ?"
-    Non. VS Code dispose de fonctionnalités exclusives :
-    
-    - `.instructions.md` (instruction files)
-    - `.prompt.md` (prompt files)
-    - `.agent.md` et agents custom
-    - `SKILL.md`
-    - Modes Chat (Ask/Plan/Agent)
-    - Édition multi-fichiers assistée
-    - `.copilotignore`
-    
-    IntelliJ offre une meilleure **analyse sémantique** du code Java/Kotlin via PSI, mais moins de fonctionnalités de personnalisation.
-    
-    Voir [Problèmes courants](../chapitre-11-troubleshooting/comparaison-problemes.md) pour la matrice complète.
+??? question "Claude Code lit-il tout le dépôt automatiquement ?"
+    Non. Un agent travaille avec un budget de contexte et utilise recherche, lecture de fichiers, outils et parfois subagents pour charger l'information utile. Un dépôt bien structuré et des instructions concises sont plus efficaces qu'une tentative d'injecter tout le workspace.
 
-??? question "Copilot fonctionne-t-il avec tous les langages ?"
-    Copilot supporte la grande majorité des langages de programmation. La qualité varie :
-    
-    - **Excellent** : Python, JavaScript, TypeScript, Java, C#, Go, Ruby
-    - **Bon** : C++, C, PHP, Swift, Kotlin, Rust, Scala
-    - **Partiel** : langages de niche, DSLs spécifiques
-    
-    Pour les langages peu représentés dans le code public, la qualité des suggestions est moindre. Des types explicites et des commentaires descriptifs compensent en partie.
+??? question "Comment améliorer la qualité des résultats ?"
+    Donnez :
 
-??? question "Comment désactiver Copilot temporairement ?"
-    === ":material-microsoft-visual-studio-code: VS Code"
-        - Barre de statut → clic sur l'icône Copilot → **Disable Completions**
-        - Ou : palette de commandes ++ctrl+shift+p++ → **"GitHub Copilot: Disable Completions"**
-        
-    === ":simple-intellijidea: IntelliJ"
-        - Clic sur l'icône Copilot dans la status bar → **"Disable GitHub Copilot"**
+    1. l'objectif ;
+    2. les contraintes ;
+    3. les fichiers ou zones pertinentes ;
+    4. les commandes de validation ;
+    5. le critère de fin.
+
+    Demandez ensuite à Claude d'exécuter les tests/linters/build pertinents et de relire le diff.
+
+??? question "Faut-il demander à Claude de “raisonner étape par étape” ?"
+    Ne présentez pas cette formule comme une recette magique. Pour le développement logiciel, il est plus robuste de demander un plan, une décomposition, des critères de vérification et des preuves exécutées.
 
 ---
 
-## Troubleshooting
+## GitHub Copilot — référence conservée
 
-??? question "Pourquoi Copilot ne génère-t-il pas de suggestions dans un fichier ?"
-    Causes fréquentes par ordre de probabilité :
-    
-    1. **Authentification expirée** → se reconnecter
-    2. **Extension/plugin désactivé** → vérifier les paramètres
-    3. **Fichier dans `.copilotignore`** (VS Code) → vérifier le fichier
-    4. **Langage désactivé** dans les paramètres pour ce type de fichier
-    5. **`editor.inlineSuggest.enabled: false`** (VS Code)
-    6. **Mode Power Save actif** (IntelliJ)
-    
-    Voir [Problèmes courants](../chapitre-11-troubleshooting/problemes-courants.md) pour les solutions détaillées.
+??? question "Pourquoi la documentation Copilot est-elle toujours présente ?"
+    Parce qu'elle reste utile pour :
 
-??? question "Comment lire les logs Copilot ?"
-    === ":material-microsoft-visual-studio-code: VS Code"
-        **Affichage → Sortie** (++ctrl+shift+u++) → sélectionnez **"GitHub Copilot"** dans le dropdown
-        
-    === ":simple-intellijidea: IntelliJ"
-        **Help → Show Log in Explorer** → filtrez `idea.log` avec grep "copilot"
-    
-    Voir [Logs & Diagnostic](../chapitre-11-troubleshooting/logs-diagnostic.md) pour le guide complet.
+    - les équipes qui utilisent encore Copilot ;
+    - comparer les mécanismes Claude/Copilot ;
+    - maintenir les configurations `.github/` existantes ;
+    - permettre un retour futur si le produit ou ses tarifs évoluent favorablement.
+
+??? question "Les fichiers Claude et Copilot sont-ils interchangeables ?"
+    Non. Par exemple :
+
+    | Claude Code | GitHub Copilot |
+    |---|---|
+    | `CLAUDE.md` | `.github/copilot-instructions.md` |
+    | `.claude/rules/` | `.github/instructions/*.instructions.md` |
+    | `.claude/skills/` | skills Copilot selon client/version |
+    | `.claude/agents/` | `.github/agents/*.agent.md` |
+    | `.mcp.json` / `claude mcp` | configuration MCP Copilot propre au client |
+
+    Gardez une source de vérité claire et évitez de supposer qu'un format fonctionne identiquement partout.
+
+??? question "Copilot reste-t-il utilisable hors ligne ?"
+    Les fonctions cloud de Copilot nécessitent une connexion réseau. Pour un besoin réellement offline/local, utilisez plutôt un backend local documenté dans le chapitre Outils.
+
+---
+
+## Sécurité
+
+??? question "Un agent peut-il être influencé par un fichier malveillant ?"
+    Oui. Un dépôt, une page Web, une issue ou une sortie MCP peut contenir des instructions non fiables. Inspectez les fichiers d'instructions, skills, hooks, plugins et `.mcp.json` avant d'accorder des permissions larges à un dépôt tiers.
+
+??? question "Le code généré est-il sûr s'il compile ?"
+    Non. Compilation et sécurité sont deux contrôles différents. Utilisez tests, lint/typecheck, SAST/SCA, revue du diff et Quality Gates selon le projet.
+
+??? question "Comment vérifier une dépendance suggérée par l'IA ?"
+    Vérifiez le registre officiel, la provenance, le mainteneur, le dépôt source, les advisories et la nécessité de l'ajout. Ne vous fiez ni au nom généré ni uniquement au nombre de téléchargements.
+
+---
+
+## Prochaine étape
+
+Poursuivez avec **[Raccourcis Clavier](raccourcis-clavier.md)**, la page suivante dans le menu.

@@ -1,493 +1,238 @@
-# RAG dans le Monde Réel : Secteurs + Architectures
+# RAG — Cas d'usage par secteur
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Exemples concrets, challenges réels, résultats ROI.
+Cette page illustre comment les contraintes changent selon le domaine. Les anciens chiffres de ROI, erreurs « avant/après » et faux exemples réglementaires ont été supprimés : sans étude sourcée, ils ne doivent pas être présentés comme des résultats réels.
 
 ---
 
-## 1. Gestion RH — (Carrière, Paie, Conformité) 👔
+## 1. RH, paie et réglementation
 
-### Problème Business
+### Besoin
 
-Un logiciel RH pour agents de la fonction publique doit gérer :
+Retrouver rapidement des règles applicables dans des documents versionnés : textes réglementaires, accords, procédures internes, jurisprudence ou guides.
 
-- **Carrière** : arrêtés, avancement de grade, échelons
-- **Paie** : calculs complexes avec régimes spécifiques, primes (13e mois, vacances, etc.)
-- **Formation** : suivi des heures, certifications obligatoires
-- **Conformité réglementaire** : décrets, circulaires, accord ministre, décision
+### Contraintes critiques
 
-**Challenges :**
+- date d'effet et version ;
+- juridiction / population concernée ;
+- données personnelles ;
+- auditabilité ;
+- décision humaine pour les actes sensibles.
 
-- Base réglementaire massive et changeante (décrets, circulaires, décisions ministérielles)
-- Erreurs de calcul = procédures CNIL, contentieux
-- Agents/RH cherchent manuellement la "bonne règle" (20-30 min par cas)
-- Maintenance coûteuse : chaque réforme = mise à jour code
+Architecture :
 
-### Solution RAG (Advanced + Agentic)
-
-**Enterprise RAG** indexant toute la base réglementaire + jurisprudence. Agents autonomes pour vérifier conformité avant exécution.
-
-### Architecture Réglementaire
-
-```
-BASE DOCUMENTAIRE
-├─ Décrets (1000+)
-├─ Circulaires DGAFP (500+)
-├─ Accords/Protocoles ministériels (200+)
-├─ Décisions CNIL/CDC (300+)
-├─ Jurisprudence/Contentieux (100+)
-└─ Guides applicatifs RH (50+)
-
-      ↓ Chunking + Métadonnées (type_doc, date_validité, version)
-      ↓ Embeddings haute qualité (text-embedding-3-large)
-      ↓ Qdrant vectorstore (filtres: juridiction, date_entrée_vigueur)
-      ↓
-CALCUL PAIE AGENT (ex: "Avancement grade Y5→Y6, échelon 8")
-      ↓ Agent recherche les 3 tâches:
-        1) Décret définissant barème Y6
-        2) Circulaire DGAFP sur conditions d'avancement
-        3) Décision ministérielle si surplancher
-      ↓ LLM vérifie conformité + calcule montants
-      ↓ Agentic loop: Si doute → cherche jurisprudence similaire
-      ↓ Reponse avec citations exactes (article X, date)
+```text
+identity + ACL
+→ filtre date/juridiction
+→ retrieval lexical + sémantique
+→ reranking éventuel
+→ réponse avec citations exactes
+→ validation humaine avant décision/paie
 ```
 
-### Code Example (Agentic + Vérification)
+Le RAG peut retrouver et synthétiser des sources ; il ne doit pas inventer un calcul de paie ou une conclusion juridique non vérifiée.
 
-```python
-from langchain.agents import AgentType, initialize_agent
-from langchain.tools import Tool
-from langchain.vectorstores import Qdrant
-from langchain_openai import ChatOpenAI
-import json
+### Evals
 
-# Base réglementaire indexée
-documents_metadata = {
-    "type": ["décret", "circulaire", "décision"],
-    "date_validité_min": "2024-01-01",
-    "jurisdiction": "fonction_publique_d_état"
-}
-
-vectorstore = Qdrant.from_documents(
-    docs=regulation_docs,  # 2000+ docs
-    embedding=embeddings,
-    path="./regulation_db",
-    collection_name="legislation_fp"
-)
-
-# Tools pour l'agent
-tools = [
-    Tool(
-        name="SearchRegulation",
-        func=lambda q: vectorstore.similarity_search(q, k=5),
-        description="Recherche dans décrets, circulaires, décisions"
-    ),
-    Tool(
-        name="CheckJurisprudence",
-        func=lambda q: search_case_law(q),
-        description="Vérifie jurisprudence (CJUE, tribunal admin, etc)"
-    ),
-    Tool(
-        name="VerifyCompliance",
-        func=check_compliance_rules,
-        description="Vérifie conformité avant calcul"
-    ),
-    Tool(
-        name="CalculateSalary",
-        func=compute_salary_rag_verified,
-        description="Calcule paie avec sources citées"
-    )
-]
-
-# Agent RH autonome
-agent = initialize_agent(
-    tools,
-    llm=ChatOpenAI(model="gpt-4", temperature=0),  # Stricte, pas de créativité
-    agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION,
-    verbose=True,
-    max_iterations=5  # Limite recherches itératives
-)
-
-# Utilisation
-agent_input = {
-    "input": """
-    Agent: Marc Dupont
-    Action: Avancement Y5 → Y6, échelon 8 → 1
-    Ancienneté: 3 ans Y5
-    Prime ministérielle appliquée: Oui
-    Situation: Surchef justifié?
-    
-    Calcule la paie avec vérification conformité OBLIGATOIRE.
-    """
-}
-
-result = agent.run(agent_input)
-print(result)
-# Output:
-# ✅ CONFORME
-# Décret 2023-XX article 12: Avancement Y6 autorisé après 3 ans
-# Circulaire DGAFP 2023-YY: Prime ministérielle applicable
-# Jurisprudence: CJUE C-456/2023 confirme calcul
-# SALAIRE: €3,245.67 (dont +€180 prime)
-# Sources citées: [Décret, Circulaire, Avis CJUE]
-```
-
-### KPIs Before/After
-
-| Métrique | Before | After | Delta |
-|----------|--------|-------|-------|
-| **Temps calcul paie/agent** | 30 min | 4 min | ↓ 86% |
-| **Erreurs paie detectées** | 8/100 | <1/100 | ↓ 87% |
-| **Audit conformité** | 2 semaines | 2 jours | ↓ 93% |
-| **Réclamations CNIL** | 5/mois | ~0.5/mois | ↓ 90% |
-| **Formation RH requise/règle** | 3h par agent | 0.5h | ↓ 83% |
-| **Contentieux/erreur** | $50K/an | $3K/an | ↓ 94% |
-| **Satisfaction RH** | 4/10 | 8.5/10 | ↑ +112% |
-
-### Défis & Solutions
-
-| Défi | Impact | Solution RAG |
-|------|--------|-------------|
-| **Base réglementaire massive** | Temps recherche | Métadonnées (type, date_validité) → filtrer avant recherche |
-| **Règles qui changent** | Obsolescence | Versioning docs + date_entrée_vigueur + alertes |
-| **Calculs complexes** | Erreurs côûteuses | Agentic loop vérify → cherche jurisprudence si doute |
-| **Citation obligatoire** | Audit/CNIL | Chaque réponse = sources exactes (article, décret, date) |
-| **Surplancher** | Cas rare/complexe | RAG trouve jurisprudence similaire + CJUE decisions |
+- article applicable récupéré ;
+- texte expiré non récupéré ;
+- citation exacte ;
+- absence de fuite entre populations/tenants ;
+- réponse « insuffisante » lorsque les sources ne tranchent pas.
 
 ---
 
-## 2. Support Client / Help Desk 📞
+## 2. Support client
 
-### Problème Business
+### Besoin
 
-- 1000 tickets par jour
-- Temps de réponse : 2 heures (agent cherche FAQ manuellement)
-- 40% des tickets = redondants (même question)
-- Satisfaction client : 6.2/10
+Répondre à partir d'une knowledge base produit avec versions et procédures.
 
-### Solution RAG
+### Architecture de départ
 
-**Naive RAG** indexant 5000 FAQ documents + knowledge base produits.
-
-### Architecture Simple
-
-```
-FAQ Database (5K docs)
-      ↓ Chunking (256 tokens)
-      ↓ ChromaDB vectorstore
-      ↓ Query: "Réinitialiser mot de passe?"
-      ↓ Top-3 FAQs trovées
-      ↓ ChatGPT formate réponse
-      ↓ Agent envoie au ticket
+```text
+question
+→ filtre produit/version/langue
+→ hybrid retrieval
+→ top passages
+→ réponse sourcée
 ```
 
-### Code Example
+### À mesurer
 
-```python
-from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
-from langchain.vectorstores import Chroma
+- taux de bonne source en top-k ;
+- taux de résolution avec réponse correcte ;
+- escalade vers humain ;
+- latence ;
+- fraîcheur des articles.
 
-# Load FAQ
-faq_docs = load_faqs_from_database()  # 5K FAQs
-
-# Setup RAG
-vectorstore = Chroma.from_documents(faq_docs, embeddings)
-qa_chain = RetrievalQA.from_chain_type(
-    llm=ChatOpenAI(model="gpt-3.5-turbo", temperature=0),
-    retriever=vectorstore.as_retriever(search_kwargs={"k": 3}),
-    return_source_documents=True
-)
-
-# Agent workflow
-ticket_text = "Customer: How to reset password?"
-response = qa_chain({"query": ticket_text})
-agent_sends = f"Agent Response: {response['result']}"
-```
-
-### KPIs Before/After
-
-| Métrique | Before | After | Delta |
-|----------|--------|-------|-------|
-| **Response Time** | 2h | 35 min | ↓ 82% |
-| **Ticket Backlog** | 200+ | <30 | ↓ 85% |
-| **FAQ Tickets %** | 40% | 5% | ↓ 87% |
-| **Agent Satisfaction** | 5/10 | 8/10 | ↑ +60% |
-| **Customer CSAT** | 6.2 | 7.8 | ↑ +25% |
-| **Cost/Ticket** | $15 | $3.50 | ↓ 77% |
+Ne mesurez pas uniquement la satisfaction générée par le style de réponse : une réponse fluide mais basée sur la mauvaise version produit est un échec.
 
 ---
 
-## 3. Analyse Juridique & Conformité ⚖️
+## 3. Documentation technique / développeurs
 
-### Problème Business
+### Besoin
 
-- 10,000 contrats en PDF
-- Recherche clause précise = 4 heures (avocats spécialisés)
-- Erreurs = coûteuses (clauses manquées)
-- Audit conformité = 2 semaines
+Combiner guides, API docs, ADR, code et tickets.
 
-### Solution RAG
+Le lexical est important pour :
 
-**Advanced RAG** avec semantic chunking, metadata filtering, Cohere reranking.
+- noms de classes ;
+- erreurs ;
+- symboles ;
+- versions.
 
-### Architecture Avancée
+Le sémantique aide pour les questions conceptuelles.
 
-```
-PDF Contrats (10K)
-      ↓ Extraction structurée (LlamaParse)
-      ↓ Chunking sémantique par clause
-      ↓ Add metadata: type_clause, jurisdiction, date
-      ↓ Embedding: textembedding-3-large (3072D)
-      ↓ Qdrant vectorstore (advanced filtering)
-      ↓
-Query: "Délai de paiement ?"
-      ↓ Multi-query expansion (3 variations)
-      ↓ Search x3 → Top-30 candidates
-      ↓ Cohere rerank → Top-5
-      ↓ GPT-4 fact-check + cite articles
-      ↓ Verified response with exact references
-```
+Un agentic retrieval peut être utile pour rechercher successivement : documentation → code → issue. Mais un moteur multi-source ne doit pas rendre les provenance illisibles.
 
-### Code Example (Advanced)
+### Evals
 
-```python
-from qdrant_client import QdrantClient
-from cohere import Client as CohereClient
-
-def advanced_legal_rag(query: str):
-    # 1. Multi-query expansion
-    expanded = [
-        "Délai paiement ?",
-        "Payment term clause",
-        "Conditions crédit?"
-    ]
-    
-    # 2. Search all variants
-    candidates = []
-    for q in expanded:
-        results = qdrant.search(
-            collection_name="contracts",
-            query_vector=embed_model.encode(q),
-            limit=30,
-            query_filter=Filter(must=[HasMetadata("jurisdiction", "FR")])
-        )
-        candidates.extend(results)
-    
-    # 3. Rerank with Cohere
-    cohere = CohereClient(api_key="YOUR_KEY")
-    reranked = cohere.rerank(
-        model="rerank-english-v3.0",
-        query=query,
-        documents=[c.payload['text'] for c in candidates],
-        top_n=5
-    )
-    
-    # 4. LLM + fact-check
-    top_5 = [candidates[r.index] for r in reranked.results]
-    
-    response = llm(f"""
-    Based ONLY on these clauses: {query}
-    
-    Clauses: {format_clauses(top_5)}
-    
-    Cite exact article numbers.
-    """, model="gpt-4")
-    
-    return response
-```
-
-### KPIs
-
-| Métrique | Before | After | Delta |
-|----------|--------|-------|-------|
-| **Search Time** | 4h | 5 min | ↓ 98% |
-| **Accuracy** | 92% | 99.5% | ↑ +7.5% |
-| **Compliance Errors** | 3/year | 0/year | ✅ Zéro |
+- API réellement présente dans la version utilisée ;
+- fichier/symbole correct ;
+- citation de la documentation officielle ;
+- code proposé compatible avec le build du projet.
 
 ---
 
-## 4. R&D / Recherche Scientifique 🔬
+## 4. Juridique / conformité
 
-### Problème
+### Besoin
 
-- 100,000 papers sur arXiv
-- Chercheur passe 5h avant de coder
-- Duplication : découvrir tard prior work
+Recherche et synthèse de documents avec provenance stricte.
 
-### Solution
+### Contraintes
 
-**Agentic RAG** with multi-source tools (Papers + Patents + Repos).
+- corpus autorisé ;
+- version/temporalité ;
+- confidentialité ;
+- juridiction ;
+- conservation des citations ;
+- distinction entre texte source et analyse.
 
-### Exemple d'Agent
+Le système doit permettre à un juriste de retrouver facilement le passage original. Évitez de présenter une synthèse générée comme avis juridique définitif.
 
-```python
-from langchain.agents import initialize_agent, Tool, AgentType
+---
 
-def search_arxiv(query: str) -> str:
-    # Search arXiv papers
-    pass
+## 5. Santé
 
-tools = [
-    Tool(
-        name="Search_ArXiv_Papers",
-        func=search_arxiv,
-        description="Search SOTA research papers"
-    ),
-]
+### Besoin
 
-agent = initialize_agent(
-    tools,
-    ChatOpenAI(model="gpt-4"),
-    agent=AgentType.OPENAI_FUNCTIONS
-)
+Retrouver procédures, littérature ou documentation clinique autorisée.
 
-response = agent.run("""
-Find 5 techniques for neural network compression.
-For each: methodology, metrics, use cases.
-Focus on 2024-2025 papers.
-""")
+### Contraintes renforcées
+
+- données de santé ;
+- contrôle d'accès ;
+- source et date ;
+- validation clinique ;
+- traçabilité ;
+- politique de rétention.
+
+Le RAG peut soutenir la recherche d'information, mais les décisions cliniques requièrent des contrôles et responsabilités adaptés au contexte réglementaire.
+
+---
+
+## 6. Finance
+
+### Besoin
+
+Questions sur politiques internes, produits, recherche ou données autorisées.
+
+### Risques
+
+- données sensibles ;
+- temporalité des prix/règles ;
+- confondre information historique et actuelle ;
+- actions transactionnelles déclenchées par un agent.
+
+Séparez clairement :
+
+```text
+retrieval lecture
+≠ analyse
+≠ exécution d'une transaction
 ```
 
-### Results
-
-- ✅ 5h recherche → 15 min
-- ✅ 50+ sources synthétisées
-- ✅ Prior work dépistée automatiquement
+Une capacité d'écriture vers un système financier doit être beaucoup plus restreinte qu'un outil de recherche.
 
 ---
 
-## 5. Santé / Protocoles Cliniques 🏥
+## 7. E-commerce
 
-### Requirement: ZÉRO ERREURS
+### Besoin
 
-Médecine = zéro tolérance à hallucinations.
+Assistant produit, support, politiques de livraison/retour.
 
-### Solution
+Le corpus mélange souvent :
 
-Hybrid search + Fact-Check GATE + Audit trail.
+- données structurées produit ;
+- docs marketing ;
+- inventaire/prix dynamiques ;
+- politiques.
 
-```python
-def medical_rag_with_review(condition: str):
-    """RAG for clinical protocols — DOCTOR REVIEW REQUIRED"""
-    
-    # Retrieve
-    docs = vectorstore.similarity_search(condition, k=5)
-    
-    # Generate
-    response = llm(f"Protocol for {condition}: {docs}")
-    
-    # GATE: Medical professional MUST approve
-    print("⚠️  DOCTOR REVIEW REQUIRED:")
-    print(f"Recommended: {response}")
-    
-    approval = input("Approve? (yes/no): ")
-    
-    if approval != "yes":
-        log_rejection(condition, response)
-        return None
-    
-    # Audit trail
-    log_audit(user=get_user(), protocol=response, approved=True)
-    return response
+Utilisez une API/DB pour prix et stock actuels plutôt qu'un index documentaire potentiellement obsolète. Le RAG est mieux adapté aux descriptions et politiques.
+
+---
+
+## 8. Sécurité / SOC
+
+### Besoin
+
+Corréler runbooks, incidents, documentation et données d'observabilité.
+
+Agentic retrieval possible :
+
+```text
+alerte
+→ runbook
+→ logs/metrics
+→ incidents similaires
+→ hypothèses
+→ recommandation
 ```
 
-### Key Features
-
-- ✅ Human review gate
-- ✅ Source documentation
-- ✅ HIPAA compliance
-- ✅ Zero hallucinations
+Gardez les actions de remédiation dangereuses sous validation humaine ou politique explicite. Une prompt injection dans un ticket ou log externe ne doit pas pouvoir déclencher une commande privilégiée.
 
 ---
 
-## 6. Commerce / E-Commerce 🛍️
+## Concevoir à partir des contraintes
 
-### Multimodal RAG (Text + Images)
+| Secteur | Métadonnées souvent critiques |
+|---|---|
+| RH / légal | date d'effet, juridiction, population |
+| Support | produit, version, langue |
+| Technique | repo, version, symbole, langage |
+| Santé | source, date, population, confidentialité |
+| Finance | date, produit, entité, autorisation |
+| E-commerce | SKU, locale, disponibilité |
+| SOC | service, environnement, horodatage, sévérité |
 
-```python
-from sentence_transformers import SentenceTransformer
+Le schéma de metadata est souvent aussi important que le modèle d'embeddings.
 
-model = SentenceTransformer('clip-ViT-L-14')
+---
 
-for product in products:
-    text_emb = model.encode(product['description'])
-    image_emb = model.encode(Image.open(product['image']))
-    
-    combined = (text_emb + image_emb) / 2
-    
-    vectorstore.add(id=product['id'], vector=combined)
+## Claude Code pour prototyper un cas métier
+
+```text
+À partir de ce besoin métier :
+1. liste les sources de données ;
+2. classe-les par sensibilité et fraîcheur ;
+3. définis les métadonnées nécessaires ;
+4. propose 20 cas d'eval réalistes ;
+5. identifie les actions qui doivent rester humaines ;
+6. seulement ensuite propose une architecture RAG minimale.
 ```
 
-### Results
-
-- ✅ Unified descriptions
-- ✅ +15% conversion rate
-- ✅ -20% returns
-
 ---
 
-## 7. HR / Politiques Internes 👥
+## Sources
 
-### Simple Naive RAG
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
+- [Anthropic — Claude Code sandboxing](https://www.anthropic.com/engineering/claude-code-sandboxing) — consulté le 2026-09-28
 
-```python
-handbook = open("employee_handbook.md").read()
-sections = handbook.split("## ")
+## Prochaine étape
 
-vectorstore.add(
-    ids=[f"sec_{i}" for i in range(len(sections))],
-    documents=sections
-)
-
-# Chatbot
-while True:
-    q = input("HR Question: ")
-    results = vectorstore.query(q, top_k=2)
-    print(f"Answer: {results[0]}")
-```
-
-### Results
-
-- ✅ -50% HR email volume
-- ✅ Onboarding 2 weeks → 3 days
-- Free
-
----
-
-## Tableau Résumé
-
-| Secteur | Architecture | Vectorstore | LLM | Reranking | Coût |
-|---------|---|---|---|---|---|
-| **Fonction Publique** | Agentic | Qdrant | GPT-4 | ✅ Cohere | High |
-| **Support** | Naive | ChromaDB | 3.5 | ❌ | Low |
-| **Juridique** | Advanced | Qdrant | GPT-4 | ✅ Cohere | High |
-| **R&D** | Agentic | FAISS | GPT-4 | ❌ | Medium |
-| **Santé** | Hybrid+Gate | Postgres | GPT-4 | ❌ | High |
-| **Commerce** | Multimodal | Pinecone | 3.5 | ❌ | Medium |
-| **HR** | Naive | ChromaDB | 3.5 | ❌ | Low |
-
-### Sources
-
-- **Zendesk Customer Service Benchmarks 2024**: Support AI ROI
-- **Gartner Legal AI Report**: Contract analysis trends
-- **FDA Guidance on AI in Healthcare**: Clinical protocols
-- **McKinsey E-Commerce Study**: Conversion rate optimization
-- **HR Tech Magazine**: Employee handbook digitalization
-
----
-
-## Prochaine Étape
-
-Vos cas d'usage identifiés ? Passez à l'optimisation :
-
-### 🚀 [Optimisation Avancée](optimisation-avancee.md)
-
-Après MVP : coûts, latence, qualité, monitoring.
-
-- **RAGAS evaluation** : évaluer précision RAG automatiquement
-- **Caching** : réduire appels LLM (-60% coûts)
-- **Token optimization** : réduire taille contexte
-- **Security/Compliance** : audit trail, données sensibles
-- **Production checklist** : 7 points validation avant deploy
+Poursuivez avec **[Optimisation Avancée](optimisation-avancee.md)**, la page suivante dans le menu.

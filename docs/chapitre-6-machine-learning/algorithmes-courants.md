@@ -48,11 +48,10 @@ print(f"Prédiction : {prediction[0]:.1f}")
 | **Univariée** | 1 feature → 1 output | Relation simple |
 | **Multiple (MLR)** | N features → 1 output | Plusieurs facteurs influencent le résultat |
 | **Polynomiale** | Relation non-linéaire | Courbe plutôt que droite |
-| **Logistique** | Classification binaire (0/1) | Prédire Oui/Non, Spam/Ham |
 
 ### Descente de Gradient
 
-Mécanisme fondamental d'optimisation utilisé par la plupart des algorithmes ML : il ajuste les poids du modèle pas à pas pour minimiser l'erreur.
+Mécanisme d'optimisation utilisé notamment par les réseaux de neurones et de nombreux modèles différentiables : il ajuste les poids du modèle pas à pas pour minimiser l'erreur.
 
 !!! info "Analogie"
     Imaginez-vous dans un brouillard sur une montagne. Pour descendre dans la vallée (minimiser l'erreur), vous faites de petits pas dans la direction qui descend le plus. C'est la descente de gradient.
@@ -63,15 +62,21 @@ Mécanisme fondamental d'optimisation utilisé par la plupart des algorithmes ML
 
 Les algorithmes de classification prédisent une **catégorie**.
 
+La **régression logistique** est un classifieur malgré son nom : elle modélise des probabilités de classe. Les arbres, forêts et KNN ne s'entraînent pas avec la même descente de gradient qu'un réseau. Les snippets de classification ci-dessous réutilisent le split Iris créé dans le premier exemple ; ils sont distincts de la démonstration de régression précédente.
+
 ### Arbre de Décision (Decision Tree)
 
 Divise les données selon des règles logiques successives, comme un organigramme.
 
 ```python
+from sklearn.datasets import load_iris
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X, y = load_iris(return_X_y=True)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y,
+)
 
 clf = DecisionTreeClassifier(max_depth=5)
 clf.fit(X_train, y_train)
@@ -90,15 +95,15 @@ Ensemble d'arbres de décision entraînés sur des sous-échantillons différent
 ```python
 from sklearn.ensemble import RandomForestClassifier
 
-# 100 arbres — plus robuste qu'un seul arbre
+# 100 arbres : valeur illustrative, à comparer sur la validation
 clf = RandomForestClassifier(n_estimators=100, random_state=42)
 clf.fit(X_train, y_train)
 ```
 
 !!! success "Bonne pratique"
-    Random Forest est souvent un **excellent point de départ** : robuste, peu sensible au surapprentissage, peu de réglages nécessaires.
+    Une forêt est une baseline tabulaire utile, mais peut aussi surapprendre. Comparez profondeur, taille des feuilles, métriques de validation et coût d'inférence.
 
-### Boosting : Bagging, Gradient Boosting, XGBoost
+### Méthodes ensemblistes : bagging et boosting
 
 | Technique | Principe | Implémentation |
 |-----------|----------|----------------|
@@ -111,9 +116,11 @@ clf.fit(X_train, y_train)
 Trouve la frontière (hyperplan) qui sépare au mieux les classes avec la marge maximale.
 
 ```python
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
-svm = SVC(kernel='rbf', C=1.0)
+svm = make_pipeline(StandardScaler(), SVC(kernel='rbf', C=1.0))
 svm.fit(X_train, y_train)
 ```
 
@@ -125,9 +132,11 @@ svm.fit(X_train, y_train)
 Classe un point en regardant les **K exemples les plus proches** dans l'espace de features.
 
 ```python
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 
-knn = KNeighborsClassifier(n_neighbors=5)
+knn = make_pipeline(StandardScaler(), KNeighborsClassifier(n_neighbors=5))
 knn.fit(X_train, y_train)
 ```
 
@@ -139,11 +148,12 @@ Basé sur le **théorème de Bayes** — très efficace pour la classification d
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 
-vectorizer = CountVectorizer()
-X_vec = vectorizer.fit_transform(textes)
+# Fournir textes_train, textes_test et labels_train issus d'un split préalable.
+from sklearn.pipeline import make_pipeline
 
-nb = MultinomialNB()
-nb.fit(X_vec, labels)
+nb = make_pipeline(CountVectorizer(), MultinomialNB())
+nb.fit(textes_train, labels_train)
+predictions = nb.predict(textes_test)
 ```
 
 !!! example "Cas d'usage : analyse de sentiment"
@@ -151,7 +161,9 @@ nb.fit(X_vec, labels)
 
 ---
 
-## Algorithmes Non Supervisés — Clustering
+## Algorithmes non supervisés — Clustering
+
+Les exemples suivants construisent leur propre jeu de données 2D. Un cluster est une structure statistique ; il ne prouve pas une catégorie métier.
 
 ### K-Means (K-Moyennes)
 
@@ -159,9 +171,13 @@ Divise les données en **K groupes** (clusters) dont on choisit le nombre à l'a
 
 ```python
 from sklearn.cluster import KMeans
+from sklearn.datasets import make_blobs
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-kmeans = KMeans(n_clusters=3, random_state=42)
+X_raw, _ = make_blobs(n_samples=300, centers=3, random_state=42)
+X = StandardScaler().fit_transform(X_raw)
+kmeans = KMeans(n_clusters=3, n_init=10, random_state=42)
 kmeans.fit(X)
 
 labels = kmeans.labels_
@@ -173,7 +189,7 @@ plt.show()
 ```
 
 !!! info "Cas concret : abricots et cerises"
-    Si vous avez des données de fruits (taille, couleur, poids) sans étiquettes, K-Means va automatiquement regrouper les abricots ensemble et les cerises ensemble — sans jamais avoir vu their labels!
+    Si vous avez des données de fruits (taille, couleur, poids) sans étiquettes, K-Means peut faire émerger des groupes selon les features et leur échelle. Ces groupes ne correspondent pas nécessairement aux espèces ; vérifiez leur interprétation au lieu de supposer qu'ils sont corrects.
 
 ### DBSCAN
 
@@ -194,14 +210,20 @@ Modèle probabiliste qui suppose que les données sont générées par plusieurs
 ```python
 from sklearn.mixture import GaussianMixture
 
-gmm = GaussianMixture(n_components=3)
+gmm = GaussianMixture(n_components=3, random_state=42)
 gmm.fit(X)
 probas = gmm.predict_proba(X)  # Probabilité d'appartenir à chaque cluster
 ```
 
 ---
 
+Les distances de KNN, SVM RBF, K-Means et DBSCAN dépendent de l’échelle des variables. Le scaler et le vocabulaire doivent être appris uniquement sur le train dans une évaluation supervisée, y compris à chaque fold de cross-validation.
+
+[scikit-learn — preprocessing et fuites de données](https://scikit-learn.org/stable/common_pitfalls.html), revérifié le 3 octobre 2026.
+
 ## Tableau Comparatif
+
+Les étoiles suivantes donnent une intuition qualitative, sans constituer un benchmark : les résultats dépendent du volume, des paramètres et de la représentation des données.
 
 | Algorithme | Type | Interprétabilité | Scalabilité | Quand l'utiliser |
 |-----------|------|-----------------|-------------|-----------------|
@@ -215,23 +237,18 @@ probas = gmm.predict_proba(X)  # Probabilité d'appartenir à chaque cluster
 | K-Means | Non supervisé - Clustering | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | Groupes sphériques, K connu |
 | DBSCAN | Non supervisé - Clustering | ⭐⭐⭐ | ⭐⭐⭐ | Groupes de forme quelconque, outliers |
 
-!!! tip "Utiliser Copilot pour choisir"
-    Décrivez votre problème à Copilot Chat : *"J'ai 10 000 observations avec 50 features numériques et je veux prédire une catégorie parmi 5. Quel algorithme sklearn recommandes-tu ?"* — Copilot suggère généralement Random Forest ou XGBoost avec justification.
-
 ---
 
 ## Sources
 
 - [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
-- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-algorithmes-courants).
 
 ## Prochaine étape
 
-**[Copilot pour le Workflow ML](copilot-workflow-ml.md)** : maintenant que vous connaissez les algorithmes, découvrez comment Copilot vous assiste à chaque phase du projet ML.
-
-Concepts clés couverts :
-
-- **Définir le problème** — Copilot identifie le type de problème (classification, régression) et recommande un algorithme adapté
-- **Préparer les données** — Suggestions pour gérer les NaN, encoder les catégories, normaliser avec sklearn
-- **Entraîner et évaluer** — Pipeline complet avec `cross_val_score`, matrice de confusion, rapport de classification
-- **Prompts par phase** — Bibliothèque de prompts Copilot prêts à l'emploi pour chaque étape du workflow
+Poursuivez avec **[Claude Code pour le ML](claude-workflow-ml.md)**, la page suivante dans le menu.

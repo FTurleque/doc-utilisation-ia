@@ -1,11 +1,8 @@
-# Claude Code & Migration depuis Copilot
+# Claude Code
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-vscode">VS Code</span> <span class="badge-cli">CLI</span>
 
-Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d'Anthropic, et migrer progressivement depuis GitHub Copilot — **sans perte de productivité**. De l'installation aux workflows avancés, en passant par une comparaison honnête des deux écosystèmes, vous y trouverez tout pour décider et agir.
-
-!!! info "Claude Code, c'est quoi ?"
-    Là où Copilot est né dans l'IDE (complétion fluide, intégration GitHub), Claude Code est né dans le **terminal** : un agent autonome piloté par une configuration **versionnée** (`.claude/`, `CLAUDE.md`). Les deux peuvent même cohabiter dans le même IDE — Copilot pour la complétion inline, Claude pour les tâches d'agent (refactoring, audit, génération de tests).
+Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d'Anthropic, et structurer vos usages dans le dépôt : installation, Claude Desktop, configuration du projet et workflows avancés.
 
 ---
 
@@ -19,6 +16,12 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
     Installer la CLI (macOS, Linux, Windows), l'extension VS Code et le plugin JetBrains. Authentification, mise à jour, dépannage.
 
+- :material-monitor: **[Claude Desktop](claude-desktop.md)**
+
+    <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span>
+
+    Application officielle macOS, Windows et Linux bêta : Chat, Claude Code, travail local, extensions de bureau, deep links `claude://` et articulation avec CLI/IDE.
+
 - :material-folder-cog: **[Architecture `.claude/`](architecture-claude.md)**
 
     <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
@@ -29,7 +32,13 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
     <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-    Haiku, Sonnet ou Opus : grille de décision par tâche, changement de modèle et impact sur le coût.
+    Haiku, Sonnet, Opus ou Fable : grille de décision par tâche, changement de modèle et impact sur l'usage.
+
+- :material-cash-multiple: **[Coûts & quotas](couts-quotas.md)**
+
+    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
+
+    Relier le modèle choisi aux limites d'usage, usage credits, abonnements, API/providers et leviers d'économie.
 
 - :material-message-processing: **[Prompt Engineering avec Claude](prompt-engineering-claude.md)**
 
@@ -77,31 +86,11 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
     <span class="badge-expert">Expert</span>
 
-    Packager et partager une configuration `.claude/` cohérente entre tous vos dépôts.
+    Versionner et partager des skills, agents, hooks et intégrations ; distinguer le plugin des instructions et settings propres à `.claude/`.
 
-- :material-compare: **[Comparaison Copilot vs Claude](comparaison-copilot-claude.md)**
+- :material-console: **[Cheat sheet — Commandes Claude Code](commandes-claude.md)**
 
-    <span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span>
-
-    Tableau détaillé, avantages/inconvénients, coûts, et grille de décision (rester / passer / hybride).
-
-- :material-cash-multiple: **[Coûts & quotas](couts-quotas.md)**
-
-    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
-
-    Facturation, comptage des tokens, mesure (`/cost`) et leviers d'économie. Comparaison budgétaire.
-
-- :material-swap-horizontal: **[Migration pas à pas](migration-pas-a-pas.md)**
-
-    <span class="badge-expert">Expert</span>
-
-    Convertir vos fichiers Copilot (`instructions`, `prompts`, `agents`, hooks) en configuration Claude.
-
-- :material-calendar-check: **[Checklist 30/60/90 jours](migration-30-60-90.md)**
-
-    <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
-
-    Un plan calendaire pour piloter la bascule en équipe avec des points de décision mesurables.
+    Commandes `/`, terminal, options CLI, alias et différences de disponibilité.
 
 </div>
 
@@ -111,9 +100,11 @@ Ce chapitre vous accompagne pour découvrir **Claude Code**, l'agent de codage d
 
 ```mermaid
 graph TD
-    I["Installation"] --> A["Architecture .claude/"]
+    I["Installation"] --> D["Claude Desktop"]
+    D --> A["Architecture .claude/"]
     A --> MOD["Modèles Claude"]
-    MOD --> P["Prompt Engineering"]
+    MOD --> CO["Coûts & quotas"]
+    CO --> P["Prompt Engineering"]
     P --> CK["Cookbook"]
     CK --> HK["Hooks avancés"]
     HK --> CI["Workflows CI"]
@@ -121,17 +112,15 @@ graph TD
     ORCH --> MCP["MCP"]
     MCP --> SEC["Sécurité"]
     SEC --> PL["Plugins d'équipe"]
-    PL --> C["Comparaison"]
-    C --> CO["Coûts & quotas"]
-    CO --> M["Migration pas à pas"]
-    M --> J["Checklist 30/60/90"]
 ```
 
 | Votre besoin | Commencez par |
 |--------------|---------------|
 | Installer et tester Claude vite | [Installation](installation.md) |
+| Utiliser Claude Code dans l'application de bureau | [Claude Desktop](claude-desktop.md) |
 | Structurer un dépôt pour Claude | [Architecture `.claude/`](architecture-claude.md) |
-| Choisir Haiku / Sonnet / Opus | [Modèles Claude](modeles-claude.md) |
+| Choisir Haiku / Sonnet / Opus / Fable | [Modèles Claude](modeles-claude.md) |
+| Comprendre l'impact du modèle sur budget et limites | [Coûts & quotas](couts-quotas.md) |
 | Écrire de meilleurs prompts | [Prompt Engineering avec Claude](prompt-engineering-claude.md) |
 | Copier des recettes prêtes | [Cookbook](cookbook.md) |
 | Automatiser avec des hooks | [Hooks avancés](hooks-avances.md) |
@@ -140,26 +129,14 @@ graph TD
 | Brancher GitHub / Jira / BDD | [MCP — sources externes](mcp-sources-externes.md) |
 | Sécuriser et gouverner l'agent | [Sécurité & gouvernance](securite-gouvernance.md) |
 | Partager la config entre dépôts | [Plugins d'équipe](plugins-equipe.md) |
-| Décider Copilot vs Claude | [Comparaison](comparaison-copilot-claude.md) |
-| Maîtriser le budget | [Coûts & quotas](couts-quotas.md) |
 | Migrer une équipe existante | [Migration pas à pas](migration-pas-a-pas.md) → [Checklist 30/60/90](migration-30-60-90.md) |
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-index).
+
 ## Prochaine étape
 
-**[Installer Claude Code — CLI, VS Code et JetBrains](installation.md)** : mettre en place l'outil sur votre poste avant d'explorer sa configuration et ses workflows.
-
-Concepts clés couverts :
-
-- **CLI native** — installeurs macOS, Linux et Windows, et authentification
-- **Extensions IDE** — VS Code et JetBrains qui réutilisent la même configuration
-- **Premiers pas** — commandes slash de base et mode non interactif
-- **Dépannage** — `claude doctor` et résolution des problèmes courants
-
-
-
-
-
-
-
+Poursuivez avec **[Installation (CLI, VS Code, JetBrains)](installation.md)**, la page suivante dans le menu.

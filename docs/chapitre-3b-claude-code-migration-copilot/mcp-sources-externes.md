@@ -4,9 +4,6 @@
 
 Le **Model Context Protocol (MCP)** est un standard ouvert qui permet à Claude Code de dialoguer avec des outils et sources de données externes : dépôts GitHub, tickets Jira, bases de données, systèmes de fichiers, API internes… Au lieu de copier-coller du contexte, Claude **interroge directement la source**.
 
-!!! info "MCP n'est pas propre à Claude"
-    MCP est un protocole ouvert (initié par Anthropic) que d'autres outils adoptent, dont GitHub Copilot. Migrer un serveur MCP d'un écosystème à l'autre est donc souvent direct.
-
 ---
 
 ## Pourquoi MCP ?
@@ -26,9 +23,6 @@ graph TD
 | Contexte vite obsolète | Toujours à jour à la demande |
 | Pas d'action sur les systèmes | Claude peut lire **et** agir (selon permissions) |
 | Intégrations ad hoc | Protocole standard réutilisable |
-
-!!! tip "Équivalent Copilot"
-    MCP est l'équivalent fonctionnel du « contexte externe » de Copilot, mais formalisé et portable : un même serveur MCP fonctionne avec Claude Code et d'autres clients compatibles.
 
 ---
 
@@ -162,18 +156,13 @@ graph TD
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-mcp-sources-externes).
+
 ## Prochaine étape
 
-**[Sécurité & gouvernance avec Claude Code](securite-gouvernance.md)** : encadrer Claude (et ses serveurs MCP) avec des politiques de sécurité, des hooks et une gestion stricte des permissions.
-
-Concepts clés couverts :
-
-- **Politique de sécurité à 3 niveaux** — utilisateur, projet, surcharges locales
-- **Hooks de garde** — bloquer les actions dangereuses avant exécution
-- **Permissions d'outils** — `allow` / `deny` dans `settings.json`
-- **Gestion des secrets** — variables d'environnement et exclusions
-
----
+Poursuivez avec **[Sécurité & gouvernance](securite-gouvernance.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -181,4 +170,3 @@ Concepts clés couverts :
 - [Model Context Protocol — Spécification](https://modelcontextprotocol.io) - consulté le 2026-06-20
 - [Model Context Protocol — Serveurs de référence](https://github.com/modelcontextprotocol/servers) - consulté le 2026-06-20
 - [Anthropic — Claude Code settings](https://docs.anthropic.com/en/docs/claude-code/settings) - consulté le 2026-06-20
-

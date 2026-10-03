@@ -1,283 +1,194 @@
-# Copilot dans les Notebooks Jupyter
+# Notebooks Jupyter avec Claude Code
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Les notebooks Jupyter sont l'environnement de prédilection pour l'exploration de données et le prototypage ML. GitHub Copilot s'y intègre nativement dans VS Code, offrant une assistance puissante cellule par cellule.
+Les notebooks Jupyter sont excellents pour l'exploration, la visualisation et la communication d'une analyse. Avec Claude Code, le workflow le plus robuste consiste à utiliser le notebook comme **interface d'exploration**, puis à déplacer la logique stable vers des modules Python testables et versionnables.
 
 ---
 
-## Configurer Copilot dans Jupyter
+## Ce que Claude Code peut apporter
 
-### VS Code + Extension Jupyter
+Claude peut vous aider à :
 
-<span class="badge-vscode">VS Code</span>
+- lire et modifier du code associé à un notebook ;
+- diagnostiquer une exception à partir de la sortie réelle ;
+- extraire une cellule stable vers `src/` ;
+- écrire des tests pour la logique extraite ;
+- générer des scripts reproductibles à partir d'une exploration ;
+- exécuter des commandes Python, tests et linters dans le dépôt ;
+- revoir un diff avant commit.
 
-1. Installer l'extension **Jupyter** depuis la marketplace VS Code
-2. Créer un fichier `.ipynb` ou ouvrir un notebook existant
-3. Copilot est automatiquement actif dans les cellules de code
-
-!!! tip "Activation de Copilot dans Jupyter"
-    Copilot est actif dès que l'extension Jupyter est installée. Les suggestions apparaissent en gris clair — appuyez sur ++tab++ pour accepter.
-
-### Raccourcis utiles en mode notebook
-
-| Action | Raccourci VS Code |
-|--------|------------------|
-| Accepter suggestion Copilot | ++tab++ |
-| Voir suggestions alternatives | ++alt+]++ / ++alt+[++ |
-| Ouvrir Copilot Chat | ++ctrl+alt+i++ |
-| Exécuter la cellule | ++shift+enter++ |
-| Nouvelle cellule en dessous | ++b++ (mode commande) |
+L'objectif n'est pas de transformer le notebook en gigantesque conversation, mais de **réduire progressivement la part non reproductible** de l'analyse.
 
 ---
 
-## Patterns d'Utilisation Copilot en Notebook
+## Structure recommandée
 
-### Pattern 1 — Cellule de commentaire → Code généré
+```text
+projet-data/
+├── notebooks/
+│   ├── 01-exploration.ipynb
+│   └── 02-modelisation.ipynb
+├── src/
+│   ├── data.py
+│   ├── features.py
+│   └── model.py
+├── tests/
+│   ├── test_features.py
+│   └── test_model.py
+├── scripts/
+│   └── profile_data.py
+└── CLAUDE.md
+```
 
-Écrivez une cellule markdown expliquant ce que vous voulez faire, puis créez une cellule code vide en dessous : Copilot génère le code correspondant.
+Le notebook **orchestre** l'expérience ; `src/` contient la logique que vous voulez pouvoir tester, réutiliser et relire facilement.
 
-**Cellule Markdown :**
+---
+
+## Pattern 1 — Explorer dans le notebook, stabiliser dans `src/`
+
+Après une exploration réussie :
+
+```text
+La cellule de feature engineering dans @notebooks/01-exploration.ipynb
+est maintenant stable.
+
+1. extrais sa logique pure dans `src/features.py` ;
+2. garde dans le notebook uniquement l'appel à la fonction ;
+3. ajoute des tests sur valeurs normales, NaN et catégories inconnues ;
+4. exécute les tests ;
+5. résume le diff.
+```
+
+Ce pattern évite que la logique métier n'existe uniquement dans une cellule difficile à tester.
+
+---
+
+## Pattern 2 — Reproduire une erreur réelle
+
+Évitez :
+
+```text
+Mon notebook ne marche pas, corrige-le.
+```
+
+Préférez :
+
+```text
+Cette cellule échoue avec l'erreur suivante :
+<coller le traceback>
+
+Trouve d'abord la cause racine.
+Ne modifie rien avant d'avoir identifié :
+- la cellule ou le module responsable ;
+- l'hypothèse violée ;
+- une reproduction minimale.
+Ensuite propose le correctif le plus petit et vérifie-le.
+```
+
+Si la logique existe déjà dans `src/`, demandez à Claude d'écrire un test de régression plutôt que de corriger uniquement la cellule.
+
+---
+
+## Pattern 3 — Transformer une exploration en script reproductible
+
+```text
+À partir de l'exploration actuelle, crée `scripts/profile_data.py`.
+Le script doit reproduire les statistiques importantes sans dépendre de l'état du kernel.
+Ajoute une option `--input` et retourne un code de sortie non nul si les colonnes obligatoires manquent.
+Exécute-le sur l'échantillon de test.
+```
+
+C'est un excellent moyen de supprimer les dépendances cachées liées à l'ordre d'exécution des cellules.
+
+---
+
+## État du kernel : source fréquente de faux résultats
+
+Un notebook peut sembler fonctionner uniquement parce qu'une variable a été créée plusieurs cellules plus tôt dans un ordre différent de celui affiché.
+
+Avant de considérer une analyse comme reproductible :
+
+1. redémarrez le kernel ;
+2. exécutez toutes les cellules dans l'ordre ;
+3. vérifiez qu'aucune cellule ne dépend d'un état implicite ;
+4. sauvegardez le protocole et les dépendances.
+
+Demandez à Claude de rechercher les variables utilisées avant définition et les dépendances d'état implicites.
+
+---
+
+## Notebooks volumineux
+
+Les `.ipynb` contiennent du JSON, des métadonnées et parfois des outputs volumineux. Cela peut créer :
+
+- des diffs très bruyants ;
+- une consommation de contexte inutile ;
+- des revues difficiles ;
+- des conflits Git pénibles.
+
+Pratiques recommandées :
+
+- ne versionner les outputs que s'ils ont une valeur documentaire ;
+- extraire les fonctions stables en `.py` ;
+- éviter d'embarquer des blobs ou images massives dans Git ;
+- utiliser un outil de nettoyage/diff notebook si votre équipe en a besoin ;
+- segmenter les notebooks très longs par objectif.
+
+Des tickets publics du dépôt Claude Code ont signalé des limites et problèmes d'ergonomie sur de gros notebooks et certains scénarios d'édition. Traitez donc le notebook comme une interface utile, pas comme le meilleur format pour tout le code du projet.
+
+---
+
+## Exemple de `CLAUDE.md` pour projet notebook
+
 ```markdown
-## Étape 3 : Préparer les Données
-
-On va :
-1. Supprimer les colonnes inutiles (Numéro, Nom)
-2. Remplir les NaN de Type2 par "None"  
-3. Encoder Type1 et Type2 en one-hot
-4. Normaliser les features numériques
-```
-
-**Cellule Code (Copilot génère) :**
-```python
-# Copilot suggère automatiquement ce code basé sur la cellule markdown précédente
-import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
-
-# 1. Suppression colonnes inutiles
-df = pokemon_df.drop(columns=['#', 'Nom'])
-
-# 2. Remplir NaN Type2
-df['Type2'] = df['Type2'].fillna('None')
-
-# 3. One-hot encoding
-df_encoded = pd.get_dummies(df, columns=['Type1', 'Type2'])
-
-# 4. Normalisation
-scaler = MinMaxScaler()
-cols_num = ['PV', 'Attaque', 'Defense', 'Sp. Atk', 'Sp. Def', 'Vitesse']
-df_encoded[cols_num] = scaler.fit_transform(df_encoded[cols_num])
-
-print(f"✅ DataFrame prêt : {df_encoded.shape}")
-df_encoded.head()
-```
-
-### Pattern 2 — Commentaire en tête de cellule
-
-```python
-# Afficher un graphique en barres du nombre de Pokémons par type primaire,
-# trié par ordre décroissant, avec palette de couleurs par type
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-type_counts = pokemon_df['Type1'].value_counts()
-
-plt.figure(figsize=(14, 6))
-bars = plt.bar(type_counts.index, type_counts.values,
-               color=plt.cm.tab20.colors[:len(type_counts)])
-plt.xlabel('Type Primaire')
-plt.ylabel('Nombre de Pokémons')
-plt.title('Distribution des Pokémons par Type Primaire')
-plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
-plt.show()
-```
-
-### Pattern 3 — Copilot Chat pour expliquer et générer
-
-Dans Jupyter, utilisez **Copilot Chat** (`Ctrl+Alt+I`) pour :
-
-```
-/explain  → expliquer le code d'une cellule
-/fix      → corriger une erreur Python
-/tests    → générer des assertions pour vérifier les résultats
-```
-
-**Exemple :**
-```
-Prompt Chat : "Cette cellule génère un modèle Random Forest. 
-              Génère-moi une cellule suivante qui affiche 
-              les features les plus importantes sous forme de tableau pandas"
+## Notebook workflow
+- Stable logic belongs in `src/`, not only in notebooks.
+- Run `pytest -q` after extracting notebook code.
+- Notebooks must execute top-to-bottom from a fresh kernel.
+- Do not commit confidential data or large generated outputs.
+- When changing an experiment, report the dataset split and seed.
 ```
 
 ---
 
-## Workflow Notebook ML Recommandé
+## Utiliser Claude dans VS Code ou JetBrains
 
-```
-📓 pokemon_analysis.ipynb
-│
-├── 📋 Cellule 1 — Imports et configuration
-├── 📊 Cellule 2 — Chargement données
-├── 🔍 Cellule 3 — Exploration (shape, dtypes, head)
-├── 📈 Cellule 4 — Statistiques descriptives
-├── 🖼️  Cellule 5 — Visualisations
-├── 🔧 Cellule 6 — Nettoyage données
-├── ⚙️  Cellule 7 — Feature engineering
-├── 🤖 Cellule 8 — Split train/test
-├── 🏋️  Cellule 9 — Entraînement modèle
-├── 📊 Cellule 10 — Évaluation métriques
-└── 💾 Cellule 11 — Sauvegarde modèle
-```
+Claude Code dispose d'intégrations IDE pour VS Code et JetBrains. Pour travailler sur un notebook :
 
-### Cellule 1 — Template d'imports
+- gardez le dépôt ouvert à sa racine ;
+- référencez explicitement le notebook ou le module Python concerné ;
+- faites exécuter les tests/commandes hors notebook quand c'est possible ;
+- relisez le diff Git après une modification de `.ipynb`.
 
-```python
-# Imports standard pour un notebook ML
-# Copilot complète automatiquement les imports manquants au fur et à mesure
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
-import joblib
-import warnings
-
-warnings.filterwarnings('ignore')
-pd.set_option('display.max_columns', None)
-pd.set_option('display.float_format', '{:.2f}'.format)
-
-%matplotlib inline
-plt.style.use('seaborn-v0_8-whitegrid')
-sns.set_palette('viridis')
-
-print("✅ Imports OK")
-```
+Pour les tâches longues, utilisez un subagent d'exploration afin que les sorties volumineuses ne saturent pas la conversation principale.
 
 ---
 
-## Variables Magiques Utiles
+## Checklist avant commit
 
-```python
-# Mesurer le temps d'exécution d'une cellule
-%%time
-
-model.fit(X_train, y_train)
-```
-
-```python
-# Afficher toutes les variables définies dans le notebook
-%who
-
-# Taille des objets en mémoire
-%whos
-```
-
-```python
-# Profiler les performances
-%prun model.predict(X_test)
-```
-
-!!! tip "Copilot connaît les magic commands"
-    Tapez `%` ou `%%` dans une cellule — Copilot suggère la commande magique adaptée au contexte.
-
----
-
-## Documentation Automatique des Cellules
-
-Copilot peut générer des résumés de cellules complexes :
-
-```python
-# Copilot Chat : "Documente cette cellule avec un commentaire markdown expliquant
-#                ce qu'elle fait, les inputs et les outputs"
-```
-
-Résultat généré par Copilot :
-```python
-"""
-Etape de feature engineering.
-
-Inputs:
-    - pokemon_df : DataFrame brut (800 lignes, 13 colonnes)
-    
-Transformations:
-    - Suppression des colonnes identifiantes (#, Nom)
-    - Encodage one-hot de Type1 et Type2 (18 types possibles)
-    - Normalisation MinMax des 6 stats numériques → [0, 1]
-    - Création feature 'Total' : somme des 6 stats
-    
-Outputs:
-    - df_ready : DataFrame prêt pour ML (800 lignes, ~45 colonnes)
-"""
-```
-
----
-
-## Intégration Jupyter dans les IDE
-
-=== "VS Code"
-
-    Copilot est intégré nativement dans les fichiers `.ipynb` :
-    
-    - Suggestions inline dans chaque cellule
-    - Copilot Chat accessible en sidebar
-    - Commande `/explain` pour expliquer une cellule sélectionnée
-    - **Édition multi-fichiers assistée** peut modifier plusieurs cellules à la fois
-    
-    ```json
-    // settings.json — améliorer Copilot dans Jupyter
-    {
-        "jupyter.askForKernelRestart": false,
-        "editor.inlineSuggest.enabled": true,
-        "github.copilot.editor.enableAutoCompletions": true
-    }
-    ```
-
-=== "IntelliJ IDEA"
-
-    <span class="badge-intellij">IntelliJ</span>
-    
-    Jupyter est supporté via le plugin **Python** (PyCharm) ou le plugin dédié Jupyter :
-    
-    - Copilot actif dans les cellules de code
-    - Utiliser ++alt+enter++ pour voir les suggestions alternatives
-    - Le panneau Copilot Chat (icône en sidebar) fonctionne aussi dans les notebooks
-
----
-
-## Bonnes Pratiques Notebook avec Copilot
-
-!!! success "À faire"
-    - Écrire un **titre Markdown avant chaque cellule complexe** — guide Copilot
-    - Utiliser des **noms de variables descriptifs** (`X_train_scaled` plutôt que `X`)
-    - Indiquer dans un commentaire le **format attendu** du résultat
-    - Exécuter les cellules **dans l'ordre** pour que Copilot ait tout le contexte
-
-!!! failure "À éviter"
-    - Cellules trop longues (>50 lignes) — découpez en étapes logiques
-    - Variables globales réutilisées sans contexte clair
-    - Sauter des cellules lors de l'exécution (contexte brisé pour Copilot)
-    - Mélanger exploration et production dans le même notebook
+- [ ] notebook exécutable depuis un kernel propre ;
+- [ ] logique réutilisable extraite dans `src/` ;
+- [ ] tests associés aux transformations critiques ;
+- [ ] outputs lourds supprimés s'ils n'apportent rien ;
+- [ ] aucun secret ou donnée confidentielle dans les cellules/output ;
+- [ ] diff `.ipynb` relu.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
-- [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code) — consulté le 2026-09-28
+- [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
+- [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Claude Code issue tracker — notebook file-size limitations](https://github.com/anthropics/claude-code/issues/16984) — consulté le 2026-09-28
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-notebooks-jupyter).
 
 ## Prochaine étape
 
-**[MLOps & Déploiement de Modèles avec Copilot](mlops-deploiement.md)** : passer du prototype en notebook à un modèle déployé et monitoré en production.
-
-Concepts clés couverts :
-
-- **MLflow** — Tracker les expériences, logger hyperparamètres/métriques/artefacts, comparer les runs dans l'interface web
-- **API REST avec FastAPI** — Exposer un modèle joblib comme endpoint `/predict` avec validation Pydantic
-- **Containerisation Docker** — Dockerfile optimisé pour une API ML, `docker-compose` pour l'orchestration locale
-- **Monitoring & Data Drift** — Détecter quand les données de production divergent du jeu d'entraînement avec Evidently
+Poursuivez avec **[MLOps & Déploiement](mlops-deploiement.md)**, la page suivante dans le menu.

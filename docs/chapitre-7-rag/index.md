@@ -1,219 +1,211 @@
 # RAG — Retrieval-Augmented Generation
 
-<span class="badge-beginner">Débutant</span>  <span class="badge-intermediate">Intermédiaire</span>  <span class="badge-expert">Expert</span>
+<span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Le **RAG** (*Retrieval-Augmented Generation*) est l'architecture qui permet à un LLM de répondre avec précision sur des données privées ou récentes qu'il n'a jamais vues lors de son entraînement. Au lieu d'espérer que le modèle connaît votre codebase, vos documents internes ou vos données métier, le RAG les indexe et injecte automatiquement les passages pertinents dans chaque prompt.
+Le **RAG** (*Retrieval-Augmented Generation*) consiste à récupérer des informations externes pertinentes puis à les fournir au modèle au moment de répondre. C'est une technique utile lorsque la réponse doit s'appuyer sur des documents privés, volumineux ou fréquemment mis à jour.
 
-Si vous utilisez GitHub Copilot, vous bénéficiez déjà d'une forme de RAG sans le savoir : Copilot indexe vos fichiers ouverts, votre historique de conversation et vos `.instructions.md` pour construire un contexte adapté à votre projet avant chaque suggestion.
+!!! important "RAG ≠ tout mécanisme de contexte"
+    Un IDE qui fournit des fichiers ouverts ou un agent qui lit un dépôt utilise du **contexte** et des outils de recherche, mais ce n'est pas automatiquement une architecture RAG au sens strict. Le RAG implique généralement une étape explicite de **retrieval** sur un corpus avant génération.
 
 ---
 
-## Roadmap Apprentissage RAG
+## Où Claude Code se place
+
+Claude Code peut participer à deux niveaux différents :
+
+1. **développer et tester** votre système RAG (ingestion, indexation, retrieval, évaluation, API) ;
+2. **consommer des sources externes** via MCP ou des outils pour charger du contexte juste à temps.
+
+Anthropic décrit justement cette évolution vers le **just-in-time context** : plutôt que d'injecter un maximum de données à l'avance, l'agent conserve des références légères puis charge les informations utiles au moment où il en a besoin.
+
+---
+
+## Roadmap d'apprentissage
 
 ```mermaid
 graph LR
-    A["📖<br/>Lire Concepts"] -->|"30 min"| B["⚙️<br/>Niveau 1<br/>Débutant<br/>30 min"]
-    B -->|"1-2h"| C["🎯<br/>Niveau 2<br/>Intermédiaire<br/>Advanced"]
-    C -->|"2-4h"| D["🚀<br/>Niveau 3<br/>Expert<br/>Production"]
-    D -->|"1-2j"| E["🏆<br/>Systems<br/>Design<br/>Multi-source"]
-    
-    style A fill:#e3f2fd
-    style B fill:#f1f8e9
-    style C fill:#fff3e0
-    style D fill:#fce4ec
-    style E fill:#f3e5f5
+    A["Concepts"] --> I["Ingestion\nDocling"]
+    I --> B["Niveau 1\nretrieval simple"]
+    B --> C["Niveau 2\nqualité retrieval"]
+    C --> D["Niveau 3\nproduction"]
+    D --> E["Agentic retrieval\n& multi-source"]
 ```
 
----
-
-## Ce que vous allez apprendre dans ce chapitre
-
-| Page | Niveau | Temps | Contenu |
-|------|--------|-------|---------|
-| **[Concepts & Types de RAG](concepts.md)** | Tous | 30 min | Qu'est-ce que RAG, 3 architectures, quand choisir laquelle, benchmarks réels |
-| **[Implémentation (1-3)](implementation.md)** | Tous | 5h total | Niveau 1 (30 min), Niveau 2 (Advanced), Niveau 3 (Enterprise) + Ressources |
-| **[Cas d'Usage par Secteur](cas-usage-secteurs.md)** | Intermédiaire | 1h | 6 secteurs réels (Support, Juridique, R&D, Santé, Commerce, HR) avec KPIs |
-| **[Optimisation Avancée](optimisation-avancee.md)** | Expert | 2h | Tuning, évaluation, monitoring, sécurité, troubleshooting |
-
----
-
-## Pourquoi le RAG existe
-
-Un LLM seul présente des limitations critiques pour un usage professionnel :
-
-| Problème | Conséquence | Solution RAG |
-|----------|-------------|--------------|
-| Connaissance figée à la date d'entraînement | Pas de réponse sur vos données récentes | Données injectées en temps réel |
-| Aucune connaissance de votre codebase | Suggestions génériques, hors contexte | Documents du projet indexés automatiquement |
-| Hallucinations sur données internes | Réponses inventées mais confiantes | Réponses ancrées dans vos documents réels |
-| Fine-tuning coûteux (temps + argent) | Inaccessible pour la plupart des équipes | RAG économique et sans ré-entraînement |
-| Pas de traçabilité des sources | Impossible de vérifier l'origine d'une réponse | Sources citables, liens vers les passages |
+| Page | Niveau | Contenu |
+|---|---|---|
+| [Concepts & architectures](concepts.md) | Tous | Retrieval, embeddings, chunking, reranking, agentic retrieval |
+| [Docling](docling.md) | Intermédiaire | Ingestion PDF/DOCX/PPTX/etc., OCR, structure, exports et chunks |
+| [Qdrant](qdrant.md) | Intermédiaire | Moteur vectoriel, payloads, filtres et hybrid search |
+| [Implémentation](implementation.md) | Tous | Progression du prototype à la production |
+| [Niveau 1](niveau-1.md) | Débutant | Pipeline minimal et observable |
+| [Niveau 2](niveau-2.md) | Intermédiaire | Retrieval hybride, reranking, qualité |
+| [Niveau 3](niveau-3.md) | Expert | Production, sécurité, monitoring |
+| [Cas d'usage par secteur](cas-usage-secteurs.md) | Intermédiaire | Exemples métier et contraintes |
+| [Optimisation avancée](optimisation-avancee.md) | Expert | Évaluation, tuning et diagnostic |
 
 ---
 
-## Comment fonctionne le RAG
+## Pipeline RAG minimal
 
 ```mermaid
 graph TD
-    Q["❓ Question\nutilisateur"] --> EMB["🔢 Vectorisation\nde la question"]
-
-    EMB --> VDB[("🗄️ Base Vectorielle\n(vos docs indexés)")]
-    VDB -->|"Récupère top-3<br/>(k=3 par défaut)"| CTX["📚 Top-3 Chunks<br/>les plus similaires<br/>sémantiquement"]
-
-    CTX --> AUGMENT["✨ Prompt augmenté\n= Question + Contexte"]
-    Q --> AUGMENT
-
-    AUGMENT --> LLM["🧠 LLM"]
-    LLM --> ANS["💬 Réponse précise\navec sources citées"]
+    DOCS["Documents"] --> ING["Ingestion / parsing\nex. Docling"]
+    ING --> CHUNK["Découpage"]
+    CHUNK --> IDX["Index / store\nex. Qdrant"]
+    Q["Question"] --> RET["Retrieval"]
+    IDX --> RET
+    RET --> CTX["Passages pertinents"]
+    Q --> AUG["Prompt / contexte augmenté"]
+    CTX --> AUG
+    AUG --> LLM["LLM"]
+    LLM --> ANS["Réponse + sources"]
 ```
 
-!!! info "Qu'est-ce que **top-k** ?"
-    - **k** = nombre entier qu'on choisit (1, 3, 5, 10, etc.)
-    - **top-k** = les **K meilleurs résultats**
-    - **Exemple**: k=3 retourne les 3 chunks les plus similaires à la question
+Le pipeline est simple à dessiner mais difficile à rendre fiable. Les erreurs peuvent venir de l'ingestion, du chunking, de l'indexation, du retrieval, du reranking, du prompt ou du modèle.
 
 ---
 
-## Mesure de Similarité — Comment ça Marche?
+## Ingestion documentaire : Docling
 
-C'est ultra simple: convertir texte → nombres (vecteurs) → comparer les nombres.
+Avant les embeddings et le vector store, il faut transformer les sources en un corpus exploitable.
 
-#### Étape 1: Vectorisation (Texte → Nombres)
+**[Docling](docling.md)** est un exemple d'outil spécialisé dans cette étape :
 
-```
-Question: "Comment redémarrer le service?"
-           ↓ Embedding model (all-MiniLM-L6-v2)
-Vecteur:   [0.12, -0.45, 0.88, 0.23, ..., 0.06]  ← 384 nombres
+- PDF avec structure de page, ordre de lecture, tableaux, formules et OCR ;
+- DOCX, PPTX, XLSX, HTML, EPUB, images, audio et autres formats ;
+- représentation structurée `DoclingDocument` ;
+- exports Markdown/JSON/texte et sortie de chunks ;
+- exécution locale, bibliothèque Python, service API et serveur MCP.
 
-Chunk #47: "Redémarrez le service avec systemctl restart myapp"
-           ↓ Même embedding model
-Vecteur:   [0.13, -0.44, 0.87, 0.25, ..., 0.07]  ← 384 nombres aussi
-
-Chunk #128: "Pour explorer Paris, visiter la tour Eiffel"
-           ↓ Même embedding model
-Vecteur:   [0.92, 0.11, -0.33, 0.81, ..., 0.44]  ← Complètement différent!
-```
-
-#### Étape 2: Mesure de Similitude (Comparer les Vecteurs)
-
-**Distance Cosinus** = Comment 2 vecteurs se ressemblent:
-
-```
-Formule simple: Se demander "Vers la même direction?"
-
-Question vecteur:  [0.12, -0.45, 0.88, ...]
-Chunk #47 vecteur: [0.13, -0.44, 0.87, ...]
-
-Résultat: De 0.0 à 1.0
-  1.0 = IDENTIQUE ✓ (même direction)
-  0.5 = SIMILAIRE (direction proche)
-  0.0 = RIEN EN COMMUN ✗ (directions opposées)
-```
-
-#### Exemple Réel:
-
-```
-QUESTION: "Redémarrer service?"
-
-CHUNK #47: "Redémarrez le service avec..."
-Similarité: 0.95 ✓✓✓ TRÈS PERTINENT!
-
-CHUNK #128: "Tour Eiffel à Paris..."
-Similarité: 0.12 ✗ PAS PERTINENT (complètement hors sujet)
-
-CHUNK #234: "Arrêter et relancer le processus..."
-Similarité: 0.88 ✓✓ PERTINENT!
-
-CLASSEMENT (top-3):
-  1. Chunk #47 (0.95)  ← TOP 1 🥇
-  2. Chunk #234 (0.88) ← TOP 2 🥈
-  3. Chunk #301 (0.82) ← TOP 3 🥉
-```
-
-!!! tip "Pourquoi distance cosinus?"
-    Elle capture le **sens** même si les mots changent:
-    - "Redémarrer service" vs "Relancer application" → SIMILAIRE (0.88)
-    - "Redémarrer" vs "Tour Eiffel" → DIFFÉRENT (0.12)
-    
-    C'est magique car le modèle a appris que "redémarrer" et "relancer" se ressemblent!
-
-Le RAG opère en **deux phases distinctes** :
-
-1. **Indexation** (une fois, puis mise à jour au fil des changements) : les documents sont découpés en chunks → chaque chunk est converti en vecteur (*embedding*) → les vecteurs sont stockés dans une base vectorielle.
-
-2. **Requête** (à chaque question) : la question est vectorisée → les chunks les plus proches sémantiquement sont récupérés → ils sont injectés dans le prompt avant d'appeler le LLM.
+Docling n'est pas obligatoire : choisissez un parseur selon vos formats et contraintes. Le point important est de **mesurer la qualité de l'ingestion avant de juger le retrieval**.
 
 ---
 
-## Prérequis & Stack Recommandée
+## Embeddings, similarité et moteur vectoriel
 
-### Langages & Frameworks
+Une approche courante consiste à représenter textes et requêtes sous forme de vecteurs puis à rechercher les passages proches.
 
-- **Python 3.8+** (tous les exemples sont en Python)
-- **LangChain** ou **LlamaIndex** (abstraction RAG)
-- **sentence-transformers** (embeddings gratuits) ou **OpenAI API** (embeddings payants)
+La similarité cosinus est fréquente, mais **un score élevé n'est pas une preuve de pertinence métier**. Un retrieval doit être évalué sur un jeu de questions représentatif.
 
-### Infrastructure
+**[Qdrant](qdrant.md)** fournit un exemple concret de moteur vectoriel adapté à ce rôle, avec filtres sur payload, recherche dense/sparse et requêtes hybrides. Il n'est pas obligatoire : choisissez le store qui correspond à vos contraintes et à vos evals.
 
-| Ressource | Niveau 1 | Niveau 2 | Niveau 3 |
-|-----------|----------|----------|----------|
-| **Embedding Model** | all-MiniLM-L6-v2 ($0) | all-mpnet-base-v2 ($0) | text-embedding-3-large ($0.13/M) |
-| **Vector DB** | ChromaDB (local) | Qdrant (cloud $18/mo) | Pinecone ($25/mo) + FAISS (self) |
-| **LLM** | gpt-3.5-turbo ($0.50/M) | gpt-4 ($15/M) | Claude 3 ($3-30/M) ou local (Ollama) |
-| **Re-ranker** | ❌ Non | Cohere Rerank ($0.10/q) | Cohere + custom scoring |
+Métriques utiles côté retrieval :
 
-### Budget Estimé (par mois, pour 10K requêtes)
-
-```
-Niveau 1: $5-10    (all-MiniLM + ChromaDB + GPT-3.5)
-Niveau 2: $50-200  (all-mpnet + Qdrant + GPT-4 + Cohere)
-Niveau 3: $500+    (text-embedding-3-large + Pinecone + Claude + monitoring)
-```
-
-!!! warning "Qu'est-ce qu'une **requête RAG**?"
-    Une **requête RAG** = une question posée par un utilisateur à ton système RAG.
-    
-    **C'est DIFFÉRENT des consumptions Copilot** :
-    
-    | Aspect | Requête RAG | Copilot Consumption |
-    |--------|-------------|-------------------|
-    | **Définition** | Une question utilisateur ("Redémarrer service?") | Suggestion de code / completion |
-    | **Coût par requête** | $0.005 - $1.00 | Dépend de la durée session + usage |
-    | **10K/mois** | ~333 questions/jour | Non applicable (metric différente) |
-    | **Exemple** | FAQ support: 10K questions/mois = normal | Développeur VS Code: X completions/jour |
-    
-    **Une requête RAG coûte PLUS qu'une simple API call** car elle inclut:
-    ```
-    1 Requête RAG = {
-      + Embeddings query (vectoriser la question) 
-      + Recherche dans le vector DB (peut être gratuit si local)
-      + Appel LLM (répondre avec contexte)
-      + Parfois: Re-ranking (Cohere)
-      + Parfois: Autres API calls (external services)
-    }
-    
-    Exemple coûts unitaires:
-      Embeddings query: $0.0000004 (text-embedding-3-large)
-      LLM (gpt-3.5): $0.0005 (output token)
-      Cohere Rerank: $0.10 (par requête)
-      Total/requête: ~$0.0005 - $0.10 dépend config
-    ```
-    
-    **10K requêtes/mois** = système avec:
-    
-    - FAQ support: 333 questions/jour (réaliste)
-    - Chatbot interne: 500 questions/jour
-    - Recherche documentaire: plusieurs milliers/jour
+- Recall@k ;
+- Precision@k ;
+- MRR / nDCG selon le problème ;
+- taux de réponse avec source correcte ;
+- couverture des documents critiques.
 
 ---
+
+## Ne pas figer les fournisseurs et tarifs
+
+Les anciennes versions de cette page associaient des niveaux à des modèles précis, des prix mensuels de vector DB et des tarifs de tokens. Ces informations vieillissent trop vite.
+
+Conservez plutôt une matrice de décision :
+
+| Composant | Questions à poser |
+|---|---|
+| Parsing / ingestion | formats, structure, OCR, tableaux, local/cloud, confidentialité |
+| Embeddings | langue, domaine, dimension, coût, hébergement, confidentialité |
+| Store | volume, filtres metadata, latence, sauvegarde, coût opérationnel |
+| Reranker | gain mesuré, latence ajoutée, coût par requête |
+| LLM | qualité sur votre eval, contexte, outils, coût réel du trafic |
+| Framework | abstraction utile ou complexité inutile ? |
+
+Les prix doivent être vérifiés sur les pages officielles des fournisseurs au moment d'une décision d'achat, pas recopiés ici comme constantes.
+
+---
+
+## Baseline avant architecture « avancée »
+
+Commencez par :
+
+1. un corpus propre et une ingestion vérifiée ;
+2. un chunking simple ;
+3. un retrieval observable ;
+4. des citations ;
+5. un petit jeu d'évaluation réel.
+
+N'ajoutez query expansion, reranking, hybrid search, graph retrieval ou orchestration agentique **que si les evals montrent un problème qu'ils résolvent**.
+
+Cette approche suit le principe Anthropic : privilégier des patterns simples et composables avant d'ajouter de la complexité agentique.
+
+---
+
+## Évaluer ingestion, retrieval et génération séparément
+
+Si la réponse est mauvaise, demandez d'abord :
+
+- le document a-t-il été correctement parsé ?
+- sa structure, ses tableaux ou son OCR sont-ils corrects ?
+- le bon document était-il indexé ?
+- a-t-il été chunké correctement ?
+- le bon passage était-il dans le top-k ?
+- le reranker l'a-t-il conservé ?
+- le modèle a-t-il utilisé la source ?
+
+Ne changez pas simultanément parseur, embeddings, chunk size, prompt et modèle : vous perdrez la capacité d'expliquer l'amélioration.
+
+---
+
+## Agentic retrieval et MCP
+
+Un agent peut décider **quand** chercher, **quelle source** interroger et **s'il faut rechercher à nouveau**. C'est différent d'un pipeline RAG fixe.
+
+Claude Code peut accéder à des systèmes externes via MCP. Pour un projet RAG, cela permet par exemple de connecter :
+
+- un service Docling pour traiter un document ;
+- une base documentaire ;
+- un moteur de recherche interne ;
+- une base SQL ;
+- un outil d'observabilité ;
+- un système de tickets.
+
+MCP fournit l'accès aux outils et données ; les **skills** peuvent documenter comment les utiliser correctement.
+
+---
+
+## Sécurité
+
+Le retrieval fait entrer du contenu externe dans le contexte du modèle. Considérez ce contenu comme **non fiable** :
+
+- contrôlez les droits d'accès avant ingestion et retrieval ;
+- ne faites pas remonter de document qu'un utilisateur n'a pas le droit de voir ;
+- conservez la provenance ;
+- séparez données et instructions ;
+- testez les prompt injections présentes dans les documents ;
+- limitez les outils d'écriture lorsque seule la lecture est nécessaire.
+
+---
+
+## Workflow Claude pour développer un RAG
+
+```text
+1. Cartographie le pipeline RAG actuel sans modifier le code.
+2. Identifie où sont ingestion, chunking, indexation, retrieval, reranking et génération.
+3. Trouve les evals existantes.
+4. Exécute la baseline et enregistre ses métriques.
+5. Propose UNE modification avec hypothèse mesurable.
+6. Implémente-la.
+7. Réexécute exactement les mêmes evals.
+8. Compare coût, latence et qualité avant/après.
+```
+
+Pour les analyses volumineuses, déléguez l'exploration à un subagent afin de garder la conversation principale concentrée sur la décision.
+
+---
+
+## Sources
+
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+- [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Docling — dépôt officiel](https://github.com/docling-project/docling) — consulté le 2026-10-01
+- [Qdrant — documentation](https://qdrant.tech/documentation/) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Concepts & Types de RAG](concepts.md)** : comprendre les trois grandes architectures avant de choisir et d'implémenter.
-
-Concepts clés couverts :
-
-- **Naive RAG** — le point de départ obligatoire : chunking, vectorisation, index, top-k
-- **Advanced RAG** — query expansion, re-ranking, chunking sémantique, HyDE pour améliorer la qualité
-- **Agentic RAG** — le LLM décide lui-même quand et comment interroger la base vectorielle
-- **Quelle architecture choisir** — arbre de décision selon le volume, la complexité et le budget infrastructure
+Poursuivez avec **[Concepts & Architectures](concepts.md)**, la page suivante dans le menu.

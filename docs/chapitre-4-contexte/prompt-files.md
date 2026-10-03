@@ -1,350 +1,121 @@
-# Prompt Files (.prompt.md)
+# Prompt Files (`.prompt.md`) — référence GitHub Copilot
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
-## Présentation
-Les fichiers `.prompt.md` sont des prompts réutilisables stockés dans votre projet. Ils permettent de **sauvegarder et partager** des prompts Copilot Chat complexes pour des tâches récurrentes, sans avoir à les réécrire à chaque fois.
+!!! info "Page Copilot conservée"
+    Les fichiers `.prompt.md` restent documentés ici pour **GitHub Copilot**. Ils sont actuellement proposés en preview dans VS Code, Visual Studio et JetBrains.
+
+    Pour le parcours Claude-first de ce dépôt, utilisez plutôt un **skill Claude** dans `.claude/skills/<nom>/SKILL.md` lorsqu'un workflow doit être versionné et réutilisé. Voir [Skills Claude](guide-skills.md).
 
 ---
 
-## Qu'est-ce qu'un fichier .prompt.md ?
+## À quoi sert un `.prompt.md` ?
 
-Un fichier `.prompt.md` est un fichier Markdown avec un frontmatter YAML qui définit un prompt standardisé. Une fois créé, vous pouvez l'invoquer depuis Copilot Chat via la commande `/` ou en le sélectionnant dans la liste des prompts.
+Un prompt file encapsule une tâche récurrente : revue de code, génération de tests, documentation, audit, refactoring, etc.
 
-**Emplacement :** `.github/prompts/`
+Emplacement de référence :
 
+```text
+.github/prompts/
+├── code-review.prompt.md
+├── generate-tests.prompt.md
+└── security-audit.prompt.md
 ```
-mon-projet/
-└── .github/
-    └── prompts/
-        ├── code-review.prompt.md         ← Revue de code
-        ├── generate-tests.prompt.md      ← Génération de tests
-        ├── generate-docs.prompt.md       ← Génération de documentation
-        ├── refactor.prompt.md            ← Refactoring
-        └── security-audit.prompt.md      ← Audit de sécurité
-```
+
+Dans Copilot Chat, les prompt files peuvent être invoqués via `/nom-du-prompt` et complétés avec du contexte supplémentaire.
 
 ---
 
-## Structure d'un fichier .prompt.md
+## Exemple minimal
 
 ```markdown
 ---
-description: Description courte du prompt (affichée dans le picker)
-mode: agent
-tools:
-  - codebase
-  - editFiles
----
-
-# Titre du Prompt
-
-Votre prompt ici, en langage naturel.
-
-Vous pouvez référencer des fichiers du projet :
-- `src/models/User.ts`
-
-Ou utiliser des variables de contexte :
-- Le fichier sélectionné : ${file}
-- La sélection courante : ${selection}
-```
-
----
-
-## Le frontmatter des prompt files
-
-```yaml
----
-description: Courte description (affichée dans le sélecteur de prompts)
-mode: agent                    # agent | edit | ask
-tools:                         # Outils disponibles pour ce prompt
-  - codebase                   # Accès au workspace
-  - editFiles                  # Modification de fichiers
-  - terminalLastCommand        # Accès à la dernière commande terminal
-disable-model-invocation: false  # true = désactive l'appel au modèle
----
-```
-
-### Tous les champs du frontmatter
-
-| Champ | Valeurs | Description |
-|-------|---------|-------------|
-| `description` | texte | Affiché dans le picker lors de l'invocation |
-| `mode` | `ask` \| `edit` \| `agent` | Mode d'exécution du prompt |
-| `tools` | liste | Outils accessibles pendant l'exécution |
-| `disable-model-invocation` | `true` \| `false` | Si `true`, le prompt n'appelle pas le modèle — utile pour des prompts de type "template" ou orchestration pure |
-
-!!! warning "`disable-model-invocation` n'existe pas dans les prompt files"
-    Ce champ **n'est pas pris en charge** dans les fichiers `.prompt.md` selon la [documentation officielle VS Code](https://code.visualstudio.com/docs/copilot/customization/prompt-files). Il existe uniquement dans les fichiers `.agent.md` et `SKILL.md`. Ne pas l'utiliser dans vos prompt files — il sera ignoré silencieusement.
-
-### Le champ `mode`
-
-| Mode | Description | Quand l'utiliser |
-|------|-------------|-----------------|
-| `ask` | Répond sans modifier de fichiers | Questions, explications, analyses |
-| `edit` | Modifie des fichiers existants | Refactoring, corrections, améliorations |
-| `agent` | Mode agent complet avec outils | Tâches complexes multi-fichiers |
-
-### Les `tools` disponibles
-
-| Tool | Description |
-|------|-------------|
-| `codebase` | Accès et recherche dans le workspace |
-| `editFiles` | Création et modification de fichiers |
-| `terminalLastCommand` | Accès à la sortie de la dernière commande |
-| `githubRepo` | Accès aux informations GitHub du repo |
-| `search` | Recherche web |
-
----
-
-## Exemples complets
-
-### Revue de code
-
-```markdown
----
-description: Revue de code complète selon les standards du projet
-mode: ask
+description: Revue de code focalisée sécurité et régressions
 tools:
   - codebase
 ---
 
-# Revue de Code
+Analyse le code fourni ou sélectionné.
 
-Effectue une revue de code approfondie du code sélectionné ou du fichier actuel.
-
-Analyse les points suivants et fournis un rapport structuré :
-
-## 1. Correctness
-- Y a-t-il des bugs évidents ou des cas límites non gérés ?
-- Les conditions d'erreur sont-elles toutes traitées ?
-
-## 2. Sécurité (OWASP Top 10)
-- Y a-t-il des risques d'injection (SQL, XSS, command injection) ?
-- Les entrées utilisateur sont-elles validées et sanitisées ?
-- Y a-t-il des données sensibles exposées ?
-
-## 3. Performance
-- Y a-t-il des requêtes N+1 ou des boucles inefficaces ?
-- Les ressources sont-elles correctement fermées/libérées ?
-
-## 4. Maintenabilité
-- Le code respecte-t-il les conventions du projet (.github/copilot-instructions.md) ?
-- Les noms sont-ils explicites et auto-documentés ?
-- Y a-t-il de la duplication qui devrait être extraite ?
-
-## 5. Tests
-- Le code est-il testable ?
-- Quels cas de test manquent ?
-
-Fournis un rapport avec : ✅ Points positifs, ⚠️ Améliorations suggérées, ❌ Problèmes à corriger.
+Retourne :
+1. les bugs probables ;
+2. les risques sécurité ;
+3. les régressions possibles ;
+4. les tests manquants ;
+5. les corrections prioritaires.
 ```
 
-### Génération de tests unitaires
+!!! warning "Frontmatter : ne recopiez pas d'anciens exemples sans vérifier"
+    Les champs et outils disponibles évoluent avec Copilot et l'IDE. Utilisez la documentation officielle de votre version pour valider `tools`, le mode d'exécution et les variables de contexte.
+
+---
+
+## Référencer du contexte
+
+Les formats officiellement documentés incluent notamment les liens Markdown et les références `#file:`.
+
+```markdown
+Compare l'implémentation avec [nos conventions](../instructions/api.instructions.md).
+Analyse aussi #file:../../src/api/UserController.ts.
+```
+
+Les chemins relatifs sont résolus à partir du fichier `.prompt.md`.
+
+---
+
+## Copilot prompt file ou Claude skill ?
+
+| Besoin | Copilot | Claude Code |
+|---|---|---|
+| Prompt ponctuel réutilisable | `.github/prompts/*.prompt.md` | Skill ou prompt direct |
+| Workflow récurrent avec fichiers de référence | Prompt file | `.claude/skills/<nom>/SKILL.md` |
+| Connaissance chargée selon la tâche | Agent skill | Skill Claude |
+| Instructions toujours actives | `.github/copilot-instructions.md` / `.instructions.md` | `CLAUDE.md` / `.claude/rules/` |
+| Agent spécialisé | `.github/agents/*.agent.md` | `.claude/agents/*.md` |
+
+### Exemple d'équivalent Claude
+
+```text
+.claude/skills/code-review/
+├── SKILL.md
+└── checklist.md
+```
 
 ```markdown
 ---
-description: Génère des tests unitaires Jest complets pour le code sélectionné
-mode: edit
-tools:
-  - codebase
-  - editFiles
+name: code-review
+description: Revue de changements avant commit ou PR ; recherche bugs, régressions, sécurité et tests manquants.
 ---
 
-# Génération de Tests Unitaires
+# Code review
 
-Génère des tests unitaires Jest/TypeScript complets pour ${file}.
-
-## Instructions
-1. Crée le fichier de test `${fileBasenameNoExtension}.test.ts` dans le même dossier
-2. Importe les dépendances nécessaires
-3. Mock toutes les dépendances externes (DB, API, filesystem)
-
-## Cas à couvrir systématiquement
-- **Happy path** : comportement nominal avec des données valides
-- **Edge cases** : valeurs limites (0, null, "", tableau vide, nombre max)
-- **Error cases** : chaque exception/erreur que la fonction peut lever
-- **Type validation** : si la fonction valide des types, tester les types invalides
-
-## Format attendu
-Respecte les conventions du projet définies dans `.github/instructions/tests.instructions.md`.
-
-## Structure
-```typescript
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
-
-describe('NomDeLaClasse/Fonction', () => {
-  describe('nomDeLaMéthode', () => {
-    it('should [comportement attendu] when [condition]', () => {
-      // Arrange
-      // Act  
-      // Assert
-    });
-  });
-});
-```
-```
-
-### Audit de sécurité
-
-```markdown
----
-description: Audit de sécurité OWASP du code sélectionné
-mode: ask
-tools:
-  - codebase
----
-
-# Audit de Sécurité
-
-Effectue un audit de sécurité du code en analysant les risques selon l'OWASP Top 10.
-
-Pour chaque risque identifié, fournis :
-- **Niveau de risque** : Critique / Élevé / Moyen / Faible / Info
-- **Description** : Ce qui est vulnérable et pourquoi
-- **Preuve** : La ligne de code exacte problématique
-- **Correction recommandée** : Code corrigé ou pattern sécurisé
-
-## Catégories à analyser
-
-### A01 — Broken Access Control
-- Vérification des autorisations avant chaque opération sensible
-- Accès direct aux objets (IDOR)
-
-### A02 — Cryptographic Failures  
-- Stockage de données sensibles en clair
-- Algorithmes de chiffrement faibles ou dépréciés
-
-### A03 — Injection
-- Concaténation de chaînes dans les requêtes SQL
-- Injection de commandes shell
-- XSS (interpolation non échappée dans HTML)
-
-### A07 — Authentication Failures
-- Mots de passe stockés en clair ou avec hash faible (MD5, SHA1)
-- Tokens non révocables
-- Absence de rate limiting sur les endpoints d'auth
-
-### A09 — Security Logging
-- Logging de données sensibles (mots de passe, tokens)
-- Absence de logging sur les actions critiques
-
-Termine par un résumé prioritaire des corrections à effectuer.
-```
-
-### Documentation automatique
-
-```markdown
----
-description: Génère la documentation complète d'un module/fichier
-mode: edit
-tools:
-  - codebase
-  - editFiles
----
-
-# Génération de Documentation
-
-Génère une documentation technique complète pour ${file}.
-
-## Ce que tu dois produire
-
-1. **JSDoc/TSDoc pour chaque fonction/méthode/classe publique** :
-   - Description en français
-   - `@param` pour chaque paramètre avec type et description
-   - `@returns` avec type et description
-   - `@throws` pour chaque exception possible
-   - `@example` avec un exemple d'utilisation concret
-
-2. **Commentaires de section** pour grouper le code logiquement
-
-3. **README du module** si le fichier est un index ou un service principal
-   - Rôle du module dans l'architecture
-   - Comment l'utiliser
-   - Dépendances importantes
-
-## Format JSDoc attendu
-```typescript
-/**
- * Calcule le montant total d'une commande avec les taxes applicables.
- * 
- * @param items - Liste des articles de la commande
- * @param taxRate - Taux de taxe entre 0 et 1 (ex: 0.20 pour 20%)
- * @returns Montant total TTC arrondi à 2 décimales
- * @throws {ValidationError} Si taxRate est hors de la plage [0, 1]
- * @throws {EmptyOrderError} Si items est vide
- * @example
- * const total = calculateOrderTotal(cartItems, 0.20);
- * // => 120.00 (pour 100€ HT avec 20% de TVA)
- */
+1. Lire le diff et les fichiers impactés.
+2. Vérifier les conventions du projet.
+3. Chercher les régressions et risques sécurité.
+4. Exécuter ou proposer les vérifications pertinentes.
+5. Retourner les constats par sévérité avec preuves.
 ```
 
 ---
 
-## Invoquer un prompt depuis Copilot Chat
+## Bonnes pratiques
 
-### Méthode 1 — Slash command
-
-Dans Copilot Chat, tapez `/` pour voir la liste des prompts disponibles :
-
-```
-/code-review
-/generate-tests  
-/security-audit
-```
-
-Cette méthode fonctionne **identiquement** sur VS Code et IntelliJ.
-
-### Méthode 2 — Via le picker
-
-=== "VS Code"
-    1. Dans Copilot Chat, cliquez sur l'icône `📎` ou `⋯`
-    2. Sélectionnez **"Use Prompt File"**
-    3. Choisissez votre fichier `.prompt.md`
-
-=== "IntelliJ IDEA"
-    1. Dans la fenêtre Copilot Chat, cliquez sur le bouton `+` ou l'icône d'ajout de contexte
-    2. Sélectionnez **"Prompt file"**
-    3. Choisissez votre fichier `.prompt.md`
-
-### Méthode 3 — Avec contexte sélectionné
-
-=== "VS Code"
-    1. Sélectionnez du code dans l'éditeur
-    2. Ouvrez Copilot Chat (++ctrl+alt+i++)
-    3. Tapez `/code-review` — le code sélectionné est automatiquement inclus comme contexte
-
-=== "IntelliJ IDEA"
-    1. Sélectionnez du code dans l'éditeur
-    2. Ouvrez Copilot Chat (panneau latéral ou ++alt+shift+c++)
-    3. Tapez `/code-review` — le code sélectionné est automatiquement inclus comme contexte
-
----
-
-## Différence entre Prompt Files et Instructions
-
-| Aspect | `.instructions.md` | `.prompt.md` |
-|--------|-------------------|-------------|
-| **Usage** | Passif — toujours actif | Actif — invoqué à la demande |
-| **Déclenchement** | Automatique (dès que le fichier matche) | Manuel (commande `/` ou sélection) |
-| **Contenu** | Règles et conventions | Tâche spécifique à exécuter |
-| **Exemple** | "Toujours utiliser TypeScript strict" | "Génère des tests pour ce fichier" |
+- Un prompt = **une tâche clairement identifiable**.
+- Référencer les conventions plutôt que les recopier partout.
+- Définir le **résultat attendu** et les critères de validation.
+- Ne pas donner d'outils d'écriture à un prompt de revue s'ils ne sont pas nécessaires.
+- Vérifier le prompt après une mise à jour majeure de Copilot ou de l'IDE.
+- Préférer un skill Claude si la même capacité doit devenir le workflow principal du dépôt.
 
 ---
 
 ## Sources
 
-- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
-- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+- [GitHub Docs — Prompt files](https://docs.github.com/en/copilot/tutorials/customization-library/prompt-files) — consulté le 2026-09-28
+- [GitHub Docs — Repository custom instructions et prompt files](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide) — consulté le 2026-09-28
+- [VS Code — Prompt files](https://code.visualstudio.com/docs/agent-customization/prompt-files) — consulté le 2026-09-28
+- [Claude Code — Skills](https://code.claude.com/docs/en/skills) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Guide Agents (.agent.md)](guide-agents.md)** : créer des agents Copilot spécialisés avec comportements, outils et instructions dédiés.
-
-Concepts clés couverts :
-
-- **Qu'est-ce qu'un agent custom** — Persona IA avec rôle spécifié et outils restreints
-- **Frontmatter d'agent** — `name`, `description`, `tools`, `model`
-- **Restriction d'outils** — Limiter les capacités pour des raisons de sécurité ou focus
-- **Exemples d'agents** — Documentation writer, security auditor, refactoring expert
-
+Poursuivez avec **[Copilot (référence)](../chapitre-5-prompt-engineering/avec-copilot.md)**, la page suivante dans le menu.

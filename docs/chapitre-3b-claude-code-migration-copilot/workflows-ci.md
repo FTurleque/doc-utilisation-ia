@@ -241,16 +241,7 @@ graph TD
 
 ## Prochaine étape
 
-**[Orchestration multi-agents avec Claude Code](subagents-orchestration.md)** : faire collaborer plusieurs subagents spécialisés pour les tâches complexes, en local comme en CI.
-
-Concepts clés couverts :
-
-- **Patterns d'orchestration** — orchestrateur/workers, pipeline, exploration parallèle, critique
-- **Isolation du contexte** — déléguer sans saturer la conversation principale
-- **Modèle par agent** — Haiku pour explorer, Opus pour critiquer
-- **Anti-patterns** — quand un seul agent suffit
-
----
+Poursuivez avec **[Orchestration multi-agents](subagents-orchestration.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -258,6 +249,3 @@ Concepts clés couverts :
 - [Anthropic — Headless / scripting](https://docs.anthropic.com/en/docs/claude-code/headless) - consulté le 2026-06-20
 - [Anthropic — GitHub Actions](https://docs.anthropic.com/en/docs/claude-code/github-actions) - consulté le 2026-06-20
 - [Anthropic — Security (prompt injection)](https://docs.anthropic.com/en/docs/claude-code/security) - consulté le 2026-06-20
-
-
-

@@ -1,124 +1,78 @@
-# Amazon Q Developer
+# Amazon Q Developer — référence AWS en transition vers Kiro
 
-<span class="badge-beginner">Débutant</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-beginner">Débutant</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Amazon Q Developer est l'assistant de développement d'AWS.
-Il devient très pertinent quand ton code et ton exploitation sont fortement centrés sur les services AWS.
+Amazon Q Developer reste un assistant orienté développement et services AWS, mais sa trajectoire produit a changé : AWS annonce la **fin de support des plugins IDE Amazon Q Developer le 30 avril 2027** et oriente les utilisateurs vers **Kiro** pour les fonctions agentiques, chat et MCP les plus récentes.
 
----
-
-## À quoi sert Amazon Q Developer
-
-- Aide au développement applicatif dans l'écosystème AWS
-- Assistance sur services cloud (IAM, Lambda, S3, CDK, etc.)
-- Support de bonnes pratiques et dépannage orienté AWS
-
-!!! success "Quand l'utiliser"
-    Si ton projet est majoritairement AWS, Amazon Q peut réduire fortement les allers-retours de recherche documentaire.
+Le **Q Developer CLI** a également été rebrandé en Kiro. Cette page est donc une référence de transition, pas un choix à considérer comme stable à long terme dans l'IDE.
 
 ---
 
-## Quand l'utiliser
+## Quand Amazon Q reste pertinent
 
-- Quand le projet est principalement basé sur AWS
-- Quand tu veux une aide spécialisée sur les services cloud Amazon
-- Quand tu veux accélérer les diagnostics autour d'IAM, Lambda ou CDK
-
-## Quand l'éviter
-
-- Quand le projet n'a pas de dépendance forte à AWS
-- Quand tu cherches une aide générique pour un autre cloud
-- Quand tu n'as pas encore de contexte service/région clair
+- diagnostic et développement fortement centrés sur AWS ;
+- questions IAM, Lambda, S3, CDK ou opérations AWS ;
+- équipes déjà équipées d'Amazon Q Developer Pro ;
+- environnement où les workflows existants doivent être maintenus pendant la transition.
 
 ---
 
-## Mise en œuvre
+## IDE : anticiper la fin de support
 
-### Installation
+AWS indique que les plugins Amazon Q Developer pour IDE cesseront d'être supportés le **30 avril 2027**.
 
-=== "Visual Studio Code"
-    1. Installer **AWS Toolkit** depuis le marketplace.
-    2. Se connecter avec un compte compatible (ex: Builder ID selon mode d'accès).
-    3. Ouvrir Amazon Q dans le panneau Toolkit.
+Pour un nouveau déploiement, évaluez directement **Kiro** plutôt que de construire des procédures longues autour d'un plugin destiné à être retiré.
 
-=== "IntelliJ IDEA"
-    1. Installer **AWS Toolkit** depuis le marketplace JetBrains.
-    2. Se connecter au compte AWS/Builder ID.
-    3. Activer Amazon Q depuis les outils AWS.
+Pour une installation existante :
 
-### Bon démarrage
-
-- Donner le contexte exact : service AWS, région, contraintes IAM
-- Demander des sorties vérifiables : checklists, commandes, étapes de test
-- Valider les recommandations en sandbox avant production
+1. inventoriez les fonctions Q réellement utilisées ;
+2. vérifiez leur équivalent Kiro ;
+3. testez la migration sur un groupe pilote ;
+4. documentez les différences de permissions, MCP et règles ;
+5. retirez progressivement les dépendances au plugin Q.
 
 ---
 
-## Cas d'usage pertinents
+## Amazon Q et Claude Code
 
-- Diagnostic d'erreurs AWS dans un projet existant
-- L'aide à l'écriture de code SDK AWS
-- Préparation de scripts d'infra et d'opérations cloud
-- Revue de configurations IAM (avec vérification humaine)
+Claude Code reste le parcours généraliste principal du dépôt. Amazon Q/Kiro peut être utile comme outil spécialisé AWS lorsque ses intégrations apportent un avantage mesurable.
 
-Cas moins adaptés :
-
-- Projet non AWS
-- Demandes généralistes sans contexte service/région
-
----
-
-## Exploiter son plein potentiel
-
-1. **Prompts précis cloud**
-   - Service + région + contrainte + objectif
-2. **Couplage avec outils locaux**
-   - **[RTK](rtk.md)** pour filtrer les logs
-   - **[Continue.dev](continue-dev.md)** + local pour tâches de code génériques
-3. **Garde-fous sécurité**
-   - Revue humaine des politiques IAM
-   - Tests de moindre privilège et validation en environnement non prod
-
-!!! warning "Vigilance coût/quotas"
-    Les quotas et options gratuites peuvent évoluer. Vérifie la page pricing officielle avant de formaliser une stratégie d'équipe.
-
----
-
-## Exemple concret
+Évitez une duplication systématique :
 
 ```text
-Prompt type:
-"J'ai une Lambda Node.js en eu-west-1 qui échoue avec AccessDenied sur S3.
-Propose un plan de diagnostic IAM en 6 étapes avec commandes de vérification."
+Claude Code → développement général, dépôt, tests, MCP
+AWS CLI / IaC / docs officielles → preuves
+Amazon Q / Kiro → cas AWS où l'intégration spécialisée apporte une valeur réelle
 ```
 
 ---
 
-## Résumé
+## Sécurité AWS
 
-Amazon Q Developer prend tout son intérêt quand le projet, les services et
-les opérations sont centrés sur AWS. Il est alors plus utile qu'un assistant
-généraliste pour les questions cloud ciblées.
+Une suggestion IAM n'est jamais une validation de moindre privilège.
+
+- testez les policies avec les outils AWS adaptés ;
+- validez en environnement non-production ;
+- ne collez pas de credentials dans le chat ;
+- utilisez des rôles et sessions temporaires ;
+- vérifiez région, compte et identité active avant toute commande destructive.
+
+---
+
+## Tarification et quotas
+
+AWS fait évoluer les offres et quotas. Ne recopiez pas ici un nombre fixe de requêtes comme règle durable.
+
+Avant une décision d'achat, vérifiez les pages officielles Amazon Q/Kiro et le périmètre exact : IDE, CLI, agent, transformations, organisation et compte AWS.
 
 ---
 
 ## Sources
 
-- Page officielle: [Amazon Q Developer](https://aws.amazon.com/q/developer/) (consultée le 2026-06-07)
-- Documentation officielle: [Amazon Q Developer User Guide](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/what-is.html) (consultée le 2026-06-07)
-- Tarification officielle: [Amazon Q Developer Pricing](https://aws.amazon.com/q/developer/pricing/) (consultée le 2026-06-07)
-- VS Code Toolkit: [AWS Toolkit for VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html) (consultée le 2026-06-07)
-- JetBrains Toolkit: [AWS Toolkit for JetBrains](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html) (consultée le 2026-06-07)
-
----
+- [Amazon Q Developer — IDE setup](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/q-in-IDE-setup.html) — consulté le 2026-09-28
+- [Amazon Q Developer — fin de support IDE](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/q-developer-ide-end-of-support.html) — consulté le 2026-09-28
+- [Amazon Q Developer — migration vers Kiro](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/upgrade-to-kiro.html) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Supermaven](supermaven.md)** : accélérer la complétion inline sur de gros contextes de code pour les phases d'écriture intensive.
-
-Concepts clés couverts :
-
-- **Complétion très rapide** - diminuer la latence perçue
-- **Contexte long** - exploiter des fichiers plus larges
-- **Coexistence outils** - un moteur inline principal
-- **Mesure de gain** - acceptance rate et qualité PR
+Poursuivez avec **[Supermaven (historique)](supermaven.md)**, la page suivante dans le menu.

@@ -1,258 +1,183 @@
-# Comparaison des Frameworks Deep Learning
+# Comparaison des frameworks Deep Learning
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Le choix du framework Deep Learning impacte la productivité, la flexibilité, et les options de déploiement. Ce comparatif couvre les quatre frameworks majeurs : **TensorFlow**, **PyTorch**, **Keras** et **JAX**.
+Le choix d'un framework dépend moins d'un classement absolu que de votre **code existant**, du matériel cible, des contraintes de déploiement et des compétences de l'équipe. Cette page évite donc les verdicts du type « X est toujours meilleur » et se concentre sur les différences durables.
 
 ---
 
-## Tableau comparatif complet
+## Vue d'ensemble
 
-| Critère | TensorFlow | PyTorch | Keras | JAX |
-|---------|:----------:|:-------:|:-----:|:---:|
-| **Développeur** | Google | Meta (Facebook) | François Chollet / Google | Google Research |
-| **Année** | 2015 | 2016 | 2015 (standalone) | 2018 |
-| **Paradigme** | Graph + Eager | Eager (dynamique) | API haut niveau | Fonctionnel + JIT |
-| **Facilité** | Moyenne | Bonne | **Excellente** | Difficile |
-| **Flexibilité** | Haute | **Très haute** | Moyenne | **Très haute** |
-| **Déploiement** | **Excellent** (TF Serving, TFLite, TF.js) | Bon (TorchServe, ONNX) | Via TensorFlow | Limité |
-| **Communauté** | Très large | **La plus active** (recherche) | Large (intégrée à TF) | En croissance |
-| **Recherche** | Utilisé | **Standard académique** | Prototypage rapide | Pointe (DeepMind) |
-| **Production** | **Standard industrie** | En forte croissance | Via TensorFlow | Niche |
-| **Mobile / Edge** | TFLite | PyTorch Mobile | Via TFLite | Non |
-| **Multi-GPU** | `tf.distribute` | `DistributedDataParallel` | Via TensorFlow | `pmap` / `pjit` |
-| **Mixed Precision** | Natif | Natif (`torch.cuda.amp`) | Via TensorFlow | Natif |
-| **Documentation** | Très complète | **Excellente** | Très complète | Bonne |
+| Écosystème | Point fort | À vérifier avant adoption |
+|---|---|---|
+| **PyTorch** | API impérative, recherche et écosystème très large | stratégie d'export/serving adaptée à votre cible |
+| **TensorFlow** | écosystème historique de production et outils de déploiement | compatibilité des APIs et du chemin de déploiement réellement utilisé |
+| **Keras 3** | API haut niveau multi-backend | compatibilité de vos couches/ops custom avec le backend choisi |
+| **JAX** | transformations fonctionnelles, JIT, vectorisation et calcul distribué | expertise de l'équipe et outillage de production |
+
+Keras 3 peut fonctionner sur des backends JAX, TensorFlow ou PyTorch, ce qui rend la frontière entre « framework » et « API haut niveau » moins nette qu'auparavant.
 
 ---
 
-## Différences détaillées
+## PyTorch
 
-### TensorFlow
+PyTorch reste adapté lorsque vous voulez :
 
-=== "Forces"
-
-    - Écosystème **complet** pour la production : TensorFlow Serving, TFLite (mobile), TF.js (web)
-    - TensorBoard pour la visualisation des métriques
-    - Excellente intégration cloud (Google Cloud, AWS, Azure)
-    - Keras intégré comme API haut niveau officielle
-    - Large base de modèles pré-entraînés (TF Hub)
-
-=== "Faiblesses"
-
-    - API parfois complexe et verbose
-    - Plusieurs façons de faire la même chose (legacy v1 vs v2)
-    - Debugging plus difficile qu'en PyTorch (graph mode)
+- une boucle d'entraînement explicite ;
+- un debugging proche du Python normal ;
+- un écosystème riche pour la recherche et les modèles modernes ;
+- un contrôle fin sur le modèle et l'optimisation.
 
 ```python
-# Style TensorFlow / Keras
-import tensorflow as tf
-
-model = tf.keras.Sequential([
-    tf.keras.layers.Dense(128, activation='relu'),
-    tf.keras.layers.Dense(10, activation='softmax')
-])
-model.compile(optimizer='adam', loss='categorical_crossentropy')
-model.fit(X_train, y_train, epochs=10)
-```
-
-### PyTorch
-
-=== "Forces"
-
-    - Mode **eager par défaut** : le code s'exécute ligne par ligne → debugging naturel
-    - **Standard en recherche** : la majorité des papers publient en PyTorch
-    - API Pythonique et intuitive
-    - Excellent pour le prototypage rapide
-    - Écosystème de plus en plus complet (TorchServe, TorchVision, TorchAudio)
-
-=== "Faiblesses"
-
-    - Historiquement moins d'outils de déploiement que TensorFlow (en rattrapage)
-    - Boucle d'entraînement manuelle (plus de code boilerplate)
-    - Pas de Keras-like intégré (mais PyTorch Lightning existe)
-
-```python
-# Style PyTorch
 import torch
-import torch.nn as nn
+from torch import nn
 
-class Model(nn.Module):
-    def __init__(self):
+class Classifier(nn.Module):
+    def __init__(self, input_dim: int, classes: int):
         super().__init__()
-        self.fc1 = nn.Linear(784, 128)
-        self.fc2 = nn.Linear(128, 10)
+        self.net = nn.Sequential(
+            nn.Linear(input_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, classes),
+        )
 
     def forward(self, x):
-        x = torch.relu(self.fc1(x))
-        return self.fc2(x)
-
-model = Model()
-optimizer = torch.optim.Adam(model.parameters())
-criterion = nn.CrossEntropyLoss()
-
-# Boucle d'entraînement manuelle
-for epoch in range(10):
-    optimizer.zero_grad()
-    output = model(X_train)
-    loss = criterion(output, y_train)
-    loss.backward()
-    optimizer.step()
+        return self.net(x)
 ```
 
-### Keras
+!!! warning "Export moderne"
+    Les documents anciens recommandent souvent TorchScript. La documentation PyTorch actuelle indique que **TorchScript est déprécié** et recommande `torch.export` pour les nouveaux workflows concernés. Vérifiez toujours la cible de déploiement avant de copier une recette historique.
 
-=== "Forces"
+---
 
-    - API **la plus simple** et la plus lisible
-    - Prototypage ultra-rapide
-    - Intégré à TensorFlow (Keras 2) et maintenant multi-backend (Keras 3 : TF, PyTorch, JAX)
-    - Documentation pédagogique excellente
-    - Idéal pour les débutants et le prototypage
+## TensorFlow
 
-=== "Faiblesses"
+TensorFlow reste pertinent lorsque votre organisation possède déjà :
 
-    - Moins flexible pour les architectures très custom
-    - Dépend d'un backend (TF, PyTorch, ou JAX)
-    - Les optimisations avancées nécessitent parfois de "casser l'abstraction"
+- modèles et pipelines TensorFlow ;
+- infrastructure de serving associée ;
+- expertise `tf.data` / distribution ;
+- contraintes mobile/web couvertes par l'écosystème TensorFlow/Google AI Edge.
+
+Ne migrez pas un système stable uniquement parce qu'un autre framework domine une partie de la recherche : mesurez coût de migration, performance et maintenabilité sur votre cas réel.
+
+---
+
+## Keras 3
+
+Keras 3 est une API multi-backend : un même workflow peut cibler JAX, TensorFlow ou PyTorch lorsque le code reste compatible avec les APIs Keras multi-backend.
 
 ```python
-# Style Keras (depuis Keras 3 — multi-backend)
+import os
+os.environ["KERAS_BACKEND"] = "torch"  # ou jax / tensorflow
+
 import keras
 from keras import layers
 
 model = keras.Sequential([
-    layers.Dense(128, activation='relu'),
-    layers.Dense(10, activation='softmax')
+    layers.Input((128,)),
+    layers.Dense(64, activation="relu"),
+    layers.Dense(10),
 ])
-model.compile(optimizer='adam', loss='categorical_crossentropy')
-model.fit(X_train, y_train, epochs=10)
 ```
 
-### JAX
+C'est particulièrement intéressant pour :
 
-=== "Forces"
+- l'enseignement et le prototypage ;
+- les équipes qui veulent une API haut niveau ;
+- les composants que l'on souhaite rendre portables entre plusieurs backends.
 
-    - **Performance maximale** : compilation JIT (XLA), différentiation automatique, vectorisation
-    - Paradigme fonctionnel pur : code composable et testable
-    - Excellente parallélisation multi-GPU/TPU (`pmap`)
-    - Utilisé par Google DeepMind pour la recherche de pointe
-    - Transformations composables : `jit`, `grad`, `vmap`, `pmap`
+La portabilité n'est toutefois pas magique : du code utilisant directement des opérations spécifiques TensorFlow/PyTorch/JAX peut casser l'abstraction.
 
-=== "Faiblesses"
-
-    - Courbe d'apprentissage très raide
-    - API bas niveau (nécessite Flax ou Haiku pour les réseaux)
-    - Communauté plus petite
-    - Moins d'outils de déploiement
-
-```python
-# Style JAX + Flax
-import jax
-import jax.numpy as jnp
-from flax import linen as nn
-
-class Model(nn.Module):
-    @nn.compact
-    def __call__(self, x):
-        x = nn.Dense(128)(x)
-        x = nn.relu(x)
-        x = nn.Dense(10)(x)
-        return x
-
-model = Model()
-params = model.init(jax.random.PRNGKey(0), jnp.ones((1, 784)))
-
-# JAX est fonctionnel : pas d'état mutable
-@jax.jit
-def predict(params, x):
-    return model.apply(params, x)
-```
+Keras propose aussi un backend **OpenVINO pour l'inférence uniquement** : il ne remplace pas les backends d'entraînement JAX, TensorFlow et PyTorch. Fixez `KERAS_BACKEND` avant l'import et vérifiez les opérations supportées. [Documentation Keras 3](https://keras.io/keras_3/#run-inference-with-the-openvino-backend), revérifiée le 3 octobre 2026.
 
 ---
 
-## Guide de choix
+## JAX
 
-```mermaid
-graph TD
-    START["Quel est ton<br/>objectif principal ?"]
-    START -->|"Apprendre le DL"| KERAS["Keras<br/>(le plus simple)"]
-    START -->|"Recherche / Papers"| PYTORCH["PyTorch<br/>(standard académique)"]
-    START -->|"Production / Déploiement"| TF["TensorFlow<br/>(écosystème complet)"]
-    START -->|"Performance extrême"| JAX["JAX<br/>(JIT + parallélisation)"]
-    START -->|"Je ne sais pas"| DEFAULT["PyTorch ou Keras 3<br/>(les deux sont excellents)"]
+JAX fournit notamment `jit`, `grad` et `vmap`, avec un style fonctionnel qui convient bien aux workloads numériques et aux architectures nécessitant un contrôle fin du calcul.
 
-    style KERAS fill:#e8f5e9
-    style PYTORCH fill:#e3f2fd
-    style TF fill:#fff3e0
-    style JAX fill:#fce4ec
-    style DEFAULT fill:#f3e5f5
+```python
+import jax
+import jax.numpy as jnp
+
+@jax.jit
+def mse(y_true, y_pred):
+    return jnp.mean((y_true - y_pred) ** 2)
 ```
 
-### Recommandations par profil
+Le coût principal est souvent organisationnel : paradigme différent, gestion de l'état, compilation et debugging demandent une équipe à l'aise avec ces concepts.
 
-| Profil | Framework recommandé | Raison |
-|--------|:--------------------:|--------|
-| **Débutant** | Keras | Syntaxe la plus accessible, courbe d'apprentissage douce |
-| **Étudiant / Chercheur** | PyTorch | Standard en recherche, debugging intuitif |
-| **Ingénieur ML en entreprise** | TensorFlow + Keras | Déploiement solide, écosystème production |
-| **Ingénieur performance** | JAX | JIT compilation, parallélisation native |
-| **Full-stack ML** | PyTorch + Lightning | Bonne abstraction tout en gardant la flexibilité |
+Les fonctions transformées doivent respecter les contraintes de pureté de JAX, avec état et clés aléatoires explicites. Pour un benchmark, attendez la fin effective du calcul (`block_until_ready()` sur le résultat lorsque pertinent) et séparez compilation initiale et exécutions suivantes. [JAX — pièges de programmation](https://docs.jax.dev/en/latest/notebooks/Common_Gotchas_in_JAX.html), revérifié le 3 octobre 2026.
+
+---
+
+## Choisir avec une expérience, pas avec un tableau de popularité
+
+Pour un nouveau projet, construisez un **spike reproductible** avec 1 ou 2 candidats :
+
+1. implémenter une petite baseline identique ;
+2. mesurer temps d'entraînement et mémoire sur le matériel cible ;
+3. tester export/serving réel ;
+4. mesurer simplicité du debugging ;
+5. vérifier les dépendances de production ;
+6. évaluer la compétence actuelle de l'équipe.
+
+Le « meilleur framework » est celui qui satisfait ces contraintes avec le moins de complexité opérationnelle.
+
+---
+
+## Claude Code pour comparer deux frameworks
+
+Claude peut automatiser un spike si vous l'empêchez de modifier plusieurs variables simultanément :
+
+```text
+Nous voulons comparer PyTorch et Keras 3 sur cette baseline.
+Crée deux implémentations fonctionnellement équivalentes.
+Utilise le même dataset, split, seed et métrique.
+Exécute les deux avec le même protocole.
+Rapporte :
+- temps ;
+- mémoire si mesurable ;
+- métrique ;
+- taille de l'artefact ;
+- difficulté d'export ;
+- différences de code.
+Ne conclue pas sur la base de popularité.
+```
+
+Pour une décision importante, conservez le benchmark et sa configuration dans le dépôt.
 
 ---
 
 ## Interopérabilité
 
-Les frameworks ne sont pas des îles — plusieurs outils permettent de passer de l'un à l'autre :
+Quelques mécanismes utiles :
 
-| Outil | Conversion | Usage |
-|-------|-----------|-------|
-| **ONNX** | TF ↔ PyTorch ↔ Autres | Format d'échange universel |
-| **Keras 3** | TF + PyTorch + JAX | Backend interchangeable |
-| **Hugging Face** | Modèles dans tous les frameworks | Hub de modèles pré-entraînés |
-| **TorchScript** | PyTorch → Optimisé | Export pour production |
+- **Keras 3** pour une API multi-backend ;
+- **ONNX** lorsque vos opérateurs et votre cible sont compatibles ;
+- formats/exporteurs propres à chaque framework ;
+- hubs de modèles qui fournissent souvent plusieurs implémentations.
 
-```python
-# Exporter un modèle PyTorch vers ONNX
-import torch
-
-dummy_input = torch.randn(1, 784)
-torch.onnx.export(
-    model, dummy_input,
-    "model.onnx",
-    input_names=['input'],
-    output_names=['output'],
-    dynamic_axes={'input': {0: 'batch'}, 'output': {0: 'batch'}}
-)
-```
+L'interopérabilité doit être testée sur le modèle réel : les opérateurs custom, la quantification et les runtimes cibles peuvent limiter les conversions.
 
 ---
 
-## Tendances 2024-2026
+## Ce que la documentation retire volontairement
 
-| Tendance | Détails |
-|----------|---------|
-| **PyTorch domine la recherche** | > 80% des publications utilisent PyTorch |
-| **Keras 3 multi-backend** | Un seul code, trois backends (TF, PyTorch, JAX) |
-| **JAX en croissance** | Adoption par Google DeepMind, performance GPU/TPU |
-| **TensorFlow stable en production** | Reste fort pour le déploiement et le mobile |
-| **Hugging Face comme hub** | Centralise modèles et datasets pour tous les frameworks |
+Les affirmations telles que « PyTorch = 80 % des publications », « TensorFlow = standard industrie » ou « JAX = le plus rapide » ont été retirées. Elles dépendent du sous-domaine, de la période, du matériel et du benchmark et vieillissent mal.
 
 ---
 
-## Points clés à retenir
+## Prochaine étape
 
-!!! success "Résumé"
-    - **Keras** pour apprendre et prototyper — le plus simple
-    - **PyTorch** pour la recherche et la flexibilité — le plus populaire
-    - **TensorFlow** pour la production et le déploiement — le plus complet
-    - **JAX** pour la performance brute et la recherche avancée — le plus rapide
-    - L'interopérabilité (ONNX, Keras 3, Hugging Face) rend le choix moins définitif qu'avant
-    - En cas de doute, commence avec **PyTorch** ou **Keras** — tu pourras toujours changer de framework grâce à ONNX
----
+Poursuivez avec **[RAG — Introduction](../chapitre-7-rag/index.md)**, la page suivante dans le menu.
 
 ## Sources
 
-- [Deep Learning book (Goodfellow)](https://www.deeplearningbook.org/) - consulté le 2026-06-20
-- [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
-- [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20
+- [Keras — Keras 3](https://keras.io/keras_3/) — consulté le 2026-09-28
+- [Keras — Getting started](https://keras.io/getting_started/) — consulté le 2026-09-28
+- [PyTorch — documentation](https://pytorch.org/docs/stable/) — consulté le 2026-09-28
+- [PyTorch — TorchScript deprecated, use torch.export](https://docs.pytorch.org/docs/stable/notes/cpu_threading_torchscript_inference.html) — consulté le 2026-09-28
+- [TensorFlow — documentation](https://www.tensorflow.org/guide) — consulté le 2026-09-28
+- [JAX — documentation](https://docs.jax.dev/) — consulté le 2026-09-28

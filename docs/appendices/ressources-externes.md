@@ -1,71 +1,92 @@
-pip install mkdocs-material
-mkdocs serve# Ressources Externes
+# Ressources externes
 
-## Documentation officielle
-
-### GitHub Copilot
-
-| Ressource | URL | Description |
-|-----------|-----|-------------|
-| Documentation officielle | [docs.github.com/copilot](https://docs.github.com/fr/copilot) | Guide complet officiel (disponible en français) |
-| Copilot pour VS Code | [docs.github.com/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-github-copilot-in-visual-studio-code](https://docs.github.com/fr/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-github-copilot-in-visual-studio-code) | Guide spécifique VS Code |
-| Copilot pour JetBrains | [docs.github.com/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-github-copilot-in-a-jetbrains-ide](https://docs.github.com/fr/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-github-copilot-in-a-jetbrains-ide) | Guide spécifique IntelliJ/JetBrains |
-| Copilot Chat | [docs.github.com/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide](https://docs.github.com/fr/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide) | Documentation Copilot Chat |
-| Instruction files | [docs.github.com/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot](https://docs.github.com/fr/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) | Guide `.instructions.md` |
-| Gestion de l'abonnement | [github.com/settings/copilot](https://github.com/settings/copilot) | Paramètres compte Copilot |
-| Status GitHub | [githubstatus.com](https://www.githubstatus.com) | État des services GitHub |
+Cette page regroupe les liens durables utilisés par la documentation. Pour les faits évolutifs (prix, modèles, quotas, previews), privilégiez toujours la page officielle courante plutôt qu'une copie locale.
 
 ---
 
-## VS Code
+## Claude Code & Anthropic
 
-| Ressource | URL |
-|-----------|-----|
-| Documentation VS Code | [code.visualstudio.com/docs](https://code.visualstudio.com/docs) |
-| Extension GitHub Copilot (Marketplace) | [marketplace.visualstudio.com/items?itemName=GitHub.copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) |
-| Extension GitHub Copilot Chat (Marketplace) | [marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) |
-| GitHub Copilot dans VS Code | [code.visualstudio.com/docs/copilot/overview](https://code.visualstudio.com/docs/copilot/overview) |
-| Variables Chat Copilot | [code.visualstudio.com/docs/copilot/copilot-chat](https://code.visualstudio.com/docs/copilot/copilot-chat) |
-
----
-
-## IntelliJ IDEA
-
-| Ressource | URL |
-|-----------|-----|
-| Documentation IntelliJ | [jetbrains.com/help/idea](https://www.jetbrains.com/help/idea/) |
-| Plugin GitHub Copilot (JetBrains Marketplace) | [plugins.jetbrains.com/plugin/17718-github-copilot](https://plugins.jetbrains.com/plugin/17718-github-copilot) |
-| Guide GitHub Copilot pour JetBrains | [jetbrains.com/help/idea/github-copilot.html](https://www.jetbrains.com/help/idea/github-copilot.html) |
-| Rapport de bugs IntelliJ | [youtrack.jetbrains.com](https://youtrack.jetbrains.com) |
+| Ressource | Lien | Usage |
+|---|---|---|
+| Claude Code | [code.claude.com/docs](https://code.claude.com/docs/) | Documentation principale |
+| Changelog Claude Code | [code.claude.com/docs/en/changelog](https://code.claude.com/docs/en/changelog) | Changements produit |
+| Claude Platform | [platform.claude.com/docs](https://platform.claude.com/docs/) | API et plateforme développeur |
+| Anthropic Newsroom | [anthropic.com/news](https://www.anthropic.com/news) | Modèles, annonces, sécurité |
+| Anthropic Research | [anthropic.com/research](https://www.anthropic.com/research) | Recherche et évaluations |
+| Threat Intelligence | [anthropic.com/threat-intelligence](https://www.anthropic.com/threat-intelligence) | Cas documentés d'abus et menaces |
 
 ---
 
-## Communauté et apprentissage
+## GitHub Copilot — référence conservée
 
-### Forums et discussions
-
-| Plateforme | Lien | Description |
-|------------|------|-------------|
-| GitHub Community | [github.com/orgs/community/discussions](https://github.com/orgs/community/discussions) | Forum officiel GitHub |
-| VS Code GitHub Discussions | [github.com/microsoft/vscode/discussions](https://github.com/microsoft/vscode/discussions) | Discussions VS Code |
-| Stack Overflow | [stackoverflow.com/questions/tagged/github-copilot](https://stackoverflow.com/questions/tagged/github-copilot) | Questions/réponses |
-| Reddit r/github | [reddit.com/r/github](https://www.reddit.com/r/github) | Communauté GitHub |
-
----
-
-## Sécurité et bonnes pratiques OWASP
-
-| Ressource | Description |
-|-----------|-------------|
-| [OWASP Top 10](https://owasp.org/Top10/) | Les 10 risques de sécurité web les plus critiques |
-| [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) | Guides pratiques de sécurité par technology |
+| Ressource | Lien |
+|---|---|
+| Documentation Copilot | [docs.github.com/en/copilot](https://docs.github.com/en/copilot) |
+| Plans Copilot | [docs.github.com/en/copilot/get-started/plans](https://docs.github.com/en/copilot/get-started/plans) |
+| Billing Copilot | [docs.github.com/en/billing/concepts/product-billing/github-copilot-billing](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-billing) |
+| GitHub Changelog | [github.blog/changelog](https://github.blog/changelog/) |
+| GitHub Status | [githubstatus.com](https://www.githubstatus.com/) |
 
 ---
 
-## Changelog et nouveautés
+## IDE
 
-Pour rester informé des nouvelles fonctionnalités Copilot :
+### VS Code
 
-- **GitHub Changelog** : [github.blog/changelog](https://github.blog/changelog/) — filtre "copilot"
-- **VS Code Release Notes** : [code.visualstudio.com/updates](https://code.visualstudio.com/updates) — section "GitHub Copilot" de chaque release
-- **JetBrains What's New** : [jetbrains.com/idea/whatsnew](https://www.jetbrains.com/idea/whatsnew/)
+- [Documentation VS Code](https://code.visualstudio.com/docs)
+- [Release notes](https://code.visualstudio.com/updates)
+- [Claude Code pour VS Code](https://code.claude.com/docs/en/vs-code)
+
+### JetBrains
+
+- [Documentation IntelliJ IDEA](https://www.jetbrains.com/help/idea/)
+- [Claude Code pour JetBrains](https://code.claude.com/docs/en/jetbrains)
+- [What's New IntelliJ IDEA](https://www.jetbrains.com/idea/whatsnew/)
+
+---
+
+## Sécurité IA
+
+| Ressource | Usage |
+|---|---|
+| [OWASP GenAI Security Project](https://genai.owasp.org/) | Risques LLM et agentiques |
+| [MITRE ATLAS](https://atlas.mitre.org/) | Tactiques/techniques adverses IA |
+| [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) | Gestion du risque IA |
+| [CISA AI](https://www.cisa.gov/ai) | Ressources cyber/IA |
+| [ANSSI](https://cyber.gouv.fr/) | Références cyber françaises |
+| [CNIL — IA](https://www.cnil.fr/fr/intelligence-artificielle) | Données personnelles et IA |
+
+---
+
+## Outils documentés dans le dépôt
+
+- [RTK](https://github.com/rtk-ai/rtk)
+- [SonarQube MCP Server](https://github.com/SonarSource/sonarqube-mcp-server)
+- [Ollama](https://docs.ollama.com/)
+- [LM Studio](https://lmstudio.ai/docs/)
+- [OpenSkills](https://github.com/numman-ali/openskills)
+- [TOON](https://github.com/toon-format/toon)
+
+---
+
+## Règle de vérification
+
+Avant d'ajouter une ressource externe :
+
+1. vérifier qu'elle est encore maintenue ;
+2. préférer le domaine/dépôt officiel ;
+3. éviter les URLs profondes fragiles lorsqu'une page canonique existe ;
+4. dater les informations commerciales ou de disponibilité ;
+5. conserver les ressources legacy uniquement si leur statut est explicite.
+
+## Voir aussi
+
+- [Veille IA](../chapitre-14-veille-ia/index.md)
+- [Sécurité IA](../chapitre-14-veille-ia/securite-risques.md)
+- [Outils complémentaires](../chapitre-13-outils-economies/outils-complementaires.md)
+
+---
+
+## Prochaine étape
+
+Poursuivez avec **[Templates Configuration](templates-configuration.md)**, la page suivante dans le menu.

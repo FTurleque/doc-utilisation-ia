@@ -1,254 +1,109 @@
-# Patterns de Documentation — Exemples Concrets
+# Patterns de documentation — exemples
 
-## Pattern 1 : Page de fonctionnalité (contenu unique)
-
-Utiliser pour une fonctionnalité qui ne se différencie pas selon l'IDE.
+## Page Claude Code générique
 
 ```markdown
-# Nom de la Fonctionnalité
+# Nom de la fonctionnalité
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Courte description de ce que fait cette fonctionnalité (1-2 phrases).
+Description de l'objectif utilisateur.
 
 ---
 
-## Vue d'ensemble
+## Fonctionnement
 
-Explication conceptuelle avec diagramme si utile.
+Explication factuelle et durable.
 
 ```mermaid
 graph LR
-    A[Utilisateur] --> B[Copilot] --> C[Suggestion]
+    U[Utilisateur] --> C[Claude Code]
+    C --> T[Outils / fichiers]
+    T --> V[Validation]
 ```
-
----
-
-## Comment l'utiliser
-
-### Étape 1 — Prérequis
-
-!!! info "Prérequis"
-    Listez ici ce qui est nécessaire avant de commencer.
-
-### Étape 2 — Configuration
-
-```yaml
-# settings.json (VS Code) ou équivalent
-"copilot.feature": true
-```
-
-### Étape 3 — Utilisation
-
-Description de l'utilisation avec exemple concret.
-
-!!! tip "Conseil"
-    Astuce pour optimiser l'utilisation.
-
----
-
-## Cas d'usage
-
-### Cas 1 : [Scénario]
-
-```python
-# Commentaire décrivant l'intention
-# Copilot génère à partir de ce contexte
-```
-
-### Cas 2 : [Autre scénario]
-
-...
-
----
-
-## Limites et précautions
-
-!!! warning "À savoir"
-    Limitations connues ou précautions d'usage.
-
----
-
-## Résumé
-
-- Point clé 1
-- Point clé 2
-- Point clé 3
-```
-
-## Pattern 2 : Page de comparaison IntelliJ / VS Code
-
-```markdown
-# Comparaison — [Sujet] IntelliJ vs VS Code
-
-## Présentation
-
-Contexte de la comparaison en 2-3 phrases.
-
----
-
-## Tableau comparatif
-
-| Critère | IntelliJ IDEA | Visual Studio Code |
-|---------|:-------------:|:-----------------:|
-| **Fonctionnalité A** | :material-check-circle:{ .green } Oui | :material-close-circle:{ .red } Non |
-| **Fonctionnalité B** | Partiel | Complet |
-
----
-
-## Détail des différences
-
-### [Critère principal]
-
-=== "IntelliJ IDEA"
-    Explication détaillée pour IntelliJ.
-
-    ```java
-    // Exemple IntelliJ
-    ```
-
-=== "Visual Studio Code"
-    Explication détaillée pour VS Code.
-
-    ```typescript
-    // Exemple VS Code
-    ```
-
----
-
-## Recommandation
-
-!!! tip "Notre recommandation"
-    Sur quel IDE privilégier cette fonctionnalité et pourquoi.
-```
-
-## Pattern 3 : Tutoriel pas à pas
-
-```markdown
-# Tutoriel — [Objectif]
-
-<span class="badge-beginner">Débutant</span> <span class="badge-intellij">IntelliJ</span>
-
-Ce tutoriel vous guide pour [objectif] en [durée estimée].
-
-**Prérequis :** [liste des prérequis]
-
----
-
-## Étape 1 — [Titre de l'étape]
-
-Description de ce qui se passe dans cette étape.
-
-1. Action concrète à effectuer
-2. Deuxième action
-
-!!! info "Résultat attendu"
-    Décrivez ce que l'utilisateur doit voir après cette étape.
-
----
-
-## Étape 2 — [Titre]
-
-...
-
----
-
-## Vérification finale
-
-!!! success "Ça marche ?"
-    Décrivez comment vérifier que le tutoriel s'est bien déroulé.
-
-Si quelque chose ne fonctionne pas, consultez [la page de troubleshooting](../../chapitre-5-troubleshooting/problemes-courants.md).
-```
-
-## Pattern 4 : Page de référence rapide
-
-```markdown
-# Référence — [Sujet]
-
-<span class="badge-expert">Expert</span>
-
-Page de référence rapide pour [sujet]. Connaissances préalables supposées.
-
----
-
-## Raccourcis essentiels
-
-| Action | Raccourci |
-|--------|-----------|
-| [Action] | ++ctrl+alt+a++ |
 
 ---
 
 ## Configuration
 
-| Paramètre | Valeur | Description |
-|-----------|--------|-------------|
-| `parametre.name` | `true/false` | Ce que ça fait |
+```json
+{
+  "example": true
+}
+```
 
 ---
 
-## API / Syntaxe
+## Vérification
+
+Décrire une preuve reproductible : commande, test, build ou état UI observé.
+
+---
+
+## Limites
+
+!!! warning "À vérifier selon version"
+    Documenter ici les limites réellement confirmées.
+```
+
+## Page de référence Copilot
+
+Une page dédiée à Copilot peut rester centrée sur Copilot, mais doit le dire clairement et éviter d'être utilisée comme modèle universel pour les pages génériques.
 
 ```markdown
-# Syntaxe supportée
+# GitHub Copilot — [Sujet]
 
-[exemples]
-```
+Cette page est une référence Copilot conservée dans un dépôt Claude-first.
 
----
-
-## Liens utiles
-
-- [Documentation officielle](#)
-- [Page de concepts](../concepts.md)
-```
-
-## Pattern 5 : Page de cas d'usage (par langage)
-
-```markdown
-# Copilot avec [Langage/Framework]
-
-<span class="badge-intermediate">Intermédiaire</span>
-
-GitHub Copilot adapte ses suggestions au contexte de [Langage]. Cette page couvre les cas d'usage les plus utiles.
-
----
-
-## Forces de Copilot avec [Langage]
-
-- Force 1
-- Force 2
-- Force 3
-
----
-
-## Complétion de code
-
-### [Cas d'usage fréquent]
-
-**Prompt (commentaire) :**
-
-```[language]
-// Commentaire décrivant l'intention
-```
-
-**Ce que Copilot génère :**
-
-```[language]
-// Code généré typique
-```
-
----
-
-## Génération de tests
+## Procédure
 
 ...
 
----
+## Équivalent / différence Claude Code
 
-## Pièges à éviter
-
-!!! warning "Attention avec [Langage]"
-    Particularités ou limitations à connaître.
+Lien vers la page Claude pertinente lorsque cela aide la migration.
 ```
+
+## Comparaison IDE
+
+Utiliser seulement lorsque l'IDE change réellement la procédure :
+
+```markdown
+=== "IntelliJ IDEA"
+    Procédure observée dans JetBrains.
+
+=== "Visual Studio Code"
+    Procédure observée dans VS Code.
+```
+
+Ne déclarer aucun IDE « meilleur » ou « plus sûr » par défaut ; comparer des fonctions et surfaces de contrôle vérifiables.
+
+## Tutoriel
+
+Un tutoriel doit fournir : prérequis, étapes reproductibles, résultat attendu et vérification finale. Éviter les estimations de durée universelles.
+
+```markdown
+# Tutoriel — Objectif
+
+## Prérequis
+
+- Élément nécessaire
+
+## Étape 1 — Action
+
+...
+
+## Vérification finale
+
+```bash
+commande-de-verification
+```
+```
+
+## Cas d'usage langage/framework
+
+Pour Java, Python, Node.js, React, etc. : partir du problème de développement, montrer le contexte fourni à Claude Code, la modification attendue et surtout la validation (tests/lint/build). Ne présenter un exemple Copilot que s'il apporte une comparaison explicite ou si la page est dédiée à Copilot.
+
+## Sources
+
+Pour tout comportement produit/version-sensible, terminer par des sources officielles pertinentes et une date de consultation lorsque cela apporte de la traçabilité.

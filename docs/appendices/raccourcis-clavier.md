@@ -1,186 +1,127 @@
-﻿# Raccourcis Clavier — Référence Complète
+# Raccourcis & commandes — référence rapide
 
-Référence exhaustive de tous les raccourcis GitHub Copilot pour IntelliJ IDEA et VS Code, sur Windows, macOS et Linux.
+Les raccourcis IDE et commandes évoluent. Cette page privilégie les **points d'entrée stables** et renvoie vers `/help`, la palette de commandes VS Code ou le Keymap JetBrains pour la liste réellement disponible dans votre version.
 
----
-
-## VS Code — Raccourcis Copilot
-
-### Suggestions inline
-
-| Action | Windows / Linux | macOS |
-|--------|----------------|-------|
-| Accepter la suggestion | ++tab++ | ++tab++ |
-| Rejeter la suggestion | ++escape++ | ++escape++ |
-| Suggestion suivante | ++alt+bracket-right++ | ++option+bracket-right++ |
-| Suggestion précédente | ++alt+bracket-left++ | ++option+bracket-left++ |
-| Voir toutes les suggestions | ++ctrl+enter++ | ++cmd+enter++ |
-| Accepter le mot suivant | ++ctrl+right++ | ++cmd+right++ |
-| Accepter la ligne suivante | ++ctrl+alt+right++ | ++cmd+option+right++ |
-
-### Copilot Chat
-
-| Action | Windows / Linux | macOS |
-|--------|----------------|-------|
-| Ouvrir le panneau Chat | ++ctrl+alt+i++ | ++cmd+option+i++ |
-| Ouvrir Quick Chat | ++ctrl+shift+i++ | ++cmd+shift+i++ |
-| Ouvrir Inline Chat | ++ctrl+i++ | ++ctrl+i++ |
-| Nouvelle conversation Chat | Icône + dans le panneau | Icône + dans le panneau |
-| Envoyer le message | ++enter++ | ++enter++ |
-| Nouvelle ligne dans le chat | ++shift+enter++ | ++shift+enter++ |
-| Arrêter la génération | ++escape++ ou bouton Stop | ++escape++ ou bouton Stop |
-
-### Variables de chat spéciales
-
-| Variable | Description |
-|----------|-------------|
-| `@workspace` | Contexte de tout le workspace |
-| `@vscode` | Questions sur VS Code lui-même |
-| `@terminal` | Contexte du terminal actif |
-| `#file` | Référencer un fichier spécifique |
-| `#selection` | Référencer la sélection courante |
-| `#codebase` | Recherche sémantique dans le projet |
-
-### Commandes de la palette
-
-| Commande | Description |
-|----------|-------------|
-| `GitHub Copilot: Enable Completions` | Activer les suggestions |
-| `GitHub Copilot: Disable Completions` | Désactiver les suggestions |
-| `GitHub Copilot: Sign In` | Connexion |
-| `GitHub Copilot: Sign Out` | Déconnexion |
-| `GitHub Copilot: Open Completions Panel` | Ouvrir le panneau des suggestions |
-| `GitHub Copilot: Report Issue` | Signaler un problème |
+La [cheat sheet des commandes Claude Code](../chapitre-3b-claude-code-migration-copilot/commandes-claude.md) recense les commandes de session, leurs alias, les sous-commandes du terminal et les options CLI.
 
 ---
 
-## IntelliJ IDEA — Raccourcis Copilot
+## Claude Code — commandes utiles
 
-### Suggestions inline
+Dans une session Claude Code :
 
-| Action | Windows / Linux | macOS |
-|--------|----------------|-------|
-| Accepter la suggestion | ++tab++ | ++tab++ |
-| Rejeter la suggestion | ++escape++ | ++escape++ |
-| Suggestion suivante | ++alt+bracket-right++ | ++option+bracket-right++ |
-| Suggestion précédente | ++alt+bracket-left++ | ++option+bracket-left++ |
-| Déclencher manuellement | ++alt+backslash++ | ++option+backslash++ |
-| Accepter le mot suivant | ++ctrl+right++ | ++option+right++ |
+| Commande | Usage |
+|---|---|
+| `/help` | Afficher les commandes disponibles dans la version installée |
+| `/status` | Vérifier compte, modèle et état de session |
+| `/doctor` | Diagnostiquer configuration et environnement |
+| `/context` | Inspecter l'utilisation du contexte |
+| `/model` | Choisir un modèle disponible |
+| `/clear` | Repartir avec un contexte de conversation vide |
+| `/compact` | Compacter le contexte lorsque la session devient longue |
+| `/mcp` | Voir/configurer l'état des serveurs MCP |
+| `/agents` | Gérer/utiliser les subagents lorsque disponible |
 
-### Copilot Chat (IntelliJ)
-
-| Action | Windows / Linux | macOS |
-|--------|----------------|-------|
-| Ouvrir Copilot Chat | Icône dans la sidebar | Icône dans la sidebar |
-| Inline Chat / Ask Copilot | ++alt+enter++ sur sélection | ++option+enter++ sur sélection |
-| Expliquer le code sélectionné | Clic droit → Copilot → Explain | Clic droit → Copilot → Explain |
-| Générer des tests | Clic droit → Copilot → Generate Tests | Clic droit → Copilot → Generate Tests |
-| Corriger un problème | Clic droit → Copilot → Fix | Clic droit → Copilot → Fix |
-
-### Accès via le menu contextuel (clic droit)
-
-| Action | Chemin |
-|--------|--------|
-| Expliquer | Clic droit → GitHub Copilot → Explain This |
-| Générer tests | Clic droit → GitHub Copilot → Generate Tests |
-| Suggérer noms | Clic droit → GitHub Copilot → Suggest Variable Names |
-| Corriger | Clic droit → GitHub Copilot → Fix This |
-
-### Actions dans IntelliJ (++ctrl+shift+a++)
-
-Cherchez "Copilot" dans la boîte de recherche des actions pour trouver toutes les actions disponibles selon votre version.
+!!! tip "Source de vérité"
+    Utilisez `/help` avant de recopier une commande dans un runbook : Claude Code évolue rapidement et certaines commandes peuvent être ajoutées, renommées ou retirées.
 
 ---
 
-## Claude Code — raccourcis et commandes
+## Référencer du contexte
 
-Claude Code étant centré sur la **CLI**, l'essentiel du pilotage passe par des **commandes slash** dans le REPL plutôt que par des raccourcis clavier. Cette section récapitule les deux.
+Claude Code sait travailler à partir des fichiers du dépôt et des références explicites. Le moyen exact de référencer un fichier ou une sélection dépend de la surface (CLI, VS Code, JetBrains) et de la version.
 
-!!! info "Vérifier selon votre version"
-    Les raccourcis des extensions Claude (VS Code, JetBrains) évoluent et peuvent être personnalisés. En cas de doute, consultez la palette de commandes (VS Code) ou **Settings → Keymap** (JetBrains).
+Bon réflexe :
 
-### Commandes slash du REPL (toutes plateformes)
+```text
+Lis `src/service/UserService.ts` et les tests associés.
+Compare avec le pattern utilisé dans `src/service/ProductService.ts`.
+```
 
-| Commande | Description |
-|----------|-------------|
-| `/help` | Liste les commandes disponibles |
-| `/init` | Génère un `CLAUDE.md` de départ |
-| `/status` | Compte, plan, modèle et version |
-| `/login` · `/logout` | Gérer l'authentification |
-| `/model` | Changer de modèle (Haiku / Sonnet / Opus) |
-| `/clear` | Vider le contexte de la conversation |
-| `/compact` | Résumer/compacter le contexte |
-| `/config` | Ouvrir la configuration |
-| `/memory` | Éditer les fichiers mémoire (`CLAUDE.md`) |
-| `/agents` | Gérer les subagents |
-| `/mcp` | Gérer les serveurs MCP |
-| `/plugin` | Gérer les plugins |
-| `/cost` | Afficher le coût en tokens de la session |
-
-### Raccourcis dans le REPL
-
-| Action | Raccourci |
-|--------|-----------|
-| Interrompre la génération | ++escape++ |
-| Nouvelle ligne dans le prompt | ++shift+enter++ |
-| Envoyer le message | ++enter++ |
-| Quitter la session | ++ctrl+c++ (deux fois) ou `/exit` |
-| Référencer un fichier | `@chemin/fichier` |
-| Référencer un dossier | `@chemin/dossier/` |
-
-### Références de contexte (équivalent des variables Copilot)
-
-| Claude Code | Équivalent Copilot |
-|-------------|--------------------|
-| `@fichier:chemin` | `#file` |
-| `@dossier/` | `#codebase` (recherche) |
-| Sélection IDE | `#selection` |
-| `` !`commande` `` (dans une command) | — (injection dynamique) |
-
-### VS Code & JetBrains — points d'entrée
-
-| Action | VS Code | JetBrains |
-|--------|---------|-----------|
-| Ouvrir le panneau Claude | Icône barre latérale / palette `Claude` | Fenêtre d'outils Claude Code |
-| Terminal Claude intégré | Terminal intégré → `claude` | Terminal intégré → `claude` |
-| Personnaliser les raccourcis | ++ctrl+k++ ++ctrl+s++ → « Claude » | Settings → Keymap → « Claude » |
-
-!!! tip "Le terminal reste le point d'entrée universel"
-    Quel que soit l'IDE, ouvrir un terminal intégré et lancer `claude` donne accès à **toutes** les commandes slash, identiques sur Windows, macOS et Linux.
+Ne construisez pas une convention interne autour d'une syntaxe spéciale non vérifiée dans votre version.
 
 ---
 
-## Comparaison côte-à-côte
+## VS Code — Claude Code
 
-| Action | VS Code Windows | IntelliJ Windows |
-|--------|----------------|-----------------|
-| Accepter suggestion | ++tab++ | ++tab++ |
-| Rejeter suggestion | ++escape++ | ++escape++ |
-| Suggestion suivante | ++alt+bracket-right++ | ++alt+bracket-right++ |
-| Inline Chat | ++ctrl+i++ | ++alt+enter++ (contextuel) |
-| Ouvrir Chat | ++ctrl+alt+i++ | Via sidebar |
-| Quick Chat | ++ctrl+shift+i++ | Non disponible |
-| Déclencher manuellement | ++alt+backslash++ | ++alt+backslash++ |
+Utilisez :
+
+- la vue/extension Claude Code ;
+- la palette de commandes (`Ctrl/Cmd+Shift+P`) puis recherchez « Claude » ;
+- les raccourcis clavier (`Ctrl/Cmd+K`, puis `Ctrl/Cmd+S`) pour voir ou personnaliser les bindings actifs ;
+- le terminal intégré pour lancer `claude` lorsque la CLI standalone est installée.
+
+Les raccourcis exacts peuvent être personnalisés par utilisateur et évoluer avec l'extension.
 
 ---
 
-## Personnaliser les raccourcis
+## JetBrains — Claude Code
 
-=== ":material-microsoft-visual-studio-code: VS Code"
-    ++ctrl+k++ ++ctrl+s++ → Raccourcis clavier → Recherchez "copilot"
-    
-    Ou modifiez directement `keybindings.json` :
-    ```json
-    [
-        {
-            "key": "ctrl+shift+space",
-            "command": "editor.action.inlineSuggest.trigger",
-            "when": "editorTextFocus"
-        }
-    ]
-    ```
+Utilisez :
 
-=== ":simple-intellijidea: IntelliJ"
-    **Settings → Keymap** → Recherchez "Copilot" dans le champ de recherche.
-    
-    Double-cliquez sur une action pour lui assigner un raccourci personnalisé.
+- la fenêtre d'outils Claude Code ;
+- **Settings → Keymap** puis recherchez « Claude » ;
+- le terminal intégré pour lancer `claude` ;
+- les actions IDE natives (Find Usages, Rename, Extract, tests, debugger) avant de demander à l'agent une transformation mécanique.
+
+---
+
+## Raccourcis IDE à connaître indépendamment de l'IA
+
+### VS Code
+
+| Action | Windows/Linux | macOS |
+|---|---|---|
+| Palette de commandes | `Ctrl+Shift+P` | `Cmd+Shift+P` |
+| Raccourcis clavier | `Ctrl+K Ctrl+S` | `Cmd+K Cmd+S` |
+| Terminal intégré | ``Ctrl+` `` | ``Ctrl+` `` |
+| Recherche fichiers | `Ctrl+P` | `Cmd+P` |
+| Recherche globale | `Ctrl+Shift+F` | `Cmd+Shift+F` |
+
+### JetBrains
+
+Les bindings dépendent fortement du keymap (Windows, macOS, IntelliJ, VS Code keymap, Vim...). Utilisez **Find Action** puis recherchez l'action voulue plutôt que de figer un raccourci universel dans cette documentation.
+
+---
+
+## GitHub Copilot — référence conservée
+
+Les raccourcis Copilot varient également selon VS Code/JetBrains et la version. Pour éviter de conserver une table périmée :
+
+- VS Code : ouvrez **Keyboard Shortcuts** et recherchez `Copilot` ;
+- JetBrains : **Settings → Keymap** puis recherchez `Copilot` ;
+- vérifiez la documentation GitHub Copilot avant de standardiser un binding d'équipe.
+
+Les concepts restent : accepter/rejeter une suggestion inline, ouvrir le chat, ajouter du contexte et déclencher les actions disponibles dans le client.
+
+---
+
+## Commandes de diagnostic hors session
+
+```bash
+claude --version
+claude doctor
+```
+
+Pour un problème complexe, voyez le chapitre [Troubleshooting](../chapitre-11-troubleshooting/index.md).
+
+---
+
+## À éviter
+
+- mémoriser une longue liste de raccourcis versionnés dans un runbook ;
+- supposer qu'un binding VS Code existe aussi dans JetBrains ;
+- publier des noms de modèles figés dans la commande `/model` ;
+- confondre une commande Claude Code avec une commande Copilot portant un nom similaire.
+
+---
+
+## Prochaine étape
+
+Poursuivez avec **[Ressources Externes](ressources-externes.md)**, la page suivante dans le menu.
+
+## Sources
+
+- [Claude Code documentation](https://code.claude.com/docs/)
+- [Claude Code changelog](https://code.claude.com/docs/en/changelog)
+- [GitHub Copilot documentation](https://docs.github.com/en/copilot)

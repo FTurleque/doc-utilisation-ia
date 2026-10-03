@@ -1,24 +1,34 @@
-# CODEOWNERS — Règles de propriété du code
+# CODEOWNERS — propriété du dépôt
 #
-# Ce fichier désigne les reviewer(s) obligatoires pour chaque fichier du dépôt.
-# GitHub requiert leur approbation avant tout merge sur main (si les Branch
-# Protection Rules sont activées — voir CONTRIBUTING.md).
-#
-# Syntaxe : <pattern> <@utilisateur ou @org/équipe>
-# Référence : https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+# La règle globale couvre tous les fichiers. Les entrées explicites ci-dessous
+# documentent les zones particulièrement sensibles à la documentation, aux agents
+# et au déploiement. L'application effective des reviews dépend des rulesets ou
+# protections configurés sur GitHub.
 
-# Règle globale : @FTurleque est reviewer obligatoire sur tous les fichiers
 * @FTurleque
 
-# Documentation principale
+# Documentation publiée
 docs/ @FTurleque
-
-# Configuration MkDocs (critique — impacte le build et le déploiement)
 mkdocs.yml @FTurleque
 
-# CI/CD (critique — impacte le déploiement GitHub Pages)
+# Instructions et agents Claude
+CLAUDE.md @FTurleque
+AGENTS.md @FTurleque
+.claude/ @FTurleque
+
+# GitHub Copilot / automatisations GitHub
+.github/copilot-instructions.md @FTurleque
+.github/agents/ @FTurleque
+.github/instructions/ @FTurleque
+.github/prompts/ @FTurleque
+.github/skills/ @FTurleque
+.github/hooks/ @FTurleque
 .github/workflows/ @FTurleque
 
-# Règles de collaboration (ce fichier lui-même)
+# Gouvernance et scripts
 .github/CODEOWNERS @FTurleque
+.github/pull_request_template.md @FTurleque
 CONTRIBUTING.md @FTurleque
+MAINTENANCE_SCHEDULE.md @FTurleque
+DEPLOYMENT.md @FTurleque
+scripts/ @FTurleque

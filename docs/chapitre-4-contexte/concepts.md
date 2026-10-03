@@ -1,305 +1,256 @@
-# Concepts Fondamentaux du Contexte Copilot
+# Concepts fondamentaux du contexte agentique
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-## Qu'est-ce que le "contexte" ?
+Le **contexte** est l'ensemble des informations disponibles pour l'agent au moment où il raisonne : instructions, historique de conversation, fichiers lus, résultats de commandes, sorties MCP, skills invoqués et synthèses de subagents.
 
-GitHub Copilot génère ses réponses à partir d'un **prompt de travail** construit automatiquement avec différents éléments de votre environnement. Ce contexte peut inclure :
-
-1. le contenu du fichier actuel
-2. des extraits d'autres fichiers pertinents
-3. des instructions personnalisées
-4. des informations sur le dépôt, la stack et les outils
-5. des éléments externes si vous utilisez MCP ou d'autres mécanismes de contexte
-
-Le point clé à retenir : **tout n'entre pas en même temps**. Copilot travaille toujours dans une **fenêtre de contexte limitée**, dont la taille et le coût varient selon le mode, le modèle et le type d'interaction.
 
 ---
 
-## La fenêtre de contexte
+## La fenêtre de contexte est un budget
 
-### Une limite réelle, mais variable
-
-Il est tentant de raisonner avec des chiffres fixes du type « tant de tokens pour le chat » ou « tant de tokens pour l'agent ». En pratique, ces valeurs évoluent selon :
-
-- le **modèle** utilisé
-- le **mode** (complétion, chat, agent, revue, etc.)
-- l'**environnement** (IDE, CLI, GitHub.com)
-- les **fonctionnalités actives** (MCP, fonctions agentiques, mémoire, etc.)
-
-!!! info "Bonne règle mentale"
-    Pensez la fenêtre de contexte comme un **budget partagé**. Si vous ajoutez plus d'instructions, plus de fichiers, plus de résultats d'outils ou plus de sortie MCP, il reste moins de place pour le reste.
-
-### Ce qui compte plus qu'un chiffre exact
-
-| Élément | Effet sur la qualité | Effet sur le coût |
-|---|---|---|
-| Fichier courant bien structuré | Très fort | Faible à moyen |
-| Fichiers voisins pertinents | Fort | Moyen |
-| Instructions de dépôt concises | Très fort | Faible |
-| Instructions longues et bavardes | Faible à négatif | Moyen à fort |
-| Sorties MCP volumineuses | Variable | Fort |
-| Questions floues ou trop larges | Faible | Fort |
-
----
-
-## Ordre de priorité pratique du contexte
-
-Dans la plupart des usages, Copilot raisonne mieux quand le contexte suit cet ordre :
+Une session n'a pas une mémoire infinie. Chaque élément chargé consomme une partie de la fenêtre :
 
 ```text
-1. Le fichier courant et la zone proche du curseur
-2. Les fichiers directement liés à la tâche
-3. Les fichiers de structure du projet (README, build, config)
-4. Les instructions de dépôt et règles ciblées
-5. Les outils externes / contextes additionnels si vraiment nécessaires
+Instructions persistantes
++ conversation
++ fichiers lus
++ sorties d'outils
++ résultats MCP
++ skills invoqués
++ synthèses de subagents
+= contexte de travail
 ```
 
-!!! tip "Règle d'or"
-    Plus un élément est **proche de la tâche**, plus il mérite d'entrer dans le contexte. Le reste doit être soit supprimé, soit repoussé à une étape suivante.
+La bonne question n'est donc pas « comment tout donner à l'agent ? », mais :
+
+> **Quelle information est nécessaire maintenant pour réussir la tâche ?**
+
+Claude Code recommande de gérer ce contexte activement. Une fenêtre remplie d'informations sans rapport peut réduire la qualité des décisions.
 
 ---
 
-## Le contexte est aussi un budget de coût
+## Contexte permanent vs contexte à la demande
 
-Depuis la facturation basée sur les **AI Credits**, mieux gérer le contexte n'est plus seulement une question de qualité : c'est aussi une question de **coût**.
+**Permanent signifie conservé sur disque et chargé automatiquement dans les sessions concernées.** Cela ne signifie pas que le modèle mémorise définitivement votre dépôt. **À la demande signifie chargé seulement lorsqu'une tâche le nécessite** : une lecture, l'invocation d'un skill ou un appel d'outil apporte alors son contenu dans la conversation.
 
-### Pourquoi un mauvais contexte coûte plus cher
+Il faut distinguer trois choses : le fichier existe, Claude sait qu'il existe, et son contenu est effectivement dans la fenêtre de contexte. Un manuel présent dans le dépôt n'est pas automatiquement lu. Une courte description de skill peut être disponible pour permettre sa sélection, sans que toute sa procédure soit déjà chargée.
 
-Un contexte médiocre entraîne souvent :
+### Le socle automatique
 
-- plus de reformulations
-- plus d'itérations
-- plus d'étapes agentiques inutiles
-- plus de relectures de fichiers non pertinents
-- plus de sorties intermédiaires volumineuses
+Le `CLAUDE.md` du projet contient les informations nécessaires presque toujours : commandes de test, conventions essentielles et architecture générale. Les instructions applicables du répertoire de travail et de ses parents sont chargées au démarrage. Les règles `.claude/rules/` **sans `paths`** font également partie du socle automatique : séparer un long document en plusieurs fichiers sans condition ne réduit donc pas son coût en contexte.
 
-### Pourquoi un bon contexte coûte moins cher
+Un import `@docs/conventions.md` dans `CLAUDE.md` charge aussi ce document avec les instructions. À l'inverse, écrire « consultez `docs/conventions.md` si vous modifiez l'API » donne une consigne de lecture, sans importer immédiatement tout le document.
 
-Un contexte bien préparé permet souvent à Copilot de :
+Ce socle doit rester court : il occupe une partie du budget même pour une petite correction. Réservez-lui ce qui doit guider toutes les tâches, pas les détails de chaque domaine.
 
-- comprendre plus vite la demande
-- éviter des hypothèses erronées
-- proposer un premier résultat plus proche du besoin
-- demander moins de corrections
-- terminer une tâche en moins d'étapes
+### Le contexte conditionnel
 
-!!! success "Conséquence pratique"
-    Le moyen le plus simple de réduire votre facture n'est pas seulement de choisir un modèle moins cher : c'est de **mieux cadrer la tâche**.
+Une règle avec `paths` constitue un niveau intermédiaire : elle est conservée dans le dépôt, mais chargée lorsque Claude utilise Read, Write ou Edit sur un chemin correspondant. Par exemple, `.claude/rules/api.md` :
 
+```markdown
+---
+paths:
+  - "src/api/**/*.ts"
 ---
 
-## Stratégies pour améliorer la qualité du contexte
+# Conventions API
 
-### 1. Garder les fichiers pertinents ouverts
-
-Si vous travaillez sur un service qui dépend d'un type ou d'un repository, gardez ouverts uniquement les fichiers qui ont une vraie valeur pour la tâche.
-
-```text
-Exemple utile :
-├── UserService.ts      ← fichier courant
-├── User.ts             ← type principal
-├── UserRepository.ts   ← contrat d'accès aux données
-└── README.md           ← conventions utiles si nécessaire
+- Valider les entrées avant d'appeler le service.
+- Ajouter un test pour chaque nouvelle réponse d'erreur.
 ```
 
-### 2. Positionner le curseur intelligemment
+Cette règle n'a pas besoin d'encombrer une session consacrée aux styles CSS. Les `CLAUDE.md` de sous-répertoires peuvent aussi être chargés lors de la lecture de fichiers de leur périmètre. **Conditionnel ne signifie pas temporaire au sens d'une suppression immédiate** : une fois chargé, le contenu participe au contexte de travail de la session.
 
-Copilot réagit mieux quand le point d'insertion est clair et déjà cadré.
+### Le contexte à la demande
 
-```typescript
-/**
- * Filtre les utilisateurs actifs créés dans les 30 derniers jours.
- */
-function filterRecentActiveUsers(users: User[]): User[] {
-  // curseur ici
-}
-```
+Pour une procédure occasionnelle, utilisez un skill, par exemple `.claude/skills/release/SKILL.md`. Sa description aide Claude à décider quand l'utiliser ; son corps est chargé lors de l'invocation par vous ou par Claude, selon sa configuration. Les fichiers annexes du skill doivent ensuite être lus lorsqu'ils sont utiles : installer un skill ne charge pas automatiquement tous ses exemples.
 
-### 3. Utiliser des noms explicites
+De même, les fichiers sources, logs et résultats MCP entrent dans le contexte lorsqu'ils sont consultés. Un subagent peut isoler une exploration volumineuse : la conversation principale reçoit sa synthèse, plutôt que chacune de ses lectures.
 
-```text
-# ❌ Contexte pauvre
+### Exemple : corriger une route puis préparer une release
 
-def calc(x, y, z):
-    pass
+1. Au démarrage, Claude reçoit le socle `CLAUDE.md` : comment tester et quelles conventions communes respecter.
+2. En lisant `src/api/users.ts`, il reçoit la règle API ciblée et le contenu de ce fichier.
+3. Il lit les tests concernés et les résultats de leur exécution. Les autres services restent hors du contexte tant qu'ils ne sont pas consultés.
+4. Lors d'une release, vous invoquez le skill dédié : sa procédure est alors chargée. Elle n'avait pas besoin d'être présente pendant la correction de route.
 
-# ✅ Contexte riche
+Le gain vient du **moment où l'information est chargée**, pas seulement de son emplacement dans l'arborescence.
 
-def calculate_compound_interest(principal: float, rate: float, periods: int) -> float:
-    pass
-```
-
-### 4. Documenter les types et interfaces
-
-Les types bien nommés et bien structurés réduisent les ambiguïtés.
-
-```typescript
-interface ProductSearchResult {
-  products: Product[];
-  totalCount: number;
-  hasNextPage: boolean;
-  filters: AppliedFilter[];
-}
-```
-
-### 5. Structurer le projet clairement
-
-```text
-✅ Structure claire
-src/
-├── controllers/
-├── services/
-├── repositories/
-└── models/
-
-❌ Structure ambiguë
-src/
-├── stuff/
-├── things/
-└── misc/
-```
-
----
-
-## Les meilleurs leviers de contexte à faible coût
-
-### `.github/copilot-instructions.md`
-
-C'est le meilleur levier global pour donner à Copilot :
-
-- les conventions importantes
-- la stack
-- les validations obligatoires
-- les anti-patterns à éviter
-- les commandes build/test utiles
-
-### `README.md`
-
-Il donne une vue d'ensemble rapide du projet sans surcharger chaque interaction.
-
-### Quelques fichiers de référence bien choisis
-
-Mieux vaut **3 fichiers très pertinents** que **20 fichiers ouverts par habitude**.
-
-### Une demande découpée en étapes
-
-Préférez :
-
-1. comprendre
-2. planifier
-3. implémenter
-4. valider
-
-plutôt qu'une requête unique trop large.
-
----
-
-## Ce que Copilot ne voit pas toujours automatiquement
-
-Il faut éviter les formulations absolues du type « Copilot voit tout » ou « Copilot ne voit jamais cela ». Selon l'IDE, le mode et les outils activés, la réalité est plus nuancée.
-
-### Ce qui n'est généralement pas pris en compte automatiquement
-
-| Élément | Point d'attention |
+| Information | Mécanisme Claude recommandé |
 |---|---|
-| Secrets et vraies valeurs de `.env` | Ne pas compter dessus pour guider Copilot |
-| Données de bases réelles | Le modèle ne connaît pas votre contenu métier réel |
-| Documentation externe non reliée | Elle doit être fournie ou intégrée via un mécanisme explicite |
-| Fichiers hors périmètre de travail | Ils ne sont pas toujours utilisés de façon utile |
-| Dossiers générés ou bruités | Ils dégradent souvent le contexte plus qu'ils ne l'aident |
+| conventions et commandes utiles presque toujours | `CLAUDE.md` |
+| règle liée à certains fichiers | `.claude/rules/` avec `paths` |
+| procédure ou expertise occasionnelle | skill |
+| fichier nécessaire à la tâche actuelle | lecture/référence ciblée |
+| recherche qui exige beaucoup de lectures | subagent |
+| données d'un système externe | MCP si réellement nécessaire |
 
-!!! warning "Ne comptez pas sur l'implicite"
-    Si une règle, une contrainte métier ou une étape de validation est importante, écrivez-la dans le dépôt au lieu de supposer que Copilot va la deviner.
+!!! tip "Ne mettez pas tout dans CLAUDE.md"
+    Claude Code recommande un `CLAUDE.md` concis, idéalement sous environ 200 lignes. Une procédure longue ou locale doit généralement devenir une rule ciblée ou un skill.
+
+### Que reste-t-il après une nouvelle session ?
+
+Les fichiers versionnés restent disponibles sur disque et les instructions automatiques applicables sont rechargées. Les fichiers lus et les résultats d'outils d'une ancienne conversation ne deviennent pas pour autant des instructions permanentes. `/clear` remet à zéro l'historique de conversation ; `/compact` le résume, avec une possible perte de détails. Consignez donc une décision durable dans un fichier approprié et relisez les preuves nécessaires à une nouvelle tâche.
+
+La mémoire automatique de Claude Code est un mécanisme distinct : elle conserve certains apprentissages entre sessions, mais ne remplace ni les instructions d'équipe versionnées ni une vérification de l'état réel du code. Utilisez `/memory` et `/context` pour inspecter les instructions et l'occupation du contexte.
+
+Ces règles de chargement ont été vérifiées dans la [documentation officielle sur la mémoire](https://code.claude.com/docs/en/memory) le **3 octobre 2026**. Le chargement progressif des procédures est décrit dans la [documentation des skills](https://code.claude.com/docs/en/skills).
 
 ---
 
-## Contexte vs capacité : deux notions complémentaires
+## Un bon contexte est spécifique
 
-Ces deux concepts sont souvent confondus, alors qu'ils remplissent des rôles différents.
+Prompt vague :
+
+```text
+Corrige le service utilisateur.
+```
+
+Contexte utile :
+
+```text
+Dans src/users/UserService.ts, corrige le cas où un utilisateur désactivé
+peut encore renouveler son token.
+
+Lis d'abord src/auth/TokenService.ts et le test UserService.test.ts.
+Ne change pas l'API publique.
+Ajoute un test de non-régression puis exécute la suite ciblée.
+```
+
+Le second exemple indique :
+
+- la **cible** ;
+- le **scénario** ;
+- les fichiers de référence ;
+- une contrainte de compatibilité ;
+- une preuve de réussite.
+
+---
+
+## Le contexte ne remplace pas la vérification
+
+Un agent peut produire une solution plausible avec un contexte excellent et malgré tout se tromper.
+
+Donnez-lui un signal qu'il peut vérifier :
+
+- tests ;
+- build ;
+- linter ;
+- validation de schéma ;
+- comparaison à une fixture ;
+- capture d'écran ou contrôle fonctionnel.
+
+La documentation Claude Code insiste sur ce point : un test ou un build ferme la boucle de travail et évite que l'utilisateur soit le seul détecteur d'erreurs.
+
+---
+
+## Explorer sans polluer la conversation principale
+
+Une recherche large peut charger des dizaines de fichiers. Claude Code recommande d'utiliser des **subagents** pour les investigations volumineuses.
+
+```text
+Utilise un subagent pour cartographier le flux de paiement.
+Retourne seulement :
+- fichiers clés ;
+- appels externes ;
+- invariants ;
+- risques de la modification demandée.
+```
+
+Le subagent conserve son exploration dans un contexte séparé et remonte une synthèse.
+
+---
+
+## Gérer une session longue
+
+| Problème | Action Claude Code |
+|---|---|
+| nouvelle tâche sans rapport | `/clear` |
+| contexte proche de la limite | auto-compaction ou `/compact` |
+| besoin de revenir à un état antérieur | `/rewind` ou ++esc+esc++ |
+| question annexe à ne pas garder dans l'historique | `/btw` si disponible |
+| multiples corrections qui échouent | `/clear`, puis nouveau prompt intégrant les apprentissages |
+
+Claude Code compresse automatiquement l'historique lorsqu'il approche des limites de contexte. `/compact <instructions>` permet de guider explicitement cette synthèse.
+
+---
+
+## Instructions et règles ne sont pas des barrières de sécurité
+
+`CLAUDE.md`, `AGENTS.md` et `.claude/rules/` sont du **contexte**. Ils guident le modèle, mais ne garantissent pas techniquement qu'une action sera impossible.
+
+Pour faire respecter une interdiction :
+
+- `permissions.deny` ;
+- politiques gérées ;
+- sandboxing lorsque disponible ;
+- hook `PreToolUse` pour une décision dynamique.
+
+```json
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)"
+    ]
+  }
+}
+```
+
+---
 
 ### Contexte
 
-L'ensemble des informations utiles pour raisonner **dans la situation actuelle** : besoin, état du projet, contraintes, fichiers pertinents, décisions déjà prises.
-
-> Ce que Copilot doit savoir *maintenant* pour réussir cette tâche.
+Ce que l'agent doit savoir **pour cette situation** : état du dépôt, contraintes, fichiers, décisions.
 
 ### Capacité
 
-Une procédure ou un savoir-faire réutilisable : écrire des tests, faire une revue, migrer du code, auditer une doc, etc.
+Ce que l'agent sait **faire de façon réutilisable** : auditer une documentation, migrer un composant, préparer une release, analyser une PR.
 
-> Ce que Copilot sait *faire* indépendamment du projet.
-
-!!! warning "La règle d'or"
-    **Sans contexte, une capacité est aveugle.**
-    **Sans capacité, le contexte reste sous-exploité.**
+Dans Claude Code, une capacité répétable se prête souvent bien à un **skill** ou à un **subagent**.
 
 ---
 
-## La technologie de prompt : penser en système, pas en phrase unique
+## Pourquoi les sorties d'outils comptent
 
-Un bon prompt ne se résume pas à une demande bien formulée. Il s'appuie aussi sur :
+Les commandes terminal, recherches, logs et résultats MCP peuvent consommer beaucoup de contexte.
 
-- le rôle implicite ou explicite donné à Copilot
-- le périmètre de la tâche
-- le format attendu
-- les critères de validation
-- le contexte déjà présent dans le dépôt
+Pour limiter le bruit :
 
-### Les éléments d'un prompt efficace
+1. ciblez les commandes ;
+2. filtrez les résultats volumineux ;
+3. ne demandez pas l'exploration exhaustive par défaut ;
+4. utilisez un subagent pour les recherches larges ;
+5. nettoyez la session entre tâches indépendantes.
 
-```text
-Rôle       → Qui agit ?
-Objectif   → Que faut-il produire ?
-Périmètre  → Ce qui est inclus / exclu
-Contexte   → Quels fichiers, règles, contraintes ?
-Validation → Comment sait-on que c'est correct ?
-```
-
-### Traiter les prompts comme du code
-
-| Pratique de développement | Équivalent côté Copilot |
-|---|---|
-| Versioning Git | Versionner les instructions et artefacts de personnalisation |
-| Refactoring | Raccourcir les règles devenues trop bavardes |
-| Tests | Vérifier que les réponses suivent encore les conventions |
-| Observabilité | Suivre le coût, le bruit, les itérations |
-| Code review | Relire les instructions importantes |
+Des outils comme RTK, documentés dans le chapitre Outils, peuvent aussi compresser certaines sorties CLI avant qu'elles n'occupent la fenêtre de contexte.
 
 ---
 
-## Les 5 réflexes les plus rentables ce mois-ci
+## Les 5 réflexes à retenir
 
-Avec la hausse des coûts, voici les réflexes qui donnent le plus de valeur rapidement :
-
-1. **Maintenir un `copilot-instructions.md` concis**
-2. **Choisir le bon modèle pour la bonne tâche**
-3. **Découper les demandes larges en étapes**
-4. **Limiter le bruit du dépôt et des onglets ouverts**
-5. **N'activer les outils externes et fonctions agentiques qu'en cas de vrai besoin**
-
-!!! tip "Si vous ne savez pas par quoi commencer"
-    Commencez par réduire de moitié la longueur de vos instructions globales, puis retirez du périmètre les dossiers inutiles. C'est souvent le gain le plus rapide sur la précision **et** le coût.
+1. **Borner la tâche** avant de demander une modification.
+2. **Garder `CLAUDE.md` concis** et déplacer le reste vers rules/skills.
+3. **Fournir les fichiers ou patterns utiles**, pas le dépôt entier.
+4. **Donner une vérification exécutable**.
+5. **Nettoyer ou isoler le contexte** avec `/clear`, compaction et subagents.
 
 ---
 
-## Sources
+## Référence en annexe
 
-- GitHub Docs — *[Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support)* (consulté le 2026-06-03)
-- GitHub Docs — *[Adding repository custom instructions for GitHub Copilot in your IDE](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide)* (consulté le 2026-06-03)
-- GitHub Docs — *[Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing)* (consulté le 2026-06-03)
-- GitHub Docs — *[Improving agent quality to optimize AI usage](https://docs.github.com/en/copilot/tutorials/optimize-ai-usage)* (consulté le 2026-06-03)
-- GitHub Docs — *[Extending GitHub Copilot Chat with Model Context Protocol (MCP) servers](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/extend-copilot-chat-with-mcp)* (consulté le 2026-06-03)
-
----
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-concepts).
 
 ## Prochaine étape
 
-**[Guide Instructions (.instructions.md)](guide-instructions.md)** : formaliser vos conventions en règles persistantes et ciblées pour améliorer la précision sans surcharger le contexte global.
+Poursuivez avec **[Semble — Recherche de code](semble.md)**, la page suivante dans le menu.
 
-Concepts clés couverts :
+## Sources
 
-- **Frontmatter YAML** — `description`, `applyTo` et autres champs utiles
-- **Portée des règles** — quand rester global et quand cibler un dossier ou un langage
-- **Éviter la surcharge** — comment écrire des instructions courtes et efficaces
-- **Patterns concrets** — exemples réutilisables par type de fichier
+Sources officielles consultées le **28 septembre 2026** :
+
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)
+- [Claude Code — Memory and project instructions](https://code.claude.com/docs/en/memory)
+- [Claude Code — Skills](https://code.claude.com/docs/en/skills)
+- [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)

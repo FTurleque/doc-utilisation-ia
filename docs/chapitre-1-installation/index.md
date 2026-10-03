@@ -1,46 +1,53 @@
-﻿# Installation & Configuration de Base
+# GitHub Copilot — Installation (référence)
 
-Ce chapitre vous guide à travers l'installation complète de GitHub Copilot sur vos IDEs. Que vous utilisiez IntelliJ IDEA ou Visual Studio Code, la procédure est rapide (moins de 10 minutes) et ne nécessite pas de configuration système particulière.
+Ce chapitre conserve les procédures d'installation de **GitHub Copilot** dans IntelliJ IDEA et Visual Studio Code.
+
+!!! info "Parcours principal du dépôt"
+    Le parcours recommandé est désormais **Claude Code**. Pour une nouvelle installation, commencez par [Installer Claude Code](../chapitre-3b-claude-code-migration-copilot/installation.md). Les pages ci-dessous restent maintenues comme référence Copilot, comparaison et solution de repli éventuelle.
 
 ---
 
-## Prérequis communs
+## Prérequis Copilot
 
-Avant de commencer, vérifiez que vous disposez de :
+GitHub Copilot peut être utilisé avec un plan individuel gratuit ou payant, ou avec une licence fournie par une organisation.
 
-!!! warning "Compte GitHub avec Copilot activé"
-    GitHub Copilot nécessite un plan actif (Free, Pro, Pro+, Business ou Enterprise) avant installation du plugin/extension.
+Les offres GitHub documentées actuellement comprennent notamment :
 
-    - [Activer GitHub Copilot](https://github.com/features/copilot) sur votre compte GitHub
-    - Vérifier votre plan : [github.com/settings/copilot](https://github.com/settings/copilot)
-    - Vérifier les plans officiels : [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans)
+- Copilot Free ;
+- Copilot Student ;
+- Copilot Pro ;
+- Copilot Pro+ ;
+- Copilot Max ;
+- Copilot Business ;
+- Copilot Enterprise.
+
+!!! warning "Les offres et quotas changent"
+    Ne vous fiez pas à un ancien nombre de requêtes ou de crédits copié dans cette page. Vérifiez la page officielle [Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) avant toute décision d'abonnement.
+
+Prérequis généraux :
 
 | Prérequis | Détail |
-|-----------|--------|
-| **Compte GitHub** | Compte personnel ou compte d'organisation avec Copilot activé |
-| **Abonnement** | Copilot Free, Pro, Pro+, Business, ou Enterprise |
-| **Connexion internet** | Requise lors de l'installation et de l'authentification |
-| **IDE à jour** | Voir versions minimales ci-dessous |
+|---|---|
+| Compte GitHub | Compte personnel ou compte d'organisation autorisé à utiliser Copilot |
+| Plan Copilot | Free/Student ou offre payante compatible avec la fonctionnalité visée |
+| Connexion Internet | Requise pour l'authentification et les appels au service |
+| IDE | Utilisez une version stable récente et la dernière version du plugin/extension Copilot |
 
 ---
 
-## Choisissez votre IDE
+## Installer dans votre IDE
 
 <div class="grid cards" markdown>
 
-- :simple-intellijidea: **IntelliJ IDEA**
+- :simple-intellijidea: **IntelliJ IDEA / JetBrains**
 
-    Version minimale : **2023.1**
+    Installation via **Settings / Preferences → Plugins → Marketplace**, puis recherche du plugin officiel GitHub Copilot.
 
-    Installation via le Marketplace de plugins intégré. Compatible avec toute la suite JetBrains (PyCharm, WebStorm, GoLand, Rider...).
-
-    [Tutoriel IntelliJ →](intellij/tutoriel.md){ .md-button .md-button--primary }
+    [Tutoriel IntelliJ →](intellij/tutoriel.md){ .md-button }
 
 - :material-microsoft-visual-studio-code: **Visual Studio Code**
 
-    Version minimale : **1.80**
-
-    Installation via le Marketplace d'extensions. Fonctionne avec tous les langages supportés par VS Code.
+    Installation depuis le Marketplace d'extensions VS Code avec l'extension GitHub Copilot.
 
     [Tutoriel VS Code →](vscode/tutoriel.md){ .md-button }
 
@@ -48,31 +55,36 @@ Avant de commencer, vérifiez que vous disposez de :
 
 ---
 
-## Comparaison rapide
+## État des personnalisations Copilot
 
-| Aspect | IntelliJ IDEA | VS Code |
-|--------|--------------|---------|
-| **Type d'intégration** | Plugin natif JetBrains | Extension Marketplace |
-| **Authentification** | Via Tools → GitHub Copilot | Pop-up automatique à l'installation |
-| **Copilot Chat** | Inclus dans le plugin | Extension séparée (GitHub Copilot Chat) |
-| **Temps d'installation** | ~5 min | ~3 min |
-| **Custom Instructions** | ✓ Supporté | ✓ Supporté |
-| **Custom Agents** | ✓ Supporté | ✓ Supporté |
-| **Prompt Files** | ✓ Supporté | ✓ Supporté |
-| **Agent Skills** | ✓ Supporté (lecture) | ✓ Supporté |
-| **MCP (Model Context Protocol)** | ✓ Supporté | ✓ Supporté |
-| **Hooks personnalisés** | ✗ Non supportés | ✓ Supporté |
+Les fonctionnalités ne sont pas strictement identiques entre les surfaces. La matrice GitHub actuelle indique notamment :
 
-!!! warning "Versions minimales requises"
-    - **IntelliJ IDEA** : 2023.1+ pour Copilot complet
-    - **VS Code** : 1.85+ pour toutes les fonctionnalités (Custom agents, MCP, etc.)
+| Fonction | VS Code | JetBrains |
+|---|:---:|:---:|
+| Custom instructions | ✓ | Preview |
+| Prompt files | ✓ | Preview |
+| Custom agents | ✓ | Preview |
+| Subagents | ✓ | Preview |
+| Agent skills | ✓ | Preview |
+| Hooks | Preview | ✗ |
+| MCP | ✓ | ✓ |
 
-!!! tip "Vous utilisez les deux IDEs ?"
-    Si vous alternez entre IntelliJ et VS Code, installez Copilot sur les deux. Votre abonnement couvre tous vos IDEs simultanément.
+Cette matrice évolue rapidement : utilisez la [Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet) comme source de vérité avant d'écrire une procédure multi-IDE.
+
+!!! note "Skills interopérables"
+    GitHub Copilot sait désormais charger des skills depuis `.github/skills`, `.claude/skills` ou `.agents/skills` sur certaines surfaces. Cette compatibilité est utile pour conserver des briques partagées pendant la migration vers Claude.
 
 ---
 
-## Prochaines étapes
+## Prochaine étape
 
-Après l'installation, rendez-vous au [Paramétrage](../chapitre-2-parametrage/index.md) pour configurer Copilot selon votre workflow.
+Poursuivez avec **[IntelliJ IDEA — Tutoriel](intellij/tutoriel.md)**, la page suivante dans le menu.
 
+## Sources
+
+Sources officielles consultées le **28 septembre 2026** :
+
+- [GitHub Docs — Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans)
+- [GitHub Docs — Installing the GitHub Copilot extension](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension)
+- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
+- [GitHub Docs — Adding agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)

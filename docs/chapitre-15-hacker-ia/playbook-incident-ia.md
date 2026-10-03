@@ -1,227 +1,191 @@
-# Playbook incident IA - Détection, réponse, communication
+# Playbook incident IA — détection, confinement, investigation
 
 <span class="badge-expert">Expert</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
 
-Ce playbook fournit une procédure actionnable pour répondre à un incident impliquant l'IA: phishing assisté, deepfake, compromission via agent de code, fuite de données dans un workflow LLM.
+Ce playbook fournit un cadre défensif pour un incident impliquant un agent IA, une fuite de données, une prompt injection, un MCP compromis, une fraude assistée par IA ou un autre composant GenAI.
+
+Les délais et seuils doivent venir de votre politique d'incident response et de la criticité métier ; cette page ne fixe pas de SLA universel.
 
 ---
 
-## Objectif et conditions d'activation
+## Conditions d'activation
 
-Active ce playbook dès qu'un signal implique un usage probable de l'IA dans l'attaque ou un composant IA interne compromis.
+Activez ce playbook lorsqu'un signal crédible implique :
 
-### Déclencheurs typiques
+- une action inattendue d'un agent ;
+- un secret ou une donnée sensible potentiellement exposé ;
+- un serveur MCP, plugin, hook ou skill suspect ;
+- une modification de dépôt non expliquée ;
+- une fraude ou une usurpation où l'IA peut avoir facilité la préparation ;
+- un fournisseur IA ou intermédiaire potentiellement compromis.
 
-- Demande urgente inhabituelle avec forte vraisemblance linguistique
-- Variantes massives d'emails quasi identiques en peu de temps
-- Activité agentique anormale dans les dépôts ou pipelines
-- Indice de fuite de secrets via prompt, sortie ou artefact
-
-!!! danger "Réflexe clé"
-    En cas de doute, traite l'événement comme incident confirmé pendant la phase de triage initial. Le coût d'un faux positif est souvent inférieur au coût d'une fraude réussie.
+L'objectif du triage est de confirmer rapidement le périmètre sans détruire les preuves utiles.
 
 ---
 
-## Rôles et responsabilités (RACI simplifié)
+## Rôles
 
-| Activité | Incident Manager | SOC/SecOps | IT Ops | Dev Lead | Juridique/Comms |
+| Activité | Incident Manager | SOC/SecOps | IT/Cloud | Dev Lead | Juridique/Privacy/Comms |
 |---|---|---|---|---|---|
-| Qualification incident | A | R | C | C | I |
-| Containment technique | A | R | R | C | I |
-| Analyse forensique | C | R | C | C | I |
-| Décision de communication | A | C | I | I | R |
+| Qualification | A | R | C | C | I |
+| Confinement | A | R | R | C | I |
+| Investigation technique | C | R | R | R | I |
+| Évaluation données/obligations | C | C | I | I | R/A selon organisation |
 | Retour d'expérience | A | R | C | R | C |
 
-Légende: R = Responsable, A = Autorité finale, C = Consulté, I = Informé.
+Adaptez ce RACI à l'organisation réelle.
 
 ---
 
-## Chronologie opérationnelle
+## Phase 1 — Triage
 
-### T+0 à T+15 min - Qualification
+- créer un incident et horodater les premiers faits ;
+- identifier comptes, dépôts, endpoints, services et données potentiellement touchés ;
+- préserver les logs et artefacts pertinents ;
+- distinguer fait observé, hypothèse et information manquante ;
+- identifier les credentials auxquels l'agent ou le service avait accès.
 
-- Ouvrir ticket majeur et horodatage initial
-- Isoler la portée: identité, endpoint, messagerie, dépôt, SI critique
-- Capturer les preuves volatiles disponibles sans altération
-- Déterminer le niveau de sévérité initial
+Pour Claude Code, vérifiez notamment :
 
-### T+15 à T+60 min - Confinement
-
-- Révoquer sessions et tokens potentiellement compromis
-- Forcer MFA reset sur comptes à risque
-- Bloquer IOC/IOA identifiés (domaines, URL, hash, compte expéditeur)
-- Geler temporairement actions agentiques non essentielles
-
-### T+1h à T+4h - Investigation
-
-- Corréler logs IAM, email gateway, EDR, SCM/CI
-- Vérifier les exfiltrations probables et artefacts générés
-- Évaluer impact métier et obligations réglementaires
-- Préparer communication interne de crise
-
-### T+4h à T+24h - Remédiation
-
-- Corriger la cause racine (process, config, permission, formation)
-- Restaurer les systèmes selon ordre de criticité
-- Déployer règles de détection supplémentaires
-- Revalider contrôles clés avant reprise complète
-
-### T+24h à T+7j - Retour d'expérience
-
-- Post-mortem sans blâme
-- Plan d'actions avec responsables et échéances
-- Mise à jour du playbook et des exercices tabletop
-- Reporting direction avec indicateurs d'efficacité
+- fichiers d'instructions chargés ;
+- `.mcp.json` et serveurs actifs ;
+- skills/plugins/hooks utilisés ;
+- commandes exécutées ;
+- diff Git ;
+- variables/secrets disponibles dans l'environnement.
 
 ---
 
-## Runbooks ciblés par type d'incident
+## Phase 2 — Confinement
 
-### A. Phishing/demande urgente assisté IA
+Selon le cas :
 
-- Vérifier identité de l'émetteur hors bande
-- Bloquer campagne et purger boîtes cibles si nécessaire
-- Réinitialiser les comptes impactés
-- Informer les fonctions exposées (finance, RH, assistanat)
+- arrêter ou restreindre l'agent ;
+- désactiver un MCP/plugin/hook suspect ;
+- révoquer les tokens potentiellement exposés ;
+- isoler le poste, runner ou environnement affecté ;
+- bloquer temporairement les écritures ou déploiements automatisés ;
+- suspendre les nouvelles dépendances si la supply chain est concernée.
 
-### B. Deepfake voix/vidéo
-
-- Exiger authentification forte de la demande via canal secondaire
-- Placer en quarantaine toute instruction financière liée
-- Conserver enregistrement et métadonnées pour investigation
-- Mettre à jour script de vérification des demandes sensibles
-
-### C. Incident agent de code / prompt poisoning
-
-- Désactiver temporairement l'agent ou restreindre ses permissions
-- Auditer les modifications récentes et revert contrôlé si nécessaire
-- Scanner secrets, dépendances et commandes exécutées
-- Renforcer règles de revue sur fichiers d'instructions
-
-### D. Fuite potentielle de données via IA
-
-- Identifier périmètre des données concernées
-- Couper les flux non essentiels vers services externes
-- Activer procédure juridique/privacy selon réglementation
-- Notifier parties prenantes selon obligations applicables
+Préférez un confinement proportionné : ne supprimez pas les logs ou configurations utiles à l'investigation avant capture.
 
 ---
 
-## Checklists prêtes à l'emploi
+## Phase 3 — Investigation
 
-### Checklist triage
+Construisez une chronologie :
 
-- [ ] Incident ID créé
-- [ ] Périmètre initial défini
-- [ ] Gravité initiale attribuée
-- [ ] Preuves critiques sauvegardées
-- [ ] RACI activé
-
-### Checklist containment
-
-- [ ] Sessions/tokens compromis révoqués
-- [ ] IOC/IOA bloqués
-- [ ] Permissions agents restreintes
-- [ ] Pipeline durci temporairement
-- [ ] Communication interne de vigilance envoyée
-
-### Checklist remédiation
-
-- [ ] Cause racine validée
-- [ ] Correctifs appliqués
-- [ ] Détection améliorée
-- [ ] Contrôles re-testés
-- [ ] Post-mortem planifié
-
----
-
-## Exemples de messages de communication
-
-### Message interne court (alerte immédiate)
-
-```markdown
-Incident sécurité en cours - vigilance renforcée
-
-Un incident impliquant des contenus potentiellement générés par IA est en cours d'analyse.
-N'exécutez aucune demande urgente (paiement, accès, secret) sans validation hors bande.
-Signalez immédiatement tout message ou appel suspect au SOC.
+```text
+source du contexte
+→ instruction reçue
+→ décision/outils appelés
+→ commandes/actions
+→ ressources touchées
+→ données lues/écrites
+→ destination éventuelle
 ```
 
-### Message de consigne équipes techniques
+Corrélez si disponible :
 
-```markdown
-Mesures temporaires de sécurité
+- logs IAM/cloud ;
+- EDR ;
+- SCM/Git ;
+- CI/CD ;
+- proxy/DNS ;
+- logs MCP ;
+- logs IDE/agent ;
+- secret manager ;
+- messagerie/ticketing.
 
-- Revue humaine obligatoire sur toute modification sensible.
-- Installation de nouvelles dépendances suspendue sans validation SecOps.
-- Actions agentiques à privilège élevé temporairement désactivées.
-```
-
----
-
-## Adaptation par IDE
-
-=== "IntelliJ IDEA"
-    - Vérifier les plugins actifs et désactiver temporairement ceux non essentiels
-    - Renforcer les quality gates côté CI pour tout commit assisté IA
-    - Forcer revue pair sur changements multi-fichiers sensibles
-
-=== "Visual Studio Code"
-    - Réviser les permissions des extensions et agents connectés
-    - Restreindre les actions terminales automatiques
-    - Centraliser les paramètres sécurité dans le workspace d'équipe
+Ne supposez pas qu'une sortie générée par le modèle décrit fidèlement toutes les actions réellement effectuées : utilisez les journaux système comme preuve.
 
 ---
 
-## KPI de pilotage post-incident
+## Phase 4 — Remédiation
 
-| Indicateur | Cible |
-|---|---|
-| Temps de détection (MTTD) | Réduction continue trimestre sur trimestre |
-| Temps de confinement (MTTC) | < 60 min sur incidents majeurs |
-| Taux d'incidents liés à validation monocanal | Tendre vers 0 |
-| Taux de faux positifs critiques | Maîtrisé et documenté |
-| Taux de conformité des revues humaines | 100% sur périmètre critique |
+- corriger la cause racine ;
+- réduire les permissions ;
+- remplacer/mettre à jour le composant compromis ;
+- ajouter ou renforcer tests, policies et contrôles CI ;
+- faire tourner les secrets exposés ou raisonnablement suspects ;
+- restaurer depuis une source de confiance ;
+- valider le retour en service avec des contrôles indépendants.
 
 ---
 
-## Cadre légal minimal (UE/FR) à vérifier en incident
+## Runbooks par scénario
 
-| Sujet | Question opérationnelle |
-|---|---|
-| Données personnelles | Des données personnelles ont-elles été exposées dans prompts, logs ou artefacts ? |
-| Notification | Une notification à l'autorité compétente est-elle requise selon la nature de l'incident ? |
-| Traçabilité | Les décisions, horodatages et actions sont-ils correctement journalisés ? |
-| Tiers externes | Un fournisseur IA externe est-il impliqué contractuellement dans la chaîne d'incident ? |
-| Communication | Le message externe est-il aligné entre technique, juridique et direction ? |
+### Prompt injection / contexte empoisonné
 
-!!! warning "Bon réflexe"
-    En cas d'incident impliquant des données sensibles, engage rapidement les fonctions juridique, conformité et protection des données en parallèle du SOC.
+- isoler la source du contenu ;
+- identifier les actions déclenchées après sa lecture ;
+- retirer l'accès aux outils non nécessaires ;
+- corriger les règles de confiance sur contenu externe ;
+- ajouter un test ou un contrôle empêchant la répétition.
+
+### MCP compromis ou trop permissif
+
+- désactiver le serveur ;
+- révoquer ses secrets ;
+- vérifier les destinations réseau et actions utilisées ;
+- auditer sa configuration et provenance ;
+- réintroduire avec scopes minimaux seulement après validation.
+
+### Secret potentiellement exfiltré
+
+- considérer le secret compromis jusqu'à preuve contraire ;
+- révoquer/rotater ;
+- rechercher son usage après l'événement ;
+- identifier comment il est devenu accessible à l'agent ;
+- supprimer cette exposition structurelle.
+
+### Dépendance / skill / plugin suspect
+
+- geler la version ;
+- préserver package, lockfile et hash ;
+- vérifier mainteneur, release et advisories ;
+- analyser scripts d'installation/exécution ;
+- remplacer ou retirer si la confiance n'est pas rétablie.
+
+### Fraude / deepfake / demande urgente
+
+- valider l'identité hors bande ;
+- suspendre la transaction/action sensible ;
+- conserver messages et métadonnées ;
+- rechercher les autres cibles ;
+- revoir la procédure de validation humaine.
+
+---
+
+## Post-mortem
+
+Le retour d'expérience doit produire :
+
+- chronologie confirmée ;
+- cause racine et facteurs contributifs ;
+- actifs/données réellement concernés ;
+- contrôles qui ont fonctionné ou échoué ;
+- actions avec owner et échéance ;
+- preuve attendue pour fermer chaque action ;
+- mise à jour du threat model et des exercices.
+
+---
+
+## Communication et cadre légal
+
+Si des données personnelles, secrets clients ou systèmes réglementés sont concernés, associez rapidement les fonctions juridiques, privacy/DPO et conformité. Les obligations de notification dépendent de la juridiction, du type de donnée, du rôle de l'organisation et de l'impact réel ; vérifiez les textes et procédures internes applicables.
 
 ---
 
 ## Sources
 
-- [CISA AI](https://www.cisa.gov/ai)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [MITRE ATLAS](https://atlas.mitre.org/)
-- [ANSSI](https://www.ssi.gouv.fr/)
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
-- [GitHub Security Blog - Secure Code Game](https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/)
-
-!!! info "Positionnement"
-    Ce playbook est un gabarit de réponse défensive. Adapte-le à tes obligations légales, à ton secteur et à ton organisation interne (astreinte, RSSI, DPO, communication de crise).
-
----
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [CISA — AI](https://www.cisa.gov/ai)
+- [ANSSI](https://cyber.gouv.fr/)
+- [Anthropic Threat Intelligence](https://www.anthropic.com/threat-intelligence)
 
 ## Prochaine étape
 
-**[KPI & SOC pour menaces IA](kpi-soc-ia.md)** : transforme la réponse incident en pilotage mesurable et amélioration continue.
-
-Concepts clés couverts :
-
-- **RACI incident** — qui décide, qui exécute, qui valide
-- **Confinement rapide** — réduire l'impact dans la première heure
-- **Remédiation durable** — corriger causes racines et pas seulement les symptômes
-- **Mesure de performance** — piloter l'amélioration avec des KPI concrets
+Poursuivez avec **[KPI & SOC pour menaces IA](kpi-soc-ia.md)**, la page suivante dans le menu.

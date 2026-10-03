@@ -216,16 +216,7 @@ graph TD
 
 ## Prochaine étape
 
-**[Plugins d'équipe](plugins-equipe.md)** : packager et partager une configuration `.claude/` sécurisée et cohérente entre tous vos dépôts.
-
-Concepts clés couverts :
-
-- **Anatomie d'un plugin** — `.claude-plugin/plugin.json` et son contenu
-- **Mutualisation** — commands, skills, agents et hooks partagés
-- **Distribution** — référencer un plugin dans plusieurs projets
-- **Cohérence multi-IDE** — même config dans VS Code et JetBrains
-
----
+Poursuivez avec **[Plugins d'équipe](plugins-equipe.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -233,4 +224,3 @@ Concepts clés couverts :
 - [Anthropic — Settings & permissions](https://docs.anthropic.com/en/docs/claude-code/settings) - consulté le 2026-06-20
 - [Anthropic — Security](https://docs.anthropic.com/en/docs/claude-code/security) - consulté le 2026-06-20
 - [Anthropic — Identity and access management](https://docs.anthropic.com/en/docs/claude-code/iam) - consulté le 2026-06-20
-

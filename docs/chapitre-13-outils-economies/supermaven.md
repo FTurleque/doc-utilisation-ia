@@ -1,126 +1,65 @@
-# Supermaven
+# Supermaven — référence historique
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Supermaven est un assistant principalement orienté complétion inline rapide.
-Il vise à fluidifier l'écriture continue dans l'éditeur, avec une latence faible.
+Supermaven a été un assistant particulièrement connu pour sa complétion inline rapide. Son statut a cependant changé : l'équipe a rejoint **Cursor** en novembre 2024, puis a annoncé le **sunset de Supermaven en novembre 2025**.
 
----
-
-## À quoi sert Supermaven
-
-- Complétion inline à haute fréquence
-- Accélération des tâches de code répétitives
-- Support des gros contextes selon les capacités produit du moment
-
-!!! info "Positionnement"
-    Supermaven est surtout un moteur de complétion. Pour le chat outillé, combine-le avec d'autres briques comme **[Continue.dev](continue-dev.md)**.
+Cette page est donc conservée comme **référence historique** pour les utilisateurs existants. Elle ne doit plus servir de recommandation pour un nouveau déploiement d'équipe.
 
 ---
 
-## Quand l'utiliser
+## État du produit
 
-- Quand tu veux de la complétion inline très rapide
-- Quand tu écris beaucoup de code standard ou répétitif
-- Quand tu veux un moteur principal de saisie avec faible friction
+L'annonce officielle de sunset indique notamment :
 
-## Quand l'éviter
+- remboursement des abonnements existants au moment de l'annonce ;
+- maintien gratuit de l'autocomplétion pour les clients existants « for the foreseeable future » ;
+- arrêt des conversations agentiques Supermaven ;
+- recommandation aux utilisateurs VS Code de migrer vers Cursor.
 
-- Quand tu as déjà plusieurs moteurs inline actifs
-- Quand la tâche est surtout du chat ou du raisonnement
-- Quand ton processus impose un autre outil standardisé
-
----
-
-## Mise en œuvre
-
-### Installation
-
-=== "Visual Studio Code"
-    1. Installer l'extension Supermaven.
-    2. Se connecter au compte.
-    3. Activer la complétion inline.
-
-=== "IntelliJ IDEA"
-    1. Installer le plugin Supermaven depuis le marketplace.
-    2. Se connecter.
-    3. Activer la complétion et tester sur un fichier de projet.
-
-### Règle de cohabitation
-
-Pour éviter les collisions de suggestions:
-
-- Un moteur inline principal (Supermaven **ou** Copilot **ou** Codeium)
-- Les autres outils restent actifs pour des usages chat ponctuels
+La durée du maintien de l'autocomplétion n'est pas un engagement pérenne : vérifiez le statut du service avant de dépendre de Supermaven dans un workflow critique.
 
 ---
 
-## Cas d'usage pertinents
+## Pour une installation existante
 
-- Écriture rapide de code standard
-- Complétion dans de gros fichiers
-- Maintenance quotidienne avec faible friction
+Si Supermaven est encore actif dans votre IDE :
 
-Cas moins adaptés:
-
-- Analyse architecture lourde
-- Recommandations sécurité sans audit complémentaire
-
----
-
-## Exploiter son plein potentiel
-
-1. **Mesurer avant/après**
-   - Temps d'écriture
-   - Taux d'acceptation
-   - Rework en revue de code
-2. **Définir une hygiène de prompt/vérification**
-   - Même avec forte vitesse, garder tests et revue
-3. **Stack hybride recommandée**
-   - Complétion: Supermaven
-   - Chat local: **[Ollama](ollama.md)** + **[Continue.dev](continue-dev.md)**
-   - Cas complexe: Copilot (AI Credits) avec contexte filtré
+1. gardez un seul moteur de complétion inline actif pour éviter les collisions ;
+2. ne construisez pas de nouveau processus d'équipe spécifique à Supermaven ;
+3. documentez une solution de remplacement ;
+4. testez la migration avant une mise à jour IDE importante ;
+5. conservez tests, lint et revue comme validation du code accepté.
 
 ---
 
-## Exemple concret
+## Migration dans le contexte de ce dépôt
+
+Le parcours principal reste :
 
 ```text
-Scénario:
-- Tu dois produire rapidement des DTO, mappers et tests de base.
-
-Approche:
-1) Supermaven pour la complétion inline.
-2) Continue.dev local pour expliquer/refactorer les zones ambigües.
-3) Tests automatiques avant commit.
+Claude Code
+→ instructions projet / skills / MCP
+→ tests et outils déterministes
+→ backend Claude officiel ou local selon le besoin
 ```
 
----
+Si votre besoin est uniquement la **complétion inline**, évaluez un moteur actuellement maintenu dans votre IDE plutôt que d'ajouter une dépendance à Supermaven.
 
-## Résumé
-
-Supermaven se positionne comme un moteur de complétion rapide à grand volume.
-Il est idéal pour les phases d'écriture continue, à condition de garder une
-seule source principale de suggestions inline.
 
 ---
 
 ## Sources
 
-- Site officiel: [supermaven.com](https://supermaven.com/) (consulté le 2026-06-07)
-- Documentation officielle: [Supermaven Docs](https://docs.supermaven.com/) (consulté le 2026-06-07)
-- Tarification officielle: [Supermaven Pricing](https://supermaven.com/pricing) (consulté le 2026-06-07)
-- Politique de confidentialité: [Supermaven Privacy](https://supermaven.com/privacy) (consulté le 2026-06-07)
+- [Supermaven — Sunsetting Supermaven](https://supermaven.com/blog/sunsetting-supermaven) — consulté le 2026-09-28
+- [Supermaven — équipe rejoignant Cursor](https://supermaven.com/blog/cursor-announcement) — consulté le 2026-09-28
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-supermaven).
+
 ## Prochaine étape
 
-**[Comparaison des Outils](comparaison.md)** : choisir la meilleure combinaison selon ton IDE, ton budget, ton niveau de confidentialité et la complexité de tes tâches.
-
-Concepts clés couverts :
-
-- **Tableau comparatif** - vue transversale des solutions
-- **Choix par contrainte** - offline, AWS, entreprise, budget
-- **Économies estimées** - impact par stack d'outils
-- **Décision rapide** - arborescence actionnable en pratique
+Poursuivez avec **[Comparaison des Outils](comparaison.md)**, la page suivante dans le menu.

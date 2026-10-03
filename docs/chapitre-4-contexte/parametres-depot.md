@@ -1,113 +1,180 @@
-# Paramètres du Dépôt
+# Paramètres du dépôt — stratégie Claude-first
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-intermediate">Intermédiaire</span>
 
-Les paramètres du dépôt vivent dans le code source et sont partagés avec toute l'équipe.
-Ils priment sur les réglages individuels quand Copilot construit son contexte de travail.
+La configuration IA versionnée doit être lisible comme n'importe quelle autre configuration du projet : peu de fichiers globaux, des responsabilités claires et aucune règle de sécurité critique laissée à une simple phrase de prompt.
+
 
 ---
 
-## Couches de personnalisation
-
-Pensez la personnalisation Copilot comme un système en couches :
-
-- Instructions : garde-fous persistants
-- Skills : expertise réutilisable à la demande
-- Agents : persona spécialisé avec outils dédiés
-
-En combinant les trois, vous obtenez :
-
-- onboarding plus cohérent ;
-- moins de changements de contexte sur les tâches répétitives ;
-- workflows spécialisés par domaine.
-
----
-
-## Ce qui se configure au niveau dépôt
-
-Personnalisations courantes :
-
-- instructions de conventions de code.
-- skills réutilisables.
-- agents spécialisés par workflow.
-- règles de contexte et d'exclusion (`.copilotignore`, `.gitignore`).
-
-### Arborescence recommandée
+## Arborescence recommandée
 
 ```text
-.github/
-  copilot-instructions.md
-  instructions/
-    *.instructions.md
-  prompts/
-    *.prompt.md
-  agents/
-    *.agent.md
-  skills/
-    <skill-name>/SKILL.md
-AGENTS.md
+projet/
+├── CLAUDE.md
+├── .mcp.json
+└── .claude/
+    ├── settings.json
+    ├── rules/
+    ├── skills/
+    └── agents/
 ```
+
+Tous ces dossiers ne sont pas obligatoires. Ajoutez-les seulement lorsqu'un besoin réel apparaît.
 
 ---
 
-## Fichier AGENTS.md à la racine
+### `CLAUDE.md`
 
-Vous pouvez ajouter un fichier `AGENTS.md` à la racine pour référencer :
+Conventions et informations utiles dans presque toutes les sessions :
 
-- les agents disponibles.
-- les skills de référence.
-- les conventions d'orchestration (quand utiliser quel agent).
+- commandes build/test/lint ;
+- architecture du dépôt ;
+- règles essentielles ;
+- contraintes de contribution.
 
-Exemple minimal :
+### `.claude/rules/`
+
+Règles thématiques ou ciblées par chemins. Elles évitent d'allonger le contexte global.
+
+### `.claude/skills/`
+
+Procédures et expertises à charger à la demande.
+
+### `.claude/agents/`
+
+Subagents spécialisés avec contexte et outils propres.
+
+### `.claude/settings.json`
+
+Réglages partagés : permissions, hooks, environnement contrôlé, plugins et autres options prises en charge.
+
+### `.mcp.json`
+
+Serveurs MCP partagés au niveau projet. Gardez les secrets hors du fichier versionné.
+
+---
+
+## Ce qui doit rester local
+
+Ne versionnez pas les préférences ou secrets personnels.
+
+Exemples :
+
+```text
+CLAUDE.local.md
+.claude/settings.local.json
+```
+
+Ajoutez explicitement les fichiers locaux créés manuellement au `.gitignore` si nécessaire.
+
+Les credentials Claude Code sont gérés hors des fichiers projet ; ils ne doivent jamais être copiés dans `CLAUDE.md`, `settings.json` ou `.mcp.json`.
+
+---
+
+## `AGENTS.md` dans ce dépôt
+
+`AGENTS.md` peut servir de socle compatible avec plusieurs agents de développement. Claude Code sait le lire nativement dans les versions récentes, mais lorsqu'un `CLAUDE.md` projet existe, celui-ci est lu par défaut à sa place.
+
+La stratégie de ce dépôt est donc explicite :
 
 ```markdown
-# Catalogue d'agents
+@AGENTS.md
 
-## Agents disponibles
-- @security-auditor : audit de sécurité
-- @gem-documentation-writer : rédaction docs
-- @software-engineer : implémentation code
-
-## Skills recommandés
-- copilot-skill://agent-customization/SKILL.md
-- copilot-skill://api-standards/SKILL.md
+# Claude Code — instructions du projet
+...
 ```
 
----
+Cela évite une ambiguïté de chargement et permet de séparer :
 
-## Priorité pratique des fichiers
-
-Ordre de priorité conseillé pour éviter les conflits :
-
-1. `copilot-instructions.md` : règles globales stables
-2. `*.instructions.md` : règles ciblées par type de fichier
-3. `*.agent.md` : comportement de session
-4. `SKILL.md` : contexte riche invoqué à la demande
+- les instructions génériques aux agents ;
+- les consignes propres à Claude Code.
 
 ---
 
-## Sources
+## Sécurité : fichier d'instructions ou réglage technique ?
 
-- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
-- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+| Besoin | Mécanisme |
+|---|---|
+| « toujours écrire les docs en français » | `CLAUDE.md` / rule |
+| « ne jamais lire `.env` » | permission `deny` |
+| « empêcher certains `git push` » | permissions ou hook `PreToolUse` |
+| « exécuter un lint après une édition » | hook `PostToolUse` |
+| « accéder à Jira/GitHub/BDD » | MCP avec permissions minimales |
+
+Une règle textuelle est utile pour guider ; un réglage technique est nécessaire pour faire respecter une interdiction.
+
+---
+
+## Validation d'une configuration projet
+
+Après un changement Claude :
+
+```text
+/status
+```
+
+permet de voir les sources de settings chargées.
+
+```text
+/context
+```
+
+permet d'inspecter le contexte et les fichiers d'instructions/mémoire.
+
+Pour diagnostiquer une configuration :
+
+```bash
+claude doctor
+```
+
+Et pour ce dépôt documentaire :
+
+```powershell
+py -m mkdocs build
+```
+
+reste la validation fonctionnelle à exécuter lorsque l'environnement local est disponible.
+
+---
+
+## Exemple minimal pour `doc-utilisation-ia`
+
+Aujourd'hui, le socle utile est :
+
+
+À terme, les workflows de maintenance peuvent être migrés progressivement vers :
+
+```text
+.claude/
+├─ rules/
+│  └─ documentation.md
+├─ skills/
+│  ├─ doc-writer/SKILL.md
+│  └─ official-doc-audit/SKILL.md
+└─ agents/
+   └─ official-doc-auditor.md
+```
+
+L'objectif est de **réduire les instructions permanentes** et de charger les capacités spécialisées uniquement lorsqu'elles sont nécessaires.
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-parametres-depot).
 
 ## Prochaine étape
 
-**[IntelliJ IDEA — Configuration Contexte](intellij-contexte.md)** : exploiter l'analyse sémantique profonde (PSI) d'IntelliJ pour offrir à Copilot un contexte ultra-riche et des suggestions précises.
+Poursuivez avec **[VS Code — Claude](vscode-contexte.md)**, la page suivante dans le menu.
 
-Concepts clés couverts :
+## Sources
 
-- **Analyse PSI native** — Avantage unique d'IntelliJ pour les langages JVM
-- **Structure de projet recommandée** — Maven, Gradle, multi-modules
-- **Marquage des dossiers** — Sources, Tests, Resources, Excluded
-- **Fichiers importants** — `pom.xml`, `build.gradle`, `application.yml`, Javadoc
+Sources officielles consultées le **28 septembre 2026** :
 
-**[VS Code — Configuration Contexte](vscode-contexte.md)** : structurer votre projet VS Code pour offrir à Copilot le meilleur contexte possible et la meilleure expérience utilisateur.
-
-Concepts clés couverts :
-
-- **Instructions personnelles et par repository** — Personal-level vs Repository-level
-- **Arborescence optimale** — Structurer `.github/`, `src/`, composants pour VS Code
-- **Custom instructions officielles** — Niveaux de configuration et priorités
-- **Exemple complet** — Projet MERN avec instructions, patterns et conventions
-
+- [Claude Code — `.claude` directory](https://code.claude.com/docs/en/claude-directory)
+- [Claude Code — Memory / AGENTS.md](https://code.claude.com/docs/en/memory)
+- [Claude Code — Settings](https://code.claude.com/docs/en/settings)
+- [Claude Code — Skills](https://code.claude.com/docs/en/skills)
+- [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents)
+- [Claude Code — Hooks](https://code.claude.com/docs/en/hooks)

@@ -1,11 +1,13 @@
 {
+  "version": 1,
   "hooks": {
-    "PostToolUse": [
+    "agentStop": [
       {
         "type": "command",
-        "windows": "powershell -NoProfile -Command \"$input = [Console]::In.ReadToEnd() | ConvertFrom-Json; $toolName = $input.toolName; $filePath = $input.toolInput.filePath; if ($toolName -in @('create_file','replace_string_in_file','multi_replace_string_in_file') -and $filePath -match 'docs[\\\\/].*\\.md$|mkdocs\\.yml$') { Write-Host '🔍 Validation MkDocs en cours...'; $result = py -m mkdocs build --strict 2>&1; if ($LASTEXITCODE -ne 0) { $output = @{ continue = $false; stopReason = \"Erreur MkDocs build : $($result -join ' ')\"; systemMessage = \"La modification a causé une erreur MkDocs. Corrige avant de continuer.\" } | ConvertTo-Json; Write-Output $output; exit 2 } else { Write-Host '✅ MkDocs build OK' } }\"",
+        "bash": "python -m mkdocs build --strict && python scripts/validate-links.py",
+        "powershell": "$ErrorActionPreference = 'Stop'; python -m mkdocs build --strict; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }; python scripts/validate-links.py; exit $LASTEXITCODE",
         "cwd": ".",
-        "timeout": 60
+        "timeoutSec": 120
       }
     ]
   }

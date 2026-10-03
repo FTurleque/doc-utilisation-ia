@@ -13,6 +13,9 @@ site/
 .vscode/
 .idea/
 
+# Claude Code local project settings
+.claude/settings.local.json
+
 # OS
 .DS_Store
 Thumbs.db

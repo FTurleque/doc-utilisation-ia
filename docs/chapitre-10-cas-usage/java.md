@@ -1,280 +1,150 @@
-﻿# Java — Cas d'Usage
+# Java — Cas d'usage avec Claude Code
 
-## Stack couverte
-
-- **Langage** : Java 17 ou 21 (LTS)
-- **Framework** : Spring Boot 3.x
-- **Build** : Maven ou Gradle
-- **Tests** : JUnit 5 + Mockito + AssertJ
-- **IDE** : IntelliJ IDEA (recommandé) ou VS Code avec Java Extension Pack
+Claude Code fonctionne bien sur les projets Java lorsque le dépôt expose son **JDK réel**, son wrapper Maven/Gradle, ses tests et ses conventions. Ne partez pas d'une version Java ou Spring écrite dans cette page : lisez le projet.
 
 ---
 
-## IntelliJ IDEA : l'IDE optimal pour Java
+## 1. Commencer par la configuration réelle
 
-Avec Java, IntelliJ IDEA offre l'expérience Copilot la plus riche grâce au PSI (Program Structure Interface) :
+Claude doit inspecter en priorité :
 
-- Analyse sémantique complète — Copilot voit la vraie structure du code, pas juste du texte
-- Résolution des types génériques (`List<UserDTO>` comprise nativement)
-- Navigation bean Spring — les `@Autowired` et `@Component` sont analysés
-- Auto-import intelligent — les suggestions Copilot viennent avec les bons imports
-
----
-
-## Structure de projet Spring Boot
-
+```text
+pom.xml / build.gradle(.kts)
+mvnw / gradlew
+.tool-versions / .sdkmanrc / Dockerfile
+src/main/java/
+src/test/java/
 ```
-mon-projet-spring/
-├── .github/
-│   ├── copilot-instructions.md
-│   └── instructions/
-│       ├── spring-components.instructions.md
-│       └── tests.instructions.md
-├── src/
-│   ├── main/
-│   │   └── java/com/example/monprojet/
-│   │       ├── MonProjetApplication.java
-│   │       ├── config/
-│   │       ├── controller/
-│   │       │   └── UserController.java
-│   │       ├── service/
-│   │       │   ├── UserService.java
-│   │       │   └── UserServiceImpl.java
-│   │       ├── repository/
-│   │       │   └── UserRepository.java
-│   │       ├── entity/
-│   │       │   └── User.java
-│   │       └── dto/
-│   │           ├── CreateUserRequest.java
-│   │           └── UserResponse.java
-│   └── test/
-│       └── java/com/example/monprojet/
-│           ├── controller/
-│           └── service/
-├── pom.xml
-└── application.yml
+
+Demande :
+
+```text
+Avant de modifier ce projet Java :
+- identifie la version JDK et le build tool ;
+- trouve les conventions de package ;
+- trouve un service et un test représentatifs ;
+- donne les commandes de test et build réellement disponibles.
 ```
 
 ---
 
-## Configuration Copilot pour Java/Spring
-
-### `.github/copilot-instructions.md`
+## 2. `CLAUDE.md` Java minimal
 
 ```markdown
----
-applyTo: 'src/**/*.java'
----
-
-# Conventions Java du projet
-
-## Stack
-- Java 21 (utiliser les features Java 21: records, text blocks, pattern matching)
-- Spring Boot 3.2
-- Spring Data JPA avec Hibernate
-- MapStruct pour les mappings DTO ↔ Entity
-- Validation: Jakarta Validation (@Valid, @NotNull, @Size, etc.)
-- Tests: JUnit 5 + Mockito + AssertJ
-
-## Conventions
-- Entités JPA: annotées @Entity, @Table, utiliser Lombok @Data ou records pour les simples
-- DTOs: utiliser des records Java pour les DTOs immuables
-- Services: interface + implémentation (UserService + UserServiceImpl)
-- Repositories: étendre JpaRepository<Entity, ID>
-- Exceptions: créer des exceptions métier spécifiques (UserNotFoundException, etc.)
-
-## Patterns interdits
-- Pas de @Autowired sur les champs (utiliser injection par constructeur)
-- Pas d'entités JPA retournées directement dans les controllers (utiliser des DTOs)
-- Pas de logique métier dans les controllers
+## Java
+- Use the project Maven/Gradle wrapper.
+- Run targeted tests before the full suite.
+- Follow existing package and dependency-injection patterns.
+- Do not introduce Lombok, MapStruct or another library unless already used or explicitly requested.
+- Preserve public API compatibility unless the task says otherwise.
 ```
 
-### `.github/instructions/spring-components.instructions.md`
+Ajoutez la commande exacte, par exemple `./mvnw test` ou `./gradlew test`, d'après le dépôt.
 
-```markdown
----
-applyTo: 'src/main/java/**/controller/*.java'
 ---
 
-## Pattern Controller Spring
+## 3. Pattern : corriger un service
 
-- Annoter avec @RestController et @RequestMapping("/api/v1/resource")
-- Utiliser @Valid sur les @RequestBody
-- Retourner ResponseEntity<T> avec le status code explicite
-- Swagger/OpenDoc: annoter avec @Operation et @ApiResponse
+```text
+Le bug se trouve dans `OrderService`.
+Trouve d'abord le test le plus proche et reproduis le problème.
+Compare avec les services voisins pour respecter les patterns du projet.
+Applique le correctif minimal puis exécute le test ciblé.
+```
 
-## Template de méthode
+Claude doit utiliser les types, exceptions et abstractions déjà présents plutôt que générer automatiquement une nouvelle couche.
+
+---
+
+## 4. Pattern : refactoring Java
+
+Pour un refactor de signature ou de package :
+
+```text
+1. trouve tous les appelants ;
+2. identifie les APIs publiques ;
+3. liste les tests impactés ;
+4. propose un ordre de migration buildable ;
+5. modifie une étape ;
+6. compile/teste avant la suivante.
+```
+
+Sur un projet JVM volumineux, l'intégration JetBrains peut compléter le travail de Claude avec les capacités de navigation/refactoring de l'IDE.
+
+---
+
+## 5. DTO, records et langage moderne
+
+N'utilisez un record, sealed class ou autre feature moderne que si la version JDK du projet le permet et si le pattern correspond au code existant.
+
+Exemple :
 
 ```java
-@PostMapping
-@Operation(summary = "Créer une ressource")
-@ApiResponse(responseCode = "201", description = "Ressource créée")
-@ApiResponse(responseCode = "400", description = "Données invalides")
-public ResponseEntity<UserResponse> create(
-    @Valid @RequestBody CreateUserRequest request
-) {
-    UserResponse response = userService.create(request);
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
-}
-```
-```
-
----
-
-## Cas d'usage pratiques
-
-### 1. Entité JPA avec Java 21
-
-```java
-// Entité JPA User avec Jakarta Persistence
-// Champs: id (UUID généré auto), email (unique, non null), 
-//         username, createdAt (auto), roles (Set<Role>)
-// Utiliser Lombok @Builder et @NoArgsConstructor pour JPA
-@Entity
-@Table(name = "users")
-public class User {
-    // Copilot génère les champs avec les annotations correctes
-```
-
-### 2. Repository Spring Data avec requêtes custom
-
-```java
-// Repository Spring Data pour User
-// Méthodes custom: findByEmail, findByUsernameContainingIgnoreCase,
-// findAllByRolesContaining, findAllActiveUsersSince(LocalDateTime)
-@Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
-    // Copilot génère les signatures de méthodes Spring Data
-```
-
-### 3. Service avec logique métier
-
-```java
-// Implémentation du service User
-// create: valider unicité email, hasher mot de passe, sauvegarder, retourner DTO
-// getById: lancer UserNotFoundException si absent
-// update: vérifier que l'utilisateur existe, mettre à jour les champs fournis
-@Service
-@Transactional
-@RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
-    
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
-    
-    // Copilot génère les méthodes avec la logique appropriée
-```
-
-### 4. Tests JUnit 5 avec Mockito via Copilot Chat
-
-```
-Dans Copilot Chat (IntelliJ) :
-"Génère les tests JUnit 5 + Mockito pour UserServiceImpl.create().
-Utilise @ExtendWith(MockitoExtension.class).
-Mock : UserRepository, PasswordEncoder, UserMapper.
-Couvre :
-- Création réussie : verify que save() est appelé, assertThat sur le retour
-- Email déjà utilisé : when(repository.existsByEmail()).thenReturn(true) → UserAlreadyExistsException
-- Utilise AssertJ pour les assertions"
-```
-
----
-
-## Records Java 21 pour les DTOs
-
-Les records Java sont idéaux pour les DTOs — Copilot les génère facilement :
-
-```java
-// DTO de réponse pour User (record Java)
-// Exposer: id, email, username, createdAt, rôles
-// Ne pas exposer: mot de passe, date de dernière connexion
-public record UserResponse(
-    // Copilot complète les champs avec les bons types
-) {}
-
-// DTO de création avec validation Jakarta
-// email: @Email @NotBlank
-// password: @NotBlank @Size(min=8)  
-// username: @NotBlank @Size(min=2, max=50) @Pattern(alnum + underscore)
 public record CreateUserRequest(
-    // Copilot génère avec les annotations de validation
+    String email,
+    String displayName
 ) {}
 ```
 
----
+La documentation doit éviter « utilisez Java 21 » comme règle universelle : un service maintenu sur une autre LTS peut avoir de bonnes raisons de rester ainsi.
 
-## Configuration IDE
-
-=== ":simple-intellijidea: IntelliJ IDEA"
-    Paramètres recommandés pour maximiser l'efficacité Copilot + Java :
-    
-    1. **Settings → Editor → Code Style → Java** : configurez selon les conventions du projet
-    2. **Settings → Build → Compiler** : activez "Build project automatically"
-    3. **Settings → GitHub Copilot** : conservez le delay à 300ms pour Java (analyse PSI légèrement plus lente)
-    4. Ouvrez les fichiers liés dans des onglets : `User.java`, `UserService.java`, `UserRepository.java`
-
-=== ":material-microsoft-visual-studio-code: VS Code"
-    ```json
-    // .vscode/settings.json
-    {
-        "java.configuration.runtimes": [
-            {
-                "name": "JavaSE-21",
-                "path": "/path/to/jdk21",
-                "default": true
-            }
-        ],
-        "java.format.settings.profile": "GoogleStyle",
-        "java.saveActions.organizeImports": true,
-        "github.copilot.enable": {
-            "java": true
-        }
-    }
-    ```
-    
-    Extensions Java requises :
-    - Extension Pack for Java (`vscjava.vscode-java-pack`)
-    - Spring Boot Extension Pack (`vmware.vscode-boot-dev-pack`)
+Un record fournit des champs finaux et des méthodes générées, mais ne rend pas profondément immuables les objets qu'il référence. Si un composant contient une collection mutable, vérifiez les copies défensives nécessaires. Son `toString()` expose les composants : évitez d'y placer un secret qui pourrait être journalisé.
 
 ---
 
-## Utiliser Copilot pour générer la documentation Javadoc
+## 6. Tests
 
-```java
-/**
- * [Positionnez le curseur ici et demandez à Copilot de générer le Javadoc]
- * Ou utilisez Copilot Chat : "Ajoute le Javadoc complet pour cette méthode"
- */
-public UserResponse create(CreateUserRequest request) {
+Claude peut générer des tests à partir du style existant :
+
+```text
+Ajoute des tests pour `PricingService.calculate`.
+Utilise le framework, les assertions et les fixtures déjà employés dans ce module.
+Couvre le cas nominal, les bornes métier et les erreurs observables.
+Exécute uniquement cette classe de test d'abord.
 ```
 
+Évitez d'imposer Mockito, AssertJ ou Testcontainers si le projet utilise autre chose.
+
 ---
 
-## Workflow Maven avec Copilot
+## 7. Build et diagnostic
 
-```xml
-<!-- pom.xml : Copilot peut vous aider à trouver les bonnes dépendances -->
-<!-- Dans un commentaire XML, décrivez ce dont vous avez besoin : -->
-<!-- Dépendance pour JWT authentication avec Spring Security, version récente -->
-<dependency>
-    <!-- Copilot complète avec le bon groupId/artifactId/version -->
-</dependency>
+Lorsque le build échoue :
+
+```text
+Exécute le wrapper du projet avec le test/module ciblé.
+Analyse la première cause racine, pas les erreurs en cascade.
+Corrige-la puis relance la même commande.
 ```
+
+Stockez les logs très longs dans un fichier et recherchez les premières erreurs utiles plutôt que d'injecter toute la sortie dans le contexte.
+
+---
+
+## 8. Dépendances
+
+Avant d'ajouter une dépendance Java :
+
+- vérifier si une dépendance existante couvre le besoin ;
+- vérifier la documentation officielle actuelle ;
+- respecter le BOM/dependency management du projet ;
+- exécuter les tests et l'analyse de dépendances si disponible.
 
 ---
 
 ## Sources
 
-- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+- [Java — contrats des record classes](https://docs.oracle.com/en/java/javase/25/language/records.html) — vérifié le 2026-10-03 ; adapter au JDK du projet
+
+- [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
+- [Claude Code — common workflows](https://code.claude.com/docs/en/common-workflows) — consulté le 2026-09-28
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-10-cas-usage.md#page-chapitre-10-cas-usage-java).
 
 ## Prochaine étape
 
-**[Java & Spring Boot](java-spring-boot.md)** : maîtriser les patterns Spring Boot pour les backends enterprise et comment Copilot génère des services, controllers et tests de haute qualité.
-
-Concepts clés couverts :
-
-- **Custom Instructions pour Spring Boot** — Configuration Copilot par couche
-- **Pattern Service complet** — Service class optimisée pour la génération
-- **Entités JPA annotées** — Maximiser le contexte pour Copilot
-- **Tests avec Copilot Chat** — Générer tests unitaires complets avec Mockito
+Poursuivez avec **[Java & Spring Boot](java-spring-boot.md)**, la page suivante dans le menu.

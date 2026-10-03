@@ -137,10 +137,13 @@ graph LR
 
 ---
 
+## Prochaine étape
+
+Poursuivez avec **[Archives Copilot par chapitre — Accueil](../appendices/copilot/accueil.md)**, la page suivante dans le menu.
+
 ## Sources
 
 - [Anthropic — Claude Code overview](https://docs.anthropic.com/en/docs/claude-code/overview) - consulté le 2026-06-20
 - [Anthropic — Settings](https://docs.anthropic.com/en/docs/claude-code/settings) - consulté le 2026-06-20
 - [Anthropic — Costs & usage](https://docs.anthropic.com/en/docs/claude-code/costs) - consulté le 2026-06-20
 - [GitHub Docs — GitHub Copilot](https://docs.github.com/en/copilot) - consulté le 2026-06-20
-

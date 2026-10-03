@@ -1,100 +1,47 @@
-﻿# Machine Learning avec GitHub Copilot
+# Machine Learning avec Claude Code
 
 <span class="badge-intermediate">Intermédiaire</span>
 
-Ce chapitre explore le Machine Learning et le Deep Learning sous deux
-angles complémentaires : comprendre les **fondamentaux théoriques**
-(algorithmes, statistiques, réseaux de neurones) et utiliser **GitHub
-Copilot pour accélérer** chaque étape du workflow ML — de
-l'exploration des données au déploiement en production.
+Ce chapitre couvre le Machine Learning sous deux angles complémentaires : comprendre les **fondamentaux théoriques** et utiliser **Claude Code comme agent de développement** pour rendre les expérimentations reproductibles, testables et vérifiables.
+
 
 ---
 
-## 🤖 Parcourir ce Chapitre
+## Parcourir ce chapitre
 
 <div class="grid cards" markdown>
 
-- :material-brain: **Concepts Fondamentaux**
+- :material-brain: **[Concepts fondamentaux](concepts-fondamentaux.md)**
 
-    ---
+    IA, Machine Learning, Deep Learning, types d'apprentissage et métriques.
 
-    Intelligence artificielle, Machine Learning, Deep Learning :
-    définitions, historique, et les 3 types d'apprentissage.
+- :material-function: **[Algorithmes courants](algorithmes-courants.md)**
 
-    [Commencer ici →](concepts-fondamentaux.md)
+    Régression, classification, clustering et choix d'une baseline.
 
-- :material-function: **Algorithmes Courants**
+- :material-robot-outline: **[Claude Code pour le workflow ML](claude-workflow-ml.md)**
 
-    ---
+    Parcours principal : cadrage, exploration, pipelines reproductibles, tests, évaluation, subagents et MLOps.
 
-    Régression, classification, clustering : panorama des grands
-    algorithmes ML supervisés et non supervisés.
+- :simple-python: **[Python & Data Science](python-data-science.md)**
 
-    [Voir les algorithmes →](algorithmes-courants.md)
+    pandas, NumPy, scikit-learn et organisation d'un projet data avec Claude.
 
-- :material-robot-outline: **Copilot pour le ML**
+- :simple-jupyter: **[Notebooks Jupyter](notebooks-jupyter.md)**
 
-    ---
+    Bonnes pratiques de collaboration IA sur les notebooks et limites à connaître.
 
-    Comment Copilot assiste à chaque étape du workflow ML :
-    définition du problème, préparation des données, entraînement,
-    évaluation.
+- :material-rocket-launch: **[MLOps & Déploiement](mlops-deploiement.md)**
 
-    [Découvrir le workflow →](copilot-workflow-ml.md)
+    Passage de l'expérimentation au pipeline versionné, testé et monitoré.
 
-- :simple-python: **Python & Data Science**
+- :material-scale-balance: **[Comparaison écosystèmes ML](comparaison-ecosystemes-ml.md)**
 
-    ---
+    Python, R, Julia et critères de choix techniques.
 
-    Copilot + pandas, numpy, scikit-learn. Patterns optimaux pour
-    l'exploration de données et l'entraînement de modèles.
+- :material-compare: **[Comparaison des outils](comparaison-outils.md)**
 
-    [Guide pratique →](python-data-science.md)
-
-- :material-layers: **Deep Learning**
-
-    ---
-
-    Réseaux de neurones, perceptron, CNN. Copilot avec TensorFlow,
-    Keras et PyTorch.
-
-    [Niveau expert →](deep-learning.md)
-
-- :simple-jupyter: **Notebooks Jupyter**
-
-    ---
-
-    Copilot dans les notebooks Jupyter : complétion inline,
-    génération de cellules, documentation automatique.
-
-    [Utiliser Copilot en notebook →](notebooks-jupyter.md)
-
-- :material-rocket-launch: **MLOps & Déploiement**
-
-    ---
-
-    De l'expérimentation à la production : versioning de modèles,
-    pipelines CI/CD ML, monitoring avec Copilot.
-
-    [Aller en production →](mlops-deploiement.md)
-
-- :material-scale-balance: **Comparaison Écosystèmes ML**
-
-    ---
-
-    Python vs R vs Julia pour le Machine Learning : forces,
-    faiblesses, intégration Copilot.
-
-    [Comparer les langages →](comparaison-ecosystemes-ml.md)
-
-- :material-compare: **Comparaison des Outils**
-
-    ---
-
-    scikit-learn vs TensorFlow vs PyTorch vs Keras : quel framework
-    pour quel usage ?
-
-    [Choisir son framework →](comparaison-outils.md)
+    scikit-learn, TensorFlow, PyTorch, Keras et autres frameworks selon le besoin.
 
 </div>
 
@@ -102,75 +49,80 @@ l'exploration des données au déploiement en production.
 
 ## Prérequis
 
-!!! info "Ce dont tu as besoin"
-        - **Python 3.10+** installé sur ton poste
-        - **GitHub Copilot** activé dans VS Code ou IntelliJ IDEA
-        - Notions de base en Python (variables, fonctions, listes) — voir
-            [chapitre 2 du livre de référence](../chapitre-10-cas-usage/python.md)
-        - Aucune compétence mathématique avancée requise pour les
-            fondamentaux
+!!! info "Ce dont vous avez besoin"
+    - Python installé et un environnement virtuel par projet ;
+    - Claude Code installé, en CLI ou via son intégration IDE ;
+    - notions de base en Python ;
+    - Git pour versionner code, configuration et protocoles d'expérience.
+
+Les numéros de versions de bibliothèques évoluent vite : préférez les contraintes réellement supportées par votre projet (`pyproject.toml`, lockfile, image Docker) plutôt qu'une version figée dans cette documentation.
 
 ---
 
-## Vision d'Ensemble
+## Le workflow ML : la boucle scientifique avant l'outil
 
-<div class="mermaid-large">
 ```mermaid
-%%{init: {"flowchart": {"useMaxWidth": true}}}%%
 graph TB
-        A[🎯 Définir le problème]
-        B[📦 Collecter les données]
-        C[🔧 Préparer les données]
-        D[🤖 Choisir un algorithme]
-        E[🧪 Entraîner le modèle]
-        F[📊 Évaluer les performances]
-        G{Résultat OK ?}
-        H[🚀 Déployer]
-        I[📈 Monitorer]
-
-        A --> B
-        B --> C
-        C --> D
-        D --> E
-        E --> F
-        F --> G
-        G -- Non --> D
-        G -- Oui --> H
-        H --> I
+    A["Définir le problème"] --> B["Collecter / qualifier les données"]
+    B --> C["Préparer sans fuite"]
+    C --> D["Établir une baseline"]
+    D --> E["Entraîner"]
+    E --> F["Évaluer"]
+    F --> G{"Critères atteints ?"}
+    G -- Non --> H["Formuler une nouvelle hypothèse"]
+    H --> C
+    G -- Oui --> I["Versionner et déployer"]
+    I --> J["Monitorer"]
 ```
-</div>
 
-!!! tip "Copilot à chaque étape"
-    GitHub Copilot peut assister à **toutes** les étapes de ce
-    workflow : génération de code de nettoyage de données,
-    suggestions d'algorithmes, écriture de pipelines d'entraînement,
-    création de tests de modèle, et même scripts de déploiement.
+Claude Code peut accélérer cette boucle en lisant le dépôt, en écrivant les scripts, en exécutant les commandes, en corrigeant les erreurs et en comparant les résultats. Il ne remplace pas le choix des hypothèses, la définition d'une métrique métier ni la décision finale sur la validité scientifique d'une expérience.
 
 ---
 
-## Ressources du Chapitre
+## Les règles Claude les plus utiles en ML
 
-| Page | Niveau | Thème |
-|------|--------|-------|
-| [Concepts Fondamentaux](concepts-fondamentaux.md) | Débutant | IA, ML, DL, types d'apprentissage |
-| [Algorithmes Courants](algorithmes-courants.md) | Intermédiaire | Régression, classification, clustering |
-| [Copilot pour le ML](copilot-workflow-ml.md) | Intermédiaire | Workflow ML assisté par Copilot |
-| [Python & Data Science](python-data-science.md) | Intermédiaire | pandas, numpy, scikit-learn |
-| [Deep Learning](deep-learning.md) | Expert | Réseaux neurones, TensorFlow, PyTorch |
-| [Notebooks Jupyter](notebooks-jupyter.md) | Intermédiaire | Copilot dans Jupyter |
-| [MLOps & Déploiement](mlops-deploiement.md) | Expert | CI/CD ML, monitoring |
-| [Comparaison Écosystèmes ML](comparaison-ecosystemes-ml.md) | Intermédiaire | Python vs R vs Julia |
-| [Comparaison des Outils](comparaison-outils.md) | Intermédiaire | sklearn vs TF vs PyTorch |
+Mettez dans `CLAUDE.md` uniquement les invariants du projet :
+
+```markdown
+## Machine Learning
+- Tests: `pytest -q`
+- Lint: `ruff check .`
+- Never fit preprocessing on the final test set.
+- Report the dataset split with every metric.
+- Keep training/evaluation commands reproducible.
+- Do not commit confidential raw data or credentials.
+```
+
+Pour les procédures longues, utilisez `.claude/rules/` et `.claude/skills/` plutôt que de gonfler `CLAUDE.md`.
 
 ---
+
+## Validation avant confiance
+
+Une réponse textuelle n'est pas une preuve d'expérience ML. Demandez systématiquement :
+
+1. quelle commande a été exécutée ;
+2. sur quel split/dataset ;
+3. quelle métrique a été mesurée ;
+4. quels tests ont été passés ;
+5. quels fichiers et artefacts ont été produits.
+
+Cette discipline rejoint le fonctionnement agentique recommandé par Anthropic : l'agent doit récupérer du **ground truth** depuis son environnement pendant l'exécution plutôt que se fier uniquement à son raisonnement interne.
+
+---
+
+## Sources
+
+- [Claude Code — fonctionnalités et extensions](https://code.claude.com/docs/en/features-overview) — consulté le 2026-09-28
+- [Claude Code — répertoire `.claude/`](https://code.claude.com/docs/en/claude-directory) — consulté le 2026-09-28
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-index).
 
 ## Prochaine étape
 
-**[Concepts Fondamentaux du Machine Learning](concepts-fondamentaux.md)** : comprendre les bases théoriques avant de coder.
-
-Concepts clés couverts :
-
-- **IA, ML, Deep Learning** — Définitions et relations entre ces trois termes (poupées russes)
-- **Historique** — Du perceptron (1957) aux Transformers (2017) et à l'IA générative (2022)
-- **3 types d'apprentissage** — Supervisé (données étiquetées), non supervisé (clustering), par renforcement (récompenses)
-- **Exemples concrets** — Filtre antispam, reconnaissance d'images, segmentation de clients
+Poursuivez avec **[Concepts Fondamentaux](concepts-fondamentaux.md)**, la page suivante dans le menu.

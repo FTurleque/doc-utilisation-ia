@@ -1,44 +1,57 @@
 ---
-description: 'Guidelines for structuring code and projects to maximize GitHub Copilot effectiveness through better context management'
+description: 'Context engineering guidance for editing this Claude-first repository with GitHub Copilot'
 applyTo: '**'
 ---
 
-# Context Engineering
+# Context engineering dans ce dépôt
 
-Principles for helping GitHub Copilot understand your codebase and provide better suggestions.
+Ces instructions s'exécutent dans **GitHub Copilot**, mais le dépôt lui-même est Claude Code-first. Utilise les formats Copilot pour ton propre contexte ; n'en déduis pas que les pages génériques doivent devenir Copilot-first.
 
-## Project Structure
+## Sources de contexte du projet
 
-- **Use descriptive file paths**: `src/auth/middleware.ts` > `src/utils/m.ts`. Copilot uses paths to infer intent.
-- **Colocate related code**: Keep components, tests, types, and hooks together. One search pattern should find everything related.
-- **Export public APIs from index files**: What's exported is the contract; what's not is internal. This helps Copilot understand boundaries.
+Lire en priorité :
 
-## Code Patterns
+1. `CLAUDE.md` — orientation Claude Code et règles spécifiques ;
+2. `AGENTS.md` — workflow commun ;
+3. `.github/copilot-instructions.md` — règles propres à Copilot ;
+4. `mkdocs.yml` — structure de navigation réelle ;
+5. les fichiers proches de la page ou du template modifié.
 
-- **Prefer explicit types over inference**: Type annotations are context. `function getUser(id: string): Promise<User>` tells Copilot more than `function getUser(id)`.
-- **Use semantic names**: `activeAdultUsers` > `x`. Self-documenting code is AI-readable code.
-- **Define constants**: `MAX_RETRY_ATTEMPTS = 3` > magic number `3`. Named values carry meaning.
+Ne crée pas de `COPILOT.md` : ce dépôt utilise les mécanismes Copilot sous `.github/` et les mécanismes Claude sous `.claude/`.
 
-## Working with Copilot
+## Contextualiser avant d'éditer
 
-- **Keep relevant files open in tabs**: Copilot uses open tabs as context signals. Working on auth? Open auth-related files.
-- **Position cursor intentionally**: Copilot prioritizes code near your cursor. Put cursor where context matters.
-- **Use Copilot Chat for complex tasks**: Inline completions have minimal context. Chat mode sees more files.
+- Lire le fichier cible et son index de chapitre.
+- Chercher les mêmes termes dans le dépôt avant d'introduire une nouvelle convention.
+- Pour un déplacement/renommage, identifier les liens et entrées `mkdocs.yml` dépendants.
+- Pour un fait externe évolutif, consulter une source officielle récente avant modification.
 
-## Context Hints
+## Limiter le bruit
 
-- **Add a COPILOT.md file**: Document architecture decisions, patterns, and conventions Copilot should follow.
-- **Use strategic comments**: At the top of complex modules, briefly describe the flow or purpose.
-- **Reference patterns explicitly**: "Follow the same pattern as `src/api/users.ts`" gives Copilot a concrete example.
+- Charger les fichiers utiles plutôt que de supposer qu'un grand dossier entier est nécessaire.
+- Pour une modification locale, ne pas réécrire des chapitres sans rapport.
+- Séparer les faits vérifiés des recommandations éditoriales.
+- Une page Copilot de référence peut rester spécifique à Copilot ; une page générique doit respecter l'orientation Claude-first.
 
-## Multi-File Changes
+## Structure lisible par les assistants
 
-- **Describe scope first**: Tell Copilot all files involved before asking for changes. "I need to update the User model, API endpoint, and tests."
-- **Work incrementally**: One file at a time, verifying each change. Don't ask for everything at once.
-- **Check understanding**: Ask "What files would you need to see?" before complex refactors.
+Des noms et chemins explicites améliorent la recherche pour tous les agents, pas seulement Copilot :
 
-## When Copilot Struggles
+- noms de fichiers descriptifs ;
+- concepts proches regroupés ;
+- commandes de validation documentées ;
+- instructions persistantes courtes et non contradictoires ;
+- templates spécialisés séparés du contenu publié.
 
-- **Missing context**: Open the relevant files in tabs, or explicitly paste code snippets.
-- **Stale suggestions**: Copilot may not see recent changes. Re-open files or restart the session.
-- **Generic answers**: Be more specific. Add constraints, mention frameworks, reference existing code.
+## Changements multi-fichiers
+
+Avant un changement transverse :
+
+1. établir la liste des fichiers réellement touchés ;
+2. préserver les artefacts Copilot lorsqu'ils restent utiles ;
+3. ajouter/mettre à jour l'équivalent Claude lorsque le workflow doit être utilisable par Claude Code ;
+4. exécuter `python -m mkdocs build --strict` et `python scripts/validate-links.py` si le site est affecté.
+
+## En cas d'incertitude
+
+Ne transforme pas une hypothèse sur le comportement de Claude Code, Copilot, un IDE ou un outil tiers en règle du dépôt. Vérifie la documentation officielle ou conserve une formulation explicitement conditionnelle.

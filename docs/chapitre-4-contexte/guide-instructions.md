@@ -1,327 +1,239 @@
-# Instructions Copilot (.instructions.md)
+# Instructions projet — Claude Code
 
 <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
-## Présentation
-Les fichiers `.instructions.md` sont des fichiers Markdown spéciaux que VS Code injecte automatiquement dans le contexte de Copilot. Ils permettent de définir des **règles persistantes** qui s'appliquent à toutes vos interactions avec Copilot, sans avoir à les répéter à chaque prompt.
+Les instructions persistantes doivent contenir ce que vous ne voulez **pas réexpliquer à chaque session** : commandes de build, architecture, conventions, contraintes et pièges du projet.
+
+Dans ce dépôt, le mécanisme principal est désormais **Claude Code**.
 
 ---
 
-## Deux types d'instructions
+## 1. `CLAUDE.md` — instructions principales du projet
 
-### 1. Instructions globales — `copilot-instructions.md`
+Claude Code charge les instructions projet depuis :
 
-Le fichier `.github/copilot-instructions.md` s'applique à **toutes** les interactions Copilot dans le workspace.
-
-```
-mon-projet/
-└── .github/
-    └── copilot-instructions.md   ← S'applique partout
+```text
+./CLAUDE.md
 ```
 
-### 2. Instructions ciblées — `*.instructions.md`
+ou :
 
-Les fichiers dans `.github/instructions/` peuvent cibler des fichiers spécifiques via le champ `applyTo` du frontmatter.
+```text
+./.claude/CLAUDE.md
+```
 
+Pour une équipe, versionnez ce fichier avec le dépôt.
+
+### Que mettre dans `CLAUDE.md` ?
+
+```markdown
+# Mon projet
+
+## Commandes
+- Build : `npm run build`
+- Tests : `npm test`
+- Lint : `npm run lint`
+
+## Architecture
+- API : `src/api/`
+- Domaine : `src/domain/`
+- Accès aux données : `src/repositories/`
+
+## Conventions
+- TypeScript strict
+- Pas de `any` sans justification
+- Validation des entrées avec Zod
+- Tests requis pour toute correction de bug
 ```
-mon-projet/
-└── .github/
-    └── instructions/
-        ├── typescript.instructions.md    ← Uniquement les fichiers .ts
-        ├── react.instructions.md         ← Uniquement les composants React
-        ├── tests.instructions.md         ← Uniquement les fichiers de test
-        └── api.instructions.md           ← Uniquement src/api/**
-```
+
+Claude recommande des instructions :
+
+- **spécifiques** ;
+- **vérifiables** ;
+- **courtes** ;
+- sans contradictions avec les autres fichiers d'instructions.
+
+Une cible raisonnable est **moins de 200 lignes** par `CLAUDE.md`.
 
 ---
 
-## Structure d'un fichier .instructions.md
+## 2. `AGENTS.md` — instructions partageables entre agents
+
+Claude Code sait lire `AGENTS.md` nativement dans les versions récentes.
+
+Le comportement par défaut est important :
+
+| Fichiers présents dans le projet | Chargement par défaut |
+|---|---|
+| `AGENTS.md` sans `CLAUDE.md` | `AGENTS.md` est lu |
+| `AGENTS.md` + `CLAUDE.md` | le `CLAUDE.md` projet est privilégié |
+| `CLAUDE.md` contient `@AGENTS.md` | les deux sont chargés |
+
+Ce dépôt choisit explicitement :
+
+```markdown
+@AGENTS.md
+
+# Claude Code — instructions du projet
+...
+```
+
+Cela permet de garder un socle `AGENTS.md` portable tout en donnant à Claude ses instructions spécifiques.
+
+---
+
+## 3. Imports avec `@`
+
+Un `CLAUDE.md` peut importer des fichiers :
+
+```markdown
+@AGENTS.md
+@docs/architecture.md
+@docs/conventions.md
+```
+
+Les chemins relatifs sont résolus depuis le fichier qui contient l'import. Les imports sont ajoutés au contexte au démarrage : les utiliser pour « découper » un gros `CLAUDE.md` améliore l'organisation, **mais ne réduit pas nécessairement les tokens chargés**.
+
+!!! warning "Import externe"
+    Un import qui pointe en dehors du répertoire de travail peut déclencher une demande d'approbation. Cette protection évite qu'un dépôt partagé fasse charger silencieusement un fichier externe.
+
+---
+
+## 4. `CLAUDE.local.md` — préférences personnelles
+
+Pour une préférence liée à un projet mais qui ne doit pas être partagée :
+
+```text
+CLAUDE.local.md
+```
+
+Exemples :
+
+```markdown
+# Préférences locales
+- Utiliser mon environnement Docker local `dev-personal`.
+- Pour les exemples de test, préférer les fixtures dans `sandbox/`.
+```
+
+Ajoutez le fichier au `.gitignore`.
+
+---
+
+## 5. `.claude/rules/` — règles thématiques
+
+Quand une règle ne doit pas gonfler `CLAUDE.md`, créez un fichier sous :
+
+```text
+.claude/rules/
+├── markdown.md
+├── security.md
+└── tests.md
+```
+
+Une rule sans frontmatter est globale. Pour la limiter à certains chemins, utilisez **`paths`** :
 
 ```markdown
 ---
-description: Conventions TypeScript pour ce projet
-applyTo: "**/*.ts,**/*.tsx"
+paths:
+  - "docs/**/*.md"
+  - "mkdocs.yml"
 ---
 
-# Conventions TypeScript
+# Règles documentation
 
-## Typage
-- Utiliser des types explicites, jamais `any`
-- Préférer `interface` à `type` pour les objets
-- Toujours typer les paramètres de fonction et les retours
-
-## Nommage
-- Variables et fonctions : camelCase
-- Interfaces et classes : PascalCase
-- Constantes : SCREAMING_SNAKE_CASE
-- Fichiers de composants React : PascalCase.tsx
-
-## Gestion des erreurs
-- Ne jamais ignorer les erreurs avec try/catch vide
-- Utiliser les custom error classes dans `src/errors/`
-- Logger les erreurs via `logger.error()` (jamais `console.error`)
+- Rédiger en français.
+- Préserver les liens relatifs.
+- Vérifier la navigation après ajout d'une page.
 ```
 
----
+### Patterns courants
 
-## Le frontmatter YAML
+| Pattern | Portée |
+|---|---|
+| `**/*.md` | tous les Markdown |
+| `docs/**/*` | tout sous `docs/` |
+| `src/**/*.{ts,tsx}` | TypeScript / TSX sous `src/` |
+| `tests/**/*.test.ts` | tests TypeScript ciblés |
 
-Chaque fichier `.instructions.md` peut avoir un frontmatter YAML en tête :
-
-```yaml
----
-description: Description courte de ces instructions
-applyTo: "glob/pattern/**/*.ts"
----
-```
-
-| Champ | Obligatoire | Description |
-|-------|:-----------:|-------------|
-| `description` | Non | Description affichée dans VS Code pour identifier la règle |
-| `applyTo` | Non | Pattern glob des fichiers auxquels s'appliquent ces instructions |
-| `name` | Non | Nom lisible de l'instruction (utile dans les gros repos) |
-
-!!! tip "applyTo avancé"
-  Pour des exemples réels multi-patterns et les pièges fréquents, voir [applyTo avancé](applyto-avance.md).
-
-### Patterns `applyTo` courants
-
-| Pattern | Cible |
-|---------|-------|
-| `**` | Tous les fichiers (comportement global) |
-| `**/*.ts` | Tous les fichiers TypeScript |
-| `**/*.{ts,tsx}` | TypeScript et TSX |
-| `src/api/**` | Tout le dossier `src/api/` |
-| `**/*.test.ts` | Uniquement les fichiers de test |
-| `**/components/**` | Tous les composants |
-
-!!! warning "Sans frontmatter"
-    Si le fichier `.instructions.md` n'a pas de frontmatter `applyTo`, il s'applique à **tous** les fichiers — comme le fichier global `copilot-instructions.md`.
+Ne copiez pas un frontmatter de l'un vers l'autre sans adaptation.
 
 ---
 
-## Exemples concrets
+## 6. Quand préférer un skill ?
 
-### Instructions globales projet
+Utilisez un **skill** plutôt qu'une instruction permanente lorsqu'il s'agit :
 
-```markdown
----
-description: Règles globales du projet MonApp
-applyTo: "**"
----
+- d'une procédure multi-étapes ;
+- d'une expertise domaine détaillée ;
+- d'un workflow seulement utile ponctuellement ;
+- d'une tâche que Claude peut sélectionner quand elle devient pertinente.
 
-# Règles globales — MonApp
+Exemple : une checklist de revue de documentation de 100 lignes n'a pas besoin d'être injectée dans chaque session. Placez-la dans `.claude/skills/doc-review/SKILL.md`.
 
-## Stack technique
-Ce projet utilise : Node.js 20, TypeScript 5, Express 4, PostgreSQL 15, Prisma ORM.
-
-## Conventions générales
-- Code en anglais (variables, fonctions, commentaires)
-- Commentaires explicatifs en français
-- Longueur de ligne maximale : 120 caractères
-- Indentation : 2 espaces
-
-## Sécurité
-- Ne jamais utiliser `eval()` ni `Function()`
-- Toujours valider les entrées utilisateur avec Zod
-- Ne jamais logger de données personnelles (email, mot de passe, token)
-- Utiliser des requêtes paramétrées — jamais de concaténation SQL
-
-## Tests
-- Chaque fonction publique doit avoir au moins un test unitaire
-- Nommage des tests : `describe('nomDeLaFonction')` + `it('should ...')`
-- Coverage minimum : 80%
-```
-
-### Instructions spécifiques aux composants React
-
-```markdown
----
-description: Conventions composants React
-applyTo: "src/components/**/*.tsx"
 ---
 
-# Conventions Composants React
+## 7. Instructions ≠ politique de sécurité
 
-## Structure d'un composant
-1. Imports (React en premier, puis librairies, puis locaux)
-2. Types/interfaces du composant
-3. Composant principal (function component, pas class component)
-4. Styles (si inline)
-5. Export par défaut
+`CLAUDE.md`, `AGENTS.md` et les rules influencent le modèle. Ils ne constituent pas une barrière technique absolue.
 
-## Props
-- Définir une interface `<NomComposant>Props`
-- Déstructurer les props dans la signature de la fonction
-- Fournir des valeurs par défaut quand pertinent
+Pour empêcher réellement une action, utilisez :
 
-## Hooks
-- Respecter les règles des hooks (appels au top-level)
-- Créer des custom hooks dans `src/hooks/` si logique réutilisable
-- Nommer les custom hooks avec le préfixe `use`
+- `permissions.deny` / `permissions.allow` ;
+- les settings gérés d'organisation ;
+- le sandboxing lorsque disponible ;
+- un hook `PreToolUse` lorsque le contrôle doit être dynamique.
 
-## Exemple de composant attendu
-```tsx
-interface ButtonProps {
-  label: string;
-  onClick: () => void;
-  variant?: 'primary' | 'secondary';
-  disabled?: boolean;
+La page [Sandbox Claude Code — isoler les commandes et intégrer le runtime](sandbox.md) détaille l'activation, les plateformes, les restrictions de fichiers/réseau et l'intégration du runtime à vos propres outils.
+
+```json
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./secrets/**)"
+    ]
+  }
 }
-
-export default function Button({ label, onClick, variant = 'primary', disabled = false }: ButtonProps) {
-  return (
-    <button
-      className={`btn btn-${variant}`}
-      onClick={onClick}
-      disabled={disabled}
-    >
-      {label}
-    </button>
-  );
-}
-```
-```
-
-### Instructions pour les tests
-
-```markdown
----
-description: Conventions de tests Jest
-applyTo: "**/*.test.{ts,tsx},**/*.spec.{ts,tsx}"
----
-
-# Conventions de Tests
-
-## Structure
-- Un fichier de test par fichier source
-- Tests dans le même dossier que le fichier testé (`*.test.ts`)
-
-## Nommage
-```typescript
-describe('UserService', () => {
-  describe('createUser', () => {
-    it('should create a user with valid data', () => { ... });
-    it('should throw ValidationError when email is invalid', () => { ... });
-    it('should throw ConflictError when email already exists', () => { ... });
-  });
-});
-```
-
-## Mocking
-- Mocker les dépendances externes (DB, API) avec `jest.mock()`
-- Utiliser des factories dans `src/__tests__/factories/` pour les données de test
-- Éviter les données hardcodées dans les tests
-
-## Assertions
-- Une assertion principale par test (une seule chose testée)
-- Utiliser `toMatchObject()` pour les objets partiels
-- Utiliser `toThrow()` pour vérifier les erreurs
 ```
 
 ---
 
-## Fichier global copilot-instructions.md
+## Vérifier ce qui est chargé
 
-Emplacement : `.github/copilot-instructions.md` (sans sous-dossier)
+Dans Claude Code :
 
-Ce fichier est le moyen le plus simple pour donner des instructions globales à Copilot. Il n'a **pas besoin de frontmatter** — tout son contenu est injecté dans le contexte de toutes les interactions.
+```text
+/context
+```
 
-```markdown
-# Instructions GitHub Copilot — MonProjet
+permet d'inspecter notamment les fichiers de mémoire/instructions présents dans le contexte.
 
-Ce projet est une application React/TypeScript avec un backend Node.js/Express.
+Pour les settings :
 
-## Conventions clés
-- TypeScript strict mode activé
-- Pas de `any` sauf commentaire justificatif `// eslint-disable-next-line @typescript-eslint/no-explicit-any`
-- State management : Redux Toolkit
-- Styling : Tailwind CSS (pas de CSS modules)
-- Tests : Vitest + Testing Library
+```text
+/status
+```
 
-## Ce que tu dois savoir sur ce projet
-- Les API calls sont dans `src/api/` avec Axios
-- Les types globaux sont dans `src/types/`
-- Les utils sont dans `src/utils/`
-- Les composants partagés sont dans `src/components/shared/`
+et, en cas de configuration invalide :
+
+```bash
+claude doctor
 ```
 
 ---
 
-## Bonnes pratiques
+## Référence en annexe
 
-### Garder les instructions concises
-
-```markdown
-# ✅ Bon — Instructions claires et directes
-- Utiliser `async/await` plutôt que `.then()/.catch()`
-- Tolérance zéro pour les `console.log` en production
-- Toujours fermer les connexions DB dans `finally`
-
-# ❌ Mauvais — Trop verbeux, risque d'être ignoré
-Il est important de noter que dans ce projet, qui a été créé en 2023 avec une équipe de 5 développeurs,
-nous avons décidé après de longues discussions d'utiliser async/await...
-```
-
-### Organiser par responsabilité
-
-```
-.github/instructions/
-├── project-overview.instructions.md     ← Vue d'ensemble du projet
-├── coding-conventions.instructions.md   ← Conventions de code
-├── security.instructions.md             ← Règles de sécurité (applyTo: **)
-├── api.instructions.md                  ← Règles API (applyTo: src/api/**)
-├── react.instructions.md                ← Règles React (applyTo: **/*.tsx)
-└── tests.instructions.md                ← Règles tests (applyTo: **/*.test.*)
-```
-
-### Versionner avec le projet
-
-Les fichiers `.instructions.md` doivent être **committés dans Git** — ils font partie de la configuration du projet et doivent être partagés avec toute l'équipe.
-
-```
-# .gitignore
-# NE PAS ignorer ces fichiers !
-# .github/instructions/ ← À versionner
-# .github/copilot-instructions.md ← À versionner
-```
-
----
-
-## Pièges à éviter
-
-!!! danger "Erreurs courantes"
-
-    **1. Instructions contradictoires entre fichiers**
-    Si `global.instructions.md` dit "utiliser JavaScript" et `api.instructions.md` dit "utiliser TypeScript", Copilot peut se retrouver confus.
-    ✅ Auditez régulièrement vos instructions pour les incohérences.
-
-    **2. Trop d'instructions (surcharge)**
-    Plus de 2000 tokens d'instructions réduisent l'espace disponible pour le contexte du code.
-    ✅ Priorisez les règles les plus impactantes.
-
-    **3. Instructions vagues**
-    "Écrire du bon code" n'aide pas Copilot.
-    ✅ Soyez précis : "Utiliser des fonctions pures sans effets de bord dans `src/utils/`".
-
-    **4. Oublier `applyTo` pour les règles ciblées**
-    Sans `applyTo`, toutes les instructions s'appliquent à tous les fichiers — même celles qui ne concernent que les tests.
-    ✅ Définissez `applyTo` pour limiter la portée.
-
----
-
-## Sources
-
-- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
-- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-instructions).
 
 ## Prochaine étape
 
-**[applyTo Avancé](applyto-avance.md)** : maîtriser les patterns glob pour cibler précisément vos instructions sur les bons fichiers et langages.
+Poursuivez avec **[Sandbox — Isolation des commandes](sandbox.md)**, la page suivante dans le menu.
 
-Concepts clés couverts :
+## Sources
 
-- **Globber patterns** — `**/*.ts`, `src/api/**`, `**/*.test.{ts,tsx}`
-- **Motifs multi-patterns** — Combiner plusieurs patterns avec des virgules
-- **Erreurs fréquentes** — Cas d'usage mal définis, portée trop large
-- **Stratégie recommandée** — Tester avant généralisant, documenter le but
+Sources officielles consultées le **28 septembre 2026** :
+
+- [Claude Code — Memory, CLAUDE.md, AGENTS.md et rules](https://code.claude.com/docs/en/memory)
+- [Claude Code — Settings](https://code.claude.com/docs/en/settings)
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices)

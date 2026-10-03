@@ -371,16 +371,7 @@ echo "Code de sortie : $?"   # attendu : 2
 
 ## Prochaine étape
 
-**[Workflows CI & automatisation](workflows-ci.md)** : sortir du REPL pour intégrer Claude dans vos pipelines avec `claude -p` — revue de PR automatique, génération de notes de version, garde-fous CI.
-
-Concepts clés couverts :
-
-- **Mode `-p` (print)** — exécuter Claude sans interaction, dans un pipeline
-- **GitHub Actions** — déclencher Claude sur une PR ou un push
-- **Pré-commit** — brancher Claude (et les hooks) avant le commit
-- **Sorties exploitables** — JSON et codes de sortie pour piloter la CI
-
----
+Poursuivez avec **[Workflows CI & automatisation](workflows-ci.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -388,4 +379,3 @@ Concepts clés couverts :
 - [Anthropic — Get started with hooks (guide)](https://docs.anthropic.com/en/docs/claude-code/hooks-guide) - consulté le 2026-06-20
 - [Anthropic — Settings & permissions](https://docs.anthropic.com/en/docs/claude-code/settings) - consulté le 2026-06-20
 - [Anthropic — Security](https://docs.anthropic.com/en/docs/claude-code/security) - consulté le 2026-06-20
-

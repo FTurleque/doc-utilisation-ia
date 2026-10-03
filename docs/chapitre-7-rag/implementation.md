@@ -1,190 +1,264 @@
-# RAG — Implémentation Complète (Débutant à Expert)
+# RAG — Implémentation progressive
 
-<span class="badge-beginner">Débutant</span>  <span class="badge-intermediate">Intermédiaire</span>  <span class="badge-expert">Expert</span>
+<span class="badge-beginner">Débutant</span> <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Progressez à votre rythme : de **RAG minimal** (30 min, débutant) jusqu'à **RAG production-grade** (architecture avancée, scaling, monitoring). Tous les codes sont testables immédiatement.
+Cette section propose une progression du **prototype observable** au système de production. Les anciennes estimations de coûts et versions de modèles ont été retirées : elles vieillissent trop vite et donnent une fausse impression de précision.
 
-!!! info "📌 Langage utilisé: PYTHON 🐍"
-    **Tous les exemples de code de ce chapitre sont en Python** (3.8+)
-    
-    - **Frameworks**: LangChain, LlamaIndex (Python-first)
-    - **Vector DBs**: ChromaDB, FAISS, Qdrant (tous supportent Python)
-    - **Embeddings**: sentence-transformers, OpenAI API (Python)
-    - **LLMs**: gpt-3.5, gpt-4, Claude (via Python)
-    
-    **Vous voulez un autre langage?** Voir en bas: [Équivalents Node.js / Java / Rust](#autres-langages)
+Le principe est désormais : **baseline → evals → diagnostic → amélioration ciblée**.
 
 ---
 
-## Choisissez Votre Niveau
+## Choisir votre niveau
 
-| Page | Niveau | Durée | Coût au démarrage | Contenu |
-|------|--------|-------|------------------|---------|
-| **[Niveau 1](niveau-1.md)** | <span class="badge-beginner">Débutant</span> | 30 min | ✅ Gratuit* | Charger → Embeddings → Index → Query |
-| **[Niveau 2](niveau-2.md)** | <span class="badge-intermediate">Intermédiaire</span> | 2-3h | 💰 ~$25-100 | Hybrid Search, Query Expansion, Re-ranking optionnel |
-| **[Niveau 3](niveau-3.md)** | <span class="badge-expert">Expert</span> | 1 jour | 💰 $1,500+ | Chunking, FAISS, Agents, RAGAS, Langsmith |
+| Page | Niveau | Objectif |
+|---|---|---|
+| [Niveau 1](niveau-1.md) | Débutant | Construire un retrieval simple, observable et sourcé |
+| [Niveau 2](niveau-2.md) | Intermédiaire | Améliorer la qualité avec hybrid search, filtres et reranking |
+| [Niveau 3](niveau-3.md) | Expert | Production : sécurité, evals, monitoring et orchestration |
 
-*Niveau 1 : Gratuit avec Ollama (local), ou ~$0.50 avec OpenAI
-
-!!! info "💰 Coûts Estimés en Production"
-    
-    | Niveau | 100 requêtes/mois | 10K requêtes/mois | 1M requêtes/mois |
-    |--------|------------------|------------------|-----------------|
-    | **1** | $0 (Ollama) | $1.50 | $150 |
-    | **2** | $0.50 | $75 | $7,500 |
-    | **3** | $10 | $250 | $2,000+ |
-    
-    **Levier d'économies :**
-    - Utiliser **Ollama** au lieu de ChatOpenAI
-    - Cacher les résultats (réduire requêtes API)
-    - Ne pas utiliser Cohere Rerank au Niveau 2
-    - Utiliser du **text-embedding-3-small** (50x moins cher que large)
+Ne montez pas de niveau simplement parce qu'une technique est plus moderne. Montez lorsque vos mesures montrent une limite du niveau précédent.
 
 ---
 
-## Démarche Recommandée
+## Niveau 0 — définir les evals avant le framework
 
-### 1️⃣ **Vous débutez ?** → Commencez par [Niveau 1](niveau-1.md)
-- Objectif : Avoir un RAG fonctionnel en 30 minutes
-- Code : 50 lignes de Python
-- Budget : **Gratuit avec Ollama**
+Avant d'installer LangChain, LlamaIndex ou n'importe quelle abstraction, créez un petit jeu de questions représentatives :
 
-### 2️⃣ **Vous maîtrisez Niveau 1 ?** → Passez à [Niveau 2](niveau-2.md)
-- Objectif : Améliorer la pertinence et la performance
-- Techniques : Hybrid Search, Query Expansion, Re-ranking (optionnel)
-- Budget : **Gratuit to $100/mois** selon les services actifs
-
-### 3️⃣ **Vous construisez en production ?** → Consultez [Niveau 3](niveau-3.md)
-- Objectif : RAG enterprise-grade avec monitoring
-- Sujets : Chunking, Agents, Évaluation (RAGAS), Monitoring (Langsmith)
-- Budget : **$1,500+ par mois** pour haute charge
-
----
-
-## 🎯 Cas d'Usage Courants
-
-### Vous avez un petit corpus (~1000 docs)?
-→ [Niveau 1](niveau-1.md) + ChromaDB suffit
-
-### Vous avez besoin de haute précision?
-→ [Niveau 2](niveau-2.md) + Re-ranking Cohere
-
-### Vous servez 1000s d'utilisateurs?
-→ [Niveau 3](niveau-3.md) + FAISS + Agents
-
----
-
-## Autres Langages
-
-<span class="badge-intermediate">Intermédiaire</span>
-
-Ce chapitre est centré sur **Python**, mais RAG est universel. Voici les équivalents pour d'autres écosystèmes.
-
-### Node.js / TypeScript
-
-```typescript
-// Installation
-// npm install @langchain/core @langchain/openai chromadb
-
-import { OpenAIEmbeddings } from "@langchain/openai";
-import { Chroma } from "@langchain/community/vectorstores/chroma";
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-
-const embeddings = new OpenAIEmbeddings();
-const vectorStore = new Chroma({ embeddings });
-
-// Index
-const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 500 });
-const docs = await splitter.splitText("...");
-await vectorStore.addDocuments(docs);
-
-// Query
-const results = await vectorStore.similaritySearch("Quelle est...", 3);
+```json
+[
+  {
+    "question": "Comment réinitialiser un token expiré ?",
+    "expected_sources": ["auth/token-reset.md"],
+    "expected_facts": ["endpoint /token/refresh", "refresh token required"]
+  }
+]
 ```
 
-**Frameworks recommandés :**
-- [LangChain.js](https://js.langchain.com) — Équivalent JS de LangChain (production-ready)
-- [LlamaIndex.ts](https://github.com/run-llama/LlamaIndexTS) — LlamaIndex pour TypeScript
-- [Verba](https://github.com/weaviate/Verba) — RAG UI avec Weaviate backend
-
-### Java
-
-```java
-// Dépendances: langchain4j, chromadb-java
-import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.rag.content.retriever.ContentRetriever;
-import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.rag.DefaultRetrievalAugmentor;
-
-// Embedding
-EmbeddingStore<TextSegment> embeddingStore = new InMemoryEmbeddingStore<>();
-
-// RAG Chain
-RetrievalAugmentor ragAugmentor = DefaultRetrievalAugmentor.builder()
-    .withContentRetriever(contentRetriever)
-    .build();
-
-// Chat avec RAG
-AiMessage response = ai.chat(ragAugmentor, "Quelle est...").aiMessage();
-```
-
-**Frameworks recommandés :**
-- [LangChain4j](https://github.com/langchain4j/langchain4j) — Java native, excellente doc
-- [Spring AI](https://spring.io/projects/spring-ai) — Intégration Spring Boot native
-- [Quarkus LangChain4j](https://docs.quarkus.io/langchain) — RAG serverless avec Quarkus
-
-### Rust
-
-```rust
-// Cargo.toml: langchain-rust, qdrant-client, ollama-rs
-use langchain_rust::chain::Chain;
-use langchain_rust::llm::OpenAIConfig;
-use qdrant_client::client::QdrantClient;
-
-#[tokio::main]
-async fn main() {
-    let client = QdrantClient::from_url("http://localhost:6334").build()?;
-    
-    // Search
-    let search_result = client.search_points(
-        "documents".to_string(),
-        vec![embedding],
-        3,
-    ).await?;
-    
-    // Chat
-    let llm = OpenAIConfig::default().build()?;
-    let response = llm.invoke(&context).await?;
-    
-    println!("{}", response);
-}
-```
-
-**Frameworks recommandés :**
-
-- [langchain-rust](https://github.com/Abraxas-365/langchain-rust) — Port en cours, jeune écosystème
-- [Qdrant Rust SDK](https://qdrant.tech/documentation/quick-start/) — Vector DB native Rust
-- [Ollama](https://ollama.com) + local LLMs — RAG totalement offline + performant
-
-### Comparaison d'Écosystèmes
-
-| Langage | Maturité | Community | Perfs | Pour qui |
-|---------|----------|-----------|-------|----------|
-| **Python** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Bonnes | Data scientists, prototypes rapides |
-| **Node.js** | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | APIs web, full-stack JS |
-| **Java** | ⭐⭐⭐⭐ | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Enterprise, haute disponibilité |
-| **Rust** | ⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐⭐ | Performance critique, systèmes |
+Même 20 à 50 cas bien choisis valent mieux qu'une architecture complexe sans référence de qualité.
 
 ---
 
-## Prochains chapitres
+## Niveau 1 — pipeline minimal
 
-**[Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)** — Utilisation effective, productivité, sécurité et workflows IA au quotidien
-**[Cas d'Usage par Technologie](../chapitre-10-cas-usage/index.md)** — Configurations et exemples concrets pour Java, Python, Node.js, React
+Architecture :
+
+```text
+documents
+  → chunking
+  → index
+question
+  → retrieve top-k
+  → context + question
+  → LLM
+  → answer + sources
+```
+
+Objectifs :
+
+- pouvoir inspecter les résultats du retrieval ;
+- conserver les IDs/URLs des sources ;
+- mesurer Recall@k ;
+- éviter de cacher la logique derrière trop d'abstractions.
+
+### Pseudo-code Python volontairement générique
+
+```python
+documents = load_documents("docs/")
+chunks = chunk_documents(documents)
+index = build_index(chunks)
+
+results = index.search(question, k=5)
+answer = generate_answer(
+    question=question,
+    context=results,
+    require_citations=True,
+)
+```
+
+Le but de ce niveau est de comprendre où chaque erreur apparaît, pas de sélectionner « le meilleur vector DB ».
+
+---
+
+## Niveau 2 — améliorer un problème mesuré
+
+Ajoutez une seule technique à la fois :
+
+### Hybrid search
+
+Utile lorsque votre corpus mélange sémantique et identifiants exacts : noms de classes, codes erreur, références produit.
+
+### Metadata filtering
+
+Utile pour restreindre par :
+
+- tenant ;
+- produit/version ;
+- langue ;
+- type de document ;
+- période ;
+- niveau d'autorisation.
+
+### Reranking
+
+Utile si le bon résultat est souvent récupéré mais classé trop bas.
+
+### Query rewriting
+
+Utile si les questions réelles sont courtes, ambiguës ou contiennent du vocabulaire métier différent du corpus.
+
+Après chaque ajout, réexécutez le même jeu d'evals.
+
+---
+
+## Niveau 3 — production
+
+Un système de production doit couvrir plus que le retrieval :
+
+| Axe | Exigences |
+|---|---|
+| Sécurité | ACL avant retrieval, secrets protégés, prompt injection testée |
+| Observabilité | requête, documents récupérés, scores, latence, erreurs |
+| Evals | dataset versionné, régression automatique |
+| Fraîcheur | stratégie de réindexation et suppression |
+| Résilience | timeout, fallback, dépendances externes |
+| Coût | tokens, appels retrieval/reranking, cache mesuré |
+| Gouvernance | provenance et politique de rétention |
+
+---
+
+## Workflow Claude Code pour implémenter
+
+Claude Code peut inspecter le dépôt, modifier les composants et exécuter les evals.
+
+```text
+Cartographie ce projet RAG.
+Ne modifie rien pour l'instant.
+Identifie :
+- ingestion ;
+- chunking ;
+- embeddings/index ;
+- retrieval ;
+- reranking ;
+- prompt/génération ;
+- evals ;
+- observabilité.
+
+Ensuite exécute la baseline existante et donne les métriques.
+```
+
+Puis :
+
+```text
+Les evals montrent que le bon document est présent dans top-20 mais rarement top-5.
+Propose une seule expérience pour améliorer le ranking.
+Définis le critère de succès avant de coder.
+```
+
+Cette façon de travailler évite que Claude « améliore » plusieurs composants en même temps sans pouvoir attribuer le gain.
+
+---
+
+## Skill d'évaluation RAG
+
+`.claude/skills/evaluate-rag/SKILL.md` :
+
+```markdown
+---
+name: evaluate-rag
+description: Exécute et diagnostique les évaluations du pipeline RAG sans changer plusieurs variables à la fois.
+---
+
+1. Lire la configuration du pipeline et du dataset d'eval.
+2. Exécuter la baseline.
+3. Séparer erreurs de retrieval et erreurs de génération.
+4. Classer les échecs par cause.
+5. Comparer au run précédent à protocole identique.
+6. Produire qualité, latence et coût observés.
+```
+
+---
+
+## Subagents utiles
+
+Pour un gros corpus, déléguez séparément :
+
+- audit du chunking ;
+- analyse des requêtes qui échouent ;
+- sécurité / ACL ;
+- prompt injection ;
+- performance et latence.
+
+Chaque subagent doit retourner une synthèse avec preuves et exemples, pas tout son corpus d'analyse.
+
+---
+
+## Agentic retrieval
+
+Passez à un agent seulement lorsque la question nécessite réellement plusieurs recherches ou outils dynamiques.
+
+Exemples pertinents :
+
+- comparer documentation, ticket et code ;
+- chercher une source, analyser le résultat puis reformuler ;
+- sélectionner entre plusieurs bases selon la question.
+
+Pour un FAQ simple, une boucle agentique peut uniquement ajouter coût, latence et surfaces de sécurité.
+
+---
+
+## MCP
+
+Claude Code peut utiliser MCP pour accéder à des sources externes. `.mcp.json` peut décrire des serveurs partagés par le projet.
+
+Pattern :
+
+```text
+MCP = connexion et outils
+Skill = procédure métier pour bien utiliser ces outils
+Subagent = contexte isolé pour une recherche lourde
+Hook = automatisation sur événement
+```
+
+Ce sont des briques différentes ; ne les utilisez pas comme synonymes de RAG.
+
+---
+
+## Autres langages
+
+Le RAG n'est pas lié à Python. TypeScript, Java, Rust, Go et d'autres écosystèmes disposent de clients de bases vectorielles, SDK LLM et frameworks de retrieval.
+
+Choisissez selon :
+
+- stack existante ;
+- maturité des bibliothèques nécessaires ;
+- observabilité ;
+- contraintes de déploiement ;
+- expertise de l'équipe.
+
+Ne migrez pas un service Java stable vers Python uniquement pour utiliser une librairie RAG populaire si votre besoin peut être couvert avec les composants de la stack existante.
+
+---
+
+## Coûts : comment les documenter correctement
+
+Ne stockez pas ici de prix unitaires supposés durables. Pour une décision réelle :
+
+1. relevez les tarifs officiels actuels ;
+2. mesurez votre distribution de tokens et de requêtes ;
+3. incluez retrieval, embeddings, reranking, LLM, stockage et observabilité ;
+4. simulez votre trafic ;
+5. ajoutez une marge pour retries et pics.
+
+Versionnez le tableur ou script d'estimation dans le projet si le coût est une contrainte d'architecture.
+
 ---
 
 ## Sources
 
-- [LangChain documentation](https://python.langchain.com/docs/introduction/) - consulté le 2026-06-20
-- [LlamaIndex documentation](https://docs.llamaindex.ai/en/stable/) - consulté le 2026-06-20
-- [OpenAI Embeddings guide](https://platform.openai.com/docs/guides/embeddings) - consulté le 2026-06-20
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
+- [Anthropic — Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
+- [Claude Code — MCP](https://code.claude.com/docs/en/mcp) — consulté le 2026-09-28
+
+## Prochaine étape
+
+Poursuivez avec **[Niveau 1 (Débutant)](niveau-1.md)**, la page suivante dans le menu.

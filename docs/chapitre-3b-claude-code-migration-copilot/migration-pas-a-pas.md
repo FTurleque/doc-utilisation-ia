@@ -225,16 +225,7 @@ Pour chaque `.agent.md` Copilot :
 
 ## Prochaine étape
 
-**[Checklist de migration 30/60/90 jours](migration-30-60-90.md)** : un plan calendaire concret pour piloter la bascule en équipe sans casser la production.
-
-Concepts clés couverts :
-
-- **Jours 0-30** — pilote, premiers `CLAUDE.md` et mesure de baseline
-- **Jours 31-60** — généralisation contrôlée et formation de l'équipe
-- **Jours 61-90** — industrialisation, plugin d'équipe et décision finale
-- **Indicateurs de succès** — métriques pour trancher rester/passer/hybride
-
----
+Poursuivez avec **[Checklist 30/60/90 jours](migration-30-60-90.md)**, la page suivante dans le menu.
 
 ## Sources
 
@@ -243,4 +234,3 @@ Concepts clés couverts :
 - [Anthropic — Subagents](https://docs.anthropic.com/en/docs/claude-code/sub-agents) - consulté le 2026-06-20
 - [Anthropic — Hooks reference](https://docs.anthropic.com/en/docs/claude-code/hooks) - consulté le 2026-06-20
 - [GitHub Docs — Repository custom instructions](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) - consulté le 2026-06-20
-
