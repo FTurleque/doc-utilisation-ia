@@ -1,446 +1,274 @@
-# Optimisation et Performance
+# Optimisation et performance Deep Learning
 
 <span class="badge-expert">Expert</span>
 
-Ce guide couvre les techniques avancées pour maximiser les performances d'un réseau de neurones : régularisation, accélération matérielle, optimisation d'architecture, et mise à l'échelle. L'objectif est d'obtenir le meilleur modèle possible dans les contraintes de temps, de calcul et de données disponibles.
+Optimiser un modèle signifie améliorer un compromis mesuré : **qualité, temps d'entraînement, mémoire, latence, énergie et coût d'exploitation**. Cette page retire les anciens gains génériques (`+5%`, `2× plus rapide`, tailles de dropout « standard ») qui ne sont pas transférables d'un projet à l'autre.
 
 ---
 
-## Vue d'ensemble des leviers de performance
+## Boucle d'optimisation
 
 ```mermaid
 graph LR
-    PERF["🎯 Maximiser la<br/>Performance"]
-
-    PERF --> REG["🛡️ Régularisation"]
-    PERF --> ARCH["🏗️ Architecture"]
-    PERF --> DATA["📊 Données"]
-    PERF --> HW["⚡ Accélération<br/>matérielle"]
-    PERF --> DEPLOY["🚀 Déploiement"]
-
-    REG --> R1["Dropout"]
-    REG --> R2["Weight Decay"]
-    REG --> R3["Batch Norm"]
-    REG --> R4["Data Aug"]
-
-    ARCH --> A1["Transfer Learning"]
-    ARCH --> A2["Ensembles"]
-    ARCH --> A3["NAS"]
-
-    DATA --> D1["Augmentation"]
-    DATA --> D2["Nettoyage"]
-    DATA --> D3["Rééquilibrage"]
-
-    HW --> H1["GPU / Multi-GPU"]
-    HW --> H2["Mixed Precision"]
-    HW --> H3["Distributed"]
-
-    DEPLOY --> P1["Quantification"]
-    DEPLOY --> P2["Pruning"]
-    DEPLOY --> P3["Distillation"]
-
-    style PERF fill:#e3f2fd,stroke:#1565c0,color:#000
-    style REG fill:#e8f5e9,stroke:#2e7d32,color:#000
-    style ARCH fill:#fff3e0,stroke:#e65100,color:#000
-    style DATA fill:#fce4ec,stroke:#880e4f,color:#000
-    style HW fill:#f3e5f5,stroke:#6a1b9a,color:#000
-    style DEPLOY fill:#b2dfdb,stroke:#004d40,color:#000
+    B["Baseline mesurée"] --> H["Hypothèse"]
+    H --> C["Un changement"]
+    C --> M["Mesurer"]
+    M --> D{"Meilleur compromis ?"}
+    D -- Oui --> K["Conserver"]
+    D -- Non --> R["Revenir"]
+    K --> H
+    R --> H
 ```
+
+Conservez le même dataset, protocole et métriques lorsque vous comparez deux variantes.
 
 ---
 
-## Régularisation avancée
-
-La régularisation empêche le modèle de **mémoriser** les données d'entraînement au lieu d'**apprendre** des motifs généralisables.
+## 1. Régularisation
 
 ### Dropout
 
-Le **Dropout** désactive aléatoirement une fraction des neurones à chaque itération d'entraînement, forçant le réseau à ne pas dépendre d'un seul chemin.
+Le dropout peut réduire l'overfitting dans certaines architectures, mais le taux utile dépend du modèle et des données.
 
 ```python
-from tensorflow.keras import layers
-
-model.add(layers.Dense(256, activation='relu'))
-model.add(layers.Dropout(0.4))  # 40% des neurones désactivés
-model.add(layers.Dense(128, activation='relu'))
-model.add(layers.Dropout(0.3))
+layers.Dropout(dropout_rate)
 ```
 
-| Taux de Dropout | Cas d'usage |
-|:---------------:|-------------|
-| 0.1 - 0.2 | Peu de données, réseau petit |
-| 0.3 - 0.4 | **Standard** — bon compromis |
-| 0.5 | Grand réseau, beaucoup de données |
-| > 0.5 | Rarement utile — le réseau perd trop d'information |
+Testez plusieurs valeurs et mesurez train/validation ; ne partez pas du principe que `0.3` ou `0.5` est optimal.
 
-### Batch Normalization
-
-La **Batch Normalization** normalise les activations de chaque couche à moyenne ≈ 0 et variance ≈ 1, ce qui stabilise et accélère l'entraînement.
+### Weight decay
 
 ```python
-# Placement recommandé : après la couche, avant l'activation (ou après)
-model.add(layers.Dense(128))
-model.add(layers.BatchNormalization())
-model.add(layers.Activation('relu'))
-model.add(layers.Dropout(0.3))
-```
+from keras.optimizers import AdamW
 
-!!! tip "Batch Norm vs Dropout"
-    En pratique, Batch Normalization et Dropout ne fonctionnent pas toujours bien ensemble. Pour les CNN modernes, beaucoup d'architectures utilisent **Batch Norm seul** (sans Dropout dans les couches convolutives) et réservent le Dropout aux couches denses finales.
-
-### Weight Decay (L2 Regularization)
-
-Le Weight Decay pénalise les poids trop grands en ajoutant un terme à la loss :
-
-$$L_{total} = L_{data} + \lambda \sum w_i^2$$
-
-```python
-# Avec Keras
-model.add(layers.Dense(
-    128, activation='relu',
-    kernel_regularizer=tf.keras.regularizers.l2(1e-4)
-))
-
-# Avec AdamW (méthode préférée)
-optimizer = tf.keras.optimizers.AdamW(
-    learning_rate=0.001,
-    weight_decay=0.01
+optimizer = AdamW(
+    learning_rate=learning_rate,
+    weight_decay=weight_decay,
 )
 ```
 
-### Data Augmentation (images)
+Le weight decay est lui aussi un hyperparamètre à valider. Sa sémantique peut varier selon l'optimizer/framework.
 
-La **Data Augmentation** crée des variations des images d'entraînement à la volée pour augmenter artificiellement la taille du dataset :
+### Normalisation
 
-```python
-from tensorflow.keras import layers
-
-data_augmentation = tf.keras.Sequential([
-    layers.RandomFlip("horizontal"),
-    layers.RandomRotation(0.1),
-    layers.RandomZoom(0.1),
-    layers.RandomContrast(0.1),
-    layers.RandomTranslation(0.1, 0.1),
-])
-
-# Intégrer dans le modèle
-model = tf.keras.Sequential([
-    layers.Input(shape=(224, 224, 3)),
-    data_augmentation,  # Augmentation en première couche
-    layers.Conv2D(32, 3, activation='relu'),
-    # ...
-])
-```
-
-### Tableau récapitulatif des techniques de régularisation
-
-| Technique | Quand l'utiliser | Impact typique |
-|-----------|-----------------|:-------------:|
-| **Dropout** | Toujours (couches denses) | +2-5% accuracy |
-| **Batch Normalization** | Toujours (couches conv) | Entraînement 2-3× plus rapide |
-| **Weight Decay** | Modèles de grande taille | Réduit l'overfitting |
-| **Data Augmentation** | Peu d'images d'entraînement | +5-15% accuracy |
-| **Early Stopping** | Toujours | Évite le surentraînement |
-| **Label Smoothing** | Classification avec beaucoup de classes | +1-3% accuracy |
+BatchNorm, LayerNorm, RMSNorm et autres mécanismes répondent à des architectures différentes. Suivez le design établi du modèle ou les recommandations de l'architecture pré-entraînée plutôt que d'ajouter systématiquement BatchNorm.
 
 ---
 
-## Transfer Learning
+## 2. Data augmentation
 
-Le **Transfer Learning** réutilise un modèle pré-entraîné sur un grand dataset (ex : ImageNet avec 1.2M images) et l'adapte à ta tâche spécifique. C'est **la technique la plus puissante** quand tu as peu de données.
+Une augmentation est valide si elle préserve le label et reflète une variation plausible du domaine.
 
-### Quand utiliser le Transfer Learning
+Pour des images, une rotation ou un flip peut être utile — ou invalider complètement le label selon la tâche.
 
-```mermaid
-graph TD
-    Q["Combien de données<br/>d'entraînement ?"]
-    Q -->|"< 1 000"| TL1["Transfer Learning<br/>obligatoire"]
-    Q -->|"1 000 - 10 000"| TL2["Transfer Learning<br/>fortement recommandé"]
-    Q -->|"10 000 - 100 000"| TL3["Transfer Learning<br/>ou entraîner from scratch"]
-    Q -->|"> 100 000"| TL4["Entraîner from scratch<br/>possible"]
+Mesurez :
 
-    style TL1 fill:#ffebee
-    style TL2 fill:#fff3e0
-    style TL3 fill:#e8f5e9
-    style TL4 fill:#e3f2fd
-```
-
-### Stratégies de fine-tuning
-
-| Stratégie | Description | Quand |
-|-----------|-------------|-------|
-| **Feature Extraction** | Geler toutes les couches pré-entraînées, n'entraîner que le classifieur | Très peu de données, domaine similaire |
-| **Fine-tuning partiel** | Dégeler les dernières couches du backbone | Données modérées |
-| **Fine-tuning complet** | Tout dégeler avec un petit learning rate | Beaucoup de données, domaine différent |
-
-### Exemple complet — Transfer Learning avec ResNet50
-
-```python
-import tensorflow as tf
-from tensorflow.keras import layers, models
-
-# 1. Charger le modèle pré-entraîné (sans la tête de classification)
-base_model = tf.keras.applications.ResNet50(
-    weights='imagenet',
-    include_top=False,
-    input_shape=(224, 224, 3)
-)
-
-# 2. Geler le backbone
-base_model.trainable = False
-
-# 3. Ajouter notre classifieur
-model = models.Sequential([
-    base_model,
-    layers.GlobalAveragePooling2D(),
-    layers.Dense(256, activation='relu'),
-    layers.Dropout(0.5),
-    layers.Dense(num_classes, activation='softmax')
-])
-
-# 4. Entraîner le classifieur seul (feature extraction)
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-3),
-    loss='categorical_crossentropy',
-    metrics=['accuracy']
-)
-model.fit(train_ds, epochs=10, validation_data=val_ds)
-
-# 5. Fine-tuning : dégeler les 30 dernières couches
-base_model.trainable = True
-for layer in base_model.layers[:-30]:
-    layer.trainable = False
-
-# 6. Réentraîner avec un learning rate très faible
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
-    loss='categorical_crossentropy',
-    metrics=['accuracy']
-)
-model.fit(train_ds, epochs=20, validation_data=val_ds)
-```
-
-!!! warning "Learning rate pour le fine-tuning"
-    Lors du fine-tuning, utilise un learning rate **10 à 100× plus petit** que pour l'entraînement initial. Sinon, tu détruiras les features pré-apprises.
-
-### Modèles pré-entraînés populaires
-
-| Modèle | Paramètres | Top-1 Accuracy (ImageNet) | Usage recommandé |
-|--------|:----------:|:-------------------------:|------------------|
-| **MobileNetV3** | 5.4M | 75.2% | Mobile / Edge / Temps réel |
-| **EfficientNetB0** | 5.3M | 77.1% | Bon compromis taille/performance |
-| **ResNet50** | 25.6M | 76.1% | Standard, bien documenté |
-| **EfficientNetB4** | 19M | 82.9% | Haute performance, GPU requis |
-| **ConvNeXt** | 89M | 87.8% | État de l'art (2022+) |
+- qualité globale ;
+- qualité par sous-population ;
+- calibration ;
+- robustesse aux transformations réellement rencontrées.
 
 ---
 
-## Accélération GPU
+## 3. Transfer learning
 
-### Vérifier la disponibilité GPU
+Le transfer learning est souvent utile lorsque vous disposez d'un modèle pré-entraîné adapté, mais il n'existe pas de seuil universel « moins de 1 000 exemples = obligatoire ».
 
-```python
-import tensorflow as tf
+Comparez :
 
-# Lister les GPU disponibles
-gpus = tf.config.list_physical_devices('GPU')
-print(f"GPU disponibles : {len(gpus)}")
-for gpu in gpus:
-    print(f"  - {gpu.name}")
-
-# Vérifier si TensorFlow utilise le GPU
-print(f"Built with CUDA : {tf.test.is_built_with_cuda()}")
+```text
+baseline from scratch
+vs
+frozen backbone + head
+vs
+partial/full fine-tuning
 ```
 
-### Mixed Precision Training
+Avec le même split et les mêmes métriques.
 
-Le **Mixed Precision** utilise des nombres en 16 bits (FP16) au lieu de 32 bits (FP32) pour les calculs, ce qui **double la vitesse** et **réduit la mémoire** sur les GPU modernes (NVIDIA Volta+).
-
-```python
-# Activer Mixed Precision (une seule ligne)
-tf.keras.mixed_precision.set_global_policy('mixed_float16')
-
-# Le modèle s'entraîne automatiquement en FP16
-# La sortie doit rester en FP32 pour la stabilité
-model.add(layers.Dense(num_classes, activation='softmax', dtype='float32'))
-```
-
-| Mode | Vitesse | Mémoire | Précision |
-|------|:-------:|:-------:|:---------:|
-| FP32 (défaut) | 1× | 1× | Référence |
-| Mixed FP16 | **1.5-3×** | **0.5×** | ~identique |
-
-!!! info "Prérequis"
-    Le Mixed Precision nécessite un GPU NVIDIA avec Tensor Cores (architectures Volta, Turing, Ampere, Hopper — GTX 2060+, Tesla V100+).
-
-### Entraînement multi-GPU
-
-```python
-# Stratégie de distribution (multi-GPU sur une machine)
-strategy = tf.distribute.MirroredStrategy()
-
-with strategy.scope():
-    model = build_model()  # Créer le modèle dans le scope
-    model.compile(optimizer='adam', loss='categorical_crossentropy')
-
-# L'entraînement est automatiquement distribué
-model.fit(train_ds, epochs=50, validation_data=val_ds)
-```
-
-| Stratégie | Description | Cas d'usage |
-|-----------|-------------|-------------|
-| **MirroredStrategy** | Copie le modèle sur chaque GPU, synchronise les gradients | 2-8 GPU sur une machine |
-| **MultiWorkerMirrored** | Multi-GPU sur plusieurs machines | Cluster |
-| **TPUStrategy** | Google Cloud TPU | Grande échelle |
+Les learning rates de fine-tuning doivent suivre les recommandations du modèle/framework et être testés ; une règle fixe « 10–100× plus petit » n'est pas universelle.
 
 ---
 
-## Optimisation pour le déploiement
+## 4. Mixed precision
 
-### Quantification
+La précision mixte peut améliorer throughput et mémoire sur du matériel compatible. Le gain dépend :
 
-La **quantification** réduit la précision des poids (FP32 → INT8) pour un modèle plus petit et plus rapide, avec une perte de précision minimale.
+- GPU/accelerator ;
+- modèle ;
+- tailles de batch ;
+- opérations ;
+- framework ;
+- format numérique (FP16, BF16, etc.).
 
-```python
-import tensorflow as tf
+Benchmarkez :
 
-# Quantification post-entraînement (la plus simple)
-converter = tf.lite.TFLiteConverter.from_saved_model('models/mon_modele')
-converter.optimizations = [tf.lite.Optimize.DEFAULT]
-quantized_model = converter.convert()
-
-# Sauvegarder le modèle quantifié
-with open('models/model_quantized.tflite', 'wb') as f:
-    f.write(quantized_model)
+```text
+examples/sec
+peak memory
+validation metric
+numerical stability
 ```
 
-| Type | Taille | Vitesse | Précision |
-|------|:------:|:-------:|:---------:|
-| FP32 (original) | 100% | 1× | Référence |
-| FP16 | 50% | 1.5× | -0.1% |
-| INT8 (dynamique) | **25%** | **2-3×** | -0.5-1% |
-| INT8 (full) | **25%** | **3-4×** | -1-2% |
-
-### Pruning (élagage)
-
-Le **Pruning** supprime les connexions (poids) les moins importantes du réseau, rendant le modèle plus compact sans perte significative de performance.
-
-```python
-import tensorflow_model_optimization as tfmot
-
-# Appliquer le pruning progressif
-pruning_schedule = tfmot.sparsity.keras.PolynomialDecay(
-    initial_sparsity=0.0,
-    final_sparsity=0.5,   # 50% des poids mis à zéro
-    begin_step=0,
-    end_step=1000
-)
-
-pruned_model = tfmot.sparsity.keras.prune_low_magnitude(
-    model, pruning_schedule=pruning_schedule
-)
-
-pruned_model.compile(
-    optimizer='adam',
-    loss='sparse_categorical_crossentropy',
-    metrics=['accuracy']
-)
-
-pruned_model.fit(
-    X_train, y_train,
-    epochs=10,
-    callbacks=[tfmot.sparsity.keras.UpdatePruningStep()]
-)
-
-# Finaliser (supprimer les wrappers de pruning)
-final_model = tfmot.sparsity.keras.strip_pruning(pruned_model)
-```
-
-### Knowledge Distillation
-
-La **distillation** entraîne un petit modèle (l'**élève**) à reproduire les prédictions d'un grand modèle (le **professeur**).
-
-```mermaid
-graph LR
-    DATA["Données"] --> TEACHER["Grand modèle<br/>(Professeur)<br/>ResNet-152"]
-    TEACHER --> SOFT["Soft labels<br/>(probabilités)"]
-    DATA --> STUDENT["Petit modèle<br/>(Élève)<br/>MobileNet"]
-    SOFT --> STUDENT
-    STUDENT --> DEPLOY["Modèle léger<br/>déployable"]
-
-    style TEACHER fill:#e3f2fd
-    style STUDENT fill:#e8f5e9
-    style DEPLOY fill:#c8e6c9
-```
-
-### Comparaison des techniques d'optimisation
-
-| Technique | Réduction taille | Impact vitesse | Perte accuracy | Difficulté |
-|-----------|:----------------:|:--------------:|:--------------:|:----------:|
-| **Quantification INT8** | 4× | 2-4× plus rapide | < 1% | Facile |
-| **Pruning 50%** | 2× | 1.5-2× plus rapide | < 1% | Moyen |
-| **Distillation** | 5-10× | 3-10× plus rapide | 1-3% | Difficile |
-| **Quant + Pruning** | 6-8× | 3-6× plus rapide | 1-2% | Moyen |
+N'annoncez pas « 2× plus rapide » sans mesure locale.
 
 ---
 
-## Checklist de performance maximale
+Pour PyTorch récent, utilisez `torch.amp.autocast("cuda", dtype=torch.float16)` et, pour l’entraînement FP16, `torch.amp.GradScaler("cuda")`. Les anciennes variantes `torch.cuda.amp.*` et `torch.cpu.amp.*` sont dépréciées. BF16 et FP16 n’ont pas les mêmes besoins de scaling ; vérifiez le matériel, les opérations et les gradients. Le backward doit suivre le protocole AMP du framework, sans transformer aveuglément tous les tensors en FP16.
 
-!!! success "Checklist pour un modèle optimal"
+[PyTorch — AMP](https://docs.pytorch.org/docs/2.14/amp.html), vérifié le 3 octobre 2026. Les snippets `AdamW` de cette page utilisent Keras (`learning_rate`) ; PyTorch emploie `lr` dans `torch.optim.AdamW`.
 
-    **Données**
+## 5. Compilation / JIT
 
-    - [ ] Données nettoyées et normalisées
-    - [ ] Data Augmentation (si images)
-    - [ ] Classes rééquilibrées (class weights ou oversampling)
+PyTorch, TensorFlow, JAX et les runtimes associés proposent différentes formes de compilation.
 
-    **Architecture**
+Avant activation :
 
-    - [ ] Transfer Learning utilisé si < 10 000 échantillons
-    - [ ] Batch Normalization dans les couches convolutives
-    - [ ] Dropout dans les couches denses
-    - [ ] Architecture adaptée au type de données
+1. mesurer la baseline ;
+2. vérifier les opérations non supportées/dynamic shapes ;
+3. mesurer warm-up vs steady-state ;
+4. tester les outputs ;
+5. mesurer la mémoire.
 
-    **Entraînement**
-
-    - [ ] Adam comme optimiseur de départ
-    - [ ] EarlyStopping avec `restore_best_weights=True`
-    - [ ] ReduceLROnPlateau configuré
-    - [ ] Mixed Precision activé (si GPU compatible)
-    - [ ] Hyperparamètres optimisés (Keras Tuner ou Optuna)
-
-    **Évaluation**
-
-    - [ ] Courbes d'apprentissage analysées
-    - [ ] Pas d'overfitting ni d'underfitting
-    - [ ] Métriques cohérentes sur le jeu de test
-
-    **Déploiement**
-
-    - [ ] Quantification appliquée (si edge/mobile)
-    - [ ] Pruning considéré (si contrainte de taille)
-    - [ ] Format d'export adapté (ONNX, TFLite, TorchScript)
+La compilation peut accélérer un workload ou ajouter de l'overhead sur un petit job.
 
 ---
 
-## Points clés à retenir
+## 6. Distributed training
 
-!!! success "Résumé"
-    - La **régularisation** (Dropout, BatchNorm, Weight Decay, Data Augmentation) est indispensable pour généraliser
-    - Le **Transfer Learning** est le levier le plus puissant quand les données sont limitées
-    - Le **Mixed Precision** double la vitesse d'entraînement sur GPU modernes sans effort
-    - La **quantification** et le **pruning** réduisent la taille du modèle de 4-8× pour le déploiement
-    - La **distillation** permet de transférer les connaissances d'un grand modèle vers un petit
-    - Optimise dans cet ordre : données → architecture → hyperparamètres → matériel → déploiement
+Passez au multi-GPU/multi-node seulement si :
+
+- un device unique ne satisfait pas le besoin ;
+- le coût de communication est acceptable ;
+- le pipeline de données alimente suffisamment les accélérateurs.
+
+Mesurez le **scaling efficiency** plutôt que de supposer qu'ajouter deux fois plus de GPU divise le temps par deux.
+
+---
+
+## 7. Profiling
+
+Avant d'optimiser :
+
+- profiler compute vs data loading ;
+- GPU utilization ;
+- mémoire ;
+- temps par étape ;
+- synchronisations ;
+- I/O.
+
+Un GPU à faible utilisation peut indiquer un data loader lent plutôt qu'un modèle à optimiser.
+
+---
+
+## 8. Quantification
+
+La quantification peut réduire mémoire et latence, mais la compatibilité dépend du runtime et du matériel.
+
+Benchmarkez :
+
+```text
+model size
+latency p50/p95
+throughput
+quality metric
+unsupported ops / fallback
+```
+
+Validez toujours l'artefact dans le **runtime cible**, pas seulement dans le notebook d'export.
+
+---
+
+## 9. Pruning et distillation
+
+Ces techniques peuvent être utiles pour réduire un modèle mais nécessitent un protocole clair.
+
+### Pruning
+
+Mesurez sparsity réelle **et** accélération effective sur le runtime ; un modèle sparse n'est pas automatiquement plus rapide.
+
+### Distillation
+
+Comparez student vs teacher sur :
+
+- qualité ;
+- taille ;
+- latence ;
+- coût d'entraînement ;
+- comportement sur sous-populations critiques.
+
+---
+
+## 10. Choix du modèle pré-entraîné
+
+Évitez les tables statiques de paramètres/accuracy copiées d'anciens benchmarks. Les résultats dépendent de :
+
+- variante exacte ;
+- résolution ;
+- preprocessing ;
+- dataset ;
+- checkpoint ;
+- runtime.
+
+Consultez la model card et les benchmarks officiels de la version utilisée.
+
+---
+
+## 11. Benchmark de déploiement
+
+Pour chaque candidat :
+
+```text
+hardware cible
+dataset représentatif
+batch size production
+warmup identique
+latency p50/p95/p99
+throughput
+peak memory
+quality metric
+```
+
+Les benchmarks de laptop ou GPU de développement ne prédisent pas nécessairement la production.
+
+---
+
+## 12. Claude Code comme assistant d'expérimentation
+
+```text
+Nous voulons réduire la latence d'inférence.
+1. exécute le benchmark baseline ;
+2. profile le modèle ;
+3. identifie le bottleneck principal ;
+4. propose UNE optimisation compatible avec notre runtime ;
+5. applique-la ;
+6. réexécute le même benchmark ;
+7. compare qualité, p95, throughput et mémoire.
+```
+
+Stockez les résultats dans un fichier versionné ou un système de tracking.
+
+---
+
+## Checklist
+
+- [ ] baseline enregistrée ;
+- [ ] bottleneck profilé ;
+- [ ] une variable principale changée ;
+- [ ] benchmark reproductible ;
+- [ ] qualité non dégradée au-delà du seuil accepté ;
+- [ ] runtime cible testé ;
+- [ ] gain réel, pas théorique.
 
 ---
 
 ## Sources
 
-- [Deep Learning book (Goodfellow)](https://www.deeplearningbook.org/) - consulté le 2026-06-20
-- [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
-- [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20
+- [PyTorch — Performance Tuning Guide](https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html) — vérifier la version utilisée
+- [TensorFlow — Performance](https://www.tensorflow.org/guide/gpu_performance_analysis) — vérifier la version utilisée
+- [JAX — documentation](https://docs.jax.dev/) — vérifier la version utilisée
+- [Keras — guides](https://keras.io/guides/) — vérifier la version utilisée
 
 ## Prochaine étape
 
-Pour choisir le bon framework et comparer leurs forces respectives, consulte la **[Comparaison des frameworks](comparaison.md)** : TensorFlow vs PyTorch vs Keras vs JAX.
+Poursuivez avec **[Comparaison des Frameworks](comparaison.md)**, la page suivante dans le menu.

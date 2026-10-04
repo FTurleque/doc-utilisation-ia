@@ -1,48 +1,87 @@
-<!--
-Fichier d'aide décrivant les agents recommandés pour ce dépôt.
-Ce document est destiné aux contributeurs et aux intégrations Copilot/agents.
--->
-
 # AGENTS — recommandations pour ce dépôt
 
-But
+Ce fichier contient les conventions communes aux assistants et agents utilisés pour maintenir **l'ensemble du dépôt**. Claude Code est l'outil principal ; les configurations GitHub Copilot restent maintenues pour la compatibilité et la référence.
 
-- Fournir des agents et des scénarios d'utilisation pour accélérer les tâches de documentation (rédaction, relecture, synthèse).
+## Périmètre
 
-ApplyTo
+- Documentation publique : `docs/`
+- Navigation : `mkdocs.yml`
+- Instructions/gouvernance : fichiers Markdown à la racine
+- Claude Code : `CLAUDE.md` et `.claude/`
+- GitHub Copilot : `.github/copilot-instructions.md`, `.github/agents/`, `.github/instructions/`, `.github/prompts/`, `.github/skills/`, `.github/hooks/`
+- CI/CD : `.github/workflows/`
+- Scripts : `scripts/`
+- Notes internes : `user/`
+- Templates : `docs/assets/templates/`
 
-- Dossier principal de documentation : `docs/`
+## Règles communes
 
-Agents suggérés
+- Écrire en français pour le contenu publié.
+- Vérifier les faits évolutifs auprès de sources officielles avant publication.
+- Présenter Claude Code comme parcours principal dans les pages génériques.
+- Conserver les références Copilot utiles et les identifier clairement.
+- Ne pas traiter `.claude/*` et `.github/*` comme des formats interchangeables.
+- Mettre `mkdocs.yml` à jour pour les pages publiques ajoutées/déplacées, sauf ressources volontairement hors navigation.
+- Auditer aussi les scripts, templates, agents et workflows lorsqu'une migration transverse les affecte.
+- Ne jamais pousser ou merger directement dans `main` dans un workflow d'agent.
 
-- `docs-editor` : agent pour rédiger et restructurer des pages Markdown dans `docs/`.
-  - Tâches : proposer sommaires, adapter le niveau (débutant/intermédiaire), reformuler des sections.
+## Rôles Claude disponibles
 
-- `official-doc-sync` : agent pour mettre à jour une page à partir de
-  références officielles (documentation éditeur, release notes, changelog).
-  - Tâches : valider les faits techniques, corriger les écarts, garder une traçabilité des sources utilisées.
+Sous `.claude/agents/` :
 
-- `official-doc-audit` : agent d'audit en lecture seule pour comparer la documentation aux sources officielles.
-  - Tâches : détecter l'obsolescence, classer les écarts par sévérité,
-    proposer un plan de correction sans modifier les fichiers.
+- `doc-writer` — rédaction et mise à jour ;
+- `doc-reviewer` — audit en lecture seule ;
+- `nav-maintainer` — navigation MkDocs ;
+- `official-doc-audit` — comparaison aux sources officielles ;
+- `official-doc-sync` — synchronisation documentée ;
+- `sonar-remediation` — correction Sonar bornée avec preuves de build/tests.
 
-- `docs-linter` : agent focalisé sur la relecture (orthographe, style, liens cassés, métadonnées).
-  - Tâches : vérifier front-matter, s'assurer que les liens internes existent.
+Le skill `.claude/skills/doc-writer/` fournit le workflow de rédaction réutilisable.
 
-- `site-builder` : agent pour exécuter les commandes de build/déploiement.
-  - Tâches : `pip install -r requirements.txt`, `mkdocs build`, `mkdocs gh-deploy`.
+Les agents/skills sous `.github/` restent les équivalents ou outils spécifiques GitHub Copilot.
 
-Exemples d'utilisation rapide
+## Sources
 
-- "docs-editor: Améliore l'introduction de `docs/index.md` pour un public débutant."
-- "docs-linter: Vérifie les liens relatifs dans `docs/bonnes-pratiques/` et propose les corrections."
-- "official-doc-sync: Mets à jour
-  `docs/chapitre-11-troubleshooting/problemes-courants.md` selon les docs
-  officielles GitHub Copilot publiées cette semaine."
-- "official-doc-audit: Audite
-  `docs/chapitre-12-couts-gouvernance/abonnements.md` et liste les écarts avec
-  les sources officielles, sans appliquer de changements."
+Prioriser :
 
-Prochaine étape
+1. documentation officielle du produit ;
+2. changelog/release notes officiels ;
+3. dépôt ou spécification officielle ;
+4. source secondaire seulement en complément.
 
-- Créer des prompts modèles dans `prompts/` pour ces agents (gabarits réutilisables).
+Pour Claude : `code.claude.com/docs`, `platform.claude.com/docs`, `anthropic.com`.
+Pour Copilot : GitHub Docs et GitHub Changelog.
+
+## Validation du site
+
+Commande de référence :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
+```
+
+Sous Windows, `py -m` peut remplacer `python -m` selon l'installation.
+
+La CI de PR exécute ces validations. Ne masque pas un échec par un assouplissement du validateur sans démontrer qu'il s'agit d'un faux positif.
+
+## Git et déploiement
+
+- Travail sur branche.
+- Push : `git push -u origin HEAD`.
+- Pull Request vers `main`.
+- Merge manuel après revue.
+- Déploiement par `.github/workflows/deploy.yml` après intégration dans `main`.
+
+Le script `scripts/push-and-deploy.ps1` porte un nom historique mais refuse désormais de pousser `main/master`.
+
+## Sécurité
+
+- Ne jamais committer de secrets ou credentials.
+- `.claude/settings.local.json` et les réglages personnels restent locaux.
+- Considérer hooks, skills, agents et workflows comme du code/configuration exécutable à relire.
+- Les exemples offensifs du chapitre cybersécurité doivent rester orientés défense, détection et contrôle.
+
+## Relation avec `CLAUDE.md`
+
+`CLAUDE.md` importe ce fichier et contient les priorités spécifiques Claude. Les deux doivent rester cohérents et suffisamment courts pour ne pas surcharger le contexte.

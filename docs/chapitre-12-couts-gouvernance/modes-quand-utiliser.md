@@ -1,179 +1,177 @@
-# Quand utiliser quel mode ?
+# Quand utiliser quel mode avec Claude Code ?
 
 <span class="badge-intermediate">Intermédiaire</span>
-<span class="badge-expert">Expert</span>
 
-GitHub Copilot propose quatre modes d'interaction principaux, chacun avec un niveau de puissance, de coût et d'autonomie différent. Utiliser le bon mode selon la tâche est la décision la plus impactante pour équilibrer productivité et consommation d'AI Credits.
-
----
-
-## Vue d'ensemble des modes
-
-| Mode | Déclenchement | Autonomie | Coût | Meilleur pour |
-|------|--------------|-----------|------|---------------|
-| **Inline / Autocomplétion** | Automatique en tapant | Aucune | Très faible | Code répétitif, patterns connus |
-| **Chat (Ask)** | Manuel, panneau dédié | Faible | Modéré | Exploration, questions, explications |
-| **Plan** | Manuel, panneau dédié | Modérée (lecture seule) | Modéré | Décomposer une tâche, clarifier le scope |
-| **Agent** | Manuel, tâche décrite | Haute | Élevé | Fonctionnalités complètes, migration |
+Avec Claude Code, le bon choix n'est pas « quel bouton coûte le moins cher ? », mais **quel niveau d'autonomie et de contexte est nécessaire pour réussir la tâche sans rework**.
 
 ---
 
-## Mode Inline — Autocomplétion
+## Vue d'ensemble
 
-**Nature :** suggestions en temps réel dans l'éditeur pendant la frappe (ghost text).
-
-**Coût :** nul sur les plans payants — utilise le modèle standard.
-
-**Quand l'utiliser :**
-
-- Implémenter un pattern déjà présent dans le projet
-- Écrire du boilerplate (getters, constructeurs, interfaces)
-- Compléter des imports, des switch/case, des queries SQL connues
-- Taper rapidement quand on sait exactement ce qu'on veut
-
-**Quand ne pas l'utiliser :**
-
-- Quand la logique est ambiguë — Copilot devinera mal
-- Pour des décisions d'architecture
-- Quand le fichier courant n'a pas assez de contexte
-
-!!! tip "Signal d'efficacité"
-    Si les suggestions inline sont souvent pertinentes, votre code est bien structuré et bien nommé. Si elles sont souvent à côté, c'est un signal sur la qualité du contexte local.
+| Approche | Autonomie | Contexte typique | À utiliser pour |
+|---|---:|---|---|
+| **Interaction directe** | Faible | question ciblée, fichier ou erreur précise | comprendre, expliquer, petite correction |
+| **Plan** | Lecture / cadrage | plusieurs fichiers, contraintes, architecture | préparer un changement complexe avant écriture |
+| **Agent principal** | Élevée | dépôt + outils | implémentation, debug multi-fichiers, migration |
+| **Subagent** | Spécialisée | contexte isolé | exploration lourde, audit, recherche parallèle |
+| **Skill / routine** | Réutilisable | procédure versionnée | workflow répétitif et stable |
 
 ---
 
-## Mode Chat (Ask)
+## Interaction directe
 
-**Nature :** conversation en langage naturel dans un panneau dédié.
+Utilisez une interaction simple quand la tâche est locale et bien définie.
 
-**Coût :** modéré — 1 message = 1 interaction facturable (selon modèle et tokens).
+```text
+Lis @src/auth/token.ts et le test associé.
+Explique pourquoi le test `expired token` échoue.
+Ne modifie rien.
+```
 
-=== ":material-microsoft-visual-studio-code: VS Code"
+C'est souvent préférable à une orchestration complète pour :
 
-    Panneau Copilot Chat avec sélection de mode (Ask, Plan, Agent). Les participants et variables évoluent: saisir `@`, `/` et `#` dans la zone de chat pour afficher la liste réellement disponible dans votre version.
-
-=== ":simple-intellijidea: IntelliJ IDEA"
-
-    Fenêtre **GitHub Copilot Chat** (vue dédiée) avec support des fichiers référencés manuellement.
-
-**Quand l'utiliser :**
-
-- Comprendre un code existant (`/explain`)
-- Corriger un bug avec contexte (`/fix`)
-- Générer des tests (`/tests`)
-- Poser des questions sur l'architecture ou les choix de design
-- Explorer des alternatives avant d'implémenter
-
-**Slash commands utiles :**
-
-| Commande | Action |
-|----------|--------|
-| `/explain` | Explique le code sélectionné ou référencé |
-| `/fix` | Propose une correction pour l'erreur/bug courant |
-| `/tests` | Génère des tests unitaires pour le code sélectionné |
-| `/doc` | Génère la documentation (JSDoc, Javadoc...) |
-| `/new` | Crée un nouveau fichier ou projet |
+- une erreur de compilation ;
+- une question d'API ;
+- un petit refactoring ;
+- un test manquant ;
+- une explication de code.
 
 ---
 
-## Mode Plan
+## Plan
 
-**Nature :** mode de planification avant exécution. Il produit un plan d'implémentation et peut poser des questions de clarification.
+Le mode Plan est utile quand **le coût d'une mauvaise direction est supérieur au coût du cadrage**.
 
-**Coût :** modéré (interactions de chat). En général moins coûteux qu'une exécution agent complète sur une tâche mal cadrée.
+Utilisez-le avant :
 
-**Quand l'utiliser :**
+- migration de dépendance ;
+- refactoring multi-module ;
+- changement de schéma ;
+- nouvelle fonctionnalité transverse ;
+- modification impliquant sécurité ou compatibilité.
 
-- Quand le besoin est encore ambigu
-- Avant une fonctionnalité multi-fichiers
-- Quand tu veux valider la stratégie avant de modifier le code
+Un bon plan doit identifier :
 
-**Quand ne pas l'utiliser :**
+1. fichiers concernés ;
+2. contraintes et invariants ;
+3. ordre des modifications ;
+4. risques ;
+5. tests et critères de sortie.
 
-- Pour une correction triviale sur un seul fichier
-- Quand tu as déjà un plan validé et prêt à exécution
-
-!!! tip "Chaîne recommandée"
-    Ask pour comprendre, Plan pour cadrer, Agent pour exécuter.
-
----
-
-## Mode Agent
-
-**Nature :** mode autonome où Copilot planifie, exécute des tool calls (lecture, écriture, recherche), et itère jusqu'à complétion d'une tâche complexe.
-
-**Coût :** variable selon le modèle, la taille du contexte et le nombre de prompts utilisateur. En mode agentique, la consommation totale dépend des appels modèle effectués pendant la session.
-
-**Quand l'utiliser :**
-
-- Créer une fonctionnalité complète de bout en bout (API + service + tests + types)
-- Migrer un module entier vers une nouvelle technologie
-- Implémenter un ticket JIRA / GitHub Issue complet
-- Générer un scaffold de projet avec structure de dossiers
-
-**Quand ne pas l'utiliser :**
-
-- Pour des modifications single-file → Chat ou autocomplétion sont souvent plus rapides
-- Pour des explorations ou des questions → Chat
-- Quand le périmètre est flou → définir le scope avant de lancer l'agent
-
-!!! warning "Vérifier avant de valider"
-    L'Agent Mode peut créer, modifier et supprimer des fichiers. Toujours vérifier le plan avant de cliquer "Accept All" — notamment sur les lignes supprimées.
+!!! tip "Plan court"
+    Ne demandez pas une dissertation. Le plan sert à réduire l'ambiguïté, pas à consommer le contexte avant l'implémentation.
 
 ---
 
-## Arbre de décision
+## Agent principal
 
-```mermaid
-graph TD
-    A[Tâche à réaliser] --> B{Je sais exactement\nce que je veux écrire ?}
-    B -->|Oui| C["→ Autocomplétion inline\n(taper et accepter)"]
-    B -->|Non| D{Tâche simple :\n1 fichier, question, explication ?}
-    D -->|Oui| E["→ Chat (Ask)\n(/explain, /fix, /tests)"]
-    D -->|Non| F{Transformation ciblée\nsur 2-5 fichiers connus ?}
-    F -->|Oui| G["→ Chat guidé\navec fichiers ciblés"]
-    F -->|Non| H{Fonctionnalité complète\nou migration ?}
-    H -->|Oui| P["→ Plan\n(valider le plan)"]
-    P --> I["→ Agent Mode\n(exécuter le plan)"]
-    H -->|Non| E
+L'agent principal est adapté lorsque Claude doit combiner plusieurs actions :
 
-    style C fill:#d4edda,color:#000
-    style E fill:#cce5ff,color:#000
-    style G fill:#fff3cd,color:#000
-    style I fill:#f8d7da,color:#000
+```text
+Explore → modifier → exécuter → observer → corriger → vérifier
+```
+
+Exemples :
+
+- implémenter une feature sur plusieurs fichiers ;
+- reproduire puis corriger un bug ;
+- ajouter des tests et faire passer la suite ;
+- adapter une configuration CI ;
+- migrer une API avec vérification du build.
+
+Le coût est justifié si l'agent dispose d'une **boucle de validation réelle**.
+
+---
+
+## Subagents
+
+Un subagent est utile quand une sous-tâche génère beaucoup de contexte mais que le résultat final peut être résumé.
+
+Bon cas :
+
+- cartographier un gros module ;
+- auditer les appels à une API dépréciée ;
+- analyser séparément sécurité, tests et performance ;
+- rechercher plusieurs hypothèses en parallèle.
+
+Mauvais cas :
+
+- lire deux fichiers ;
+- corriger une typo ;
+- créer une couche d'orchestration uniquement « parce que c'est agentique ».
+
+L'objectif est d'**isoler le bruit**, pas de multiplier les agents.
+
+---
+
+## Skills et procédures récurrentes
+
+Si vous répétez le même protocole, transformez-le en skill plutôt que de recopier un long prompt.
+
+Exemples :
+
+- revue de PR ;
+- audit sécurité ;
+- génération et validation de migration ;
+- évaluation ML ;
+- mise à jour documentaire.
+
+Un skill est rentable quand il réduit les oublis et standardise les contrôles.
+
+---
+
+## Choisir avec quatre questions
+
+```text
+1. La tâche est-elle locale et claire ?
+   → interaction directe
+
+2. Une mauvaise direction toucherait-elle plusieurs fichiers ?
+   → Plan
+
+3. Faut-il modifier puis exécuter des validations ?
+   → agent principal
+
+4. Une sous-tâche volumineuse peut-elle être isolée et résumée ?
+   → subagent
 ```
 
 ---
 
-## Comparatif de coût sur un exemple concret
+## Modèle et coût
 
-**Tâche :** "Ajouter la validation de l'email dans le UserService."
+Ne choisissez pas un modèle uniquement par habitude. La meilleure stratégie est :
 
-| Mode utilisé | Requêtes consommées | Temps | Qualité |
-|-------------|---------------------|-------|---------|
-| Autocomplétion | 0 | 2 min | Bonne si pattern connu |
-| Chat + /fix | 1 | 3 min | Très bonne |
-| Plan puis Agent | 2+ | 4-8 min | Très bonne (moins de retours) |
-| Chat guidé (UserService seul) | 1 | 2-3 min | Très bonne |
-| Agent Mode | 5–10 | 5 min | Très bonne... pour rien de plus |
+- modèle plus léger pour tâches simples et déterministes ;
+- modèle plus capable lorsque le raisonnement ou la coordination le justifie ;
+- mesure sur vos tâches réelles plutôt qu'un classement générique.
 
-!!! danger "Anti-pattern"
-    Lancer Agent Mode par défaut sur toutes les tâches parce que "c'est plus rapide à formuler" — c'est le principal vecteur de gaspillage d'AI Credits.
+Les modèles, disponibilités et politiques de routage évoluent ; consultez la documentation et les réglages du compte au moment du choix.
+
+---
+
+## Auto mode et permissions
+
+Avec **Claude Code v2.1.283 ou ultérieur**, auto mode est le mode de départ intégré des sessions interactives terminal et VS Code sur tous les plans et fournisseurs, sous réserve de disponibilité et des réglages qui le remplacent. Les versions antérieures ont un périmètre différent : vérifiez `claude --version` et le mode affiché. Un modèle local derrière une API compatible n'est pas automatiquement pris en charge par le classificateur.
+
+Auto mode fait analyser les actions par un classificateur distinct ; il ne constitue pas une sandbox. Les règles `ask` explicites peuvent encore provoquer une demande. L'organisation peut désactiver ce mode. Le réglage `permissions.defaultMode: "auto"` ne prend pas effet depuis les fichiers projet `.claude/settings.json` ou `.claude/settings.local.json` : utilisez la portée utilisateur/administrée appropriée ou `claude --permission-mode auto`.
+
+[Modes et conditions officiels](https://code.claude.com/docs/en/permission-modes#eliminate-prompts-with-auto-mode), revérifiés le **3 octobre 2026**. Pour l'isolation des commandes, voir [Sandbox](../chapitre-4-contexte/sandbox.md).
 
 ---
 
 ## Sources
 
-- [GitHub Copilot plans](https://docs.github.com/en/copilot/get-started/plans) - consulté le 2026-06-20
-- [GitHub Copilot usage-based billing](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulté le 2026-06-20
+- [Claude Code — Best practices](https://code.claude.com/docs/en/best-practices) — consulté le 2026-09-28
+- [Claude Code — Subagents](https://code.claude.com/docs/en/sub-agents) — consulté le 2026-09-28
+- [Claude — Auto mode default in Claude Code](https://claude.com/blog/auto-mode-default-in-claude-code) — consulté le 2026-09-28
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-12-couts-gouvernance.md#page-chapitre-12-couts-gouvernance-modes-quand-utiliser).
 
 ## Prochaine étape
 
-**[Workflow recommandé](workflow-recommande.md)** : séquence optimale au quotidien combinant décisions sur les modes, modèles et contexte pour maximiser la productivité et minimiser le gaspillage.
-
-Concepts clés couverts :
-
-- **Principe directeur** — Commencer par le moins coûteux, monter en puissance si nécessaire
-- **Workflow journalier** — Mise en contexte, séquences type, tâches récurrentes
-- **Pairs de tâches** — Patterns optimaux pour code repetitif, refactoring, debugging, architecture
-- **Checklist quotidienne** — Points de vérification pour éviter les erreurs courantes
+Poursuivez avec **[Workflow recommandé](workflow-recommande.md)**, la page suivante dans le menu.

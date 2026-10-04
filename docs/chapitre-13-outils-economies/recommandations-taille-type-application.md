@@ -1,188 +1,185 @@
-# Recommandations pratiques par taille et type d'application
+# Recommandations pratiques par contexte projet
 
-<span class="badge-intermediate">Intermédiaire</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-intermediate">Intermédiaire</span>
 
-Cette page transforme le cadre du chapitre 13 en décisions concrètes. Tu y trouves ce qu'il faut utiliser selon la taille de ton application et son type technique. Le but est de limiter les crédits IA sans ralentir l'équipe.
-
----
-
-## Méthode de décision rapide
-
-1. Évalue la **taille** de la codebase.
-2. Identifie le **type d'application** dominant.
-3. Applique la base : IntelliJ natif → automatisation sans IA → IA locale → Copilot (AI Credits).
-
-!!! tip "Raccourci utile"
-    Si une action est déterministe et répétable, privilégie IntelliJ + outils statiques. Garde Copilot pour les cas ambigus ou transverses.
+La taille seule ne suffit pas pour choisir une stack IA. Un petit projet réglementé peut exiger plus de gouvernance qu'un grand projet open source. Cette page propose donc des décisions fondées sur **risque, données, architecture, outillage existant et capacité de validation**.
 
 ---
 
-## Recommandations par taille d'application
+## Ordre de décision
 
-### Petite application (solo ou petite équipe)
+1. Identifier les contraintes de données et de sécurité.
+2. Identifier les validations déjà disponibles : tests, build, lint, Sonar, CI.
+3. Choisir l'agent principal.
+4. Choisir le backend de modèle si le local ou un fournisseur particulier est requis.
+5. Ajouter uniquement les outils qui résolvent un problème mesuré.
 
-- Priorité : rapidité d'exécution.
-- Stack recommandée : IntelliJ natif + Copilot inline + Continue/Ollama pour le chat simple.
-- Évite d'industrialiser trop tôt (pipeline lourd, règles excessives).
-
-Actions immédiates :
-
-- Active les inspections IntelliJ avec quick-fix.
-- Utilise `rg` et `tree` avant chaque prompt.
-- Réserve Copilot Chat aux tâches qui touchent plusieurs fichiers.
-- Active SonarQube for IDE en mode autonome pour détecter tôt sans crédit Copilot.
-
-### Application Java moyenne
-
-- Priorité : homogénéité des règles et réduction des corrections manuelles.
-- Stack recommandée : SonarQube for IDE + Connected Mode + inspections IntelliJ + tests.
-- AI CodeFix : à activer seulement si édition/licence compatibles et avec revue du diff.
-
-Actions immédiates :
-
-- Connecte l'IDE au projet Sonar de l'équipe.
-- Traite d'abord Quick Fix Sonar/IntelliJ.
-- Utilise Copilot sur les issues non déterministes.
-
-### Monolithe moyen
-
-- Priorité : cohérence du code et qualité continue.
-- Stack recommandée : IntelliJ natif + Qodana/Checkstyle/SpotBugs + Copilot ciblé.
-- Ajoute RTK pour compresser les sorties terminal de test/build.
-
-Actions immédiates :
-
-- Crée un profil d'inspection partagé d'équipe.
-- Automatise OpenRewrite sur les migrations mécaniques.
-- Utilise Copilot après échec d'une passe inspection/refactor/test.
-
-### Grand monorepo ou polyrepo
-
-- Priorité : filtrage de contexte et gouvernance.
-- Stack recommandée : RTK + ast-grep + Semgrep + ArchUnit + agents spécialisés cadrés.
-- Travaille par sous-domaines pour éviter les prompts massifs.
-
-Actions immédiates :
-
-- Limite les prompts à un module/service à la fois.
-- Utilise `jq/yq` pour réduire logs et configs avant envoi.
-- Versionne les règles (OpenRewrite/Semgrep/ArchUnit) comme du code.
-- Ajoute un triage Sonar par règle avant toute campagne IA.
-
-### Application legacy
-
-- Priorité : sécuriser les refactorings.
-- Stack recommandée : IntelliJ refactorings sûrs + tests de non-régression + Copilot pour plan de migration.
-- Évite de demander "réécris tout" à un agent.
-
-Actions immédiates :
-
-- Lance d'abord les inspections et la hiérarchie d'usages.
-- Écris/renforce les tests de caractérisation.
-- Utilise Copilot pour proposer des micro-étapes validables.
-- Segmente la dette Sonar en lots courts (une règle à la fois).
-
-### Multi-module Maven
-
-- Priorité : limiter le risque de régression transversale.
-- Recommandé : SonarQube for IDE + Connected Mode + lots Sonar bornés par module.
-- MCP Sonar : utile pour extraire les issues d'une règle sur un sous-ensemble de modules.
-
-### Microservices
-
-- Priorité : cohérence qualité inter-services.
-- Recommandé : profils Sonar communs + Quality Gate + correction service par service.
-- Remediation Agent : pertinent sur backlog important, si l'offre Sonar est compatible.
-
-### Application d'entreprise ou code sensible
-
-- Priorité : sécurité, traçabilité, revue humaine.
-- Recommandé : SonarQube Server/Cloud en mode connecté, règles d'entreprise, politiques strictes de tokens.
-- Interdire toute désactivation de règle sans justification approuvée.
 
 ---
 
-## Recommandations par type d'application
+## Petit projet ou prototype
 
-| Type d'application | Priorité outillage | IntelliJ natif d'abord | Copilot quand ? |
-|---|---|:---:|---|
-| API backend (Java/Kotlin, Spring) | Inspections, refactorings, tests, SpotBugs | Oui | Quand le problème traverse plusieurs couches (controller/service/repo) |
-| Frontend (React/Vue/Angular) | Lint, format, tests UI, snippets | Oui | Pour générer variantes UI, tests complexes ou migration framework |
-| Data / ML | Préparation de données, scripts reproductibles, notebooks | Partiel | Pour expliquer résultats, prototyper pipelines, documenter expériences |
-| Microservices | Contrats, observabilité, règles d'architecture | Oui | Pour analyser incidents multi-services et proposer plans de remédiation |
+Objectif : garder la stack simple.
 
-!!! info "Backend IntelliJ"
-    Sur les projets JVM, IntelliJ couvre déjà une grande part des besoins d'analyse structurelle. C'est le meilleur levier d'économie avant IA.
+```text
+Claude Code
++ tests/lint du projet
++ aucun MCP inutile
+```
 
-### SonarQube : quel niveau selon le contexte
-
-| Contexte | SonarQube for IDE seul | Connected Mode | AI CodeFix | MCP Sonar | Remediation Agent |
-|---|:---:|:---:|:---:|:---:|:---:|
-| Petit projet personnel | Oui | Optionnel | Optionnel | Non prioritaire | Non |
-| Application Java moyenne | Oui | Oui | Optionnel | Optionnel | Optionnel |
-| Monolithe historique | Oui | Oui | Oui si éligible | Oui (triage lots) | Optionnel |
-| Multi-module Maven | Oui | Oui | Optionnel | Oui | Optionnel |
-| Microservices | Oui | Oui | Optionnel | Oui | Oui si backlog élevé |
-| Application d'entreprise | Oui | Oui | Selon offre | Oui | Selon offre |
-| Code sensible/sécurité forte | Oui | Oui | Avec revue stricte | Oui borné | Avec gouvernance stricte |
-| Équipe SonarQube Server | Oui | Oui (serveur) | Selon édition serveur | Oui | Selon édition |
-| Équipe SonarQube Cloud | Oui | Oui (cloud) | Selon offre cloud | Oui | Selon offre |
+Ajoutez Ollama/LM Studio seulement si le local répond à un besoin réel. Ajoutez Sonar ou RTK seulement si vous observez respectivement un besoin d'analyse statique ou des sorties terminal réellement trop volumineuses.
 
 ---
 
-## Quand utiliser IntelliJ natif vs Copilot
+## Application métier avec CI mature
 
-### Utiliser IntelliJ natif
+Objectif : faire de l'environnement la source de vérité.
 
-- Correction de warnings connus.
-- Refactoring mécanique.
-- Recherche d'usages et impact local.
-- Exécution et diagnostic de tests.
+```text
+Claude Code
+→ tests ciblés
+→ lint/typecheck
+→ Sonar/quality gate si présent
+→ CI
+```
 
-### Utiliser Copilot
-
-- Arbitrage d'architecture.
-- Debug multi-fichiers avec hypothèses.
-- Génération de plan de migration.
-- Explication rapide d'un sous-système inconnu.
-
-=== "IntelliJ IDEA"
-    Ordre recommandé : Inspections → Refactorings → Tests → Qodana/Semgrep → Copilot.
-
-=== "Visual Studio Code"
-    Ordre recommandé : Lint/Test/CLI → outils de recherche (`rg`, `ast-grep`) → Copilot/agent.
-
-!!! warning "Signal de surconsommation"
-    Si tu ouvres Copilot plusieurs fois pour des corrections que l'IDE automatise, tu consommes des crédits sans gain réel.
+Placez les commandes dans `CLAUDE.md` et créez des skills pour les procédures répétitives. N'autorisez pas l'agent à conclure « terminé » sans validation exécutable.
 
 ---
 
-## Plan d'adoption en 30 jours
+## Monolithe ou legacy
 
-1. **Semaine 1** : imposer la préparation de contexte (`rg`, `tree`, `jq/yq`, RTK).
-2. **Semaine 2** : standardiser inspections/refactorings IntelliJ en équipe.
-3. **Semaine 3** : brancher Qodana/Semgrep/OpenRewrite en CI.
-4. **Semaine 4** : formaliser la règle d'escalade vers Copilot (AI Credits).
+Objectif : éviter les réécritures massives.
 
-!!! success "Résultat attendu"
-    Moins de prompts longs, moins d'allers-retours, et une consommation IA concentrée sur les tâches complexes.
+- commencer par des tests de caractérisation ;
+- utiliser les refactorings IDE déterministes ;
+- travailler par petits lots ;
+- utiliser Sonar pour prioriser le nouveau code ou une règle précise ;
+- utiliser Plan avant un changement transversal ;
+- exécuter build/tests à chaque étape.
 
----
-
-## Points clés à retenir
-
-- La taille de la codebase change la stratégie de contexte.
-- Le type d'application change le mix IntelliJ/automatisation/Copilot.
-- Le meilleur ROI vient d'un ordre de traitement strict avant IA.
+Évitez les demandes « modernise tout le module » sans critères de compatibilité.
 
 ---
 
-## Sources
+## Monorepo / nombreux services
 
-- [GitHub Copilot documentation](https://docs.github.com/en/copilot) - consulté le 2026-06-20
+Objectif : contrôler le contexte.
+
+- `CLAUDE.md` racine court ;
+- instructions/rules locales par sous-projet ;
+- subagents pour les recherches indépendantes ;
+- MCP uniquement pour les services nécessaires ;
+- RTK si les builds/logs saturent effectivement le contexte ;
+- validation service par service avant une passe globale.
+
+La taille du repo n'implique pas qu'il faut tout charger dans une seule session.
+
+---
+
+## Projet sensible ou réglementé
+
+Commencez par une revue de la chaîne de données :
+
+```text
+agent
+→ backend modèle
+→ logs/transcriptions
+→ MCP
+→ plugins/skills
+→ services externes
+```
+
+Selon les exigences, évaluez :
+
+- Claude Code avec politiques organisationnelles adaptées ;
+- backend local via Ollama/LM Studio ;
+- plateforme entreprise telle que Tabnine ;
+- SonarQube Server/Cloud selon politique interne ;
+- restrictions réseau et permissions d'outils.
+
+« Local » n'est pas une conformité automatique : il faut aussi sécuriser le poste, les logs et les services exposés.
+
+---
+
+## Projet AWS
+
+Claude Code peut rester l'agent principal et s'appuyer sur AWS CLI, IaC, documentation officielle et MCP/outils autorisés.
+
+Si l'intégration AWS spécialisée est importante, évaluez **Kiro**. Pour les installations Amazon Q Developer existantes, préparez la migration avant la fin de support IDE annoncée au 30 avril 2027.
+
+---
+
+## Data / ML
+
+Priorités : reproductibilité et absence de fuite de données.
+
+- garder preprocessing/training/eval dans des scripts versionnés ;
+- notebook mince ;
+- dataset final de test hors boucle ;
+- skills pour protocole d'évaluation ;
+- Claude produit commandes, métriques et artefacts comme preuves ;
+- backend local uniquement si les données l'exigent et si la qualité est suffisante.
+
+---
+
+## Frontend / Node / Python / JVM
+
+Le langage change surtout les outils de validation, pas le principe :
+
+| Stack | Preuves typiques |
+|---|---|
+| JVM | Maven/Gradle, tests, inspections, Sonar |
+| Node/TypeScript | tests, typecheck, lint, build |
+| React | tests composants/E2E, typecheck, build |
+| Python | pytest, lint/typecheck, packaging |
+| Data/ML | tests + protocole d'expérience + métriques reproductibles |
+
+Claude doit découvrir les commandes réelles du dépôt plutôt que supposer une convention générique.
+
+---
+
+## Quand ajouter un modèle local
+
+Ajoutez Ollama ou LM Studio lorsque l'un de ces critères est mesurable :
+
+- contrainte de sortie de données ;
+- coût cloud significatif ;
+- besoin offline ;
+- latence acceptable localement ;
+- matériel disponible ;
+- modèle local validé sur vos tâches agentiques.
+
+Sinon, le local peut augmenter l'exploitation sans améliorer le résultat.
+
+---
+
+## Checklist avant d'ajouter un outil
+
+- Quel problème précis résout-il ?
+- Est-il activement maintenu ?
+- Quelles données voit-il ?
+- Quels secrets exige-t-il ?
+- Quelle validation indépendante existe ?
+- Quel coût d'exploitation ajoute-t-il ?
+- Comment le retirer ou le remplacer ?
+
+Si ces réponses ne sont pas claires, n'ajoutez pas l'outil à la stack standard.
+
+---
 
 ## Chapitres suivants
 
-**[Veille IA](../chapitre-14-veille-ia/index.md)** : organiser une veille fiable sur les évolutions produits, modèles, sécurité et annonces officielles.
+**[Veille IA](../chapitre-14-veille-ia/index.md)** : maintenir les informations produits, modèles et sécurité sans laisser la documentation se périmer.
 
-**[Hacker IA](../chapitre-15-hacker-ia/index.md)** : comprendre les risques offensifs/défensifs autour de l'IA et structurer une réponse opérationnelle.
+**[Hacker IA](../chapitre-15-hacker-ia/index.md)** : traiter les risques offensifs/défensifs et les contrôles opérationnels.
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-recommandations-taille-type-application).
+
+## Prochaine étape
+
+Poursuivez avec **[Veille IA — Accueil](../chapitre-14-veille-ia/index.md)**, la page suivante dans le menu.

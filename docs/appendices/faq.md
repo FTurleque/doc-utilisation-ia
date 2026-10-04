@@ -1,152 +1,25 @@
-﻿# FAQ — Questions Fréquentes
+# FAQ GitHub Copilot — référence
 
-## Installation & Abonnement
+Cette FAQ concerne les références conservées de GitHub Copilot. Les réponses dépendent du client et de la version ; vérifiez les guides dédiés avant de standardiser une configuration.
 
-??? question "Faut-il payer pour utiliser GitHub Copilot ?"
-    GitHub Copilot propose plusieurs plans, dont un plan gratuit limité.
+## Pourquoi garder cette documentation ?
 
-    - **Copilot Free** : limité (complétions et interactions mensuelles plafonnées)
-    - **Copilot Pro** : plan individuel payant
-    - **Copilot Pro+** : plan individuel payant avec allocation AI Credits plus élevée
-    - **Copilot Business** : plan organisation avec gestion centralisée
-    - **Copilot Enterprise** : plan entreprise avec gouvernance avancée
+Elle sert aux équipes qui utilisent encore Copilot, à la maintenance des configurations existantes et à la comparaison historique des approches. Voir les [références de l'annexe](index.md).
 
-    Les montants exacts et allocations peuvent évoluer. Vérifiez toujours la page officielle : [Plans GitHub Copilot](https://docs.github.com/fr/copilot/get-started/plans).
+## Quels fichiers de configuration utiliser ?
 
-    Les **étudiants et mainteneurs open source** peuvent être éligibles à un accès gratuit via [GitHub Education](https://education.github.com/) ou les programmes GitHub dédiés.
+Les formats dépendent du mécanisme et du client : `.github/copilot-instructions.md`, instructions ciblées `.instructions.md`, prompts `.prompt.md` et agents `.agent.md`. Les mécanismes MCP possèdent aussi leur configuration propre au client.
 
-??? question "Puis-je utiliser Copilot sur plusieurs machines avec le même compte ?"
-    Oui. Votre abonnement GitHub Copilot est lié à votre compte GitHub, pas à une machine. Vous pouvez l'utiliser sur autant de machines que vous souhaitez avec la même authentification. Les sessions simultanées sont supportées.
+Voir les guides [instructions ciblées](../chapitre-4-contexte/applyto-avance.md) et [prompt files](../chapitre-4-contexte/prompt-files.md), ainsi que les [templates de référence](templates-configuration.md).
 
-??? question "Copilot fonctionne-t-il hors ligne ?"
-    Non. GitHub Copilot nécessite une connexion Internet pour envoyer le contexte aux serveurs GitHub et recevoir les suggestions. Il n'existe pas de mode hors ligne officiel.
-    
-    En cas de connexion intermittente, les suggestions deviennent indisponibles jusqu'au rétablissement.
+## Les fonctionnalités cloud fonctionnent-elles hors ligne ?
 
----
+Les fonctions cloud nécessitent une connexion au service. Ne confondez pas accès à l'éditeur installé et disponibilité du service distant.
 
-## Confidentialité & Sécurité
+## Où vérifier les plans, incidents et nouveautés ?
 
-??? question "Mon code est-il envoyé à GitHub ? Est-il utilisé pour entraîner le modèle ?"
-    **Copilot Individual** : par défaut, GitHub peut utiliser les snippets pour améliorer le modèle. Vous pouvez désactiver cela dans **github.com/settings/copilot** → "Allow GitHub to use my code snippets from the code editor for product improvements."
-    
-    **Copilot Business et Enterprise** : les snippets ne sont **jamais** utilisés pour l'entraînement du modèle. C'est une garantie contractuelle de GitHub.
-    
-    Dans tous les cas, des métadonnées non-code (telemetry) sont envoyées. Consultez la [politique de confidentialité GitHub Copilot](https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement) pour les détails.
+Les [ressources externes Copilot](ressources-externes.md) regroupent documentation, plans, facturation, changelog et statut du service.
 
-??? question "Copilot peut-il générer du code sous copyright ?"
-    Il existe un risque théorique que Copilot génère des séquences de code identiques à du code sous licence restrictive (GPL, AGPL, etc.). Pour réduire ce risque :
-    
-    1. Dans **github.com/settings/copilot**, activez **"Block suggestions matching public code"**
-    2. En Copilot Business/Enterprise, ce filtrage est disponible en tant que politique organisationnelle
-    
-    Ce paramètre n'élimine pas totalement le risque mais le réduit significativement.
+## Prochaine étape
 
-??? question "Peut-on utiliser Copilot pour des projets confidentiels ?"
-    Avec **Copilot Business ou Enterprise**, GitHub s'engage contractuellement à ne pas utiliser votre code pour entraîner le modèle. Le code est traité comme des données confidentielles.
-    
-    Pour les projets hautement sensibles (défense, données médicales, etc.), vérifiez les informations sous-traitants et certifications de conformité de GitHub auprès de votre DPO.
-
----
-
-## Fonctionnalités & Utilisation
-
-??? question "Quelle est la différence entre les suggestions inline et Copilot Chat ?"
-    - **Suggestions inline** : suggestions "ghost text" qui apparaissent directement dans l'éditeur pendant que vous tapez. Idéal pour compléter des fonctions, des lignes, du boilerplate.
-    - **Copilot Chat** : interface conversationnelle dans un panneau dédié. Idéal pour expliquer du code, générer des tests, refactoriser, poser des questions sur le projet.
-    
-    Les deux fonctionnent de manière complémentaire. La plupart des développeurs utilisent les deux selon le contexte.
-
-??? question "Copilot Chat peut-il analyser tout mon projet ?"
-    Avec la variable `@workspace` dans Copilot Chat (VS Code), Copilot effectue une recherche sémantique dans votre projet avant de répondre. Il ne "lit" pas tout le projet d'un coup, mais indexe et retrouve les fichiers pertinents.
-    
-    La qualité de l'analyse dépend de la taille et de la clarté de la structure du projet.
-
-??? question "Comment améliorer la qualité des suggestions Copilot ?"
-    Les leviers principaux, par ordre d'impact :
-    
-    1. **Types explicites** — annotez partout, Copilot comprend votre modèle de données
-    2. **Noms descriptifs** — `getUsersByActiveStatus()` >> `query()`
-    3. **Fichiers liés ouverts** — ouvrez les types, interfaces, et dépendances dans des onglets
-    4. **Instructions contextuelles** — configurez `.github/copilot-instructions.md`
-    5. **Commentaires de description** — écrivez l'intention en commentaire avant la fonction
-    6. **Curseur positionné intelligemment** — juste après du code existant plutôt qu'en fichier vide
-
-??? question "Copilot peut-il générer des tests automatiquement ?"
-    Oui, c'est l'une de ses utilisations les plus efficaces. Deux approches :
-    
-    1. **Inline** : écrivez `// Test pour la fonction getUserById` et Copilot complète
-    2. **Chat** : `Génère les tests Jest pour cette fonction, couvre les cas nominaux et les cas d'erreur`
-    
-    La qualité est bonne mais nécessite toujours une revue : Copilot peut manquer des cas limites ou générer des assertions trop permissives.
-
-??? question "Quelle est la différence entre `.instructions.md`, `.prompt.md`, `.agent.md` et `SKILL.md` ?"
-    | Fichier | Rôle |
-    |---------|------|
-    | `.instructions.md` | Règles permanentes appliquées automatiquement selon le type de fichier (`applyTo`) |
-    | `.prompt.md` | Prompts pré-configurés invocables manuellement depuis le Chat (`/prompt-name`) |
-    | `.agent.md` | Définit un agent personnalisé avec des outils spécifiques et un comportement dédié |
-    | `SKILL.md` | Regroupe un ensemble de comportements et connaissances invocables via URI `copilot-skill://` |
-    
-    Voir [Contexte & Personnalisation](../chapitre-4-contexte/index.md) pour le guide complet.
-
----
-
-## IDE & Compatibilité
-
-??? question "IntelliJ et VS Code offrent-ils les mêmes fonctionnalités Copilot ?"
-    Non. VS Code dispose de fonctionnalités exclusives :
-    
-    - `.instructions.md` (instruction files)
-    - `.prompt.md` (prompt files)
-    - `.agent.md` et agents custom
-    - `SKILL.md`
-    - Modes Chat (Ask/Plan/Agent)
-    - Édition multi-fichiers assistée
-    - `.copilotignore`
-    
-    IntelliJ offre une meilleure **analyse sémantique** du code Java/Kotlin via PSI, mais moins de fonctionnalités de personnalisation.
-    
-    Voir [Problèmes courants](../chapitre-11-troubleshooting/comparaison-problemes.md) pour la matrice complète.
-
-??? question "Copilot fonctionne-t-il avec tous les langages ?"
-    Copilot supporte la grande majorité des langages de programmation. La qualité varie :
-    
-    - **Excellent** : Python, JavaScript, TypeScript, Java, C#, Go, Ruby
-    - **Bon** : C++, C, PHP, Swift, Kotlin, Rust, Scala
-    - **Partiel** : langages de niche, DSLs spécifiques
-    
-    Pour les langages peu représentés dans le code public, la qualité des suggestions est moindre. Des types explicites et des commentaires descriptifs compensent en partie.
-
-??? question "Comment désactiver Copilot temporairement ?"
-    === ":material-microsoft-visual-studio-code: VS Code"
-        - Barre de statut → clic sur l'icône Copilot → **Disable Completions**
-        - Ou : palette de commandes ++ctrl+shift+p++ → **"GitHub Copilot: Disable Completions"**
-        
-    === ":simple-intellijidea: IntelliJ"
-        - Clic sur l'icône Copilot dans la status bar → **"Disable GitHub Copilot"**
-
----
-
-## Troubleshooting
-
-??? question "Pourquoi Copilot ne génère-t-il pas de suggestions dans un fichier ?"
-    Causes fréquentes par ordre de probabilité :
-    
-    1. **Authentification expirée** → se reconnecter
-    2. **Extension/plugin désactivé** → vérifier les paramètres
-    3. **Fichier dans `.copilotignore`** (VS Code) → vérifier le fichier
-    4. **Langage désactivé** dans les paramètres pour ce type de fichier
-    5. **`editor.inlineSuggest.enabled: false`** (VS Code)
-    6. **Mode Power Save actif** (IntelliJ)
-    
-    Voir [Problèmes courants](../chapitre-11-troubleshooting/problemes-courants.md) pour les solutions détaillées.
-
-??? question "Comment lire les logs Copilot ?"
-    === ":material-microsoft-visual-studio-code: VS Code"
-        **Affichage → Sortie** (++ctrl+shift+u++) → sélectionnez **"GitHub Copilot"** dans le dropdown
-        
-    === ":simple-intellijidea: IntelliJ"
-        **Help → Show Log in Explorer** → filtrez `idea.log` avec grep "copilot"
-    
-    Voir [Logs & Diagnostic](../chapitre-11-troubleshooting/logs-diagnostic.md) pour le guide complet.
+Poursuivez avec **[Raccourcis Copilot](raccourcis-clavier.md)**, la page suivante dans le menu.

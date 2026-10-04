@@ -2,7 +2,7 @@
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Le choix d'architecture est **la décision la plus impactante** dans un projet de Deep Learning. Chaque type de réseau a été conçu pour exceller sur un type de données spécifique. Ce guide présente les architectures majeures, leurs mécanismes, et quand les utiliser.
+Le choix d'architecture dépend des données, de la tâche, du pré-entraînement disponible et des contraintes de calcul. Ce guide présente les architectures majeures, leurs mécanismes et leurs usages. La qualité des données et le protocole d'évaluation peuvent avoir autant d'impact que le réseau choisi.
 
 ---
 
@@ -34,8 +34,9 @@ graph TD
 | **MLP** (Dense) | Données tabulaires | Simple, polyvalent | Prédiction de prix, classification |
 | **CNN** | Images, signaux 2D | Extraction de motifs spatiaux | Reconnaissance faciale, imagerie médicale |
 | **RNN / LSTM / GRU** | Séquences, séries temporelles | Mémoire du contexte passé | Traduction, prédiction de stocks |
-| **Transformer** | Texte, images, multimodal | Attention parallélisable, contexte long | GPT, BERT, Copilot, DALL-E |
+| **Transformer** | Texte, vision, multimodal et séries | Attention entre éléments, pré-entraînement | Modèles de langage, ViT |
 | **GAN** | Génération de données | Crée des données réalistes | Génération d'images, augmentation de données |
+| **Diffusion** | Génération d'images, vidéo ou audio | Génération par débruitage progressif | Synthèse et édition conditionnées |
 | **Autoencodeur** | Compression, anomalies | Apprend des représentations compactes | Détection de fraude, débruitage |
 
 ---
@@ -78,7 +79,9 @@ graph LR
 
 **Quand l'utiliser** : données tabulaires (CSV, bases de données), features numériques structurées.
 
-**Limites** : ne capte pas les relations spatiales (images) ni temporelles (séquences).
+**Limites** : ne possède pas les biais spatiaux d'un CNN ni l'état récurrent d'un RNN. Un MLP peut néanmoins exploiter une séquence aplatie ou des features temporelles ; il ne faut pas confondre absence de biais dédié et impossibilité de traiter ces données.
+
+Les snippets sont des architectures illustratives : fournissez données, dimensions et imports (`import keras`, `from keras import layers`, `from torch import nn`) selon le bloc. Ils ne définissent pas une recette optimale. Les sorties PyTorch sont des **logits** pour `nn.CrossEntropyLoss` ; la sortie Keras softmax doit être associée à une loss configurée pour des probabilités. `categorical_crossentropy` attend des labels one-hot, `sparse_categorical_crossentropy` des indices de classes.
 
 === "TensorFlow / Keras"
 
@@ -402,6 +405,14 @@ graph LR
 
 ---
 
+## Modèles de diffusion
+
+À l'entraînement, un modèle apprend à prédire ou retirer du bruit ajouté aux données selon un protocole donné. À la génération, le pipeline part d'un bruit et applique une succession d'étapes guidées par un scheduler et, éventuellement, un conditionnement texte/image. Certains modèles utilisent un espace latent et un autoencodeur plutôt que les pixels directement.
+
+Le réseau de débruitage peut être un U-Net ou un Transformer : « diffusion » décrit le mécanisme génératif, pas une unique architecture de couches. Nombre d'étapes, scheduler, résolution, guidance et quantification modifient qualité, mémoire et latence. Comparez le pipeline et le checkpoint exacts sur vos données ; les GAN restent utiles mais ne résument pas la génération moderne.
+
+[Diffusers — pipelines de diffusion et optimisations](https://huggingface.co/docs/diffusers/en/index), revérifié le **3 octobre 2026**.
+
 ## Autoencodeurs
 
 Un **autoencodeur** compresse les données dans un espace latent réduit, puis les reconstruit. Il apprend une représentation compacte et efficace.
@@ -465,7 +476,7 @@ graph TD
     - **Transformers** pour le texte (et au-delà) : attention parallèle, contexte long, transfer learning
     - **GAN** pour générer : deux réseaux en compétition créent des données réalistes
     - **Autoencodeurs** pour compresser et détecter des anomalies
-    - Le choix d'architecture dépend du **type de données**, pas de la complexité du problème
+    - Le choix dépend des **données, de la tâche, du pré-entraînement et des contraintes de calcul** ; une architecture plus complexe ne garantit pas un meilleur résultat
 
 ---
 
@@ -475,6 +486,12 @@ graph TD
 - [PyTorch tutorials](https://pytorch.org/tutorials/) - consulté le 2026-06-20
 - [TensorFlow tutorials](https://www.tensorflow.org/tutorials) - consulté le 2026-06-20
 
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-8-deep-learning.md#page-chapitre-8-deep-learning-architectures-deep-learning).
+
 ## Prochaine étape
 
-Tu connais maintenant les architectures. Passe à l'étape pratique : **[Concevoir et entraîner un réseau de neurones](concevoir-entrainer.md)** — le guide pas à pas pour construire, entraîner et évaluer ton propre modèle.
+Poursuivez avec **[Concevoir et Entraîner](concevoir-entrainer.md)**, la page suivante dans le menu.

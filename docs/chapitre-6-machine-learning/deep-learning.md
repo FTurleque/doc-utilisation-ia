@@ -372,11 +372,4 @@ print(f"Probabilité de victoire : {proba[0][0]:.1%}")
 
 ## Prochaine étape
 
-**[Copilot dans les Notebooks Jupyter](notebooks-jupyter.md)** : pratiquer le Deep Learning et le ML directement dans un environnement interactif cellule par cellule.
-
-Concepts clés couverts :
-
-- **Configuration Copilot en notebook** — Activer les suggestions inline dans VS Code + Jupyter, raccourcis clavier essentiels
-- **Pattern cellule markdown → code généré** — Décrire l'étape en Markdown, Copilot génère le code dans la cellule suivante
-- **Workflow notebook ML recommandé** — 11 cellules types : imports → chargement → EDA → nettoyage → entraînement → sauvegarde
-- **Magic commands** — `%%time`, `%whos`, `%prun` : que Copilot connaît et suggère selon le contexte
+Poursuivez avec **[AI Credits Copilot (référence)](../chapitre-12-couts-gouvernance/premium-requests.md)**, la page suivante dans le menu.

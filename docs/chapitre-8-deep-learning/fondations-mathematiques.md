@@ -51,7 +51,7 @@ Avant de lire une formule, il faut connaître le dictionnaire de symboles. Voici
 
 ---
 
-## Partie 1 — Probabilités
+## Partie 1 — Probabilités et pertes
 
 ### 1.1 Qu'est-ce qu'une probabilité ?
 
@@ -122,8 +122,6 @@ $$\boxed{P(y \mid x) = \frac{P(x \mid y) \cdot P(y)}{P(x)}}$$
 
 !!! example "Application en Deep Learning"
     Quand un réseau de neurones prédit la classe d'une image, il approxime $P(y \mid x)$ implicitement. La perte cross-entropy l'y entraîne directement.
-
-### 1.4 Espérance et variance
 
 #### Espérance $\mathbb{E}[X]$ — Qu'est-ce qu'une moyenne pondérée ?
 
@@ -238,8 +236,6 @@ $$\sigma = \sqrt{\mathrm{Var}(X)} \quad \text{(écart-type, même unité que les
 
     C'est le principe de la **Batch Normalization** appliqué aux activations d'une couche.
 
-### 1.5 Entropie de Shannon
-
 #### Étape 1 — L'idée de surprise
 
 **Commence par une question simple** : quelle information apporte un événement quand il se produit ?
@@ -344,7 +340,7 @@ La somme vaut bien $1$.
 
 ---
 
-## Partie 2 — Algèbre Linéaire
+## Partie 2 — Algèbre linéaire
 
 ### 2.1 Vecteurs : définition et intuition
 
@@ -359,8 +355,6 @@ Un **vecteur** est une liste ordonnée de nombres, qui peut représenter :
 $$x = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} \in \mathbb{R}^n$$
 
 Chaque $x_i$ est un nombre réel. L'ensemble $\mathbb{R}^n$ est l'espace de tous les vecteurs à $n$ dimensions.
-
-### 2.2 Opérations élémentaires sur les vecteurs
 
 #### Addition de vecteurs
 
@@ -546,7 +540,7 @@ Ce qui démontre que $[(AB)^T]_{ij} = [B^T A^T]_{ij}$ pour tous $i,j$, donc $\bo
 
 ---
 
-## Partie 3 — Analyse et Optimisation
+## Partie 3 — Dérivées et rétropropagation
 
 ### 3.1 Dérivée d'une fonction d'une variable
 
@@ -596,8 +590,6 @@ $$\frac{df}{dx} = \frac{d(u^2)}{du} \cdot \frac{d(2x+1)}{dx} = 2u \cdot 2 = 2(2x
 
 **Pourquoi c'est crucial en Deep Learning** : calculer le gradient de la perte par rapport aux poids de la première couche nécessite de composer des dizaines de dérivées via la chain rule. C'est exactement ce que fait la rétropropagation automatiquement.
 
-### 3.2 Dérivée partielle et gradient
-
 #### Dérivée partielle
 
 Si la fonction $L$ dépend de plusieurs variables $w_1, w_2, \ldots, w_n$, la **dérivée partielle** $\frac{\partial L}{\partial w_j}$ mesure comment $L$ varie quand on ne bouge que $w_j$, les autres étant fixés.
@@ -636,8 +628,6 @@ $$D_v L = \|\nabla L\| \cdot \|v\| \cdot \cos\theta = \|\nabla L\| \cos\theta$$
 (car $\|v\| = 1$). Cette quantité est **maximale** quand $\cos\theta = 1$, soit $\theta = 0°$ : quand $v$ est exactement dans la même direction que $\nabla L$.
 
 Donc le gradient est bien la direction de montée maximale. **Pour minimiser**, on part dans la direction opposée : $-\nabla L$.
-
-### 3.3 Descente de gradient — Algorithme, intuition et convergence
 
 #### L'algorithme
 
@@ -815,25 +805,6 @@ La perte est passée de $0.151$ à $0.070$ : **divisée par 2 en un seul pas de 
 
 ---
 
-## Refaire ces calculs dans les IDE avec Copilot
-
-=== "IntelliJ IDEA"
-    1. Crée un fichier `test_gradients.py` dans ton projet Python.
-    2. Demande à Copilot Chat : *"Implémente pas à pas le forward pass et le backward pass pour ce réseau à un neurone caché : w1=0.4, b1=0.1, w2=0.5, b2=0, x=2, y=1. Calcule la perte MSE et les gradients sans utiliser PyTorch autograd."*
-    3. Compare les valeurs avec les calculs de cette page.
-    4. Ensuite demande : *"Ajoute une version PyTorch avec `autograd` et vérifie que les gradients correspondent."*
-
-=== "Visual Studio Code"
-    1. Ouvre un notebook Jupyter (`Ctrl+Shift+P` → "New Jupyter Notebook").
-    2. Dans la première cellule, demande à Copilot : *"Génère une cellule NumPy qui vérifie le produit matrice-vecteur, la norme L2 et une étape de descente de gradient pour l'exemple de cette page."*
-    3. Ajoute une deuxième cellule : *"Trace la courbe de la perte en fonction du learning rate η entre 0.001 et 1 pour cet exemple."*
-    4. Lance cellule par cellule.
-
-!!! example "Objectif pratique"
-    Faire tourner ces calculs dans un notebook avec des `print()` à chaque étape est la meilleure façon de s'assurer que la compréhension est solide avant d'utiliser PyTorch ou TensorFlow.
-
----
-
 ## Récapitulatif des théorèmes démontrés
 
 | Théorème | Formule clé | Usage en Deep Learning |
@@ -874,13 +845,10 @@ La perte est passée de $0.151$ à $0.070$ : **divisée par 2 en un seul pas de 
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-8-deep-learning.md#page-chapitre-8-deep-learning-fondations-mathematiques).
+
 ## Prochaine étape
 
-**[Réseaux de neurones : fondamentaux](reseaux-neurones.md)** : passer des bases mathématiques au fonctionnement complet d'un réseau de neurones (neurones, activations, propagation avant et entraînement).
-
-Concepts clés couverts :
-
-- **Perceptron** — neurone artificiel et somme pondérée
-- **Propagation avant** — calcul de sortie couche par couche
-- **Fonctions d'activation** — non-linéarité et capacité de modélisation
-- **Fonction de perte** — mesure d'erreur à minimiser
+Poursuivez avec **[Réseaux de Neurones — Fondamentaux](reseaux-neurones.md)**, la page suivante dans le menu.

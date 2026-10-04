@@ -1,321 +1,167 @@
-# Deployment Guide — GitHub Copilot Documentation
+# Guide de déploiement — Documentation Claude Code & Copilot
 
-> Production deployment instructions for doc-utilisation-ia
+Ce dépôt génère un site MkDocs Material. Claude Code est le parcours documentaire principal ; les pages GitHub Copilot restent publiées comme référence.
 
----
+## Principe de déploiement
 
-## Quick Start
+Le workflow normal est :
 
-```bash
-# Build locally
-python -m mkdocs build --strict
+1. travailler sur une branche ;
+2. valider la documentation ;
+3. ouvrir une Pull Request vers `main` ;
+4. merger **manuellement** après revue ;
+5. laisser `.github/workflows/deploy.yml` publier le site après le push résultant sur `main`.
 
-# Serve locally (development)
-python -m mkdocs serve
-
-# Deploy to GitHub Pages (automatic via CI/CD)
-git push origin main
-```
-
----
+Aucun script de contribution ne doit pousser directement sur `main`.
 
 ## Architecture
 
+```text
+docs/                              sources publiées
+mkdocs.yml                         configuration du site
+requirements.txt                   dépendances Python
+scripts/validate-links.py          contrôle des chemins et ancres internes
+.github/workflows/validate-docs.yml validation des Pull Requests
+.github/workflows/deploy.yml        publication après intégration dans main
+site/                              sortie locale générée, ignorée par Git
 ```
-Repository Structure:
-├── docs/                          ← Documentation markdown
-├── mkdocs.yml                     ← Site configuration
-├── .github/workflows/deploy.yml   ← GitHub Actions CI/CD
-├── site/                          ← Generated static site (git ignored)
-└── requirements.txt               ← Python dependencies
-```
 
----
-
-## Local Development
-
-### Prerequisites
+## Développement et validation locale
 
 ```bash
-# Python 3.11+
-python --version
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Building
-
-```bash
-# Strict mode (fail on errors)
+python -m pip install -r requirements.txt
 python -m mkdocs build --strict
-
-# Output: site/ directory with HTML files
-```
-
-### Testing Locally
-
-```bash
-# Start development server
+python scripts/validate-links.py
 python -m mkdocs serve
-
-# Open browser: http://localhost:8000
-# Auto-refreshes on file changes
 ```
 
----
+Sous Windows, `py -m` peut remplacer `python -m` si le launcher Python est utilisé.
 
-## Production Deployment
+Le serveur de développement écoute par défaut sur `http://127.0.0.1:8000/`.
 
-### Option 1: GitHub Pages (Recommended)
+## Validation des Pull Requests
 
-**Prerequisites**:
-- Repository on GitHub
-- GitHub Pages enabled (Settings → Pages)
-- Main branch protection enabled (optional but recommended)
+`.github/workflows/validate-docs.yml` s'exécute sur les Pull Requests vers `main` et contrôle :
 
-**Automatic Deployment**:
-1. Push to `main` or `master` branch
-2. GitHub Actions trigger (`.github/workflows/deploy.yml`)
-3. Workflow builds documentation
-4. Site deployed to `gh-pages` branch
-5. Live at: `https://{username}.github.io/{repo}`
+- l'installation des dépendances ;
+- `mkdocs build --strict` ;
+- les chemins internes du site généré ;
+- les ancres HTML internes (`#fragment`).
 
-**Configuration**:
-```yaml
-# In mkdocs.yml
-site_url: https://fturleque.github.io/doc-utilisation-ia/
-```
+Ce workflow dispose uniquement des permissions de lecture nécessaires et **ne déploie pas**.
 
-### Option 2: Manual Deployment
+## Déploiement GitHub Pages
+
+`.github/workflows/deploy.yml` s'exécute après un push sur `main` et peut aussi être lancé manuellement via `workflow_dispatch`.
+
+Le workflow :
+
+1. récupère le dépôt ;
+2. installe les dépendances ;
+3. vérifie/configure GitHub Pages ;
+4. publie avec `mkdocs gh-deploy --force` sur `gh-pages` ;
+5. retire un éventuel `CNAME` afin de conserver l'hébergement prévu sur `fturleque.github.io`.
+
+L'URL déclarée dans `mkdocs.yml` reste la source de vérité pour le chemin GitHub Pages du site.
+
+## Déclencher une publication
+
+Une contribution normale ne déclenche pas elle-même un déploiement. Poussez la branche de travail :
 
 ```bash
-# Build site
-python -m mkdocs build --strict
-
-# Deploy site/ directory to web server
-# Examples:
-# - Copy to Apache/Nginx DocumentRoot
-# - Upload to cloud storage (AWS S3, Azure Blob)
-# - Deploy to Vercel, Netlify, etc.
+git push -u origin HEAD
 ```
 
-### Option 3: Docker Deployment
+Une fois la PR relue et intégrée manuellement dans `main`, le workflow de déploiement démarre automatiquement.
+
+Pour republier le `main` actuel sans changement de contenu, utiliser **GitHub → Actions → Deploy MkDocs to GitHub Pages → Run workflow** plutôt que de créer un commit vide ou de pousser directement sur `main`.
+
+## Déploiement local ou autre hébergeur
+
+Pour produire le site statique :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
+```
+
+Le dossier `site/` peut ensuite être servi par Nginx/Apache ou envoyé vers un hébergeur statique. Il est généré et ne doit pas être versionné.
+
+### Exemple Docker local
 
 ```dockerfile
-FROM python:3.11-slim
+FROM python:3.13-slim
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 COPY docs/ docs/
 COPY mkdocs.yml .
-RUN python -m mkdocs build
+COPY scripts/ scripts/
+RUN python -m mkdocs build --strict && python scripts/validate-links.py
 EXPOSE 8000
-CMD ["python", "-m", "mkdocs", "serve", "-a", "0.0.0.0:8000"]
+CMD ["python", "-m", "http.server", "--directory", "site", "8000"]
 ```
+
+Cet exemple construit puis sert la sortie statique ; il ne remplace pas le workflow GitHub Pages du dépôt.
+
+## Diagnostic
+
+### La validation PR échoue
+
+1. lire le job `Validate MkDocs documentation` ;
+2. reproduire localement avec :
 
 ```bash
-# Build image
-docker build -t doc-copilot .
-
-# Run container
-docker run -p 8000:8000 doc-copilot
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
----
+3. corriger les erreurs sur la branche ;
+4. repousser la branche.
 
-## Performance Optimization
+### Le déploiement échoue après merge
 
-### Site Size
+1. vérifier le run `Deploy MkDocs to GitHub Pages` ;
+2. confirmer que `requirements.txt` s'installe ;
+3. confirmer que GitHub Pages et la branche `gh-pages` sont accessibles au workflow ;
+4. ne pas contourner l'échec par un push manuel sur `main`.
 
-```bash
-# Check built site size
-du -sh site/
+### Le site ne reflète pas le dernier merge
 
-# Typical: 5-15 MB (uncompressed)
-```
-
-### Compression
-
-```bash
-# Gzip compression
-gzip -r site/
-
-# CDN (CloudFlare, AWS CloudFront)
-# Automatic gzip + caching
-```
-
-### Caching Strategy
-
-```
-# .github/workflows/deploy.yml adds cache headers:
-Cache-Control: max-age=3600        # HTML (1 hour)
-Cache-Control: max-age=31536000    # Assets/JS/CSS (1 year)
-```
-
----
-
-## Monitoring & Maintenance
-
-### Health Checks
-
-```bash
-# Test site is live
-curl -I https://fturleque.github.io/doc-utilisation-ia/
-
-# Check specific page
-curl -I https://fturleque.github.io/doc-utilisation-ia/index.html
-```
-
-### Broken Links
-
-```bash
-# Run link checker locally
-python -m pip install linkchecker
-linkchecker site/
-
-# Or using GitHub Actions (add to workflow)
-```
-
-### Analytics
-
-Add to `docs/index.md` or `mkdocs.yml`:
-```yaml
-# Google Analytics
-google_analytics:
-  provider: google
-  property: G-XXXXXXXXXX
-```
-
----
-
-## Troubleshooting
-
-### Build Fails on Push
-
-1. Check workflow logs: GitHub → Actions → {workflow run}
-2. Verify `requirements.txt` has all dependencies
-3. Run locally first: `python -m mkdocs build --strict`
-4. Check file encoding (UTF-8 recommended)
-
-### Permission Denied (403) on `mkdocs gh-deploy`
-
-If you see an error like:
-```
-remote: Permission to FTurleque/doc-utilisation-ia.git denied to <username>.
-fatal: unable to access '...': The requested URL returned error: 403
-```
-
-**Local deployment is not recommended.** Use the automated GitHub Actions workflow instead.
-
-To trigger a deployment:
-```bash
-git push origin main
-```
-
-The GitHub Actions workflow (`.github/workflows/deploy.yml`) uses `GITHUB_TOKEN` and the `github-actions[bot]` identity to push to the `gh-pages` branch — no manual deployment is needed.
-
-### Site Not Updating
-
-1. Verify push succeeded: `git status`
-2. Check GitHub Actions ran: Settings → Actions
-3. Clear browser cache: `Ctrl+Shift+Delete`
-4. Check gh-pages branch exists: `git branch -a`
-
-### Custom Domain Not Working
-
-1. Verify DNS CNAME record points to GitHub Pages
-2. Check GitHub Settings → Pages → Custom domain
-3. Wait 5-10 minutes for DNS propagation
-4. Test: `nslookup fturleque.github.io`
-
----
+- vérifier le dernier run de déploiement ;
+- vérifier la branche `gh-pages` ;
+- vérifier l'URL `site_url` dans `mkdocs.yml` ;
+- tester sans cache navigateur si le déploiement est vert mais l'ancien contenu reste visible.
 
 ## Rollback
 
-### Previous Version
+Le dossier `site/` n'est pas versionné : un rollback doit porter sur les **sources**.
 
-```bash
-# View deployment history
-git log --oneline site/ | head -10
+Approche recommandée :
 
-# Revert to previous build
-git checkout {commit-hash} -- site/
+1. créer une branche depuis `main` ;
+2. utiliser `git revert <commit>` ou restaurer les fichiers concernés ;
+3. exécuter le build strict et le validateur ;
+4. ouvrir une PR de rollback ;
+5. merger manuellement après revue.
 
-# Re-deploy
-git push origin main
-```
+Le merge du rollback dans `main` déclenche ensuite une nouvelle publication GitHub Pages.
 
-### Manual Rollback
+## Sécurité
 
-```bash
-# Rebuild from previous mkdocs.yml
-git checkout {commit-hash} mkdocs.yml docs/
+Ne jamais committer :
 
-# Build and deploy
-python -m mkdocs build --strict
-# Deploy site/ directory
-```
+- clés API ou tokens ;
+- secrets d'organisation ;
+- credentials cloud ;
+- données personnelles utilisées seulement pour les captures ou exemples.
 
----
+Les secrets nécessaires à un workflow doivent être fournis via les mécanismes GitHub prévus à cet effet. Les workflows de PR provenant de contenu non fiable ne doivent pas recevoir de secret inutile.
 
-## CI/CD Pipeline
+## Fichiers associés
 
-### Automated Checks (Before Deployment)
-
-1. **Build Check**
-   ```bash
-   python -m mkdocs build --strict
-   ```
-   Fails if: markdown errors, broken macros, encoding issues
-
-2. **Link Validation** (optional)
-   ```bash
-   linkchecker site/
-   ```
-   Fails if: broken internal links, missing files
-
-3. **Performance** (optional)
-   ```bash
-   # Check site size, load time
-   ```
-
-### Deployment Steps
-
-1. ✅ All checks pass
-2. 🔨 Build documentation
-3. 📤 Deploy to GitHub Pages
-4. 🔔 Comment on PR with status
-
----
-
-## Security
-
-### Sensitive Data
-
-❌ **Never commit**:
-- API keys, secrets
-- Personal information
-- Credentials
-
-✅ **Use**:
-- Environment variables
-- GitHub Secrets (for CI/CD)
-- `.gitignore` for sensitive files
-
-### Access Control
-
-- GitHub Pages: Public by default
-- Use GitHub Organizations for private docs
-- Set branch protection rules on main
-
----
-
-## Support
-
-**Issues?**
-1. Check logs: GitHub Actions → Workflow run
-2. Run locally: `python -m mkdocs build --strict`
-3. Open GitHub Issue with error message
-4. Check [MkDocs Docs](https://www.mkdocs.org/)
-
+- `CONTRIBUTING.md` — workflow de contribution ;
+- `.github/workflows/validate-docs.yml` — validation PR ;
+- `.github/workflows/deploy.yml` — publication ;
+- `scripts/validate-links.py` — validation des liens/ancres internes ;
+- `MAINTENANCE_SCHEDULE.md` — veille et maintenance du dépôt.

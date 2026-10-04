@@ -1,56 +1,70 @@
-﻿# Paramétrage Détaillé & Options Avancées
+# GitHub Copilot — Paramétrage (référence)
 
-Une fois GitHub Copilot installé, la configuration par défaut est fonctionnelle mais générique. Ce chapitre vous guide à travers tous les paramètres disponibles sur chaque IDE, avec des explications concrètes et des profils de configuration adaptés à votre contexte.
+Ce chapitre conserve les réglages et personnalisations **GitHub Copilot** pour IntelliJ IDEA et Visual Studio Code.
 
----
-
-## Pourquoi paramétrer Copilot ?
-
-La configuration par défaut de Copilot est conçue pour être universelle, mais elle n'est pas optimale pour tous les contextes :
-
-- **Trop de suggestions ?** Ajustez la fréquence et les délais
-- **Pas de suggestions dans certains fichiers ?** Activez/désactivez par langage
-- **Vous travaillez en équipe ?** Standardisez les paramètres via un fichier partagé
-- **Performances dégradées ?** Optimisez les paramètres de ressources
+!!! info "Parcours principal Claude Code"
+    Pour le paramétrage recommandé dans ce dépôt, utilisez désormais [Architecture et paramétrage Claude Code](../chapitre-3b-claude-code-migration-copilot/architecture-claude.md). Les pages Copilot restent disponibles pour les environnements qui l'utilisent encore et pour faciliter les comparaisons ou un retour futur.
 
 ---
 
-## Ce que vous trouverez dans ce chapitre
+## Pages Copilot conservées
 
 <div class="grid cards" markdown>
 
-- :simple-intellijidea: **[IntelliJ — Paramétrage](intellij-parametrage.md)**
+- :simple-intellijidea: **[IntelliJ — Paramétrage Copilot](intellij-parametrage.md)**
 
-    Accès aux settings, chaque paramètre expliqué, 4 profils de configuration (débutant, expert, équipe, minimaliste)
+    Réglages du plugin et personnalisations disponibles dans l'écosystème JetBrains.
 
-- :material-microsoft-visual-studio-code: **[VS Code — Paramétrage](vscode-parametrage.md)**
+- :material-microsoft-visual-studio-code: **[VS Code — Paramétrage Copilot](vscode-parametrage.md)**
 
-    `settings.json` complet, tous les paramètres `github.copilot.*`, 4 profils prêts à copier
+    Réglages de l'extension et personnalisations spécifiques à VS Code.
 
 - :material-compare: **[Comparaison des paramètres](comparaison-parametres.md)**
 
-    Tableau croisé IntelliJ ↔ VS Code, fonctionnalités exclusives à chaque IDE
+    Différences de surface entre VS Code et JetBrains.
 
 </div>
 
 ---
 
-## Les 4 profils de configuration
+## Attention aux différences entre IDE
 
-Tout au long de ce chapitre, vous trouverez ces 4 profils prêts à l'emploi :
+Les personnalisations Copilot ne sont pas disponibles au même niveau partout. D'après la matrice GitHub actuelle :
 
-| Profil | Pour qui ? | Caractéristiques |
-|--------|-----------|-----------------|
-| 🟢 **Débutant** | Découverte de Copilot | Suggestions fréquentes, délais courts, chat activé |
-| 🔴 **Expert** | Développeurs expérimentés | Contrôle manuel, suggestions à la demande |
-| 👥 **Équipe** | Travail collaboratif | Standardisé, cohérent entre tous les membres |
-| ⚡ **Minimaliste** | Peu de distractions | Suggestions rares, désactivé sur plusieurs langages |
+- VS Code dispose du support le plus complet pour les instructions, prompt files, agents, subagents, skills et MCP ;
+- plusieurs fonctionnalités de personnalisation restent en **preview** dans JetBrains ;
+- les hooks ne sont pas actuellement une fonctionnalité JetBrains équivalente à celle de Copilot CLI / cloud agent et des surfaces qui les prennent en charge.
+
+Avant de recopier un réglage d'un IDE à l'autre, vérifiez la [Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet).
 
 ---
 
-## Prochaines étapes
+## Équivalences utiles avec Claude Code
 
-Après avoir configuré vos paramètres, explorez :
+| Besoin | Claude Code | Copilot conservé dans ce dépôt |
+|---|---|---|
+| Instructions projet | `CLAUDE.md`, `AGENTS.md`, `.claude/rules/` | `.github/copilot-instructions.md`, instructions ciblées |
+| Réglages partagés | `.claude/settings.json` | réglages IDE / politiques Copilot |
+| Capacité réutilisable | `.claude/skills/<nom>/SKILL.md` | `.github/skills/`, `.claude/skills/` ou `.agents/skills/` selon surface |
+| Agent spécialisé | `.claude/agents/*.md` | `.github/agents/*.agent.md` ou profils compatibles |
+| Automatisation lifecycle | hooks Claude dans settings | hooks Copilot sur surfaces prises en charge |
+| Outils externes | MCP / `.mcp.json` | MCP selon IDE / agent / configuration GitHub |
 
-- [Contexte & Personnalisation](../chapitre-4-contexte/index.md) pour aller encore plus loin avec les instructions, agents et skills
+!!! tip "Ne dupliquez pas inutilement les skills"
+    Certaines surfaces Copilot savent lire `.claude/skills`. Lorsqu'un skill peut réellement rester générique, préférez une seule source compatible plutôt qu'une copie Claude et une copie Copilot qui divergent.
 
+---
+
+## Prochaine étape
+
+Poursuivez avec **[IntelliJ IDEA](intellij-parametrage.md)**, la page suivante dans le menu.
+
+## Sources
+
+Sources officielles consultées le **28 septembre 2026** :
+
+- [GitHub Docs — Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)
+- [GitHub Docs — Agent skills](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
+- [GitHub Docs — Hooks](https://docs.github.com/en/copilot/concepts/agents/hooks)
+- [Claude Code — Settings](https://code.claude.com/docs/en/settings)
+- [Claude Code — `.claude` directory](https://code.claude.com/docs/en/claude-directory)

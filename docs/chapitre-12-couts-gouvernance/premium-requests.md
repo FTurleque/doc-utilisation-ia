@@ -1,156 +1,110 @@
-# AI Credits : consommation detaillee (et legacy premium requests)
+# GitHub Copilot — AI Credits et facturation (référence)
 
-<span class="badge-intermediate">Intermediaire</span>
+<span class="badge-intermediate">Intermédiaire</span>
 
-Depuis juin 2026, le referentiel principal de facturation Copilot est la consommation en **AI Credits**. Cette page explique comment la consommation est calculee, ce qui est facture, et comment optimiser l'usage pour garder un bon niveau de productivite sans derive de cout.
+Cette page est conservée comme **référence GitHub Copilot**. Le parcours principal du chapitre Coûts & Gouvernance concerne désormais Claude Code ; Copilot utilise un système distinct de facturation appelé **GitHub AI Credits**.
 
-!!! info "Reference de cette page"
-    Contenu reverifie le **1 juin 2026** sur la documentation officielle GitHub Copilot.
-
-!!! warning "Important"
-    Le modele **premium requests** est desormais **legacy** pour des cas specifiques (notamment certains abonnements annuels restes sur l'ancien mode). Pour la majorite des usages, piloter la consommation en **AI Credits**.
+!!! info "État vérifié"
+    Référence revérifiée le **28 septembre 2026** sur la documentation GitHub officielle.
 
 ---
 
-## Comment sont calcules les AI Credits
+## Modèle actuel : GitHub AI Credits
 
-Le cout d'une interaction Copilot depend de deux variables:
+GitHub mesure l'usage Copilot facturable en **AI Credits** :
 
-- le **modele** utilise
-- le nombre de **tokens** consommes (entree, sortie, cache)
+- **1 AI Credit = 0,01 USD** ;
+- le coût dépend du **modèle** utilisé ;
+- il dépend aussi des **tokens consommés** : entrée, sortie et cache selon le modèle ;
+- chaque plan comprend une allocation mensuelle.
 
-Regle de conversion officielle:
+Les plans individuels payants affichent actuellement :
 
-- **1 AI Credit = 0,01 USD**
+| Plan | Prix mensuel | AI Credits mensuels inclus |
+|---|---:|---:|
+| Copilot Pro | 10 USD | 1 500 |
+| Copilot Pro+ | 39 USD | 7 000 |
+| Copilot Max | 100 USD | 20 000 |
 
-Formule pratique:
+Pour les organisations :
 
-$$
-\text{AI Credits} = \frac{\text{cout total en USD}}{0{,}01}
-$$
+| Plan | Prix par siège / mois | AI Credits par utilisateur / mois |
+|---|---:|---:|
+| Copilot Business | 19 USD | 1 900 |
+| Copilot Enterprise | 39 USD | 3 900 |
 
-ou le cout total en USD depend des tarifs par million de tokens du modele.
+Les crédits des organisations/entreprises sont mutualisés au niveau de l'entité de facturation.
 
-!!! tip "Lecture des tarifs"
-    Utiliser la page officielle "Models and pricing for GitHub Copilot" pour convertir les volumes de tokens en credits selon le modele exact.
-
----
-
-## Ce qui consomme des AI Credits (et ce qui ne consomme pas)
-
-Consomme des AI Credits:
-
-- Copilot Chat
-- Copilot CLI
-- Copilot cloud agent
-- Copilot Spaces
-- Spark
-- Agents tiers
-
-Ne consomme pas d'AI Credits:
-
-- Code completions (autocompletion)
-- Next edit suggestions
-
-!!! info "Point cle"
-    Les completions et suggestions d'edition restent non facturees en AI Credits sur les plans payants.
+!!! warning "Valeurs évolutives"
+    Vérifiez toujours la page officielle des plans avant une décision d'achat. Les montants et catalogues de modèles peuvent évoluer.
 
 ---
 
-## Facteurs qui font varier la consommation
+## Ce qui consomme des AI Credits
 
-Les principaux leviers de consommation sont:
+GitHub indique notamment comme usages facturés :
 
-- **Longueur et complexite** de la conversation
-- **Usage agentique** (plus d'appels modele au sein d'une tache)
-- **Choix du modele** (cout/token different selon le modele)
-- **Taille du contexte** (tokens envoyes en entree)
+- Copilot Chat ;
+- Copilot CLI ;
+- Copilot coding/cloud agent ;
+- Copilot Spaces ;
+- Spark ;
+- agents tiers intégrés.
 
-!!! tip "Reduction immediate"
-    Reduire le contexte aux fichiers utiles et preferer un modele leger pour les taches simples est la maniere la plus rapide de diminuer les credits consommes.
-
----
-
-## Exemples concrets de consommation
-
-### Exemple A - Chat court, modele leger
-
-- Prompt court + reponse courte
-- Modele leger (ex. GPT-5 mini / Claude Haiku)
-- Cout: souvent une fraction de credit a quelques credits
-
-### Exemple B - Session agent longue, modele puissant
-
-- Tache multi-fichiers avec iterations
-- Modele frontier
-- Cout: nettement plus eleve, potentiellement des dizaines a centaines de credits selon le volume de tokens
+Les **code completions** et **next edit suggestions** ne sont pas facturées en AI Credits sur les plans payants.
 
 ---
 
-## Que se passe-t-il quand les credits sont epuises?
+## Comment le coût varie
 
-### Comptes individuels
+Une interaction courte avec un modèle léger peut coûter une fraction de crédit. Une session agentique longue, utilisant un modèle plus coûteux et beaucoup de contexte, consomme davantage.
 
-- Definir un budget additionnel (facture en USD), ou
-- Attendre le cycle mensuel suivant
+Évitez donc les estimations fixes du type « un message = un crédit » ou « un agent = N crédits ». Le coût est lié au modèle et aux tokens réellement consommés.
+
+---
+
+## Que se passe-t-il lorsque l'allocation est épuisée ?
+
+### Individuels
+
+Selon la configuration du compte, l'utilisateur peut :
+
+- autoriser un budget d'usage additionnel ;
+- ou attendre le prochain cycle si aucune dépense supplémentaire n'est autorisée.
 
 ### Organisations et entreprises
 
-- Les credits inclus sont **pooles** au niveau de l'entite de facturation
-- Si le pool est epuise:
-  - usage additionnel autorise: la facturation continue
-  - usage additionnel bloque: acces aux fonctionnalites consommatrices de credits bloque jusqu'au cycle suivant
+Les licences alimentent un pool partagé. Lorsque le pool est épuisé :
 
-Important:
+- un budget autorisé permet de continuer avec facturation additionnelle ;
+- un budget bloquant peut empêcher les usages facturables jusqu'au prochain cycle ou jusqu'à modification du budget.
 
-- Il n'y a **pas de fallback automatique** vers un modele moins cher quand un budget bloque l'usage.
-- Les code completions et next edit suggestions continuent de fonctionner.
+GitHub permet de piloter les budgets à plusieurs niveaux selon le type de compte.
 
 ---
 
-## Surveiller la consommation
+## Legacy : premium requests
 
-=== ":material-microsoft-visual-studio-code: VS Code"
+Depuis le **1er juin 2026**, GitHub a remplacé le modèle principal basé sur les **premium requests** par la facturation basée sur l'usage en AI Credits.
 
-    Icone Copilot dans la barre de statut puis parametres Copilot pour un apercu local.
-
-    Pour la facturation detaillee: [github.com/settings/billing](https://github.com/settings/billing).
-
-=== ":simple-intellijidea: IntelliJ IDEA"
-
-    Selon la version, le quota est visible via l'icone Copilot.
-
-    Pour les details complets: [github.com/settings/billing](https://github.com/settings/billing).
+Le modèle premium-requests reste documenté uniquement pour certains abonnés annuels Copilot Pro / Pro+ restés sur l'ancien système. Les multiplicateurs de modèles appartiennent à ce système legacy et ne doivent pas être mélangés avec la logique AI Credits actuelle.
 
 ---
 
-## Legacy : premium requests (cas restants)
+## Claude Code : système différent
 
-Le modele premium requests reste documente pour certains abonnements annuels legacy.
+Claude Code ne consomme pas de GitHub AI Credits lorsqu'il est utilisé avec un abonnement Claude. Les plans Claude disposent de limites d'usage partagées entre Claude et Claude Code ; après épuisement, des **usage credits** peuvent être activés pour continuer en tarification à l'usage.
 
-A retenir:
-
-- ce n'est plus le modele cible pour la majorite des nouveaux usages
-- les pages legacy servent surtout a comprendre un heritage de facturation
+Voir [Les abonnements Claude](abonnements.md) pour le parcours principal.
 
 ---
 
 ## Sources
 
-- [Usage-based billing for individuals](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-individuals) - consulte le 2026-06-01
-- [Usage-based billing for organizations and enterprises](https://docs.github.com/en/copilot/concepts/billing/usage-based-billing-for-organizations-and-enterprises) - consulte le 2026-06-01
-- [Models and pricing for GitHub Copilot](https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing) - consulte le 2026-06-01
-- [Requests in GitHub Copilot (legacy)](https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/copilot-requests) - consulte le 2026-06-03
+- [GitHub Docs — GitHub Copilot billing](https://docs.github.com/en/billing/concepts/product-billing/github-copilot-billing) — consulté le 2026-09-28
+- [GitHub Docs — Plans for GitHub Copilot](https://docs.github.com/en/copilot/get-started/plans) — consulté le 2026-09-28
+- [GitHub Docs — Legacy billing changes](https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/what-changed-with-billing) — consulté le 2026-09-28
 
----
+## Prochaine étape
 
-## Prochaine etape
-
-**[Les abonnements](abonnements.md)** : comparatif detaille des plans GitHub Copilot avec allocations AI Credits, gouvernance et criteres de choix.
-
-Concepts cles couverts :
-
-- **Plans disponibles** - Free, Student, Pro, Pro+, Max, Business, Enterprise
-- **Allocations AI Credits** - individuel, pool organisation, depassement
-- **Fonctionnalites exclusives** - Agent, gouvernance, audit, politiques
-- **Quel plan choisir** - matrice decision selon volume, budget et conformite
+Poursuivez avec **[Historique restrictions & évolutions](historique-modifications.md)**, la page suivante dans le menu.

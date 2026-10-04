@@ -1,5 +1,5 @@
 site_name: Documentation IA
-site_description: Documentation collectée sur l'utilisation de l'IA
+site_description: Documentation Claude Code, GitHub Copilot et usages IA pour le développement
 site_author: FTurleque
 site_url: https://fturleque.github.io/doc-utilisation-ia/
 use_directory_urls: true
@@ -38,6 +38,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/sidebar-toggle.js
+  - javascripts/toc-selection.js
   - javascripts/mathjax.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
@@ -79,31 +80,13 @@ markdown_extensions:
 nav:
   - Accueil: index.md
 
-  - Copilot:
-    - Installation:
-      - Accueil: chapitre-1-installation/index.md
-      - IntelliJ IDEA:
-        - Tutoriel: chapitre-1-installation/intellij/tutoriel.md
-        - Référence: chapitre-1-installation/intellij/reference.md
-      - Visual Studio Code:
-        - Tutoriel: chapitre-1-installation/vscode/tutoriel.md
-        - Référence: chapitre-1-installation/vscode/reference.md
-      - Comparaison: chapitre-1-installation/comparaison.md
-    - Paramétrage:
-      - Accueil: chapitre-2-parametrage/index.md
-      - IntelliJ IDEA: chapitre-2-parametrage/intellij-parametrage.md
-      - Visual Studio Code: chapitre-2-parametrage/vscode-parametrage.md
-      - Comparaison: chapitre-2-parametrage/comparaison-parametres.md
-    - Modes CLI:
-      - Accueil: chapitre-3-cli-modes/index.md
-      - Modes CLI Détail: chapitre-3-cli-modes/page-principale.md
-      - Comparaison Modes: chapitre-3-cli-modes/comparaison.md
-
-  - Claude Code & Migration:
+  - Claude Code:
     - Introduction: chapitre-3b-claude-code-migration-copilot/index.md
     - "Installation (CLI, VS Code, JetBrains)": chapitre-3b-claude-code-migration-copilot/installation.md
-    - "Architecture .claude/": chapitre-3b-claude-code-migration-copilot/architecture-claude.md
+    - "Claude Desktop": chapitre-3b-claude-code-migration-copilot/claude-desktop.md
+    - "Architecture et paramétrage Claude Code": chapitre-3b-claude-code-migration-copilot/architecture-claude.md
     - "Choisir le bon modèle": chapitre-3b-claude-code-migration-copilot/modeles-claude.md
+    - "Coûts & quotas": chapitre-3b-claude-code-migration-copilot/couts-quotas.md
     - "Prompt Engineering avec Claude": chapitre-3b-claude-code-migration-copilot/prompt-engineering-claude.md
     - "Cookbook — recettes prêtes": chapitre-3b-claude-code-migration-copilot/cookbook.md
     - "Hooks avancés": chapitre-3b-claude-code-migration-copilot/hooks-avances.md
@@ -112,40 +95,40 @@ nav:
     - "MCP — sources externes": chapitre-3b-claude-code-migration-copilot/mcp-sources-externes.md
     - "Sécurité & gouvernance": chapitre-3b-claude-code-migration-copilot/securite-gouvernance.md
     - "Plugins d'équipe": chapitre-3b-claude-code-migration-copilot/plugins-equipe.md
-    - "Comparaison Copilot vs Claude": chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md
-    - "Coûts & quotas": chapitre-3b-claude-code-migration-copilot/couts-quotas.md
-    - "Migration pas à pas": chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md
-    - "Checklist 30/60/90 jours": chapitre-3b-claude-code-migration-copilot/migration-30-60-90.md
+    - Cheat sheet — Commandes Claude Code: chapitre-3b-claude-code-migration-copilot/commandes-claude.md
 
   - Contexte & Personnalisation:
     - Accueil: chapitre-4-contexte/index.md
     - Concepts Clés: chapitre-4-contexte/concepts.md
-    - Instructions (.instructions.md): chapitre-4-contexte/guide-instructions.md
-    - applyTo Avancé: chapitre-4-contexte/applyto-avance.md
-    - Prompt Files (.prompt.md): chapitre-4-contexte/prompt-files.md
-    - Agents (.agent.md): chapitre-4-contexte/guide-agents.md
+    - "Code intelligence & retrieval":
+      - Semble — Recherche de code: chapitre-4-contexte/semble.md
+      - Serena — Code intelligence sémantique: chapitre-4-contexte/serena.md
+      - Graphify — Knowledge Graph: chapitre-4-contexte/graphify.md
+      - Tree-sitter — Analyse syntaxique: chapitre-4-contexte/tree-sitter.md
+    - Instructions Claude & Rules: chapitre-4-contexte/guide-instructions.md
+    - Templates de configuration Claude: chapitre-4-contexte/templates-configuration.md
+    - Sandbox — Isolation des commandes: chapitre-4-contexte/sandbox.md
+    - Agents Claude: chapitre-4-contexte/guide-agents.md
     - "Orchestration multi-agents": chapitre-4-contexte/orchestration-multi-agents.md
-    - Skills (SKILL.md): chapitre-4-contexte/guide-skills.md
-    - Hooks: chapitre-4-contexte/guide-hooks.md
+    - Skills Claude (SKILL.md): chapitre-4-contexte/guide-skills.md
+    - Hooks Claude: chapitre-4-contexte/guide-hooks.md
     - Paramètres du Dépôt: chapitre-4-contexte/parametres-depot.md
-    - VS Code — Contexte: chapitre-4-contexte/vscode-contexte.md
-    - IntelliJ IDEA — Contexte: chapitre-4-contexte/intellij-contexte.md
-    - Comparaison Contexte: chapitre-4-contexte/comparaison-contexte.md
+    - VS Code — Claude: chapitre-4-contexte/vscode-contexte.md
+    - IntelliJ IDEA — Claude: chapitre-4-contexte/intellij-contexte.md
+    - Comparaison des IDE: chapitre-4-contexte/comparaison-contexte.md
 
   - Prompt Engineering:
     - Accueil: chapitre-5-prompt-engineering/index.md
     - Fondamentaux: chapitre-5-prompt-engineering/fondamentaux.md
     - Techniques Intermédiaires: chapitre-5-prompt-engineering/techniques-intermediaires.md
     - Techniques Avancées: chapitre-5-prompt-engineering/techniques-avancees.md
-    - Prompting avec Copilot: chapitre-5-prompt-engineering/avec-copilot.md
 
   - Machine Learning:
     - Accueil: chapitre-6-machine-learning/index.md
     - Concepts Fondamentaux: chapitre-6-machine-learning/concepts-fondamentaux.md
     - Algorithmes Courants: chapitre-6-machine-learning/algorithmes-courants.md
-    - Copilot pour le ML: chapitre-6-machine-learning/copilot-workflow-ml.md
+    - Claude Code pour le ML: chapitre-6-machine-learning/claude-workflow-ml.md
     - Python & Data Science: chapitre-6-machine-learning/python-data-science.md
-    - Deep Learning: chapitre-6-machine-learning/deep-learning.md
     - Notebooks Jupyter: chapitre-6-machine-learning/notebooks-jupyter.md
     - MLOps & Déploiement: chapitre-6-machine-learning/mlops-deploiement.md
     - Comparaison Écosystèmes ML: chapitre-6-machine-learning/comparaison-ecosystemes-ml.md
@@ -163,6 +146,9 @@ nav:
   - RAG:
     - Introduction: chapitre-7-rag/index.md
     - Concepts & Architectures: chapitre-7-rag/concepts.md
+    - Sécurité — ACL & Prompt injection: chapitre-7-rag/securite.md
+    - Docling — Ingestion documentaire: chapitre-7-rag/docling.md
+    - Qdrant — Vector DB & Hybrid Search: chapitre-7-rag/qdrant.md
     - Implémentation (Basic→Expert):
       - Présentation: chapitre-7-rag/implementation.md
       - Niveau 1 (Débutant): chapitre-7-rag/niveau-1.md
@@ -175,6 +161,9 @@ nav:
     - Accueil: chapitre-9-bonnes-pratiques/index.md
     - Utilisation Effective: chapitre-9-bonnes-pratiques/utilisation-effective.md
     - Organisation du Code: chapitre-9-bonnes-pratiques/organisation-code.md
+    - "Spec-driven development":
+      - OpenSpec: chapitre-9-bonnes-pratiques/openspec.md
+      - OpenSpec Custom Schemas: chapitre-9-bonnes-pratiques/openspec-schemas.md
     - Productivité: chapitre-9-bonnes-pratiques/productivite.md
     - Sécurité & Qualité: chapitre-9-bonnes-pratiques/securite-qualite.md
     - Performance & Ressources: chapitre-9-bonnes-pratiques/performance.md
@@ -187,7 +176,7 @@ nav:
     - Java & Spring Boot: chapitre-10-cas-usage/java-spring-boot.md
     - Node.js & React: chapitre-10-cas-usage/nodejs-react.md
     - Node.js & Express: chapitre-10-cas-usage/nodejs-express.md
-    - React 19 & TypeScript: chapitre-10-cas-usage/react-typescript.md
+    - React & TypeScript: chapitre-10-cas-usage/react-typescript.md
     - Python & FastAPI: chapitre-10-cas-usage/python.md
 
   - Troubleshooting:
@@ -200,33 +189,64 @@ nav:
   - Coûts & Gouvernance:
     - Accueil: chapitre-12-couts-gouvernance/index.md
     - Réduire les allers-retours: chapitre-12-couts-gouvernance/patterns-allers-retours.md
-    - "AI Credits": chapitre-12-couts-gouvernance/premium-requests.md
-    - Historique restrictions & évolutions: chapitre-12-couts-gouvernance/historique-modifications.md
     - Les abonnements: chapitre-12-couts-gouvernance/abonnements.md
     - Leviers d'économie: chapitre-12-couts-gouvernance/leviers-economie.md
+    - Caveman & RTK — Réduction des tokens: chapitre-12-couts-gouvernance/caveman.md
     - Quand utiliser quel mode ?: chapitre-12-couts-gouvernance/modes-quand-utiliser.md
     - Workflow recommandé: chapitre-12-couts-gouvernance/workflow-recommande.md
 
   - Outils:
     - Accueil: chapitre-13-outils-economies/index.md
     - RTK AI: chapitre-13-outils-economies/rtk.md
+    - Caveman: chapitre-13-outils-economies/caveman.md
+    - Code intelligence & analyse syntaxique:
+      - Semble: chapitre-13-outils-economies/semble.md
+      - Serena: chapitre-13-outils-economies/serena.md
+      - Graphify: chapitre-13-outils-economies/graphify.md
+      - Tree-sitter: chapitre-13-outils-economies/tree-sitter.md
+    - Ingestion & retrieval RAG:
+      - Docling: chapitre-13-outils-economies/docling.md
+      - Qdrant: chapitre-13-outils-economies/qdrant.md
+    - Spécifications & workflows:
+      - OpenSpec: chapitre-13-outils-economies/openspec.md
+      - OpenSpec Custom Schemas: chapitre-13-outils-economies/openspec-schemas.md
+    - Data & Machine Learning:
+      - Jupyter: chapitre-13-outils-economies/jupyter.md
+      - Frameworks ML: chapitre-13-outils-economies/frameworks-ml.md
+      - Frameworks Deep Learning: chapitre-13-outils-economies/frameworks-deep-learning.md
     - SonarQube:
       - IntelliJ: chapitre-13-outils-economies/sonarqube.md
       - VS Code: chapitre-13-outils-economies/sonarqube-vscode.md
       - RTK + SonarQube: chapitre-13-outils-economies/rtk-sonar.md
     - TOON: chapitre-13-outils-economies/toon.md
     - OpenSkills: chapitre-13-outils-economies/openskills.md
-    - LLM en Local:
-      - Continue.dev: chapitre-13-outils-economies/continue-dev.md
+    - MCP:
+      - Présentation et choix: chapitre-13-outils-economies/mcps/index.md
+      - MCP Web local: chapitre-13-outils-economies/mcps/configuration.md
+      - MCP Web gratuit: chapitre-13-outils-economies/mcps/serveurs.md
+      - Sécurité: chapitre-13-outils-economies/mcps/securite.md
+    - Observabilité & GreenOps:
+      - Vue d'ensemble: chapitre-13-outils-economies/observabilite/index.md
+      - Grafana: chapitre-13-outils-economies/observabilite/grafana.md
+      - Loki: chapitre-13-outils-economies/observabilite/loki.md
+      - Kepler: chapitre-13-outils-economies/observabilite/kepler.md
+    - Event-driven & agents:
+      - Solace: chapitre-13-outils-economies/solace.md
+    - Backends / LLM locaux:
+      - "Continue.dev (legacy)": chapitre-13-outils-economies/continue-dev.md
       - Ollama: chapitre-13-outils-economies/ollama.md
       - LM Studio: chapitre-13-outils-economies/lm-studio.md
-      - Stack prete en 15 min — VS Code: chapitre-13-outils-economies/stack-prete-15-min-vscode.md
-      - Stack prete en 15 min — IntelliJ: chapitre-13-outils-economies/stack-prete-15-min-intellij.md
-    - Alternatives à Copilot:
-      - Codeium / Windsurf: chapitre-13-outils-economies/codeium-windsurf.md
+      - Stack locale rapide — VS Code: chapitre-13-outils-economies/stack-prete-15-min-vscode.md
+      - Stack locale rapide — IntelliJ: chapitre-13-outils-economies/stack-prete-15-min-intellij.md
+    - Agents de code alternatifs:
+      - Vue d'ensemble: chapitre-13-outils-economies/agents-code/index.md
+      - Cline: chapitre-13-outils-economies/agents-code/cline.md
+      - Kilo Code: chapitre-13-outils-economies/agents-code/kilo-code.md
+    - Assistants alternatifs / références:
+      - "Windsurf (Codeium historique)": chapitre-13-outils-economies/codeium-windsurf.md
       - Tabnine: chapitre-13-outils-economies/tabnine.md
-      - Amazon Q Developer: chapitre-13-outils-economies/amazon-q-developer.md
-      - Supermaven: chapitre-13-outils-economies/supermaven.md
+      - "Amazon Q / Kiro (transition)": chapitre-13-outils-economies/amazon-q-developer.md
+      - "Supermaven (historique)": chapitre-13-outils-economies/supermaven.md
     - Comparaison des Outils: chapitre-13-outils-economies/comparaison.md
     - "Vue d'ensemble des outils": chapitre-13-outils-economies/outils-complementaires.md
     - Recommandations par application: chapitre-13-outils-economies/recommandations-taille-type-application.md
@@ -238,9 +258,10 @@ nav:
     - Sécurité, Risques & Failles: chapitre-14-veille-ia/securite-risques.md
     - Newsletters & Communautés: chapitre-14-veille-ia/newsletters-communautes.md
 
-  - Hacker:
+  - Cybersécurité & IA:
     - Introduction: chapitre-15-hacker-ia/index.md
     - IA et hacking: chapitre-15-hacker-ia/page-principale.md
+    - Sécuriser les agents IA: chapitre-15-hacker-ia/securite-agents.md
     - Études de cas 2024-2026: chapitre-15-hacker-ia/etudes-de-cas-2024-2026.md
     - Playbook incident IA: chapitre-15-hacker-ia/playbook-incident-ia.md
     - KPI & SOC pour menaces IA: chapitre-15-hacker-ia/kpi-soc-ia.md
@@ -248,13 +269,66 @@ nav:
     - Cas sectoriels IA et cybersécurité: chapitre-15-hacker-ia/cas-sectoriels-ia.md
     - Matrice menaces IA -> contrôles: chapitre-15-hacker-ia/matrice-controles-menaces.md
     - Checklist audit interne IA: chapitre-15-hacker-ia/checklist-audit-interne.md
+    - Tests de sécurité & preuves: chapitre-15-hacker-ia/tests-securite.md
     - Modèles fiches incident & post-mortem: chapitre-15-hacker-ia/modeles-fiches-incident.md
     - Plan 90 jours — Passer à l'action: chapitre-15-hacker-ia/plan-90-jours.md
     - Comparaison: chapitre-15-hacker-ia/comparaison.md
 
-  - Appendices:
+  - Références Claude:
+    - FAQ Claude Code: references-claude/faq.md
+    - Raccourcis & commandes Claude: references-claude/raccourcis-commandes.md
+    - Ressources externes Claude: references-claude/ressources-externes.md
+
+  - Annexe:
     - Accueil: appendices/index.md
-    - FAQ: appendices/faq.md
-    - Raccourcis Clavier: appendices/raccourcis-clavier.md
-    - Ressources Externes: appendices/ressources-externes.md
-    - Templates Configuration: appendices/templates-configuration.md
+    - FAQ Copilot: appendices/faq.md
+    - Raccourcis Copilot: appendices/raccourcis-clavier.md
+    - Ressources externes Copilot: appendices/ressources-externes.md
+    - Templates Copilot: appendices/templates-configuration.md
+    - "GitHub Copilot (référence)":
+      - Installation:
+        - Accueil: chapitre-1-installation/index.md
+        - IntelliJ IDEA:
+          - Tutoriel: chapitre-1-installation/intellij/tutoriel.md
+          - Référence: chapitre-1-installation/intellij/reference.md
+        - Visual Studio Code:
+          - Tutoriel: chapitre-1-installation/vscode/tutoriel.md
+          - Référence: chapitre-1-installation/vscode/reference.md
+        - Comparaison: chapitre-1-installation/comparaison.md
+      - Paramétrage:
+        - Accueil: chapitre-2-parametrage/index.md
+        - IntelliJ IDEA: chapitre-2-parametrage/intellij-parametrage.md
+        - Visual Studio Code: chapitre-2-parametrage/vscode-parametrage.md
+        - Comparaison: chapitre-2-parametrage/comparaison-parametres.md
+      - Modes CLI:
+        - Accueil: chapitre-3-cli-modes/index.md
+        - Modes CLI Détail: chapitre-3-cli-modes/page-principale.md
+        - Comparaison Modes: chapitre-3-cli-modes/comparaison.md
+    - Contexte et prompts Copilot:
+      - "applyTo Copilot (référence)": chapitre-4-contexte/applyto-avance.md
+      - "Prompt Files Copilot (référence)": chapitre-4-contexte/prompt-files.md
+      - "Copilot (référence)": chapitre-5-prompt-engineering/avec-copilot.md
+    - Machine Learning avec Copilot:
+      - "Copilot pour le ML (référence)": chapitre-6-machine-learning/copilot-workflow-ml.md
+      - Deep Learning: chapitre-6-machine-learning/deep-learning.md
+    - Coûts et historique Copilot:
+      - "AI Credits Copilot (référence)": chapitre-12-couts-gouvernance/premium-requests.md
+      - Historique restrictions & évolutions: chapitre-12-couts-gouvernance/historique-modifications.md
+    - Comparaison et migration depuis Copilot:
+      - "Comparaison Copilot vs Claude": chapitre-3b-claude-code-migration-copilot/comparaison-copilot-claude.md
+      - "Migration pas à pas": chapitre-3b-claude-code-migration-copilot/migration-pas-a-pas.md
+      - "Checklist 30/60/90 jours": chapitre-3b-claude-code-migration-copilot/migration-30-60-90.md
+    - Archives Copilot par chapitre:
+      - "Accueil": appendices/copilot/accueil.md
+      - "Copilot — comparaisons et migration": appendices/copilot/chapitre-3b-claude-code-migration-copilot.md
+      - "Contexte & Personnalisation": appendices/copilot/chapitre-4-contexte.md
+      - "Prompt Engineering": appendices/copilot/chapitre-5-prompt-engineering.md
+      - "Machine Learning": appendices/copilot/chapitre-6-machine-learning.md
+      - "Deep Learning & Réseaux de Neurones": appendices/copilot/chapitre-8-deep-learning.md
+      - "Bonnes Pratiques": appendices/copilot/chapitre-9-bonnes-pratiques.md
+      - "Cas d'Usage": appendices/copilot/chapitre-10-cas-usage.md
+      - "Troubleshooting": appendices/copilot/chapitre-11-troubleshooting.md
+      - "Coûts & Gouvernance": appendices/copilot/chapitre-12-couts-gouvernance.md
+      - "Outils": appendices/copilot/chapitre-13-outils-economies.md
+      - "Veille IA": appendices/copilot/chapitre-14-veille-ia.md
+      - "Cybersécurité & IA": appendices/copilot/chapitre-15-hacker-ia.md

@@ -1,61 +1,80 @@
 ---
-description: 'Documentation and content creation standards'
+description: 'Markdown standards for this MkDocs Material repository'
 applyTo: '**/*.md'
 ---
 
-## Markdown Content Rules
+# Règles Markdown du dépôt
 
-The following markdown content rules are enforced in the validators:
+Ces règles décrivent le format **réel** du projet. Elles remplacent les conventions de blog/front matter qui ne s'appliquent pas ici.
 
-1. **Headings**: Use appropriate heading levels (H2, H3, etc.) to structure your content. Do not use an H1 heading, as this will be generated based on the title.
-2. **Lists**: Use bullet points or numbered lists for lists. Ensure proper indentation and spacing.
-3. **Code Blocks**: Use fenced code blocks for code snippets. Specify the language for syntax highlighting.
-4. **Links**: Use proper markdown syntax for links. Ensure that links are valid and accessible.
-5. **Images**: Use proper markdown syntax for images. Include alt text for accessibility.
-6. **Tables**: Use markdown tables for tabular data. Ensure proper formatting and alignment.
-7. **Line Length**: Limit line length to 400 characters for readability.
-8. **Whitespace**: Use appropriate whitespace to separate sections and improve readability.
-9. **Front Matter**: Include YAML front matter at the beginning of the file with required metadata fields.
+## Titres
 
-## Formatting and Structure
+- Une page publiée commence normalement par un unique `# H1`.
+- Utiliser `## H2`, puis `### H3` sans saut de niveau.
+- Ne pas utiliser du texte en gras comme substitut à un titre.
+- Les fichiers techniques non publiés (`README.md`, instructions, agents, skills, templates) peuvent adapter leur structure à leur rôle, tout en conservant une hiérarchie cohérente.
 
-Follow these guidelines for formatting and structuring your markdown content:
+## Front matter
 
-- **Headings**: Use `##` for H2 and `###` for H3. Ensure that headings are used in a hierarchical manner. Recommend restructuring if content includes H4, and more strongly recommend for H5.
-- **Lists**: Use `-` for bullet points and `1.` for numbered lists. Indent nested lists with two spaces.
-- **Code Blocks**: Use triple backticks (`) to create fenced code blocks. Specify the language after the opening backticks for syntax highlighting (e.g., `csharp).
-- **Links**: Use `[link text](URL)` for links. Ensure that the link text is descriptive and the URL is valid.
-- **Images**: Use `![alt text](image URL)` for images. Include a brief description of the image in the alt text.
-- **Tables**: Use `|` to create tables. Ensure that columns are properly aligned and headers are included.
-- **Line Length**: Break lines at 80 characters to improve readability. Use soft line breaks for long paragraphs.
-- **Whitespace**: Use blank lines to separate sections and improve readability. Avoid excessive whitespace.
+Le front matter YAML **n'est pas obligatoire** pour les pages MkDocs de ce dépôt.
+
+Ne pas ajouter de champs de blog Microsoft tels que `post_title`, `microsoft_alias`, `featured_image`, `categories`, `ai_note`, etc. sauf si un futur outil du dépôt les exige explicitement.
+
+Les artefacts IA (`.github/agents`, `.github/prompts`, `.github/skills`, `.claude/agents`, `.claude/skills`) peuvent en revanche utiliser le front matter propre à leur plateforme.
+
+## Listes, code et tableaux
+
+- Utiliser la syntaxe Markdown native pour les listes.
+- Spécifier le langage des blocs de code (`python`, `bash`, `powershell`, `json`, `yaml`, `markdown`, etc.).
+- Ajouter une ligne vide autour des blocs structurants lorsque cela améliore la lisibilité.
+- Utiliser des tableaux seulement quand la comparaison tabulaire est réellement utile.
+
+## Liens
+
+- Utiliser un libellé descriptif plutôt qu'un « cliquez ici ».
+- Préférer les liens relatifs pour les pages internes.
+- Ne pas copier un ancien chemin sans vérifier qu'il existe encore.
+- Après modification du site, exécuter le validateur des liens et ancres.
+
+## Images
+
+- Fournir un texte alternatif descriptif.
+- Ne pas utiliser le nom de fichier comme alt text par défaut.
+- Une image décorative peut avoir un alt vide si elle est réellement décorative et si le rendu le justifie.
+- Les captures UI doivent respecter `CONTRIBUTING-SCREENSHOTS.md`.
+
+## Langue et style
+
+- Documentation publiée : français, sauf termes techniques usuels.
+- Préférer des phrases directes et vérifiables.
+- Éviter les chiffres de performance, pourcentages, scores ou durées présentés comme universels sans mesure/source.
+- Ne pas figer prix, quotas, versions minimales ou noms de modèles si une formulation durable suffit.
 
 ## Sources et traçabilité
 
-Pour toute section de références, appliquer **une convention unique et obligatoire** :
+Lorsqu'une page contient des faits externes évolutifs, utiliser une section `## Sources` et privilégier les références officielles.
 
-- Le titre de section doit être exactement `## Sources`
-- Chaque source doit suivre exactement le format `- [Titre](URL) - consulté le AAAA-MM-JJ`
-- Les URL nues en prose sont interdites dans cette section
-- Les variantes de titre sont interdites (exemples : `## Sources officielles`, `## Références`)
+Format recommandé :
 
-## Validation Requirements
+```markdown
+## Sources
 
-Ensure compliance with the following validation requirements:
+- [Titre de la source](https://exemple.invalid/) — consulté le YYYY-MM-DD
+```
 
-- **Front Matter**: Include the following fields in the YAML front matter:
+Une date de consultation est particulièrement utile pour les pages sur modèles, tarifs, sécurité, compatibilité IDE, previews et APIs.
 
-  - `post_title`: The title of the post.
-  - `author1`: The primary author of the post.
-  - `post_slug`: The URL slug for the post.
-  - `microsoft_alias`: The Microsoft alias of the author.
-  - `featured_image`: The URL of the featured image.
-  - `categories`: The categories for the post. These categories must be from the list in /categories.txt.
-  - `tags`: The tags for the post.
-  - `ai_note`: Indicate if AI was used in the creation of the post.
-  - `summary`: A brief summary of the post. Recommend a summary based on the content when possible.
-  - `post_date`: The publication date of the post.
+## MkDocs Material
 
-- **Content Rules**: Ensure that the content follows the markdown content rules specified above.
-- **Formatting**: Ensure that the content is properly formatted and structured according to the guidelines.
-- **Validation**: Run the validation tools to check for compliance with the rules and guidelines.
+Les admonitions, onglets, Mermaid, attributs et autres extensions doivent suivre `.github/instructions/mkdocs-material.instructions.md` et la configuration réellement active dans `mkdocs.yml`.
+
+## Validation
+
+Pour les changements qui affectent le site :
+
+```bash
+python -m mkdocs build --strict
+python scripts/validate-links.py
+```
+
+Ne prétends pas qu'un fichier est conforme uniquement parce que Markdown « ressemble » à du contenu valide : la CI est la référence technique.

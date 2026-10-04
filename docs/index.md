@@ -1,50 +1,53 @@
-# GitHub Copilot — Configuration & Utilisation
+# Claude Code — Configuration et utilisation
 
 <div class="hero-banner" markdown>
 
-## Votre assistant IA intégré à IntelliJ et VS Code
+## Un parcours guidé pour développer avec Claude Code
 
-GitHub Copilot est un assistant de programmation propulsé par l'IA qui suggère du code, génère des fonctions entières, et répond à vos questions directement dans votre éditeur. Cette documentation vous guide de l'installation jusqu'aux techniques avancées de personnalisation.
+Installation, contexte, automatisation, MCP, sécurité et pratiques d'équipe.
 
-[:simple-intellijidea: Commencer avec IntelliJ IDEA](chapitre-1-installation/intellij/tutoriel.md){ .md-button .md-button--primary }
-[:material-microsoft-visual-studio-code: Commencer avec VS Code](chapitre-1-installation/vscode/tutoriel.md){ .md-button }
+[:material-robot: Commencer avec Claude Code](chapitre-3b-claude-code-migration-copilot/installation.md){ .md-button .md-button--primary }
+[:material-folder-cog: Configurer le projet](chapitre-3b-claude-code-migration-copilot/architecture-claude.md){ .md-button }
 
 </div>
 
+## Qu'est-ce que Claude Code ?
+
+Claude Code est l'outil de développement agentique d'Anthropic. Il peut lire un dépôt, modifier plusieurs fichiers, exécuter des commandes, travailler avec Git et se connecter à des outils externes via MCP. Il est disponible en terminal ainsi que dans les environnements de développement pris en charge.
+
+**Dans ce dépôt, Claude Code devient le parcours principal pour :**
+
+- **Explorer et modifier un codebase** sur plusieurs fichiers ;
+- **Planifier puis exécuter** des tâches de refactoring, correction, tests ou documentation ;
+- **Versionner les instructions du projet** avec `CLAUDE.md` et les mécanismes de configuration Claude ;
+- **Connecter des outils et sources externes** avec le Model Context Protocol (MCP) ;
+- **Automatiser des workflows** en CLI, CI/CD, hooks et agents spécialisés ;
+- **Travailler depuis VS Code, JetBrains ou le terminal** selon le besoin.
+
+!!! info "Sources Claude vérifiées"
+    Les pages Claude sont maintenues à partir de la documentation officielle Claude Code et Anthropic. Les informations sensibles à l'évolution — installation, modèles, quotas, prix, intégrations — doivent être revalidées lors de leur mise à jour.
+
 ---
 
-## Qu'est-ce que GitHub Copilot ?
-
-GitHub Copilot est un service d'IA développé par GitHub et OpenAI. Il s'intègre directement dans votre IDE et propose des suggestions de code en temps réel : complétions de lignes, génération de fonctions entières, écriture de tests, refactoring, et réponses à vos questions techniques via le chat.
-
-**Ce que Copilot fait concrètement :**
-
-- **Suggestions inline** : il complète votre code en gris pendant que vous tapez — acceptez avec ++tab++
-- **Génération à partir de commentaires** : écrivez `// fonction qui trie un tableau par date` et Copilot génère le code
-- **Copilot Chat** : posez des questions en langage naturel, demandez des explications, des refactorings, des tests
-- **Agents et personnalisation** : créez des agents custom, des instructions réutilisables, des prompts sauvegardés
-
----
-
-## Bénéfices pour le développement
+## Parcours recommandés
 
 <div class="grid cards" markdown>
 
-- :material-lightning-bolt: **Vitesse**
+- :material-download: **[Installer Claude Code](chapitre-3b-claude-code-migration-copilot/installation.md)**
 
-    Réduisez le temps passé sur les tâches répétitives : boilerplate, getters/setters, tests unitaires, documentation
+    CLI, VS Code, JetBrains, authentification et premiers tests.
 
-- :material-brain: **Apprentissage**
+- :material-folder-cog: **[Structurer un dépôt pour Claude](chapitre-3b-claude-code-migration-copilot/architecture-claude.md)**
 
-    Découvrez des patterns et APIs que vous ne connaissez pas encore, avec des explications contextualisées
+    `CLAUDE.md`, configuration `.claude/`, règles, hooks, skills et agents.
 
-- :material-shield-check: **Qualité**
+- :material-connection: **[Connecter Claude avec MCP](chapitre-3b-claude-code-migration-copilot/mcp-sources-externes.md)**
 
-    Générez des tests automatiquement, obtenez des suggestions de refactoring, identifiez les problèmes potentiels
+    Relier GitHub, outils internes, bases de données et services externes.
 
-- :material-code-tags: **Focus**
+- :material-shield-lock: **[Sécurité & gouvernance](chapitre-3b-claude-code-migration-copilot/securite-gouvernance.md)**
 
-    Restez dans votre éditeur sans jongler entre documentation, StackOverflow et votre IDE
+    Permissions, secrets, garde-fous et pratiques d'équipe.
 
 </div>
 
@@ -54,57 +57,31 @@ GitHub Copilot est un service d'IA développé par GitHub et OpenAI. Il s'intèg
 
 | Niveau | Profil | Ce que vous trouverez ici |
 |--------|--------|---------------------------|
-| 🟢 **Débutant** | Vous venez d'activer Copilot ou vous débutez | Tutoriels pas à pas, captures d'écran, explications des termes techniques |
-| 🟡 **Intermédiaire** | Vous utilisez Copilot au quotidien | Paramétrage avancé, bonnes pratiques, optimisation du contexte |
-| 🔴 **Expert** | Vous voulez personnaliser Copilot profondément | Agents custom, instructions, skills, hooks, cas d'usage par langage |
-
----
-
-## Structure de cette documentation
-
-```
-📖 Installation & Configuration de base
-   └── Comment installer et authentifier Copilot sur chaque IDE
-
-⚙️  Paramétrage détaillé
-   └── Tous les paramètres expliqués, profils de configuration
-
-🧠 Contexte & Personnalisation
-   └── Instructions, agents, skills, hooks, .copilotignore
-
-✅ Bonnes Pratiques
-   └── Prompts efficaces, sécurité, productivité
-
-🔧 Troubleshooting
-   └── Résolution des problèmes courants, logs, diagnostic
-
-💼 Cas d'Usage Concrets
-   └── Node.js/React, Python, Java — configs clé en main
-
-📎 Appendices
-   └── Raccourcis clavier, templates, ressources, FAQ
-```
-
----
-
-## Versions couvertes
-
-| Logiciel | Version minimale | Recommandée |
-|----------|-----------------|-------------|
-| IntelliJ IDEA | 2023.1 | 2024.1+ |
-| Visual Studio Code | 1.80 | Dernière stable |
-| Plugin GitHub Copilot (IntelliJ) | 1.5+ | Dernière |
-| Extension GitHub Copilot (VS Code) | 1.150+ | Dernière |
-| Abonnement | GitHub Copilot Individual / Business / Enterprise | — |
-
-!!! info "GitHub Copilot Free"
-    Depuis fin 2024, GitHub propose un tier **Copilot Free** avec des limites mensuelles (2 000 complétions, 50 messages Chat). Cette documentation couvre toutes les offres.
+| 🟢 **Débutant** | Vous découvrez les assistants de développement IA | Installation, premiers usages, vocabulaire et parcours guidés |
+| 🟡 **Intermédiaire** | Vous utilisez déjà un agent de développement | Configuration du contexte, règles, skills et workflows reproductibles |
+| 🔴 **Expert** | Vous industrialisez l'usage de l'IA | MCP, hooks, agents, CI/CD, gouvernance, sécurité et architectures avancées |
 
 ---
 
 ## Comment utiliser cette documentation
 
-- **Vous débutez ?** → Suivez le [tutoriel IntelliJ](chapitre-1-installation/intellij/tutoriel.md) ou [tutoriel VS Code](chapitre-1-installation/vscode/tutoriel.md) de A à Z
-- **Vous cherchez un paramètre précis ?** → Utilisez la **barre de recherche** en haut (++slash++ pour l'activer)
-- **Vous avez un problème ?** → Rendez-vous directement au [Troubleshooting](chapitre-11-troubleshooting/index.md)
-- **Vous voulez les raccourcis ?** → [Appendice A — Raccourcis clavier](appendices/raccourcis-clavier.md)
+- **Vous démarrez avec Claude ?** → [Installation Claude Code](chapitre-3b-claude-code-migration-copilot/installation.md)
+- **Vous cherchez à mieux gérer le contexte ?** → [Contexte & Personnalisation](chapitre-4-contexte/index.md)
+- **Vous avez un problème ?** → [Troubleshooting](chapitre-11-troubleshooting/index.md)
+- **Vous surveillez les coûts ?** → [Coûts & Gouvernance](chapitre-12-couts-gouvernance/index.md)
+
+---
+
+## Principe de maintenance
+
+Les pages principales suivent le parcours Claude Code. Les références historiques sont regroupées en annexe, à la fin du menu.
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](appendices/copilot/accueil.md#page-index).
+
+## Prochaine étape
+
+Poursuivez avec **[Claude Code — Introduction](chapitre-3b-claude-code-migration-copilot/index.md)**, la page suivante dans le menu.

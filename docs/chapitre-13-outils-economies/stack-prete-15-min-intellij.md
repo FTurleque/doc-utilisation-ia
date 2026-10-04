@@ -1,194 +1,153 @@
-# Stack prête en 15 min — IntelliJ
+# Stack locale rapide — IntelliJ + Claude Code
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intellij">IntelliJ</span>
 
-Cette stack reprend le même socle local-first que la version
-[VS Code](stack-prete-15-min-vscode.md), mais en profitant des forces
-natives d'IntelliJ pour le diagnostic et le refactoring. L'objectif est de
-rester autonome pour le quotidien, tout en gardant Copilot pour les cas les
-plus complexes.
+Cette page adapte le parcours local-first à IntelliJ IDEA. Le socle n'est plus Continue : **Claude Code reste l'agent principal**, éventuellement connecté à Ollama ou LM Studio comme backend compatible Anthropic.
+
+IntelliJ apporte en plus ses inspections, refactorings, navigation structurelle et intégration SonarQube.
 
 ---
 
-## Prérequis
+## Stack cible
 
-- IntelliJ IDEA installée
-- Accès internet pour l'installation initiale
-- Plugin SonarQube for IDE (recommandé)
-- Ollama disponible en local
-- Plugin Continue.dev installé
-- RTK disponible pour le terminal
-
-!!! tip "Ordre recommandé"
-    Commence par les outils natifs IntelliJ, puis ajoute **[Continue.dev](continue-dev.md)** et **[Ollama](ollama.md)** pour le chat local.
-
----
-
-## Parallèle avec VS Code
-
-Cette page suit la même logique que la version VS Code : Ollama pour le
-modèle local, Continue.dev pour le chat, puis RTK pour réduire le bruit du
-terminal. La différence principale est qu'IntelliJ ajoute ses inspections,
-ses refactorings natifs et, si besoin, SonarQube for IDE.
-
-=== "IntelliJ IDEA"
-    - Corriger et refactorer avec les outils natifs avant toute IA distante.
-    - Utiliser SonarQube for IDE pour détecter les issues locales et proposer
-      des quick fixes sur les règles compatibles.
-    - Activer Connected Mode ou MCP Sonar seulement si l'équipe en a besoin.
-
-=== "Visual Studio Code"
-    - Conserver la même base locale : Ollama + Continue.dev + RTK.
-    - S'appuyer davantage sur les extensions pour l'analyse et les refactorings.
-    - Suivre le playbook dédié dans [Stack prête en 15 min — VS Code](stack-prete-15-min-vscode.md).
-
----
-
-## Étape 1 — Installer les plugins
-
-1. Ouvrir **Settings -> Plugins -> Marketplace**.
-2. Installer **Continue**.
-3. Installer **SonarQube for IDE** (éditeur SonarSource).
-4. Redémarrer l'IDE.
-5. Vérifier que la barre latérale Continue est disponible.
-6. Vérifier que la fenêtre SonarQube est visible et qu'une issue locale remonte sur un fichier Java.
-
-!!! tip "Validation rapide Sonar"
-    Place le curseur sur une issue Sonar compatible puis utilise `Alt+Enter` pour vérifier si un Quick Fix est proposé.
-
----
-
-## Étape 2 — Installer Ollama
-
-1. Installer Ollama depuis le site officiel.
-2. Lancer un modèle local.
-3. Vérifier le service local sur `http://localhost:11434`.
-
-```powershell
-ollama run mistral
+```text
+IntelliJ IDEA
+├── refactorings / inspections / tests natifs
+├── Claude Code
+│   ├── backend Claude habituel
+│   ├── OU Ollama
+│   └── OU LM Studio
+├── SonarQube for IDE (optionnel)
+└── RTK pour les sorties terminal volumineuses (optionnel)
 ```
 
 ---
 
-## Étape 3 — Brancher Continue.dev
+## 1. Utiliser d'abord l'IDE
 
-Configurer Continue pour pointer vers Ollama.
+Avant tout appel agentique, exploitez :
 
-```json
-{
-  "models": [
-    {
-      "title": "Chat local IntelliJ",
-      "provider": "ollama",
-      "model": "mistral",
-      "apiBase": "http://localhost:11434"
-    }
-  ]
-}
+- Inspect Code ;
+- Find Usages ;
+- Rename / Extract / Change Signature ;
+- navigation symboles/classes ;
+- debugger ;
+- tests ciblés ;
+- analyse Sonar lorsque disponible.
+
+Pour une transformation déterministe, l'IDE reste généralement plus sûr qu'une génération probabiliste.
+
+---
+
+## 2. Installer/configurer Claude Code
+
+Suivez le guide JetBrains Claude Code du chapitre installation. Le plugin JetBrains s'appuie sur la CLI Claude Code : vérifiez donc l'installation avec :
+
+```bash
+claude --version
+claude doctor
 ```
 
-Ensuite, teste sur un fichier Java ou Kotlin pour:
-
-- expliquer une classe
-- proposer un refactoring simple
-- générer un test unitaire brouillon
+Puis testez la connexion IDE depuis un petit projet avant de l'utiliser sur un dépôt critique.
 
 ---
 
-## Étape 4 — Activer RTK dans le terminal
+## 3. Backend local avec Ollama
 
-RTK sert à nettoyer les sorties de build avant de les faire analyser.
+Ollama peut configurer Claude Code directement :
 
-```powershell
-rtk gradle test
-rtk git diff
-rtk rg "IllegalStateException" src
+```bash
+ollama launch claude
+```
+
+Ou utilisez :
+
+```bash
+export ANTHROPIC_AUTH_TOKEN=ollama
+export ANTHROPIC_BASE_URL=http://localhost:11434
+claude --model <modele-local>
 ```
 
 ---
 
-## Étape 5 — Vérifier les inspections et refactorings
+## 4. Backend local avec LM Studio
 
-Avant toute IA distante, valide les gains natifs IntelliJ:
+```bash
+lms server start --port 1234
+export ANTHROPIC_BASE_URL=http://localhost:1234
+export ANTHROPIC_AUTH_TOKEN=lmstudio
+export CLAUDE_CODE_ATTRIBUTION_HEADER=0
+claude --model <modele-local>
+```
 
-- `Analyze -> Inspect Code`
-- `Refactor -> Rename`
-- `Find Usages`
-- `Navigate -> Class / Symbol`
-- `Run tests`
-
-!!! success "Critère de validation"
-    La stack est valide si IntelliJ peut corriger, refactorer et tester sans
-    prompt IA pour les cas locaux les plus simples.
+Si LM Studio est exposé au réseau, activez l'authentification et limitez le bind réseau.
 
 ---
 
-## Étape 6 (optionnelle) — Connected Mode Sonar
+## 5. Ajouter SonarQube for IDE
 
-Active ce mode seulement si ton équipe dispose d'un serveur SonarQube Cloud/Server.
+SonarQube est particulièrement pertinent avec IntelliJ :
 
-1. Ouvre les paramètres SonarQube for IDE.
-2. Configure la connexion avec un token utilisateur.
-3. Lie le projet (bind) et vérifie la synchro des règles.
+```text
+issue Sonar
+→ Quick Fix / intention IntelliJ si possible
+→ Claude si analyse complexe
+→ compilation + tests
+→ réanalyse Sonar
+```
 
-!!! warning "Promesse réaliste"
-    L'installation plugin + analyse locale entre souvent dans 15 minutes. La configuration Connected Mode complète dépend de l'infrastructure entreprise.
-
-## Étape 7 (avancée) — MCP Sonar
-
-Ne configure MCP Sonar qu'en niveau avancé, après validation du workflow local.
-
-- Priorité : détection + correction déterministe.
-- MCP : utile pour triage/correction multi-issues à périmètre borné.
-- Vérifier la compatibilité réelle de ton plugin Copilot JetBrains avant configuration.
+Connected Mode et MCP Sonar sont optionnels et dépendent de l'infrastructure d'équipe.
 
 ---
 
-## Ce que cette stack couvre
+## 6. Ajouter RTK seulement si utile
 
-- Correction de warnings simples
-- Diagnostic local de problèmes de compilation
-- Explication de code ciblé
-- Nettoyage de logs avant partage
+Pour des builds Gradle/Maven ou suites de tests verbeuses :
 
-Elle ne remplace pas Copilot pour:
+```bash
+rtk init --global --dry-run
+rtk init --global
+rtk gain
+```
 
-- Les modifications multi-fichiers coordonnées
-- Les décisions d'architecture longues
-- Les cas qui exigent un contexte très large
+Si un diagnostic devient incomplet, relancez la commande sans filtrage.
+
+---
+
+## Critères de validation
+
+La stack est prête lorsque :
+
+- l'IDE compile et teste sans dépendre de l'IA ;
+- Claude Code voit le bon dépôt et les bonnes instructions ;
+- le modèle choisi réussit les tool calls nécessaires ;
+- les secrets restent hors Git ;
+- un changement agentique peut être relu via diff ;
+- Sonar et les tests, s'ils existent, servent de validation objective.
 
 ---
 
-## Quand garder Copilot
+## Continue — référence legacy
 
-Garde Copilot pour:
-
-- un refactoring transversal
-- un bug qui touche plusieurs couches
-- une tâche de conception ou de revue complexe
-
-!!! info "Règle simple"
-    IntelliJ natif d'abord, Continue.dev ensuite, Copilot en dernier recours.
+L'ancien montage IntelliJ + Continue + Ollama est conservé uniquement pour les installations existantes. Le dépôt Continue n'étant plus activement maintenu, ne construisez pas un nouveau standard d'équipe autour de son plugin JetBrains.
 
 ---
+
+### Configuration locale et retour au fournisseur habituel
+
+Les blocs `export` ciblent Bash (Linux, macOS ou WSL). Dans PowerShell, utilisez par exemple `$env:ANTHROPIC_BASE_URL = "http://localhost:11434"` pour Ollama, ou le port `1234` pour LM Studio, puis définissez `$env:ANTHROPIC_AUTH_TOKEN`. Pour LM Studio, ajoutez `$env:CLAUDE_CODE_ATTRIBUTION_HEADER = "0"`, comme dans son guide actuel. Ces variables routent la session vers un autre backend : retirez-les avant de revenir à votre connexion Claude habituelle et vérifiez `/status`.
+
+Exigez un modèle prenant en charge les appels d’outils et testez un petit changement avec validation. Un modèle servi localement ne rend pas automatiquement locaux les MCP, recherches Web ou autres outils de la session.
+
+Guides revérifiés le **3 octobre 2026** : [Ollama — compatibilité Anthropic](https://docs.ollama.com/api/anthropic-compatibility) et [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code).
 
 ## Sources
 
-- Documentation officielle: [Continue Docs](https://docs.continue.dev/) (consultée le 2026-06-07)
-- Site officiel: [Continue](https://www.continue.dev/) (consultée le 2026-06-07)
-- Site officiel: [Ollama](https://ollama.com/) (consultée le 2026-06-07)
-- Documentation officielle: [Ollama GitHub](https://github.com/ollama/ollama) (consultée le 2026-06-07)
-- Plugin IntelliJ: [Continue sur JetBrains Marketplace](https://plugins.jetbrains.com/plugin/22794-continue) (consultée le 2026-06-07)
-
----
+- [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains) — consulté le 2026-09-28
+- [Ollama — Claude Code](https://docs.ollama.com/api/anthropic-compatibility) — consulté le 2026-09-28
+- [LM Studio — Claude Code](https://lmstudio.ai/docs/integrations/claude-code) — consulté le 2026-09-28
+- [SonarQube MCP Server](https://github.com/SonarSource/sonarqube-mcp-server) — consulté le 2026-09-28
 
 ## Prochaine étape
 
-**[Codeium / Windsurf](codeium-windsurf.md)** : ajouter une alternative de complétion/chat dans l'IDE pour les tâches quotidiennes à faible complexité.
-
-Concepts clés couverts :
-
-- **Natif avant IA** - exploiter les inspections et refactorings
-- **Chat local** - conserver les questions simples hors quota
-- **Terminal filtré** - limiter le bruit des commandes
-- **Passage à Copilot** - savoir quand monter en puissance
+Poursuivez avec **[Vue d'ensemble](agents-code/index.md)**, la page suivante dans le menu.

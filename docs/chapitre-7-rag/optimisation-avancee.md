@@ -1,374 +1,299 @@
-# Optimisation Avancée du RAG — Tuning, Évaluation, Monitoring
+# Optimisation avancée du RAG — Évaluation, tuning et monitoring
 
 <span class="badge-expert">Expert</span>
 
-Production RAG requires metrics, monitoring, continuous improvements.
-
-## 1. ÉVALUATION & BENCHMARKING
-
-### Métriques de Retrieval
-
-```
-Précision@K = (# chunks pertinents dans top-K) / K
-Rappel = (# chunks pertinents trouvés) / (# chunks pertinents totaux)
-
-Exemple:
-  100 docs total
-  Query: "Quoi Python ?"
-  Top-5: [Python doc, Java, Fruits, C++, HTML]
-  Pertinents: 2 (Python, C++)
-  
-  Precision@5 = 2/5 = 40%
-  Recall = 2/2 = 100%
-```
-
-### Métriques de Generation
-
-```
-BLEU = n-gram overlap avec réponse "gold"
-ROUGE = recall-oriented (sumarization)
-F1 = harmonic mean precision/recall
-
-Exemple: ROUGE = 80%, BLEU = 75%, F1 = 77%
-```
-
-### Golden Dataset
-
-```python
-golden_dataset = [
-    {
-        "question": "Réinitialiser mot de passe ?",
-        "expected": "Settings > Security > Change Password",
-        "source_docs": ["doc_42"],
-        "metadata": {"category": "account", "difficulty": "easy"}
-    },
-    {
-        "question": "Délai paiement ?",
-        "expected": "Net-30 jours",
-        "source_docs": ["contract.pdf#p5"],
-        "metadata": {"category": "legal", "difficulty": "medium"}
-    }
-]
-
-def evaluate_rag(qa_chain, golden_dataset):
-    scores = {"precision": [], "recall": [], "f1": []}
-    
-    for case in golden_dataset:
-        result = qa_chain({"query": case["question"]})
-        
-        precision, recall, f1 = compute_metrics(
-            result['result'],
-            case['expected']
-        )
-        
-        scores['precision'].append(precision)
-        scores['recall'].append(recall)
-        scores['f1'].append(f1)
-    
-    return {k: sum(v)/len(v) for k, v in scores.items()}
-
-# Day 1
-metrics_v1 = evaluate_rag(rag_v1, golden_dataset)
-# precision=0.62, recall=0.71, f1=0.66
-
-# Day 2
-metrics_v2 = evaluate_rag(rag_v2, golden_dataset)
-# precision=0.84, recall=0.82, f1=0.83 ← +25% improvement!
-```
+Optimiser un RAG signifie améliorer un compromis **qualité / latence / coût / sécurité** sur un dataset représentatif. Cette page retire les anciens « sweet spots » et gains chiffrés inventés : tout réglage doit être mesuré sur votre système.
 
 ---
 
-## 2. TUNING EMPIRIQUE
+## 1. Dataset d'évaluation versionné
 
-### Chunk Size Optimization
-
-```
-Test chunk_size values:
-  100 tokens: F1=0.68 (trop détaillé, perte contexte)
-  256 tokens: F1=0.86 ✅ (sweet spot)
-  512 tokens: F1=0.72 (trop générique)
-  1024 tokens: F1=0.65 (contexte dilué)
-
-→ Recommendation: 256-512 optimal range
+```json
+{
+  "id": "auth-001",
+  "question": "Comment renouveler un token expiré ?",
+  "expected_sources": ["auth/token-reset.md"],
+  "expected_facts": ["POST /token/refresh", "refresh token"],
+  "metadata": {"category": "auth", "difficulty": "normal"}
+}
 ```
 
-### Embedding Model Selection
+Le dataset doit inclure :
 
-```
-Benchmarks (F1 on golden_dataset):
+- questions fréquentes ;
+- formulations ambiguës ;
+- cas sans réponse ;
+- distracteurs ;
+- versions/documents obsolètes ;
+- cas de sécurité/ACL ;
+- injections adversariales lorsque pertinent.
 
-all-MiniLM-L6-v2        F1=0.74, latency=5ms, cost=Free
-all-mpnet-base-v2       F1=0.78, latency=20ms, cost=Free
-textembedding-3-small   F1=0.83, latency=100ms, cost=$0.02/1M
-textembedding-3-large   F1=0.87, latency=200ms, cost=$0.13/1M
+Gardez un jeu de test hors de la boucle de tuning si vous comparez beaucoup de variantes.
 
-Decision matrix:
-  Latency critical? → all-MiniLM
-  Quality critical? → textembedding-3-large
-  Else? → all-mpnet (balanced)
-```
+### Cycle d'une variante : diagramme de séquence UML
 
-### Top-K Tuning
-
-```python
-k_values = [1, 3, 5, 10, 20, 50]
-
-for k in k_values:
-    precision = evaluate_retrieval(vectorstore, golden_dataset, k)
-    latency = measure_latency(retriever, k)
-    
-    print(f"k={k}: precision={precision:.2f}, latency={latency:.0f}ms")
-
-# Output:
-# k=1: precision=0.85 (misses context)
-# k=3: precision=0.92, latency=50ms  ← Balanced
-# k=5: precision=0.94, latency=80ms
-# k=20: precision=0.96, latency=200ms (LLM overload)
-
-# → Recommendation: k=3-5
-```
-
----
-
-## 3. CACHING & PERFORMANCE
-
-### Prompt Caching (OpenAI)
-
-```python
-# Cache context for repeated queries
-# 10x latency improvement, 100x cost reduction
-
-client = OpenAI(cache_control_ephemeral=True, ttl_seconds=3600)
-
-# First request (slow, writes cache)
-context = "Very long context... 10K tokens..."
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[
-        {"role": "system", "content": context},  # Cached
-        {"role": "user", "content": "Question 1"}
-    ]
-)
-# Time: 800ms, Tokens: 10K input
-
-# Second request (fast, from cache)
-response = client.chat.completions.create(
-    model="gpt-4",
-    messages=[
-        {"role": "system", "content": context},  # From cache!
-        {"role": "user", "content": "Question 2"}
-    ]
-)
-# Time: 100ms (10x faster!), Tokens: ~100 (cache hit!)
-```
-
-### Redis Response Caching
-
-```python
-import redis
-import json
-
-redis_client = redis.Redis(host='localhost', port=6379)
-
-def cached_rag_query(question: str, ttl_seconds: int = 3600):
-    cache_key = f"rag:{hash(question)}"
-    
-    # Check cache
-    cached = redis_client.get(cache_key)
-    if cached:
-        print(f"✓ Cache hit: {question}")
-        return json.loads(cached)
-    
-    # Cache miss → full RAG
-    print(f"✗ Cache miss, running RAG...")
-    result = rag_chain({"query": question})
-    
-    # Store
-    redis_client.setex(cache_key, ttl_seconds, json.dumps(result))
-    
-    return result
-
-# Typical results:
-# 70% cache hit rate (repeated questions)
-# Latency range: 10ms (cache) to 800ms (full RAG)
-```
-
----
-
-## 4. SÉCURITÉ & COMPLIANCE
-
-### PII Redaction
-
-```python
-import re
-
-def sanitize_retrieval(document: str, query: str, user_id: str):
-    # 1. Input validation
-    suspicious = ["DROP TABLE", "DELETE", "<script>"]
-    if any(kw in query for kw in suspicious):
-        log_security_alert(f"Suspicious from {user_id}: {query}")
-        return "Query blocked for security"
-    
-    # 2. PII redaction
-    redacted = re.sub(r'\b\d{3}-\d{2}-\d{4}\b', '[SSN]', document)  # SSN
-    redacted = re.sub(r'\b\d{16}\b', '[CARD]', redacted)  # Credit card
-    
-    # 3. Audit log
-    log_access(
-        user_id=user_id,
-        query=query,
-        timestamp=now(),
-        document_id=document.metadata.get('id'),
-        pii_redacted=len(redacted) < len(document)
-    )
-    
-    return redacted
-```
-
-### GDPR Right to be Forgotten
-
-```python
-def delete_user_data(user_id: str, vectorstore):
-    """Supprimer tous les docs d'un utilisateur (GDPR)"""
-    
-    docs = vectorstore.search_by_metadata({"user_id": user_id})
-    
-    for doc_id in docs:
-        vectorstore.delete(doc_id)
-    
-    print(f"✓ Deleted {len(docs)} docs for user {user_id}")
-```
-
----
-
-## 5. DÉPANNAGE : Decision Tree
+La qualité, la sécurité et la performance sont des contrôles distincts. Une meilleure réponse moyenne ne compense pas une fuite de document.
 
 ```mermaid
-graph TD
-    A["❓ RAG ne fonctionne pas"] --> B["Test 1: Bon doc trouvé?"]
-    
-    B -->|Non| C["Problème RETRIEVAL"]
-    C --> C1["Chunk trop gros?<br/>(↓ chunk_size)"]
-    C --> C2["Embedding faible?<br/>(↑ modèle)"]
-    C --> C3["Doc pas indexée?<br/>(refresh)"]
-    
-    B -->|Oui| D["Test 2: Réponse correcte?"]
-    D -->|Non| E["Problème LLM"]
-    E --> E1["LLM hallucine?<br/>(strict prompt)"]
-    E --> E2["Contexte confus?<br/>(better chunking)"]
-    E --> E3["Modèle faible?<br/>(GPT-4)"]
-    
-    D -->|Oui| F["✅ RAG works!"]
+sequenceDiagram
+    participant C as Claude Code ou developpeur
+    participant E as Runner evaluation
+    participant P as Pipeline candidat
+    participant R as Rapport de comparaison
+    C->>E: Variante et dataset versionnes
+    loop Questions de test et identites differentes
+        E->>P: Question, identite et configuration
+        P-->>E: Traces de retrieval, transferts, reponse et citations
+        E->>E: Verifier faits, droits, duree et cout
+    end
+    E->>R: Resultats candidat et baseline
+    R-->>C: Ecarts et controles echoues
+    alt Controle de securite echoue
+        C->>C: Rejeter la variante et corriger
+    else Controles passes
+        C->>C: Evaluer le compromis avant adoption
+    end
 ```
 
-### Cas Réels
-
-```python
-# CASE 1: "Réponses toujours générales"
-if avg_chunk_size > 512:
-    print("❌ Chunks trop gros → Refactoriser")
-    new_splitter = CharacterTextSplitter(chunk_size=256, overlap=50)
-
-# CASE 2: "Cite bon passage mais réponse fausse"
-result_no_rag = llm("Réinitialiser?")  # Seul
-if "Settings" in result_no_rag:
-    print("❌ LLM hallucine seul → Upgrade GPT-4")
-
-# CASE 3: "10s latency, too slow"
-t_ret = time_retrieval()
-t_llm = time_llm()
-print(f"Retrieval: {t_ret}s, LLM: {t_llm}s")
-```
+Le guide **[Sécurité du RAG](securite.md#10-tests-de-securite-prouver-aussi-les-refus)** fournit des cas de test pour les ACL, caches et injections documentaires.
 
 ---
 
-## 6. COÛTS COMPARATIFS
+## 2. Métriques retrieval
 
-| Solution | Setup | Mensuel | Par Query | Scale |
-|----------|-------|---------|-----------|-------|
-| **ChromaDB local** | $0 | $0 | $0 | <100K docs |
-| **Pinecone** | $0 | $25+ | $0.03-0.10 | ∞ |
-| **Qdrant cloud** | $0 | $18-200 | $0.002 | ∞ |
-| **Azure Cognitive** | $100 | $100-500 | $0.03-0.20 | ∞ |
-| **AWS Kendra** | $0 | $2000+ | $0.30-1.0 | ∞ |
+### Precision@k
 
-### ROI Calculation
+Part des résultats top-k qui sont pertinents.
 
-```
-Old: 1 FTE (HR) $50K/year answering FAQs
-New: Pinecone $500/year + OpenAI $200/year = $700/year
+### Recall@k
 
-Savings: $50K - $700 = $49,300/year
-ROI Payback: < 1 week! 🎉
-```
+Part des documents pertinents retrouvés dans top-k.
 
----
+### MRR
 
-## 7. MONITORING TOOLS
+Favorise les systèmes où le premier résultat pertinent arrive tôt.
 
-### RAGAS (RAG Evaluation Framework)
+### nDCG
 
-```python
-from ragas import evaluate
+Utile lorsqu'il existe plusieurs niveaux de pertinence.
 
-result = evaluate(
-    dataset=dataset,
-    llm=llm,
-    embeddings=embeddings,
-    metrics=[
-        context_precision,
-        context_recall,
-        faithfulness,
-        answer_relevancy,
-    ]
-)
-
-# Outputs:
-# context_precision: 0.82
-# context_recall: 0.91
-# faithfulness: 0.87
-# answer_relevancy: 0.79
-```
-
-### Langsmith (LangChain Tracing)
-
-Tracer requests LangChain, visualiser chains, debug issues.
-
-Dashboard: [smith.langchain.com](https://smith.langchain.com/)
-
-### TruLens (RAG Observability)
-
-```python
-from trulens_eval import Tru, TruChain
-
-tru = Tru()
-tru_chain = TruChain(my_rag_chain)
-tru.run_dashboard()  # Launch observability UI
-```
+Ne calculez pas « recall total » si vous ne connaissez pas l'ensemble des documents pertinents pour la question.
 
 ---
 
-### Sources
+## 3. Métriques génération
 
-- **RAGAS Research Paper** — *[Evaluating RAG Systems](https://arxiv.org/abs/2309.15217)*
-- **OpenAI Prompt Caching** — *[Official docs](https://platform.openai.com/docs/)*
-- **Langsmith** — *[smith.langchain.com](https://smith.langchain.com/)*
-- **TruLens** — *[github.com/truera/trulens](https://github.com/truera/trulens)*
-- **Cohere Reranking** — *[docs.cohere.ai/docs/rerank](https://docs.cohere.ai/docs/rerank)*
+Les métriques lexicales comme BLEU/ROUGE ne sont pas des métriques universelles de factualité RAG.
+
+Évaluez plutôt selon le cas :
+
+- exactitude des faits attendus ;
+- citation correcte ;
+- complétude ;
+- refus lorsque les sources sont insuffisantes ;
+- format/contrat ;
+- évaluation humaine ou LLM-as-judge **calibré** si nécessaire.
+
+Un judge LLM doit lui-même être validé sur un échantillon humain avant d'être traité comme ground truth.
 
 ---
 
+## 4. Tuning du chunking
+
+Au lieu de :
+
+```text
+256 tokens = optimal
+```
+
+faites :
+
+```text
+variants = [structurel, 256, 512, parent-child]
+→ même corpus
+→ même eval set
+→ même retrieval config
+→ comparer Recall@k + contexte moyen + latence
+```
+
+La bonne taille varie avec la structure documentaire et la question.
+
 ---
 
-## Prochaines Étapes
+## 5. Tuning top-k
 
-Votre RAG est en production ? Continuez votre parcours IA :
+Mesurez deux niveaux :
 
-### 📚 [Bonnes Pratiques](../chapitre-9-bonnes-pratiques/index.md)
+```text
+candidate_k = nombre de candidats récupérés
+context_k   = nombre réellement transmis au LLM
+```
 
-### 💼 [Cas d'Usage Avancés](../chapitre-10-cas-usage/index.md)
+Avec reranking, `candidate_k` peut être élevé tandis que `context_k` reste bas.
 
-### 🚨 [Troubleshooting](../chapitre-11-troubleshooting/index.md)
+Tracez :
 
-### 💰 [Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)
+- Recall@candidate_k ;
+- Precision/context quality à `context_k` ;
+- tokens de contexte ;
+- latence.
 
+---
+
+## 6. Comparer embeddings / retrievers
+
+Matrice d'expérience :
+
+```text
+retriever_id
+embedding_model
+index_config
+corpus_version
+eval_version
+Recall@5
+MRR
+p50/p95 latency
+index size
+estimated/observed cost
+```
+
+Ne recopiez pas les tarifs dans la doc : récupérez-les depuis le fournisseur au moment du benchmark.
+
+---
+
+## 7. Cache
+
+Trois caches possibles :
+
+### Embeddings
+
+Éviter de recalculer les vecteurs d'un document inchangé.
+
+### Retrieval
+
+Réutiliser une recherche identique si corpus + ACL + config n'ont pas changé.
+
+### Réponse
+
+Plus risqué : la réponse dépend de l'identité, des droits, de la fraîcheur et du modèle.
+
+Clé de cache conceptuelle :
+
+```text
+hash(query, tenant, permissions, corpus_version, pipeline_version)
+```
+
+Mesurez le hit rate avant d'annoncer un gain.
+
+---
+
+## 8. Latence par étape
+
+Tracez séparément :
+
+```text
+query rewrite
+embedding
+lexical search
+dense search
+reranking
+generation
+post-validation
+```
+
+Sans breakdown, une « requête lente » ne permet pas de savoir où optimiser.
+
+---
+
+## 9. Coût
+
+Calculez sur trafic réel ou simulé :
+
+```text
+embedding ingestion
+embedding query
+retrieval infra
+reranker
+generation input/output
+caches
+observability
+retries
+```
+
+Conservez un script/tableur versionné avec les hypothèses et la date des tarifs.
+
+---
+
+## 10. Monitoring qualité en production
+
+Tous les signaux ne disposent pas immédiatement d'un ground truth.
+
+Surveillez :
+
+- absence de résultats ;
+- changements de distribution des requêtes ;
+- documents souvent cités ;
+- taux d'escalade ;
+- feedback explicite ;
+- erreurs/outages ;
+- latence ;
+- régressions sur golden set à chaque release.
+
+Lorsque le ground truth arrive plus tard, reliez-le aux traces du run correspondant.
+
+---
+
+## 11. Expériences contrôlées
+
+Une bonne expérience :
+
+```text
+Hypothèse : le reranker améliorera MRR sur les requêtes techniques.
+Variable : reranker on/off.
+Constant : corpus, embeddings, candidate_k, prompt, model.
+Critère : +X défini par l'équipe avec régression latence acceptable.
+```
+
+La valeur `X` doit venir des besoins produit, pas de cette documentation.
+
+---
+
+## 12. Claude Code pour automatiser les evals
+
+```text
+Exécute la matrice d'expériences définie dans `evals/config.yaml`.
+Pour chaque variante :
+- conserve la config ;
+- exécute les mêmes questions ;
+- stocke résultats bruts ;
+- calcule les métriques ;
+- produis un tableau comparatif.
+Ne modifie pas l'eval set pendant l'expérience.
+```
+
+Un skill peut encapsuler cette procédure pour la CI.
+
+---
+
+## 13. CI de non-régression
+
+Sur chaque changement RAG significatif :
+
+1. tests unitaires ;
+2. petit eval set rapide ;
+3. sécurité/ACL ;
+4. benchmark complet en job séparé si nécessaire.
+
+Ne bloquez pas toutes les PR sur un benchmark coûteux si un smoke eval suffit pour le feedback immédiat.
+
+---
+
+## Sources
+
+- [Anthropic — Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) — consulté le 2026-09-28
+- [Anthropic — Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) — consulté le 2026-09-28
+- [Anthropic — Effective context engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) — consulté le 2026-09-28
+
+## Prochaine étape
+
+Poursuivez avec **[Bonnes Pratiques — Accueil](../chapitre-9-bonnes-pratiques/index.md)**, la page suivante dans le menu.

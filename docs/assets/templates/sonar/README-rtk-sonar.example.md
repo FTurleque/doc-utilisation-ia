@@ -1,50 +1,49 @@
-# rtk-sonar (PowerShell 7+)
+# rtk-sonar — exemple PowerShell 7+
 
-Outil CLI local pour reduire le bruit Sonar avant envoi a Copilot.
+Outil CLI local pour réduire le bruit Sonar avant de transmettre un lot borné à **Claude Code** ou, en référence, à GitHub Copilot.
 
-## Preconditions
+## Rôle des fichiers de ce dossier
 
-- PowerShell 7+
-- Acces Sonar API (token utilisateur)
-- Optionnel: git disponible pour `--git-modified-only`
+- `rtk-sonar.example.ps1` — collecte, filtre et prépare un paquet Sonar ;
+- `sonar-*.prompt.md` — **templates GitHub Copilot** au format prompt file ;
+- `sonar-remediation.agent.md` — **template GitHub Copilot** de custom agent ;
+- `sonar.instructions.md` — règles génériques réutilisables ;
+- `mcp-config.example.json` / `sonar-mcp.env.example` — exemples pédagogiques MCP/environnement ;
+- `sonar-issues.sample.json` — données d'exemple.
+
+L'équivalent Claude Code du rôle de remédiation est versionné dans `.claude/agents/sonar-remediation.md`.
+
+## Prérequis
+
+- PowerShell 7+ ;
+- accès à l'API Sonar avec un token adapté ;
+- Git optionnel pour le filtre `--git-modified-only`.
+
+Ne committez jamais un token réel. Utilisez une variable d'environnement ou le mécanisme de secret approprié à votre environnement.
 
 ## Commandes
-
-Le script d'exemple est: `docs/assets/templates/sonar/rtk-sonar.example.ps1`
 
 ```powershell
 pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 help
 ```
 
-### 1) collect
-
-Recupere les issues Sonar via `/api/issues/search` avec pagination bornee.
+### Collecter
 
 ```powershell
-$env:SONAR_TOKEN = "xxxx"   # ne pas commiter ce token
+$env:SONAR_TOKEN = "<token-local>"
 pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 collect `
-  --base-url "https://sonar.myorg.local" `
-  --projectKey "doc-utilisation-ia" `
-  --branch "main" `
+  --base-url "https://sonar.example.internal" `
+  --projectKey "mon-projet" `
+  --branch "ma-branche" `
   --severities "BLOCKER,CRITICAL,MAJOR" `
   --newCodeOnly true `
   --maxItems 400 `
   --outDir ".\tmp"
 ```
 
-Fichier genere par defaut:
-- `tmp/sonar-issues.raw.json`
+Le script écrit par défaut `sonar-issues.raw.json` dans le dossier de sortie choisi.
 
-Options utiles:
-- `--pullRequest 123`
-- `--pageSize 200`
-- `--outFile sonar-pr-123.raw.json`
-
-### 2) summarize
-
-Lit un JSON Sonar, applique filtres, dedup, priorisation, et genere:
-- `sonar-packet.json`
-- `sonar-packet.md`
+### Résumer
 
 ```powershell
 pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 summarize `
@@ -55,12 +54,9 @@ pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 summarize `
   --outDir ".\tmp"
 ```
 
-Comportement safe:
-- si git absent ou hors repo: warning + filtre git ignore (pas d echec).
+Cette étape filtre, déduplique et priorise les issues dans `sonar-packet.json` / `sonar-packet.md`.
 
-### 3) prompt
-
-Genere un prompt compact pret a coller dans Copilot a partir de `sonar-packet.json`.
+### Générer un prompt compact
 
 ```powershell
 pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 prompt `
@@ -69,22 +65,14 @@ pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 prompt `
   --outDir ".\tmp"
 ```
 
-Fichier genere par defaut:
-- `tmp/sonar-prompt.txt`
+Le fichier `sonar-prompt.txt` est du **texte de prompt générique** : il peut être fourni à Claude Code ou à un autre assistant après revue humaine.
 
-## Flux recommande equipe
+## Garde-fous
 
-```powershell
-pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 collect --base-url "https://sonar.myorg.local" --projectKey "doc-utilisation-ia" --branch "main" --maxItems 500 --outDir ".\tmp"
-pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 summarize --input ".\tmp\sonar-issues.raw.json" --git-modified-only --top 30 --outDir ".\tmp"
-pwsh .\docs\assets\templates\sonar\rtk-sonar.example.ps1 prompt --input ".\tmp\sonar-packet.json" --top 20 --outDir ".\tmp"
-```
+- une issue ou une règle à la fois pour les corrections ;
+- ne jamais utiliser `NOSONAR` ou désactiver une règle comme substitut automatique à une correction ;
+- compiler/tester après modification ;
+- ne pas committer les JSON bruts lorsqu'ils contiennent du code, des chemins ou métadonnées sensibles ;
+- ne pas pousser/merger automatiquement dans `main`.
 
-## Notes securite
-
-- Le token n est jamais affiche par le script.
-- Preferer variable d environnement `SONAR_TOKEN`.
-- Ne pas commiter les JSON bruts si sensibles.
-
-
-
+Les exemples d'URL, project keys, branches et tokens de ce dossier sont des placeholders : adaptez-les à votre environnement sans versionner de secret.

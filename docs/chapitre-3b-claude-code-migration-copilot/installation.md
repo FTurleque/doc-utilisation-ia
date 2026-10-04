@@ -1,340 +1,346 @@
-# Installer Claude Code — CLI, VS Code et JetBrains
+# Installer Claude Code — CLI, Desktop, VS Code et JetBrains
 
 <span class="badge-beginner">Débutant</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-vscode">VS Code</span> <span class="badge-cli">CLI</span>
 
-Cette page couvre **toutes les méthodes d'installation** de Claude Code, l'agent de codage d'Anthropic : la CLI native (macOS, Linux, Windows), l'extension Visual Studio Code et le plugin JetBrains. Vous y trouverez aussi l'authentification, la mise à jour, le dépannage et la désinstallation.
+Cette page décrit les principaux points d'entrée actuels de **Claude Code** : CLI native, **Claude Desktop**, extension Visual Studio Code et plugin JetBrains. Elle couvre aussi l'authentification, les mises à jour et les diagnostics de base.
 
-!!! warning "Vérifiez toujours la commande exacte sur la doc officielle"
-    Les URL des scripts d'installation, les identifiants de paquets (WinGet, Homebrew) et les ID d'extension évoluent. Les commandes ci-dessous reflètent l'usage courant de Claude Code, mais **confirmez-les sur la page officielle** [Guide officiel d'installation de Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup) avant de les diffuser en équipe. Voir la section [Sources](#sources).
+!!! info "Vérifié le 28 septembre 2026"
+    Les commandes et prérequis ci-dessous ont été revérifiés dans la documentation officielle Claude Code et Claude Desktop.
 
 ---
 
-## Vue d'ensemble des points d'entrée
+## Quel point d'entrée choisir ?
 
-```mermaid
-graph TD
-    A["🧑‍💻 Développeur"] --> B["CLI Claude Code\n(terminal, REPL)"]
-    A --> C["Extension VS Code"]
-    A --> D["Plugin JetBrains"]
+| Besoin | Point d'entrée recommandé | CLI requise ? |
+|---|---|:---:|
+| Travailler principalement dans un terminal | **CLI Claude Code** | — |
+| Utiliser Claude Code dans une application graphique unifiée avec Chat et outils locaux | **Claude Desktop** | Non pour l'application ; CLI utile pour les workflows terminal et le transfert de session |
+| Travailler dans VS Code avec panneau graphique, diffs et `@mentions` | **Extension VS Code** | Non |
+| Travailler dans IntelliJ / PyCharm / WebStorm avec intégration IDE | **Plugin JetBrains + CLI** | Oui |
+| Automatiser dans un script ou une CI | **CLI en mode `-p`** | Oui |
 
-    B --> E["Même couche de configuration\n.claude/ + ~/.claude/"]
-    C --> E
-    D --> E
+!!! important "Desktop, VS Code et JetBrains ne fonctionnent pas de la même manière"
+    **Claude Desktop** est l'application officielle de bureau et peut exécuter Claude Code directement. L'extension **VS Code** peut être installée et authentifiée directement dans l'éditeur : la CLI locale n'est pas un prérequis. Le plugin **JetBrains**, lui, lance la commande `claude` dans le terminal intégré et nécessite donc la CLI sur le `PATH`.
 
-    E --> F["🧠 Modèle Claude\n(Sonnet / Opus / Haiku)"]
+### Claude Desktop
+
+Claude Desktop est disponible sur macOS et Windows, ainsi que sur Linux en bêta pour les distributions actuellement prises en charge. Il réunit Chat et Claude Code dans une application native, prend en charge des extensions de bureau pour des ressources locales et le schéma de deep link `claude://`.
+
+Consultez la page dédiée **[Claude Desktop](claude-desktop.md)** pour l'installation, les extensions locales, les deep links, `/desktop` et les différences avec CLI/IDE.
+
+---
+
+## Prérequis de la CLI
+
+Claude Code prend officiellement en charge notamment :
+
+- macOS **13+** ;
+- Windows **10 1809+** ou Windows Server 2019+ ;
+- Ubuntu **20.04+**, Debian **10+**, Alpine Linux **3.19+** ;
+- processeur x64 ou ARM64 ;
+- au moins **4 Go de RAM** ;
+- Bash, Zsh, PowerShell ou CMD ;
+- une connexion Internet et un pays/région pris en charge par Anthropic.
+
+Sur Windows natif, **Git for Windows est recommandé mais n'est plus obligatoire**. Sans Git Bash, Claude Code peut utiliser son outil PowerShell. WSL 2 reste pertinent pour les toolchains Linux et permet le sandboxing, contrairement à Windows natif.
+
+### Compte nécessaire
+
+Pour l'authentification directe Anthropic, Claude Code accepte :
+
+- Claude **Pro** ou **Max** ;
+- Claude **Team** ou **Enterprise** ;
+- un compte **Claude Console** ;
+- ou un fournisseur tiers configuré : Amazon Bedrock, Google Cloud Agent Platform / Vertex AI, Microsoft Foundry, etc.
+
+!!! warning "Le plan Claude gratuit ne donne pas accès à Claude Code"
+    L'accès local à Claude Code nécessite actuellement un compte payant compatible, un compte Console ou un fournisseur tiers configuré. Le chat Claude Desktop, lui, reste disponible sur le plan Free.
+
+---
+
+### macOS, Linux et WSL
+
+L'installation native est la méthode recommandée :
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-!!! info "Un seul moteur, trois points d'entrée"
-    Que vous lanciez Claude depuis le terminal, VS Code ou IntelliJ, **c'est la même CLI sous-jacente** qui s'exécute et lit la même configuration (`.claude/` dans le projet, `~/.claude/` pour l'utilisateur). Installer la CLI d'abord est donc la base de tout.
+Sur macOS ou Linux avec Homebrew :
 
----
+```bash
+brew install --cask claude-code
+```
 
-## Prérequis
+Le cask `claude-code` suit le canal **stable**. Le cask `claude-code@latest` suit les versions dès leur publication.
 
-| Élément | Recommandation | Remarque |
-|---------|----------------|----------|
-| Système | macOS, Linux, ou Windows | Sur Windows, **Git for Windows** est recommandé ; certaines fonctionnalités tirent profit de WSL |
-| Git | Installé et configuré | Claude exploite l'état du dépôt (`git status`, `git diff`) |
-| Terminal | PowerShell, bash ou zsh | Pour la CLI et les hooks |
-| Compte | Compte Anthropic, abonnement Claude (Pro/Max) **ou** clé API | Voir la section [Authentification](#2-authentification) |
-| Node.js | Uniquement pour la méthode npm (historique) | Les installeurs natifs n'en dépendent pas |
+### Windows PowerShell
 
-!!! tip "Ordre d'installation conseillé"
-    1. Installer la **CLI** et l'authentifier.
-    2. Valider un premier run sur un petit dépôt.
-    3. **Ensuite seulement**, ajouter l'extension IDE. Cela évite de diagnostiquer en même temps des problèmes de CLI et d'IDE.
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
 
----
+Il n'est pas nécessaire d'ouvrir PowerShell en administrateur.
 
-## 1. Installer la CLI
+### Windows CMD
 
-=== "macOS / Linux"
+```cmd
+curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+```
 
-    **Installeur natif (recommandé)** — script shell officiel :
+### Windows avec WinGet
 
-    ```bash
-    curl -fsSL https://claude.ai/install.sh | bash
-    ```
+```powershell
+winget install Anthropic.ClaudeCode
+```
 
-    **Homebrew (macOS)** — alternative pratique si vous gérez déjà vos outils avec `brew` :
+### npm — compatibilité historique
 
-    ```bash
-    brew install claude-code
-    ```
+La méthode npm existe encore, mais ce n'est plus la méthode recommandée pour une nouvelle installation :
 
-    Vérifiez l'installation :
+```bash
+npm install -g @anthropic-ai/claude-code
+```
 
-    ```bash
-    claude --version
-    claude doctor   # diagnostic de l'environnement (PATH, auth, dépendances)
-    ```
+Préférez l'installeur natif lorsque votre environnement le permet.
 
-    !!! note "PATH"
-        Si la commande `claude` n'est pas reconnue après installation, ouvrez un nouveau terminal ou ajoutez le dossier d'installation (souvent `~/.local/bin` ou `~/.claude/bin`) à votre `PATH`.
+### Vérifier l'installation
 
-=== "Windows"
+```bash
+claude --version
+claude doctor
+```
 
-    **PowerShell (installeur natif)** :
-
-    ```powershell
-    irm https://claude.ai/install.ps1 | iex
-    ```
-
-    **WinGet** — pour un déploiement reproductible / scripté :
-
-    ```powershell
-    winget install Anthropic.ClaudeCode
-    ```
-
-    Vérifiez l'installation (dans un **nouveau** terminal) :
-
-    ```powershell
-    claude --version
-    claude doctor
-    ```
-
-    !!! warning "Git et WSL"
-        Installez **Git for Windows** pour que Claude lise correctement l'état du dépôt. Pour des workflows Unix avancés (hooks bash, outils POSIX), envisagez **WSL** : lancez alors la CLI depuis votre distribution Linux.
-
-=== "npm (méthode historique)"
-
-    L'installation via npm reste possible mais **n'est plus la méthode recommandée** ; préférez les installeurs natifs ci-dessus (pas de dépendance Node.js, auto-update intégré).
-
-    ```bash
-    npm install -g @anthropic-ai/claude-code
-    ```
-
-    !!! failure "À éviter en 2026 pour un nouveau poste"
-        La voie npm impose de maintenir Node.js à jour et ne bénéficie pas de l'auto-update natif. Utilisez-la seulement si votre politique d'entreprise l'exige.
+`claude doctor` réalise un diagnostic **en lecture seule** de l'installation et de la configuration : santé de l'installation, validation des settings et avertissements avec pistes de correction.
 
 ---
 
 ## 2. Authentification
 
-Au **premier lancement**, `claude` déclenche le flux de connexion. Vous pouvez aussi le relancer à tout moment avec la commande slash `/login` depuis le REPL.
-
-```bash
-cd mon-projet
-claude          # ouvre le mode interactif et propose la connexion
-```
-
-### Méthodes d'authentification
-
-=== "Abonnement Claude (Pro / Max)"
-
-    Le plus simple pour un développeur individuel : connectez-vous avec votre compte **claude.ai**. L'usage est inclus dans votre abonnement Pro ou Max (sous réserve des limites du plan).
-
-    - Lancez `claude`, choisissez la connexion via navigateur.
-    - Validez l'autorisation dans le navigateur, puis revenez au terminal.
-
-=== "Clé API (Console Anthropic)"
-
-    Pour une facturation à l'usage (API) ou une intégration CI :
-
-    ```bash
-    # macOS / Linux
-    export ANTHROPIC_API_KEY="sk-ant-..."
-
-    # Windows PowerShell
-    $env:ANTHROPIC_API_KEY = "sk-ant-..."
-    ```
-
-    !!! danger "Ne committez jamais une clé API"
-        Stockez la clé dans une variable d'environnement, un gestionnaire de secrets ou le trousseau de l'OS. **Jamais** en clair dans le dépôt, un `.env` versionné ou `CLAUDE.md`.
-
-=== "Amazon Bedrock"
-
-    Pour router les requêtes via votre compte AWS :
-
-    ```bash
-    export CLAUDE_CODE_USE_BEDROCK=1
-    # + identifiants AWS (AWS_PROFILE / AWS_ACCESS_KEY_ID, région, etc.)
-    ```
-
-=== "Google Vertex AI"
-
-    Pour router les requêtes via Google Cloud :
-
-    ```bash
-    export CLAUDE_CODE_USE_VERTEX=1
-    # + configuration GCP (projet, région, credentials)
-    ```
-
-### Où sont stockées les credentials ?
-
-| OS | Stockage |
-|----|----------|
-| macOS | Trousseau (**Keychain**) |
-| Linux | Fichier dans `~/.claude/` |
-| Windows | Fichier dans `%USERPROFILE%\.claude\` (équivalent de `~/.claude/`) |
-
-!!! tip "Vérifier l'état de connexion"
-    Dans le REPL, tapez `/status` pour voir le compte actif, le plan, le modèle et la version. `/login` permet de changer de compte, `/logout` de se déconnecter.
-
-!!! info "Premier accès au REPL"
-    Le REPL s'ouvre en lançant `claude` sans argument. Tapez `/help` pour voir toutes les commandes disponibles, ou posez directement votre première question en langage naturel.
-
----
-
-## 3. Premier lancement et commandes de base
-
-Lancez Claude **à la racine du projet** pour qu'il charge automatiquement `CLAUDE.md` et `.claude/settings.json` :
+Lancez Claude Code dans un terminal :
 
 ```bash
 cd mon-projet
 claude
 ```
 
-Vous entrez dans un **REPL** (Read-Eval-Print Loop — boucle interactive où vous saisissez une requête, Claude l'évalue et affiche une réponse). Quelques commandes slash essentielles :
+Au premier démarrage, Claude Code ouvre normalement le navigateur pour l'authentification. Si le navigateur ne peut pas revenir vers le terminal — situation fréquente en WSL2, SSH ou conteneur — Claude Code permet de copier l'URL puis de coller le code de connexion dans le terminal.
 
-| Commande | Rôle |
-|----------|------|
-| `/help` | Liste les commandes disponibles |
-| `/init` | Génère un `CLAUDE.md` de départ en analysant le projet |
-| `/status` | État du compte, plan, modèle, version |
-| `/login` · `/logout` | Gérer l'authentification |
-| `/model` | Choisir le modèle (Sonnet, Opus, Haiku…) |
-| `/clear` | Vider le contexte de la conversation |
-| `/compact` | Résumer/compacter le contexte pour économiser des tokens |
-| `/memory` | Gérer la mémoire persistante de Claude (notes entre sessions) |
-| `/mcp` | Gérer les serveurs MCP connectés |
-| `/cost` | Afficher le coût en tokens de la session |
+### Abonnement Claude
 
-### Mode non interactif (scripts, CI)
+Avec Pro, Max, Team ou Enterprise :
 
-Pour exécuter une requête unique sans ouvrir le REPL :
+1. lancez `claude` ;
+2. connectez-vous avec votre compte Claude ;
+3. terminez l'autorisation dans le navigateur.
+
+Dans une session interactive, `/login` permet de refaire l'authentification et `/logout` de la supprimer.
+
+### Claude Console et clé API
+
+Un compte Claude Console peut désormais être utilisé **avec ou sans création manuelle de clé API**, selon la configuration de l'organisation.
+
+Pour utiliser explicitement une clé API :
+
+```bash
+# macOS / Linux
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Windows PowerShell
+$env:ANTHROPIC_API_KEY = "sk-ant-..."
+```
+
+Lorsqu'`ANTHROPIC_API_KEY` est présente, le mode interactif demande une confirmation avant de l'utiliser. En mode non interactif (`claude -p`), elle est utilisée lorsqu'elle est définie.
+
+!!! danger "Ne versionnez jamais les credentials"
+    Une clé API ou un jeton ne doit jamais apparaître dans `CLAUDE.md`, `.claude/settings.json`, un fichier Markdown ou un `.env` versionné. Utilisez un gestionnaire de secrets, les mécanismes d'authentification Claude ou des variables d'environnement injectées au runtime.
+
+### Fournisseurs cloud
+
+Claude Code peut être routé vers plusieurs plateformes. Par exemple :
+
+```bash
+# Amazon Bedrock
+export CLAUDE_CODE_USE_BEDROCK=1
+
+# Google Cloud Agent Platform / Vertex AI
+export CLAUDE_CODE_USE_VERTEX=1
+
+# Microsoft Foundry
+export CLAUDE_CODE_USE_FOUNDRY=1
+```
+
+Les identifiants et variables complémentaires dépendent du fournisseur : suivez la page officielle correspondante plutôt que de copier des secrets dans le dépôt.
+
+### Où Claude stocke-t-il la connexion ?
+
+| OS | Stockage de la connexion Claude Code |
+|---|---|
+| macOS | Keychain chiffré ; fallback possible vers `~/.claude/.credentials.json` si le Keychain n'est pas accessible |
+| Linux | `~/.claude/.credentials.json`, permissions `0600` |
+| Windows | `%USERPROFILE%\.claude\.credentials.json`, protégé par les ACL du profil utilisateur |
+
+Si `CLAUDE_CONFIG_DIR` est défini, Claude Code utilise ce répertoire à la place de `~/.claude` pour ses données de configuration et credentials concernés.
+
+---
+
+## 3. Premier lancement CLI
+
+Lancez Claude à la racine du dépôt lorsque les instructions et réglages partagés se trouvent à cet endroit :
+
+```bash
+cd mon-projet
+claude
+```
+
+Quelques commandes utiles :
+
+| Commande | Usage |
+|---|---|
+| `/help` | Voir les commandes disponibles dans votre version |
+| `/init` | Créer ou améliorer un `CLAUDE.md` à partir du dépôt |
+| `/status` | Vérifier notamment la configuration et la méthode d'authentification active |
+| `/config` | Modifier les préférences prises en charge |
+| `/model` | Choisir le modèle pour la session |
+| `/clear` | Démarrer avec un contexte de conversation vide |
+| `/compact` | Compacter le contexte de la session |
+| `/mcp` | Inspecter et gérer les connexions MCP |
+| `/usage` | Consulter les informations d'usage disponibles |
+| `/desktop` | Passer vers Claude Desktop lorsqu'il est pris en charge par la version installée |
+
+!!! note "Les commandes évoluent rapidement"
+    Utilisez `/help` dans votre version installée comme source opérationnelle. Cette documentation évite de figer une liste exhaustive de commandes slash.
+
+### Mode non interactif
 
 ```bash
 claude -p "Résume les changements de ce diff et propose un message de commit"
 ```
 
-!!! example "Idéal pour l'automatisation"
-    Le mode `-p` (print) se branche dans un pipeline : pré-commit, génération de notes de version, revue automatique d'un diff. Combinez-le avec `git diff | claude -p "..."`.
+Le mode `-p` est adapté aux scripts et à la CI. Pour les automatisations sans navigateur, utilisez une méthode d'authentification explicitement prévue pour l'environnement d'exécution plutôt qu'un secret committé dans le dépôt.
 
 ---
 
-## 4. Installer l'extension VS Code
+### Prérequis
 
-!!! info "La CLI d'abord"
-    L'extension VS Code s'appuie sur la CLI. Installez et authentifiez la CLI (sections 1 et 2) **avant** d'ajouter l'extension.
+La documentation officielle demande actuellement :
 
-=== "Depuis l'interface"
+- **VS Code 1.94.0 ou supérieur** ;
+- un abonnement Claude payant compatible ou un compte Claude Console ;
+- ou la configuration d'un fournisseur tiers prise en charge.
 
-    1. Ouvrez le **panneau Extensions** (++ctrl+shift+x++ sur Windows/Linux, ++cmd+shift+x++ sur macOS).
-    2. Recherchez **« Claude Code »** (éditeur : **Anthropic**).
-    3. Cliquez sur **Install**, puis rechargez la fenêtre si demandé.
-    4. Une icône Claude apparaît dans la barre latérale.
+La CLI n'est **pas obligatoire** pour utiliser l'extension VS Code.
 
-=== "En ligne de commande"
+### Installation
 
-    ```bash
-    code --install-extension anthropic.claude-code
-    ```
+1. Ouvrez Extensions avec ++ctrl+shift+x++ sous Windows/Linux ou ++cmd+shift+x++ sous macOS.
+2. Recherchez **Claude Code** publié par Anthropic.
+3. Installez l'extension.
+4. Si le panneau n'apparaît pas, rechargez la fenêtre avec **Developer: Reload Window** ou redémarrez VS Code.
 
-### Démarrer dans VS Code
+Vous pouvez ensuite ouvrir Claude avec l'icône dédiée, l'Activity Bar ou la palette de commandes.
 
-- Ouvrez le panneau Claude dans la barre latérale, **ou** la palette de commandes (++ctrl+shift+p++) puis tapez `Claude`.
-- L'extension prend en compte le **contexte** : fichiers ouverts, sélection, historique de conversation.
-- Elle propose des actions rapides : plan d'implémentation, revue de diff, génération de tests.
-- Le **terminal intégré** reste utilisable pour les workflows purement CLI (`claude`).
+Au premier démarrage, le panneau affiche son propre écran de connexion et ouvre le navigateur. Si vous utilisez `ANTHROPIC_API_KEY`, lancez éventuellement VS Code depuis un terminal avec `code .` pour qu'il hérite des variables d'environnement du shell.
 
-!!! tip "Cohabitation avec GitHub Copilot"
-    Vous pouvez garder Copilot pour la complétion **inline** et utiliser Claude pour les tâches lourdes (refactor, audit). Pour éviter les suggestions concurrentes pendant l'apprentissage, désactivez temporairement l'inline de l'un des deux outils.
+### Contexte et modifications
 
----
+L'intégration VS Code peut notamment :
 
-## 5. Installer le plugin JetBrains (IntelliJ, PyCharm…)
-
-!!! note "Statut bêta"
-    Le plugin JetBrains de Claude Code est diffusé en **bêta**. Les fonctionnalités et l'ergonomie évoluent rapidement — vérifiez la [page officielle des IDE JetBrains](https://docs.anthropic.com/en/docs/claude-code/ide-integrations) pour l'état courant.
-
-1. Installez et authentifiez la **CLI** (sections 1 et 2).
-2. Dans l'IDE : **Settings/Preferences → Plugins → Marketplace**.
-3. Recherchez **« Claude Code »** (éditeur : Anthropic) et cliquez sur **Install**.
-4. **Redémarrez** l'IDE.
-5. Ouvrez la fenêtre d'outils Claude Code (icône dédiée) et connectez votre compte si demandé.
-
-### IDEs JetBrains compatibles
-
-IntelliJ IDEA, PyCharm, WebStorm, PhpStorm, GoLand, RubyMine, CLion, Rider, Android Studio… (toute la plateforme JetBrains récente).
-
-!!! tip "Deux options sur JetBrains"
-    - **Plugin Claude Code (stand-alone)** : terminal Claude intégré + diffs dans l'IDE, léger, orienté CLI.
-    - **AI Assistant avec agent Claude** (selon disponibilité) : panneau de chat graphique proche de l'expérience Copilot Chat. Activez AI Assistant dans **Settings → Plugins** et vérifiez que les dépendances **Markdown** et **MCP Server** sont actives.
+- voir la sélection courante ;
+- référencer des fichiers et dossiers avec `@...` ;
+- afficher des diffs ;
+- travailler selon le mode de permissions choisi ;
+- reprendre des sessions précédentes.
 
 ---
 
-## 6. Mettre à jour et désinstaller
+## 5. Installer Claude Code dans JetBrains
 
-=== "Mettre à jour"
+Le plugin JetBrains fonctionne différemment de l'extension VS Code : **il ne contient pas sa propre copie de la CLI**.
 
-    ```bash
-    claude update
-    ```
+### Installation
 
-    | Méthode d'installation | Auto-update |
-    |------------------------|:-----------:|
-    | Installeur natif (curl/PowerShell/WinGet) | ✅ en arrière-plan |
-    | Homebrew | ⚠️ via `brew upgrade` |
-    | npm | ⚠️ via `npm update -g @anthropic-ai/claude-code` |
+1. Installez d'abord la CLI Claude Code et vérifiez `claude --version`.
+2. Dans IntelliJ IDEA, PyCharm, WebStorm ou un autre IDE pris en charge, ouvrez **Settings / Preferences → Plugins → Marketplace**.
+3. Installez le plugin officiel **Claude Code**.
+4. Redémarrez complètement l'IDE.
+5. Lancez `claude` depuis le terminal intégré de l'IDE.
 
-=== "Désinstaller"
+Le plugin prend notamment en charge :
 
-    ```bash
-    # npm
-    npm uninstall -g @anthropic-ai/claude-code
+- le lancement rapide de Claude Code ;
+- l'affichage des diffs dans l'IDE ;
+- le partage de la sélection ou de l'onglet actif ;
+- les références de fichiers ;
+- le partage des diagnostics IDE.
 
-    # Homebrew
-    brew uninstall claude-code
+Si `claude` est installé dans un emplacement que l'IDE ne trouve pas, configurez le chemin complet dans le réglage **Claude command** du plugin.
 
-    # WinGet
-    winget uninstall Anthropic.ClaudeCode
-    ```
-
-    Supprimez ensuite la configuration utilisateur (`~/.claude/`) si vous voulez repartir de zéro. **Conservez** le dossier `.claude/` de vos projets s'il contient votre configuration d'équipe versionnée.
+Depuis un terminal externe, vous pouvez également démarrer Claude puis utiliser `/ide` pour vous connecter à une instance JetBrains en cours d'exécution.
 
 ---
 
-## 7. Dépannage rapide
+## 6. Windows : natif ou WSL ?
 
-| Symptôme | Cause probable | Solution |
-|----------|----------------|----------|
-| `claude: command not found` | Dossier d'installation hors du `PATH` | Ouvrir un nouveau terminal ; ajouter `~/.local/bin` ou `~/.claude/bin` au `PATH` |
-| Authentification en boucle | Credentials corrompues | `/logout` puis `/login` ; vérifier l'horloge système |
-| L'extension IDE ne trouve pas la CLI | CLI non installée ou hors `PATH` | Réinstaller la CLI ; redémarrer l'IDE |
-| `CLAUDE.md` non pris en compte | Lancement hors racine du projet | Lancer `claude` depuis le dossier contenant `.claude/` |
-| Diagnostic global | — | `claude doctor` affiche PATH, auth, version et dépendances |
+| Mode | Sandboxing Claude Code | Usage recommandé |
+|---|:---:|---|
+| Windows natif | Non | Projets et outils Windows natifs |
+| WSL 2 | Oui | Toolchains Linux ou besoin de sandboxing |
+| WSL 1 | Non | Solution de compatibilité lorsque WSL 2 n'est pas disponible |
 
-!!! tip "Commande de diagnostic"
-    `claude doctor` est votre premier réflexe : il vérifie l'installation, l'authentification, le `PATH` et signale les problèmes courants avant que vous ne perdiez du temps.
+Avec Git for Windows installé, Claude Code peut utiliser Git Bash pour son outil Bash. Sans Git for Windows, les versions actuelles peuvent utiliser PowerShell sur Windows natif.
 
 ---
+
+## 7. Mises à jour
+
+| Installation | Mise à jour |
+|---|---|
+| Installeur natif Claude Code | Mise à jour automatique en arrière-plan ; `claude update` permet de forcer une vérification |
+| Homebrew | `brew upgrade claude-code` ou `brew upgrade claude-code@latest` |
+| WinGet | `winget upgrade Anthropic.ClaudeCode` |
+| npm | Mise à jour via npm |
+| Claude Desktop Linux via `apt` | Mise à jour via les mises à jour normales du gestionnaire de paquets |
+
+!!! warning "WinGet n'est pas l'installeur natif auto-updaté"
+    Une installation WinGet nécessite par défaut une mise à jour via WinGet. Ne la classez pas avec l'installeur natif lorsqu'il s'agit de politique de mise à jour.
+
+Claude Code permet également de choisir un canal de mise à jour (`latest` ou `stable`) pour les installations concernées.
+
+---
+
+## 8. Dépannage rapide
+
+| Symptôme | Vérification |
+|---|---|
+| `claude` introuvable | Ouvrir un nouveau terminal, contrôler le `PATH`, puis lancer `claude doctor` |
+| Le plugin JetBrains ne démarre pas | Vérifier que la CLI est installée et que le plugin connaît le chemin de `claude` |
+| L'extension VS Code ne s'affiche pas | **Developer: Reload Window** ou redémarrage de VS Code |
+| Une clé API n'est pas utilisée dans VS Code | Lancer `code .` depuis un shell qui contient la variable, ou utiliser la connexion Claude |
+| Claude Desktop n'ouvre pas une session Code | Vérifier le plan compatible, la version Desktop et la disponibilité de Claude Code sur la plateforme |
+| Connexion expirée | Vérifier `/status`, puis refaire `/login` |
+| Settings invalides | `claude doctor` et `/status` signalent les erreurs de configuration |
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-installation).
 
 ## Prochaine étape
 
-**[Architecture de configuration `.claude/`](architecture-claude.md)** : comprendre en profondeur les fichiers qui pilotent Claude Code (`CLAUDE.md`, commands, skills, agents, hooks, settings) avant de structurer votre dépôt.
-
-Concepts clés couverts :
-
-- **`CLAUDE.md`** — le fichier « constitution » chargé en continu par la CLI et les IDE
-- **commands / skills / agents** — où placer chaque type d'instruction et pourquoi
-- **hooks & settings.json** — automatiser et sécuriser les actions de Claude
-- **Niveaux de configuration** — projet (`.claude/`) vs utilisateur (`~/.claude/`)
-
----
+Poursuivez avec **[Claude Desktop](claude-desktop.md)**, la page suivante dans le menu.
 
 ## Sources
 
-- [Anthropic — Guide officiel d'installation de Claude Code](https://docs.anthropic.com/en/docs/claude-code/setup) - consulté le 2026-06-20
-- [Anthropic — Quickstart](https://docs.anthropic.com/en/docs/claude-code/quickstart) - consulté le 2026-06-20
-- [Anthropic — Référence CLI](https://docs.anthropic.com/en/docs/claude-code/cli-reference) - consulté le 2026-06-20
-- [Anthropic — Commandes slash](https://docs.anthropic.com/en/docs/claude-code/slash-commands) - consulté le 2026-06-20
-- [Anthropic — Intégrations IDE (VS Code et JetBrains)](https://docs.anthropic.com/en/docs/claude-code/ide-integrations) - consulté le 2026-06-20
-- [Anthropic — Amazon Bedrock](https://docs.anthropic.com/en/docs/claude-code/amazon-bedrock) - consulté le 2026-06-20
-- [Anthropic — Google Vertex AI](https://docs.anthropic.com/en/docs/claude-code/google-vertex-ai) - consulté le 2026-06-20
-- [Extension VS Code dans le Marketplace](https://marketplace.visualstudio.com/items?itemName=anthropic.claude-code) - consulté le 2026-06-20
-- [Claude Code — Domaine dédié](https://code.claude.com/docs/) - consulté le 2026-06-20
+Sources officielles consultées le **28 septembre 2026** :
 
-
-
-
+- [Claude — Télécharger Claude Desktop](https://claude.com/download)
+- [Anthropic Help Center — Installer Claude Desktop](https://support.claude.com/fr/articles/10065433-installer-claude-desktop)
+- [Anthropic Help Center — Ouvrir Claude Desktop avec un lien](https://support.claude.com/fr/articles/14729294-ouvrir-claude-desktop-avec-un-lien)
+- [Claude Code — Advanced setup](https://code.claude.com/docs/en/setup)
+- [Claude Code — Authentication](https://code.claude.com/docs/en/authentication)
+- [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code)
+- [Claude Code — JetBrains IDEs](https://code.claude.com/docs/en/jetbrains)
+- [Claude Code — CLI reference](https://code.claude.com/docs/en/cli-reference)
+- [Claude Code — Settings](https://code.claude.com/docs/en/settings)

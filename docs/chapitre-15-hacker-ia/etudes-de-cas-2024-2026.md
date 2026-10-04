@@ -2,180 +2,175 @@
 
 <span class="badge-expert">Expert</span> <span class="badge-intermediate">Intermédiaire</span>
 
-Cette page regroupe des cas et tendances documentés entre 2024 et 2026 autour de l'usage de l'IA dans les cybermenaces. L'objectif est de transformer ces retours en décisions défensives applicables immédiatement.
+Cette page regroupe des **tendances et cas documentés** afin d'en tirer des contrôles défensifs. Elle ne cherche pas à classer arbitrairement les menaces par probabilité : la fréquence réelle dépend du secteur, de l'exposition, des données et des adversaires de l'organisation.
 
 ---
 
 ## Méthode de lecture
 
-- Un cas n'est utile que si tu en tires des contrôles concrets
-- Les exemples ci-dessous sont orientés défense et réduction du risque
-- Les sources sont indiquées explicitement pour permettre la vérification
+Pour chaque cas, séparez :
 
-!!! info "Périmètre"
-    Certains cas sont des tendances consolidées (rapports annuels) plutôt qu'un incident unique. Le but est opérationnel: identifier ce qui se reproduit et comment s'en protéger.
+1. le fait rapporté par la source ;
+2. ce qui est inféré ou extrapolé ;
+3. le contrôle défensif applicable ;
+4. la preuve que ce contrôle fonctionne chez vous.
 
----
-
-## Cas 1 - Phishing hautement personnalisé par IA
-
-### Ce qui est observé
-
-Les campagnes de phishing exploitent l'IA pour produire rapidement des variantes linguistiques crédibles, adaptées au poste, au secteur et au contexte de la cible.
-
-### Pourquoi c'est efficace
-
-- Meilleure qualité rédactionnelle
-- Personnalisation à grande échelle
-- Réduction des signaux classiques de fraude (orthographe, ton incohérent)
-
-### Défense recommandée
-
-| Horizon | Action prioritaire |
-|---|---|
-| 7 jours | Exiger MFA phishing-resistant sur comptes critiques |
-| 30 jours | Simulations ciblées par fonction (finance, RH, support, dev) |
-| 90 jours | Corrélation SOC entre emails, identités et endpoints |
+Un rapport fournisseur décrit ce qu'il observe sur sa propre plateforme. Il peut être très utile sans être représentatif de tout l'écosystème.
 
 ---
 
-## Cas 2 - Fraude vocale/deepfake sur chaîne de validation
+## Cas 1 — IA utilisée comme accélérateur d'opérations cyber
 
-### Ce qui est observé
+Le rapport **Anthropic Threat Intelligence — septembre 2026** décrit plusieurs opérations malveillantes détectées entre décembre 2025 et août 2026. Anthropic indique avoir observé des acteurs utilisant Claude pour accélérer des tâches d'ingénierie, d'analyse ou d'orchestration dans des campagnes cyber et de surveillance.
 
-Les attaques combinent un appel vocal crédible et une demande urgente (virement, accès, changement de RIB, transfert de secret).
+Source directe : [rapport Anthropic du 10 septembre 2026](https://www.anthropic.com/threat-intelligence-report-september-2026), consulté le **4 octobre 2026**. La page fournit aussi des indicateurs de compromission (**IOC**). Vérifiez contexte, dates, périmètre et fiabilité avant de les exploiter ; la présence d'un indicateur peut justifier une investigation, pas une attribution automatique.
 
-### Point faible exploité
+### Leçon défensive
 
-La procédure humaine: urgence, hiérarchie, et validation monocanal.
+Ne supposez plus qu'une opération techniquement sophistiquée implique nécessairement une grande équipe. Renforcez les contrôles sur :
 
-### Défense recommandée
-
-- Validation hors bande obligatoire (second canal connu)
-- Règle "zéro exception" sur les paiements urgents
-- Code phrase d'équipe pour opérations sensibles
-- Journalisation des demandes atypiques avec revue hebdomadaire
-
-!!! warning "Risque métier"
-    Ce type d'attaque vise souvent la perte financière immédiate et la rupture de confiance interne.
+- identités et clés API ;
+- exécution de scripts inhabituels ;
+- accès aux dépôts et environnements cloud ;
+- création rapide d'outils internes non approuvés ;
+- détection comportementale plutôt que seule attribution par « niveau de sophistication ».
 
 ---
 
-## Cas 3 - Empoisonnement de contexte des assistants de code
+## Cas 2 — Vol ou abus de credentials comme multiplicateur
 
-### Ce qui est observé
+Les rapports 2026 mettent en évidence l'usage de **clés API volées, comptes frauduleux ou services de proxy/revente** pour contourner des restrictions et industrialiser l'accès aux modèles.
 
-Des instructions trompeuses sont introduites dans des fichiers de documentation, commentaires, prompts ou artefacts du dépôt pour influencer un agent IA.
+### Contrôles
 
-### Effets possibles
-
-- Suggestions non conformes aux politiques internes
-- Exposition de secrets dans les sorties
-- Modifications de code hors périmètre attendu
-
-### Défense recommandée
-
-| Contrôle | Mise en place pratique |
-|---|---|
-| Revue des fichiers d'instructions | Pull request obligatoire sur les fichiers de gouvernance IA |
-| Permissions minimales | Interdire les actions terminales sensibles sans confirmation |
-| Audit des actions agentiques | Conserver logs détaillés des opérations automatiques |
-| Garde-fou pipeline | Bloquer merge si secret détecté ou dépendance non approuvée |
+- secrets courts et rotatifs ;
+- scopes minimaux ;
+- alertes sur usage géographique ou volumétrique inhabituel ;
+- révocation rapide ;
+- séparation des comptes de développement, CI et production ;
+- interdiction de partager des clés entre développeurs.
 
 ---
 
-## Cas 4 - Supply chain accélérée par suggestions IA
+## Cas 3 — Prompt injection et empoisonnement de contexte des agents
 
-### Ce qui est observé
+Un dépôt, une page Web, une issue ou une sortie MCP peut contenir des instructions conçues pour détourner un agent.
 
-Des dépendances suggérées automatiquement peuvent être obsolètes, peu maintenues ou malveillantes, puis passer en CI/CD si les garde-fous sont insuffisants.
+### Surface typique
 
-### Défense recommandée
+```text
+contenu externe non fiable
+→ agent le lit comme contexte
+→ instruction malveillante influence un outil
+→ accès fichier/réseau/commande trop permissif
+→ action ou exfiltration
+```
 
-- Allowlist de packages par langage
-- Validation SCA bloquante en CI
-- Vérification mainteneur et provenance
-- Réexamen humain des changements de dépendances à risque
+### Contrôles
 
----
-
-## Cas 5 - Industrialisation de la reconnaissance ouverte (OSINT)
-
-### Ce qui est observé
-
-L'IA facilite le tri, la synthèse et la priorisation d'informations publiques pour construire des prétextes très crédibles.
-
-### Défense recommandée
-
-- Réduire l'exposition d'informations sensibles publiques (site, réseaux, offres d'emploi)
-- Politique claire de communication externe sur l'infra et les rôles critiques
-- Sensibilisation des fonctions exposées (dirigeants, assistanat, finance, support)
+- revue des fichiers d'instructions et skills ;
+- `.mcp.json` audité ;
+- moindre privilège ;
+- outils réseau limités ;
+- secrets inaccessibles par défaut ;
+- validation humaine avant actions sensibles ;
+- logs permettant de reconstruire la séquence.
 
 ---
 
-## Exemples opérationnels par équipe
+## Cas 4 — Supply chain : package, skill, plugin ou MCP
 
-=== "Équipe Dev"
-    - Signaler toute suggestion de dépendance inconnue avant installation
-    - Bloquer les merges sans SAST/SCA et secrets scanning
-    - Exiger revue humaine pour les changements générés en masse
+L'IA peut accélérer l'ajout de dépendances, mais l'agent n'est pas une autorité sur leur provenance.
 
-=== "Équipe SecOps / SOC"
-    - Créer des règles de détection pour vagues de phishing personnalisées
-    - Surveiller les écritures anormales d'agents dans les dépôts
-    - Corréler alertes identité + messagerie + endpoint
+### Contrôles
 
----
-
-## Matrice impact x probabilité (priorisation)
-
-| Menace | Probabilité | Impact | Priorité |
-|---|---|---|---|
-| Phishing personnalisé IA | Élevée | Élevé | Critique |
-| Deepfake vocal pour fraude | Moyenne à élevée | Élevé | Critique |
-| Empoisonnement de contexte agent | Moyenne | Élevé | Haute |
-| Supply chain via dépendance suggérée | Moyenne | Élevé | Haute |
-| Désinformation interne ciblée | Moyenne | Moyen à élevé | Moyenne |
+- registre officiel ;
+- provenance/mainteneur ;
+- SCA et advisories ;
+- versions épinglées lorsque nécessaire ;
+- revue des scripts d'installation ;
+- allowlist dans les environnements sensibles ;
+- procédure distincte pour les skills/plugins/MCP tiers.
 
 ---
 
-## Avant / Après la mise en place des protections
+## Cas 5 — Fraude et ingénierie sociale assistées par IA
 
-| Menace | Avant protection | Après protection |
+Les modèles peuvent améliorer la qualité linguistique, la personnalisation et la vitesse de génération de contenus frauduleux. Les deepfakes ajoutent un canal supplémentaire, mais le problème de fond reste souvent **une chaîne de validation humaine trop faible**.
+
+### Contrôles
+
+- MFA résistant au phishing pour comptes critiques ;
+- validation hors bande pour paiements/changements sensibles ;
+- procédures qui ne reposent pas uniquement sur voix/vidéo ;
+- corrélation identité + messagerie + endpoint ;
+- sensibilisation ciblée des fonctions exposées.
+
+---
+
+## Cas 6 — Données sensibles dans des services ou routeurs tiers
+
+Les outils d'IA intermédiaires peuvent stocker ou relayer prompts, code et credentials. Un fournisseur de modèle n'est qu'un maillon de la chaîne.
+
+### Questions à poser
+
+```text
+IDE / agent
+→ proxy/router
+→ modèle
+→ MCP/outils
+→ logs
+→ analytics
+→ stockage
+```
+
+Pour chaque maillon : qui voit quoi, pendant combien de temps, avec quelle base contractuelle et quel contrôle d'accès ?
+
+---
+
+## Chronologie documentée et limites des conclusions
+
+| Publication | Observation ou périmètre de la source | Leçon défensive |
 |---|---|---|
-| Phishing IA | Messages personnalisés passés inaperçus, taux de clic non mesuré | Formation ciblée + détection messagerie, réduction visible du taux de compromission |
-| Deepfake vocal | Virement approuvé sur demande orale urgent | Procédure de confirmation multi-canal, zéro validation sur canal unique |
-| Empoisonnement de contexte | Fichier d'instructions modifié non détecté | Revue periódique obligatoire des fichiers `.github/`, alertes sur modifications |
-| Supply chain | Dépendance malveillante intégrée à la base de code | SCA bloquante active, aucun merge sans validation provenance |
-| OSINT amplifié | Exposition des données publiques non identifiée | Audit surface d'exposition, minimisation des données publiées |
+| [Anthropic, novembre 2025](https://www.anthropic.com/news/disrupting-AI-espionage) | Le fournisseur rapporte une campagne utilisant Claude Code pour une orchestration fortement automatisée ; la sélection des cibles et certaines décisions restent humaines | Limiter identités et outils ; corréler actions réelles et journaux |
+| [ANSSI, février 2026](https://cyber.gouv.fr/actualites/synthese-de-la-menace-sur-lia-generative-face-aux-attaques-informatiques/) | Synthèse sur l'IA comme levier offensif et comme cible ; limites techniques et opérationnelles à cette date | Évaluer votre exposition plutôt qu'une promesse d'attaque universellement autonome |
+| [Anthropic, septembre 2026](https://www.anthropic.com/threat-intelligence-report-september-2026) | Cas sélectionnés sur la plateforme : cyber, surveillance, influence, fraude et autres abus | Surveiller les comportements, les accès et les credentials ; utiliser les IOC contextualisés |
+
+Ces publications ont été consultées le **4 octobre 2026**. Les sections « Cas 3 » à « Cas 6 » ci-dessus sont des **familles de scénarios défensifs**, pas quatre incidents nommés ou attribués. Le titre 2024–2026 décrit la période de veille ; il n'implique pas un incident démontré pour chaque année.
+
+Ne juxtaposez pas des chiffres d'autonomie issus de protocoles différents. Distinguez observation du fournisseur, attribution qu'il propose, réussite confirmée et résultat déclaré par le modèle. Aucun de ces rapports ne mesure la probabilité d'attaque de votre organisation.
+
+## Prioriser sans faux score universel
+
+Au lieu d'une matrice « probabilité élevée/moyenne » générique, mesurez votre exposition :
+
+| Dimension | Question |
+|---|---|
+| Actifs | quels secrets, dépôts, données ou comptes sont accessibles ? |
+| Capacité agent | lecture seule, écriture, shell, réseau, cloud ? |
+| Source de contexte | dépôt interne, Web, tickets, emails, MCP ? |
+| Identité | quel compte et quels scopes ? |
+| Détection | peut-on reconstruire les actions ? |
+| Récupération | peut-on révoquer, restaurer, revenir en arrière ? |
+
+La priorité vient ensuite de votre threat model, pas d'un tableau générique du dépôt.
 
 ---
 
-## Sources
+## Sources primaires recommandées
 
-| Domaine | Source |
-|---|---|
-| Risques LLM applicatifs | [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) |
-| Techniques adverses IA | [MITRE ATLAS](https://atlas.mitre.org/) |
-| Tendances de menaces en Europe | [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) |
-| Recommandations cyber et IA | [CISA AI](https://www.cisa.gov/ai) |
-| Gouvernance risque IA | [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) |
-| Cybercriminalité organisée | [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports) |
-| Sécurité code et agents | [GitHub Security Blog - Secure Code Game](https://github.blog/security/hack-the-ai-agent-build-agentic-ai-security-skills-with-the-github-secure-code-game/) |
-| Vulgarisation sectorielle complémentaire | [Google Cloud Q&A CISO](https://cloud.google.com/transform/truths-about-ai-hacking-every-ciso-needs-to-know-qa?hl=en), [OPSWAT](https://french.opswat.com/blog/ai-hacking-how-hackers-use-artificial-intelligence-in-cyberattacks) |
+- [Anthropic — Threat Intelligence](https://www.anthropic.com/threat-intelligence) — rapport septembre 2026 et archives
+- [OWASP GenAI Security Project](https://genai.owasp.org/) — Top 10 LLM/GenAI et sécurité agentique
+- [MITRE ATLAS](https://atlas.mitre.org/) — tactiques/techniques adverses IA
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
+- [CISA — AI](https://www.cisa.gov/ai)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [ANSSI](https://cyber.gouv.fr/)
 
-!!! tip "Comment exploiter ces sources"
-    Utilise les référentiels (OWASP, NIST, MITRE, CISA, ENISA) pour définir tes contrôles, puis utilise les articles sectoriels pour sensibiliser les équipes non techniques.
+Les articles fournisseurs et médias peuvent compléter le contexte, mais ne doivent pas remplacer ces sources lorsque vous affirmez qu'une menace a été observée ou qu'un contrôle est recommandé.
 
 ---
 
 ## Prochaine étape
 
-**[Playbook incident IA](playbook-incident-ia.md)** : passe d'une analyse de menaces à un plan d'action concret utilisable en situation de crise.
-
-Concepts clés couverts :
-
-- **Priorisation par risque** — concentrer les efforts sur les menaces à impact élevé
-- **Contrôles défensifs mesurables** — actions concrètes à 7, 30 et 90 jours
-- **Détection corrélée** — identité, messagerie, endpoint et dépôt
-- **Gouvernance des agents IA** — permissions, revue et auditabilité
+Poursuivez avec **[Playbook incident IA](playbook-incident-ia.md)**, la page suivante dans le menu.

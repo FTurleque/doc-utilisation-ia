@@ -1,34 +1,42 @@
 {
-  "note": "Exemple pédagogique. Le JSON de production n'accepte pas ce champ de commentaire.",
-  "variants": {
+  "mcpServers": {
     "sonarqube-server": {
-      "transport": "stdio",
       "command": "docker",
       "args": [
         "run",
-        "--rm",
+        "--init",
+        "--pull=always",
         "-i",
+        "--rm",
         "-e",
-        "SONARQUBE_TOKEN=${SONARQUBE_TOKEN}",
+        "SONARQUBE_TOKEN",
         "-e",
-        "SONARQUBE_URL=${SONARQUBE_URL}",
-        "sonarsource/sonarqube-mcp-server:latest"
-      ]
+        "SONARQUBE_URL",
+        "sonarsource/sonarqube-mcp"
+      ],
+      "env": {
+        "SONARQUBE_TOKEN": "${SONARQUBE_TOKEN}",
+        "SONARQUBE_URL": "${SONARQUBE_URL}"
+      }
     },
     "sonarqube-cloud": {
-      "transport": "stdio",
       "command": "docker",
       "args": [
         "run",
-        "--rm",
+        "--init",
+        "--pull=always",
         "-i",
+        "--rm",
         "-e",
-        "SONARQUBE_TOKEN=${SONARQUBE_TOKEN}",
+        "SONARQUBE_TOKEN",
         "-e",
-        "SONARQUBE_ORG=${SONARQUBE_ORG}",
-        "sonarsource/sonarqube-mcp-server:latest"
-      ]
+        "SONARQUBE_ORG",
+        "sonarsource/sonarqube-mcp"
+      ],
+      "env": {
+        "SONARQUBE_TOKEN": "${SONARQUBE_TOKEN}",
+        "SONARQUBE_ORG": "${SONARQUBE_ORG}"
+      }
     }
   }
 }
-

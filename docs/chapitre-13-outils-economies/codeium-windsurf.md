@@ -1,132 +1,72 @@
-# Codeium / Windsurf
+# Windsurf — assistant/IDE alternatif
 
-<span class="badge-beginner">Débutant</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span>
+<span class="badge-beginner">Débutant</span>
 
-Codeium (et sa marque Windsurf selon le produit) est une alternative à Copilot pour la complétion et le chat.
-Il est pertinent quand tu veux réduire le recours aux crédits IA pour les tâches simples.
+Windsurf est un environnement de développement agentique issu de Codeium. La marque **Codeium** appartient désormais surtout à l'historique du produit ; Windsurf est aujourd'hui la surface à évaluer.
 
----
-
-## À quoi sert cet outil
-
-- Complétion inline au quotidien
-- Chat de développement pour questions courantes
-- Génération de code répétitif (boilerplate, tests de base)
-
-!!! info "Positionnement"
-    Codeium/Windsurf est surtout fort en productivité de saisie et itération rapide. Pour les décisions d'architecture critiques, garde une validation humaine stricte.
+Windsurf fait partie de **Cognition** depuis 2025. Cette page est conservée comme comparaison avec le parcours Claude Code, pas comme recommandation de remplacement automatique.
 
 ---
 
-## Quand l'utiliser
+## Positionnement
 
-- Quand tu veux de la complétion inline gratuite ou peu coûteuse.
-- Quand tu veux produire vite du code répétitif.
-- Quand tu veux un chat simple pour des questions courantes.
+Windsurf propose un IDE et des workflows agentiques intégrés. Son intérêt est différent de Claude Code :
 
-## Quand l'éviter
-
-- Quand plusieurs moteurs inline sont déjà actifs en même temps.
-- Quand la tâche demande un raisonnement profond multi-fichiers.
-- Quand des règles de gouvernance imposent un autre outil.
+- Claude Code peut fonctionner dans le terminal et plusieurs IDE ;
+- Windsurf fournit une expérience d'éditeur dédiée ;
+- le choix dépend de la gouvernance, des workflows, de la compatibilité IDE et du coût réel de l'équipe.
 
 ---
 
-## Mise en œuvre
+## Quand l'évaluer
 
-### Installation
-
-=== "Visual Studio Code"
-    1. Installer l'[extension officielle Codeium](https://marketplace.visualstudio.com/items?itemName=Codeium.codeium).
-    2. Se connecter avec son compte.
-    3. Activer complétion et chat selon le plan.
-
-=== "IntelliJ IDEA"
-    1. Ouvrir **Settings -> Plugins -> Marketplace**.
-    2. Installer le [plugin Codeium officiel](https://plugins.jetbrains.com/plugin/12798-codeium).
-    3. Se connecter puis activer les fonctionnalités.
-
-### Éviter les conflits
-
-Si Copilot, Supermaven et Codeium sont actifs en même temps,
-les suggestions inline peuvent se chevaucher.
-
-- Garder **un seul moteur inline principal**
-- Utiliser les autres outils pour le chat ou des cas spécifiques
+- équipe prête à adopter un IDE dédié ;
+- besoin d'une expérience agentique très intégrée à l'éditeur ;
+- volonté de comparer plusieurs plateformes plutôt que plusieurs modèles ;
+- politiques Cognition/Windsurf compatibles avec les exigences de données de l'organisation.
 
 ---
 
-## Cas d'usage pertinents
+## Points à vérifier avant adoption
 
-- Complétion rapide sur code standard
-- Génération de snippets répétitifs
-- Aide syntaxique dans des langages connus
-- Mode budget quand tu veux éviter de consommer des crédits IA inutilement
+Ne figez pas prix, quotas ou modèles dans cette documentation. Vérifiez au moment de l'évaluation :
 
-Cas moins adaptés :
-
-- Débogage complexe multi-services
-- Recommandations sécurité sans vérification externe
-
----
-
-## Exploiter son plein potentiel
-
-1. **Définir un mode principal par tâche**
-   - Complétion: Codeium/Windsurf
-   - Chat local: **[Continue.dev](continue-dev.md)** + **[Ollama](ollama.md)**
-2. **Mettre des garde-fous qualité**
-   - Tests automatiques
-   - Linter/formatter en pré-commit
-3. **Mesurer la productivité**
-   - Latence moyenne
-   - Taux d'acceptation des suggestions
-   - Nombre de corrections post-génération
+- modèles disponibles ;
+- politique de rétention et sous-traitants ;
+- options entreprise/compliance ;
+- contrôle des outils/agents ;
+- support MCP ;
+- migration depuis VS Code/JetBrains ;
+- fonctionnement offline/local éventuel ;
+- exportabilité des règles et du contexte projet.
 
 ---
 
-## Exemples concrets
+## Cohabitation avec Claude Code
 
-```text
-Exemple de demande chat:
-"Génère un handler Express avec validation d'entrée, gestion d'erreurs,
-et tests unitaires Jest de base."
-```
+Si Windsurf est utilisé ponctuellement, évitez de dupliquer toutes les règles projet.
 
-```text
-Exemple de flux hybride:
-- Complétion: Codeium/Windsurf
-- Questions de fond: Continue.dev + modèle local
-- Cas critique: Copilot/Claude avec contexte filtré
-```
+Conservez une source de vérité dans le dépôt (`CLAUDE.md`, `AGENTS.md`, règles et documentation) et adaptez uniquement les fichiers spécifiques au client.
 
 ---
 
-## Résumé
+## Codeium — historique
 
-Codeium / Windsurf est surtout un moteur de complétion et de chat rapide.
-Il est utile pour les tâches quotidiennes, mais il prend toute sa valeur quand
-il est combiné avec un chat local et une bonne discipline de validation.
+Les anciennes extensions et documentations peuvent encore utiliser le nom **Codeium**. Lors d'un audit, vérifiez si la page ou le plugin concerné pointe encore vers un produit maintenu ou vers une surface legacy.
 
 ---
 
 ## Sources
 
-- Site officiel: [codeium.com](https://codeium.com/) (consulté le 2026-06-07)
-- Site officiel Windsurf: [windsurf.com](https://windsurf.com/) (consulté le 2026-06-07)
-- Documentation: [docs.codeium.com](https://docs.codeium.com/) (consulté le 2026-06-07)
-- Tarification: [Codeium Pricing](https://codeium.com/pricing) (consulté le 2026-06-07)
-- Sécurité: [Codeium Security](https://codeium.com/security) (consulté le 2026-06-07)
+- [Windsurf](https://windsurf.com/) — consulté le 2026-09-28
+- [Cognition](https://cognition.ai/) — consulté le 2026-09-28
 
 ---
 
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-codeium-windsurf).
+
 ## Prochaine étape
 
-**[Tabnine](tabnine.md)** : choisir une alternative orientée gouvernance et confidentialité pour les environnements entreprise.
-
-Concepts clés couverts :
-
-- **Confidentialité** - cadre de protection des données
-- **Mode entreprise** - contrôles et politiques d'usage
-- **Intégration IDE** - workflows VS Code et IntelliJ
-- **Validation code IA** - revue et tests systématiques
+Poursuivez avec **[Tabnine](tabnine.md)**, la page suivante dans le menu.

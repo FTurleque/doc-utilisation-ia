@@ -1,259 +1,147 @@
-# IA et hacking: usages offensifs, risques réels et protections
+# IA et hacking — usages offensifs, risques réels et protections
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-L'IA accélère autant les attaquants que les défenseurs. Cette page explique où l'IA améliore réellement les techniques de cyberattaque, ce qui relève surtout du buzz, et comment renforcer ta posture de sécurité sans attendre.
+L'IA peut réduire le coût de certaines tâches d'attaque et accélérer des workflows qui nécessitaient auparavant davantage de temps ou de compétences spécialisées. Elle améliore aussi les capacités défensives. Cette page reste strictement orientée **prévention, détection et réponse**.
 
 ---
 
-## Pourquoi le sujet est critique en 2026
+## Ce que les sources 2026 permettent d'affirmer
 
-L'industrialisation de l'IA réduit le coût d'entrée de certaines activités malveillantes: génération de contenus de phishing crédibles, automatisation de reconnaissance ouverte (OSINT), et adaptation plus rapide des campagnes. En parallèle, les équipes sécurité disposent aussi de nouveaux leviers (détection, triage, simulation, formation).
+Les rapports de threat intelligence et référentiels récents documentent notamment :
 
-!!! info "Point d'équilibre"
-    L'IA ne remplace pas les compétences techniques d'un attaquant confirmé. Elle agit surtout comme multiplicateur de vitesse, de volume, et de personnalisation.
+- assistance à l'ingénierie de logiciels malveillants ou de surveillance ;
+- automatisation et personnalisation de contenus frauduleux ;
+- utilisation de clés API volées et de services de proxy/revente ;
+- industrialisation de certaines tâches de recherche et d'analyse ;
+- risques propres aux agents : prompt injection, permissions excessives, supply chain et outils externes.
 
----
-
-## Comment l'IA est utilisée dans les cyberattaques
-
-| Famille d'usage | Ce que l'IA apporte | Risque principal | Signal d'alerte |
-|---|---|---|---|
-| Phishing et ingénierie sociale | Messages mieux ciblés, multilingues, plus crédibles | Hausse du taux de clic et de divulgation | Emails très personnalisés, style cohérent mais source douteuse |
-| Deepfakes audio/vidéo | Usurpation d'identité plus convaincante | Fraude au virement, manipulation interne | Demandes urgentes inhabituelles via canaux non habituels |
-| Automatisation de campagnes | Variation rapide des contenus, tests A/B malveillants | Campagnes massives plus efficaces | Pic d'attaques avec contenus similaires mais légèrement variés |
-| Aide au code malveillant | Assistance à la compréhension de scripts existants | Accélération des acteurs peu expérimentés | Artefacts réutilisés, signatures de code génératif |
-| Contournement social des défenses | Adaptation du discours selon la cible | Bypass des procédures humaines | Pression temporelle, prétextes hiérarchiques |
-
-!!! warning "Limite importante"
-    Cette documentation ne fournit pas d'instructions techniques offensives. Elle se concentre sur la détection, la prévention et la réponse.
+Ces cas montrent des capacités réelles, mais ne donnent pas automatiquement une fréquence ou une probabilité universelle pour votre organisation.
 
 ---
 
-## Chaîne d'attaque IA vs chaîne de défense
+## Menaces à modéliser
 
-```mermaid
-flowchart LR
-    A[Reconnaissance cible] --> B[Préparation du leurre IA]
-    B --> C[Livraison du vecteur]
-    C --> D[Interaction humaine]
-    D --> E[Compromission initiale]
-    E --> F[Mouvement latéral / impact métier]
+Il faut distinguer **IA utilisée comme moyen d'attaque**, **système IA pris pour cible** et **agent influencé dans un environnement autorisé**. Les contrôles se recoupent mais les preuves d'incident diffèrent. La [page sur la sécurité des agents](securite-agents.md) détaille ces frontières.
 
-    D1[Formation anti-ingenierie sociale] --> D
-    C1[Filtrage mail / DNS / URL] --> C
-    E1[MFA phishing-resistant + PAM] --> E
-    F1[SOC + EDR + playbook incident IA] --> F
+| Famille | Surface exposée | Contrôles défensifs |
+|---|---|---|
+| Ingénierie sociale assistée | messagerie, voix, vidéo, support | MFA résistante au phishing, validation hors bande, processus transactionnels |
+| Agent de code compromis/influencé | dépôt, IDE, shell, CI | moindre privilège, revue diff, tests, logs, sandbox |
+| Prompt injection indirecte | Web, tickets, README, MCP | frontières de confiance, outils minimaux, validation des sources |
+| Supply chain | packages, plugins, skills, MCP | provenance, SCA, versions contrôlées, revue scripts |
+| Exfiltration | secrets, données client, code | scopes minimaux, secret manager, DLP, restrictions réseau |
+| Identité/credentials | API keys, tokens CI/cloud | rotation, scopes, comptes dédiés, détection d'usage inhabituel |
+
+---
+
+## Claude Code : surface spécifique
+
+Un agent de développement peut combiner :
+
+```text
+instructions dépôt
++ fichiers du projet
++ shell
++ Git
++ MCP
++ hooks/plugins/skills
++ credentials disponibles
 ```
 
-!!! tip "Comment lire ce schéma"
-    L'attaquant optimise surtout les étapes amont (leurre et interaction humaine) avec l'IA. La défense gagne en efficacité en combinant garde-fous humains, techniques et organisationnels à chaque étape.
+Cette combinaison rend la gouvernance des **permissions** plus importante que le simple choix du modèle.
+
+Avant d'accorder une autonomie importante :
+
+- auditer `CLAUDE.md`, `.claude/`, `AGENTS.md` et `.mcp.json` ;
+- réduire les secrets présents dans l'environnement ;
+- valider les hooks/plugins/skills ;
+- garder les actions sensibles derrière un contrôle approprié ;
+- s'assurer que tests/CI permettent de détecter les régressions.
 
 ---
 
-## Hacking éthique vs non éthique: rôle de l'IA
+## « IA hacker » et outils offensifs commerciaux
 
-### Hacking éthique (red team, pentest, AppSec)
+Un produit qui promet un pentest ou une exploitation « one-click » doit être évalué comme tout outil de sécurité sensible :
 
-- Génération de scénarios de test plus variés
-- Priorisation des surfaces d'attaque à valider
-- Aide à la rédaction de rapports exploitables par les métiers
-- Simulation de campagnes de sensibilisation réalistes
+- identité de l'éditeur ;
+- conditions légales d'usage ;
+- données envoyées ;
+- permissions demandées ;
+- maintenance et advisories ;
+- possibilité de l'exécuter dans une sandbox ;
+- journalisation et contrôle humain.
 
-### Hacking non éthique (cybercriminalité)
-
-- Phishing plus crédible et localisé
-- Industrialisation de l'arnaque conversationnelle
-- Création de fausses identités à grande échelle
-- Automatisation de reconnaissance d'information publique
-
-!!! danger "Même technologie, finalités opposées"
-    La même IA peut aider à mieux sécuriser un SI ou à mieux cibler une fraude. La différence tient à la gouvernance, au cadre légal, et aux contrôles en place.
+N'utilisez pas un outil offensif sur une cible sans autorisation explicite.
 
 ---
 
-## Niveaux de maturité: où commencer selon ton contexte
+## Signaux SOC utiles
 
-| Niveau | Symptômes | Priorités des 30 prochains jours |
+Au lieu de chercher une « signature IA » peu fiable, surveillez les **comportements** :
+
+- utilisation anormale de credentials ;
+- commandes ou écritures hors périmètre habituel ;
+- création soudaine de dépendances/outils ;
+- sorties réseau nouvelles ;
+- demandes transactionnelles contournant les procédures ;
+- changements d'instructions, hooks, MCP ou policies sans revue.
+
+L'objectif est de détecter une action risquée, pas de prouver qu'un texte ou un script a été généré par IA.
+
+---
+
+## Employer l'IA pour la défense
+
+| Tâche | Contribution utile de l'assistant | Contrôle indépendant |
 |---|---|---|
-| Niveau 1 - Initial | Pas de politique IA, pas de revue dédiée | Politique "no secret in prompt", MFA robuste, revue humaine obligatoire |
-| Niveau 2 - Structuré | Outils en place mais hétérogènes | Standardiser les permissions agents, logs d'audit, exercices phishing ciblés |
-| Niveau 3 - Maîtrisé | Processus sécurité définis et suivis | Tabletop trimestriel, métriques SOC dédiées IA, amélioration continue du playbook |
+| Triage SOC | Synthétiser des événements et proposer des hypothèses | Journaux originaux et décision de l'analyste |
+| Revue de code | Expliquer un diagnostic et proposer un correctif | [Analyse statique](../chapitre-13-outils-economies/outils-complementaires.md#validation-analyse-statique-et-migrations), tests et revue du diff |
+| Incident | Préparer une chronologie et un compte rendu | Horodatages, sources et qualification des faits |
+| Runbook | Préparer une action dans un périmètre borné | Autorisation, validation métier et retour arrière |
+
+Les tickets, logs et alertes peuvent eux-mêmes contenir du texte contrôlé par un attaquant. Les transmettre à un assistant SOC ne les rend pas fiables. Réduisez les données envoyées et gardez les changements de droits, révocations, communications et opérations sensibles sous un contrôle approprié.
+
+## Priorisation locale
+
+Ne classez pas « phishing IA = critique » ou « prompt injection = moyen » sans threat model.
+
+Évaluez plutôt :
+
+1. quels actifs sont accessibles ;
+2. quelles permissions l'agent possède ;
+3. quelles données sont sensibles ;
+4. quelles sources externes peuvent influencer le workflow ;
+5. quels contrôles de détection et récupération existent.
 
 ---
 
-## Exemples de scénarios d'attaque et protections
+## Mise à jour des référentiels — octobre 2026
 
-### 1. Fraude au président augmentée par IA
+Les guides OWASP **LLM 2026** et **agentique 2026** répondent à des périmètres distincts. Ne recopiez pas les identifiants ou rangs d'une édition 2025 comme s'ils étaient ceux de 2026. Fixez l'édition dans votre registre de contrôles et vérifiez le mapping lors d'une mise à jour.
 
-**Scénario**: message vocal imitant un dirigeant + email urgent demandant un paiement exceptionnel.
+La [synthèse ANSSI de février 2026](https://cyber.gouv.fr/actualites/synthese-de-la-menace-sur-lia-generative-face-aux-attaques-informatiques/) traite à la fois des usages offensifs et des attaques contre les systèmes IA. Ses constats doivent rester datés ; un rapport fournisseur décrivant une opération fortement automatisée ne prouve pas une autonomie complète de toutes les attaques.
 
-**Protections prioritaires**:
+Pour vos applications, vérifiez aussi mémoire persistante, séparation des tenants, traitement des sorties générées, abus de budget et retries. La [matrice des contrôles](matrice-controles-menaces.md) et les [tests défensifs](tests-securite.md) traduisent ces risques en preuves attendues.
 
-- Procédure de double validation hors canal initial
-- Mot de passe de crise ou phrase de vérification interne
-- Blocage des paiements urgents sans contrôle financier croisé
-- Entraînement trimestriel des équipes finance et support
+## Références vérifiées le 4 octobre 2026
 
-### 2. Phishing ciblé sur développeurs
+- [OWASP — LLM 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+- [OWASP — agents 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- [ANSSI / BSI — principes Zero Trust pour les systèmes LLM](https://cyber.gouv.fr/nous-connaitre/publications/publications-internationales/design-principles-for-llm-based-systems-with-zero-trust/)
+- [Claude Code — Security](https://code.claude.com/docs/en/security)
 
-**Scénario**: faux message de revue de code ou de CI/CD menant vers une page d'authentification clonée.
+### Autres repères
 
-**Protections prioritaires**:
-
-- MFA résistant au phishing (FIDO2/WebAuthn)
-- Vérification systématique du domaine et du certificat
-- Isolation des postes administrateurs et comptes à privilèges
-- Politique de rotation rapide des tokens compromis
-
-### 3. Empoisonnement de contexte dans les outils IA
-
-**Scénario**: fichier de dépôt ou documentation contenant des instructions trompeuses destinées à influencer l'agent IA.
-
-**Protections prioritaires**:
-
-- Revue des fichiers d'instructions avant exécution agent
-- Cloisonnement des permissions de l'agent (moindre privilège)
-- Confirmation humaine pour actions terminales sensibles
-- Journalisation complète des actions agentiques
-
-### 4. Faux support technique généré par IA
-
-**Scénario**: un collaborateur reçoit un message crédible d'un faux "support IT" demandant de valider une action urgente.
-
-**Protections prioritaires**:
-
-- Processus de support avec canal officiel unique
-- Vérification d'identité sur un second canal connu
-- Interdiction d'actions administrateur sur demande non ticketée
-- Campagnes régulières de simulation de social engineering
-
-### 5. Dépendance malveillante suggérée par IA
-
-**Scénario**: une suggestion d'assistant propose une librairie peu connue ou usurpée, puis la chaîne CI/CD la déploie.
-
-**Protections prioritaires**:
-
-- Allowlist de dépendances validées
-- SCA bloquant en CI pour nouveaux paquets non approuvés
-- Signature et provenance (quand disponible)
-- Double revue sur les changements de dépendances critiques
-
----
-
-## "IA hacker" qui circulent sur le web: quels dangers
-
-On voit apparaître des offres de type "AI Hacker", "auto-pentest", "one-click exploit", souvent via des sites vitrine, canaux sociaux, ou dépôts non vérifiés.
-
-### Risques fréquents
-
-- Promesses trompeuses ou frauduleuses
-- Logiciels contenant malwares ou voleurs d'identifiants
-- Collecte de données sensibles envoyées au service
-- Exposition juridique majeure en cas d'usage non autorisé
-
-### Grille d'évaluation rapide avant test
-
-| Critère | Question à poser | Décision prudente |
-|---|---|---|
-| Éditeur identifié | Société, mentions légales, contact vérifiable ? | Refuser si opaque |
-| Conditions d'usage | Cadre légal explicite et usage défensif autorisé ? | Refuser si ambigu |
-| Politique données | Où vont les prompts, logs et artefacts ? | Refuser sans transparence |
-| Réputation sécurité | Audit tiers, incidents connus, historique public ? | Refuser sans preuves |
-| Environnement de test | Sandbox isolée disponible ? | Ne jamais tester en prod |
-
-!!! warning "Réflexe opérationnel"
-    Si un outil se présente comme "hacker IA miracle" sans documentation sécurité ni cadre légal clair, considère-le comme à haut risque.
-
----
-
-## Signaux SOC à surveiller spécifiquement
-
-| Signal | Exemple observé | Action défensive immédiate |
-|---|---|---|
-| Pic de tentatives d'authentification ciblées | Comptes VIP visés en rafale | Forcer MFA fort, blocage adaptatif, revue des sessions actives |
-| Campagne de mails fortement personnalisés | Variantes nombreuses avec mêmes intents | Renforcer filtres anti-phishing et chasse IOC/IOA |
-| Activité anormale d'agents de code | Écritures massives hors périmètre habituel | Suspendre permissions agent, revue manuelle des changements |
-| Hausse d'alertes dépendances | Nouveaux paquets non approuvés en PR | Bloquer merge, lancer analyse supply chain |
-| Demandes internes "urgentes" hors process | Finance/RH/IT sollicités sans ticket | Appliquer protocole d'authentification hors bande |
-
----
-
-## Bonnes pratiques défensives pour équipes dev et sécu
-
-=== "IntelliJ IDEA"
-    - Active les confirmations avant actions à impact
-    - Évite d'exposer secrets et fichiers sensibles dans le contexte IA
-    - Utilise SAST/SCA en pipeline pour valider tout code généré
-    - Documente une procédure de revue humaine obligatoire pour les changements critiques
-
-=== "Visual Studio Code"
-    - Vérifie les permissions des agents et outils connectés
-    - Isole les tâches exploratoires dans un environnement dédié
-    - Configure des exclusions de contenu pour les secrets et fichiers sensibles
-    - Active lint, tests et scans sécurité avant fusion de code
-
----
-
-## Références officielles à suivre
-
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+- [Anthropic Threat Intelligence](https://www.anthropic.com/threat-intelligence)
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [MITRE ATLAS](https://atlas.mitre.org/)
-- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
-- [ENISA: Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
-- [ANSSI: Publications et recommandations](https://www.ssi.gouv.fr/)
-- [CISA: AI Security Resources](https://www.cisa.gov/ai)
-
-## Sources
-
-| Sujet | Source principale |
-|---|---|
-| Risques applicatifs LLM (injection, exfiltration, agency) | [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/) |
-| Taxonomie de techniques adverses IA | [MITRE ATLAS](https://atlas.mitre.org/) |
-| Tendances de menace en Europe | [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape) |
-| Recommandations opérationnelles cyber US | [CISA AI Security](https://www.cisa.gov/ai) |
-| Cadre de gouvernance du risque IA | [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) |
-| Référentiel français de cybersécurité | [ANSSI](https://www.ssi.gouv.fr/) |
-| Veille cybercriminalité organisée | [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports) |
-
-!!! info "Transparence"
-    Les scénarios de cette page sont des cas pédagogiques défensifs construits à partir de tendances documentées par les sources ci-dessus et par tes liens fournis. Ils ne constituent pas des preuves forensiques d'un incident unique.
-
-!!! tip "Cadence recommandée"
-    Mets à jour ta veille sécurité IA une fois par mois et rejoue un exercice de simulation sociale chaque trimestre.
-
----
-
-## Checklist opérationnelle (30 jours)
-
-- [ ] Cartographier les usages IA internes et leurs permissions
-- [ ] Mettre en place une politique "no secret in prompt"
-- [ ] Imposer une revue humaine sur les changements sensibles
-- [ ] Renforcer MFA contre phishing pour comptes critiques
-- [ ] Former finance, support, RH aux deepfakes et à l'urgence simulée
-- [ ] Créer un playbook "incident IA" (détection, confinement, communication)
-
----
-
-## Avant / Après la mise en place des garde-fous
-
-| Critère | Sans contrôle | Avec contrôle |
-|---|---|---|
-| Phishing personnalisé IA | Taux de clic élevé, victime ne détecte pas la personnalisation | Formation + validation hors bande réduit la surface d'exposition |
-| Deepfake vocal / vidéo | Virement ou accès sensible accordé sur demande simulée | Procédure de confirmation multi-canal, aucun accès sur canal unique |
-| Agent IA sur-permissionné | L'agent lit, écrit ou exécute sans garde-fou | Permissions minimales + confirmations obligatoires + logs audités |
-| Code malveillant via IA | Script injecté ou suggéré par l'assistant sans revue | Revue humaine systématique + SCA bloquante en CI |
-| Secrets dans les prompts | Secrets potentiellement envoyés à l'API IA | Politique écrite + scan de secrets + exclusions configurées |
-
----
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [CISA AI](https://www.cisa.gov/ai)
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
+- [ANSSI](https://cyber.gouv.fr/)
 
 ## Prochaine étape
 
-**[Études de cas 2024-2026](etudes-de-cas-2024-2026.md)** : analyse des cas et tendances documentés, avec impacts métiers et plans de protection concrets.
-
-Concepts clés couverts :
-
-- **Surfaces d'exposition** — ce que l'agent peut lire, écrire et exécuter
-- **Moindre privilège** — limiter les actions automatiques à faible impact
-- **Validation humaine** — garde-fou final sur les opérations critiques
-- **Veille sécurité IA** — suivi continu des menaces et contre-mesures
+Poursuivez avec **[Sécuriser les agents IA](securite-agents.md)**, la page suivante dans le menu.

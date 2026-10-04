@@ -1,57 +1,89 @@
-# documentation-ia
+# Documentation IA
 
-Centralisation de la documentation issue de mon apprentissage IA.
+Documentation personnelle et pratique sur l'utilisation de l'IA pour le développement, publiée avec MkDocs Material.
 
-## Lancer le site en local
+## Orientation du projet
 
-Ce projet utilise MkDocs avec le thème Material.
+Le parcours principal est **Claude Code** : installation, configuration, contexte, prompt engineering, agents, skills, hooks, MCP, sécurité, coûts et workflows de développement.
 
-### Pré-requis
+La documentation **GitHub Copilot est volontairement conservée** :
 
-- Windows avec Python 3.11+
-- Lanceur Python `py` disponible
+- référence pour les environnements qui l'utilisent encore ;
+- comparaison avec Claude Code ;
+- migration progressive ou fonctionnement hybride ;
+- option de retour si son offre/tarification redevient pertinente.
 
-### Installation des dépendances
+Aucun contenu Copilot n'est supprimé uniquement parce que Claude Code est prioritaire.
 
-Depuis la racine du projet :
+## Parcours
 
-```powershell
-py -m pip install --upgrade pip
-py -m pip install mkdocs-material
+- Claude Code : `docs/chapitre-3b-claude-code-migration-copilot/`
+- Contexte, rules, skills, agents, hooks et MCP : `docs/chapitre-4-contexte/`
+- Annexe, en fin de menu : ressources générales, références GitHub Copilot, comparaison et migration
+- Pratiques transverses : prompt engineering, ML/RAG, sécurité, coûts, outils et cas d'usage
+
+## Configuration des assistants
+
+### Claude Code
+
+- `CLAUDE.md` — instructions principales
+- `AGENTS.md` — règles communes
+- `.claude/settings.json` — réglages partagés
+- `.claude/rules/` — règles ciblées
+- `.claude/agents/` — subagents du dépôt
+- `.claude/skills/` — skills réutilisables
+
+### GitHub Copilot
+
+- `.github/copilot-instructions.md`
+- `.github/instructions/`
+- `.github/prompts/`
+- `.github/agents/`
+- `.github/skills/`
+- `.github/hooks/`
+
+Ces deux ensembles sont maintenus séparément : ils ne partagent pas le même contrat de configuration.
+
+## Installation locale
+
+```bash
+python -m venv .venv
 ```
 
-### Démarrage en local
+Activez ensuite le venv selon votre système puis :
 
-```powershell
-py -m mkdocs serve
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m mkdocs serve
 ```
 
-> **Note** : Lance cette commande depuis la racine du repo (dossier où est `mkdocs.yml`)
+Sous Windows, `py -m` peut être utilisé si le launcher Python est la commande disponible.
 
-Ensuite ouvre l'URL affichée dans le terminal (par défaut : <http://127.0.0.1:8000>). 
+## Validation
 
-### Build statique
+Avant une Pull Request :
 
-```powershell
-py -m mkdocs build
+```bash
+python scripts/sync-navigation.py
+python scripts/validate-copilot-scope.py
+python -m mkdocs build --strict
+python scripts/validate-links.py
 ```
 
-> **Note** : Lance cette commande depuis la racine du repo (dossier où est `mkdocs.yml`)
+La CI de PR exécute les mêmes contrôles de progression, génération, chemins internes et ancres HTML.
 
-Le site généré sera dans le dossier `site/`.
+Après un changement d'ordre dans `mkdocs.yml`, exécutez `python scripts/sync-navigation.py --write` pour réaligner les sections « Prochaine étape ». Les sommaires des chapitres doivent également suivre cet ordre. Tout contenu Copilot reste dans « Annexe » ; le parcours principal conserve uniquement des liens vers ces références. `validate-copilot-scope.py` vérifie cette séparation.
 
-## Dépannage rapide (Windows)
+Pour vérifier le comportement des tables des matières, construisez le site puis servez `site/` avec `python -m http.server 8765 --directory site`. Dans un autre terminal disposant de Node.js, Playwright et Chromium, lancez `node scripts/validate-toc.cjs http://127.0.0.1:8765/`. Le script contrôle l'ordre des ancres, la sélection après chaque clic et la reprise du suivi au défilement, sur ordinateur et mobile, pour toutes les pages navigables. Les ressources externes sont bloquées afin de tester le sommaire hors ligne ; ce contrôle ne valide pas le rendu Mermaid/MathJax. `PLAYWRIGHT_CHROMIUM_EXECUTABLE` permet de choisir un Chromium déjà installé.
 
-Si `pip` ou `mkdocs` n'est pas reconnu, c'est normal si les scripts Python ne sont pas dans le PATH.
-Dans ce cas, utilise toujours :
+## Contribution
 
-- `py -m pip ...`
-- `py -m mkdocs ...`
+Toute modification passe par une branche et une Pull Request vers `main` : aucun push direct sur `main` n'est attendu dans le workflow du projet.
 
-Commandes de vérification utiles :
+Consultez :
 
-```powershell
-py --version
-py -m pip --version
-py -m mkdocs --version
-```
+- `CONTRIBUTING.md` — workflow complet ;
+- `MAINTENANCE_SCHEDULE.md` — veille mensuelle/trimestrielle ;
+- `DEPLOYMENT.md` — validation et publication GitHub Pages ;
+- `CONTRIBUTING-SCREENSHOTS.md` — captures d'écran.

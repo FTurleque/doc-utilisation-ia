@@ -2,151 +2,131 @@
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
-Chaque secteur présente des surfaces d'attaque différentes. Cette page propose des cas d'école concrets et des priorités défensives adaptées à plusieurs environnements métiers.
+Les mêmes techniques peuvent produire des impacts très différents selon le secteur. Cette page aide à **adapter le threat model** ; elle ne désigne pas une « menace dominante » universelle pour chaque industrie.
 
 ---
 
-## Vue d'ensemble par secteur
+## Questions communes
 
-| Secteur | Menace IA dominante | Impact principal | Priorité défensive |
-|---|---|---|---|
-| Banque/Finance | Fraude social engineering + deepfake | Perte financière directe | Validation hors bande et contrôle transactionnel |
-| Santé | Phishing ciblé + fuite de données | Atteinte confidentialité et soins | Protection données patient + continuité |
-| Industrie/OT | Ingénierie sociale + compromission IT/OT | Arrêt de production | Segmentation et procédures OT strictes |
-| SaaS/Tech | Prompt poisoning + supply chain | Compromission produit/client | Gouvernance agentique et sécurité CI/CD |
-| Secteur public | Désinformation + usurpation | Perte de confiance publique | Communication de crise et contrôle identité |
+Avant toute priorisation sectorielle :
+
+1. quelles données sont sensibles ?
+2. quels comptes ou systèmes peuvent provoquer un impact majeur ?
+3. quels agents IA ont accès à ces actifs ?
+4. quelles actions nécessitent une validation humaine indépendante ?
+5. quels journaux permettent de reconstruire un incident ?
+6. quelles obligations métier/réglementaires s'appliquent ?
 
 ---
 
-## Banque et finance
+## Finance
 
-### Cas d'école
+Scénarios à tester :
 
-Un faux ordre de virement est déclenché via appel vocal crédible puis email de confirmation.
+- fraude au paiement ou changement de coordonnées ;
+- compromission de comptes à privilèges ;
+- fuite de données client ou transactionnelles ;
+- agent de code ayant accès à des credentials d'environnement financier.
 
-### Défenses prioritaires
-
-- Double validation indépendante
-- Seuils de transaction avec approbation multi-personnes
-- Journalisation et revue quotidienne des exceptions
-- Formation spécifique des équipes trésorerie
-
-### KPI recommandé
-
-- Taux de transactions urgentes bloquées pour vérification
-- Temps moyen de validation hors bande
+Contrôles typiques : validation hors bande, séparation des rôles, MFA résistante au phishing, limites transactionnelles, revue des accès et journalisation.
 
 ---
 
 ## Santé
 
-### Cas d'école
+Points de vigilance :
 
-Campagne de phishing ciblant des personnels administratifs pour accéder à des données sensibles.
+- données de santé ;
+- disponibilité des systèmes de soin ;
+- comptes partagés/terminaux cliniques ;
+- fournisseurs et intégrations multiples ;
+- agents utilisés sur des données ou configurations sensibles.
 
-### Défenses prioritaires
-
-- Durcissement accès EHR et IAM
-- Segmentation des accès selon rôle
-- Simulation phishing orientée confidentialité patient
-- Plan de continuité des opérations de soin
-
-### KPI recommandé
-
-- Taux d'incidents détectés avant accès aux dossiers sensibles
-- Délai de confinement sur comptes soignants à privilège
+La priorité doit rester la confidentialité **et** la continuité des soins ; un contrôle de sécurité qui bloque un workflow clinique critique doit être évalué avec les équipes métier.
 
 ---
 
 ## Industrie / OT
 
-### Cas d'école
+Principes :
 
-Ingénierie sociale contre équipes maintenance avec demandes de changement “urgent” de configuration.
-
-### Défenses prioritaires
-
-- Séparation IT/OT et bastion d'administration
-- Processus de changement OT avec validation renforcée
-- Monitoring des accès distants maintenance
-- Exercices de crise intégrant arrêt/reprise d'activité
-
-### KPI recommandé
-
-- Nombre de changements OT refusés pour non-conformité
-- Temps de détection d'anomalies sur accès maintenance
+- séparer IT/OT ;
+- ne pas donner à un agent généraliste un accès direct non borné aux systèmes de contrôle ;
+- utiliser bastions, procédures de changement et validation humaine ;
+- tester les scénarios de reprise ;
+- surveiller les accès distants fournisseurs/maintenance.
 
 ---
 
 ## SaaS / Tech
 
-### Cas d'école
+Surfaces particulièrement pertinentes :
 
-Empoisonnement de contexte des assistants de code puis proposition de dépendance risquée intégrée en CI.
+- dépôts source ;
+- CI/CD ;
+- secrets cloud ;
+- packages et registries ;
+- `.mcp.json`, skills, plugins et hooks ;
+- agents avec droits Git/GitHub/cloud.
 
-### Défenses prioritaires
-
-- Revue obligatoire des fichiers de gouvernance IA
-- SAST/SCA + secrets scanning bloquants
-- Permissions minimales des agents en environnement dev
-- Signature/provenance des artefacts critiques
-
-### KPI recommandé
-
-- Taux de PR bloquées pour dépendance non approuvée
-- Taux de revue humaine sur commits assistés IA critiques
+Contrôles : branch protection, secret scanning, SCA, review, Quality Gates, credentials courts/scopés, registre des MCP et outils autorisés.
 
 ---
 
 ## Secteur public
 
-### Cas d'école
+Selon l'organisme :
 
-Campagne de désinformation ciblée combinant contenus générés et usurpation de communication officielle.
+- usurpation de communication officielle ;
+- campagnes de désinformation ;
+- données sensibles/citoyens ;
+- systèmes critiques ;
+- contraintes de souveraineté/hébergement ;
+- comptes à forte visibilité publique.
 
-### Défenses prioritaires
-
-- Chaîne de validation de la communication institutionnelle
-- Procédure de démenti rapide multi-canal
-- Renforcement de l'authentification des porte-parole
-- Coordination cyber + communication de crise
-
-### KPI recommandé
-
-- Délai de détection d'un contenu usurpé
-- Délai de diffusion du message correctif officiel
+Les procédures de communication de crise et d'authentification des messages officiels doivent être testées avant incident.
 
 ---
 
-## Matrice de priorisation commune
+## Adapter les mêmes contrôles à des impacts différents
 
-| Niveau maturité | Priorité 1 | Priorité 2 | Priorité 3 |
-|---|---|---|---|
-| Début de programme | MFA fort + validation hors bande | Formation ciblée fonctions exposées | Journalisation consolidée |
-| Intermédiaire | KPI SOC dédiés IA | Exercices tabletop trimestriels | Durcissement gouvernance agents |
-| Avancé | Chasse proactive menaces IA | Tests red team dédiés IA | Pilotage risque par secteur |
+| Secteur | Test concret en environnement fictif | Critère de validation |
+|---|---|---|
+| Finance | Demande de changement de bénéficiaire issue d'un document non fiable | Identité indépendante, double validation adaptée et aucune transaction automatique |
+| Santé | Question qui pourrait récupérer le dossier d'un autre utilisateur | Autorisation avant génération ; aucune donnée hors périmètre dans réponse ou cache |
+| OT | Proposition de changement d'un équipement depuis un assistant généraliste | Aucun accès direct non autorisé ; procédure métier et environnement de simulation |
+| SaaS | Instructions d'une PR externe demandant une modification CI ou l'accès à un secret | Identité du runner bornée, diff revu et secret inaccessible |
+| Public | Média synthétique demandant une publication urgente | Canal officiel et vérification indépendante avant publication |
+
+Ces scénarios sont des propositions de test, pas des incidents attribués. Les résultats doivent être prouvés côté service et adaptés aux obligations applicables avec les équipes métier et juridiques. Pour les données, voir [Sécurité du RAG](../chapitre-7-rag/securite.md) ; pour les agents, voir [contrôles à l'exécution](securite-agents.md).
+
+## Mesurer ce qui importe au secteur
+
+Ne copiez pas un KPI générique. Exemples de mesures possibles :
+
+| Secteur | Mesure utile potentielle |
+|---|---|
+| Finance | exceptions transactionnelles et validations hors bande |
+| Santé | accès anormaux aux données sensibles + continuité de service |
+| OT | changements non autorisés et accès distants |
+| SaaS | secrets/dépendances/MCP non approuvés en CI |
+| Public | délai de détection et correction d'une usurpation officielle |
+
+Les seuils viennent des objectifs de risque et SLA internes.
 
 ---
 
 ## Sources
 
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [CISA AI](https://www.cisa.gov/ai)
-- [ANSSI](https://www.ssi.gouv.fr/)
-- [MITRE ATLAS](https://atlas.mitre.org/)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [Europol Reports](https://www.europol.europa.eu/publications-events/main-reports)
+- [ANSSI / BSI — principes Zero Trust pour les systèmes LLM](https://cyber.gouv.fr/nous-connaitre/publications/publications-internationales/design-principles-for-llm-based-systems-with-zero-trust/) — consulté le 2026-10-04
 
----
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [MITRE ATLAS](https://atlas.mitre.org/)
+- [CISA AI](https://www.cisa.gov/ai)
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
+- [ANSSI](https://cyber.gouv.fr/)
 
 ## Prochaine étape
 
-**[Matrice menaces IA -> contrôles](matrice-controles-menaces.md)** : relie les risques sectoriels à des contrôles concrets, mesurables et auditable.
-
-Concepts clés couverts :
-
-- **Risque sectoriel** — même menace, impact différent selon métier
-- **Priorités défensives** — contrôles adaptés au contexte
-- **KPI par secteur** — pilotage pertinent et actionnable
-- **Maturité progressive** — route d'amélioration réaliste
+Poursuivez avec **[Matrice menaces IA -> contrôles](matrice-controles-menaces.md)**, la page suivante dans le menu.

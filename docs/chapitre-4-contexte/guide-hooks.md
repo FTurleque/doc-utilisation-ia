@@ -1,348 +1,268 @@
-# Hooks Copilot
+# Hooks — Claude Code
 
-<span class="badge-vscode">VS Code</span> <span class="badge-expert">Expert</span>
+<span class="badge-vscode">VS Code</span> <span class="badge-intellij">IntelliJ</span> <span class="badge-expert">Expert</span>
 
-## Présentation
-Les hooks Copilot sont des **déclencheurs automatiques** qui exécutent des actions en réponse à des événements dans votre workflow de développement. Ils permettent d'intégrer Copilot dans des pipelines automatisés : validation de code, génération automatique de documentation, contrôles qualité, etc.
+Les hooks Claude Code permettent d'exécuter automatiquement une commande, un appel HTTP, un outil MCP ou d'autres contrôles à différents événements du cycle de vie de l'agent.
 
-!!! info "Fonctionnalité en évolution"
-    Les hooks Copilot sont une fonctionnalité relativement récente et en cours d'évolution active. Les capacités et APIs décrites ici correspondent à l'état de la fonctionnalité en 2025-2026. Consultez la [documentation GitHub Copilot](https://docs.github.com/copilot) pour les dernières mises à jour.
+Ils servent surtout à **automatiser** et à **faire respecter des garde-fous** : bloquer une commande dangereuse, lancer un contrôle après une édition, journaliser une action ou injecter un contexte ciblé.
 
 ---
 
-## Concept : Qu'est-ce qu'un hook ?
+## Hooks ≠ instructions
 
-Un hook est un mécanisme qui **écoute un événement de session d'agent** et déclenche automatiquement une **commande shell**. Dans le contexte de l'agent Copilot VS Code :
+| Besoin | Bon mécanisme |
+|---|---|
+| « respecte cette convention de code » | `CLAUDE.md` ou `.claude/rules/` |
+| « applique cette procédure quand elle est pertinente » | skill |
+| « refuse techniquement cette action avant exécution » | permissions ou `PreToolUse` hook |
+| « lance ce contrôle après une édition » | `PostToolUse` hook |
+| « exécute un pre-commit Git » | hook Git, pas hook Claude |
 
-```
-Événement d'agent   →   Hook déclenché    →   Commande shell exécutée
-──────────────────────────────────────────────────────────────────────
-Avant un outil      →   PreToolUse        →   Validation / blocage
-Après un outil      →   PostToolUse       →   Lint / format automatique
-Début de session    →   SessionStart      →   Injection de contexte
-Fin de session      →   Stop              →   Rapport / nettoyage
-```
-
-!!! warning "Les hooks `onSave`, `onOpen`, `pre-commit` ne sont PAS des hooks Copilot"
-    Ces événements n'existent pas dans l'API de hooks Copilot VS Code. Les hooks Copilot écoutent les **événements de session d'agent** (PreToolUse, PostToolUse, etc.), pas les événements d'éditeur. Pour les hooks Git (`pre-commit`, `post-merge`), voir la section [Git Hooks](#hook-pre-commit-avec-git-hooks) plus bas.
+Une phrase dans `CLAUDE.md` influence le modèle. Un hook `PreToolUse` peut, lui, intervenir dans le flux d'exécution.
 
 ---
 
-## Types de hooks disponibles (réels)
+## Où configurer les hooks Claude ?
 
-Les hooks Copilot VS Code (Preview) supportent 8 événements de cycle de vie d'agent :
+Les hooks projet se déclarent normalement dans :
 
-| Événement | Déclencheur | Cas d'usage |
-|-----------|-------------|-------------|
-| `SessionStart` | Première soumission d'un prompt | Injecter du contexte projet, logger le démarrage |
-| `UserPromptSubmit` | Chaque soumission de prompt utilisateur | Auditer les requêtes, injecter du contexte système |
-| `PreToolUse` | Avant qu'un outil soit invoqué | Bloquer des opérations dangereuses, demander confirmation |
-| `PostToolUse` | Après qu'un outil se termine | Lancer un linter/formatter, logger les résultats |
-| `PreCompact` | Avant la compaction du contexte | Exporter l'état important avant troncature |
-| `SubagentStart` | Lancement d'un sous-agent | Tracker l'usage de sous-agents |
-| `SubagentStop` | Fin d'un sous-agent | Agréger les résultats |
-| `Stop` | Fin de la session d'agent | Générer des rapports, nettoyer les ressources |
-
----
-
-## Configuration des hooks Copilot
-
-### Format de fichier
-
-Les hooks se configurent dans des **fichiers JSON** placés dans `.github/hooks/` :
-
-```
-mon-projet/
-└── .github/
-    └── hooks/
-        ├── format.json      ← Hook de formatage post-édition
-        └── security.json    ← Hook de validation pré-outil
+```text
+.claude/settings.json
 ```
 
-Structure du fichier JSON :
+Les scripts peuvent vivre par exemple dans :
+
+```text
+.claude/hooks/
+├─ block-dangerous-command.py
+└─ check-style.sh
+```
+
+Exemple actuel de structure :
 
 ```json
 {
   "hooks": {
-    "PostToolUse": [
-      {
-        "type": "command",
-        "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\""
-      }
-    ],
     "PreToolUse": [
       {
-        "type": "command",
-        "command": "./scripts/validate-tool.sh",
-        "timeout": 15
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/check-command.py",
+            "args": []
+          }
+        ]
       }
     ]
   }
 }
 ```
 
-### Propriétés d'une commande hook
+!!! important "Structure imbriquée"
+    Les versions actuelles utilisent une liste de matchers contenant elle-même une liste `hooks`. Plusieurs anciens exemples utilisent une structure plus plate : ne les copiez pas sans vérifier la référence actuelle.
 
-| Propriété | Type | Description |
-|-----------|------|-------------|
-| `type` | string | Obligatoire — toujours `"command"` |
-| `command` | string | Commande à exécuter (cross-platform) |
-| `windows` | string | Commande spécifique Windows (override) |
-| `linux` | string | Commande spécifique Linux (override) |
-| `osx` | string | Commande spécifique macOS (override) |
-| `cwd` | string | Répertoire de travail (relatif à la racine du repo) |
-| `timeout` | number | Timeout en secondes (défaut : 30) |
+---
 
-### Variables d'environnement disponibles
+## Événements importants
 
-Les hooks reçoivent des informations via des variables d'environnement et via `stdin` (JSON) :
+Claude Code possède aujourd'hui de nombreux événements. Les plus utiles pour démarrer sont :
 
-| Variable | Description |
-|----------|-------------|
-| `$TOOL_INPUT_FILE_PATH` | Chemin du fichier modifié (PostToolUse) |
-| `$TOOL_NAME` | Nom de l'outil invoqué |
+| Événement | Moment | Exemple d'usage |
+|---|---|---|
+| `SessionStart` | début / reprise de session selon le contexte | charger une information externe |
+| `UserPromptSubmit` | avant traitement d'un prompt utilisateur | audit ou contexte contrôlé |
+| `PreToolUse` | avant exécution d'un outil | autoriser, demander ou bloquer |
+| `PostToolUse` | après réussite d'un outil | lint, audit, journalisation |
+| `PostToolUseFailure` | après échec d'un outil | diagnostic ciblé |
+| `SubagentStart` / `SubagentStop` | cycle d'un subagent | suivi et agrégation |
+| `PreCompact` / `PostCompact` | autour de la compaction | préserver / inspecter l'état |
+| `Stop` | avant que Claude ne termine | imposer une vérification supplémentaire |
+| `FileChanged` | fichier changé sur disque | contrôle après changement, quelle qu'en soit l'origine |
 
-!!! tip "Via stdin"
-    Chaque hook reçoit aussi un objet JSON complet via `stdin` avec `tool_name`, `tool_input`, `sessionId`, etc. Utilisez-le dans vos scripts shell pour une logique avancée.
+La liste évolue et comprend d'autres événements (modèle, worktree, configuration, permissions, etc.). Utilisez la référence officielle pour les cas avancés.
 
-### Exemple minimal : formater après chaque édition
+---
 
-Créez `.github/hooks/format.json` :
+## `PreToolUse` — garde-fou avant action
+
+`PreToolUse` s'exécute après que Claude a préparé les paramètres d'un outil, mais avant son exécution.
+
+Exemple : cibler les commandes shell :
 
 ```json
 {
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
-        "type": "command",
-        "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\""
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/validate-command.py"
+          }
+        ]
       }
     ]
   }
 }
 ```
 
----
+Le script reçoit un JSON sur `stdin`, notamment `tool_name` et `tool_input` pour cet événement.
 
-## Personnalisation des messages de commit
+### Bloquer avec un code de sortie
 
-!!! info "Ce n'est pas un hook au sens strict"
-    La génération de message de commit est une fonctionnalité distincte des hooks d'agent. Elle se configure dans `settings.json` et s'active manuellement via l'icône ✨ dans la vue Source Control.
-
-### Configuration via settings VS Code
-
-```json
-{
-    "github.copilot.chat.commitMessageGeneration.instructions": [
-        {
-            "text": "Génère les messages de commit en français, format Conventional Commits (feat/fix/docs/chore). Maximum 72 caractères pour le sujet."
-        }
-    ]
-}
-```
-
-**Activation :**
-
-1. Dans la vue Source Control de VS Code
-2. Cliquez sur l'icône étoile ✨ dans le champ de message de commit
-3. Copilot analyse vos changements et génère un message
-
----
-
-## Hook pre-commit avec Git Hooks
-
-Pour intégrer Copilot dans un hook Git pre-commit, vous pouvez combiner les hooks Git natifs avec des prompts Copilot :
-
-### Exemple : Validation pre-commit automatique
-
-Créez `.git/hooks/pre-commit` :
+Pour la plupart des événements qui peuvent bloquer, **`exit 2`** signale le refus.
 
 ```bash
-#!/bin/sh
-# Hook pre-commit : vérifications minimales avant commit
+#!/usr/bin/env bash
+input=$(cat)
+command=$(jq -r '.tool_input.command // ""' <<<"$input")
 
-# Vérifier si des fichiers .env sont staged
-if git diff --cached --name-only | grep -E '\.env$|\.env\.' > /dev/null 2>&1; then
-    echo "❌ ERREUR: Des fichiers .env sont dans le staging area !"
-    echo "   Retirez-les avec: git reset HEAD <fichier.env>"
-    exit 1
+if [[ "$command" == rm* ]]; then
+  echo "Commande rm bloquée par la politique du projet" >&2
+  exit 2
 fi
 
-# Vérifier les TODO/FIXME critiques dans le code staged
-if git diff --cached | grep -E '^\+.*(FIXME|HACK|XXX)' > /dev/null 2>&1; then
-    echo "⚠️  ATTENTION: Des marqueurs FIXME/HACK/XXX ont été ajoutés."
-    echo "   Vérifiez s'ils doivent être résolus avant le commit."
-    # exit 1  # Décommenter pour bloquer le commit
-fi
-
-echo "✅ Pre-commit checks passed"
 exit 0
 ```
 
-!!! tip "Commenter avec Copilot"
-    Après avoir écrit votre hook, demandez à Copilot Chat : "*Améliore ce hook pre-commit pour ajouter des vérifications de sécurité supplémentaires*".
+!!! danger "`exit 1` n'est pas un blocage fiable"
+    Pour la plupart des hooks Claude Code, un code différent de `2` est traité comme une erreur non bloquante si aucune décision JSON valide ne dit le contraire. Si votre garde-fou repose sur un script shell, utilisez le contrat documenté de l'événement, pas la convention Unix « 1 = échec ».
 
 ---
 
-## Hooks via GitHub Actions + Copilot
+## Permissions avant hooks
 
-Pour des environnements d'équipe, les hooks Copilot s'intègrent dans GitHub Actions :
-
-### Workflow de revue automatique
-
-```yaml
-# .github/workflows/copilot-review.yml
-name: Copilot PR Review
-
-on:
-  pull_request:
-    types: [opened, synchronize]
-
-jobs:
-  copilot-review:
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Request Copilot Review
-        # GitHub Copilot peut être configuré pour reviewer automatiquement les PRs
-        # via les paramètres du repository dans GitHub.com
-        run: echo "Copilot review requested via GitHub settings"
-```
-
-!!! info "Revue automatique de PR par Copilot"
-    GitHub Copilot peut être configuré pour commenter automatiquement sur les Pull Requests. Activez-le depuis les paramètres de votre repository → Code and automation → GitHub Copilot.
-
----
-
-## Hook de génération de documentation automatique
-
-Configurez VS Code pour suggérer une mise à jour de documentation quand vous modifiez une fonction :
+Pour une interdiction simple et statique, une règle de permission est souvent préférable :
 
 ```json
 {
-    "github.copilot.chat.codeGeneration.instructions": [
-        {
-            "text": "Quand tu génères du code, ajoute toujours la documentation JSDoc/TSDoc correspondante."
-        }
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Bash(git push --force *)"
     ]
+  }
 }
 ```
 
-### Instructions via `.github/copilot-instructions.md`
+Utilisez un hook lorsque la décision nécessite une logique dynamique : contenu de la commande, fichier ciblé, validation externe, politique métier, etc.
 
-Vous pouvez aussi configurer un comportement "hook-like" via les instructions globales :
-
-```markdown
-# Instructions GitHub Copilot
-
-## Comportement automatique attendu
-
-### Lors de la génération de code
-- Toujours ajouter JSDoc/TSDoc pour les fonctions/classes publiques
-- Toujours inclure des tests unitaires de base dans un bloc de commentaires
-- Signaler si une fonction dépasse 30 lignes (suggérer un refactoring)
-
-### Lors de la modification de code existant
-- Si tu modifies une fonction documentée, mets à jour la documentation
-- Si tu ajoutes un paramètre, documente-le dans le JSDoc existant
-```
+!!! note "Références `@fichier`"
+    `PreToolUse` ne s'exécute pas lorsqu'un fichier est ajouté directement au contexte via une référence `@...`, car aucun outil `Read` n'est nécessaire. Pour interdire certains chemins même dans ce cas, utilisez une règle de permission `Read(...)`.
 
 ---
 
-## Cas d'usage pratiques
+## `PostToolUse` — contrôle après modification
 
-### 1. Validation de qualité post-édition
-
-Configurez un snippet VS Code qui se déclenche après l'acceptation d'une suggestion :
+Exemple : lancer un script de style après Write/Edit :
 
 ```json
-// .vscode/tasks.json
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Validate with ESLint",
-            "type": "shell",
-            "command": "npx eslint ${file} --fix",
-            "runOptions": { "runOn": "folderOpen" },
-            "group": "test"
-        }
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/check-style.sh",
+            "args": []
+          }
+        ]
+      }
     ]
+  }
 }
 ```
 
-Combinez avec une keybinding pour déclencher la validation après une session Copilot :
+`PostToolUse` arrive **après** l'action. Il est adapté à la vérification et au feedback, pas à l'empêchement de l'écriture déjà effectuée.
 
-```json
-// keybindings.json
-{
-    "key": "ctrl+alt+v",
-    "command": "workbench.action.tasks.runTask",
-    "args": "Validate with ESLint"
-}
-```
-
-### 2. Hook de message de commit personnalisé
+Pour un contrôle asynchrone :
 
 ```json
 {
-    "github.copilot.chat.commitMessageGeneration.instructions": [
-        {
-            "file": ".github/commit-instructions.md"
-        }
-    ]
+  "type": "command",
+  "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/run-tests.sh",
+  "async": true
 }
 ```
 
-```markdown
-<!-- .github/commit-instructions.md -->
-# Instructions pour les messages de commit
+Claude peut alors continuer pendant l'exécution ; le résultat est livré ultérieurement dans la conversation.
 
-## Format obligatoire
-type(scope): description courte en français (max 72 chars)
+---
 
-## Types acceptés
-- feat: nouvelle fonctionnalité
-- fix: correction de bug
-- docs: documentation uniquement
-- refactor: refactoring sans changement de comportement
-- test: ajout/modification de tests
-- chore: tâches de maintenance
+## Hooks Windows / PowerShell
 
-## Exemple
-feat(auth): ajouter la vérification 2FA par SMS
+Claude Code sait exécuter des hooks via PowerShell. Exemple :
+
+```json
+{
+  "type": "command",
+  "shell": "powershell",
+  "command": "& \"$env:CLAUDE_PROJECT_DIR\\.claude\\hooks\\check.ps1\""
+}
 ```
 
----
-
-## Limites actuelles
-
-!!! warning "Ce que les hooks ne peuvent pas faire (encore)"
-
-    - **Déclencher des actions arbitraires** à partir de n'importe quel événement VS Code
-    - **Modifier le comportement de complétion inline** en temps réel
-    - **Intercepter** les suggestions avant leur affichage pour les filtrer
-    - **S'intégrer nativement** avec des outils externes (Jira, Slack) sans extension tierce
-
-    Ces capacités évoluent rapidement. Consultez les [release notes VS Code](https://code.visualstudio.com/updates) pour les nouvelles fonctionnalités Copilot.
+Pour une configuration multi-OS, privilégiez des scripts portables ou séparez proprement les implémentations plutôt que d'imbriquer de longues commandes spécifiques à un shell dans `settings.json`.
 
 ---
 
-## Sources
+## Sécurité des hooks
 
-- [Customizing GitHub Copilot in your organization](https://docs.github.com/en/copilot/customizing-copilot/creating-a-custom-model-for-github-copilot) - consulté le 2026-06-20
-- [About customizing GitHub Copilot Chat responses](https://docs.github.com/en/copilot/customizing-copilot/customizing-the-behavior-of-github-copilot-chat/about-customizing-github-copilot-chat-responses) - consulté le 2026-06-20
+Un hook de type `command` est **du code exécuté sur votre machine**.
+
+Avant de versionner ou accepter un hook :
+
+1. relisez le script ;
+2. vérifiez ses chemins et variables ;
+3. limitez ses permissions OS ;
+4. évitez de logguer des secrets ;
+5. testez le comportement de blocage ;
+6. vérifiez qu'un timeout ou un script absent ne désactive pas silencieusement votre garde-fou.
+
+!!! warning "Timeout PreToolUse"
+    Un hook `command`, HTTP ou MCP qui atteint son timeout sur `PreToolUse` ne doit pas être considéré comme un mécanisme *fail-closed* universel : le tool call peut continuer dans le flux normal de permissions. Pour une politique critique, combinez permissions explicites et contrôles robustes.
+
+---
+
+## Hooks Git : mécanisme différent
+
+Un fichier `.git/hooks/pre-commit` ou un outil comme pre-commit / Husky agit au niveau de Git et fonctionne indépendamment de Claude.
+
+Exemple simple :
+
+```bash
+#!/usr/bin/env sh
+
+if git diff --cached --name-only | grep -E '(^|/)\.env($|\.)' >/dev/null 2>&1; then
+  echo "Fichier .env détecté dans le staging" >&2
+  exit 1
+fi
+
+exit 0
+```
+
+Un **hook Git** doit continuer à être présenté comme un hook Git, même si Claude vous aide à l'écrire.
+
+---
+
+## Checklist avant de créer un hook
+
+Le [template de checklist des hooks](templates-configuration.md#template-hook) regroupe les points à relire avant activation.
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-hooks).
 
 ## Prochaine étape
 
-**[Paramètres du Dépôt](parametres-depot.md)** : centraliser et versionner la configuration Copilot dans `.github/` pour la partager avec toute l'équipe.
+Poursuivez avec **[Paramètres du Dépôt](parametres-depot.md)**, la page suivante dans le menu.
 
-Concepts clés couverts :
+## Sources
 
-- **Couches de personnalisation** — Instructions, Skills, Agents combinés
-- **Arborescence recommandée** — `.github/copilot-instructions.md`, `instructions/`, `prompts/`, `agents/`, `skills/`
-- **Fichier AGENT.md à la racine** — Catalogue et orchestration des agents
-- **Priorité des fichiers** — Ordre d'application et résolution de conflits
+Sources officielles consultées le **28 septembre 2026** :
+
+- [Claude Code — Hooks reference](https://code.claude.com/docs/en/hooks)
+- [Claude Code — Settings](https://code.claude.com/docs/en/settings)

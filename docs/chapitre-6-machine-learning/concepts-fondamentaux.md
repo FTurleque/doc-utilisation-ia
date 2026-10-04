@@ -53,14 +53,14 @@ graph TD
     end
 
     subgraph E2["🚀 Explosion du Deep Learning"]
-        L["**2012** — AlexNet\nGPU + big data — erreur divisée par 2\nsur ImageNet, tournant historique"]
+        L["**2012** — AlexNet\nGPU + big data — forte baisse de l’erreur top-5\nsur ImageNet, tournant historique"]
         M["**2014** — GANs\nIan Goodfellow — génération\nd'images réalistes"]
         N["**2017** — Transformers\n*Attention is All You Need*\nbase de GPT et BERT"]
     end
 
     subgraph G2["🤖 IA Générative"]
         O["**2020** — GPT-3\n175 milliards de paramètres\ngénération de texte bluffante"]
-        P["**2022** — ChatGPT & GitHub Copilot\nIA générative grand public\nmillions d'utilisateurs"]
+        P["**2022** — IA générative\nIA générative grand public\nmillions d'utilisateurs"]
         Q["**2024** — Agents autonomes\nLLMs capables de planifier,\nutiliser des outils, exécuter des tâches"]
     end
 
@@ -83,13 +83,13 @@ Trois facteurs ont rendu possible la révolution du Deep Learning :
 | **Algorithmes** | Réseaux peu profonds (2-3 couches) | Réseaux très profonds (100+ couches), Transformers |
 
 !!! info "Pourquoi 2012 est une date charnière ?"
-    En 2012, le réseau **AlexNet** (Alex Krizhevsky, supervisé par Geoffrey Hinton) remporte le concours ImageNet avec un taux d'erreur de **16%**, contre **26%** pour le meilleur algorithme classique de l'époque. Cette rupture de 10 points en un an a convaincu toute la communauté scientifique de basculer vers le Deep Learning.
+    L’article d’Alex Krizhevsky, Ilya Sutskever et Geoffrey Hinton rapporte pour ILSVRC-2012 une **erreur top-5 de 15,3 %**, contre **26,2 %** pour la deuxième meilleure entrée. Il s’agit de ce concours et de cette métrique, pas d’un taux d’erreur générique. [Publication originale](https://papers.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf), consultée le 3 octobre 2026.
 
 ### Les pionniers à connaître
 
 | Nom | Contribution | Récompense |
 |-----|-------------|-----------|
-| **Alan Turing** | Test de Turing, fondements théoriques | Prix Turing (posthume) |
+| **Alan Turing** | Test de Turing, fondements théoriques | Le prix Turing porte son nom ; il ne lui a pas été attribué |
 | **Frank Rosenblatt** | Perceptron (1957) | — |
 | **Geoffrey Hinton** | Backpropagation, Deep Belief Networks | Prix Turing 2018 |
 | **Yann LeCun** | Réseaux convolutifs (CNN) | Prix Turing 2018 |
@@ -102,7 +102,7 @@ Trois facteurs ont rendu possible la révolution du Deep Learning :
 
 ---
 
-## Les 3 Types d'Apprentissage
+## Types d’apprentissage
 
 ### 1. Apprentissage Supervisé
 
@@ -175,8 +175,6 @@ Avant de coder un modèle, il faut maîtriser ce vocabulaire fondamental.
 
 ---
 
-## Les Données : La Base de Tout
-
 ### Types de données
 
 | Type | Description | Exemple | Traitement |
@@ -212,15 +210,13 @@ print(df["PV"].describe())  # Résumé complet
 ## Sources
 
 - [Scikit-learn documentation](https://scikit-learn.org/stable/) - consulté le 2026-06-20
-- [GitHub Copilot for data science](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-data-science) - consulté le 2026-06-20
+
+---
+
+## Référence en annexe
+
+[Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-concepts-fondamentaux).
 
 ## Prochaine étape
 
-**[Algorithmes Courants du Machine Learning](algorithmes-courants.md)** : découvrir les principaux algorithmes et savoir lequel choisir selon votre problème.
-
-Concepts clés couverts :
-
-- **Choisir le bon algorithme** — Arbre de décision selon le type d'apprentissage et le type de problème
-- **Régression** — Linéaire, polynomiale, logistique, et le mécanisme de descente de gradient
-- **Classification** — Random Forest, SVM, KNN, Naive Bayes : forces et cas d'usage de chacun
-- **Clustering** — K-Means, DBSCAN, GMM : regrouper des données sans étiquettes
+Poursuivez avec **[Algorithmes Courants](algorithmes-courants.md)**, la page suivante dans le menu.

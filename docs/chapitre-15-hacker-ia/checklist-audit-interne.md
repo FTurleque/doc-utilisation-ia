@@ -1,117 +1,134 @@
-# Checklist audit interne IA (trimestriel)
+# Checklist audit interne IA
 
 <span class="badge-expert">Expert</span> <span class="badge-intermediate">Intermédiaire</span>
 
-Cette checklist aide à auditer de manière régulière la posture de sécurité liée aux usages IA dans les workflows dev, sécurité et métiers.
+Cette checklist aide à auditer la posture de sécurité des usages IA dans les workflows de développement, d'exploitation et métier. La cadence doit être adaptée au niveau de risque et aux changements de l'environnement ; « trimestriel » peut être un point de départ, pas une obligation universelle.
 
 ---
 
-## Guide d'utilisation
+## Sortie attendue
 
-- Fréquence recommandée: trimestrielle
-- Périmètre: identité, messagerie, endpoints, dépôts, CI/CD, gouvernance IA
-- Sortie attendue: plan d'écarts priorisé avec owners et échéances
+L'audit doit produire :
 
----
+- un périmètre clair ;
+- des écarts documentés ;
+- un owner par action ;
+- une échéance ;
+- une preuve attendue ;
+- les exceptions explicitement acceptées.
 
-## Grille d'audit (oui/non/partiel)
-
-### 1. Gouvernance et politique
-
-- [ ] Une politique IA formelle est publiée et connue
-- [ ] Une règle "no secret in prompt" est appliquée
-- [ ] Les rôles et responsabilités incident IA sont définis (RACI)
-- [ ] Les exceptions sont tracées et approuvées
-
-### 2. Contrôles identité et accès
-
-- [ ] MFA phishing-resistant déployé pour comptes critiques
-- [ ] Revue périodique des privilèges agents/outils
-- [ ] Sessions et tokens à durée limitée
-- [ ] Procédure de révocation rapide testée
-
-### 3. Contrôles dev et supply chain
-
-- [ ] Revue humaine obligatoire sur périmètre critique
-- [ ] SAST/SCA bloquants actifs en CI
-- [ ] Dépendances nouvelles soumises à validation
-- [ ] Secrets scanning activé sur dépôts et pipelines
-
-### 4. Détection et réponse SOC
-
-- [ ] KPI SOC IA suivis mensuellement
-- [ ] Règles de détection dédiées phishing/deepfake/agent
-- [ ] Playbook incident IA testé au moins une fois
-- [ ] Conservation des preuves et logs conforme
-
-### 5. Formation et exercices
-
-- [ ] Formation ciblée fonctions exposées (finance/RH/support)
-- [ ] Exercices tabletop réalisés ce trimestre
-- [ ] Debrief documenté et actions suivies
-- [ ] Niveau de maturité réévalué périodiquement
-
-### 6. Conformité et communication
-
-- [ ] Procédure de notification réglementaire clarifiée
-- [ ] Coordination juridique/comms testée
-- [ ] Messages de crise préparés et validés
-- [ ] Registre des incidents et post-mortems à jour
+Évitez un score global qui masque des écarts critiques.
 
 ---
 
-## Barème de maturité
+## 1. Gouvernance
 
-| Score (items cochés) | Niveau | Interprétation |
-|---|---|---|
-| 0-8 | Initial | Contrôles fragmentés, risque élevé |
-| 9-16 | Structuré | Base en place, écarts significatifs |
-| 17-22 | Maîtrisé | Bon niveau, améliorer les délais |
-| 23-24 | Avancé | Pilotage robuste et amélioration continue |
+- [ ] Les outils/agents autorisés sont inventoriés.
+- [ ] Les propriétaires de chaque outil, MCP, plugin et skill sont connus.
+- [ ] Les règles d'usage de données/secrets sont documentées.
+- [ ] Les exceptions de policy ont une date d'expiration et un owner.
+- [ ] Les responsabilités d'incident sont définies.
+
+## 2. Identité et permissions
+
+- [ ] Les comptes critiques utilisent une MFA résistante au phishing lorsque possible.
+- [ ] Les agents n'utilisent pas des credentials de production par défaut.
+- [ ] Les tokens sont scoped au besoin et révocables rapidement.
+- [ ] Les permissions agentiques sont revues après changement d'outil ou de workflow.
+- [ ] Les actions sensibles nécessitent un contrôle adapté à leur criticité.
+
+## 3. Claude Code / agents de développement
+
+- [ ] `CLAUDE.md`, rules et autres instructions sont versionnés et revus.
+- [ ] `.mcp.json` et les serveurs MCP sont audités.
+- [ ] Les hooks/plugins/skills tiers ont une provenance vérifiée.
+- [ ] Les commandes de validation du dépôt sont documentées.
+- [ ] Les changements critiques passent par diff, tests et revue.
+- [ ] Les contenus externes sont considérés comme non fiables par défaut.
+
+## 4. Supply chain
+
+- [ ] Les nouvelles dépendances sont revues selon leur criticité.
+- [ ] SCA/advisories sont intégrés au workflow pertinent.
+- [ ] Les lockfiles et sources de packages sont contrôlés.
+- [ ] Les scripts d'installation des composants tiers sensibles sont inspectés.
+- [ ] Les outils abandonnés/legacy sont identifiés et ont un plan de remplacement.
+
+## 5. Secrets et données
+
+- [ ] Les secrets ne sont pas stockés dans les instructions, tickets ou exemples.
+- [ ] Les données sensibles accessibles aux agents sont minimisées.
+- [ ] Les logs/transcriptions ont une politique de rétention adaptée.
+- [ ] Une procédure de rotation des secrets est testée.
+- [ ] Les services tiers de routage/proxy sont inclus dans la cartographie des données.
+
+## 6. Détection et réponse
+
+- [ ] Les événements nécessaires à l'investigation sont journalisés.
+- [ ] Le playbook incident couvre agent, MCP, secret et supply chain.
+- [ ] Les tokens/accès peuvent être révoqués rapidement.
+- [ ] Un exercice récent a testé au moins un scénario agentique.
+- [ ] Les actions des post-mortems sont suivies jusqu'à preuve de clôture.
+
+## 7. Fournisseurs et conformité
+
+- [ ] Les conditions de traitement des données sont comprises pour chaque fournisseur.
+- [ ] Les besoins juridiques/privacy applicables sont documentés.
+- [ ] Les décisions d'achat utilisent des tarifs et conditions actuels, pas des copies historiques.
+- [ ] Les dépendances à un fournisseur peuvent être retirées ou migrées.
 
 ---
 
-## Plan de remédiation (template)
+## 8. Contrôles à l'exécution et preuves de refus
+
+- [ ] Le mode de permission effectif est contrôlé pour la surface et la version utilisées.
+- [ ] La sandbox est testée, y compris son indisponibilité, ses exceptions et les chemins non couverts.
+- [ ] L'automatisation non interactive applique ses règles avant le lancement ; elle ne dépend pas d'un dialogue utilisateur.
+- [ ] Les droits des sous-agents et équipes sont bornés ; la délégation n'accorde pas de nouveaux accès.
+- [ ] Mémoire, index RAG, caches et tenants possèdent des règles de lecture/écriture testées.
+- [ ] La révocation d'un credential bloque réellement les accès concernés.
+- [ ] Les retries, actions répétées et budgets ont un arrêt contrôlé.
+- [ ] La télémétrie n'expose pas inutilement prompts, secrets ou données ; événements et traces sont vérifiés séparément.
+- [ ] Les tests comportent des actions interdites **et** des tâches autorisées, avec vérification côté service.
+- [ ] Le registre précise l'édition du référentiel, la date de preuve et les limites de couverture.
+
+Voir [Sécuriser les agents IA](securite-agents.md) et [Tests de sécurité](tests-securite.md). Une case cochée doit référencer une preuve datée, un périmètre et un responsable.
+
+## Plan de remédiation
 
 ```markdown
-# Plan de remédiation audit IA - Trimestre QX YYYY
-
-| Écart | Priorité | Action | Owner | Échéance | Preuve attendue |
+| Écart | Risque local | Action | Owner | Échéance | Preuve attendue |
 |---|---|---|---|---|---|
-| Exemple: pas de revue permissions agents | Haute | Mettre revue mensuelle + journal | SecOps | 2026-07-15 | Compte-rendu revue |
+| MCP avec token large | Accès excessif à Sonar | créer token dédié read-only | Platform | 2026-10-15 | test d'accès + config |
 ```
 
 ---
 
-## Exemple de synthèse audit (1 page)
+## Évaluer la maturité sans faux barème
 
-| Rubrique | Résultat |
-|---|---|
-| Score global | 16/24 |
-| Niveau | Structuré |
-| Principaux risques | Validation hors bande incomplète, logs agents incomplets |
-| Décisions prises | Activation MFA forte, revue trimestrielle tabletop |
-| Revue suivante | 2026-08-01 |
+Plutôt qu'un score `18/24`, utilisez des états par domaine :
+
+- **non maîtrisé** : contrôle absent ou non prouvé ;
+- **partiel** : contrôle présent mais couverture incomplète ;
+- **maîtrisé** : contrôle actif avec preuve ;
+- **à réévaluer** : changement récent d'outil, menace ou fournisseur.
+
+Un seul écart critique peut être plus important que vingt contrôles mineurs correctement cochés.
 
 ---
 
 ## Sources
 
-- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
-- [OWASP Top 10 for LLM Applications](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
-- [ANSSI](https://www.ssi.gouv.fr/)
-- [CISA AI](https://www.cisa.gov/ai)
-- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
+- [Claude Code — Security](https://code.claude.com/docs/en/security) — consulté le 2026-10-04
+- [Claude Code — Monitoring usage](https://code.claude.com/docs/en/monitoring-usage) — consulté le 2026-10-04
 
----
+- [OWASP GenAI Security Project](https://genai.owasp.org/)
+- [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
+- [MITRE ATLAS](https://atlas.mitre.org/)
+- [CISA — AI](https://www.cisa.gov/ai)
+- [ANSSI](https://cyber.gouv.fr/)
+- [ENISA Threat Landscape](https://www.enisa.europa.eu/topics/cyber-threats/threat-landscape)
 
 ## Prochaine étape
 
-**[Modèles de fiches incident et post-mortem IA](modeles-fiches-incident.md)** : opérationnalise l'audit avec des gabarits de documentation standardisés.
-
-Concepts clés couverts :
-
-- **Audit récurrent** — cadence trimestrielle réaliste
-- **Maturité mesurable** — score simple et comparable
-- **Plan d'écarts** — actions concrètes et suivies
-- **Traçabilité** — preuves exploitables en revue interne
+Poursuivez avec **[Tests de sécurité & preuves](tests-securite.md)**, la page suivante dans le menu.

@@ -1,58 +1,28 @@
 ---
 name: "Révision de page"
-description: "Réviser une page de documentation existante : qualité du contenu, accessibilité, cohérence de style MkDocs Material, hiérarchie des titres et complétude."
-argument-hint: "Chemin de la page à réviser (ex: docs/chapitre-3-contexte/concepts.md)"
+description: "Auditer une page MkDocs existante : exactitude, cohérence Claude/Copilot, accessibilité, sources, navigation et syntaxe."
+argument-hint: "Chemin de la page à réviser"
 mode: ask
 ---
 
-# Révision d'une page de documentation
+# Révision d'une page
 
-Révise la page de documentation fournie et produis un rapport structuré.
+Audite la page sans la modifier.
 
-## Critères de révision
+## Vérifier
 
-### 1. Structure et hiérarchie
+- H1 unique et hiérarchie H2/H3 cohérente ;
+- code avec langage, tableaux lisibles, images avec alt text ;
+- liens internes cohérents avec l'arborescence actuelle ;
+- page présente dans `mkdocs.yml` si elle est destinée à la navigation ;
+- Claude Code présenté comme parcours principal dans une page générique IA ;
+- GitHub Copilot conservé et clairement identifié lorsqu'il s'agit d'une référence ;
+- aucune confusion entre `.claude/*` et `.github/*` ;
+- modèles, prix, quotas, versions, raccourcis, previews, APIs et informations sécurité sourcés quand ils sont évolutifs ;
+- absence d'affirmations quantitatives arbitraires ou de recommandations universelles non démontrées.
 
-- [ ] La page commence par un `# H1` unique
-- [ ] Les badges de niveau/IDE sont présents après le H1
-- [ ] La hiérarchie des titres est logique (H1 → H2 → H3, pas de saut de niveau)
-- [ ] Les sections sont séparées par des `---`
-- [ ] Il y a un résumé ou des points clés en fin de page
+## Rapport
 
-### 2. Syntaxe MkDocs Material
+Pour chaque écart : **Sévérité**, **preuve**, **risque**, **correction proposée**.
 
-- [ ] Les admonitions sont correctement utilisées (type et indentation)
-- [ ] Les onglets sont cohérents ("IntelliJ IDEA" et "Visual Studio Code")
-- [ ] Les blocs de code ont un langage spécifié
-- [ ] Les tableaux sont bien formatés
-- [ ] Les liens internes pointent vers des fichiers existants
-
-### 3. Qualité du contenu
-
-- [ ] Le contenu est en français
-- [ ] Le ton est pédagogique et accessible
-- [ ] Les exemples sont concrets et pertinents
-- [ ] Les informations sont exactes (pas d'informations obsolètes sur Copilot)
-- [ ] Les cas d'usage IntelliJ ET VS Code sont couverts si applicable
-
-### 4. Accessibilité
-
-- [ ] Les images ont un texte alt descriptif
-- [ ] Les liens ont un texte descriptif (pas de "cliquez ici")
-- [ ] Les tableaux ont des en-têtes clairs
-- [ ] Le langage est suffisamment simple pour le niveau annoncé
-
-### 5. Navigation
-
-- [ ] La page est référencée dans `mkdocs.yml`
-- [ ] Les liens internes vers d'autres chapitres sont cohérents
-
-## Format du rapport
-
-Pour chaque problème trouvé, indiquer :
-- **Type** : Structure / Syntaxe / Contenu / Accessibilité / Navigation
-- **Sévérité** : Critique / Important / Suggestion
-- **Description** : Ce qui est incorrect ou manquant
-- **Correction proposée** : La modification recommandée
-
-Termine par un score global et 3 points forts de la page.
+Terminer par les points conformes et les validations recommandées. Ne donner aucun score numérique global.
