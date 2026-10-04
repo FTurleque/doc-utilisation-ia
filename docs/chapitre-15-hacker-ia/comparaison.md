@@ -36,6 +36,8 @@ Dans les deux environnements, vérifiez :
 
 Ces différences influencent le workflow, pas un niveau de sécurité intrinsèque.
 
+Les prérequis d'intégration ont été revérifiés le **4 octobre 2026** : l'extension VS Code embarque une CLI pour son panneau, tandis que le plugin JetBrains utilise la commande `claude` installée séparément. En développement distant, vérifiez aussi sur quel hôte s'exécutent plugin, commandes et credentials.
+
 ---
 
 ### Extensions/plugins
@@ -75,6 +77,14 @@ Ce principe est particulièrement visible dans les IDE JetBrains, mais VS Code d
 
 ---
 
+## Même IDE, configurations de sécurité différentes
+
+Dans la documentation actuelle, le mode **Auto** de Claude Code fait examiner certaines actions par un classificateur ; le mode **Manual** repose davantage sur les demandes d'autorisation. La surface, la version et les paramètres déterminent le mode initial. Vérifiez le mode réel et les politiques de l'organisation dans les deux IDE ; « extension installée » ne signifie pas « mêmes droits ».
+
+La sandbox de commandes ne fonctionne pas sur Windows natif. Une intégration IDE, un terminal Windows et une session WSL2 peuvent donc exposer des frontières différentes. Comparez montages, credentials, réseau et couverture effective, pas uniquement le nom de l'IDE. Voir [Sécuriser les agents](securite-agents.md) et le [guide Sandbox](../chapitre-4-contexte/sandbox.md).
+
+Ces points ont été vérifiés le **4 octobre 2026** dans les pages officielles [Security](https://code.claude.com/docs/en/security) et [Sandboxing](https://code.claude.com/docs/en/sandboxing).
+
 ## Workspace/dépôt non fiable
 
 Lors de l'ouverture d'un dépôt externe :
@@ -107,6 +117,9 @@ Pour un projet critique, le contrôle des identités, secrets, permissions et pi
 
 ## Sources
 
+- [Claude Code — Security](https://code.claude.com/docs/en/security) — consulté le 2026-10-04
+- [Claude Code — Sandboxing](https://code.claude.com/docs/en/sandboxing) — consulté le 2026-10-04
+
 - [Claude Code — VS Code](https://code.claude.com/docs/en/vs-code)
 - [Claude Code — JetBrains](https://code.claude.com/docs/en/jetbrains)
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
@@ -121,4 +134,4 @@ Pour un projet critique, le contrôle des identités, secrets, permissions et pi
 
 ## Prochaine étape
 
-Poursuivez avec **[Annexe — Accueil](../appendices/index.md)**, la page suivante dans le menu.
+Poursuivez avec **[FAQ Claude Code](../references-claude/faq.md)**, la page suivante dans le menu.

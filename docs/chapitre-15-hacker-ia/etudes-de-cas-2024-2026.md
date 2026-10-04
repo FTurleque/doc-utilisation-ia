@@ -23,6 +23,8 @@ Un rapport fournisseur décrit ce qu'il observe sur sa propre plateforme. Il peu
 
 Le rapport **Anthropic Threat Intelligence — septembre 2026** décrit plusieurs opérations malveillantes détectées entre décembre 2025 et août 2026. Anthropic indique avoir observé des acteurs utilisant Claude pour accélérer des tâches d'ingénierie, d'analyse ou d'orchestration dans des campagnes cyber et de surveillance.
 
+Source directe : [rapport Anthropic du 10 septembre 2026](https://www.anthropic.com/threat-intelligence-report-september-2026), consulté le **4 octobre 2026**. La page fournit aussi des indicateurs de compromission (**IOC**). Vérifiez contexte, dates, périmètre et fiabilité avant de les exploiter ; la présence d'un indicateur peut justifier une investigation, pas une attribution automatique.
+
 ### Leçon défensive
 
 Ne supposez plus qu'une opération techniquement sophistiquée implique nécessairement une grande équipe. Renforcez les contrôles sur :
@@ -125,6 +127,18 @@ IDE / agent
 Pour chaque maillon : qui voit quoi, pendant combien de temps, avec quelle base contractuelle et quel contrôle d'accès ?
 
 ---
+
+## Chronologie documentée et limites des conclusions
+
+| Publication | Observation ou périmètre de la source | Leçon défensive |
+|---|---|---|
+| [Anthropic, novembre 2025](https://www.anthropic.com/news/disrupting-AI-espionage) | Le fournisseur rapporte une campagne utilisant Claude Code pour une orchestration fortement automatisée ; la sélection des cibles et certaines décisions restent humaines | Limiter identités et outils ; corréler actions réelles et journaux |
+| [ANSSI, février 2026](https://cyber.gouv.fr/actualites/synthese-de-la-menace-sur-lia-generative-face-aux-attaques-informatiques/) | Synthèse sur l'IA comme levier offensif et comme cible ; limites techniques et opérationnelles à cette date | Évaluer votre exposition plutôt qu'une promesse d'attaque universellement autonome |
+| [Anthropic, septembre 2026](https://www.anthropic.com/threat-intelligence-report-september-2026) | Cas sélectionnés sur la plateforme : cyber, surveillance, influence, fraude et autres abus | Surveiller les comportements, les accès et les credentials ; utiliser les IOC contextualisés |
+
+Ces publications ont été consultées le **4 octobre 2026**. Les sections « Cas 3 » à « Cas 6 » ci-dessus sont des **familles de scénarios défensifs**, pas quatre incidents nommés ou attribués. Le titre 2024–2026 décrit la période de veille ; il n'implique pas un incident démontré pour chaque année.
+
+Ne juxtaposez pas des chiffres d'autonomie issus de protocoles différents. Distinguez observation du fournisseur, attribution qu'il propose, réussite confirmée et résultat déclaré par le modèle. Aucun de ces rapports ne mesure la probabilité d'attaque de votre organisation.
 
 ## Prioriser sans faux score universel
 

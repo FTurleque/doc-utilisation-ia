@@ -257,6 +257,10 @@ Ne présentez pas un document mis en cache comme « actuel » sans afficher sa d
 
 ---
 
+## Squelette de configuration projet
+
+Le [template .mcp.json](../../chapitre-4-contexte/templates-configuration.md#template-mcp) fournit un squelette sans credential réel.
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../../appendices/copilot/chapitre-13-outils-economies.md#page-chapitre-13-outils-economies-mcps-configuration).

@@ -334,6 +334,10 @@ Puis ajouter progressivement :
 
 ---
 
+## Templates à adapter au projet
+
+Les [templates de configuration Claude](../chapitre-4-contexte/templates-configuration.md) sont regroupés dans Contexte & Personnalisation, avec des modèles pour chaque mécanisme.
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../appendices/copilot/chapitre-3b-claude-code-migration-copilot.md#page-chapitre-3b-claude-code-migration-copilot-architecture-claude).

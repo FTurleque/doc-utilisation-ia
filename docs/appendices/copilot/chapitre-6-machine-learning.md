@@ -136,7 +136,7 @@ Les exemples historiques Copilot restent disponibles dans [Copilot pour le workf
 
 ## Notebooks Jupyter { #page-chapitre-6-machine-learning-notebooks-jupyter }
 
-Origine : [chapitre-6-machine-learning/notebooks-jupyter.md](../../chapitre-6-machine-learning/notebooks-jupyter.md).
+Origine : [chapitre-6-machine-learning/notebooks-jupyter.md](../../chapitre-13-outils-economies/jupyter.md).
 
 <!-- Extrait original : chapitre-6-machine-learning/notebooks-jupyter.md:7 ; encadré -->
 
@@ -191,7 +191,7 @@ Les anciennes notes « support Copilot ⭐⭐⭐⭐⭐ » ont été supprimées 
 
 ## Comparaison des Outils { #page-chapitre-6-machine-learning-comparaison-outils }
 
-Origine : [chapitre-6-machine-learning/comparaison-outils.md](../../chapitre-6-machine-learning/comparaison-outils.md).
+Origine : [chapitre-6-machine-learning/comparaison-outils.md](../../chapitre-13-outils-economies/frameworks-ml.md).
 
 <!-- Extrait original : chapitre-6-machine-learning/comparaison-outils.md:5 ; paragraphe -->
 

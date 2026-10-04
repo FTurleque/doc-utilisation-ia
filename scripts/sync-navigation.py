@@ -40,11 +40,16 @@ def main():
     if list(nav[-1]) != ["Annexe"]:
         raise SystemExit("Annexe doit être la dernière section du menu.")
     appendix = {path for _, path in flatten(nav[-1]["Annexe"])}
+    reference_sections = [i for i, item in enumerate(nav) if "Références Claude" in item]
+    if reference_sections and reference_sections != [len(nav) - 2]:
+        raise SystemExit("Références Claude doit précéder immédiatement Annexe.")
     errors = []
     for i, (_, current) in enumerate(pages):
         page = ROOT / "docs" / current
         text = page.read_text(encoding="utf-8")
         heading = text.splitlines()[0]
+        if current in appendix and "Claude" in heading and "Copilot" not in heading:
+            raise SystemExit(f"La page Claude doit être hors Annexe : {current}")
         dedicated = (
             "Copilot" in heading and "Claude" not in heading
         ) or Path(current).name in {

@@ -108,7 +108,7 @@ Graphify documente une intégration Kilo Code spécifique qui peut installer :
 
 Cela peut être intéressant pour les dépôts volumineux, mais relisez toujours les fichiers générés avant de les versionner.
 
-Voir **[Graphify](../../chapitre-4-contexte/graphify.md)**.
+Voir **[Graphify](../graphify.md)**.
 
 ---
 

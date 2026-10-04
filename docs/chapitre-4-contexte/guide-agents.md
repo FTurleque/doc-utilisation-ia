@@ -222,6 +222,10 @@ Pour la page demandée :
 
 ---
 
+## Template de subagent
+
+Le [template security-review](templates-configuration.md#template-agent) illustre un rôle de revue en lecture seule.
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-agents).

@@ -101,6 +101,18 @@ Chaque contrôle doit avoir un test ou une preuve observable.
 
 ---
 
+## Jalons de validation technique
+
+| Période indicative | Critère de sortie |
+|---|---|
+| Jours 1–30 | Identités et périmètres connus ; au moins une révocation et un arrêt d'agent démontrés |
+| Jours 31–60 | Contrôles de permission, sandbox/MCP et cloisonnement testés ; télémétrie vérifiée sans collecte excessive |
+| Jours 61–90 | Exercice complet avec preuves, reprise validée et actions de non-régression attribuées |
+
+Le [plan de tests](tests-securite.md) permet de choisir les scénarios applicables. Incluez mémoire persistante, RAG, sous-agents et processus associés dans l'inventaire. Fixez l'édition du référentiel de sécurité et déclenchez une réévaluation après modification d'outils, modèle, droits ou configuration.
+
+Ces jalons sont une proposition d'organisation, pas un délai réglementaire ou une promesse de maturité. Le cadre [NIST SP 800-61 Rev. 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final), consulté le **4 octobre 2026**, intègre la réponse aux incidents dans la gestion continue du risque.
+
 ## Comment juger le progrès
 
 Ne concluez pas « maturité atteinte » parce que la checklist est terminée. Vérifiez :
@@ -115,6 +127,8 @@ Ne concluez pas « maturité atteinte » parce que la checklist est terminée. V
 ---
 
 ## Sources
+
+- [NIST SP 800-61 Rev. 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final) — consulté le 2026-10-04
 
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

@@ -105,4 +105,4 @@ La migration de cette documentation est volontairement réalisée **par lots**. 
 
 ## Prochaine étape
 
-Poursuivez avec **[Claude Code](chapitre-3b-claude-code-migration-copilot.md)**, la page suivante dans le menu.
+Poursuivez avec **[Copilot — comparaisons et migration](chapitre-3b-claude-code-migration-copilot.md)**, la page suivante dans le menu.

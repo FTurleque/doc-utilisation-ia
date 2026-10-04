@@ -135,6 +135,12 @@ Dans `/usage`, le bloc de session est une estimation locale de consommation API 
 
 [Claude Code — mesure des coûts](https://code.claude.com/docs/en/costs#track-your-costs), revérifié le 3 octobre 2026.
 
+## Levier 9 — Réduire les sorties avec RTK et Caveman
+
+**[RTK](../chapitre-13-outils-economies/rtk.md)** filtre les sorties de commandes ; **[Caveman](../chapitre-13-outils-economies/caveman.md)** propose un skill de concision et des mécanismes de proxy/middleware. Ils complètent le travail sur le contexte et le modèle. Mesurez le gain et contrôlez que les diagnostics utiles restent visibles : une sortie plus courte ne garantit pas une facture réduite dans la même proportion.
+
+Consultez [Caveman & RTK — comparaison et mesure](caveman.md) pour la décision budgétaire. L'installation, les commandes et les limites de chaque outil se trouvent dans leurs fiches **Outils**.
+
 ## Checklist quotidienne
 
 ```text
@@ -164,4 +170,4 @@ Dans `/usage`, le bloc de session est une estimation locale de consommation API 
 
 ## Prochaine étape
 
-Poursuivez avec **[Caveman — Réduction des tokens](caveman.md)**, la page suivante dans le menu.
+Poursuivez avec **[Caveman & RTK — Réduction des tokens](caveman.md)**, la page suivante dans le menu.

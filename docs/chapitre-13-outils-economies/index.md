@@ -4,6 +4,22 @@
 
 Ce chapitre présente les outils qui complètent Claude Code : utilitaires déterministes, analyse statique, compression de sorties, MCP, observabilité, GreenOps, architectures event-driven, modèles locaux et agents alternatifs.
 
+**Les fiches détaillées des outils sont regroupées ici.** Les autres chapitres expliquent leur rôle dans un workflow et renvoient vers ces fiches pour l'installation, la configuration et les limites. Le **[catalogue des outils](outils-complementaires.md)** rassemble aussi les utilitaires et frameworks employés dans les exemples.
+
+## Retrouver une fiche
+
+| Famille | Guides dans Outils |
+|---|---|
+| Réduction du bruit et des tokens | [RTK](rtk.md), [Caveman](caveman.md), [TOON](toon.md) |
+| Recherche et structure du code | [Semble](semble.md), [Serena](serena.md), [Graphify](graphify.md), [Tree-sitter](tree-sitter.md) |
+| Ingestion et retrieval RAG | [Docling](docling.md), [Qdrant](qdrant.md) |
+| Spécifications et workflows | [OpenSpec](openspec.md), [schémas OpenSpec](openspec-schemas.md) |
+| Data, ML et Deep Learning | [Jupyter](jupyter.md), [frameworks ML](frameworks-ml.md), [frameworks Deep Learning](frameworks-deep-learning.md) |
+| Validation et migrations | [SonarQube](sonarqube.md), [catalogue des outils de validation](outils-complementaires.md#validation-analyse-statique-et-migrations) |
+| Connexions et skills | [MCP](mcps/index.md), [OpenSkills](openskills.md) |
+| Observabilité et événements | [Grafana, Loki, Kepler](observabilite/index.md), [Solace](solace.md) |
+| Modèles locaux et agents alternatifs | [Ollama](ollama.md), [LM Studio](lm-studio.md), [Cline et Kilo](agents-code/index.md), [autres assistants](outils-complementaires.md#autres-assistants-ou-environnements-alternatifs) |
+
 Le bon principe est : **utiliser l'outil le plus fiable et le plus simple pour chaque étape**, puis réserver le raisonnement agentique aux problèmes qui en ont réellement besoin.
 
 ---
@@ -45,9 +61,13 @@ RTK ne remplace pas `/compact` : l'un transforme une **sortie externe**, l'autre
 
 **[TOON](toon.md)** vise la représentation compacte de données structurées. Utilisez-le lorsque son format est réellement supporté par votre workflow ; ne convertissez pas des données simplement pour « économiser des tokens » si JSON/CSV filtré est déjà suffisamment lisible.
 
+### Caveman
+
+**[Caveman](caveman.md)** propose un skill de concision, un proxy local et un middleware. Comparez-le à RTK selon la source du bruit : réponses de l'agent ou résultats d'outils. Le chapitre [Coûts & Gouvernance](../chapitre-12-couts-gouvernance/caveman.md) explique comment mesurer leur intérêt budgétaire.
+
 ### Graphify
 
-Pour un dépôt volumineux, **[Graphify](../chapitre-4-contexte/graphify.md)** peut construire un knowledge graph afin de cartographier les relations entre code, documentation et configurations. Sa place principale reste le chapitre **Contexte**, car il sert d'abord à réduire l'exploration brute du repository.
+Pour un dépôt volumineux, **[Graphify](graphify.md)** peut construire un knowledge graph afin de cartographier les relations entre code, documentation et configurations. Consultez aussi **[Semble](semble.md)** pour rechercher du code, **[Serena](serena.md)** pour les symboles et références, et **[Tree-sitter](tree-sitter.md)** pour comprendre l'analyse syntaxique utilisée par certains outils.
 
 ### CLI déterministes
 

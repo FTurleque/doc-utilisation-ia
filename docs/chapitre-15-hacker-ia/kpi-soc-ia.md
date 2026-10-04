@@ -125,6 +125,28 @@ L'objectif est de reconstruire une séquence d'actions, pas d'inférer l'intenti
 
 ---
 
+## Instrumenter Claude Code sans créer une nouvelle fuite
+
+La documentation [Monitoring usage](https://code.claude.com/docs/en/monitoring-usage), consultée le **4 octobre 2026**, distingue l'export OpenTelemetry configuré par l'organisation des services de télémétrie opérationnelle Anthropic. L'export vers votre backend est optionnel et doit être explicitement configuré.
+
+Le contenu des prompts et les arguments d'outils ne sont pas systématiquement journalisés. Activer `OTEL_LOG_USER_PROMPTS`, `OTEL_LOG_TOOL_DETAILS`, `OTEL_LOG_TOOL_CONTENT` ou les traces détaillées peut exposer prompts, chemins, commandes, résultats ou données sensibles selon les options et la version. Vérifiez chaque signal et masquez les valeurs avant stockage. Ne supposez pas que l'absence de détails dans un événement signifie qu'ils sont absents des spans de trace.
+
+La journalisation complète n'est pas nécessaire à chaque décision SOC. Préférez des identifiants corrélables, horodatages, catégories d'actions, ressources, décisions et résultats ; limitez la collecte de contenu aux investigations autorisées. Protégez collector, destination d'export, accès et rétention. Le guide [Observabilité](../chapitre-13-outils-economies/observabilite/index.md) regroupe les outils correspondants.
+
+| Règle de détection proposée | Corrélation attendue | Action analyste |
+|---|---|---|
+| Changement d'instructions puis action sensible | Configuration effective + session + outil + événement du service cible | Examiner le changement et la portée réelle |
+| Credential révoqué puis nouvelle utilisation | Identité/token référencé + journal IAM + résultat d'accès | Confirmer l'invalidation ou un jeton dérivé |
+| Serveur MCP modifié puis nouvelle destination | Inventaire/version + DNS/proxy + session | Isoler si la destination est hors politique |
+| Lecture de donnée protégée puis transfert externe | Décision d'accès + journal réseau + destination | Vérifier quelles données ont effectivement quitté le système |
+| Répétition d'une action après erreur | Identifiant d'opération + retries + résultat métier | Stopper la boucle et contrôler les doublons |
+
+Ces règles sont des propositions locales, pas des détections intégrées garanties. Complétez les événements agentiques avec les journaux du système et du service cible.
+
+### Mesurer la couverture et l'incertitude
+
+Documentez numérateur, dénominateur, fenêtre de mesure et données manquantes. Par exemple, la couverture de tests est « scénarios applicables avec preuve récente / scénarios applicables », pas « alertes produites / prompts envoyés ». Pour MTTD, gardez la distinction entre début confirmé, début estimé et début inconnu ; une moyenne seule peut masquer des incidents longs.
+
 ## Revue périodique
 
 À chaque revue :
@@ -141,6 +163,8 @@ Supprimez un KPI qui ne pilote rien.
 ---
 
 ## Sources
+
+- [Claude Code — Monitoring usage](https://code.claude.com/docs/en/monitoring-usage) — consulté le 2026-10-04
 
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

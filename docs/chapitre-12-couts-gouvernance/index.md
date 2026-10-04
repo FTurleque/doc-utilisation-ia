@@ -24,9 +24,9 @@ Ce chapitre explique comment piloter le **coût, l'usage et la gouvernance de Cl
 
     Contexte minimal utile, `/clear`, `/compact`, skills, subagents, choix du modèle et limitation des outils.
 
-- :material-compress: **[Caveman — réduction du bruit et des tokens](caveman.md)**
+- :material-compress: **[Caveman & RTK — réduction du bruit et des tokens](caveman.md)**
 
-    Skill, proxy local et middleware pour réduire certaines sorties et tool results, avec mesure A/B avant adoption.
+    Choisir entre réduction des sorties terminales, concision de l'agent et traitement des tool results ; mesurer le coût et la qualité. Installation et configuration dans les fiches du chapitre Outils.
 
 - :material-transit-connection-variant: **[Quand utiliser quel mode ?](modes-quand-utiliser.md)**
 
@@ -85,7 +85,7 @@ Les principaux leviers sont donc :
 4. utiliser `/compact` sur une session longue ;
 5. déléguer les explorations volumineuses à des subagents ;
 6. faire exécuter les validations plutôt que multiplier les échanges spéculatifs ;
-7. lorsque le bruit vient réellement des sorties ou tool results, évaluer des outils ciblés comme **[Caveman](caveman.md)** ou RTK au lieu de compresser tout le workflow par principe.
+7. lorsque le bruit vient réellement des sorties ou tool results, évaluer des outils ciblés comme **[RTK](../chapitre-13-outils-economies/rtk.md)** et **[Caveman](../chapitre-13-outils-economies/caveman.md)**. Leur [comparaison budgétaire](caveman.md) reste dans ce chapitre ; leurs guides complets sont dans **Outils**.
 
 ---
 
@@ -98,8 +98,8 @@ Les outils de réduction de tokens agissent à des niveaux différents :
 | `/compact` | historique/contexte de conversation Claude |
 | Caveman skill | verbosité des réponses de l'agent |
 | Caveman proxy/middleware | certaines entrées et tool results |
-| RTK | sorties terminales volumineuses |
-| Semble | quantité de code chargée pendant la recherche |
+| [RTK](../chapitre-13-outils-economies/rtk.md) | sorties terminales volumineuses |
+| [Semble](../chapitre-13-outils-economies/semble.md) | quantité de code chargée pendant la recherche |
 
 Une réduction de tokens n'est utile que si le taux de réussite reste stable. Comparez coût **et** qualité sur un corpus réel de tâches.
 

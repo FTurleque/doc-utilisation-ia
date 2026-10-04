@@ -34,8 +34,9 @@ graph LR
 | Page | Niveau | Contenu |
 |---|---|---|
 | [Concepts & architectures](concepts.md) | Tous | Retrieval, embeddings, chunking, reranking, agentic retrieval |
-| [Docling](docling.md) | Intermédiaire | Ingestion PDF/DOCX/PPTX/etc., OCR, structure, exports et chunks |
-| [Qdrant](qdrant.md) | Intermédiaire | Moteur vectoriel, payloads, filtres et hybrid search |
+| [Sécurité — ACL & prompt injection](securite.md) | Tous | Droits d'accès, confidentialité, ingestion, caches, révocation et tests |
+| [Docling](../chapitre-13-outils-economies/docling.md) | Intermédiaire | Ingestion PDF/DOCX/PPTX/etc., OCR, structure, exports et chunks |
+| [Qdrant](../chapitre-13-outils-economies/qdrant.md) | Intermédiaire | Moteur vectoriel, payloads, filtres et hybrid search |
 | [Implémentation](implementation.md) | Tous | Progression du prototype à la production |
 | [Niveau 1](niveau-1.md) | Débutant | Pipeline minimal et observable |
 | [Niveau 2](niveau-2.md) | Intermédiaire | Retrieval hybride, reranking, qualité |
@@ -69,7 +70,7 @@ Le pipeline est simple à dessiner mais difficile à rendre fiable. Les erreurs 
 
 Avant les embeddings et le vector store, il faut transformer les sources en un corpus exploitable.
 
-**[Docling](docling.md)** est un exemple d'outil spécialisé dans cette étape :
+**[Docling](../chapitre-13-outils-economies/docling.md)** est un exemple d'outil spécialisé dans cette étape :
 
 - PDF avec structure de page, ordre de lecture, tableaux, formules et OCR ;
 - DOCX, PPTX, XLSX, HTML, EPUB, images, audio et autres formats ;
@@ -87,7 +88,7 @@ Une approche courante consiste à représenter textes et requêtes sous forme de
 
 La similarité cosinus est fréquente, mais **un score élevé n'est pas une preuve de pertinence métier**. Un retrieval doit être évalué sur un jeu de questions représentatif.
 
-**[Qdrant](qdrant.md)** fournit un exemple concret de moteur vectoriel adapté à ce rôle, avec filtres sur payload, recherche dense/sparse et requêtes hybrides. Il n'est pas obligatoire : choisissez le store qui correspond à vos contraintes et à vos evals.
+**[Qdrant](../chapitre-13-outils-economies/qdrant.md)** fournit un exemple concret de moteur vectoriel adapté à ce rôle, avec filtres sur payload, recherche dense/sparse et requêtes hybrides. Il n'est pas obligatoire : choisissez le store qui correspond à vos contraintes et à vos evals.
 
 Métriques utiles côté retrieval :
 
@@ -168,6 +169,8 @@ MCP fournit l'accès aux outils et données ; les **skills** peuvent documenter 
 ---
 
 ## Sécurité
+
+Le guide **[Sécurité du RAG](securite.md)** explique les ACL (listes de contrôle d'accès) et présente les frontières du système avec des diagrammes UML. La sécurité se conçoit dès le prototype, pas seulement lors du passage au niveau 3.
 
 Le retrieval fait entrer du contenu externe dans le contexte du modèle. Considérez ce contenu comme **non fiable** :
 

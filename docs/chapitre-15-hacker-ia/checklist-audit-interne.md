@@ -79,6 +79,21 @@ L'audit doit produire :
 
 ---
 
+## 8. Contrôles à l'exécution et preuves de refus
+
+- [ ] Le mode de permission effectif est contrôlé pour la surface et la version utilisées.
+- [ ] La sandbox est testée, y compris son indisponibilité, ses exceptions et les chemins non couverts.
+- [ ] L'automatisation non interactive applique ses règles avant le lancement ; elle ne dépend pas d'un dialogue utilisateur.
+- [ ] Les droits des sous-agents et équipes sont bornés ; la délégation n'accorde pas de nouveaux accès.
+- [ ] Mémoire, index RAG, caches et tenants possèdent des règles de lecture/écriture testées.
+- [ ] La révocation d'un credential bloque réellement les accès concernés.
+- [ ] Les retries, actions répétées et budgets ont un arrêt contrôlé.
+- [ ] La télémétrie n'expose pas inutilement prompts, secrets ou données ; événements et traces sont vérifiés séparément.
+- [ ] Les tests comportent des actions interdites **et** des tâches autorisées, avec vérification côté service.
+- [ ] Le registre précise l'édition du référentiel, la date de preuve et les limites de couverture.
+
+Voir [Sécuriser les agents IA](securite-agents.md) et [Tests de sécurité](tests-securite.md). Une case cochée doit référencer une preuve datée, un périmètre et un responsable.
+
 ## Plan de remédiation
 
 ```markdown
@@ -104,6 +119,9 @@ Un seul écart critique peut être plus important que vingt contrôles mineurs c
 
 ## Sources
 
+- [Claude Code — Security](https://code.claude.com/docs/en/security) — consulté le 2026-10-04
+- [Claude Code — Monitoring usage](https://code.claude.com/docs/en/monitoring-usage) — consulté le 2026-10-04
+
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
 - [MITRE ATLAS](https://atlas.mitre.org/)
@@ -113,4 +131,4 @@ Un seul écart critique peut être plus important que vingt contrôles mineurs c
 
 ## Prochaine étape
 
-Poursuivez avec **[Modèles fiches incident & post-mortem](modeles-fiches-incident.md)**, la page suivante dans le menu.
+Poursuivez avec **[Tests de sécurité & preuves](tests-securite.md)**, la page suivante dans le menu.

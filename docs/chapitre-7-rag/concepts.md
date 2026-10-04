@@ -25,6 +25,29 @@ graph LR
 
 Une mauvaise réponse peut venir de n'importe lequel de ces blocs. Il faut donc les évaluer séparément.
 
+### Déroulement d'une question : diagramme de séquence UML
+
+Les documents sont déjà indexés ; ce diagramme distingue recherche, assemblage et génération. Le contrôle d'accès intervient avant la diffusion des passages.
+
+```mermaid
+sequenceDiagram
+    actor U as Utilisateur
+    participant A as Application
+    participant I as Index documentaire
+    participant C as Assembleur de contexte
+    participant M as Modele
+    U->>A: Question
+    A->>A: Verifier identite et droits
+    A->>I: Rechercher dans le perimetre autorise
+    I-->>A: Passages et provenance
+    A->>C: Question et passages autorises
+    C-->>A: Contexte delimite et budgete
+    A->>M: Generer depuis ce contexte
+    M-->>A: Reponse proposee et citations
+    A->>A: Verifier citations et droits de diffusion
+    A-->>U: Reponse ou information insuffisante
+```
+
 ---
 
 ## 2. Retrieval lexical, dense et hybride
@@ -61,6 +84,35 @@ Découpe selon des frontières naturelles : titres Markdown, fonctions, classes,
 ### Parent-child
 
 Indexe des petits passages pour la précision du retrieval mais retourne un bloc parent plus large pour préserver le contexte.
+
+Le diagramme de classes UML suivant distingue la source, ses passages et les hits de recherche. Un score concerne un hit pour une question donnée ; il ne remplace ni la provenance ni une autorisation. La lecture du parent doit être autorisée, même si le petit passage l'était.
+
+```mermaid
+classDiagram
+    class Document {
+        identifiant
+        version
+        provenance
+    }
+    class Passage {
+        identifiant
+        emplacement
+        texte
+    }
+    class RepresentationVectorielle {
+        modele_embedding
+        dimension
+        vecteur
+    }
+    class ResultatRecherche {
+        score
+        rang
+    }
+    Document "1" *-- "0..*" Passage : contient
+    Passage "1" --> "0..*" RepresentationVectorielle : represente
+    ResultatRecherche "0..*" --> "1" Passage : reference
+    Passage "0..*" --> "0..1" Passage : parent
+```
 
 ### Ce qu'il faut mesurer
 
@@ -212,6 +264,8 @@ Ne confondez pas retrieval quality et answer quality.
 
 Les documents récupérés sont du **contenu non fiable**. Un document peut contenir une instruction malveillante destinée à l'agent.
 
+**ACL** signifie *Access Control List*, ou **liste de contrôle d'accès** : elle indique quels utilisateurs ou groupes peuvent effectuer une opération sur un document. Par exemple, une grille salariale lisible par le groupe RH ne doit pas apparaître dans les passages envoyés au modèle pour un commercial, même dans la même organisation. L'authentification établit l'identité ; l'autorisation vérifie ses droits. Le modèle ne décide pas de ces droits.
+
 Garde-fous essentiels :
 
 - appliquer les ACL avant retrieval ;
@@ -223,6 +277,8 @@ Garde-fous essentiels :
 - journaliser les recherches et décisions importantes.
 
 Pour les agents ayant accès en écriture à des systèmes externes, le risque n'est plus seulement une mauvaise réponse : une injection peut essayer de provoquer une action.
+
+La page **[Sécurité du RAG — ACL, confidentialité et prompt injection](securite.md)** détaille les droits sur documents/passages, les caches, la révocation, l'ingestion, les outils et les tests de refus. Le filtre doit être appliqué avant tout envoi au reranker ou au modèle ; supprimer un passage de la réponse finale ne répare pas sa divulgation précédente.
 
 ---
 
@@ -251,4 +307,4 @@ Claude Code est utile pour automatiser cette boucle, à condition de lui demande
 
 ## Prochaine étape
 
-Poursuivez avec **[Docling — Ingestion documentaire](docling.md)**, la page suivante dans le menu.
+Poursuivez avec **[Sécurité — ACL & Prompt injection](securite.md)**, la page suivante dans le menu.

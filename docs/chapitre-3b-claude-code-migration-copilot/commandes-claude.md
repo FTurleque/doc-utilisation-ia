@@ -291,6 +291,10 @@ Inventaire des options visibles dans `claude --help` de la version locale contr�
 
 ---
 
+## Raccourcis et références pratiques
+
+La [référence rapide des raccourcis Claude](../references-claude/raccourcis-commandes.md) complète cette cheat sheet avec les points d’entrée VS Code et JetBrains.
+
 ## Prochaine étape
 
 Poursuivez avec **[Contexte & Personnalisation — Accueil](../chapitre-4-contexte/index.md)**, la page suivante dans le menu.

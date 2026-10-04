@@ -248,6 +248,10 @@ Un **hook Git** doit continuer à être présenté comme un hook Git, même si C
 
 ---
 
+## Checklist avant de créer un hook
+
+Le [template de checklist des hooks](templates-configuration.md#template-hook) regroupe les points à relire avant activation.
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-hooks).

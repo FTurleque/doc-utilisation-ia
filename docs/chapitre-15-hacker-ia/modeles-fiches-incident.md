@@ -30,6 +30,9 @@ Ces modèles servent à documenter un incident impliquant un agent IA, un MCP, u
 - MCP actifs:
 - Plugins/skills/hooks:
 - Credentials accessibles:
+- Version du client et configuration effective:
+- Mode de permission et couverture sandbox:
+- Sous-agents / équipes / processus associés:
 
 ## Confinement
 - Accès révoqués:
@@ -69,6 +72,10 @@ Ces modèles servent à documenter un incident impliquant un agent IA, un MCP, u
 - Fichiers lus/écrits:
 - Destinations réseau:
 - Credentials utilisés:
+- Version du corpus RAG, mémoire et caches:
+- Identifiant de session / sous-agent / opération:
+- Décision d'autorisation et résultat côté service:
+- Données manquantes et limites de télémétrie:
 
 ## 4. Hypothèses
 | Hypothèse | Éléments pour | Éléments contre | Statut |
@@ -90,6 +97,9 @@ Ces modèles servent à documenter un incident impliquant un agent IA, un MCP, u
 - Critères de clôture:
 - Risques résiduels:
 - Preuves de validation:
+- Anciennes clés et sessions effectivement invalidées:
+- Tests de refus et tâches autorisées réussis:
+- Responsable ayant validé la reprise:
 ```
 
 ---
@@ -132,6 +142,18 @@ Ces modèles servent à documenter un incident impliquant un agent IA, un MCP, u
 
 ---
 
+## Registre de conservation des preuves
+
+```markdown
+| ID preuve | Heure UTC | Source et collecteur | Empreinte | Emplacement protégé | Accès / rétention |
+|---|---|---|---|---|---|
+| PREUVE-001 | à renseigner | service ou endpoint | SHA-256 de l'artefact | référence du coffre | responsable et politique |
+```
+
+Conservez le fichier original dans un espace restreint et distinguez-le de la copie expurgée utilisée dans le ticket. Documentez les transferts et la collecte ; l'empreinte contrôle l'intégrité, elle ne prouve pas à elle seule l'origine du fichier. Aucun secret actif ne doit être collé dans ces modèles.
+
+Les [tests de sécurité](tests-securite.md) fournissent des critères techniques de clôture ; le [playbook](playbook-incident-ia.md) précise le confinement et la reprise.
+
 ## Erreurs à éviter
 
 - recopier la réponse du modèle comme preuve ;
@@ -144,6 +166,8 @@ Ces modèles servent à documenter un incident impliquant un agent IA, un MCP, u
 ---
 
 ## Sources
+
+- [NIST SP 800-61 Rev. 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final) — consulté le 2026-10-04
 
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

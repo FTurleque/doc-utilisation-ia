@@ -160,6 +160,10 @@ L'objectif est de **réduire les instructions permanentes** et de charger les ca
 
 ---
 
+## Templates de configuration
+
+Retrouvez les [templates Claude](templates-configuration.md) pour les instructions, rules, skills, agents et MCP. Adaptez les exemples au dépôt réel.
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-parametres-depot).

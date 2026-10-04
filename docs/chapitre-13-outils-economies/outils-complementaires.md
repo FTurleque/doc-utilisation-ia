@@ -4,7 +4,7 @@
 
 Claude Code est l'agent principal de cette documentation, mais il ne doit pas remplacer les outils plus déterministes ni empêcher un choix local ou spécialisé lorsque celui-ci est pertinent.
 
-Cette page sert de **carte transversale** : certains outils sont documentés dans d'autres chapitres lorsque leur rôle principal est le contexte, le RAG, les bonnes pratiques ou les coûts.
+Cette page est le **catalogue transversal des outils de la documentation**. Les fiches d'installation, de fonctionnement et de configuration sont regroupées dans **Outils** ; les autres chapitres présentent brièvement leur intérêt pour le contexte, le RAG, les bonnes pratiques ou les coûts et renvoient ici. Les utilitaires employés dans les exemples sont également répertoriés ci-dessous.
 
 ---
 
@@ -15,14 +15,15 @@ Cette page sert de **carte transversale** : certains outils sont documentés dan
 | SonarQube | Analyse statique, Quality Gates, MCP Sonar | [SonarQube](sonarqube.md) |
 | RTK | Réduire certaines sorties CLI envoyées à l'agent | [RTK](rtk.md) |
 | TOON | Représenter de façon compacte certaines données structurées | [TOON](toon.md) |
-| Caveman | Réduire verbosité agent et certaines entrées/tool results | [Caveman](../chapitre-12-couts-gouvernance/caveman.md) |
+| Caveman | Réduire verbosité agent et certaines entrées/tool results | [Caveman](caveman.md) |
 | MCP | Connecter Claude à des services/données dynamiques | [MCP](mcps/index.md) |
 | OpenSkills | Installer/synchroniser des skills portables | [OpenSkills](openskills.md) |
-| Semble | Recherche rapide de snippets de code pour agents | [Semble](../chapitre-4-contexte/semble.md) |
-| Serena | Code intelligence sémantique : symboles, références, refactorings | [Serena](../chapitre-4-contexte/serena.md) |
-| Graphify | Construire un knowledge graph d'un dépôt volumineux | [Graphify](../chapitre-4-contexte/graphify.md) |
-| Docling | Parser/structurer des documents avant RAG | [Docling](../chapitre-7-rag/docling.md) |
-| Qdrant | Retrieval vectoriel/hybride pour les architectures RAG | [Qdrant](../chapitre-7-rag/qdrant.md) |
+| Semble | Recherche rapide de snippets de code pour agents | [Semble](semble.md) |
+| Serena | Code intelligence sémantique : symboles, références, refactorings | [Serena](serena.md) |
+| Graphify | Construire un knowledge graph d'un dépôt volumineux | [Graphify](graphify.md) |
+| Tree-sitter | Analyser la structure syntaxique du code | [Tree-sitter](tree-sitter.md) |
+| Docling | Parser/structurer des documents avant RAG | [Docling](docling.md) |
+| Qdrant | Retrieval vectoriel/hybride pour les architectures RAG | [Qdrant](qdrant.md) |
 
 Ces outils complètent Claude ; ils ne sont pas des modèles concurrents.
 
@@ -32,10 +33,53 @@ Ces outils complètent Claude ; ils ne sont pas des modèles concurrents.
 
 | Outil | Rôle | Page |
 |---|---|---|
-| OpenSpec | Framework SDD avec proposal, specs, design et tasks versionnés | [OpenSpec](../chapitre-9-bonnes-pratiques/openspec.md) |
-| OpenSpec Custom Schemas | Workflows spécialisés : intent-driven, event-driven, ADR, minimalist… | [OpenSpec Schemas](../chapitre-9-bonnes-pratiques/openspec-schemas.md) |
+| OpenSpec | Framework SDD avec proposal, specs, design et tasks versionnés | [OpenSpec](openspec.md) |
+| OpenSpec Custom Schemas | Workflows spécialisés : intent-driven, event-driven, ADR, minimalist… | [OpenSpec Schemas](openspec-schemas.md) |
 
-Ils sont documentés dans **Bonnes Pratiques** car ils structurent le processus de livraison plutôt que l'exécution du modèle.
+Le chapitre **Bonnes Pratiques** présente leur place dans le processus de livraison ; ces fiches du chapitre **Outils** expliquent leur installation et leur fonctionnement.
+
+## Utilitaires de recherche et de données
+
+| Outil | Usage avec Claude Code | Repère |
+|---|---|---|
+| Git | Historique, différences et revue des modifications | [Workflow de validation](../chapitre-9-bonnes-pratiques/workflows-ia.md) |
+| ripgrep (`rg`) | Recherche textuelle ciblée dans les fichiers | [Exemples de CLI](index.md#cli-deterministes) |
+| `jq` | Sélection de champs dans une sortie JSON | [Exemples de CLI](index.md#cli-deterministes) |
+| `yq` | Sélection de champs dans une configuration YAML | [Exemples de CLI](index.md#cli-deterministes) |
+| `tree` | Vue limitée de l'arborescence | [Exemples de CLI](index.md#cli-deterministes) |
+
+Ces commandes préparent des preuves ciblées. Fixez la variante et la version des utilitaires dans la configuration du projet : deux commandes portant le même nom peuvent avoir des options différentes.
+
+## Validation, analyse statique et migrations
+
+| Outil ou famille | Rôle dans le workflow | Guide ou documentation officielle |
+|---|---|---|
+| SonarQube | Analyse statique et Quality Gates | [IntelliJ](sonarqube.md), [VS Code](sonarqube-vscode.md), [RTK + Sonar](rtk-sonar.md) |
+| Semgrep | Recherche et analyse du code par règles | [Documentation Semgrep](https://semgrep.dev/docs/) |
+| Qodana | Inspections du code et rapports de qualité | [Documentation Qodana](https://www.jetbrains.com/help/qodana/) |
+| SpotBugs | Analyse statique du bytecode Java | [Documentation SpotBugs](https://spotbugs.readthedocs.io/) |
+| PMD | Analyse du code par règles | [Documentation PMD](https://docs.pmd-code.org/latest/) |
+| Checkstyle | Contrôle des conventions de code Java | [Documentation Checkstyle](https://checkstyle.org/) |
+| OpenRewrite | Migrations automatisées à partir de recettes | [Documentation OpenRewrite](https://docs.openrewrite.org/) |
+| pytest | Exécution des tests Python | [Documentation pytest](https://docs.pytest.org/) |
+| Ruff | Lint et formatage Python | [Documentation Ruff](https://docs.astral.sh/ruff/) |
+| Compilateurs, type checkers, Maven, Gradle, npm | Build, types et checks définis par le projet | [Workflow de validation](../chapitre-9-bonnes-pratiques/workflows-ia.md) |
+
+Ces outils fournissent les diagnostics que Claude analyse et les checks qui valident ses modifications. Leur configuration dépend du langage et du dépôt ; utilisez les commandes verrouillées par le projet.
+
+## Data, notebooks et frameworks ML
+
+| Outil ou famille | Place dans le travail | Guide dans Outils |
+|---|---|---|
+| Jupyter / JupyterLab | Exploration et notebooks reproductibles | [Jupyter avec Claude Code](jupyter.md) |
+| scikit-learn | ML classique et pipelines de preprocessing | [Comparaison des frameworks ML](frameworks-ml.md#scikit-learn) |
+| TensorFlow | Deep learning et écosystème associé | [Comparaison des frameworks ML](frameworks-ml.md#tensorflow) |
+| PyTorch | Deep learning et export des modèles | [Comparaison des frameworks ML](frameworks-ml.md#pytorch) |
+| Keras | API haut niveau et choix du backend | [Comparaison des frameworks ML](frameworks-ml.md#keras-3) |
+| JAX | Backend à considérer selon les opérations et la cible | [Frameworks Deep Learning](frameworks-deep-learning.md) |
+| NumPy, pandas, Matplotlib | Calcul, préparation des données et visualisation | [Jupyter](jupyter.md), [frameworks ML](frameworks-ml.md) |
+
+Pour une méthode de préparation des données et d'évaluation, suivez les chapitres [Machine Learning](../chapitre-6-machine-learning/index.md) et [Deep Learning](../chapitre-8-deep-learning/index.md). Ils renvoient aux fiches d'outils pour les contraintes propres aux frameworks.
 
 ---
 
@@ -77,6 +121,7 @@ Docling et Qdrant sont complémentaires : le premier prépare le corpus, le seco
 | Grafana | Dashboards, Explore, alerting et corrélation multi-source | [Grafana](observabilite/grafana.md) |
 | Loki | Centralisation et interrogation des logs | [Loki](observabilite/loki.md) |
 | Kepler | Métriques d'énergie Kubernetes exportées vers Prometheus | [Kepler](observabilite/kepler.md) |
+| Prometheus | Collecte et interrogation des métriques | [Architecture d'observabilité](observabilite/index.md) |
 
 Voir la **[vue d'ensemble Observabilité & GreenOps](observabilite/index.md)**.
 
@@ -130,8 +175,8 @@ Ces deux outils disposent d'une **[section spéciale](agents-code/index.md)** po
 
 | Produit | Pourquoi la page reste |
 |---|---|
-| Continue | Installations existantes et historique des stacks locales ; maintenance active arrêtée |
-| Supermaven | Utilisateurs existants ; sunset annoncé |
+| [Continue](continue-dev.md) | Installations existantes et historique des stacks locales ; maintenance active arrêtée |
+| [Supermaven](supermaven.md) | Utilisateurs existants ; sunset annoncé |
 
 Ne créez pas une nouvelle stack d'équipe autour d'une page legacy uniquement parce qu'elle existe encore dans la documentation.
 
@@ -189,7 +234,7 @@ Pour chaque outil ajouté :
 
 - [Contexte & code intelligence](../chapitre-4-contexte/index.md)
 - [RAG](../chapitre-7-rag/index.md)
-- [OpenSpec](../chapitre-9-bonnes-pratiques/openspec.md)
+- [OpenSpec](openspec.md)
 - [Coûts & Gouvernance](../chapitre-12-couts-gouvernance/index.md)
 - [Comparaison des outils](comparaison.md)
 - [Agents de code alternatifs](agents-code/index.md)

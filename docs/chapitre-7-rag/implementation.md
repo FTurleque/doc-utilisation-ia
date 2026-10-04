@@ -112,6 +112,8 @@ Après chaque ajout, réexécutez le même jeu d'evals.
 
 ## Niveau 3 — production
 
+La **[sécurité du RAG](securite.md)** détaille les ACL (listes de contrôle d'accès), les refus par défaut et les tests à prévoir dès qu'un prototype utilise des documents privés.
+
 Un système de production doit couvrir plus que le retrieval :
 
 | Axe | Exigences |

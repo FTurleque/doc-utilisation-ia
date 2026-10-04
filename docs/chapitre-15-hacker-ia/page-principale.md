@@ -22,6 +22,8 @@ Ces cas montrent des capacités réelles, mais ne donnent pas automatiquement un
 
 ## Menaces à modéliser
 
+Il faut distinguer **IA utilisée comme moyen d'attaque**, **système IA pris pour cible** et **agent influencé dans un environnement autorisé**. Les contrôles se recoupent mais les preuves d'incident diffèrent. La [page sur la sécurité des agents](securite-agents.md) détaille ces frontières.
+
 | Famille | Surface exposée | Contrôles défensifs |
 |---|---|---|
 | Ingénierie sociale assistée | messagerie, voix, vidéo, support | MFA résistante au phishing, validation hors bande, processus transactionnels |
@@ -90,6 +92,17 @@ L'objectif est de détecter une action risquée, pas de prouver qu'un texte ou u
 
 ---
 
+## Employer l'IA pour la défense
+
+| Tâche | Contribution utile de l'assistant | Contrôle indépendant |
+|---|---|---|
+| Triage SOC | Synthétiser des événements et proposer des hypothèses | Journaux originaux et décision de l'analyste |
+| Revue de code | Expliquer un diagnostic et proposer un correctif | [Analyse statique](../chapitre-13-outils-economies/outils-complementaires.md#validation-analyse-statique-et-migrations), tests et revue du diff |
+| Incident | Préparer une chronologie et un compte rendu | Horodatages, sources et qualification des faits |
+| Runbook | Préparer une action dans un périmètre borné | Autorisation, validation métier et retour arrière |
+
+Les tickets, logs et alertes peuvent eux-mêmes contenir du texte contrôlé par un attaquant. Les transmettre à un assistant SOC ne les rend pas fiables. Réduisez les données envoyées et gardez les changements de droits, révocations, communications et opérations sensibles sous un contrôle approprié.
+
 ## Priorisation locale
 
 Ne classez pas « phishing IA = critique » ou « prompt injection = moyen » sans threat model.
@@ -104,7 +117,22 @@ Ne classez pas « phishing IA = critique » ou « prompt injection = moyen » sa
 
 ---
 
-## Sources prioritaires
+## Mise à jour des référentiels — octobre 2026
+
+Les guides OWASP **LLM 2026** et **agentique 2026** répondent à des périmètres distincts. Ne recopiez pas les identifiants ou rangs d'une édition 2025 comme s'ils étaient ceux de 2026. Fixez l'édition dans votre registre de contrôles et vérifiez le mapping lors d'une mise à jour.
+
+La [synthèse ANSSI de février 2026](https://cyber.gouv.fr/actualites/synthese-de-la-menace-sur-lia-generative-face-aux-attaques-informatiques/) traite à la fois des usages offensifs et des attaques contre les systèmes IA. Ses constats doivent rester datés ; un rapport fournisseur décrivant une opération fortement automatisée ne prouve pas une autonomie complète de toutes les attaques.
+
+Pour vos applications, vérifiez aussi mémoire persistante, séparation des tenants, traitement des sorties générées, abus de budget et retries. La [matrice des contrôles](matrice-controles-menaces.md) et les [tests défensifs](tests-securite.md) traduisent ces risques en preuves attendues.
+
+## Références vérifiées le 4 octobre 2026
+
+- [OWASP — LLM 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/)
+- [OWASP — agents 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+- [ANSSI / BSI — principes Zero Trust pour les systèmes LLM](https://cyber.gouv.fr/nous-connaitre/publications/publications-internationales/design-principles-for-llm-based-systems-with-zero-trust/)
+- [Claude Code — Security](https://code.claude.com/docs/en/security)
+
+### Autres repères
 
 - [Anthropic Threat Intelligence](https://www.anthropic.com/threat-intelligence)
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
@@ -116,4 +144,4 @@ Ne classez pas « phishing IA = critique » ou « prompt injection = moyen » sa
 
 ## Prochaine étape
 
-Poursuivez avec **[Études de cas 2024-2026](etudes-de-cas-2024-2026.md)**, la page suivante dans le menu.
+Poursuivez avec **[Sécuriser les agents IA](securite-agents.md)**, la page suivante dans le menu.

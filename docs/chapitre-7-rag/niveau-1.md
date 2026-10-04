@@ -91,7 +91,7 @@ Conservez :
 
 ---
 
-Les fonctions `load_and_chunk_documents`, `build_index` et l’interface `index.search` sont du **pseudocode de contrat**, pas des fonctions installées par un package. Pour Qdrant, adaptez cette étape à sa [Query API](qdrant.md#api-de-recherche-actuelle). Le modèle de génération ne fournit pas nécessairement les embeddings : choisissez et versionnez un encodeur distinct, ses dimensions, sa normalisation et son tokenizer.
+Les fonctions `load_and_chunk_documents`, `build_index` et l’interface `index.search` sont du **pseudocode de contrat**, pas des fonctions installées par un package. Pour Qdrant, adaptez cette étape à sa [Query API](../chapitre-13-outils-economies/qdrant.md#api-de-recherche-actuelle). Le modèle de génération ne fournit pas nécessairement les embeddings : choisissez et versionnez un encodeur distinct, ses dimensions, sa normalisation et son tokenizer.
 
 ## 4. Retrieval inspectable
 

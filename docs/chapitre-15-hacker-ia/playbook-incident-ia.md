@@ -39,6 +39,8 @@ Adaptez ce RACI à l'organisation réelle.
 
 ## Phase 1 — Triage
 
+Le cadre de référence actualisé est [NIST SP 800-61 Rev. 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final), publié en avril 2025 et consulté le **4 octobre 2026**. Il remplace la Rev. 2 et rattache préparation, détection, réponse et récupération à la gestion du risque du CSF 2.0. Les phases ci-dessous sont une organisation pratique du dépôt, pas une reproduction normative de NIST.
+
 - créer un incident et horodater les premiers faits ;
 - identifier comptes, dépôts, endpoints, services et données potentiellement touchés ;
 - préserver les logs et artefacts pertinents ;
@@ -111,6 +113,42 @@ Ne supposez pas qu'une sortie générée par le modèle décrit fidèlement tout
 - restaurer depuis une source de confiance ;
 - valider le retour en service avec des contrôles indépendants.
 
+## Phase 5 — Reprise contrôlée
+
+Avant de relancer, vérifier : composants provenant d'une source de confiance, politique effective, secrets anciens invalides, processus persistants arrêtés ou examinés, accès minimaux et télémétrie disponible. En cas d'empoisonnement, traiter aussi mémoire, index, caches et artefacts dérivés ; retirer uniquement le document source peut laisser une copie active.
+
+Relancer une tâche représentative avec des données fictives, contrôler le résultat côté service puis obtenir la validation du responsable de reprise. Maintenir une surveillance adaptée et un retour arrière documenté. Voir les [tests de sécurité](tests-securite.md).
+
+```mermaid
+stateDiagram-v2
+    [*] --> Triage
+    Triage --> Confinement: Signal crédible
+    Triage --> Surveillance: Signal non confirmé
+    Confinement --> Investigation: Actions dangereuses interrompues
+    Investigation --> Remediation: Cause et périmètre établis
+    Remediation --> Validation: Contrôles restaurés
+    Validation --> Investigation: Échec ou preuve manquante
+    Validation --> Reprise: Tests et décision validés
+    Reprise --> Confinement: Nouveau signal
+    Reprise --> Cloture: Surveillance et risque résiduel acceptés
+    Cloture --> [*]
+```
+
+## Conserver les preuves sans retarder le confinement
+
+Si un dommage continue, interrompre les actions dangereuses sans attendre une collecte complète ; documenter les preuves éventuellement perdues. Dès que possible, conserver des copies protégées avec heure UTC, source, collecteur, empreinte et historique d'accès.
+
+| Artefact | Pourquoi le conserver |
+|---|---|
+| Version du client, modèle/backend et configuration effective | Reconstituer le comportement applicable au moment de l'incident |
+| Instructions, mémoire, sources externes et identifiants RAG | Identifier le contenu qui a influencé la session |
+| Identités, permissions, décisions et révocations | Séparer action proposée, autorisée et exécutée |
+| Journaux endpoint, réseau, IAM, SCM et CI | Vérifier les effets indépendamment du modèle |
+| MCP/plugins/skills/hooks et empreintes | Identifier la version réellement exécutée |
+| Index, caches, état des tâches et processus | Vérifier les copies et activités persistantes |
+
+Ne recopiez pas les secrets dans le ticket d'incident : référencer un coffre de preuves restreint. Une nouvelle clé ne révoque pas automatiquement l'ancienne ; vérifier l'invalidation et les sessions ou jetons dérivés.
+
 ---
 
 ## Runbooks par scénario
@@ -155,6 +193,14 @@ Ne supposez pas qu'une sortie générée par le modèle décrit fidèlement tout
 - rechercher les autres cibles ;
 - revoir la procédure de validation humaine.
 
+### RAG, mémoire ou messages inter-agents suspects
+
+- isoler le corpus, la mémoire ou la source de message concernée ;
+- identifier qui pouvait écrire et quels agents ont lu le contenu ;
+- invalider les caches et copies dérivées selon le périmètre établi ;
+- vérifier les accès entre tenants et les opérations déclenchées ;
+- restaurer les données de confiance et rejouer un test de cloisonnement.
+
 ---
 
 ## Post-mortem
@@ -178,6 +224,9 @@ Si des données personnelles, secrets clients ou systèmes réglementés sont co
 ---
 
 ## Sources
+
+- [NIST SP 800-61 Rev. 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final) — consulté le 2026-10-04
+- [Claude Code — Security](https://code.claude.com/docs/en/security) — consulté le 2026-10-04
 
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [MITRE ATLAS](https://atlas.mitre.org/)

@@ -209,6 +209,10 @@ Le skill peut expliquer comment :
 
 ---
 
+## Template de skill
+
+Copiez et adaptez le [template review-change](templates-configuration.md#template-skill) aux commandes et critères de validation du projet.
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-skills).

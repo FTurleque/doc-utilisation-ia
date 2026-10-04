@@ -30,7 +30,7 @@ graph LR
 | [Architectures de Deep Learning](architectures-deep-learning.md) | Intermédiaire / Expert | CNN, RNN/LSTM, Transformers, autoencodeurs et autres familles |
 | [Concevoir et entraîner](concevoir-entrainer.md) | Expert | Données, architecture, hyperparamètres, entraînement et évaluation |
 | [Optimisation et performance](optimisation-performance.md) | Expert | Régularisation, accélération, distribution, quantification et pruning |
-| [Comparaison des frameworks](comparaison.md) | Intermédiaire | PyTorch, TensorFlow, Keras 3, JAX et critères de choix |
+| [Comparaison des frameworks](../chapitre-13-outils-economies/frameworks-deep-learning.md) | Intermédiaire | PyTorch, TensorFlow, Keras 3, JAX et critères de choix |
 
 ---
 
@@ -83,7 +83,7 @@ Claude peut produire le tableau comparatif, mais il doit utiliser les **mesures 
 
 ## Frameworks : vérifier la documentation actuelle
 
-L'écosystème évolue rapidement. La page [Comparaison des frameworks](comparaison.md) a été actualisée pour éviter les classements figés. Exemples de changements importants : Keras 3 est multi-backend (JAX, TensorFlow, PyTorch) et les nouveaux workflows PyTorch ne doivent plus partir du principe que TorchScript est la voie d'export recommandée partout.
+L'écosystème évolue rapidement. La page [Comparaison des frameworks](../chapitre-13-outils-economies/frameworks-deep-learning.md) a été actualisée pour éviter les classements figés. Exemples de changements importants : Keras 3 est multi-backend (JAX, TensorFlow, PyTorch) et les nouveaux workflows PyTorch ne doivent plus partir du principe que TorchScript est la voie d'export recommandée partout.
 
 ---
 

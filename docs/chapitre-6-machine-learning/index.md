@@ -27,7 +27,7 @@ Ce chapitre couvre le Machine Learning sous deux angles complémentaires : compr
 
     pandas, NumPy, scikit-learn et organisation d'un projet data avec Claude.
 
-- :simple-jupyter: **[Notebooks Jupyter](notebooks-jupyter.md)**
+- :simple-jupyter: **[Notebooks Jupyter](../chapitre-13-outils-economies/jupyter.md)**
 
     Bonnes pratiques de collaboration IA sur les notebooks et limites à connaître.
 
@@ -39,7 +39,7 @@ Ce chapitre couvre le Machine Learning sous deux angles complémentaires : compr
 
     Python, R, Julia et critères de choix techniques.
 
-- :material-compare: **[Comparaison des outils](comparaison-outils.md)**
+- :material-compare: **[Comparaison des outils](../chapitre-13-outils-economies/frameworks-ml.md)**
 
     scikit-learn, TensorFlow, PyTorch, Keras et autres frameworks selon le besoin.
 

@@ -104,6 +104,24 @@ Le tabletop doit vérifier que la procédure repose sur une **preuve d'identité
 
 ---
 
+## Scénario 5 — Mémoire et cache RAG après révocation
+
+Un document fictif est retiré des droits d'une identité de test. Une réponse générée ultérieurement semble encore contenir une information de ce document.
+
+Injects : cache partagé, session longue, index dérivé non invalidé, consultation directe par identifiant. À vérifier : qui stoppe la diffusion, comment déterminer la copie concernée, quels caches invalider et comment prouver le cloisonnement à la reprise. Voir [Sécurité du RAG](../chapitre-7-rag/securite.md).
+
+## Scénario 6 — Sous-agent, boucle et double action
+
+Un sous-agent reçoit une tâche de lecture ; un service fictif enregistre pourtant une tentative d'écriture, puis plusieurs retries. Aucun système réel ne doit être touché pendant l'exercice.
+
+À tester : limites du rôle, identité utilisée, décision d'autorisation, arrêt de toute l'équipe et des processus associés, idempotence et preuve que l'action n'a pas été répétée. Ne concluez pas au confinement uniquement parce que la conversation du parent est arrêtée.
+
+## Scénario 7 — Reprise avec télémétrie incomplète
+
+Après rotation d'un credential, les logs de l'agent restent silencieux mais un événement IAM signale un accès. L'équipe doit distinguer ancien secret non révoqué, jeton dérivé, autre identité et journal manquant.
+
+Résultat attendu : reprise conditionnée par des preuves côté service, inventaire des processus et validation du responsable. Le [plan de tests techniques](tests-securite.md) complète le tabletop.
+
 ## Fiche d'observation
 
 Au lieu d'une note `1-5`, documentez :
@@ -133,6 +151,8 @@ Les observations qualitatives accompagnées de preuves sont souvent plus utiles 
 ---
 
 ## Sources
+
+- [NIST SP 800-61 Rev. 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final) — consulté le 2026-10-04
 
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [MITRE ATLAS](https://atlas.mitre.org/)

@@ -1,57 +1,20 @@
-# Annexe
+# Annexe — Références GitHub Copilot
 
-Ressources complémentaires, références rapides et templates pour le parcours **Claude Code**, avec GitHub Copilot conservé comme référence de compatibilité.
+L'annexe regroupe les guides, références et archives **GitHub Copilot**. Les comparaisons historiques sont conservées dans leur contexte ; elles ne constituent pas une nouvelle validation des fonctionnalités ou tarifs.
 
----
+## Références rapides Copilot
 
-## Ce que vous trouverez ici
-
-<div class="grid cards" markdown>
-
-- :material-frequently-asked-questions: **[FAQ](faq.md)**
-
-    Questions fréquentes sur Claude Code, modèles locaux, Copilot conservé, sécurité et dépannage.
-
-- :material-keyboard: **[Raccourcis clavier](raccourcis-clavier.md)**
-
-    Commandes et points d'entrée Claude Code, plus raccourcis Copilot de référence.
-
-- :material-link-multiple: **[Ressources externes](ressources-externes.md)**
-
-    Documentation officielle Claude/Anthropic, Copilot, IDE, sécurité et outils complémentaires.
-
-- :material-file-document: **[Templates configuration](templates-configuration.md)**
-
-    Templates `CLAUDE.md`, rules, skills, MCP et configurations Copilot conservées.
-
-</div>
-
----
-
-## Principe de l’annexe
-
-L’annexe ne doit pas réintroduire d'anciens choix par défaut. Lorsqu'un exemple Claude et un exemple Copilot coexistent :
-
-- Claude Code est présenté en premier ;
-- Copilot reste explicitement marqué comme référence ;
-- les versions, prix et raccourcis instables renvoient vers la documentation officielle lorsqu'ils évoluent trop vite.
-
----
-
-## Navigation rapide
-
-- [Claude Code](../chapitre-3b-claude-code-migration-copilot/index.md)
-- [Contexte & Personnalisation](../chapitre-4-contexte/index.md)
-- [Troubleshooting](../chapitre-11-troubleshooting/index.md)
-- [Outils](../chapitre-13-outils-economies/index.md)
-- [Veille IA](../chapitre-14-veille-ia/index.md)
+- [FAQ GitHub Copilot](faq.md)
+- [Raccourcis GitHub Copilot](raccourcis-clavier.md)
+- [Ressources externes GitHub Copilot](ressources-externes.md)
+- [Templates GitHub Copilot](templates-configuration.md)
 
 ## Archives Copilot extraites des chapitres principaux
 
 Les passages historiques ont été déplacés sans les présenter comme une nouvelle validation des fonctionnalités ou tarifs. Chaque rubrique indique sa page d'origine. Le parcours principal conserve uniquement des liens vers ces archives.
 
 - [Accueil](copilot/accueil.md)
-- [Claude Code](copilot/chapitre-3b-claude-code-migration-copilot.md)
+- [Copilot — comparaisons et migration historiques](copilot/chapitre-3b-claude-code-migration-copilot.md)
 - [Contexte & Personnalisation](copilot/chapitre-4-contexte.md)
 - [Prompt Engineering](copilot/chapitre-5-prompt-engineering.md)
 - [Machine Learning](copilot/chapitre-6-machine-learning.md)
@@ -68,7 +31,7 @@ Les passages historiques ont été déplacés sans les présenter comme une nouv
 
 ## GitHub Copilot — références et migration
 
-Les pages consacrées à Copilot sont regroupées ici, après les ressources générales, dans le même ordre que le menu :
+Les pages consacrées à Copilot sont regroupées ici, après les références rapides Copilot, dans le même ordre que le menu :
 
 - [GitHub Copilot — Installation (référence)](../chapitre-1-installation/index.md)
 - [JetBrains / IntelliJ IDEA — installer GitHub Copilot](../chapitre-1-installation/intellij/tutoriel.md)
@@ -98,4 +61,4 @@ Les pages consacrées à Copilot sont regroupées ici, après les ressources gé
 
 ## Prochaine étape
 
-Poursuivez avec **[FAQ](faq.md)**, la page suivante dans le menu.
+Poursuivez avec **[FAQ Copilot](faq.md)**, la page suivante dans le menu.

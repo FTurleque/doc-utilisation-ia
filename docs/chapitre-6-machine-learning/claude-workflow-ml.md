@@ -257,6 +257,10 @@ Avant de terminer :
 
 ---
 
+## Template d’instructions pour un projet ML
+
+Le [template Claude pour le ML](../chapitre-4-contexte/templates-configuration.md#template-ml) regroupe commandes de validation et invariants de reproduction.
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../appendices/copilot/chapitre-6-machine-learning.md#page-chapitre-6-machine-learning-claude-workflow-ml).

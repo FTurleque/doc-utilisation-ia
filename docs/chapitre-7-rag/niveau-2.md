@@ -48,6 +48,33 @@ def reciprocal_rank_fusion(result_lists, k: int = 60):
 
 Ne supposez pas que l'hybride gagne : vérifiez votre dataset d'eval.
 
+### Recherche hybride : diagramme de séquence UML
+
+Les deux recherches peuvent être parallèles si le moteur et votre application le permettent. La fusion combine les rankings ; elle n'accorde aucun nouveau droit.
+
+```mermaid
+sequenceDiagram
+    participant A as Application
+    participant P as Politique acces
+    participant L as Index lexical
+    participant D as Index dense
+    participant F as Fusion et reranking
+    A->>P: Identite authentifiee
+    P-->>A: Perimetre autorise
+    par Branche lexicale
+        A->>L: Question et filtre obligatoire
+        L-->>A: Candidats autorises
+    and Branche dense
+        A->>D: Vecteur de question et meme perimetre
+        D-->>A: Candidats autorises
+    end
+    A->>F: Rankings du perimetre
+    F->>F: Fusionner, dedupliquer, reclasser
+    F-->>A: Passages selectionnes
+    A->>P: Verifier aussi les parents et expansions
+    P-->>A: Contexte autorise pour generation
+```
+
 ---
 
 ## 3. Metadata filtering
@@ -65,6 +92,8 @@ effective_date <= query_date
 ```
 
 Appliquez les ACL **avant** de retourner les documents au modèle.
+
+ACL signifie **liste de contrôle d'accès** (*Access Control List*). Le guide **[Sécurité du RAG](securite.md)** explique leur origine, leur propagation et les tests de non-divulgation.
 
 ---
 

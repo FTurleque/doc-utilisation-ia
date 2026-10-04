@@ -98,6 +98,8 @@ rtk gain
 
 Le tableau permet de comparer la quantité d'entrée et de sortie réellement observée, commande par commande. C'est la métrique à utiliser pour décider si RTK est utile à votre projet.
 
+Les nombres de tokens affichés sont **estimés**, selon le README du projet, à partir du volume de texte (`bytes / 4`) ; ils ne sont pas issus du tokenizer du modèle. Le gain sur la sortie terminale ne correspond pas au même pourcentage de baisse de la facture totale, qui inclut aussi prompts, historique et réponses. [Explication officielle RTK](https://github.com/rtk-ai/rtk#how-savings-work), consultée le **4 octobre 2026**.
+
 Évitez les affirmations universelles telles que « RTK économise 90 % » ou « triple la durée des sessions » : le résultat dépend fortement du mix de commandes et de la verbosité initiale.
 
 ---
@@ -152,4 +154,4 @@ Ces comportements ont été revérifiés dans le [README officiel RTK](https://g
 
 ## Prochaine étape
 
-Poursuivez avec **[IntelliJ](sonarqube.md)**, la page suivante dans le menu.
+Poursuivez avec **[Caveman](caveman.md)**, la page suivante dans le menu.

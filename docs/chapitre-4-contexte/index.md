@@ -57,9 +57,9 @@ Le contexte est une **ressource limitée**. Claude Code recommande de :
 
 | Outil | Rôle principal | À privilégier quand… |
 |---|---|---|
-| **[Semble](semble.md)** | retrouver rapidement les snippets pertinents | l'exploration par grep/read charge trop de code |
-| **[Serena](serena.md)** | symboles, références, édition et refactoring sémantiques | l'agent a besoin de capacités proches d'un IDE |
-| **[Graphify](graphify.md)** | knowledge graph du dépôt | il faut comprendre les relations globales entre composants |
+| **[Semble](../chapitre-13-outils-economies/semble.md)** | retrouver rapidement les snippets pertinents | l'exploration par grep/read charge trop de code |
+| **[Serena](../chapitre-13-outils-economies/serena.md)** | symboles, références, édition et refactoring sémantiques | l'agent a besoin de capacités proches d'un IDE |
+| **[Graphify](../chapitre-13-outils-economies/graphify.md)** | knowledge graph du dépôt | il faut comprendre les relations globales entre composants |
 
 Ces outils sont optionnels. Commencez par les capacités natives de Claude Code et ajoutez une couche uniquement lorsqu'un problème mesurable le justifie.
 
@@ -73,19 +73,19 @@ Ces outils sont optionnels. Commencez par les capacités natives de Claude Code 
 
     Fenêtre de contexte, tokens, bruit, sélection du contexte et stratégies de réduction.
 
-- :material-text-search: **[Semble — recherche de code pour agents](semble.md)**
+- :material-text-search: **[Semble — recherche de code pour agents](../chapitre-13-outils-economies/semble.md)**
 
     Retrieval hybride et local de snippets ciblés, intégrable via MCP, instructions ou subagent.
 
-- :material-code-braces: **[Serena — code intelligence sémantique](serena.md)**
+- :material-code-braces: **[Serena — code intelligence sémantique](../chapitre-13-outils-economies/serena.md)**
 
     Symboles, références, refactorings et édition sémantique via MCP et backend LSP/JetBrains.
 
-- :material-graph: **[Graphify — knowledge graph du dépôt](graphify.md)**
+- :material-graph: **[Graphify — knowledge graph du dépôt](../chapitre-13-outils-economies/graphify.md)**
 
     Cartographie des relations entre code, docs et configurations pour réduire l'exploration brute d'un grand dépôt.
 
-- :material-file-tree: **[Tree-sitter — analyse syntaxique](tree-sitter.md)**
+- :material-file-tree: **[Tree-sitter — analyse syntaxique](../chapitre-13-outils-economies/tree-sitter.md)**
 
     Grammaires, arbres syntaxiques, parsing incrémental, queries et limites de l'analyse du code.
 
@@ -96,6 +96,10 @@ Ces outils sont optionnels. Commencez par les capacités natives de Claude Code 
 - :material-folder-cog: **[Paramètres du dépôt](parametres-depot.md)**
 
     Organiser `CLAUDE.md`, `.claude/` et `.mcp.json` pour partager une configuration de projet.
+
+- :material-file-document: **[Templates de configuration Claude](templates-configuration.md)**
+
+    Exemples à adapter pour instructions, rules, skills, agents, MCP, hooks et projets ML.
 
 - :material-microsoft-visual-studio-code: **[VS Code — contexte](vscode-contexte.md)**
 

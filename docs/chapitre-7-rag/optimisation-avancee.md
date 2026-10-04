@@ -30,6 +30,33 @@ Le dataset doit inclure :
 
 Gardez un jeu de test hors de la boucle de tuning si vous comparez beaucoup de variantes.
 
+### Cycle d'une variante : diagramme de séquence UML
+
+La qualité, la sécurité et la performance sont des contrôles distincts. Une meilleure réponse moyenne ne compense pas une fuite de document.
+
+```mermaid
+sequenceDiagram
+    participant C as Claude Code ou developpeur
+    participant E as Runner evaluation
+    participant P as Pipeline candidat
+    participant R as Rapport de comparaison
+    C->>E: Variante et dataset versionnes
+    loop Questions de test et identites differentes
+        E->>P: Question, identite et configuration
+        P-->>E: Traces de retrieval, transferts, reponse et citations
+        E->>E: Verifier faits, droits, duree et cout
+    end
+    E->>R: Resultats candidat et baseline
+    R-->>C: Ecarts et controles echoues
+    alt Controle de securite echoue
+        C->>C: Rejeter la variante et corriger
+    else Controles passes
+        C->>C: Evaluer le compromis avant adoption
+    end
+```
+
+Le guide **[Sécurité du RAG](securite.md#10-tests-de-securite-prouver-aussi-les-refus)** fournit des cas de test pour les ACL, caches et injections documentaires.
+
 ---
 
 ## 2. Métriques retrieval

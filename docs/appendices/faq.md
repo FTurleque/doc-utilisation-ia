@@ -1,122 +1,25 @@
-# FAQ — Questions fréquentes
+# FAQ GitHub Copilot — référence
 
-## Claude Code
+Cette FAQ concerne les références conservées de GitHub Copilot. Les réponses dépendent du client et de la version ; vérifiez les guides dédiés avant de standardiser une configuration.
 
-??? question "Claude Code est-il le parcours principal de cette documentation ?"
-    Oui. Les pages génériques utilisent désormais **Claude Code** comme outil principal. GitHub Copilot reste documenté comme référence, comparaison et option de retour si son offre redevient pertinente.
+## Pourquoi garder cette documentation ?
 
-??? question "Claude Code fonctionne-t-il dans VS Code et JetBrains ?"
-    Oui. Claude Code possède une intégration VS Code et une intégration JetBrains. Vérifiez la documentation officielle pour les prérequis exacts : l'intégration JetBrains s'appuie sur la CLI Claude Code, tandis que l'expérience VS Code dispose également de sa propre surface intégrée.
+Elle sert aux équipes qui utilisent encore Copilot, à la maintenance des configurations existantes et à la comparaison historique des approches. Voir les [références de l'annexe](index.md).
 
-??? question "Quelle configuration projet faut-il commencer par ?"
-    Gardez le socle petit :
+## Quels fichiers de configuration utiliser ?
 
-    ```text
-    CLAUDE.md
-    .claude/
-      rules/
-      skills/
-    ```
+Les formats dépendent du mécanisme et du client : `.github/copilot-instructions.md`, instructions ciblées `.instructions.md`, prompts `.prompt.md` et agents `.agent.md`. Les mécanismes MCP possèdent aussi leur configuration propre au client.
 
-    Ajoutez agents, hooks, plugins et MCP uniquement lorsqu'un besoin concret le justifie.
+Voir les guides [instructions ciblées](../chapitre-4-contexte/applyto-avance.md) et [prompt files](../chapitre-4-contexte/prompt-files.md), ainsi que les [templates de référence](templates-configuration.md).
 
-??? question "À quoi servent `CLAUDE.md` et `AGENTS.md` ?"
-    `CLAUDE.md` est le mécanisme principal d'instructions projet Claude Code. `AGENTS.md` peut servir de convention portable/multi-agent et est également pris en charge dans les versions récentes de Claude Code. Évitez de dupliquer de longues règles contradictoires dans les deux fichiers.
+## Les fonctionnalités cloud fonctionnent-elles hors ligne ?
 
-??? question "Quand utiliser une rule, une skill, un subagent ou MCP ?"
-    | Besoin | Mécanisme |
-    |---|---|
-    | Invariant court du dépôt | `CLAUDE.md` |
-    | Règle ciblée par fichiers/contexte | `.claude/rules/` |
-    | Procédure réutilisable | `.claude/skills/` |
-    | Travail isolé / recherche indépendante | subagent |
-    | Service ou donnée externe dynamique | MCP |
+Les fonctions cloud nécessitent une connexion au service. Ne confondez pas accès à l'éditeur installé et disponibilité du service distant.
 
-??? question "Comment diagnostiquer Claude Code ?"
-    Commencez par les mécanismes intégrés : `/doctor`, `claude doctor`, `/status`, `/context` et `/mcp` selon le symptôme. Utilisez `--safe-mode` lorsqu'il faut isoler plugins, hooks ou MCP.
+## Où vérifier les plans, incidents et nouveautés ?
 
-??? question "Puis-je utiliser un modèle local avec Claude Code ?"
-    Oui, certains backends comme **Ollama** et **LM Studio** exposent une compatibilité Anthropic permettant de connecter Claude Code à un modèle local. Cela ne transforme pas ce modèle en Claude : tool calling, contexte, qualité et sécurité doivent être benchmarkés séparément.
-
----
-
-## Coûts et données
-
-??? question "Faut-il un abonnement pour Claude Code ?"
-    Claude Code peut être utilisé via les offres Claude compatibles ou via des configurations API/cloud prises en charge. Les plans, limites et mécanismes d'usage évoluent : vérifiez [Claude pricing](https://claude.com/pricing) et la documentation Claude Code avant une décision budgétaire.
-
-??? question "Mon code est-il envoyé dans le cloud ?"
-    Cela dépend du backend et de la configuration. Avec un backend Anthropic/cloud, le contenu nécessaire à la requête est traité par le service distant. Avec un backend local compatible, l'inférence peut rester locale, mais d'autres composants (MCP, plugins, télémétrie, logs, services externes) peuvent toujours communiquer avec le réseau.
-
-    Pour un projet sensible, cartographiez toute la chaîne de données au lieu de vous fier au seul mot « local ».
-
-??? question "Peut-on donner des secrets à Claude pour qu'il configure un service ?"
-    Évitez de placer des secrets dans les prompts, instructions ou fichiers versionnés. Préférez variables d'environnement, secret managers et identités temporaires/scopées. L'agent ne doit voir que les credentials strictement nécessaires.
-
----
-
-## Contexte et qualité
-
-??? question "Claude Code lit-il tout le dépôt automatiquement ?"
-    Non. Un agent travaille avec un budget de contexte et utilise recherche, lecture de fichiers, outils et parfois subagents pour charger l'information utile. Un dépôt bien structuré et des instructions concises sont plus efficaces qu'une tentative d'injecter tout le workspace.
-
-??? question "Comment améliorer la qualité des résultats ?"
-    Donnez :
-
-    1. l'objectif ;
-    2. les contraintes ;
-    3. les fichiers ou zones pertinentes ;
-    4. les commandes de validation ;
-    5. le critère de fin.
-
-    Demandez ensuite à Claude d'exécuter les tests/linters/build pertinents et de relire le diff.
-
-??? question "Faut-il demander à Claude de “raisonner étape par étape” ?"
-    Ne présentez pas cette formule comme une recette magique. Pour le développement logiciel, il est plus robuste de demander un plan, une décomposition, des critères de vérification et des preuves exécutées.
-
----
-
-## GitHub Copilot — référence conservée
-
-??? question "Pourquoi la documentation Copilot est-elle toujours présente ?"
-    Parce qu'elle reste utile pour :
-
-    - les équipes qui utilisent encore Copilot ;
-    - comparer les mécanismes Claude/Copilot ;
-    - maintenir les configurations `.github/` existantes ;
-    - permettre un retour futur si le produit ou ses tarifs évoluent favorablement.
-
-??? question "Les fichiers Claude et Copilot sont-ils interchangeables ?"
-    Non. Par exemple :
-
-    | Claude Code | GitHub Copilot |
-    |---|---|
-    | `CLAUDE.md` | `.github/copilot-instructions.md` |
-    | `.claude/rules/` | `.github/instructions/*.instructions.md` |
-    | `.claude/skills/` | skills Copilot selon client/version |
-    | `.claude/agents/` | `.github/agents/*.agent.md` |
-    | `.mcp.json` / `claude mcp` | configuration MCP Copilot propre au client |
-
-    Gardez une source de vérité claire et évitez de supposer qu'un format fonctionne identiquement partout.
-
-??? question "Copilot reste-t-il utilisable hors ligne ?"
-    Les fonctions cloud de Copilot nécessitent une connexion réseau. Pour un besoin réellement offline/local, utilisez plutôt un backend local documenté dans le chapitre Outils.
-
----
-
-## Sécurité
-
-??? question "Un agent peut-il être influencé par un fichier malveillant ?"
-    Oui. Un dépôt, une page Web, une issue ou une sortie MCP peut contenir des instructions non fiables. Inspectez les fichiers d'instructions, skills, hooks, plugins et `.mcp.json` avant d'accorder des permissions larges à un dépôt tiers.
-
-??? question "Le code généré est-il sûr s'il compile ?"
-    Non. Compilation et sécurité sont deux contrôles différents. Utilisez tests, lint/typecheck, SAST/SCA, revue du diff et Quality Gates selon le projet.
-
-??? question "Comment vérifier une dépendance suggérée par l'IA ?"
-    Vérifiez le registre officiel, la provenance, le mainteneur, le dépôt source, les advisories et la nécessité de l'ajout. Ne vous fiez ni au nom généré ni uniquement au nombre de téléchargements.
-
----
+Les [ressources externes Copilot](ressources-externes.md) regroupent documentation, plans, facturation, changelog et statut du service.
 
 ## Prochaine étape
 
-Poursuivez avec **[Raccourcis Clavier](raccourcis-clavier.md)**, la page suivante dans le menu.
+Poursuivez avec **[Raccourcis Copilot](raccourcis-clavier.md)**, la page suivante dans le menu.

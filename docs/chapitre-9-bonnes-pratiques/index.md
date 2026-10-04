@@ -32,11 +32,11 @@ Claude Code est plus utile lorsqu'il reçoit un dépôt lisible, un objectif vé
 
     Structurer le dépôt pour qu'un agent puisse comprendre et valider les changements.
 
-- :material-file-document-edit: **[OpenSpec — spec-driven development](openspec.md)**
+- :material-file-document-edit: **[OpenSpec — spec-driven development](../chapitre-13-outils-economies/openspec.md)**
 
     Formaliser proposal, specs, design et tasks avant implémentation, avec des artefacts versionnés dans Git.
 
-- :material-file-tree: **[OpenSpec Custom Schemas](openspec-schemas.md)**
+- :material-file-tree: **[OpenSpec Custom Schemas](../chapitre-13-outils-economies/openspec-schemas.md)**
 
     Étendre OpenSpec avec des workflows behaviour-driven, intent-driven, event-driven, ADR ou minimalist.
 
@@ -70,7 +70,7 @@ Une conversation ou un plan de session suffit souvent pour une correction locale
 - le changement implique une décision d'architecture ;
 - la PR doit expliquer clairement pourquoi et quoi modifier avant le comment.
 
-**[OpenSpec](openspec.md)** est un exemple de framework qui structure cette discipline. Il reste optionnel : le principe important est d'adapter le niveau de formalisation au risque et à la durée de vie du changement.
+**[OpenSpec](../chapitre-13-outils-economies/openspec.md)** est un exemple de framework qui structure cette discipline. Il reste optionnel : le principe important est d'adapter le niveau de formalisation au risque et à la durée de vie du changement.
 
 ---
 

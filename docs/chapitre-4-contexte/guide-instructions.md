@@ -222,13 +222,17 @@ claude doctor
 
 ---
 
+## Templates d’instructions et de rules
+
+[CLAUDE.md minimal](templates-configuration.md#template-claudemd), [rule ciblée](templates-configuration.md#template-rule) et [AGENTS.md portable](templates-configuration.md#template-agentsmd).
+
 ## Référence en annexe
 
 [Copilot — archive de ce chapitre](../appendices/copilot/chapitre-4-contexte.md#page-chapitre-4-contexte-guide-instructions).
 
 ## Prochaine étape
 
-Poursuivez avec **[Sandbox — Isolation des commandes](sandbox.md)**, la page suivante dans le menu.
+Poursuivez avec **[Templates de configuration Claude](templates-configuration.md)**, la page suivante dans le menu.
 
 ## Sources
 

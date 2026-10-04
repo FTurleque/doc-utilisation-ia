@@ -60,6 +60,8 @@ Mesurez Recall@k, bruit et taille du contexte final.
 
 ## 4. ACL avant retrieval
 
+Une **ACL** (*Access Control List*) est une liste de contrôle d'accès. Consultez **[Sécurité du RAG](securite.md)** pour les contrôles par document, les caches et la révocation pendant une conversation.
+
 Le système ne doit jamais récupérer un document que l'utilisateur n'a pas le droit de voir puis espérer que le LLM « ne le mentionnera pas ».
 
 Ordre :
@@ -141,6 +143,32 @@ query + tenant + ACL/version + corpus version + model/config
 ```
 
 Ne réutilisez pas une réponse d'un utilisateur privilégié pour un utilisateur qui n'a pas les mêmes droits.
+
+### Cache et révocation : diagramme de séquence UML
+
+Un cache hit ne contourne pas le contrôle courant. Ce diagramme illustre le cas où les droits ont changé depuis le calcul de la réponse.
+
+```mermaid
+sequenceDiagram
+    actor U as Utilisateur
+    participant A as API RAG
+    participant P as Politique acces
+    participant C as Cache
+    U->>A: Question et session
+    A->>P: Droits et version courants
+    P-->>A: Perimetre actuel
+    A->>C: Chercher avec ce perimetre et sa version
+    alt Resultat compatible trouve
+        C-->>A: Reponse et references sources
+        A->>P: Confirmer les droits de diffusion
+        P-->>A: Autoriser ou refuser
+        A-->>U: Reponse autorisee ou refus
+    else Ancien resultat invalide ou absent
+        C-->>A: Aucun resultat reutilisable
+        A->>A: Nouveau retrieval sous les droits actuels
+        A-->>U: Nouvelle reponse validee ou insuffisance
+    end
+```
 
 ---
 

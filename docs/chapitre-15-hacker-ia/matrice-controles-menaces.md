@@ -33,7 +33,23 @@ Cette matrice relie les menaces GenAI/agentiques à des contrôles concrets. Ell
 
 ---
 
+## Contrôles supplémentaires pour les applications agentiques
+
+| Surface | Contrôle à appliquer | Test de preuve |
+|---|---|---|
+| Mémoire persistante | Écriture bornée, provenance, validation avant promotion en instruction | Une note externe ne peut pas accorder de droits |
+| Délégation et messages inter-agents | Identité, rôle, ressources et outils bornés | Le sous-agent ne dépasse pas les droits du rôle |
+| Autorisation multi-tenant | Décision côté service sur chaque ressource et cache | Une identité A ne reçoit aucun document B |
+| Sortie générée | Schéma, paramètres typés et contrôle d'exécution | Une réponse libre ne devient pas une commande |
+| Retries et actions métier | Budget, timeout, limite d'essais et idempotence | Une erreur ne produit pas de boucle ou de double action |
+| Configuration de sécurité | Paramètres administrés et trace des changements | Une configuration du dépôt ne retire pas la politique imposée |
+| Reprise après incident | Copies et caches traités, secrets invalidés, tests avant activation | L'ancien token échoue et la tâche autorisée réussit |
+
+Le [plan de tests](tests-securite.md) distingue refus vérifié, exécution interdite et résultat inconclusif. Un simple refus textuel n'est pas une preuve technique.
+
 ## Référentiels utiles
+
+Les éditions [OWASP LLM 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) et [agentique 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) ont été vérifiées le **4 octobre 2026**. Fixez l'édition et le périmètre du mapping ; les lignes de cette matrice sont des catégories pratiques du dépôt, pas les identifiants officiels de ces listes.
 
 - **OWASP GenAI Security Project** : risques LLM et agentiques ;
 - **NIST AI RMF** : gouvernance et gestion du risque ;
@@ -73,6 +89,10 @@ Mesurez ce qui correspond au périmètre réel :
 ---
 
 ## Sources
+
+- [OWASP — LLM 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) — consulté le 2026-10-04
+- [OWASP — agents 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) — consulté le 2026-10-04
+- [Claude Code — Security](https://code.claude.com/docs/en/security) — consulté le 2026-10-04
 
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

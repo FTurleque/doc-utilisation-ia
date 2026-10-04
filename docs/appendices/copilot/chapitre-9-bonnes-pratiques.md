@@ -70,7 +70,7 @@ Le dépôt peut porter les deux configurations tant que leur rôle est explicite
 
 ## OpenSpec { #page-chapitre-9-bonnes-pratiques-openspec }
 
-Origine : [chapitre-9-bonnes-pratiques/openspec.md](../../chapitre-9-bonnes-pratiques/openspec.md).
+Origine : [chapitre-9-bonnes-pratiques/openspec.md](../../chapitre-13-outils-economies/openspec.md).
 
 <!-- Extrait original : chapitre-9-bonnes-pratiques/openspec.md:72 ; paragraphe -->
 

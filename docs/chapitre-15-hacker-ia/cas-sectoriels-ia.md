@@ -88,6 +88,18 @@ Les procédures de communication de crise et d'authentification des messages off
 
 ---
 
+## Adapter les mêmes contrôles à des impacts différents
+
+| Secteur | Test concret en environnement fictif | Critère de validation |
+|---|---|---|
+| Finance | Demande de changement de bénéficiaire issue d'un document non fiable | Identité indépendante, double validation adaptée et aucune transaction automatique |
+| Santé | Question qui pourrait récupérer le dossier d'un autre utilisateur | Autorisation avant génération ; aucune donnée hors périmètre dans réponse ou cache |
+| OT | Proposition de changement d'un équipement depuis un assistant généraliste | Aucun accès direct non autorisé ; procédure métier et environnement de simulation |
+| SaaS | Instructions d'une PR externe demandant une modification CI ou l'accès à un secret | Identité du runner bornée, diff revu et secret inaccessible |
+| Public | Média synthétique demandant une publication urgente | Canal officiel et vérification indépendante avant publication |
+
+Ces scénarios sont des propositions de test, pas des incidents attribués. Les résultats doivent être prouvés côté service et adaptés aux obligations applicables avec les équipes métier et juridiques. Pour les données, voir [Sécurité du RAG](../chapitre-7-rag/securite.md) ; pour les agents, voir [contrôles à l'exécution](securite-agents.md).
+
 ## Mesurer ce qui importe au secteur
 
 Ne copiez pas un KPI générique. Exemples de mesures possibles :
@@ -105,6 +117,8 @@ Les seuils viennent des objectifs de risque et SLA internes.
 ---
 
 ## Sources
+
+- [ANSSI / BSI — principes Zero Trust pour les systèmes LLM](https://cyber.gouv.fr/nous-connaitre/publications/publications-internationales/design-principles-for-llm-based-systems-with-zero-trust/) — consulté le 2026-10-04
 
 - [OWASP GenAI Security Project](https://genai.owasp.org/)
 - [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)

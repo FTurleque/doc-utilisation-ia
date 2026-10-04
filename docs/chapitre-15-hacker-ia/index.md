@@ -4,6 +4,8 @@ Ce chapitre traite des usages malveillants ou détournés de l'IA **uniquement s
 
 Claude Code étant l'agent principal du dépôt, une attention particulière est portée aux risques des agents de développement : instructions non fiables, MCP, permissions, secrets, supply chain et actions automatisées.
 
+**Audit des sources et du chapitre : 4 octobre 2026.** Les références vérifiées comprennent les éditions OWASP LLM et agentique 2026, les publications ANSSI, la documentation de sécurité Claude Code et NIST SP 800-61 Rev. 3. Les recommandations et scénarios proposés ici sont à adapter au périmètre réel de l'organisation.
+
 ---
 
 ## Pages du chapitre
@@ -11,6 +13,7 @@ Claude Code étant l'agent principal du dépôt, une attention particulière est
 | Page | Description |
 |---|---|
 | [Panorama IA et hacking](page-principale.md) | Menaces documentées, limites de l'attribution et contrôles défensifs |
+| [Sécuriser les agents IA](securite-agents.md) | Frontières de confiance, modes de permission, sandbox, MCP, mémoire et délégation |
 | [Études de cas 2024-2026](etudes-de-cas-2024-2026.md) | Cas et tendances sourcés, avec distinction entre observation et extrapolation |
 | [Playbook incident IA](playbook-incident-ia.md) | Détection, confinement, investigation, rotation des secrets et communication |
 | [KPI & SOC pour menaces IA](kpi-soc-ia.md) | Indicateurs à adapter au contexte réel de l'organisation |
@@ -18,6 +21,7 @@ Claude Code étant l'agent principal du dépôt, une attention particulière est
 | [Cas sectoriels](cas-sectoriels-ia.md) | Contraintes différentes selon secteur et données |
 | [Matrice menaces → contrôles](matrice-controles-menaces.md) | Cartographie de contrôles et preuves attendues |
 | [Checklist audit interne IA](checklist-audit-interne.md) | Revue périodique de gouvernance, accès et sécurité |
+| [Tests de sécurité et preuves](tests-securite.md) | Tests de refus, tâches autorisées, cloisonnement, révocation et non-régression |
 | [Modèles incident & post-mortem](modeles-fiches-incident.md) | Templates de documentation d'incident |
 | [Plan 90 jours](plan-90-jours.md) | Plan de montée en maturité à adapter à l'organisation |
 | [Comparaison IDE](comparaison.md) | Différences de surface d'attaque et de contrôle VS Code / JetBrains |
@@ -25,6 +29,11 @@ Claude Code étant l'agent principal du dépôt, une attention particulière est
 ---
 
 ## Sources prioritaires
+
+- [OWASP — LLM 2026](https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/) et [agents 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) — consultés le 2026-10-04.
+- [ANSSI — synthèse de la menace IA, février 2026](https://cyber.gouv.fr/actualites/synthese-de-la-menace-sur-lia-generative-face-aux-attaques-informatiques/) — consulté le 2026-10-04.
+- [NIST — réponse aux incidents, SP 800-61 Rev. 3](https://csrc.nist.gov/pubs/sp/800/61/r3/final) — consulté le 2026-10-04.
+- [Claude Code — sécurité](https://code.claude.com/docs/en/security) — consulté le 2026-10-04.
 
 Commencez par des sources primaires et des référentiels :
 
