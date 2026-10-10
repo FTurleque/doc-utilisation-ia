@@ -2,6 +2,14 @@
 
 Ce fichier suit les changements structurants du dépôt. Les détails très fins sur les prix, modèles et quotas restent dans les pages spécialisées et leur historique, afin d'éviter de dupliquer des données rapidement périssables.
 
+## 2026-10-10 — ADR pertinents avec Claude Code, OpenSpec et Archgate CLI
+
+- Ajout d'un guide de gestion des ADR : pertinence, audit de l'existant, historique, registre canonique et preuves de conformité.
+- Ajout d'une fiche Archgate CLI : installation, reprise des ADR, commandes, CI et plugin Claude Code bêta facultatif.
+- Documentation d'un workflow combiné conservant une installation OpenSpec existante, sans réinitialisation ni duplication des décisions.
+- Distinction entre revue IA, contrôles exécutables, tests ArchUnit et couverture réelle des modules.
+- Navigation, pages d'entrée et renvois OpenSpec actualisés.
+
 ## 2026-10-01 — Code intelligence, SDD, ingestion RAG et optimisation des tokens
 
 Ajout de six projets après audit de leurs dépôts officiels et vérification qu'aucune section dédiée n'existait déjà dans `doc-utilisation-ia` :

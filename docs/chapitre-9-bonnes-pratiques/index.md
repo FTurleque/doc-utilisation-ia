@@ -32,6 +32,10 @@ Claude Code est plus utile lorsqu'il reçoit un dépôt lisible, un objectif vé
 
     Structurer le dépôt pour qu'un agent puisse comprendre et valider les changements.
 
+- :material-file-document-check: **[ADR avec Claude Code et OpenSpec](adr-claude.md)**
+
+    Améliorer les décisions existantes, filtrer les nouvelles et vérifier leur respect avec Archgate CLI et les tests du projet.
+
 - :material-file-document-edit: **[OpenSpec — spec-driven development](../chapitre-13-outils-economies/openspec.md)**
 
     Formaliser proposal, specs, design et tasks avant implémentation, avec des artefacts versionnés dans Git.
