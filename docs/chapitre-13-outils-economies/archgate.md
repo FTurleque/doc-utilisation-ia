@@ -11,6 +11,7 @@
 
 | Composant | Utilisation proposée |
 |---|---|
+| arc42 existant | Conserver les vues d’architecture ; section 9 liée au registre ADR |
 | OpenSpec déjà installé | Conserver le workflow de changement et les artefacts existants |
 | Claude Code | Lire les décisions, améliorer les textes et proposer les contrôles |
 | Archgate CLI | Exécuter les règles associées aux ADR |
@@ -53,7 +54,7 @@ Ne pas remplacer la configuration `.claude/` ou OpenSpec déjà présente. Exami
 1. Inventorier et relire le corpus avant toute conversion.
 2. Choisir le registre canonique et préparer une correspondance des anciens chemins/identifiants.
 3. Adapter les ADR retenus au [schéma Archgate](https://cli.archgate.dev/reference/adr-schema/) et à son modèle, dans une PR dédiée.
-4. Relier les artefacts OpenSpec au registre au lieu de maintenir des copies.
+4. Relier les artefacts OpenSpec et la section 9 d’arc42 au registre au lieu de maintenir des copies.
 5. Vérifier que les décisions et leurs périmètres sont effectivement reconnus avant d'activer un contrôle bloquant.
 
 `archgate adr import` vise notamment les packs et les sources Git, et peut remapper les identifiants. Ce n'est pas une promesse de conversion sans perte de n'importe quel dossier Markdown local. Pour reprendre un historique, préférer une migration relue ; ne pas importer massivement des décisions étrangères au projet.

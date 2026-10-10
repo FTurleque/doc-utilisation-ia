@@ -1,4 +1,4 @@
-# Gérer les ADR avec Claude Code et OpenSpec
+# Gérer les ADR avec Claude Code, OpenSpec et arc42
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-expert">Expert</span>
 
@@ -11,12 +11,47 @@ Cette page propose une **politique de projet** pour améliorer les ADR existants
 | Élément | Responsabilité | Ce qu'il faut éviter |
 |---|---|---|
 | [OpenSpec](../chapitre-13-outils-economies/openspec.md) déjà installé | Spécifier et suivre le changement : besoins, conception, tâches | Produire un ADR pour chaque tâche |
+| arc42 | Décrire l’architecture globale et ses vues | Recopier tous les ADR dans le dossier |
 | Registre d'ADR | Conserver les arbitrages durables et leur historique | Copier la même décision dans plusieurs registres |
 | Claude Code | Examiner l'existant, proposer, rédiger et revoir le code | Inventer les raisons historiques d'une implémentation |
 | [Archgate CLI](../chapitre-13-outils-economies/archgate.md) | Exécuter les contrôles associés aux décisions | Confondre absence de violation et couverture complète |
 | Tests du projet, dont ArchUnit en Java | Vérifier les contraintes avec l'outil adapté | Réimplémenter chaque test dans plusieurs outils |
 
 Le combo repose sur les fichiers Git et les commandes du projet. Il ne suppose pas l'existence d'un connecteur natif OpenSpec–Archgate.
+
+## Articuler arc42, OpenSpec et le registre ADR
+
+**arc42 reste le dossier d'architecture de référence.** Sa section 9 traite des décisions importantes et recommande d'éviter les textes redondants. Cela rejoint le filtre de pertinence : toutes les modifications n'ont pas vocation à devenir une décision architecturale.
+
+Pour un projet qui utilise déjà arc42, nous proposons une section 9 servant d'index vers les ADR canoniques : identifiant, titre, statut et lien. Le registre peut rester à son emplacement actuel tant que la migration vers Archgate n'est pas décidée. Après migration, cet index pointe vers `.archgate/adrs/` ; il ne devient pas un second registre éditable.
+
+### Mettre à jour les vues concernées
+
+La table suivante est une proposition de correspondance pour la revue d'un changement, à adapter au dossier existant :
+
+| Impact du changement | Sections arc42 à examiner |
+|---|---|
+| Frontières du système ou intégrations externes | 3 — Contexte et périmètre |
+| Stratégie générale de la solution | 4 — Stratégie de solution |
+| Modules, responsabilités, dépendances | 5 — Vue des blocs |
+| Scénarios et échanges à l'exécution | 6 — Vue d'exécution |
+| Infrastructure et topologie | 7 — Vue de déploiement |
+| Concept transversal, par exemple sécurité | 8 — Concepts transversaux |
+| Nouvelle décision ou remplacement | 9 — Décisions architecturales : index et liens |
+| Objectif mesurable ou scénario de qualité | 10 — Exigences de qualité |
+| Écart accepté, risque ou dette | 11 — Risques et dette technique |
+
+Ne pas réécrire les douze sections à chaque tâche. Dans la revue OpenSpec, noter les sections affectées ou l'absence d'impact documentaire. Une mise à jour d'une vue arc42 peut être nécessaire sans justifier un nouvel ADR.
+
+### Exemple : isoler les adaptateurs de stockage
+
+- **OpenSpec** décrit le changement, ses critères d'acceptation et ses tâches.
+- **L'ADR** explique l'arbitrage durable sur les dépendances autorisées ; s'il existe déjà, le référencer.
+- **arc42 §5** montre les modules et leurs relations ; **§9** renvoie à la décision.
+- **ArchUnit ou les règles appropriées** vérifient les dépendances ; l'ADR référence les preuves.
+- **arc42 §11** consigne les écarts restant à traiter, avec un lien vers leur suivi.
+
+Avant d'archiver le changement OpenSpec, vérifier que code, ADR et vues arc42 décrivent une situation cohérente, en distinguant clairement l'existant de la cible. Si le dossier est exporté en HTML ou DOCX, vérifier les liens vers les ADR ; toute inclusion de leur texte doit être générée depuis le registre canonique.
 
 ## Décider si un ADR est pertinent
 
@@ -140,6 +175,7 @@ Ajouter un lien vers la politique ADR dans `CLAUDE.md`, avec des consignes court
 - Ne pas inventer les raisons historiques des décisions.
 - Faire valider une nouvelle décision ou un remplacement avant acceptation.
 - Relier le changement OpenSpec à l'ADR canonique, sans recopier son contenu.
+- Mettre à jour les vues arc42 affectées et son index des décisions en section 9.
 - Exécuter les contrôles documentés et déclarer ce qui reste non vérifié.
 ```
 
@@ -149,7 +185,8 @@ Cette consigne oriente Claude ; les tests et la revue constituent les contrôles
 
 - Les ADR actifs ont un périmètre et un statut compréhensibles.
 - Chaque nouvel ADR passe le filtre de pertinence ; un changement peut n'en créer aucun.
-- Aucun doublon entre OpenSpec et le registre canonique.
+- Aucun doublon entre OpenSpec, arc42 et le registre canonique.
+- Les vues arc42 affectées et les liens de sa section 9 sont à jour.
 - Les contraintes automatisables ont des contrôles exécutés et un périmètre connu.
 - Les écarts existants restent visibles ; aucune règle n'est affaiblie pour faire passer le code.
 - Les liens historiques restent utilisables après migration et archivage.
@@ -164,6 +201,8 @@ Poursuivez avec **[OpenSpec](openspec.md)**, la page suivante dans le menu.
 
 Sources officielles consultées le **10 octobre 2026**. Les critères de pertinence et le workflow combiné sont les recommandations de cette documentation.
 
+- [arc42 — structure du dossier](https://arc42.org/overview/)
+- [arc42 — section 9, décisions architecturales](https://docs.arc42.org/section-9/)
 - [OpenSpec — dépôt officiel](https://github.com/Fission-AI/OpenSpec)
 - [Archgate — rédaction des ADR](https://cli.archgate.dev/guides/writing-adrs/)
 - [Archgate — schéma des ADR](https://cli.archgate.dev/reference/adr-schema/)

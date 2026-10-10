@@ -32,7 +32,7 @@ Claude Code est plus utile lorsqu'il reçoit un dépôt lisible, un objectif vé
 
     Structurer le dépôt pour qu'un agent puisse comprendre et valider les changements.
 
-- :material-file-document-check: **[ADR avec Claude Code et OpenSpec](adr-claude.md)**
+- :material-file-document-check: **[ADR avec Claude Code, OpenSpec et arc42](adr-claude.md)**
 
     Améliorer les décisions existantes, filtrer les nouvelles et vérifier leur respect avec Archgate CLI et les tests du projet.
 

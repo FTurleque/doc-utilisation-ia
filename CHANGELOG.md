@@ -8,6 +8,7 @@ Ce fichier suit les changements structurants du dépôt. Les détails très fins
 - Ajout d'une fiche Archgate CLI : installation, reprise des ADR, commandes, CI et plugin Claude Code bêta facultatif.
 - Documentation d'un workflow combiné conservant une installation OpenSpec existante, sans réinitialisation ni duplication des décisions.
 - Distinction entre revue IA, contrôles exécutables, tests ArchUnit et couverture réelle des modules.
+- Articulation avec arc42 : section 9 comme index des ADR et mise à jour ciblée des vues affectées.
 - Navigation, pages d'entrée et renvois OpenSpec actualisés.
 
 ## 2026-10-01 — Code intelligence, SDD, ingestion RAG et optimisation des tokens

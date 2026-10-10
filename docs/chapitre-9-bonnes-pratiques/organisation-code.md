@@ -257,4 +257,4 @@ Pour auditer les décisions existantes, limiter les nouveaux ADR aux arbitrages 
 
 ## Prochaine étape
 
-Poursuivez avec **[ADR avec Claude Code et OpenSpec](adr-claude.md)**, la page suivante dans le menu.
+Poursuivez avec **[ADR avec Claude Code, OpenSpec et arc42](adr-claude.md)**, la page suivante dans le menu.
