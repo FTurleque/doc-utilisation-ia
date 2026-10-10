@@ -13,7 +13,7 @@ Ce chapitre présente les outils qui complètent Claude Code : utilitaires déte
 | Réduction du bruit et des tokens | [RTK](rtk.md), [Caveman](caveman.md), [TOON](toon.md) |
 | Recherche et structure du code | [Semble](semble.md), [Serena](serena.md), [Graphify](graphify.md), [Tree-sitter](tree-sitter.md) |
 | Ingestion et retrieval RAG | [Docling](docling.md), [Qdrant](qdrant.md) |
-| Spécifications et workflows | [OpenSpec](openspec.md), [schémas OpenSpec](openspec-schemas.md) |
+| Spécifications et workflows | [OpenSpec](openspec.md), [schémas OpenSpec](openspec-schemas.md), [Archgate CLI](archgate.md) |
 | Data, ML et Deep Learning | [Jupyter](jupyter.md), [frameworks ML](frameworks-ml.md), [frameworks Deep Learning](frameworks-deep-learning.md) |
 | Validation et migrations | [SonarQube](sonarqube.md), [catalogue des outils de validation](outils-complementaires.md#validation-analyse-statique-et-migrations) |
 | Connexions et skills | [MCP](mcps/index.md), [OpenSkills](openskills.md) |
