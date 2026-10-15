@@ -227,6 +227,29 @@ Ne donnez pas automatiquement des permissions d'écriture GitHub si la tâche co
 
 ---
 
+## Workflow 9 — Réanalyser un corpus de bugs
+
+Pour un backlog ancien, ne demandez pas à l'agent de « nettoyer les issues » directement.
+
+Séquence recommandée :
+
+```text
+snapshot en lecture seule
+→ normalisation
+→ reclassification
+→ clusters de doublons candidats
+→ reproduction sur la baseline actuelle
+→ décision humaine
+→ promotion en test/règle/doc/spec
+→ modification du tracker
+```
+
+Le guide **[Auditer et assainir un corpus de bugs](../chapitre-11-troubleshooting/corpus-bugs.md)** fournit les commandes GitHub CLI, le registre d'audit, les critères de conservation/fermeture et les prompts de pré-triage.
+
+Un bug corrigé ne doit pas rester ouvert uniquement pour conserver la connaissance : si sa valeur durable est capturée par un test de régression, une règle, un ADR ou un runbook, l'issue peut être fermée avec des liens traçables.
+
+---
+
 ## Quand utiliser un subagent
 
 Utilisez un subagent si la sous-tâche :
