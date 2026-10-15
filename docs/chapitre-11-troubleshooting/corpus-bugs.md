@@ -586,5 +586,3 @@ Sources vérifiées le **15 octobre 2026** :
 ## Prochaine étape
 
 Poursuivez avec **[Comparaison des Problèmes](comparaison-problemes.md)**, la page suivante dans le menu.
-
-
