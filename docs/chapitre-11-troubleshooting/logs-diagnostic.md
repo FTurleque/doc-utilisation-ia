@@ -285,5 +285,3 @@ Ne joignez jamais de token, cookie, clé API ou transcription complète.
 ## Prochaine étape
 
 Poursuivez avec **[Audit du corpus de bugs](corpus-bugs.md)**, la page suivante dans le menu.
-
-
