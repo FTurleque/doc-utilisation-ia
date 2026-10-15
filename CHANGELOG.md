@@ -2,6 +2,14 @@
 
 Ce fichier suit les changements structurants du dépôt. Les détails très fins sur les prix, modèles et quotas restent dans les pages spécialisées et leur historique, afin d'éviter de dupliquer des données rapidement périssables.
 
+## 2026-10-15 — Installation Archgate et migration des ADR précisées
+
+- Ajout d'un diagnostic du **mode d'installation réellement utilisé** : PATH, standalone, npm global/projet, pipx/pip, .NET, Java/jbang et proto.
+- Explication des différences : les wrappers de package manager délèguent au même binaire Archgate ; la distinction principale porte sur la gestion de version et la reproductibilité.
+- Clarification de l'exemple `package.json` : le script `check:architecture` se place dans l'objet `"scripts"` du `package.json` concerné, sans remplacer les scripts existants.
+- Ajout d'un workflow de reprise des ADR existants : inventaire, normalisation, staging, `archgate adr import --dry-run`, import, remapping/traçabilité des IDs et `archgate adr sync`.
+- Documentation des rôles Claude Archgate utiles à la migration : `archgate:onboard`, `archgate:adr-author`, `archgate:architect` et `archgate:quality-manager`.
+
 ## 2026-10-15 — Archgate opérationnel et audit du corpus de bugs
 
 - Réécriture de la page **Archgate CLI** en tutoriel de bout en bout : installation standalone/Node/Python/Java, initialisation, structure `.archgate/`, premier ADR, première règle `.rules.ts`, modes `check`, plugin Claude Code, CI et combinaison avec ArchUnit.
