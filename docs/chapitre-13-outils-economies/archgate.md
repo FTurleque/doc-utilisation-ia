@@ -616,7 +616,9 @@ Avant de déclarer Archgate « en place », vérifiez :
 
 ## Prochaine étape
 
-Si vous possédez déjà de nombreux tickets historiques, poursuivez avec **[Auditer et assainir un corpus de bugs](../chapitre-11-troubleshooting/corpus-bugs.md)**. Les bugs récurrents révélant une contrainte architecturale peuvent ensuite devenir un test de régression, un ADR ou une règle Archgate — mais seulement lorsque la généralisation est réellement justifiée.
+Poursuivez avec **[Jupyter](jupyter.md)**, la page suivante dans le menu.
+
+
 
 ## Sources
 
