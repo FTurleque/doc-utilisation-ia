@@ -142,6 +142,14 @@ La décision doit rester proportionnée au risque et à la longévité du change
 
 ---
 
+## Combiner OpenSpec et les ADR contrôlés
+
+Si OpenSpec est déjà installé dans le projet, conserver d'abord sa configuration et ses changements en cours. **[Le guide ADR avec Claude Code](../chapitre-9-bonnes-pratiques/adr-claude.md)** propose un filtre de pertinence : citer ou améliorer l'existant, et ne créer une décision que lorsqu'un arbitrage durable le justifie.
+
+**[Archgate CLI](archgate.md)** complète ce parcours par des contrôles exécutables. Les artefacts OpenSpec référencent un registre canonique d'ADR ; ils n'en entretiennent pas une seconde copie. Cette combinaison est une convention de workflow, pas un connecteur natif ni une garantie de conformité automatique.
+
+---
+
 ## Sources
 
 - [Guide d'installation des schémas — prérequis et companion skills](https://github.com/intent-driven-dev/openspec-schemas/blob/main/AGENT_INSTALL.md) — vérifié le 2026-10-03
@@ -155,4 +163,4 @@ Sources consultées le **1er octobre 2026** :
 
 ## Prochaine étape
 
-Poursuivez avec **[Jupyter](jupyter.md)**, la page suivante dans le menu.
+Poursuivez avec **[Archgate CLI — Contrôle des ADR](archgate.md)**, la page suivante dans le menu.

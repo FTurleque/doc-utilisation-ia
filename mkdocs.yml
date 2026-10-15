@@ -161,6 +161,7 @@ nav:
     - Accueil: chapitre-9-bonnes-pratiques/index.md
     - Utilisation Effective: chapitre-9-bonnes-pratiques/utilisation-effective.md
     - Organisation du Code: chapitre-9-bonnes-pratiques/organisation-code.md
+    - ADR avec Claude Code, OpenSpec et arc42: chapitre-9-bonnes-pratiques/adr-claude.md
     - "Spec-driven development":
       - OpenSpec: chapitre-9-bonnes-pratiques/openspec.md
       - OpenSpec Custom Schemas: chapitre-9-bonnes-pratiques/openspec-schemas.md
@@ -210,6 +211,7 @@ nav:
     - Spécifications & workflows:
       - OpenSpec: chapitre-13-outils-economies/openspec.md
       - OpenSpec Custom Schemas: chapitre-13-outils-economies/openspec-schemas.md
+      - Archgate CLI — Contrôle des ADR: chapitre-13-outils-economies/archgate.md
     - Data & Machine Learning:
       - Jupyter: chapitre-13-outils-economies/jupyter.md
       - Frameworks ML: chapitre-13-outils-economies/frameworks-ml.md

@@ -33,6 +33,7 @@ Ces outils complètent Claude ; ils ne sont pas des modèles concurrents.
 
 | Outil | Rôle | Page |
 |---|---|---|
+| Archgate CLI | Contrôles des décisions ; combinaison avec OpenSpec et Claude Code | [Archgate](archgate.md) |
 | OpenSpec | Framework SDD avec proposal, specs, design et tasks versionnés | [OpenSpec](openspec.md) |
 | OpenSpec Custom Schemas | Workflows spécialisés : intent-driven, event-driven, ADR, minimalist… | [OpenSpec Schemas](openspec-schemas.md) |
 

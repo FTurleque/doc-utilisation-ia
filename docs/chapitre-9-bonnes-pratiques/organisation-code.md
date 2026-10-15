@@ -225,6 +225,8 @@ docs/adr/
 
 Claude peut les découvrir et les citer lors d'un changement d'architecture.
 
+Pour auditer les décisions existantes, limiter les nouveaux ADR aux arbitrages pertinents et contrôler leur respect, suivre **[Gérer les ADR avec Claude Code et OpenSpec](adr-claude.md)**. Ce parcours conserve OpenSpec lorsqu'il est déjà installé et ajoute Archgate CLI au workflow.
+
 ---
 
 ## Checklist
@@ -255,4 +257,4 @@ Claude peut les découvrir et les citer lors d'un changement d'architecture.
 
 ## Prochaine étape
 
-Poursuivez avec **[OpenSpec](openspec.md)**, la page suivante dans le menu.
+Poursuivez avec **[ADR avec Claude Code, OpenSpec et arc42](adr-claude.md)**, la page suivante dans le menu.
