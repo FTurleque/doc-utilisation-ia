@@ -116,6 +116,8 @@ Avec Archgate, conserver les métadonnées et les intitulés techniques attendus
 
 Pour un pilote Archgate, nous recommandons de rendre `.archgate/adrs/` canonique après une migration relue des ADR retenus. Adapter leurs métadonnées au schéma de l'outil et maintenir une correspondance avec les anciens identifiants et chemins. Si la migration n'est pas encore validée, garder le registre existant et utiliser les tests actuels ; ne pas annoncer une couverture Archgate qui n'est pas configurée.
 
+Pour un corpus important, la **[fiche Archgate — Reprendre et améliorer des ADR existants](../chapitre-13-outils-economies/archgate.md#11-reprendre-et-ameliorer-des-adr-existants)** détaille le workflow automatisable : audit en lecture seule, normalisation avec le plugin Claude, staging, `archgate adr import --dry-run`, import avec remapping des IDs, puis `archgate adr sync` pour les sources suivies. L'import technique ne doit intervenir qu'après la revue du contenu.
+
 Les artefacts OpenSpec contiennent un **lien vers la décision canonique** et expliquent son impact sur le changement. Ils n'en maintiennent pas une seconde copie. L'archivage d'un changement doit laisser les ADR durables accessibles et les liens valides.
 
 ### Conserver d'abord le schéma actuel
