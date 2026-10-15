@@ -284,4 +284,4 @@ Ne joignez jamais de token, cookie, clé API ou transcription complète.
 
 ## Prochaine étape
 
-Poursuivez avec **[Comparaison des Problèmes](comparaison-problemes.md)**, la page suivante dans le menu.
+Poursuivez avec **[Audit du corpus de bugs](corpus-bugs.md)**, la page suivante dans le menu.

@@ -2,6 +2,14 @@
 
 Ce fichier suit les changements structurants du dépôt. Les détails très fins sur les prix, modèles et quotas restent dans les pages spécialisées et leur historique, afin d'éviter de dupliquer des données rapidement périssables.
 
+## 2026-10-15 — Archgate opérationnel et audit du corpus de bugs
+
+- Réécriture de la page **Archgate CLI** en tutoriel de bout en bout : installation standalone/Node/Python/Java, initialisation, structure `.archgate/`, premier ADR, première règle `.rules.ts`, modes `check`, plugin Claude Code, CI et combinaison avec ArchUnit.
+- Correction du parcours Claude Code Archgate pour suivre la documentation actuelle du plugin bêta (`archgate init --install-plugin` / `archgate plugin install`).
+- Ajout d'un guide **Auditer et assainir un corpus de bugs** : snapshot en lecture seule, registre d'audit, reclassification, doublons, reproduction sur baseline supportée, décisions traçables et promotion des leçons en tests/règles/docs/specs.
+- Ajout des commandes GitHub CLI pour exporter le corpus et fermer explicitement les doublons ou tickets obsolètes après revue.
+- Navigation Troubleshooting et workflow IA mis à jour.
+
 ## 2026-10-10 — ADR pertinents avec Claude Code, OpenSpec et Archgate CLI
 
 - Ajout d'un guide de gestion des ADR : pertinence, audit de l'existant, historique, registre canonique et preuves de conformité.

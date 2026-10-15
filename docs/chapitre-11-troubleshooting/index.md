@@ -2,7 +2,7 @@
 
 <span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span>
 
-Ce chapitre couvre le diagnostic de **Claude Code** : installation, authentification, erreurs API, configuration, MCP, IDE, recherche, contexte et performance.
+Ce chapitre couvre le diagnostic de **Claude Code** : installation, authentification, erreurs API, configuration, MCP, IDE, recherche, contexte et performance. Il couvre aussi l'**assainissement d'un corpus de bugs historique** afin de conserver uniquement les problèmes encore utiles et de transférer les leçons durables vers des tests, règles ou documents.
 
 ---
 
@@ -44,6 +44,10 @@ La documentation officielle recommande ces points d'entrée avant les opération
 - :material-file-search: **[Logs & diagnostic](logs-diagnostic.md)**
 
     `/doctor`, `claude doctor`, safe mode, debug de configuration, heap dump et rapport reproductible.
+
+- :material-broom: **[Auditer et assainir un corpus de bugs](corpus-bugs.md)**
+
+    Snapshot en lecture seule, reclassification, doublons, reproduction sur la baseline actuelle, promotion en tests/règles et fermeture traçable.
 
 - :material-compare: **[Comparaison des problèmes](comparaison-problemes.md)**
 
