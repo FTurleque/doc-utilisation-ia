@@ -164,5 +164,3 @@ Sources consultées le **1er octobre 2026** :
 ## Prochaine étape
 
 Poursuivez avec **[Archgate CLI — Installer & contrôler les ADR](archgate.md)**, la page suivante dans le menu.
-
-
