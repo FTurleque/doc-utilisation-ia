@@ -184,6 +184,7 @@ nav:
     - Accueil: chapitre-11-troubleshooting/index.md
     - Problèmes Courants: chapitre-11-troubleshooting/problemes-courants.md
     - Logs & Diagnostic: chapitre-11-troubleshooting/logs-diagnostic.md
+    - Audit du corpus de bugs: chapitre-11-troubleshooting/corpus-bugs.md
     - Comparaison des Problèmes: chapitre-11-troubleshooting/comparaison-problemes.md
     - Procédures de Réparation: chapitre-11-troubleshooting/procedures-reparation.md
 
@@ -211,7 +212,7 @@ nav:
     - Spécifications & workflows:
       - OpenSpec: chapitre-13-outils-economies/openspec.md
       - OpenSpec Custom Schemas: chapitre-13-outils-economies/openspec-schemas.md
-      - Archgate CLI — Contrôle des ADR: chapitre-13-outils-economies/archgate.md
+      - Archgate CLI — Installer & contrôler les ADR: chapitre-13-outils-economies/archgate.md
     - Data & Machine Learning:
       - Jupyter: chapitre-13-outils-economies/jupyter.md
       - Frameworks ML: chapitre-13-outils-economies/frameworks-ml.md
