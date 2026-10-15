@@ -83,7 +83,7 @@ Pour figer une version dans un environnement reproductible, utilisez le mécanis
 
 ### Option B — dépendance du projet Node.js
 
-Pour une application Node/TypeScript où vous voulez versionner Archgate avec les autres outils :
+Pour une application Node/TypeScript où vous voulez **verrouiller Archgate par projet** :
 
 ```bash
 npm install --save-dev archgate
@@ -91,15 +91,26 @@ npx archgate --version
 npx archgate check
 ```
 
-Ajoutez éventuellement :
+La commande `npm install --save-dev archgate` ajoute normalement Archgate dans les `devDependencies` du **`package.json` du projet courant** et met à jour le lockfile.
+
+Le bloc suivant ne va pas dans un fichier Archgate : il se met dans le **`package.json`**, à l'intérieur de la propriété `"scripts"`.
+
+Si votre `package.json` contient déjà des scripts :
 
 ```json
 {
   "scripts": {
+    "test": "vitest run",
+    "lint": "eslint .",
     "check:architecture": "archgate check --strict"
+  },
+  "devDependencies": {
+    "archgate": "<version installée>"
   }
 }
 ```
+
+Ne remplacez pas le fichier complet : ajoutez seulement l'entrée `"check:architecture"` dans l'objet `"scripts"`.
 
 Puis :
 
@@ -107,7 +118,9 @@ Puis :
 npm run check:architecture
 ```
 
-Avantage : la version peut être verrouillée dans le lockfile du projet.
+Dans un monorepo, placez ce script dans le `package.json` **à partir duquel vous voulez exécuter le contrôle**. Si `.archgate/` gouverne tout le repository, le `package.json` racine est généralement le meilleur emplacement. Si chaque package possède des décisions indépendantes, un script par package peut être plus adapté.
+
+Avantage : la version d'Archgate peut être verrouillée dans le lockfile et exécutée de façon identique sur les postes et en CI.
 
 ### Option C — environnement Python
 
@@ -144,6 +157,8 @@ Java 11+ est requis pour ce mode. **Vous n'avez pas à transformer votre applica
 
 ## 2. Vérifier l'installation avant de toucher au projet
 
+### Vérifier que le CLI fonctionne
+
 Depuis un terminal neuf :
 
 ```bash
@@ -154,7 +169,54 @@ archgate check --help
 
 Si ces commandes ne fonctionnent pas, **n'initialisez pas encore le projet**. Résolvez d'abord l'installation et le PATH.
 
-Dans une équipe, notez la version retenue dans votre documentation de développement ou votre toolchain. Le but est d'éviter qu'une règle se comporte différemment entre poste local et CI.
+### Identifier le mode d'installation réellement utilisé
+
+`archgate --version` confirme la version, mais **pas le gestionnaire qui fournit la commande**. Si plusieurs installations coexistent, le premier exécutable trouvé dans le `PATH` gagne.
+
+**Windows PowerShell :**
+
+```powershell
+Get-Command archgate -All | Format-Table CommandType, Source
+where.exe archgate
+```
+
+**macOS / Linux / Git Bash :**
+
+```bash
+command -v archgate
+type -a archgate
+```
+
+Ensuite, vérifiez le gestionnaire soupçonné :
+
+| Installation possible | Commande de vérification |
+|---|---|
+| standalone | le chemin résolu pointe typiquement vers `~/.archgate/bin/archgate` |
+| npm global | `npm ls -g --depth=0 archgate` |
+| npm dépendance projet | `npm ls --depth=0 archgate` puis vérifier `package.json` |
+| pipx | `pipx list` |
+| pip | `python -m pip show archgate` |
+| .NET global tool | `dotnet tool list -g` |
+| jbang / Java | `jbang app list` ou vérifier le JAR utilisé |
+| proto | `proto list` puis `proto pin archgate <version>` si nécessaire |
+
+!!! tip "Plusieurs installations détectées"
+    Évitez de conserver en parallèle un Archgate standalone, un npm global et un pipx global sauf raison précise. Les wrappers npm/pip/.NET/Go/Ruby/Java délèguent au binaire Archgate de la plateforme ; la différence principale est **qui gère l'installation et la version**, pas un ensemble de fonctionnalités différent.
+
+### Quelle différence entre les modes ?
+
+| Mode | Portée | Version | Dépendance runtime du wrapper | Quand le choisir |
+|---|---|---|---|---|
+| standalone | utilisateur/poste | via `ARCHGATE_VERSION` ou installateur | aucune | choix par défaut, Java, polyglotte |
+| npm global | utilisateur | gérée par npm | Node pour le wrapper | équipe déjà standardisée npm |
+| npm dev dependency | projet | lockfile | Node pour le wrapper | reproductibilité par repository |
+| pipx | utilisateur isolé | gérée par pipx | Python 3.8+ pour le wrapper | environnement Python |
+| JAR / jbang | utilisateur ou projet | gérée par Maven/jbang | Java 11+ | toolchain Java |
+| proto | utilisateur/projet | pin explicite dans `.prototools` | proto | équipes déjà standardisées proto |
+
+La documentation Archgate indique que ces wrappers téléchargent/délèguent vers le **même binaire natif de plateforme**, généralement mis en cache sous `~/.archgate/bin/`. Il n'y a donc pas un « Archgate npm » plus puissant qu'un « Archgate Python ».
+
+Dans une équipe, choisissez **un propriétaire de version** : lockfile npm, `.prototools`, version d'action CI ou version d'installateur standalone. Le but est d'éviter qu'une règle se comporte différemment entre poste local et CI.
 
 ---
 
@@ -474,24 +536,247 @@ Avant toute modification :
 
 ---
 
-## 11. Reprendre un projet qui possède déjà des ADR
+## 11. Reprendre et améliorer des ADR existants
 
-Ne copiez pas immédiatement tout votre dossier d'ADR dans `.archgate/adrs/`.
+Oui, une partie de la reprise peut être automatisée, mais il faut distinguer **import** et **conversion**.
 
-Procédure sûre :
+### Ce que `archgate adr import` automatise réellement
 
-1. inventorier les ADR existants ;
-2. classer : actif, obsolète, remplacé, doublon, à clarifier ;
-3. choisir le registre canonique ;
-4. migrer d'abord quelques ADR actifs ;
-5. conserver une table de correspondance ancien ID → nouvel ID ;
-6. vérifier que les liens arc42/OpenSpec restent valides ;
-7. ajouter les règles après compréhension de la décision, pas pendant une conversion automatique.
+La commande officielle sait importer des ADR depuis :
 
-La commande `archgate adr import` existe pour les sources prises en charge, notamment certains packs et dépôts Git, mais ce n'est pas une garantie de conversion fidèle de n'importe quel corpus Markdown local.
+- le registre de packs Archgate ;
+- un chemin `org/repo/path` GitHub ;
+- une URL Git clonable ;
+- un sous-chemin GitHub de type `/tree/<ref>/<path>`.
 
-Pour la méthode éditoriale complète, suivre **[Gérer les ADR avec Claude Code et OpenSpec](../chapitre-9-bonnes-pratiques/adr-claude.md#assainir-les-adr-existants)**.
+Elle :
 
+1. clone la source ;
+2. lit les ADR ;
+3. remappe les IDs pour éviter les collisions ;
+4. copie les ADR et leurs éventuels fichiers `.rules.ts` dans `.archgate/adrs/` ;
+5. enregistre la provenance dans `.archgate/imports.json`.
+
+Toujours prévisualiser d'abord :
+
+```bash
+archgate adr import OWNER/REPO/path --dry-run
+```
+
+Puis seulement après revue :
+
+```bash
+archgate adr import OWNER/REPO/path
+archgate adr import --list
+```
+
+Les ADR importés depuis une source suivie peuvent ensuite être surveillés avec :
+
+```bash
+archgate adr sync --check
+archgate adr sync
+```
+
+`sync` compare les versions locales et amont ; en mode interactif, Archgate permet notamment de garder la version locale, prendre l'amont ou ignorer le changement.
+
+### Ce que `adr import` ne fait pas
+
+`archgate adr import` n'est **pas un convertisseur universel de Markdown historique**.
+
+Un ancien dossier comme :
+
+```text
+docs/architecture/decisions/
+├── 0001-use-postgresql.md
+├── 0002-hexagonal.md
+└── cache-strategy.md
+```
+
+peut utiliser un autre template, ne pas avoir de frontmatter Archgate, mélanger plusieurs décisions ou contenir des statuts historiques incompatibles. Il faut d'abord **auditer et normaliser** ces documents.
+
+### Workflow recommandé : améliorer d'abord, importer ensuite
+
+```text
+ADR historiques
+      ↓
+inventaire en lecture seule
+      ↓
+conserver / clarifier / fusionner / remplacer / reclasser
+      ↓
+normalisation au format Archgate dans une zone de staging
+      ↓
+revue humaine
+      ↓
+archgate adr import --dry-run
+      ↓
+import réel
+      ↓
+règles automatisées ajoutées progressivement
+```
+
+#### Étape A — inventorier sans modifier
+
+Créez un tableau de migration :
+
+```text
+legacy_id
+path
+title
+status
+decision_summary
+evidence_in_code
+duplicate_of
+action
+target_domain
+target_files
+target_rules
+new_archgate_id
+```
+
+Actions possibles :
+
+- `keep` : décision toujours utile ;
+- `clarify` : décision valable mais texte insuffisant ;
+- `merge` : plusieurs fichiers décrivent réellement la même décision ;
+- `supersede` : décision remplacée ;
+- `reclassify` : ce document est plutôt une procédure, une tâche ou une note ;
+- `confirm` : intention historique impossible à établir sans validation humaine.
+
+Ne laissez jamais Claude inventer des alternatives ou raisons historiques absentes des sources.
+
+#### Étape B — améliorer chaque ADR avant import
+
+Un ADR candidat doit idéalement devenir :
+
+```text
+une seule décision
++ contexte vérifiable
++ alternatives réellement connues
++ décision précise
++ Do / Don't concrets
++ conséquences positives/négatives/risques
++ mode de contrôle
++ références historiques
++ scope files si pertinent
+```
+
+Commencez avec `rules: false`. N'activez `rules: true` que lorsque le fichier compagnon `.rules.ts` existe et a été testé.
+
+Le CLI peut ensuite créer ou mettre à jour les documents normalisés :
+
+```bash
+archgate adr create \
+  --title "Isolation du domaine" \
+  --domain architecture \
+  --files "src/domain/**"
+
+archgate adr update \
+  --id ARCH-001 \
+  --body "$(cat migration/ARCH-001-body.md)"
+```
+
+`archgate adr update` remplace le body et conserve les autres métadonnées si elles ne sont pas passées explicitement.
+
+#### Étape C — utiliser le plugin Claude Code pour accélérer l'amélioration
+
+Si le plugin bêta est installé, les rôles Archgate actuels sont utiles pour la migration :
+
+| Rôle | Usage pendant la reprise |
+|---|---|
+| `archgate:onboard` | comprendre le codebase et faire émerger un premier jeu de décisions ; à exécuter une fois, pas comme convertisseur aveugle |
+| `archgate:adr-author` | créer ou éditer un ADR suivant les conventions Archgate |
+| `archgate:architect` | vérifier la cohérence structurelle du code avec les ADR applicables |
+| `archgate:quality-manager` | repérer les patterns récurrents et proposer les décisions/règles qui manquent |
+
+Prompt de migration conseillé avec `archgate:adr-author` :
+
+```text
+Analyse cet ADR historique et le code actuel en lecture seule.
+
+1. Sépare les faits historiques prouvés des hypothèses.
+2. Dis si la décision est encore active, remplacée, redondante ou hors périmètre.
+3. Vérifie si un ADR Archgate existant couvre déjà la même décision.
+4. Propose un ADR Archgate court avec :
+   Context, Decision, Do's and Don'ts, Consequences,
+   Compliance and Enforcement, References.
+5. Conserve l'ancien identifiant et le chemin dans References.
+6. Propose domain, files et rules:false.
+7. Ne crée aucune règle automatique avant validation humaine.
+```
+
+La sortie doit être une **proposition de migration**, pas une réécriture silencieuse de l'historique.
+
+#### Étape D — automatiser un lot entier de façon contrôlée
+
+Pour un corpus important, créez un dossier de staging hors du registre canonique :
+
+```text
+migration/archgate/
+├── migration-plan.csv
+└── pack/
+    ├── archgate-pack.yaml
+    └── adrs/
+        ├── ...
+        └── ...
+```
+
+Faites normaliser les ADR par lots, relisez les diffs, puis publiez cette zone sur une branche de migration.
+
+Vous pouvez alors tester l'import sans écrire :
+
+```bash
+archgate adr import https://github.com/OWNER/REPO/tree/chore/adr-migration/migration/archgate/pack --dry-run
+```
+
+Puis importer le lot validé :
+
+```bash
+archgate adr import https://github.com/OWNER/REPO/tree/chore/adr-migration/migration/archgate/pack
+archgate adr import --list
+```
+
+Ce pattern sépare clairement :
+
+```text
+amélioration éditoriale
+≠ import technique
+≠ automatisation des règles
+```
+
+### Conserver la traçabilité des anciens IDs
+
+Si Archgate remappe `ADR-0042` vers `ARCH-007`, conservez le lien dans `References` et dans un tableau de correspondance :
+
+| Ancien ID | Nouvel ID | Action |
+|---|---|---|
+| ADR-0042 | ARCH-007 | migré |
+| ADR-0043 | — | fusionné dans ARCH-007 |
+| ADR-0044 | ARCH-008 | remplacé, référence historique conservée |
+
+Ne renumérotez pas votre histoire comme si les nouveaux IDs avaient toujours existé.
+
+### Après la reprise : ne pas automatiser toutes les décisions d'un coup
+
+Une fois les ADR importés :
+
+```bash
+archgate adr list --json
+archgate review-context --verbose
+archgate check --verbose
+```
+
+Puis sélectionnez seulement les décisions pour lesquelles un contrôle automatique est fiable.
+
+Pour chaque nouvelle règle :
+
+1. passer l'ADR à `rules: true` ;
+2. créer le compagnon `.rules.ts` ;
+3. tester un cas conforme ;
+4. introduire un contre-exemple contrôlé ;
+5. vérifier que la règle échoue réellement ;
+6. seulement ensuite la rendre bloquante en CI.
+
+Pour la méthode éditoriale de tri et de pertinence, suivre **[Gérer les ADR avec Claude Code et OpenSpec](../chapitre-9-bonnes-pratiques/adr-claude.md#assainir-les-adr-existants)**.
 ---
 
 ## 12. Intégrer Archgate à GitHub Actions
@@ -627,7 +912,10 @@ Sources officielles vérifiées le **15 octobre 2026** :
 - [Quick Start](https://cli.archgate.dev/getting-started/quick-start/)
 - [Architecture Decision Records](https://cli.archgate.dev/concepts/adrs/)
 - [Domains](https://cli.archgate.dev/concepts/domains/)
+- [Writing ADRs](https://cli.archgate.dev/guides/writing-adrs/)
 - [Writing Rules](https://cli.archgate.dev/guides/writing-rules/)
+- [Importing ADRs](https://cli.archgate.dev/guides/importing-adrs/)
+- [archgate adr — create, update, import, sync](https://cli.archgate.dev/reference/cli/adr/)
 - [CI Integration](https://cli.archgate.dev/guides/ci-integration/)
 - [archgate check](https://cli.archgate.dev/reference/cli/check/)
 - [Claude Code Plugin](https://cli.archgate.dev/guides/claude-code-plugin/)
