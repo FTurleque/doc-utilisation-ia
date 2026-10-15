@@ -3146,6 +3146,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-9-reanalyser-un-corpus-de-bugs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow 9 — Réanalyser un corpus de bugs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quand-utiliser-un-subagent" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3527,6 +3538,8 @@
       
         
       
+        
+      
     
     
     
@@ -3619,6 +3632,34 @@
     
   
     Logs & Diagnostic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapitre-11-troubleshooting/corpus-bugs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit du corpus de bugs
   
 
     
@@ -4517,7 +4558,7 @@
   <span class="md-ellipsis">
     
   
-    Archgate CLI — Contrôle des ADR
+    Archgate CLI — Installer & contrôler les ADR
   
 
     
@@ -8777,6 +8818,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#workflow-9-reanalyser-un-corpus-de-bugs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow 9 — Réanalyser un corpus de bugs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quand-utiliser-un-subagent" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9061,6 +9113,21 @@
 </code></pre></div>
 <p>Ne donnez pas automatiquement des permissions d'écriture GitHub si la tâche consiste seulement à lire une issue.</p>
 <hr />
+<h2 id="workflow-9-reanalyser-un-corpus-de-bugs">Workflow 9 — Réanalyser un corpus de bugs<a class="headerlink" href="#workflow-9-reanalyser-un-corpus-de-bugs" title="Permanent link">&para;</a></h2>
+<p>Pour un backlog ancien, ne demandez pas à l'agent de « nettoyer les issues » directement.</p>
+<p>Séquence recommandée :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>snapshot en lecture seule
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>→ normalisation
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>→ reclassification
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>→ clusters de doublons candidats
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>→ reproduction sur la baseline actuelle
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>→ décision humaine
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>→ promotion en test/règle/doc/spec
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>→ modification du tracker
+</code></pre></div>
+<p>Le guide <strong><a href="../../chapitre-11-troubleshooting/corpus-bugs/">Auditer et assainir un corpus de bugs</a></strong> fournit les commandes GitHub CLI, le registre d'audit, les critères de conservation/fermeture et les prompts de pré-triage.</p>
+<p>Un bug corrigé ne doit pas rester ouvert uniquement pour conserver la connaissance : si sa valeur durable est capturée par un test de régression, une règle, un ADR ou un runbook, l'issue peut être fermée avec des liens traçables.</p>
+<hr />
 <h2 id="quand-utiliser-un-subagent">Quand utiliser un subagent<a class="headerlink" href="#quand-utiliser-un-subagent" title="Permanent link">&para;</a></h2>
 <p>Utilisez un subagent si la sous-tâche :</p>
 <ul>
@@ -9085,14 +9152,14 @@
 <h2 id="definition-of-done-pour-une-tache-claude">Definition of Done pour une tâche Claude<a class="headerlink" href="#definition-of-done-pour-une-tache-claude" title="Permanent link">&para;</a></h2>
 <p>Une tâche n'est pas terminée parce que l'agent dit « terminé ».</p>
 <p>Exemple :</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="gu">## Done</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">- [ ]</span> comportement demandé implémenté
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">- [ ]</span> tests ciblés exécutés
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">- [ ]</span> build/lint pertinent exécuté
-<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="k">- [ ]</span> diff relu
-<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="k">- [ ]</span> docs mises à jour si nécessaire
-<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="k">- [ ]</span> aucun secret / fichier généré inattendu
-<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="k">- [ ]</span> limitations ou validations impossibles signalées explicitement
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="gu">## Done</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">- [ ]</span> comportement demandé implémenté
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">- [ ]</span> tests ciblés exécutés
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="k">- [ ]</span> build/lint pertinent exécuté
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">- [ ]</span> diff relu
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="k">- [ ]</span> docs mises à jour si nécessaire
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">- [ ]</span> aucun secret / fichier généré inattendu
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="k">- [ ]</span> limitations ou validations impossibles signalées explicitement
 </code></pre></div>
 <hr />
 <h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>

@@ -3226,6 +3226,8 @@
       
         
       
+        
+      
     
     
     
@@ -3318,6 +3320,34 @@
     
   
     Logs & Diagnostic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="corpus-bugs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Audit du corpus de bugs
   
 
     
@@ -4216,7 +4246,7 @@
   <span class="md-ellipsis">
     
   
-    Archgate CLI — Contrôle des ADR
+    Archgate CLI — Installer & contrôler les ADR
   
 
     
@@ -8467,7 +8497,7 @@
 
 <h1 id="troubleshooting-claude-code">Troubleshooting Claude Code<a class="headerlink" href="#troubleshooting-claude-code" title="Permanent link">&para;</a></h1>
 <p><span class="badge-intermediate">Intermédiaire</span> <span class="badge-vscode">VS Code</span> <span class="badge-intellij">JetBrains</span></p>
-<p>Ce chapitre couvre le diagnostic de <strong>Claude Code</strong> : installation, authentification, erreurs API, configuration, MCP, IDE, recherche, contexte et performance.</p>
+<p>Ce chapitre couvre le diagnostic de <strong>Claude Code</strong> : installation, authentification, erreurs API, configuration, MCP, IDE, recherche, contexte et performance. Il couvre aussi l'<strong>assainissement d'un corpus de bugs historique</strong> afin de conserver uniquement les problèmes encore utiles et de transférer les leçons durables vers des tests, règles ou documents.</p>
 <hr />
 <h2 id="commencer-par-le-diagnostic-integre">Commencer par le diagnostic intégré<a class="headerlink" href="#commencer-par-le-diagnostic-integre" title="Permanent link">&para;</a></h2>
 <p>Si Claude Code démarre :</p>
@@ -8493,6 +8523,10 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7c-.41-.25-.8-.56-1.14-.9a6.48 6.48 0 0 1-.36-9.18C13.69 9.5 17.33 9.13 20 11V8zm-1 7V3.5L18.5 9zm7.31 9.9c1.33-2.11.69-4.9-1.4-6.22-2.11-1.33-4.91-.68-6.22 1.4-1.34 2.11-.69 4.89 1.4 6.22 1.46.93 3.32.93 4.79.02L22 23.39 23.39 22zm-3.81.1a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5"/></svg></span> <strong><a href="logs-diagnostic/">Logs &amp; diagnostic</a></strong></p>
 <p><code>/doctor</code>, <code>claude doctor</code>, safe mode, debug de configuration, heap dump et rapport reproductible.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19.36 2.72 1.42 1.42-5.72 5.71c1.07 1.54 1.22 3.39.32 4.59L9.06 8.12c1.2-.9 3.05-.75 4.59.32zM5.93 17.57c-2.01-2.01-3.24-4.41-3.58-6.65l4.88-2.09 7.44 7.44-2.09 4.88c-2.24-.34-4.64-1.57-6.65-3.58"/></svg></span> <strong><a href="corpus-bugs/">Auditer et assainir un corpus de bugs</a></strong></p>
+<p>Snapshot en lecture seule, reclassification, doublons, reproduction sur la baseline actuelle, promotion en tests/règles et fermeture traçable.</p>
 </li>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3h-5v2h5v13l-5-6v9h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-9 15H5l5-6m0-9H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h5v2h2V1h-2z"/></svg></span> <strong><a href="comparaison-problemes/">Comparaison des problèmes</a></strong></p>
