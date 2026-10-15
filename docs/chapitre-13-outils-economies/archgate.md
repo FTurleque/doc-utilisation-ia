@@ -618,8 +618,6 @@ Avant de déclarer Archgate « en place », vérifiez :
 
 Poursuivez avec **[Jupyter](jupyter.md)**, la page suivante dans le menu.
 
-
-
 ## Sources
 
 Sources officielles vérifiées le **15 octobre 2026** :
